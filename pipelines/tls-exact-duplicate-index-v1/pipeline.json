@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "pipeline_id": "tls-exact-duplicate-index-v1",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "draft_validation_only",
   "execution_enabled": false,
   "source": {
@@ -1195,6 +1195,10 @@
   ],
   "transformations": [
     {
+      "id": "materialize",
+      "operation": "Optionally materialize every pinned input into a fresh local snapshot. Require full byte count, original expected SHA-256 and independent local read-back. Record at most three attempts; reject persistent mismatches. Do not alter originals."
+    },
+    {
       "id": "verify",
       "operation": "Rehash every selected original and compare its pinned size/SHA-256. Reject symlinks and changed inputs."
     },
@@ -1214,19 +1218,25 @@
     "validation_python": "3.11.11",
     "third_party_dependencies": [],
     "oci_image": "docker.io/library/python@sha256:081075da77b2b55c23c088251026fb69a7b2bf92471e491ff5fd75c192fd38e5",
-    "container_validation": "pending current run",
+    "container_validation": "Required evidence is recorded externally in the pipeline registry",
     "platform": "linux/arm64"
   },
   "resources": {
-    "max_input_buffer_bytes": 1048576,
-    "full_selected_input_bytes": 1879383172
+    "max_input_buffer_bytes": 8388608,
+    "full_selected_input_bytes": 1879383172,
+    "local_staging_bytes": 1879383172
   },
   "audit": {
     "decision": "pending",
     "reviewer": null,
     "blockers": [
-      "At least one pinned input differs from its recorded hash; diagnose before admission",
-      "Human audit of the final package digest pending"
+      "Human audit of the final version 0.2 package and environment pending"
+    ],
+    "requirements": [
+      "Pinned source hashes and byte counts",
+      "Verified local materialization and independent local read-back",
+      "Full host and container validation of all declared inputs",
+      "Human audit tied to the final package fingerprint"
     ]
   }
 }

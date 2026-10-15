@@ -16,6 +16,7 @@ jobs:
           python3 scripts/test_catalog_reviews.py
           python3 scripts/test_lidar_curation.py
           python3 pipelines/tls-exact-duplicate-index-v1/test_pipeline.py
+          python3 pipelines/tls-exact-duplicate-index-v1/test_staging.py
           git show "$BASE_SHA:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
           python3 scripts/validate_catalog_reviews.py --base "$RUNNER_TEMP/base-catalog.json"
           python3 - <<'PYTHON'

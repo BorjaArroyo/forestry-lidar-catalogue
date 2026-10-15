@@ -27,3 +27,20 @@ an admitted executable pipeline: the pinned OCI build environment must be valida
 hashes must match, and a human must audit the package before admission. A detected
 input mismatch is a blocking finding; never update expected hashes merely to
 make validation pass.
+
+
+## Version 0.2 prior analysis: input materialization
+
+Observed SHA mismatches on a WebDAV volume can disappear on later reads without
+changing expected hashes. Reading files directly during a transformation would
+couple results to that unstable access path. Materialization is a byte-preserving
+input-preparation step: full length + pinned source SHA + local read-back are
+mandatory, and validation then reads the local snapshot independently. The step
+records retries rather than erasing earlier failures. It cannot bless permanent
+corruption or changed manifests. Partial failed copies are removed; their hashes
+and failures remain in staging-report.json. Source identities, labels, units and
+CRS are unchanged. Synthetic tests inject transient/short/corrupt reads, local
+read-back corruption, persistent mismatches and unsafe paths. Required real-data
+evidence is full 236-file materialization and independent host/container checks.
+This is an operational isolation strategy; the underlying WebDAV cause remains
+unconfirmed and human audit of the new package is still required.

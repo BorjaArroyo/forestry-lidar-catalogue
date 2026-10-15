@@ -35,3 +35,26 @@ use --entrypoint python with test_pipeline.py. Base-image acquisition is a decla
 setup requirement; validation itself has no network dependency. Execution through
 Canopy remains blocked. See the external registry/evidence for actual validation
 results and remaining gates; package metadata is a declaration, not approval.
+
+
+## Verified local snapshots (version 0.2)
+
+The mounted source has produced inconsistent read-back hashes. Do not repair by
+changing expected hashes or assume that a later successful read proves the mount
+stable. --stage-to /absolute/new-local-snapshot copies every pinned input to a
+reliable local filesystem before full validation. A snapshot is admitted only
+when byte count, expected source hash and an independent local read-back match.
+At most three attempts are made, all failed observations are recorded, persistent
+mismatches stop the run, and a failed snapshot is not a valid pipeline input.
+Originals are never replaced. Reserve 1.88 GB plus report/temporary overhead.
+
+```bash
+python3 test_staging.py
+python3 entrypoint.py --root /absolute/acquisition/root --stage-to /absolute/new-local-snapshot --output /absolute/new-report
+```
+
+For containers, materialize first or provide a separate writable local /staging
+mount; /inputs stays read-only and /outputs is a distinct directory. The current
+Canopy service remains blocked pending human audit. This workaround isolates the
+pipeline from an unreliable input mount; it does not claim to fix the WebDAV
+server/client or establish the historical cause of inconsistent reads.

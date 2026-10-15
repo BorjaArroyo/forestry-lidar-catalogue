@@ -93,7 +93,10 @@ No canonical copy is selected and no correction has been applied.
 
 An initial [dataset-specific validation package](pipelines/tls-exact-duplicate-index-v1/README.md)
 pins the TLS source's 236 duplicate-candidate files. It remains a draft;
-full input consistency and human audit are required before execution admission.
+human audit is required before execution admission. Version 0.2 validates all
+236 selected files on a verified local snapshot, independently on host and in
+the container. Original WebDAV read inconsistencies remain documented; this
+does not certify the mount or modify originals.
 Validation evidence and the package fingerprint are recorded in
 [the pipeline registry](pipelines/registry.json).
 

@@ -95,11 +95,30 @@ def main():
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--sample-groups", type=int)
+    parser.add_argument("--stage-to", type=Path, help="Create a new verified local snapshot before full validation")
     args = parser.parse_args()
     package = Path(__file__).resolve().parent
     package_hash = verify_package(package)
     contract_path = package / "pipeline.json"
-    result = validate(json.loads(contract_path.read_text()), args.root, args.output, args.sample_groups)
+    contract = json.loads(contract_path.read_text())
+    input_root = args.root
+    staging_report = None
+    if args.stage_to:
+        from staging import materialize
+        if args.sample_groups is not None:
+            parser.error("--stage-to requires full validation without sampling")
+        source_root, output_root = args.root.resolve(), args.output.resolve()
+        if source_root == output_root or source_root in output_root.parents or output_root in source_root.parents or output_root.exists():
+            parser.error("Choose a new output outside the original source root")
+        stage_root = args.stage_to.resolve()
+        if stage_root == output_root or stage_root in output_root.parents or output_root in stage_root.parents:
+            parser.error("Keep staging and final report directories separate")
+        staging_report = materialize(contract, args.root, args.stage_to, progress=lambda message: print(message, flush=True))
+        input_root = args.stage_to
+    result = validate(contract, input_root, args.output, args.sample_groups)
+    if staging_report:
+        result["staging"] = {"status": staging_report["status"], "verified_files": len(staging_report["files"]),
+                             "recorded_read_failures": staging_report["read_failures"], "source_mutated": False}
     result.update(package_lock_sha256=package_hash, contract_sha256=sha(contract_path))
     (args.output / "validation-report.json").write_text(json.dumps(result, indent=2) + "\n")
     print(f"Validated {len(result['checked_files'])}/{result['declared_files']} input files; execution remains blocked")

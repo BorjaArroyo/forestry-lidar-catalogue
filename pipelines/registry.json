@@ -1,27 +1,31 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "pipelines": [
     {
       "id": "tls-exact-duplicate-index-v1",
+      "version": "0.2.0",
       "package": "tls-exact-duplicate-index-v1/",
-      "package_lock_sha256": "971dc09cc466685b6af3db22535b2a94c26f619a8ee37e117b5f9c59f5218c39",
+      "package_lock_sha256": "62ae56c471ced55390d7d0fa668601f851390741ea4533db0142c78b10384b4c",
       "execution_enabled": false,
-      "status": "blocked",
+      "status": "awaiting_human_audit",
       "evidence": "tls-validation-evidence.json",
-      "local_image_id": "sha256:3693edf9dff174480ed9e724c3431c869e0950927d2fa7f2e9a4756299ca64bd",
+      "local_image_id": "sha256:5653b1ceff559d5b178eafa3c81c9e39a88162740968a0983eddaeab4672a8f1",
       "registry_reference": null,
       "blockers": [
-        "Input read-back inconsistencies require diagnosis and stable verification",
-        "Human audit of the final package and environment pending"
+        "Human audit tied to the final package and immutable environment pending"
       ],
-      "container_smoke_validation": "passed",
+      "required_input_policy": "verified_local_snapshot",
       "validation_summary": {
-        "container_tests_passed": 8,
-        "container_real_sample_files": 6,
-        "host_diagnostic_files": 236,
-        "host_diagnostic_hash_mismatches": 91,
+        "container_tests_passed": 15,
+        "local_materialized_files": 236,
+        "host_full_input_validation": "passed",
+        "container_full_input_validation": "passed",
         "curation_applied": false
-      }
+      },
+      "limits": [
+        "Underlying WebDAV reliability is not certified",
+        "Local image has not been published to an OCI registry"
+      ]
     }
   ]
 }

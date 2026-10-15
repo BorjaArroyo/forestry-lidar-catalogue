@@ -54,9 +54,11 @@ prototype is pipelines/tls-exact-duplicate-index-v1: an offline exact-byte
 duplicate-index validation package with a pinned input contract, prior analysis,
 tests and package checksums. pipelines/registry.json records its evidence and
 remaining blockers. It is not an execution registry and does not admit a pipeline.
-The pinned container passes its synthetic tests and a real-data sample. Full
-input consistency and human audit remain blocking requirements; see the evidence
-for read-back hash discrepancies. The local image is not published to a registry.
+Version 0.2 materializes pinned inputs into a verified local snapshot. All 236
+selected files pass independent host and container validation; 15 container tests
+cover failure handling. Human audit remains required. Earlier mounted-volume
+read-back failures remain documented; the WebDAV cause is unconfirmed. The local
+image is not published to a registry.
 The research converter module is retained as implementation material; importing
 it directly is outside the audited Canopy execution workflow. Existing benchmark
 recipes also remain disabled pending end-to-end validation.
