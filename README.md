@@ -80,6 +80,11 @@ claimed as reproduced. No images are automatically built or pulled.
 
 ## Evidence and updates
 
+Dataset proposals and admission reviews follow [CONTRIBUTING.md](CONTRIBUTING.md).
+New or changed dataset entries require evidence-backed, task-specific review
+records and maintainer review before publication. The initial ten records remain
+a legacy snapshot with partial audits; they are not retrospectively certified.
+
 The complete original collection was not reread point by point. Review audit
 coverage and limitations in the public Evidence & review view. Working-document
 paths are references to the original local audit, not published attachments.

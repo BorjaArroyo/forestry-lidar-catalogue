@@ -1,0 +1,25 @@
+name: Dataset admission
+on: pull_request
+permissions:
+  contents: read
+jobs:
+  admission:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate added and changed dataset reviews
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          python3 scripts/test_catalog_reviews.py
+          git show "$BASE_SHA:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
+          python3 scripts/validate_catalog_reviews.py --base "$RUNNER_TEMP/base-catalog.json"
+          python3 - <<'PYTHON'
+          import json
+          from pathlib import Path
+          catalog = json.loads(Path('catalog.json').read_text())
+          script = Path('catalog.js').read_text()
+          assert json.loads(script.split('=', 1)[1].strip().rstrip(';')) == catalog, 'Catalog snapshots differ'
+          PYTHON

@@ -1,0 +1,27 @@
+name: Dataset proposal
+description: Propose a source for analysis before catalog admission
+title: "[Dataset proposal] "
+body:
+  - type: markdown
+    attributes:
+      value: A proposal does not publish a dataset. Maintainers review evidence and task suitability before admission. Link records and reports; do not attach large payloads or credentials.
+  - type: input
+    id: source
+    attributes:
+      label: Version-specific source URL or DOI
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Intended tasks and added value
+      description: Which tasks could benefit? What is missing from current sources?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Known evidence and limitations
+      description: License, fields, annotations, coverage, related datasets, duplicates, papers and repositories. Unknowns are welcome; do not infer approval.
+    validations:
+      required: true

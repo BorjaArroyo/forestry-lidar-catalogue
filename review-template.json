@@ -1,0 +1,68 @@
+{
+  "dataset_id": "REPLACE_WITH_RECORD_ID",
+  "dataset_sha256": "REPLACE_WITH_DATASET_FINGERPRINT",
+  "decision": "draft",
+  "proposal_url": "",
+  "reviewed_by": "",
+  "reviewed_at": "",
+  "scope": "",
+  "limitations": "",
+  "analysis": {
+    "provenance": {
+      "finding": "",
+      "evidence": []
+    },
+    "rights": {
+      "finding": "",
+      "evidence": []
+    },
+    "integrity": {
+      "finding": "",
+      "evidence": []
+    },
+    "schema": {
+      "finding": "",
+      "evidence": []
+    },
+    "coverage": {
+      "finding": "",
+      "evidence": []
+    },
+    "duplicates": {
+      "finding": "",
+      "evidence": []
+    }
+  },
+  "tasks": {
+    "instances": {
+      "status": "unknown",
+      "rationale": "",
+      "evidence": []
+    },
+    "components": {
+      "status": "unknown",
+      "rationale": "",
+      "evidence": []
+    },
+    "species": {
+      "status": "unknown",
+      "rationale": "",
+      "evidence": []
+    },
+    "geometry": {
+      "status": "unknown",
+      "rationale": "",
+      "evidence": []
+    },
+    "spectral": {
+      "status": "unknown",
+      "rationale": "",
+      "evidence": []
+    },
+    "biomass": {
+      "status": "unknown",
+      "rationale": "",
+      "evidence": []
+    }
+  }
+}
