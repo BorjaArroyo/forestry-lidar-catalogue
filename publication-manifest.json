@@ -1,0 +1,20 @@
+{
+  "files": {
+    ".gitignore": "1ce26d6c65759992eda2b4c1a0c7beabbeb37cddedcfbee5039f628f83c4c7fe",
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "README.md": "a32cd17a87a8a58fb7a2c224d38196cef2926e075f1a87c47329ac504c5b6dd8",
+    "app.js": "40d4ebc75d7fa08e0a00a01aa0c6cc02a7ba57722419406e77b62c3eb283215e",
+    "benchmarks.json": "7c9e83a43b532561f881ea94a2f24bce2821940f22a6e106f412e63ccd2eecf5",
+    "catalog.js": "b7dd96ce8beaf1d811e076b66211f099c1aacd57ac35a8a59d42a95d9476cc96",
+    "catalog.json": "b16e9c759020f6f5b2c90b2cf8b6b518d446df1940c94c2ce0d5f4305a43d1c2",
+    "docs/lidar-acquisition-inventory.json": "9cb6f7b02c6f107be7c43a267946cc613b9cc33aa0d076a53215152926007b76",
+    "index.html": "e34dd98991cfbc470d66d2a4c776c3bbad6efe0e51965c7ffa728343fe205d8c",
+    "requirements.txt": "7d832846229448afa875352db59f44794fea4f6e167c1bf74fd6b0f1acb5497c",
+    "scripts/acquire_lidar.py": "046a9508ec7e91bbb5f0d4eb54ebb4da719d2fb139a436fc2addbaf4c5b046c3",
+    "scripts/harmonize_lidar.py": "7aa860e44205e48f39b83d3e5508e6b7e5779a7c6136d0c4858260aec19c7117",
+    "scripts/serve_knowledge_hub.py": "e092d90e9c5934bd3e6b4f0c3c02e66b147bcf82ccd486a01f4b33a6dbfb6c22",
+    "style.css": "f3d773ccc0b5b0e0421f53fd6d070f36f4d14a89639e260cff3c60ec31e0cb06",
+    "workbench.js": "0c05012fe96fdcf75ac9f6101283b6aaaa42453de9a6901ddc0ad1482559878a"
+  },
+  "target": "https://borjaarroyo.github.io/forestry-lidar-catalogue/"
+}

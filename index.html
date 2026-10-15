@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A task-oriented, evidence-backed catalog of forest LiDAR datasets and semantic transformations.">
+  <title>Canopy — LiDAR knowledge hub</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231b5047'/%3E%3Cpath d='M16 5 5 23h8v5h6v-5h8Z' fill='%23e7c477'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script>window.CANOPY_PUBLIC = true;</script><script defer src="catalog.js"></script><script defer src="app.js"></script><script defer src="workbench.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <aside class="sidebar">
+    <a class="brand" href="#graph" aria-label="Canopy home"><span class="brand-icon">⌁</span><span>canopy<span class="brand-sub">LiDAR knowledge hub</span></span></a>
+    <div class="workspace"><span class="status-dot"></span> Forest data workspace <span class="version">01</span></div>
+    <div class="nav-label">EXPLORE</div>
+    <nav aria-label="Main navigation">
+      <button class="nav-item active" data-view="graph"><span>⌘</span> Compatibility graph</button>
+      <button class="nav-item" data-view="datasets"><span>▦</span> Dataset catalog <b id="dataset-count">10</b></button>
+      <button class="nav-item" data-view="mappings"><span>⇄</span> Transformations</button>
+      <button class="nav-item" data-view="audit"><span>◈</span> Evidence & review <b id="finding-count">7</b></button>
+    <button class="nav-item" data-view="workbench"><span>↧</span> Data workbench</button><button class="nav-item" data-view="benchmarks"><span>▷</span> Benchmarks</button><button class="nav-item" data-view="environments"><span>▧</span> Image registry</button></nav>
+    <div class="nav-label task-label">RESEARCH TASK</div>
+    <div id="task-nav" class="task-nav" aria-label="Research task"></div>
+    <div class="sidebar-bottom"><div class="acquired-mark">✓</div><div><strong>Acquisition complete</strong><small>96 assets · provenance retained</small></div></div>
+    <p class="sidebar-note">A shared format is a starting point.<br>Compatibility needs evidence.</p>
+  </aside>
+  <div class="shell">
+    <header class="topbar"><div class="breadcrumbs">Workspace <span>/</span> <strong id="breadcrumb-view">Compatibility graph</strong></div><div class="top-actions"><span class="snapshot"><i></i> Evidence snapshot</span><button id="export" class="button small">↓ Export catalog</button></div></header>
+    <main id="main">
+      <div class="page-heading"><div><div class="eyebrow">THE FOREST DATA LANDSCAPE</div><h1>Find the right data.<br class="mobile-break"> Understand the connection.</h1><p>Explore what each dataset can support, how labels align, and where the evidence ends.</p></div><button id="compare-open" class="button compare-button" disabled>Compare datasets <span id="compare-count">0</span></button></div>
+      <section id="stats" class="stats" aria-label="Collection overview"></section>
+      <div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search datasets, labels, scanners…" aria-label="Search catalog"><kbd>/</kbd></label><label class="select-label">Platform<select id="platform"><option value="all">All platforms</option><option>Airborne</option><option>Terrestrial</option><option>Mobile</option></select></label><label class="select-label">Role<select id="role"><option value="all">All roles</option><option value="evaluation">Reserved evaluation</option><option value="spectral">Multispectral</option><option value="rights">Rights review</option></select></label><button id="reset" class="button text-button">Reset filters</button></div>
+      <div class="task-banner"><span class="task-symbol">↗</span><div><strong id="task-title"></strong><span id="task-description"></span></div><span class="task-badge">Task-specific view</span></div>
+      <section id="view-graph" class="view"><div class="graph-layout"><div class="graph-panel"><div class="panel-top"><div><h2>Dataset relationships</h2><p>Choose a dataset or a connection to inspect its evidence.</p></div><span id="graph-count" class="muted"></span></div><div id="graph-wrap" class="graph-wrap"><svg id="graph" role="group" aria-label="Interactive graph of dataset compatibility" viewBox="0 0 1240 790"></svg><div class="graph-controls"><button id="zoom-in" aria-label="Zoom in">+</button><button id="zoom-out" aria-label="Zoom out">−</button><button id="zoom-fit" aria-label="Reset graph view">⌖</button></div><div class="graph-caption">Directed links describe alignment toward a target schema.<br>Shared-data links identify dependence, not transfer.</div></div><div id="legend" class="legend" aria-label="Filter relationships"></div></div><aside id="inspector" class="inspector" aria-label="Selected dataset or relationship"></aside></div></section>
+      <section id="view-datasets" class="view" hidden><div class="section-heading"><div><h2>Dataset catalog</h2><p>Annotation availability and intended use are separate decisions.</p></div><span id="catalog-count" class="muted"></span></div><div id="dataset-grid" class="dataset-grid"></div></section>
+      <section id="view-mappings" class="view" hidden><div class="section-heading"><div><h2>Transformation registry</h2><p>Inspect the rule, prerequisites, losses, and supporting evidence.</p></div><span class="badge neutral">Specifications · not executed</span></div><div id="mapping-list" class="mapping-list"></div></section>
+      <section id="view-audit" class="view" hidden><div class="section-heading"><div><h2>Evidence & curation review</h2><p>Acquisition is complete. Curation decisions remain open.</p></div><button id="evidence-export" class="button small">↓ Export review findings</button></div><div id="scope" class="scope"></div><div id="findings" class="findings"></div><div class="evidence-section"><h2>Source documents</h2><div id="evidence-docs" class="evidence-docs"></div></div></section>
+      <section id="view-workbench" class="view" hidden>
+<div class="section-heading"><div><h2>Data workbench</h2><p>Version-pinned sources → verified originals → reviewed derivatives.</p></div><span id="service-status" class="badge neutral">Connecting to local service…</span></div>
+<div class="workbench-grid"><article class="work-card"><span class="eyebrow">01 / ACQUIRE</span><h3>Bring a Zenodo dataset</h3><p>Inspect a version-specific record before starting a resumable download.</p><form id="inspect-form"><label>Zenodo record ID or URL<input id="zenodo-record" required value="8287792"></label><button class="button" type="submit">Inspect record</button></form><div id="record-preview"></div></article>
+<article class="work-card"><span class="eyebrow">02 / PREPROCESS</span><h3>Review and normalize</h3><p>Use a verified acquisition directory. Original files stay preserved.</p><form id="preprocess-form"><label>Acquisition directory<input id="process-root" required placeholder="/absolute/path/to/dataset"></label><label>Workflow<select id="workflow"><option value="audit">Curation review · exact duplicates & file sizes</option><option value="harmonize">Normalize supported source formats · lossless chunks</option></select></label><p class="notice">Normalization preserves XYZ and source fields. It does not resolve every label mapping. New source schemas and ND records need review. Duplicate review writes a report; it does not delete files.</p><button class="button" type="submit">Start workflow</button></form></article></div>
+<p id="workbench-message" role="status" class="notice" hidden></p><div class="section-heading"><div><h2>Jobs & provenance</h2><p>Background workers continue when the browser closes. Refresh to reconnect.</p></div><button id="refresh-jobs" class="button small">Refresh jobs</button></div><div id="job-list"></div><article id="job-detail" class="work-card" hidden><h3>Job log</h3><pre id="job-log"></pre><button id="job-export" class="button">Export job evidence</button></article>
+</section>
+<section id="view-benchmarks" class="view" hidden><div class="section-heading"><div><h2>Benchmarks by task</h2><p>Inspect the protocol and caveats before comparing a score.</p></div></div><label class="select-label">Task<select id="benchmark-task"><option value="all">All tasks</option><option value="instances">Tree instances</option><option value="components">Semantic components</option><option value="species">Species</option><option value="geometry">Geometry</option><option value="spectral">Spectral</option><option value="biomass">Biomass</option></select></label><div id="benchmark-list" class="workbench-grid"></div><article class="work-card"><h3>Run a prepared recipe</h3><p>Input configuration uses /inputs; results must go to /outputs. Preflight lists missing requirements. Images are never built or pulled automatically.</p><form id="benchmark-form"><label>Recipe<select id="benchmark-recipe"></select></label><label>Prepared inputs directory<input id="benchmark-root" required placeholder="/absolute/path/to/inputs"></label><div class="work-actions"><button class="button" id="benchmark-check" type="button">Check readiness</button><button class="button" id="benchmark-run" type="submit" disabled>Run prepared benchmark</button></div></form><p id="benchmark-readiness" role="status"></p></article></section>
+<section id="view-environments" class="view" hidden><div class="section-heading"><div><h2>Container image registry</h2><p>Record immutable environments and their provenance.</p></div><span class="badge neutral">Metadata registry · local images</span></div><p class="notice">An image tag is not a reproducible environment. Recipes require a digest, a full source commit, platform compatibility and validation. This registry references images; it does not host image blobs.</p><div id="environment-list" class="workbench-grid"></div></section>
+<footer><span>CANOPY <span class="footer-divider">/</span> Evidence before equivalence.</span><span id="snapshot-date"></span></footer>
+    </main>
+  </div>
+  <dialog id="detail-dialog" aria-labelledby="detail-dialog-title"><div class="dialog-heading"><h2 id="detail-dialog-title">Dataset details</h2><button class="close-dialog" aria-label="Close dataset details">×</button></div><div id="dialog-detail"></div></dialog>
+  <dialog id="compare-dialog" aria-labelledby="compare-title"><div class="dialog-heading"><div><span class="eyebrow">SIDE BY SIDE</span><h2 id="compare-title">Compare datasets</h2></div><button class="close-dialog" aria-label="Close comparison">×</button></div><div id="compare-content"></div></dialog>
+  <div id="toast" role="status" class="toast" hidden></div>
+</body>
+</html>

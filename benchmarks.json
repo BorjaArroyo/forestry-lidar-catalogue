@@ -1,0 +1,132 @@
+{
+  "schema_version": "1.0",
+  "reviewed_at": "2026-10-15",
+  "recipes": [
+    {
+      "id": "treelearn-evaluation",
+      "name": "TreeLearn evaluation",
+      "tasks": [
+        "instances"
+      ],
+      "repository": "https://github.com/ecker-lab/TreeLearn",
+      "paper": "https://arxiv.org/abs/2309.08471",
+      "guide": "https://github.com/ecker-lab/TreeLearn/blob/main/docs/evaluation.md",
+      "datasets": [
+        "16875688",
+        "7307956"
+      ],
+      "metrics": [
+        "Detection: completeness, omission error, commission error, F1",
+        "Segmentation: mean precision, recall and coverage (IoU)"
+      ],
+      "stage": "Evaluation of existing predictions",
+      "image_id": "treelearn",
+      "command": [
+        "python",
+        "tools/evaluation/evaluate.py",
+        "--config",
+        "/inputs/evaluate.yaml"
+      ],
+      "required_files": [
+        "evaluate.yaml"
+      ],
+      "enabled": false,
+      "blockers": [
+        "No validated container image or pinned code commit registered",
+        "Input/configuration adapter and output paths must be validated against a pinned upstream version"
+      ],
+      "caveats": [
+        {
+          "kind": "Author-documented",
+          "text": "Unlabeled points belonging to annotated trees can penalize segmentation scores. Keep the evaluator\u2019s boundary and commission-error rules when comparing results.",
+          "url": "https://github.com/ecker-lab/TreeLearn/blob/main/docs/evaluation.md"
+        },
+        {
+          "kind": "Author-documented",
+          "text": "Ground-truth and predictions must share coordinates. Evaluation propagates predictions to reference points; the authors recommend 0.1 m voxel sampling.",
+          "url": "https://github.com/ecker-lab/TreeLearn/blob/main/docs/evaluation.md"
+        },
+        {
+          "kind": "Local audit",
+          "text": "Wytham exports overlap the acquired TLS benchmark. Do not interpret those datasets as independent training and test sites.",
+          "url": null
+        },
+        {
+          "kind": "Code inspection",
+          "text": "The evaluator writes results beside the predictions. An adapter must redirect those outputs before use with read-only dataset mounts.",
+          "url": "https://github.com/ecker-lab/TreeLearn/blob/main/tools/evaluation/evaluate.py"
+        }
+      ],
+      "audit_status": "Upstream documentation reviewed; paper-wide critique and independent reproduction pending",
+      "protocol": {
+        "matching": "Hungarian matching; minimum IoU 0.5 in upstream example",
+        "unmatched_prediction_filter": "Minimum precision 0.5 in upstream example",
+        "reference_sampling": "0.1 m voxels recommended by authors",
+        "split": "Explicit site-disjoint split and model exposure review required; not imposed by the evaluator"
+      }
+    },
+    {
+      "id": "forestformer3d",
+      "name": "ForestFormer3D",
+      "tasks": [
+        "instances",
+        "components"
+      ],
+      "repository": "https://github.com/SmartForest-no/ForestFormer3D",
+      "paper": "https://openaccess.thecvf.com/content/ICCV2025/html/Xiang_ForestFormer3D_A_Unified_Framework_for_End-to-End_Segmentation_of_Forest_LiDAR_ICCV_2025_paper.html",
+      "guide": "https://github.com/SmartForest-no/ForestFormer3D/blob/main/readme.md",
+      "datasets": [
+        "16742708"
+      ],
+      "metrics": [
+        "Published instance and semantic segmentation protocol; adapter pending"
+      ],
+      "stage": "Inference and evaluation recipe pending",
+      "image_id": "forestformer3d",
+      "command": [],
+      "required_files": [],
+      "enabled": false,
+      "blockers": [
+        "Pinned image, weights, preprocessing and evaluator adapter are not validated",
+        "Requires a compatible NVIDIA CUDA execution host"
+      ],
+      "caveats": [
+        {
+          "kind": "Author-documented",
+          "text": "The upstream setup documents dependency repairs, configuration changes and additional inference passes for dense plots. These settings must be recorded per run.",
+          "url": "https://github.com/SmartForest-no/ForestFormer3D/blob/main/readme.md"
+        },
+        {
+          "kind": "Local protocol review",
+          "text": "The official split supports published-score comparison; it does not establish strict geographic independence. Never replace missing ground truth with dummy labels when scoring.",
+          "url": null
+        }
+      ],
+      "audit_status": "Installation and inference documentation reviewed; complete article audit and independent reproduction pending"
+    }
+  ],
+  "images": [
+    {
+      "id": "treelearn",
+      "name": "TreeLearn environment",
+      "reference": null,
+      "commit": null,
+      "platform": "linux/amd64",
+      "gpu": false,
+      "validated": false,
+      "working_directory": "/workspace",
+      "build_source": "https://github.com/ecker-lab/TreeLearn/tree/main/setup"
+    },
+    {
+      "id": "forestformer3d",
+      "name": "ForestFormer3D environment",
+      "reference": null,
+      "commit": null,
+      "platform": "linux/amd64",
+      "gpu": true,
+      "validated": false,
+      "working_directory": "/workspace",
+      "build_source": "https://github.com/SmartForest-no/ForestFormer3D/blob/main/Dockerfile"
+    }
+  ]
+}

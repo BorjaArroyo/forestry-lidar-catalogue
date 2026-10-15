@@ -1,0 +1,732 @@
+{
+  "schema_version": "1.0",
+  "scope": "Reduced public companion inventory",
+  "records": [
+    {
+      "record_id": 8287792,
+      "url": "https://zenodo.org/records/8287792",
+      "api_url": "https://zenodo.org/api/records/8287792",
+      "metadata_sha256": "3598069530f4aa23c87b936baaac582b1c36483c48665359e44f42248cb7ea53",
+      "title": "FOR-instance: a UAV laser scanning benchmark dataset for semantic and   instance segmentation of individual trees",
+      "doi": "10.5281/zenodo.8287792",
+      "version": "1",
+      "access_right": "open",
+      "license_declared": {
+        "id": "cc-by-4.0"
+      },
+      "files": [
+        {
+          "name": "FORinstance_dataset.zip",
+          "size_bytes": 1643251814,
+          "provider_checksum": "md5:01fd03ba4068648e21fb4591fbff34c4",
+          "download_url": "https://zenodo.org/api/records/8287792/files/FORinstance_dataset.zip/content"
+        }
+      ]
+    },
+    {
+      "record_id": 16742708,
+      "url": "https://zenodo.org/records/16742708",
+      "api_url": "https://zenodo.org/api/records/16742708",
+      "metadata_sha256": "de53a6a750a5ff471e9266fff7d6a0b295061b4be4638312f354d94c5ffa793a",
+      "title": "FOR-instanceV2 dataset and pre-trained model in paper entitled \"ForestFormer3D: A Unified Framework for End-to-End Segmentation of Forest LiDAR 3D Point Clouds\"",
+      "doi": "10.5281/zenodo.16742708",
+      "version": null,
+      "access_right": "open",
+      "license_declared": {
+        "id": "gpl-3.0-or-later"
+      },
+      "files": [
+        {
+          "name": "train_val_data.zip",
+          "size_bytes": 2426597147,
+          "provider_checksum": "md5:5a63cc1cbe88edd9ebec28ad7e46f79b",
+          "download_url": "https://zenodo.org/api/records/16742708/files/train_val_data.zip/content"
+        },
+        {
+          "name": "test_data.zip",
+          "size_bytes": 377105598,
+          "provider_checksum": "md5:1c00a0f0b89f03b74064432162619136",
+          "download_url": "https://zenodo.org/api/records/16742708/files/test_data.zip/content"
+        },
+        {
+          "name": "clean_forestformer.zip",
+          "size_bytes": 197823601,
+          "provider_checksum": "md5:553d67379331966509076f3fbb409e57",
+          "download_url": "https://zenodo.org/api/records/16742708/files/clean_forestformer.zip/content"
+        }
+      ]
+    },
+    {
+      "record_id": 15193973,
+      "url": "https://zenodo.org/records/15193973",
+      "api_url": "https://zenodo.org/api/records/15193973",
+      "metadata_sha256": "e8d372ca11a5067b7e572d092618edf7aa7339ee1679619bce8f79aac0134a31",
+      "title": "ForestSemantic: A Dataset for Semantic Learning of Forest from Close-Range Sensing",
+      "doi": "10.5281/zenodo.15193973",
+      "version": null,
+      "access_right": "open",
+      "license_declared": {
+        "id": "cc-by-nc-nd-4.0"
+      },
+      "files": [
+        {
+          "name": "Plot_3_Tree_Reference.xlsx",
+          "size_bytes": 30316,
+          "provider_checksum": "md5:0da0fd35cbf683200d94cd0347d8f0d1",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Plot_3_Tree_Reference.xlsx/content"
+        },
+        {
+          "name": "Tree_Species_ID.txt",
+          "size_bytes": 242,
+          "provider_checksum": "md5:696085052a6494e0d6e75627662a4237",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Tree_Species_ID.txt/content"
+        },
+        {
+          "name": "Readme.pdf",
+          "size_bytes": 4228000,
+          "provider_checksum": "md5:a9daf25df63ea9aefb02767efda7daec",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Readme.pdf/content"
+        },
+        {
+          "name": "Plot_3_Branch_Reference.txt",
+          "size_bytes": 466360,
+          "provider_checksum": "md5:8a79a1e3b237a196494d113a6995fc48",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Plot_3_Branch_Reference.txt/content"
+        },
+        {
+          "name": "Plot_1_Branch_Reference.txt",
+          "size_bytes": 191652,
+          "provider_checksum": "md5:4cf25adba6fea195c6e1ba4c1ab2a553",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Plot_1_Branch_Reference.txt/content"
+        },
+        {
+          "name": "Plot_1.zip",
+          "size_bytes": 802306514,
+          "provider_checksum": "md5:14e6923deb5cce488ceaa10f5f6a7025",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Plot_1.zip/content"
+        },
+        {
+          "name": "Plot_3.zip",
+          "size_bytes": 898525090,
+          "provider_checksum": "md5:d2a7dd0ebd49556894fb8a5f8dd291d5",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Plot_3.zip/content"
+        },
+        {
+          "name": "Plot_5.zip",
+          "size_bytes": 889600174,
+          "provider_checksum": "md5:f2e2b978c7630a1889435867ef4ece5e",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Plot_5.zip/content"
+        },
+        {
+          "name": "Plot_5_Branch_Reference.txt",
+          "size_bytes": 220824,
+          "provider_checksum": "md5:cb7bb9b5a04b63e904af25197b383534",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Plot_5_Branch_Reference.txt/content"
+        },
+        {
+          "name": "Plot_1_Tree_Reference.xlsx",
+          "size_bytes": 23719,
+          "provider_checksum": "md5:d5f0dbadef2e42e54bc1ad20eff2a40d",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Plot_1_Tree_Reference.xlsx/content"
+        },
+        {
+          "name": "Plot_5_Tree_Reference.xlsx",
+          "size_bytes": 28643,
+          "provider_checksum": "md5:05aa9fea9a09c5d039fa806bb8314c72",
+          "download_url": "https://zenodo.org/api/records/15193973/files/Plot_5_Tree_Reference.xlsx/content"
+        }
+      ]
+    },
+    {
+      "record_id": 17172162,
+      "url": "https://zenodo.org/records/17172162",
+      "api_url": "https://zenodo.org/api/records/17172162",
+      "metadata_sha256": "bdf25852feed4b84da9b8c1b618de6a044f0fc9eeb5bba2f13b6f4e2ae3e87b2",
+      "title": "ForestSemantic-MS Dataset: multispectral LiDAR forest point clouds for fine-grained forest semantic segmentation",
+      "doi": "10.5281/zenodo.17172162",
+      "version": "v1",
+      "access_right": "open",
+      "license_declared": {
+        "id": "cc-by-4.0"
+      },
+      "files": [
+        {
+          "name": "test1.laz",
+          "size_bytes": 7762914,
+          "provider_checksum": "md5:2c36cc760602d75fee4bd466f7da9a8f",
+          "download_url": "https://zenodo.org/api/records/17172162/files/test1.laz/content"
+        },
+        {
+          "name": "train2.laz",
+          "size_bytes": 42592079,
+          "provider_checksum": "md5:b24cf74f9feba6dce5b4014c95a6312c",
+          "download_url": "https://zenodo.org/api/records/17172162/files/train2.laz/content"
+        },
+        {
+          "name": "train3.laz",
+          "size_bytes": 16087942,
+          "provider_checksum": "md5:5f360b14e2720482fe9916ca702973d0",
+          "download_url": "https://zenodo.org/api/records/17172162/files/train3.laz/content"
+        },
+        {
+          "name": "test2.laz",
+          "size_bytes": 18345926,
+          "provider_checksum": "md5:1476d103d889dfdde238c76a9253e8ff",
+          "download_url": "https://zenodo.org/api/records/17172162/files/test2.laz/content"
+        },
+        {
+          "name": "train1.laz",
+          "size_bytes": 20990528,
+          "provider_checksum": "md5:8d24c31df17ef58e58fd25f8bad23238",
+          "download_url": "https://zenodo.org/api/records/17172162/files/train1.laz/content"
+        },
+        {
+          "name": "train4.laz",
+          "size_bytes": 25325276,
+          "provider_checksum": "md5:b29fd542abbe35dd606793531d43ce12",
+          "download_url": "https://zenodo.org/api/records/17172162/files/train4.laz/content"
+        }
+      ]
+    },
+    {
+      "record_id": 19351234,
+      "url": "https://zenodo.org/records/19351234",
+      "api_url": "https://zenodo.org/api/records/19351234",
+      "metadata_sha256": "d60fb6fab63dfbcb1bd9d815059909b5626a918e8c5cbf2d79623677223cf720",
+      "title": "FGI-EMIT: a multispectral high-density airborne laser scanning benchmark dataset for individual tree segmentation",
+      "doi": "10.5281/zenodo.19351234",
+      "version": null,
+      "access_right": "open",
+      "license_declared": {
+        "id": "cc-by-nc-sa-4.0"
+      },
+      "files": [
+        {
+          "name": "plot_data.yaml",
+          "size_bytes": 105578,
+          "provider_checksum": "md5:0e5f69c28be31374bb3cf8faa03bded0",
+          "download_url": "https://zenodo.org/api/records/19351234/files/plot_data.yaml/content"
+        },
+        {
+          "name": "training.zip",
+          "size_bytes": 1796142742,
+          "provider_checksum": "md5:b1c5ee7e9c166dd7ff377539944e5002",
+          "download_url": "https://zenodo.org/api/records/19351234/files/training.zip/content"
+        },
+        {
+          "name": "metadata.yaml",
+          "size_bytes": 2793,
+          "provider_checksum": "md5:a42b36c6f11e7c571b29d9006129c458",
+          "download_url": "https://zenodo.org/api/records/19351234/files/metadata.yaml/content"
+        },
+        {
+          "name": "test.zip",
+          "size_bytes": 648739416,
+          "provider_checksum": "md5:c67b80c1e7f8a2ea28f54ed364aceea2",
+          "download_url": "https://zenodo.org/api/records/19351234/files/test.zip/content"
+        },
+        {
+          "name": "accuracy.zip",
+          "size_bytes": 19188,
+          "provider_checksum": "md5:368c1b7228b1ca63ae16eae3dddc8388",
+          "download_url": "https://zenodo.org/api/records/19351234/files/accuracy.zip/content"
+        }
+      ]
+    },
+    {
+      "record_id": 15913427,
+      "url": "https://zenodo.org/records/15913427",
+      "api_url": "https://zenodo.org/api/records/15913427",
+      "metadata_sha256": "e9008d5079b8e230288bc7e28e22eb819aa85aa81f063c098913c9e36e29f7b3",
+      "title": "EvoMS: multispectral LiDAR forest point clouds with partial semantic annotations",
+      "doi": "10.5281/zenodo.15913427",
+      "version": null,
+      "access_right": "open",
+      "license_declared": {
+        "id": "cc-by-nc-sa-4.0"
+      },
+      "files": [
+        {
+          "name": "plot_3.las",
+          "size_bytes": 99417003,
+          "provider_checksum": "md5:8f3765ef3bb9ccfe1e53d90c61e7745f",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_3.las/content"
+        },
+        {
+          "name": "plot_8.las",
+          "size_bytes": 215736675,
+          "provider_checksum": "md5:aa094d7f9faa82247fa81ab7b3154b1a",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_8.las/content"
+        },
+        {
+          "name": "plot_19.las",
+          "size_bytes": 249592803,
+          "provider_checksum": "md5:8ee3179330bcf9c71ca5db587a4155e9",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_19.las/content"
+        },
+        {
+          "name": "plot_4.las",
+          "size_bytes": 93840819,
+          "provider_checksum": "md5:fa06c117c0c264ef7c75fc9d3f6cf48b",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_4.las/content"
+        },
+        {
+          "name": "plot_10.las",
+          "size_bytes": 204146979,
+          "provider_checksum": "md5:fff4db4ed74bb2d78a9036c2cc6dd6a1",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_10.las/content"
+        },
+        {
+          "name": "plot_18.las",
+          "size_bytes": 264428331,
+          "provider_checksum": "md5:50bcf07246f1431157d13c3442d37d21",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_18.las/content"
+        },
+        {
+          "name": "plot_5.las",
+          "size_bytes": 170576079,
+          "provider_checksum": "md5:19ec122c05b96576129541f0df2c4345",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_5.las/content"
+        },
+        {
+          "name": "plot_11.las",
+          "size_bytes": 305674791,
+          "provider_checksum": "md5:5d81160fd684d227d508189eb7c45bc4",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_11.las/content"
+        },
+        {
+          "name": "plot_15.las",
+          "size_bytes": 292280451,
+          "provider_checksum": "md5:c3e2346eae19564de79840d14500656f",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_15.las/content"
+        },
+        {
+          "name": "plot_7.las",
+          "size_bytes": 268420443,
+          "provider_checksum": "md5:5e78b3789adde7ed3a3f057a1bccf781",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_7.las/content"
+        },
+        {
+          "name": "plot_2.las",
+          "size_bytes": 202471157,
+          "provider_checksum": "md5:c9d0c4d9a35066d3fba792a76d7c1faa",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_2.las/content"
+        },
+        {
+          "name": "plot_20.las",
+          "size_bytes": 353310243,
+          "provider_checksum": "md5:e29bdace93e08668f221aaa37943085c",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_20.las/content"
+        },
+        {
+          "name": "plot_9.las",
+          "size_bytes": 204349983,
+          "provider_checksum": "md5:c3b81452845e5e283941d26e34310b2b",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_9.las/content"
+        },
+        {
+          "name": "plot_13.las",
+          "size_bytes": 315316203,
+          "provider_checksum": "md5:c7ceaab381e63a137fa239f0c0500169",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_13.las/content"
+        },
+        {
+          "name": "plot_1.las",
+          "size_bytes": 111617109,
+          "provider_checksum": "md5:0b63ab2e1a5570f95685cc9f9a4837bb",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_1.las/content"
+        },
+        {
+          "name": "plot_6.las",
+          "size_bytes": 162698631,
+          "provider_checksum": "md5:e3c68de6b4ddb6c6a13ff43048af990d",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_6.las/content"
+        },
+        {
+          "name": "plot_12.las",
+          "size_bytes": 320307531,
+          "provider_checksum": "md5:44fff0b0b4e13a3f81eab32e18fddd17",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_12.las/content"
+        },
+        {
+          "name": "plot_14.las",
+          "size_bytes": 219165423,
+          "provider_checksum": "md5:399e8dadbff1cf525797bb6646c6e373",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_14.las/content"
+        },
+        {
+          "name": "plot_16.las",
+          "size_bytes": 301223607,
+          "provider_checksum": "md5:66707ef830dc5f6e165e9cc3e89e99a0",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_16.las/content"
+        },
+        {
+          "name": "plot_17.las",
+          "size_bytes": 289184559,
+          "provider_checksum": "md5:3ef6ee31d90d2340582ce9264618bd8b",
+          "download_url": "https://zenodo.org/api/records/15913427/files/plot_17.las/content"
+        }
+      ]
+    },
+    {
+      "record_id": 19127709,
+      "url": "https://zenodo.org/records/19127709",
+      "api_url": "https://zenodo.org/api/records/19127709",
+      "metadata_sha256": "2e22e773cebdd3c81b82c3ee2a1d5ed1c98fc5ff8b09d76e885ba3dc36d5f249",
+      "title": "TreeScanPL10k: A Central European tree species dataset of annotated terrestrial laser scanning point clouds",
+      "doi": "10.5281/zenodo.19127709",
+      "version": null,
+      "access_right": "open",
+      "license_declared": {
+        "id": "cc-by-4.0"
+      },
+      "files": [
+        {
+          "name": "batch_18.zip",
+          "size_bytes": 3298151692,
+          "provider_checksum": "md5:120806d01bc604b2bede12b73b74d5a4",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_18.zip/content"
+        },
+        {
+          "name": "batch_15.zip",
+          "size_bytes": 3799293293,
+          "provider_checksum": "md5:68c691e275ddc8a779761e74a68f9899",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_15.zip/content"
+        },
+        {
+          "name": "batch_02.zip",
+          "size_bytes": 2862405917,
+          "provider_checksum": "md5:adcc9cf41ce3c770df25a682fb9e9c37",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_02.zip/content"
+        },
+        {
+          "name": "batch_08.zip",
+          "size_bytes": 3335088239,
+          "provider_checksum": "md5:f298051bee195200ce7752a5bfb7175e",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_08.zip/content"
+        },
+        {
+          "name": "batch_03.zip",
+          "size_bytes": 2749822478,
+          "provider_checksum": "md5:daf5cd9795993c308237dd9f184173da",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_03.zip/content"
+        },
+        {
+          "name": "batch_12.zip",
+          "size_bytes": 3973019804,
+          "provider_checksum": "md5:9eb6719800e65a41b2ffc95ad3bf494e",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_12.zip/content"
+        },
+        {
+          "name": "batch_19.zip",
+          "size_bytes": 3478585692,
+          "provider_checksum": "md5:b9a56aeb2ba96db3b0605ab406627427",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_19.zip/content"
+        },
+        {
+          "name": "batch_20.zip",
+          "size_bytes": 3505178776,
+          "provider_checksum": "md5:688d6d0f7b9b3302a66cc71873405d4c",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_20.zip/content"
+        },
+        {
+          "name": "batch_25.zip",
+          "size_bytes": 4001344340,
+          "provider_checksum": "md5:c2fc4d64a5a3bbbcd420513e0c7485fc",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_25.zip/content"
+        },
+        {
+          "name": "batch_10.zip",
+          "size_bytes": 3073665533,
+          "provider_checksum": "md5:94e6e8cbfe9c1a35f86ddec2d8ab6193",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_10.zip/content"
+        },
+        {
+          "name": "individual_tree_summary.csv",
+          "size_bytes": 1079248,
+          "provider_checksum": "md5:636e591582c85164f1532a6dc6350694",
+          "download_url": "https://zenodo.org/api/records/19127709/files/individual_tree_summary.csv/content"
+        },
+        {
+          "name": "batch_13.zip",
+          "size_bytes": 4215768224,
+          "provider_checksum": "md5:696af51967cd07dc723f7b0e6b1aef94",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_13.zip/content"
+        },
+        {
+          "name": "batch_24.zip",
+          "size_bytes": 3431415842,
+          "provider_checksum": "md5:5bf4bc6d3ea16ac67ab38da85d1bcfce",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_24.zip/content"
+        },
+        {
+          "name": "plot_summary.xlsx",
+          "size_bytes": 24794,
+          "provider_checksum": "md5:c468bf5eef366dbb62bb0d2287fe3da4",
+          "download_url": "https://zenodo.org/api/records/19127709/files/plot_summary.xlsx/content"
+        },
+        {
+          "name": "batch_28.zip",
+          "size_bytes": 662676108,
+          "provider_checksum": "md5:b09ad268a1af73cf88d69b7b1d088c88",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_28.zip/content"
+        },
+        {
+          "name": "batch_16.zip",
+          "size_bytes": 3420559884,
+          "provider_checksum": "md5:b8fe735f7f4899da02a4ae0c2f86e96c",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_16.zip/content"
+        },
+        {
+          "name": "batch_17.zip",
+          "size_bytes": 3343477174,
+          "provider_checksum": "md5:edb7449b547a7377a108ef043a5d3e95",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_17.zip/content"
+        },
+        {
+          "name": "batch_01.zip",
+          "size_bytes": 3106976818,
+          "provider_checksum": "md5:945399b7c9ce70a71be7d410330a998d",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_01.zip/content"
+        },
+        {
+          "name": "batch_04.zip",
+          "size_bytes": 2851037653,
+          "provider_checksum": "md5:51c60259ec05b0c27a9e61bd4cfcd0a7",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_04.zip/content"
+        },
+        {
+          "name": "batch_05.zip",
+          "size_bytes": 2958719107,
+          "provider_checksum": "md5:45bd490b31422670191b4000e3222fdc",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_05.zip/content"
+        },
+        {
+          "name": "batch_06.zip",
+          "size_bytes": 2909169349,
+          "provider_checksum": "md5:df1da6d8702ef6145876dfc916a776f3",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_06.zip/content"
+        },
+        {
+          "name": "batch_07.zip",
+          "size_bytes": 3508945218,
+          "provider_checksum": "md5:a24ac87c309fc71452176139e2bc6876",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_07.zip/content"
+        },
+        {
+          "name": "batch_21.zip",
+          "size_bytes": 3727970038,
+          "provider_checksum": "md5:bf9a3cf04bc72338379f26a5db48b129",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_21.zip/content"
+        },
+        {
+          "name": "batch_23.zip",
+          "size_bytes": 3753182137,
+          "provider_checksum": "md5:d71d4798c0d0ada2bef30061c83c14f6",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_23.zip/content"
+        },
+        {
+          "name": "batch_26.zip",
+          "size_bytes": 3823950605,
+          "provider_checksum": "md5:c4ffae9c95ec87c95a84366966bc4cc9",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_26.zip/content"
+        },
+        {
+          "name": "batch_11.zip",
+          "size_bytes": 3760343367,
+          "provider_checksum": "md5:b2c5a72f24c96a0bb306181b5d0b78e0",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_11.zip/content"
+        },
+        {
+          "name": "batch_09.zip",
+          "size_bytes": 3170300951,
+          "provider_checksum": "md5:f82eff3c9c935d77f14f0bf9a0ea7032",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_09.zip/content"
+        },
+        {
+          "name": "species_id_names.csv",
+          "size_bytes": 956,
+          "provider_checksum": "md5:fb30c58415712a1d0d08639deb7bb0a7",
+          "download_url": "https://zenodo.org/api/records/19127709/files/species_id_names.csv/content"
+        },
+        {
+          "name": "batch_22.zip",
+          "size_bytes": 3559655178,
+          "provider_checksum": "md5:9419b7e1f66a69f638acc63de34a923b",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_22.zip/content"
+        },
+        {
+          "name": "batch_27.zip",
+          "size_bytes": 3923948980,
+          "provider_checksum": "md5:461f9a295b728882d294d09c94355c12",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_27.zip/content"
+        },
+        {
+          "name": "batch_14.zip",
+          "size_bytes": 4214781238,
+          "provider_checksum": "md5:9cb639af9ff89b67cbb8f64f502aee6f",
+          "download_url": "https://zenodo.org/api/records/19127709/files/batch_14.zip/content"
+        }
+      ]
+    },
+    {
+      "record_id": 16875688,
+      "url": "https://zenodo.org/records/16875688",
+      "api_url": "https://zenodo.org/api/records/16875688",
+      "metadata_sha256": "534392f8da7ed9d1f5470eaee4c9220f95ba8975f52cc80a434949727e0cbb42",
+      "title": "TLS forest instance segmentation benchmark: 2983 manually segmented trees from four plots",
+      "doi": "10.5281/zenodo.16875688",
+      "version": null,
+      "access_right": "open",
+      "license_declared": {
+        "id": "cc-by-4.0"
+      },
+      "files": [
+        {
+          "name": "TreeLearn_finetuned_weights_all.pth",
+          "size_bytes": 361611057,
+          "provider_checksum": "md5:577847cafec23e3a5886a680687f5afd",
+          "download_url": "https://zenodo.org/api/records/16875688/files/TreeLearn_finetuned_weights_all.pth/content"
+        },
+        {
+          "name": "final_robsoncreek.png",
+          "size_bytes": 1683824,
+          "provider_checksum": "md5:17b03a2fee38ed072bf70de2c2ab5dd0",
+          "download_url": "https://zenodo.org/api/records/16875688/files/final_robsoncreek.png/content"
+        },
+        {
+          "name": "ofental.zip",
+          "size_bytes": 5600591059,
+          "provider_checksum": "md5:9bfc9d05351633f7a6f10e5a8364e78a",
+          "download_url": "https://zenodo.org/api/records/16875688/files/ofental.zip/content"
+        },
+        {
+          "name": "final_litchfield.png",
+          "size_bytes": 1926237,
+          "provider_checksum": "md5:ef45024a117b8a7ac9ba006ccb2853e9",
+          "download_url": "https://zenodo.org/api/records/16875688/files/final_litchfield.png/content"
+        },
+        {
+          "name": "final_ofental.png",
+          "size_bytes": 1463203,
+          "provider_checksum": "md5:18cdecdfce1d7151c2d85597482362a3",
+          "download_url": "https://zenodo.org/api/records/16875688/files/final_ofental.png/content"
+        },
+        {
+          "name": "final_wytham.png",
+          "size_bytes": 2329469,
+          "provider_checksum": "md5:8ead4414659969373c3b07607a6a47ba",
+          "download_url": "https://zenodo.org/api/records/16875688/files/final_wytham.png/content"
+        },
+        {
+          "name": "ForAINet_finetuned_weights_all.pt",
+          "size_bytes": 617565194,
+          "provider_checksum": "md5:fab1fb932c1982cce90b2364168c7d08",
+          "download_url": "https://zenodo.org/api/records/16875688/files/ForAINet_finetuned_weights_all.pt/content"
+        },
+        {
+          "name": "wytham.zip",
+          "size_bytes": 3166118961,
+          "provider_checksum": "md5:8d7918ed1270d603efc83aae5a8777c1",
+          "download_url": "https://zenodo.org/api/records/16875688/files/wytham.zip/content"
+        },
+        {
+          "name": "litchfield.zip",
+          "size_bytes": 2331915728,
+          "provider_checksum": "md5:8e374d940d7e651484a84d7d63f18636",
+          "download_url": "https://zenodo.org/api/records/16875688/files/litchfield.zip/content"
+        },
+        {
+          "name": "robsoncreek.zip",
+          "size_bytes": 2899743168,
+          "provider_checksum": "md5:4051a58b19c0900a4db2972b2843146c",
+          "download_url": "https://zenodo.org/api/records/16875688/files/robsoncreek.zip/content"
+        }
+      ]
+    },
+    {
+      "record_id": 16910335,
+      "url": "https://zenodo.org/records/16910335",
+      "api_url": "https://zenodo.org/api/records/16910335",
+      "metadata_sha256": "af6e09df89313979a144908c5f19d72144c82a47710975b52bfd77a583c4a5d6",
+      "title": "LAUTx - Individual Tree Point Clouds From Austrian Forest Inventory Plots",
+      "doi": "10.5281/zenodo.16910335",
+      "version": "v2",
+      "access_right": "open",
+      "license_declared": {
+        "id": "cc-by-4.0"
+      },
+      "files": [
+        {
+          "name": "PLS_automatic_segmentation.zip",
+          "size_bytes": 2335154156,
+          "provider_checksum": "md5:9e0494447b679f2de3f4d32d8f6c4913",
+          "download_url": "https://zenodo.org/api/records/16910335/files/PLS_automatic_segmentation.zip/content"
+        },
+        {
+          "name": "APPENDIX_TABLES.pdf",
+          "size_bytes": 657767,
+          "provider_checksum": "md5:f6e7f05e11405adeeddc775bb8b41ca0",
+          "download_url": "https://zenodo.org/api/records/16910335/files/APPENDIX_TABLES.pdf/content"
+        },
+        {
+          "name": "PLS_manual_segmentation.zip",
+          "size_bytes": 1990942923,
+          "provider_checksum": "md5:4922b614dd930b94eef965feb0630f19",
+          "download_url": "https://zenodo.org/api/records/16910335/files/PLS_manual_segmentation.zip/content"
+        },
+        {
+          "name": "segmented_trees.csv",
+          "size_bytes": 137568,
+          "provider_checksum": "md5:fa82ceb131e0c9a5b96153a76e51e535",
+          "download_url": "https://zenodo.org/api/records/16910335/files/segmented_trees.csv/content"
+        },
+        {
+          "name": "PLS_manual_segmentation_complete_point_clouds.zip",
+          "size_bytes": 3491124156,
+          "provider_checksum": "md5:441d30b93d25502aa0c7ddbc6a675897",
+          "download_url": "https://zenodo.org/api/records/16910335/files/PLS_manual_segmentation_complete_point_clouds.zip/content"
+        }
+      ]
+    },
+    {
+      "record_id": 7307956,
+      "url": "https://zenodo.org/records/7307956",
+      "api_url": "https://zenodo.org/api/records/7307956",
+      "metadata_sha256": "fef0d85bbd0fdf654729919cb113941becc109882896a87958657997960e2f24",
+      "title": "Terrestrial laser scanning data Wytham Woods: individual trees and quantitative structure models (QSMs)",
+      "doi": "10.5281/zenodo.7307956",
+      "version": "Version 1.0",
+      "access_right": "open",
+      "license_declared": {
+        "id": "cc-by-4.0"
+      },
+      "files": [
+        {
+          "name": "DATA_QSM_opt.zip",
+          "size_bytes": 39473754047,
+          "provider_checksum": "md5:c9b46199177a6710d1770a5ed02eca39",
+          "download_url": "https://zenodo.org/api/records/7307956/files/DATA_QSM_opt.zip/content"
+        },
+        {
+          "name": "DATA_clouds_ply.zip",
+          "size_bytes": 1491170015,
+          "provider_checksum": "md5:7b64d818985137f12f2fc8a5cf2b0a4c",
+          "download_url": "https://zenodo.org/api/records/7307956/files/DATA_clouds_ply.zip/content"
+        },
+        {
+          "name": "analysis_and_figures.zip",
+          "size_bytes": 25738978,
+          "provider_checksum": "md5:74ea459ec8588c3aa361cebb02517047",
+          "download_url": "https://zenodo.org/api/records/7307956/files/analysis_and_figures.zip/content"
+        },
+        {
+          "name": "DATA_clouds_txt.zip",
+          "size_bytes": 1814254544,
+          "provider_checksum": "md5:5ebf92ddb2a65b13653307a8824b1e1d",
+          "download_url": "https://zenodo.org/api/records/7307956/files/DATA_clouds_txt.zip/content"
+        }
+      ]
+    }
+  ]
+}

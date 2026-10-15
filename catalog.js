@@ -1,0 +1,6473 @@
+window.LIDAR_CATALOG = {
+  "schema_version": "0.1",
+  "generated_at": "2026-10-15T08:00:59.300515+00:00",
+  "title": "Canopy / LiDAR Knowledge Hub",
+  "scope": "Acquired sources; compatibility is task-specific and does not authorize training or redistribution.",
+  "summary": {
+    "datasets": 10,
+    "assets": 96,
+    "clouds": 5626,
+    "points": 22146246558,
+    "chunks": 48177,
+    "deferred": 3,
+    "acquisition_errors": 0,
+    "conversion_errors": 0,
+    "duplicate_source_groups": 123,
+    "duplicate_cloud_copies": 118,
+    "identical_scene_groups": 398,
+    "identical_scene_extras": 398
+  },
+  "tasks": [
+    {
+      "id": "instances",
+      "name": "Tree instances",
+      "title": "Individual-tree segmentation",
+      "description": "Requires instance identity, annotation coverage, and boundary rules."
+    },
+    {
+      "id": "components",
+      "name": "Forest components",
+      "title": "Wood, foliage & ground",
+      "description": "Class meanings must match; tree labels alone do not identify wood or foliage."
+    },
+    {
+      "id": "species",
+      "name": "Tree species",
+      "title": "Species classification",
+      "description": "Requires documented species labels linked to tree identities."
+    },
+    {
+      "id": "geometry",
+      "name": "Geometry & robustness",
+      "title": "Geometry and consistency checks",
+      "description": "Unlabeled clouds can test consistency and distributions, not segmentation accuracy."
+    },
+    {
+      "id": "spectral",
+      "name": "Multispectral",
+      "title": "Spectral learning",
+      "description": "Wavelengths, channel units, normalization, and registration must be checked."
+    },
+    {
+      "id": "biomass",
+      "name": "Tree structure",
+      "title": "Structure and biomass research",
+      "description": "QSMs are derived models; independent reference measurements are required for accuracy claims."
+    }
+  ],
+  "datasets": [
+    {
+      "name": "FOR-instance",
+      "short": "FOR v1",
+      "modalities": [
+        "Airborne"
+      ],
+      "domain": "Five forest collections",
+      "geography": "Norway · Austria · Czechia · New Zealand · Australia",
+      "scanner": "RIEGL UAV systems; collection-specific models",
+      "spectral": false,
+      "kind": "Plot clouds",
+      "labels": "Tree instances; terrain, low vegetation, stem and branch classes",
+      "role": "Source benchmark",
+      "readiness": "Mapping review",
+      "tasks": [
+        "instances",
+        "components",
+        "geometry"
+      ],
+      "conditional": [
+        "components"
+      ],
+      "note": "Original semantic classes do not provide a simple wood/foliage crosswalk. Preserve the official dev/test protocol.",
+      "correction": "32 files retain original classification but have no canonical semantic mapping.",
+      "provenance": "Source of collections reused by FOR-instance V2; a new release is not an independent site.",
+      "id": "8287792",
+      "title": "FOR-instance: a UAV laser scanning benchmark dataset for semantic and   instance segmentation of individual trees",
+      "url": "https://zenodo.org/records/8287792",
+      "doi": "10.5281/zenodo.8287792",
+      "version": "1",
+      "license": "cc-by-4.0",
+      "cloud_count": 32,
+      "points": 151478959,
+      "chunks": 318,
+      "assets": 1,
+      "source_fields": [
+        "X",
+        "Y",
+        "Z",
+        "blue",
+        "classification",
+        "edge_of_flight_line",
+        "gps_time",
+        "green",
+        "intensity",
+        "key_point",
+        "number_of_returns",
+        "point_source_id",
+        "red",
+        "return_number",
+        "scan_angle_rank",
+        "scan_direction_flag",
+        "synthetic",
+        "treeID",
+        "treeSP",
+        "user_data",
+        "withheld"
+      ],
+      "schemas": [
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "red",
+            "green",
+            "blue",
+            "treeID",
+            "treeSP"
+          ],
+          "files": 8
+        },
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "gps_time",
+            "red",
+            "green",
+            "blue",
+            "treeID",
+            "treeSP"
+          ],
+          "files": 10
+        },
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "gps_time",
+            "treeID",
+            "treeSP"
+          ],
+          "files": 10
+        },
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "red",
+            "green",
+            "blue",
+            "treeID"
+          ],
+          "files": 2
+        },
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "gps_time",
+            "red",
+            "green",
+            "blue",
+            "treeID"
+          ],
+          "files": 2
+        }
+      ],
+      "example_paths": [
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_3_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_10_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_11_annotated.las"
+      ],
+      "source_metadata_sha256": "3598069530f4aa23c87b936baaac582b1c36483c48665359e44f42248cb7ea53",
+      "coordinate_references": [
+        {
+          "value": "EPSG:25833",
+          "files": 3
+        },
+        {
+          "value": "EPSG:25832",
+          "files": 20
+        },
+        {
+          "value": "Unknown / not recorded",
+          "files": 4
+        },
+        {
+          "value": "EPSG:2193",
+          "files": 5
+        }
+      ],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 0
+    },
+    {
+      "name": "FOR-instance V2",
+      "short": "FOR v2",
+      "modalities": [
+        "Airborne",
+        "Terrestrial",
+        "Mobile"
+      ],
+      "domain": "Mixed forest acquisitions",
+      "geography": "Multiple collections; site identity needs reconciliation",
+      "scanner": "ALS, TLS and MLS systems; collection-specific",
+      "spectral": false,
+      "kind": "Plot clouds",
+      "labels": "Ground, wood, foliage and tree instances",
+      "role": "Primary benchmark",
+      "readiness": "Reference schema",
+      "tasks": [
+        "instances",
+        "components",
+        "geometry"
+      ],
+      "conditional": [],
+      "note": "Reference namespace: 1 ground, 2 wood, 3 foliage. Preserve official splits and separate development LOSO from final evaluation.",
+      "correction": "Scene identities, physical sites and upstream lineage need reconciliation before claiming site-out generalization.",
+      "provenance": "Includes FOR-instance descendants and additional acquisitions, including BlueCat and MLS.",
+      "id": "16742708",
+      "title": "FOR-instanceV2 dataset and pre-trained model in paper entitled \"ForestFormer3D: A Unified Framework for End-to-End Segmentation of Forest LiDAR 3D Point Clouds\"",
+      "url": "https://zenodo.org/records/16742708",
+      "doi": "10.5281/zenodo.16742708",
+      "version": "Pinned record",
+      "license": "gpl-3.0-or-later",
+      "cloud_count": 94,
+      "points": 613942843,
+      "chunks": 1272,
+      "assets": 3,
+      "source_fields": [
+        "semantic_seg",
+        "treeID",
+        "x",
+        "y",
+        "z"
+      ],
+      "schemas": [
+        {
+          "fields": [
+            "x",
+            "y",
+            "z",
+            "semantic_seg",
+            "treeID"
+          ],
+          "files": 94
+        }
+      ],
+      "example_paths": [
+        "sources/16742708/originals/test_data/test_data/Yuchen_2023_dls_merged_230209_panoptic_test.ply",
+        "sources/16742708/originals/test_data/test_data/TUWIEN_TUWIEN_test_test.ply",
+        "sources/16742708/originals/test_data/test_data/SCION_SCION_plot_61_annotated_test.ply"
+      ],
+      "source_metadata_sha256": "de53a6a750a5ff471e9266fff7d6a0b295061b4be4638312f354d94c5ffa793a",
+      "coordinate_references": [
+        {
+          "value": "Unknown / not recorded",
+          "files": 94
+        }
+      ],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 0
+    },
+    {
+      "name": "ForestSemantic",
+      "short": "ForestSemantic",
+      "modalities": [
+        "Terrestrial"
+      ],
+      "domain": "Close-range forest plots",
+      "geography": "Finland",
+      "scanner": "Close-range sensing; see source publication",
+      "spectral": false,
+      "kind": "Plot clouds",
+      "labels": "Forest component and tree annotations; mapping review required",
+      "role": "Rights review",
+      "readiness": "Derivatives deferred",
+      "tasks": [
+        "components",
+        "geometry",
+        "instances"
+      ],
+      "conditional": [
+        "components",
+        "instances",
+        "geometry"
+      ],
+      "note": "Three point-cloud conversions were deliberately deferred for derivative-rights review. Acquisition is complete.",
+      "correction": "Do not interpret acquired files as admitted training data. Keep the intended-use review explicit.",
+      "provenance": "Recorded source license includes NC and ND terms; component and intended-use review is outstanding.",
+      "id": "15193973",
+      "title": "ForestSemantic: A Dataset for Semantic Learning of Forest from Close-Range Sensing",
+      "url": "https://zenodo.org/records/15193973",
+      "doi": "10.5281/zenodo.15193973",
+      "version": "Pinned record",
+      "license": "cc-by-nc-nd-4.0",
+      "cloud_count": 0,
+      "points": 0,
+      "chunks": 0,
+      "assets": 11,
+      "source_fields": [],
+      "schemas": [],
+      "example_paths": [],
+      "source_metadata_sha256": "e8d372ca11a5067b7e572d092618edf7aa7339ee1679619bce8f79aac0134a31",
+      "coordinate_references": [],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 3
+    },
+    {
+      "name": "ForestSemantic-MS",
+      "short": "ForestSemantic-MS",
+      "modalities": [
+        "Airborne"
+      ],
+      "domain": "Boreal forest plots",
+      "geography": "Finland",
+      "scanner": "FGI HeliALS multispectral system",
+      "spectral": true,
+      "kind": "Plot clouds",
+      "labels": "Ground, low vegetation, trunk, branches, foliage, woody debris; no tree IDs",
+      "role": "Semantic auxiliary",
+      "readiness": "Partial crosswalk",
+      "tasks": [
+        "components",
+        "geometry",
+        "spectral"
+      ],
+      "conditional": [
+        "components"
+      ],
+      "note": "Six plots: four training and two test files. SWIR 1550 nm, NIR 905 nm, Green 532 nm; normalized reflectance and VI.",
+      "correction": "Current coarse view does not map low vegetation or woody debris. Preserve both in a richer source namespace.",
+      "provenance": "Potential relationships to other FGI collections require capture-level evidence; shared institutions do not prove overlap.",
+      "id": "17172162",
+      "title": "ForestSemantic-MS Dataset: multispectral LiDAR forest point clouds for fine-grained forest semantic segmentation",
+      "url": "https://zenodo.org/records/17172162",
+      "doi": "10.5281/zenodo.17172162",
+      "version": "v1",
+      "license": "cc-by-4.0",
+      "cloud_count": 6,
+      "points": 9600927,
+      "chunks": 23,
+      "assets": 6,
+      "source_fields": [
+        "Green",
+        "NIR",
+        "SWIR",
+        "VI",
+        "X",
+        "Y",
+        "Z",
+        "blue",
+        "classification",
+        "edge_of_flight_line",
+        "gps_time",
+        "green",
+        "intensity",
+        "key_point",
+        "number_of_returns",
+        "point_source_id",
+        "red",
+        "return_number",
+        "scan_angle_rank",
+        "scan_direction_flag",
+        "semantic_GT",
+        "synthetic",
+        "user_data",
+        "withheld"
+      ],
+      "schemas": [
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "gps_time",
+            "red",
+            "green",
+            "blue",
+            "SWIR",
+            "NIR",
+            "Green",
+            "VI",
+            "semantic_GT"
+          ],
+          "files": 6
+        }
+      ],
+      "example_paths": [
+        "sources/17172162/originals/test1.laz",
+        "sources/17172162/originals/train3.laz",
+        "sources/17172162/originals/test2.laz"
+      ],
+      "source_metadata_sha256": "bdf25852feed4b84da9b8c1b618de6a044f0fc9eeb5bba2f13b6f4e2ae3e87b2",
+      "coordinate_references": [
+        {
+          "value": "Unknown / not recorded",
+          "files": 6
+        }
+      ],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 0
+    },
+    {
+      "name": "FGI-EMIT",
+      "short": "FGI-EMIT",
+      "modalities": [
+        "Airborne"
+      ],
+      "domain": "Forest and mixed-object plots",
+      "geography": "Finland",
+      "scanner": "Multispectral high-density airborne laser scanning",
+      "spectral": true,
+      "kind": "Plot clouds",
+      "labels": "Tree instances; other, tree, building, vehicle, pole, out",
+      "role": "Reserved evaluation",
+      "readiness": "Instance crosswalk",
+      "tasks": [
+        "instances",
+        "geometry",
+        "spectral"
+      ],
+      "conditional": [
+        "instances"
+      ],
+      "note": "External terminal evaluation in the existing study. Its broad tree class cannot supervise wood/foliage discrimination.",
+      "correction": "Keep class 5 out-points masked and retain native semantic categories. Do not move reserved data into fitting.",
+      "provenance": "19 files with per-scanner radiometric channels; units and calibration remain channel-specific.",
+      "id": "19351234",
+      "title": "FGI-EMIT: a multispectral high-density airborne laser scanning benchmark dataset for individual tree segmentation",
+      "url": "https://zenodo.org/records/19351234",
+      "doi": "10.5281/zenodo.19351234",
+      "version": "Pinned record",
+      "license": "cc-by-nc-sa-4.0",
+      "cloud_count": 19,
+      "points": 60793586,
+      "chunks": 132,
+      "assets": 5,
+      "source_fields": [
+        "Amplitude",
+        "Deviation",
+        "Reflectance",
+        "X",
+        "Y",
+        "Z",
+        "amplitude_1",
+        "amplitude_2",
+        "amplitude_3",
+        "blue",
+        "classification",
+        "dead",
+        "deviation_1",
+        "deviation_2",
+        "deviation_3",
+        "edge",
+        "edge_of_flight_line",
+        "gps_time",
+        "green",
+        "intensity",
+        "intensity_1",
+        "intensity_2",
+        "intensity_3",
+        "key_point",
+        "number_of_returns",
+        "overlap",
+        "point_source_id",
+        "red",
+        "reflectance_1",
+        "reflectance_2",
+        "reflectance_3",
+        "return_number",
+        "scan_angle",
+        "scan_direction_flag",
+        "scanner_channel",
+        "synthetic",
+        "tree_index",
+        "user_data",
+        "withheld"
+      ],
+      "schemas": [
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "overlap",
+            "scanner_channel",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "user_data",
+            "scan_angle",
+            "point_source_id",
+            "gps_time",
+            "red",
+            "green",
+            "blue",
+            "Amplitude",
+            "Reflectance",
+            "Deviation",
+            "reflectance_1",
+            "reflectance_2",
+            "reflectance_3",
+            "amplitude_1",
+            "amplitude_2",
+            "amplitude_3",
+            "deviation_1",
+            "deviation_2",
+            "deviation_3",
+            "intensity_1",
+            "intensity_2",
+            "intensity_3",
+            "tree_index",
+            "edge",
+            "dead"
+          ],
+          "files": 19
+        }
+      ],
+      "example_paths": [
+        "sources/19351234/originals/test/test/plot_1002.las",
+        "sources/19351234/originals/test/test/plot_1004.las",
+        "sources/19351234/originals/test/test/plot_1008.las"
+      ],
+      "source_metadata_sha256": "d60fb6fab63dfbcb1bd9d815059909b5626a918e8c5cbf2d79623677223cf720",
+      "coordinate_references": [
+        {
+          "value": "Unknown / not recorded",
+          "files": 19
+        }
+      ],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 0
+    },
+    {
+      "name": "EvoMS",
+      "short": "EvoMS",
+      "modalities": [
+        "Airborne"
+      ],
+      "domain": "Boreal forest plots",
+      "geography": "Evo, Finland",
+      "scanner": "Multispectral LiDAR, 1550 / 905 / 532 nm",
+      "spectral": true,
+      "kind": "Plot clouds",
+      "labels": "Plots 1–2: tree instances, foliage, wood, understory; 18 unlabeled plots",
+      "role": "Reserved evaluation",
+      "readiness": "Partial supervision",
+      "tasks": [
+        "instances",
+        "components",
+        "geometry",
+        "spectral"
+      ],
+      "conditional": [
+        "instances",
+        "components"
+      ],
+      "note": "Only two plots are labeled. The existing study reserves them for external evaluation and excludes unlabeled plots from fitting.",
+      "correction": "Coordinates are already ground-normalized. Do not run a second terrain normalization. Keep understory distinct.",
+      "provenance": "Labeled and unlabeled subsets have different permitted roles in the frozen study protocol.",
+      "id": "15913427",
+      "title": "EvoMS: multispectral LiDAR forest point clouds with partial semantic annotations",
+      "url": "https://zenodo.org/records/15913427",
+      "doi": "10.5281/zenodo.15913427",
+      "version": "Pinned record",
+      "license": "cc-by-nc-sa-4.0",
+      "cloud_count": 20,
+      "points": 128533887,
+      "chunks": 266,
+      "assets": 20,
+      "source_fields": [
+        "X",
+        "Y",
+        "Z",
+        "blue",
+        "classification",
+        "edge_of_flight_line",
+        "gps_time",
+        "green",
+        "intensity",
+        "key_point",
+        "number_of_returns",
+        "overlap",
+        "point_source_id",
+        "red",
+        "return_number",
+        "scan_angle",
+        "scan_direction_flag",
+        "scanner_channel",
+        "synthetic",
+        "tree_index",
+        "user_data",
+        "withheld"
+      ],
+      "schemas": [
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "overlap",
+            "scanner_channel",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "user_data",
+            "scan_angle",
+            "point_source_id",
+            "gps_time",
+            "red",
+            "green",
+            "blue"
+          ],
+          "files": 18
+        },
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "overlap",
+            "scanner_channel",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "user_data",
+            "scan_angle",
+            "point_source_id",
+            "gps_time",
+            "red",
+            "green",
+            "blue",
+            "tree_index"
+          ],
+          "files": 2
+        }
+      ],
+      "example_paths": [
+        "sources/15913427/originals/plot_4.las",
+        "sources/15913427/originals/plot_3.las",
+        "sources/15913427/originals/plot_1.las"
+      ],
+      "source_metadata_sha256": "e9008d5079b8e230288bc7e28e22eb819aa85aa81f063c098913c9e36e29f7b3",
+      "coordinate_references": [
+        {
+          "value": "Unknown / not recorded",
+          "files": 20
+        }
+      ],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 0
+    },
+    {
+      "name": "TreeScanPL10K",
+      "short": "TreeScanPL10K",
+      "modalities": [
+        "Terrestrial"
+      ],
+      "domain": "Central European forest inventories",
+      "geography": "Poland; location precision is limited",
+      "scanner": "Terrestrial laser scanning; inspect acquisition-specific metadata",
+      "spectral": false,
+      "kind": "Plot clouds",
+      "labels": "Tree IDs, species and completeness flags; no wood/foliage labels established",
+      "role": "Instance expansion candidate",
+      "readiness": "Coverage review",
+      "tasks": [
+        "instances",
+        "species",
+        "geometry"
+      ],
+      "conditional": [
+        "instances",
+        "species"
+      ],
+      "note": "272 plots. Completeness and boundary flags matter for evaluation. Species fields require a verified lookup table.",
+      "correction": "Rounded locations do not certify site separation. This source dominates the collection by point count.",
+      "provenance": "Conservative campaign/site grouping is needed; per-file instance IDs are not globally unique.",
+      "id": "19127709",
+      "title": "TreeScanPL10k: A Central European tree species dataset of annotated terrestrial laser scanning point clouds",
+      "url": "https://zenodo.org/records/19127709",
+      "doi": "10.5281/zenodo.19127709",
+      "version": "Pinned record",
+      "license": "cc-by-4.0",
+      "cloud_count": 272,
+      "points": 18762160941,
+      "chunks": 37655,
+      "assets": 31,
+      "source_fields": [
+        "PointID",
+        "X",
+        "Y",
+        "Z",
+        "blue",
+        "classification",
+        "completelyInside",
+        "edge_of_flight_line",
+        "gps_time",
+        "green",
+        "intensity",
+        "key_point",
+        "number_of_returns",
+        "point_source_id",
+        "red",
+        "return_number",
+        "scan_angle_rank",
+        "scan_direction_flag",
+        "synthetic",
+        "treeID",
+        "treeSP",
+        "user_data",
+        "withheld"
+      ],
+      "schemas": [
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "gps_time",
+            "red",
+            "green",
+            "blue",
+            "PointID",
+            "treeID",
+            "treeSP",
+            "completelyInside"
+          ],
+          "files": 51
+        },
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "PointID",
+            "treeID",
+            "treeSP",
+            "completelyInside"
+          ],
+          "files": 221
+        }
+      ],
+      "example_paths": [
+        "sources/19127709/originals/batch_28/Rem_Suprasl_2015_4502004.laz",
+        "sources/19127709/originals/batch_28/Rem_Suprasl_2015_4601204.laz",
+        "sources/19127709/originals/batch_03/Rem_Gorlice_2015_6004603.laz"
+      ],
+      "source_metadata_sha256": "2e22e773cebdd3c81b82c3ee2a1d5ed1c98fc5ff8b09d76e885ba3dc36d5f249",
+      "coordinate_references": [
+        {
+          "value": "Unknown / not recorded",
+          "files": 272
+        }
+      ],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 0
+    },
+    {
+      "name": "Four-site TLS benchmark",
+      "short": "TLS benchmark",
+      "modalities": [
+        "Terrestrial"
+      ],
+      "domain": "Savanna · temperate · tropical forest",
+      "geography": "Litchfield · Wytham · Ofental · Robson Creek",
+      "scanner": "RIEGL VZ-series",
+      "spectral": false,
+      "kind": "Plots + extracted trees",
+      "labels": "Plot-level ground/tree semantics and instances; extracted-tree exports vary",
+      "role": "Site-transfer candidate",
+      "readiness": "Overlap review",
+      "tasks": [
+        "instances",
+        "geometry"
+      ],
+      "conditional": [
+        "instances"
+      ],
+      "note": "Boundary trees are repeated between folders. Whole plots and extracted trees are related views, not independent samples.",
+      "correction": "118 byte-identical train/validation tree copies; Wytham also overlaps the separate Wytham collection.",
+      "provenance": "Provider documents boundary duplication. Site-level grouping must include all derived tree exports.",
+      "id": "16875688",
+      "title": "TLS forest instance segmentation benchmark: 2983 manually segmented trees from four plots",
+      "url": "https://zenodo.org/records/16875688",
+      "doi": "10.5281/zenodo.16875688",
+      "version": "Pinned record",
+      "license": "cc-by-4.0",
+      "cloud_count": 3271,
+      "points": 1577458464,
+      "chunks": 5573,
+      "assets": 10,
+      "source_fields": [
+        "blue",
+        "green",
+        "instance",
+        "red",
+        "semantic",
+        "x",
+        "y",
+        "z"
+      ],
+      "schemas": [
+        {
+          "fields": [
+            "x",
+            "y",
+            "z",
+            "semantic",
+            "instance"
+          ],
+          "files": 2473
+        },
+        {
+          "fields": [
+            "x",
+            "y",
+            "z"
+          ],
+          "files": 776
+        },
+        {
+          "fields": [
+            "x",
+            "y",
+            "z",
+            "red",
+            "green",
+            "blue",
+            "instance",
+            "semantic"
+          ],
+          "files": 12
+        },
+        {
+          "fields": [
+            "x",
+            "y",
+            "z",
+            "instance",
+            "semantic"
+          ],
+          "files": 10
+        }
+      ],
+      "example_paths": [
+        "sources/16875688/originals/litchfield/litchfield_train.ply",
+        "sources/16875688/originals/litchfield/trees/test/in_plot_th0.90/tile_0_-20_Boom1.ply",
+        "sources/16875688/originals/litchfield/trees/test/in_plot_th0.90/tile_0_-20_Boom10.ply"
+      ],
+      "source_metadata_sha256": "534392f8da7ed9d1f5470eaee4c9220f95ba8975f52cc80a434949727e0cbb42",
+      "coordinate_references": [
+        {
+          "value": "Unknown / not recorded",
+          "files": 3271
+        }
+      ],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 0
+    },
+    {
+      "name": "LAUTx",
+      "short": "LAUTx",
+      "modalities": [
+        "Mobile"
+      ],
+      "domain": "Austrian forest-inventory plots",
+      "geography": "Six Austrian plots",
+      "scanner": "Personal laser scanning (PLS)",
+      "spectral": false,
+      "kind": "Plots + paired tree exports",
+      "labels": "StemID; manual and automatic trees; plot treeIDv1 and updated treeIDv2",
+      "role": "Annotation-variant benchmark",
+      "readiness": "Mapping gap",
+      "tasks": [
+        "instances",
+        "geometry"
+      ],
+      "conditional": [
+        "instances"
+      ],
+      "note": "515 manual/automatic tree pairs are annotation variants, not duplicate ground truth. Six full plots retain two label versions.",
+      "correction": "All 1,036 files currently lack mapped canonical instance IDs despite preserving the source fields.",
+      "provenance": "The local README documents updated labels and shared lineage with TreeLearn. Keep v1, v2 and predictions separate.",
+      "id": "16910335",
+      "title": "LAUTx - Individual Tree Point Clouds From Austrian Forest Inventory Plots",
+      "url": "https://zenodo.org/records/16910335",
+      "doi": "10.5281/zenodo.16910335",
+      "version": "v2",
+      "license": "cc-by-4.0",
+      "cloud_count": 1036,
+      "points": 683056645,
+      "chunks": 1947,
+      "assets": 5,
+      "source_fields": [
+        "StemID",
+        "X",
+        "Y",
+        "Z",
+        "classification",
+        "edge_of_flight_line",
+        "gps_time",
+        "intensity",
+        "key_point",
+        "number_of_returns",
+        "point_source_id",
+        "randomCol",
+        "return_number",
+        "runJay",
+        "scan_angle_rank",
+        "scan_direction_flag",
+        "synthetic",
+        "treeIDv1",
+        "treeIDv2",
+        "user_data",
+        "withheld"
+      ],
+      "schemas": [
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "gps_time",
+            "StemID"
+          ],
+          "files": 515
+        },
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "gps_time",
+            "StemID",
+            "randomCol",
+            "runJay"
+          ],
+          "files": 515
+        },
+        {
+          "fields": [
+            "X",
+            "Y",
+            "Z",
+            "intensity",
+            "return_number",
+            "number_of_returns",
+            "scan_direction_flag",
+            "edge_of_flight_line",
+            "classification",
+            "synthetic",
+            "key_point",
+            "withheld",
+            "scan_angle_rank",
+            "user_data",
+            "point_source_id",
+            "gps_time",
+            "treeIDv2",
+            "treeIDv1"
+          ],
+          "files": 6
+        }
+      ],
+      "example_paths": [
+        "sources/16910335/originals/PLS_manual_segmentation/PLS_manual_segmentation/p10_0016.laz",
+        "sources/16910335/originals/PLS_manual_segmentation/PLS_manual_segmentation/p10_0017.laz",
+        "sources/16910335/originals/PLS_manual_segmentation/PLS_manual_segmentation/p10_0022.laz"
+      ],
+      "source_metadata_sha256": "af6e09df89313979a144908c5f19d72144c82a47710975b52bfd77a583c4a5d6",
+      "coordinate_references": [
+        {
+          "value": "Unknown / not recorded",
+          "files": 1036
+        }
+      ],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 0
+    },
+    {
+      "name": "Wytham Woods",
+      "short": "Wytham Woods",
+      "modalities": [
+        "Terrestrial"
+      ],
+      "domain": "Leaf-off temperate forest",
+      "geography": "Wytham Woods, UK · Nov 2015–Jan 2016",
+      "scanner": "RIEGL VZ-400 · 1550 nm",
+      "spectral": false,
+      "kind": "Individual trees + QSMs",
+      "labels": "876 isolated-tree clouds; tree identity in filenames; derived QSMs",
+      "role": "Structure research",
+      "readiness": "Shared-capture review",
+      "tasks": [
+        "geometry",
+        "biomass"
+      ],
+      "conditional": [
+        "biomass"
+      ],
+      "note": "A single-tree export supports tree-level studies, not full-scene detection scoring. QSM variants are derived reconstructions.",
+      "correction": "PLY and TXT are alternative encodings. 280 harmonized trees exactly match the TLS benchmark; all 876 names and point counts match.",
+      "provenance": "The collection contains 876 tree identities; 835 were included in the source analysis after boundary conditions.",
+      "id": "7307956",
+      "title": "Terrestrial laser scanning data Wytham Woods: individual trees and quantitative structure models (QSMs)",
+      "url": "https://zenodo.org/records/7307956",
+      "doi": "10.5281/zenodo.7307956",
+      "version": "Version 1.0",
+      "license": "cc-by-4.0",
+      "cloud_count": 876,
+      "points": 159220306,
+      "chunks": 991,
+      "assets": 4,
+      "source_fields": [
+        "x",
+        "y",
+        "z"
+      ],
+      "schemas": [
+        {
+          "fields": [
+            "x",
+            "y",
+            "z"
+          ],
+          "files": 876
+        }
+      ],
+      "example_paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_180b.ply",
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8075b.ply",
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1623.ply"
+      ],
+      "source_metadata_sha256": "fef0d85bbd0fdf654729919cb113941becc109882896a87958657997960e2f24",
+      "coordinate_references": [
+        {
+          "value": "Unknown / not recorded",
+          "files": 876
+        }
+      ],
+      "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
+      "deferred_clouds": 0
+    }
+  ],
+  "mappings": [
+    {
+      "id": "v1-v2",
+      "source": "8287792",
+      "target": "16742708",
+      "kind": "transform",
+      "tasks": [
+        "instances"
+      ],
+      "name": "Retain tree identity",
+      "rule": "Retain positive treeID values; define coverage and unknown/background masks explicitly. Keep upstream dev/test provenance.",
+      "loss": "Semantic classes differ. This does not supply a reliable foliage label or prove independent acquisitions.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/8287792"
+        }
+      ]
+    },
+    {
+      "id": "v1-v2-lineage",
+      "source": "8287792",
+      "target": "16742708",
+      "kind": "unknown",
+      "tasks": [
+        "geometry",
+        "components"
+      ],
+      "name": "Shared collection lineage",
+      "rule": "Reconcile collection, plot and annotation descendants before splitting.",
+      "loss": "No full point-set overlap audit has been completed. Dataset-out is not certified site-out.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/8287792"
+        }
+      ]
+    },
+    {
+      "id": "tls-v2",
+      "source": "16875688",
+      "target": "16742708",
+      "kind": "transform",
+      "tasks": [
+        "instances"
+      ],
+      "name": "Instance-schema crosswalk",
+      "rule": "Map positive instance values; ground is semantic=0 in the source. Keep plot and boundary-tree groups together.",
+      "loss": "Source tree semantics cannot be converted to wood/foliage ground truth.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/16875688"
+        }
+      ]
+    },
+    {
+      "id": "treescan-v2",
+      "source": "19127709",
+      "target": "16742708",
+      "kind": "transform",
+      "tasks": [
+        "instances"
+      ],
+      "name": "Tree IDs + coverage policy",
+      "rule": "Map positive treeID and retain completelyInside, species and source PointID attributes. Specify incomplete-tree scoring.",
+      "loss": "The view adds no ground/wood/foliage annotations; locations are insufficient for strict site-out certification.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/19127709"
+        }
+      ]
+    },
+    {
+      "id": "fgi-v2",
+      "source": "19351234",
+      "target": "16742708",
+      "kind": "transform",
+      "tasks": [
+        "instances"
+      ],
+      "name": "Instance IDs with out-mask",
+      "rule": "Map tree_index, preserve native class meanings and mask class=5 out-points according to the protocol.",
+      "loss": "Reserved external evaluation; tree versus other is not wood versus foliage.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/19351234"
+        }
+      ]
+    },
+    {
+      "id": "evo-v2",
+      "source": "15913427",
+      "target": "16742708",
+      "kind": "partial",
+      "tasks": [
+        "instances",
+        "components"
+      ],
+      "name": "Two labeled plots only",
+      "rule": "On plots 1–2: foliage 0→3, wood 1→2; preserve understory as its own class. Retain tree_index and normalized-height provenance.",
+      "loss": "18 plots lack annotations. Do not terrain-normalize again or use reserved evaluation plots for model selection.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/15913427"
+        }
+      ]
+    },
+    {
+      "id": "ms-v2",
+      "source": "17172162",
+      "target": "16742708",
+      "kind": "partial",
+      "tasks": [
+        "components"
+      ],
+      "name": "Collapse component granularity",
+      "rule": "Ground 0→ground; trunk 2 and branches 3→wood; foliage 4→foliage. Retain low vegetation and woody debris separately.",
+      "loss": "Collapsing subclasses loses detail. Whether fallen woody debris belongs to a target wood task requires an explicit task definition.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/17172162"
+        }
+      ]
+    },
+    {
+      "id": "ms-no-instance",
+      "source": "17172162",
+      "target": "16742708",
+      "kind": "blocked",
+      "tasks": [
+        "instances"
+      ],
+      "name": "No instance reference",
+      "rule": "No tree-instance labels are documented. A semantic crosswalk cannot manufacture independent instance ground truth.",
+      "loss": "Pseudo-labeling would be a separate model-generated training arm, not reference evaluation.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/17172162"
+        }
+      ]
+    },
+    {
+      "id": "forestsemantic-v2",
+      "source": "15193973",
+      "target": "16742708",
+      "kind": "blocked",
+      "tasks": [
+        "instances",
+        "components"
+      ],
+      "name": "Derivative-rights review",
+      "rule": "Keep source annotations intact; settle intended use and component terms before producing aligned derivatives.",
+      "loss": "Three conversions remain intentionally deferred. Metadata availability does not grant derivative permission.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/15193973"
+        }
+      ]
+    },
+    {
+      "id": "lautx-v2",
+      "source": "16910335",
+      "target": "16742708",
+      "kind": "transform",
+      "tasks": [
+        "instances"
+      ],
+      "name": "Versioned instance crosswalk",
+      "rule": "For full plots, choose and record treeIDv2 or treeIDv1; preserve both. For manual tree exports retain StemID. Keep automatic outputs as predictions.",
+      "loss": "The current coarse export misses these instance fields. Different label versions and automatic segmentations are not interchangeable references.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/16910335"
+        }
+      ]
+    },
+    {
+      "id": "wytham-overlap",
+      "source": "7307956",
+      "target": "16875688",
+      "kind": "shared",
+      "tasks": [
+        "instances",
+        "geometry",
+        "biomass"
+      ],
+      "name": "Shared Wytham tree exports",
+      "rule": "280 complete harmonized chunk sequences match exactly. All 876 Wytham tree names appear in the TLS collection with matching point counts.",
+      "loss": "Group shared tree/capture identities across datasets before splitting. The remaining pairs require geometry-level confirmation.",
+      "evidence_status": "Payload-hash metadata",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Acquisition and curation audit",
+          "local": "docs/lidar-acquisition-log.md"
+        },
+        {
+          "label": "Wytham source",
+          "url": "https://zenodo.org/records/7307956"
+        },
+        {
+          "label": "TLS benchmark source",
+          "url": "https://zenodo.org/records/16875688"
+        }
+      ]
+    },
+    {
+      "id": "spectral-fgi",
+      "source": "17172162",
+      "target": "19351234",
+      "kind": "unknown",
+      "tasks": [
+        "spectral"
+      ],
+      "name": "Channel calibration review",
+      "rule": "Check wavelength, radiometric units, calibration and co-registration per capture before pooling spectral channels.",
+      "loss": "Shared channel names or research institutions do not prove equal radiometry or independent sites.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/17172162"
+        }
+      ]
+    },
+    {
+      "id": "spectral-evo",
+      "source": "15913427",
+      "target": "19351234",
+      "kind": "unknown",
+      "tasks": [
+        "spectral"
+      ],
+      "name": "Spectral alignment candidate",
+      "rule": "Retain channel definitions and verify normalization and acquisition geometry. Preserve external evaluation reservations.",
+      "loss": "No validated radiometric transfer function is currently registered.",
+      "evidence_status": "Documented",
+      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence": [
+        {
+          "label": "Source record",
+          "url": "https://zenodo.org/records/15913427"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "duplicates",
+      "severity": "high",
+      "title": "398 duplicate normalized exports",
+      "count": 398,
+      "description": "118 within the TLS benchmark and 280 across Wytham/TLS share complete recorded chunk-hash sequences. No originals have been deleted.",
+      "datasets": [
+        "16875688",
+        "7307956"
+      ],
+      "state": "Confirmed metadata evidence"
+    },
+    {
+      "id": "split-leakage",
+      "severity": "high",
+      "title": "118 exact copies span train / validation",
+      "count": 118,
+      "description": "The source manifests identify byte-identical TLS tree exports in both folders. Official plot splits and extracted-tree evaluation have different units.",
+      "datasets": [
+        "16875688"
+      ],
+      "state": "Source-hash evidence"
+    },
+    {
+      "id": "lautx",
+      "severity": "high",
+      "title": "1,036 files need an instance crosswalk",
+      "count": 1036,
+      "description": "StemID and treeIDv1/v2 survive in original_points but are not read by the existing harmonizer. 515 manual/automatic pairs must remain separate annotation variants.",
+      "datasets": [
+        "16910335"
+      ],
+      "state": "Schema audit + sampled payloads"
+    },
+    {
+      "id": "semantics",
+      "severity": "medium",
+      "title": "Available source labels are not all mapped",
+      "count": 38,
+      "description": "FOR v1 classification is unmapped in 32 files. Six ForestSemantic-MS files preserve low vegetation and woody debris without a coarse semantic assignment. This requires task-specific mapping decisions.",
+      "datasets": [
+        "8287792",
+        "17172162"
+      ],
+      "state": "Schema audit + source definitions"
+    },
+    {
+      "id": "lineage",
+      "severity": "high",
+      "title": "No certified site-out split yet",
+      "count": 5626,
+      "description": "All normalized records still carry split=unassigned and physical_site=pending_review. Cross-dataset identities and annotation descendants must be grouped before evaluation.",
+      "datasets": [
+        "8287792",
+        "16742708",
+        "15193973",
+        "17172162",
+        "19351234",
+        "15913427",
+        "19127709",
+        "16875688",
+        "16910335",
+        "7307956"
+      ],
+      "state": "Full metadata audit"
+    },
+    {
+      "id": "rights",
+      "severity": "medium",
+      "title": "Three derivatives deliberately deferred",
+      "count": 3,
+      "description": "ForestSemantic source files are acquired; their conversions await derivative-rights review. Other record-declared licenses still require component and intended-use checks.",
+      "datasets": [
+        "15193973"
+      ],
+      "state": "Acquisition policy"
+    },
+    {
+      "id": "balance",
+      "severity": "medium",
+      "title": "Point count is strongly imbalanced",
+      "count": 85,
+      "description": "TreeScanPL10K accounts for approximately 85% of stored normalized points before deduplication. File counts do not measure independent sites or balanced training exposure.",
+      "datasets": [
+        "19127709"
+      ],
+      "state": "Full metadata audit"
+    }
+  ],
+  "duplicates": [
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2053c.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2053c.ply"
+      ],
+      "points": 46277
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1384.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1384.ply"
+      ],
+      "points": 67158
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8388.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8388.ply"
+      ],
+      "points": 162802
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8377.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8377.ply"
+      ],
+      "points": 33137
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_354b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_354b.ply"
+      ],
+      "points": 419026
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1596.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1596.ply"
+      ],
+      "points": 39963
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_122a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_122a.ply"
+      ],
+      "points": 187549
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_712b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_712b.ply"
+      ],
+      "points": 251142
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_899a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_899a.ply"
+      ],
+      "points": 32269
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_196.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_196.ply"
+      ],
+      "points": 229547
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_175a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_175a.ply"
+      ],
+      "points": 38650
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8404.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8404.ply"
+      ],
+      "points": 8671
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8410.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8410.ply"
+      ],
+      "points": 6675
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_9083.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_9083.ply"
+      ],
+      "points": 42602
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8389.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8389.ply"
+      ],
+      "points": 161200
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2053b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2053b.ply"
+      ],
+      "points": 1255
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_746.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_746.ply"
+      ],
+      "points": 476838
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1393.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1393.ply"
+      ],
+      "points": 113476
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8374.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8374.ply"
+      ],
+      "points": 27476
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2117.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2117.ply"
+      ],
+      "points": 46519
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8348.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8348.ply"
+      ],
+      "points": 4046
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_354a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_354a.ply"
+      ],
+      "points": 93645
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_122b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_122b.ply"
+      ],
+      "points": 97839
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_899b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_899b.ply"
+      ],
+      "points": 52182
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_175b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_175b.ply"
+      ],
+      "points": 22256
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_175c.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_175c.ply"
+      ],
+      "points": 381595
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1755.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1755.ply"
+      ],
+      "points": 55839
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_899c.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_899c.ply"
+      ],
+      "points": 27816
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_122c.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_122c.ply"
+      ],
+      "points": 39130
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1225.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1225.ply"
+      ],
+      "points": 166861
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8407.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8407.ply"
+      ],
+      "points": 40699
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1423.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1423.ply"
+      ],
+      "points": 253538
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8361.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8361.ply"
+      ],
+      "points": 122404
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_209.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_209.ply"
+      ],
+      "points": 424749
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2053a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2053a.ply"
+      ],
+      "points": 14033
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_786.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_786.ply"
+      ],
+      "points": 153658
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1625.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1625.ply"
+      ],
+      "points": 94672
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_9084.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_9084.ply"
+      ],
+      "points": 101506
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_9090.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_9090.ply"
+      ],
+      "points": 84445
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_580.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_580.ply"
+      ],
+      "points": 334217
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8365.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8365.ply"
+      ],
+      "points": 20056
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8417.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8417.ply"
+      ],
+      "points": 9932
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8371.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8371.ply"
+      ],
+      "points": 72463
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1209.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1209.ply"
+      ],
+      "points": 117345
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_416a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_416a.ply"
+      ],
+      "points": 180677
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_807.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_807.ply"
+      ],
+      "points": 147206
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1778.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1778.ply"
+      ],
+      "points": 43329
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_197a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_197a.ply"
+      ],
+      "points": 579596
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_122f.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_122f.ply"
+      ],
+      "points": 134682
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2067.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2067.ply"
+      ],
+      "points": 30701
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8416.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8416.ply"
+      ],
+      "points": 7301
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_640a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_640a.ply"
+      ],
+      "points": 116905
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8370.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8370.ply"
+      ],
+      "points": 9022
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8364.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8364.ply"
+      ],
+      "points": 155417
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8402.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8402.ply"
+      ],
+      "points": 31345
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_9085.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_9085.ply"
+      ],
+      "points": 27802
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2053d.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2053d.ply"
+      ],
+      "points": 26807
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1035b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1035b.ply"
+      ],
+      "points": 13159
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_781.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_781.ply"
+      ],
+      "points": 117591
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8428.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8428.ply"
+      ],
+      "points": 21055
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8372.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8372.ply"
+      ],
+      "points": 5079
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8414.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8414.ply"
+      ],
+      "points": 22286
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8400.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8400.ply"
+      ],
+      "points": 90089
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8366.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8366.ply"
+      ],
+      "points": 41716
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_122d.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_122d.ply"
+      ],
+      "points": 127328
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1544.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1544.ply"
+      ],
+      "points": 89494
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1008.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1008.ply"
+      ],
+      "points": 137452
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_197b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_197b.ply"
+      ],
+      "points": 41045
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_122e.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_122e.ply"
+      ],
+      "points": 132393
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_421.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_421.ply"
+      ],
+      "points": 658187
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8401.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8401.ply"
+      ],
+      "points": 12318
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8367.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8367.ply"
+      ],
+      "points": 25408
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8373.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8373.ply"
+      ],
+      "points": 81706
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_640b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_640b.ply"
+      ],
+      "points": 29364
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8429.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8429.ply"
+      ],
+      "points": 19239
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_9086.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_9086.ply"
+      ],
+      "points": 10185
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_541.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_541.ply"
+      ],
+      "points": 276383
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_555.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_555.ply"
+      ],
+      "points": 147930
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_62.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_62.ply"
+      ],
+      "points": 645030
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_794.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_794.ply"
+      ],
+      "points": 112715
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1035a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1035a.ply"
+      ],
+      "points": 112072
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1873.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1873.ply"
+      ],
+      "points": 54693
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2146d.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_2146d.ply"
+      ],
+      "points": 29455
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8300.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8300.ply"
+      ],
+      "points": 49408
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_33b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_33b.ply"
+      ],
+      "points": 26717
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_491.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_491.ply"
+      ],
+      "points": 293575
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1720.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1720.ply"
+      ],
+      "points": 47675
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1708.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1708.ply"
+      ],
+      "points": 79377
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_889.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_889.ply"
+      ],
+      "points": 172913
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_484.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_484.ply"
+      ],
+      "points": 182964
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_718c.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_718c.ply"
+      ],
+      "points": 271888
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_145a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_145a.ply"
+      ],
+      "points": 420419
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8301.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8301.ply"
+      ],
+      "points": 24498
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8315.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8315.ply"
+      ],
+      "points": 68643
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_269.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_269.ply"
+      ],
+      "points": 353961
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_727.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_727.ply"
+      ],
+      "points": 118070
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_12.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_12.ply"
+      ],
+      "points": 1640567
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1119.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1119.ply"
+      ],
+      "points": 59608
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8303.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8303.ply"
+      ],
+      "points": 33341
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_427a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_427a.ply"
+      ],
+      "points": 350754
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8317.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8317.ply"
+      ],
+      "points": 19835
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_145c.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_145c.ply"
+      ],
+      "points": 3039
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_33a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_33a.ply"
+      ],
+      "points": 121857
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_718a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_718a.ply"
+      ],
+      "points": 152452
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1535.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1535.ply"
+      ],
+      "points": 511390
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1045.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1045.ply"
+      ],
+      "points": 139992
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_6.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_6.ply"
+      ],
+      "points": 1684982
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8316.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8316.ply"
+      ],
+      "points": 6179
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8302.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8302.ply"
+      ],
+      "points": 21326
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_901.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_901.ply"
+      ],
+      "points": 130468
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1789a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1789a.ply"
+      ],
+      "points": 10905
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2280b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2280b.ply"
+      ],
+      "points": 56964
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2146b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_2146b.ply"
+      ],
+      "points": 18227
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8306.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8306.ply"
+      ],
+      "points": 10632
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_332.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_332.ply"
+      ],
+      "points": 244944
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1242.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1242.ply"
+      ],
+      "points": 46339
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_871.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_871.ply"
+      ],
+      "points": 221704
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_119.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_119.ply"
+      ],
+      "points": 294054
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1928.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1928.ply"
+      ],
+      "points": 119903
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2146c.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_2146c.ply"
+      ],
+      "points": 5977
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1109.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1109.ply"
+      ],
+      "points": 81152
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2366.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2366.ply"
+      ],
+      "points": 6950
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_735.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_735.ply"
+      ],
+      "points": 236787
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1789b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1789b.ply"
+      ],
+      "points": 22208
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2280a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_2280a.ply"
+      ],
+      "points": 78546
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_145e.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_145e.ply"
+      ],
+      "points": 10447
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8339.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8339.ply"
+      ],
+      "points": 110184
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8305.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8305.ply"
+      ],
+      "points": 10374
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2146a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_2146a.ply"
+      ],
+      "points": 13649
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1255.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1255.ply"
+      ],
+      "points": 158398
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1080.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1080.ply"
+      ],
+      "points": 568421
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1731.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1731.ply"
+      ],
+      "points": 31546
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1240.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1240.ply"
+      ],
+      "points": 59363
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8304.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8304.ply"
+      ],
+      "points": 31263
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8338.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8338.ply"
+      ],
+      "points": 4691
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2309c.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2309c.ply"
+      ],
+      "points": 16484
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_281a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_281a.ply"
+      ],
+      "points": 233974
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8335.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8335.ply"
+      ],
+      "points": 45424
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8321.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8321.ply"
+      ],
+      "points": 22775
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8309.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8309.ply"
+      ],
+      "points": 69475
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1517.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1517.ply"
+      ],
+      "points": 45183
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1926.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1926.ply"
+      ],
+      "points": 68811
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_809b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_809b.ply"
+      ],
+      "points": 81890
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2128a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2128a.ply"
+      ],
+      "points": 7773
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8308.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8308.ply"
+      ],
+      "points": 4148
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8320.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8320.ply"
+      ],
+      "points": 4215
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1476.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1476.ply"
+      ],
+      "points": 300265
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8334.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8334.ply"
+      ],
+      "points": 13489
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1657a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1657a.ply"
+      ],
+      "points": 74822
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1745a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1745a.ply"
+      ],
+      "points": 101001
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2309b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2309b.ply"
+      ],
+      "points": 25549
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_538.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_538.ply"
+      ],
+      "points": 134123
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_281b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_281b.ply"
+      ],
+      "points": 120411
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8322.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8322.ply"
+      ],
+      "points": 8513
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8336.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8336.ply"
+      ],
+      "points": 40100
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1448.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1448.ply"
+      ],
+      "points": 148090
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2128c.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2128c.ply"
+      ],
+      "points": 51015
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1514.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1514.ply"
+      ],
+      "points": 60740
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1931.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1931.ply"
+      ],
+      "points": 49473
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_809a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_809a.ply"
+      ],
+      "points": 88275
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_672.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_672.ply"
+      ],
+      "points": 123883
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2237.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2237.ply"
+      ],
+      "points": 53704
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_317.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_317.ply"
+      ],
+      "points": 390828
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2128b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2128b.ply"
+      ],
+      "points": 40274
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_459.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_459.ply"
+      ],
+      "points": 248615
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1475.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1475.ply"
+      ],
+      "points": 106578
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8337.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8337.ply"
+      ],
+      "points": 8790
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8323.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8323.ply"
+      ],
+      "points": 14600
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1657b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1657b.ply"
+      ],
+      "points": 15910
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1111.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1111.ply"
+      ],
+      "points": 243272
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1745b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1745b.ply"
+      ],
+      "points": 30441
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1436a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1436a.ply"
+      ],
+      "points": 167223
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2083b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2083b.ply"
+      ],
+      "points": 7527
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1505.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1505.ply"
+      ],
+      "points": 44286
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_878.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_878.ply"
+      ],
+      "points": 102643
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_688.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_688.ply"
+      ],
+      "points": 112419
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_104.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_104.ply"
+      ],
+      "points": 379956
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_460.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_460.ply"
+      ],
+      "points": 260865
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8326.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8326.ply"
+      ],
+      "points": 17839
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_280b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_280b.ply"
+      ],
+      "points": 73395
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_234a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_234a.ply"
+      ],
+      "points": 546670
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2184.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2184.ply"
+      ],
+      "points": 13185
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1436b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1436b.ply"
+      ],
+      "points": 53348
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8324.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8324.ply"
+      ],
+      "points": 21419
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8442.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8442.ply"
+      ],
+      "points": 63296
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2083a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2083a.ply"
+      ],
+      "points": 36307
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1089.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1089.ply"
+      ],
+      "points": 46116
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8319.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8319.ply"
+      ],
+      "points": 22101
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_280a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_280a.ply"
+      ],
+      "points": 303611
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8381.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8381.ply"
+      ],
+      "points": 114793
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_264a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_264a.ply"
+      ],
+      "points": 46799
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8342.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8342.ply"
+      ],
+      "points": 42257
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8418.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8418.ply"
+      ],
+      "points": 4962
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_410.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_410.ply"
+      ],
+      "points": 520805
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_122h.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_122h.ply"
+      ],
+      "points": 10694
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8333b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8333b.ply"
+      ],
+      "points": 20775
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1986.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1986.ply"
+      ],
+      "points": 20392
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1950.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1950.ply"
+      ],
+      "points": 2706
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_122i.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_122i.ply"
+      ],
+      "points": 172054
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8343.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8343.ply"
+      ],
+      "points": 51986
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8425.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8425.ply"
+      ],
+      "points": 21149
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8380.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8380.ply"
+      ],
+      "points": 56549
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8394.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8394.ply"
+      ],
+      "points": 92567
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_93.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_93.ply"
+      ],
+      "points": 245629
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8382.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8382.ply"
+      ],
+      "points": 41387
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8396.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8396.ply"
+      ],
+      "points": 129280
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8427.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8427.ply"
+      ],
+      "points": 5798
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8341.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8341.ply"
+      ],
+      "points": 11059
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_264b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_264b.ply"
+      ],
+      "points": 40953
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8369.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8369.ply"
+      ],
+      "points": 21935
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_413.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_413.ply"
+      ],
+      "points": 334785
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8333a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8333a.ply"
+      ],
+      "points": 107890
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2283.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_2283.ply"
+      ],
+      "points": 29706
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_837.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_837.ply"
+      ],
+      "points": 269625
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_162.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_162.ply"
+      ],
+      "points": 347642
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1576.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1576.ply"
+      ],
+      "points": 141317
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2094.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_2094.ply"
+      ],
+      "points": 52268
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8368.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8368.ply"
+      ],
+      "points": 53814
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8354.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8354.ply"
+      ],
+      "points": 53325
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_264c.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_264c.ply"
+      ],
+      "points": 8504
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8426.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8426.ply"
+      ],
+      "points": 39218
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1364.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1364.ply"
+      ],
+      "points": 78440
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8340.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8340.ply"
+      ],
+      "points": 48465
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_774.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_774.ply"
+      ],
+      "points": 264609
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1610.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1610.ply"
+      ],
+      "points": 56052
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8406c.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8406c.ply"
+      ],
+      "points": 37442
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8387.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8387.ply"
+      ],
+      "points": 31631
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_20b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_20b.ply"
+      ],
+      "points": 81595
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8393.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8393.ply"
+      ],
+      "points": 7698
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8378.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8378.ply"
+      ],
+      "points": 27083
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8344.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8344.ply"
+      ],
+      "points": 58604
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_9112.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_9112.ply"
+      ],
+      "points": 111403
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1867b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1867b.ply"
+      ],
+      "points": 42321
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_833.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_833.ply"
+      ],
+      "points": 285764
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1390a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1390a.ply"
+      ],
+      "points": 50297
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2293.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2293.ply"
+      ],
+      "points": 53009
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_264f.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_264f.ply"
+      ],
+      "points": 235058
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8437.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8437.ply"
+      ],
+      "points": 4771
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8351.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8351.ply"
+      ],
+      "points": 8981
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1407.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1407.ply"
+      ],
+      "points": 95769
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8345.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8345.ply"
+      ],
+      "points": 15888
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8423.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8423.ply"
+      ],
+      "points": 23635
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8379.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8379.ply"
+      ],
+      "points": 61901
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8386.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8386.ply"
+      ],
+      "points": 22744
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_9098.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_9098.ply"
+      ],
+      "points": 88201
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8406b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8406b.ply"
+      ],
+      "points": 55828
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_577.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_577.ply"
+      ],
+      "points": 144902
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_985.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_985.ply"
+      ],
+      "points": 84891
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_818b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_818b.ply"
+      ],
+      "points": 47497
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_20a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_20a.ply"
+      ],
+      "points": 477688
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8384.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8384.ply"
+      ],
+      "points": 313752
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8409.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8409.ply"
+      ],
+      "points": 19635
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8353.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8353.ply"
+      ],
+      "points": 13331
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_264d.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_264d.ply"
+      ],
+      "points": 18641
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8347.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8347.ply"
+      ],
+      "points": 20230
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_9111.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_9111.ply"
+      ],
+      "points": 188787
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1867a.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1867a.ply"
+      ],
+      "points": 216049
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1968.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1968.ply"
+      ],
+      "points": 45733
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1766.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1766.ply"
+      ],
+      "points": 33223
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1390b.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1390b.ply"
+      ],
+      "points": 31602
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_158.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_158.ply"
+      ],
+      "points": 429289
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2284.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2284.ply"
+      ],
+      "points": 73919
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_616.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_616.ply"
+      ],
+      "points": 166563
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1558.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_1558.ply"
+      ],
+      "points": 48041
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2086.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2086.ply"
+      ],
+      "points": 23352
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8420.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8420.ply"
+      ],
+      "points": 16737
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8352.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8352.ply"
+      ],
+      "points": 43359
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_264e.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_264e.ply"
+      ],
+      "points": 41456
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8408.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8408.ply"
+      ],
+      "points": 10892
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8385.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8385.ply"
+      ],
+      "points": 86334
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8391.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8391.ply"
+      ],
+      "points": 22352
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8406a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8406a.ply"
+      ],
+      "points": 55122
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_818a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_818a.ply"
+      ],
+      "points": 265480
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_20_-100_Boom13.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_20_-100_Boom13.ply"
+      ],
+      "points": 77319
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_20_-100_Boom31.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_20_-100_Boom31.ply"
+      ],
+      "points": 58334
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_20_-100_Boom9.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_20_-100_Boom9.ply"
+      ],
+      "points": 774468
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_20_-60_Boom20.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_20_-60_Boom20.ply"
+      ],
+      "points": 108788
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom12.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom12.ply"
+      ],
+      "points": 56946
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom29.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom29.ply"
+      ],
+      "points": 40784
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom31.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom31.ply"
+      ],
+      "points": 23725
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom11.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom11.ply"
+      ],
+      "points": 50539
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom12.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom12.ply"
+      ],
+      "points": 59994
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom22.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom22.ply"
+      ],
+      "points": 17976
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom3.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom3.ply"
+      ],
+      "points": 661124
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-80_Boom12.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-80_Boom12.ply"
+      ],
+      "points": 663942
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_001.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_001.ply"
+      ],
+      "points": 188112
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_003.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_003.ply"
+      ],
+      "points": 574970
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_004.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_004.ply"
+      ],
+      "points": 73531
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_006.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_006.ply"
+      ],
+      "points": 516511
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_011.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_011.ply"
+      ],
+      "points": 876685
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_017.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_017.ply"
+      ],
+      "points": 161682
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_021.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_021.ply"
+      ],
+      "points": 260317
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_043.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_043.ply"
+      ],
+      "points": 163813
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_048.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_048.ply"
+      ],
+      "points": 128181
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_052.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_052.ply"
+      ],
+      "points": 303216
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_057.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_057.ply"
+      ],
+      "points": 129101
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_059.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_059.ply"
+      ],
+      "points": 75830
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_063.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_063.ply"
+      ],
+      "points": 156681
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_073.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_073.ply"
+      ],
+      "points": 115141
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_074.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_074.ply"
+      ],
+      "points": 40954
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_083.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_083.ply"
+      ],
+      "points": 121418
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_096.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_096.ply"
+      ],
+      "points": 229455
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_100.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_100.ply"
+      ],
+      "points": 56977
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_123.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_123.ply"
+      ],
+      "points": 176741
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_129.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_129.ply"
+      ],
+      "points": 80490
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_131.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_131.ply"
+      ],
+      "points": 71007
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_141.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_141.ply"
+      ],
+      "points": 93630
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_160.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_160.ply"
+      ],
+      "points": 31731
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_164.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_164.ply"
+      ],
+      "points": 60917
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_169.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_169.ply"
+      ],
+      "points": 72055
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_170.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_170.ply"
+      ],
+      "points": 66475
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_171.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_171.ply"
+      ],
+      "points": 23920
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_184.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_184.ply"
+      ],
+      "points": 106576
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_b_006_.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_b_006_.ply"
+      ],
+      "points": 260662
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_b_017_.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_b_017_.ply"
+      ],
+      "points": 337401
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_b_037_.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_b_037_.ply"
+      ],
+      "points": 56615
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_063_corrected.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_063_corrected.ply"
+      ],
+      "points": 231337
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_075_corrected.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_075_corrected.ply"
+      ],
+      "points": 1157516
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_077_corrected.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_077_corrected.ply"
+      ],
+      "points": 192388
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_079_corrected.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_079_corrected.ply"
+      ],
+      "points": 412763
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_089_corrected.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_089_corrected.ply"
+      ],
+      "points": 830420
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_172_corrected.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_172_corrected.ply"
+      ],
+      "points": 270085
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_173_corrected.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_173_corrected.ply"
+      ],
+      "points": 581472
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_174_corrected.ply",
+        "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_174_corrected.ply"
+      ],
+      "points": 124390
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "7307956"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_130.ply",
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_130.ply"
+      ],
+      "points": 899034
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "7307956"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_260.ply",
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_260.ply"
+      ],
+      "points": 1268892
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "7307956"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8399.ply",
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8399.ply"
+      ],
+      "points": 859105
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "7307956"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_222.ply",
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_222.ply"
+      ],
+      "points": 927685
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "7307956"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_384.ply",
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_384.ply"
+      ],
+      "points": 1321904
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "7307956"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_43.ply",
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_43.ply"
+      ],
+      "points": 1211517
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "7307956"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_56.ply",
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_56.ply"
+      ],
+      "points": 1043898
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1055.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1055.ply"
+      ],
+      "points": 138563
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1074.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1074.ply"
+      ],
+      "points": 1022747
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1090.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1090.ply"
+      ],
+      "points": 136448
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1195a.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1195a.ply"
+      ],
+      "points": 137158
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1195b.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1195b.ply"
+      ],
+      "points": 8935
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1195c.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1195c.ply"
+      ],
+      "points": 25849
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1271.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1271.ply"
+      ],
+      "points": 87109
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1339.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1339.ply"
+      ],
+      "points": 80346
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_134.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_134.ply"
+      ],
+      "points": 651282
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_138a.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_138a.ply"
+      ],
+      "points": 219109
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_138b.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_138b.ply"
+      ],
+      "points": 266341
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1438a.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1438a.ply"
+      ],
+      "points": 28749
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1438b.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1438b.ply"
+      ],
+      "points": 79383
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1532a.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1532a.ply"
+      ],
+      "points": 103987
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1532b.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1532b.ply"
+      ],
+      "points": 35880
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_1567.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_1567.ply"
+      ],
+      "points": 401231
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_2049a.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_2049a.ply"
+      ],
+      "points": 125277
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_221.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_221.ply"
+      ],
+      "points": 794439
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_2232.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_2232.ply"
+      ],
+      "points": 18269
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_2240.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_2240.ply"
+      ],
+      "points": 28690
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_286.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_286.ply"
+      ],
+      "points": 264753
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_29.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_29.ply"
+      ],
+      "points": 1692343
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_31.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_31.ply"
+      ],
+      "points": 954649
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_338.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_338.ply"
+      ],
+      "points": 1017699
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_353.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_353.ply"
+      ],
+      "points": 366296
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_70.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_70.ply"
+      ],
+      "points": 788891
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_700.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_700.ply"
+      ],
+      "points": 137481
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_8031.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_8031.ply"
+      ],
+      "points": 25264
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_8096.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_8096.ply"
+      ],
+      "points": 4299
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_8098.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_8098.ply"
+      ],
+      "points": 5321
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_8099a.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_8099a.ply"
+      ],
+      "points": 6894
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_8102.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_8102.ply"
+      ],
+      "points": 34893
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_8105b.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_8105b.ply"
+      ],
+      "points": 21022
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_8107d.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_8107d.ply"
+      ],
+      "points": 28312
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/wytham/trees/train/wytham_winter_913.ply",
+        "sources/16875688/originals/wytham/trees/val/wytham_winter_913.ply"
+      ],
+      "points": 142628
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_009.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_009.ply"
+      ],
+      "points": 756358
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_013.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_013.ply"
+      ],
+      "points": 818696
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_008.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_008.ply"
+      ],
+      "points": 234984
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_009.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_009.ply"
+      ],
+      "points": 847000
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_018.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_018.ply"
+      ],
+      "points": 243560
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_019.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_019.ply"
+      ],
+      "points": 307186
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_020.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_020.ply"
+      ],
+      "points": 105828
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_057.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_057.ply"
+      ],
+      "points": 494995
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_068.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_068.ply"
+      ],
+      "points": 123764
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_090.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_090.ply"
+      ],
+      "points": 771186
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_092.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_092.ply"
+      ],
+      "points": 1099193
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_093.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_093.ply"
+      ],
+      "points": 667205
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_102.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_102.ply"
+      ],
+      "points": 606482
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_70.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_70.ply"
+      ],
+      "points": 57598
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_71.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_71.ply"
+      ],
+      "points": 1544622
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_72.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_72.ply"
+      ],
+      "points": 399157
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_73.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_73.ply"
+      ],
+      "points": 474009
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_74.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_74.ply"
+      ],
+      "points": 654423
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_75.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_75.ply"
+      ],
+      "points": 918608
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_76.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_76.ply"
+      ],
+      "points": 312461
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_77.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_77.ply"
+      ],
+      "points": 341738
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_78.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_78.ply"
+      ],
+      "points": 1139366
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_80.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_80.ply"
+      ],
+      "points": 67623
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_B_82.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_B_82.ply"
+      ],
+      "points": 522015
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_final_002.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_final_002.ply"
+      ],
+      "points": 1569222
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_final_027.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_final_027.ply"
+      ],
+      "points": 1192964
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/ofental/trees/train/ot_final_028.ply",
+        "sources/16875688/originals/ofental/trees/val/ot_final_028.ply"
+      ],
+      "points": 1387389
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_20_-80_Boom6.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_20_-80_Boom6.ply"
+      ],
+      "points": 363245
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom3.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom3.ply"
+      ],
+      "points": 350491
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom4.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom4.ply"
+      ],
+      "points": 271283
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom1.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom1.ply"
+      ],
+      "points": 1473394
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "16875688",
+        "16875688"
+      ],
+      "paths": [
+        "sources/16875688/originals/litchfield/trees/train/tile_40_-80_Boom3.ply",
+        "sources/16875688/originals/litchfield/trees/val/tile_40_-80_Boom3.ply"
+      ],
+      "points": 721016
+    }
+  ],
+  "duplicate_examples": [
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_2053c.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_2053c.ply"
+      ],
+      "points": 46277
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1384.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1384.ply"
+      ],
+      "points": 67158
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8388.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_8388.ply"
+      ],
+      "points": 162802
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_8377.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_8377.ply"
+      ],
+      "points": 33137
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_354b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_354b.ply"
+      ],
+      "points": 419026
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_1596.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_1596.ply"
+      ],
+      "points": 39963
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_122a.ply",
+        "sources/16875688/originals/wytham/trees/test/in_plot_th0.90/wytham_winter_122a.ply"
+      ],
+      "points": 187549
+    },
+    {
+      "kind": "Identical normalized data",
+      "records": [
+        "7307956",
+        "16875688"
+      ],
+      "paths": [
+        "sources/7307956/originals/DATA_clouds_ply/DATA_clouds_ply/wytham_winter_712b.ply",
+        "sources/16875688/originals/wytham/trees/test/out_plot_th0.90/wytham_winter_712b.ply"
+      ],
+      "points": 251142
+    }
+  ],
+  "evidence": [
+    {
+      "name": "Pinned inventory",
+      "path": "docs/lidar-acquisition-inventory.json"
+    },
+    {
+      "name": "Acquisition and recovery log",
+      "path": "docs/lidar-acquisition-log.md"
+    },
+    {
+      "name": "Annotation definitions",
+      "path": "docs/annotations.md"
+    },
+    {
+      "name": "Training and generalization protocol",
+      "path": "docs/lidar-training-data-plan.md"
+    },
+    {
+      "name": "Prior provenance audit",
+      "path": "docs/data-provenance-audit.md"
+    }
+  ],
+  "audit_scope": {
+    "metadata": "All 96 asset manifests, 15,400 stored-file records, 5,626 normalized cloud records and 48,177 chunk records.",
+    "payload_samples": "40 chunks / 17,102,064 points across all 20 observed source field schemas.",
+    "limits": "No full reread of all 22.15 billion points, order-invariant geometry audit, scanner calibration validation, or final license admission. Duplicate groups are evidence for review, not deletion instructions.",
+    "curation_applied": false
+  },
+  "snapshot_provenance": {
+    "inventory_sha256": "a7d58ed8ba72a0aabe5576a94459fb52789d421336df42a3872d301e2d0b6e1b",
+    "acquisition_status_sha256": "2210f4d07ef5c84c23ccc28111c1634d8613aeca53199c6a141f57dc9e641a5d",
+    "builder": "scripts/build_knowledge_hub_catalog.py",
+    "sample_audit_date": "2026-10-15"
+  }
+};
