@@ -289,6 +289,8 @@ def main():
 
 
 def run(args):
+    if args.harmonize:
+        raise ValueError("Automatic normalization is blocked until a dataset-specific self-contained pipeline is analyzed and audited")
     inventory = json.loads(args.inventory.read_text())
     args.root.mkdir(parents=True, exist_ok=True)
     status_path = args.root / "acquisition-status.json"

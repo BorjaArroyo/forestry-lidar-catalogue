@@ -20,6 +20,7 @@ WEB = REPO / 'knowledge-hub' if (REPO / 'knowledge-hub').is_dir() else REPO
 STATE = REPO / 'temp' / 'canopy-workbench'
 TOKEN = secrets.token_urlsafe(32)
 GUARD = threading.Lock()
+TRANSFORMATION_BLOCKER = "Normalization is blocked: no self-contained, dataset-specific pipeline has completed analysis and human audit yet."
 
 
 def now():
@@ -157,6 +158,8 @@ def submit(body):
     kind = body.get('kind')
     if kind not in {'acquire','audit','harmonize','benchmark'}:
         raise ValueError('Unknown job type')
+    if kind == 'harmonize':
+        raise ValueError(TRANSFORMATION_BLOCKER)
     root = directory(body.get('root', ''), exists=kind != 'acquire')
     with GUARD, FileLock(str(STATE / 'submission.lock'), timeout=0):
         if any(j['status'] in {'queued','running'} for j in jobs()):
@@ -185,9 +188,6 @@ def submit(body):
             job['expected_bytes'] = total
             job['record_id'] = rid
             save(folder / 'inventory.json', inv)
-        elif kind == 'harmonize':
-            if not (root / 'acquisition-status.json').is_file():
-                raise ValueError('Harmonization requires a verified Canopy acquisition root')
         elif kind == 'benchmark':
             recipe, image, blockers = recipe_check(body['recipe_id'], root)
             if blockers:
@@ -203,27 +203,14 @@ def submit(body):
 
 
 def audit(root, output):
-    groups = {}
-    count = 0
-    errors = []
-    for manifest in sorted((root / 'sources').glob('*/manifests/*.json')):
-        for item in read(manifest).get('outputs', []):
-            path = (root / item['path']).resolve()
-            if not path.is_relative_to(root):
-                raise ValueError('Manifest path escapes dataset directory')
-            count += 1
-            if not path.is_file() or path.stat().st_size != item['size_bytes']:
-                errors.append({'path':item['path'],'error':'Missing file or size mismatch'})
-            groups.setdefault(item['sha256'], []).append(item['path'])
-    report = {'created_at':now(),'root':str(root),'files':count,'errors':errors,
-              'duplicate_groups':[{'sha256':h,'paths':p} for h,p in groups.items() if len(p)>1],
-              'scope':'Manifest hashes and current file sizes; payloads were not rehashed. Review before deletion.',
-              'curation_applied':False}
-    if not count:
-        raise ValueError('No acquired file manifests found')
+    from plan_lidar_curation import build_plan, render_markdown
+
+    report = build_plan(root, check_files=True, progress=lambda message: print(message, flush=True))
     save(output / 'curation-report.json', report)
-    print(f"Reviewed {count} file records; {len(report['duplicate_groups'])} duplicate groups; {len(errors)} file errors", flush=True)
-    return bool(errors)
+    (output / 'curation-plan.md').write_text(render_markdown(report))
+    print(f"Reviewed {report['files']} file records; {len(report['duplicate_groups'])} source duplicate groups; "
+          f"{len(report['normalized_duplicate_groups'])} normalized groups; {len(report['errors'])} errors", flush=True)
+    return bool(report['errors'])
 
 
 def worker(folder):
@@ -247,24 +234,7 @@ def worker(folder):
                     if audit(root, folder):
                         job['status'] = 'completed_with_errors'
                 elif job['kind'] == 'harmonize':
-                    from harmonize_lidar import harmonize
-                    allowed = {r['record_id'] for r in records()} - {15193973}
-                    results = []
-                    for manifest in sorted((root / 'sources').glob('*/manifests/*.json')):
-                        meta = read(manifest)
-                        rid = int(meta['record_id'])
-                        if rid not in allowed:
-                            print(f'SKIP {rid}: no approved source-specific mapping',flush=True)
-                            continue
-                        for item in meta['outputs']:
-                            path = (root/item['path']).resolve()
-                            if not path.is_relative_to(root):
-                                raise ValueError('Manifest path escapes dataset root')
-                            result = harmonize(root,rid,item)
-                            if result:
-                                results.append(result)
-                                print(f"NORMALIZED {item['path']}",flush=True)
-                    save(folder/'harmonization-report.json',{'results':results,'created_at':now()})
+                    raise ValueError(TRANSFORMATION_BLOCKER)
                 else:
                     recipe,image = job['recipe'],job['image']
                     _,_,blockers = recipe_check(recipe['id'],root)

@@ -50,14 +50,16 @@ python3.11 -m venv .venv
 
 Open http://127.0.0.1:8765/#workbench. The loopback service enables explicit,
 version-pinned Zenodo downloads into a selected absolute directory, source-aware
-normalization, duplicate-review reports, and persistent background jobs.
+duplicate-review plans, and persistent background jobs.
 Downloading and extracting assets can require substantial local and destination
 space. Original files remain preserved. Only ZIP archives are expanded.
-Normalization supports the registered source-specific schemas; unknown schemas
-and derivative-rights-review records require separate review.
+Normalization is blocked until a self-contained, dataset-specific pipeline has
+completed prior analysis and human audit; see [PIPELINES.md](PIPELINES.md).
 
-Curation review groups recorded hashes and checks file sizes. It does not
-rehash all payloads, detect every geometric duplicate or delete original files.
+Curation review groups recorded source and normalized hashes, checks source
+file sizes and proposes connected cloud identities. macOS AppleDouble sidecars
+are ignored. Support-file duplicates are kept separate from cloud identities.
+It does not rehash payloads, establish near-duplicate geometry or delete files.
 Jobs and reports are local under `temp/canopy-workbench/`. They are not included
 in this repository or transmitted to the public site. Stopping the web server
 does not cancel an already running background worker. Do not run concurrent
@@ -84,6 +86,10 @@ Dataset proposals and admission reviews follow [CONTRIBUTING.md](CONTRIBUTING.md
 New or changed dataset entries require evidence-backed, task-specific review
 records and maintainer review before publication. The initial ten records remain
 a legacy snapshot with partial audits; they are not retrospectively certified.
+
+The [curation review plan](curation/README.md) separates recorded duplicate
+evidence, source-file size checks, semantic corrections and pending decisions.
+No canonical copy is selected and no correction has been applied.
 
 The complete original collection was not reread point by point. Review audit
 coverage and limitations in the public Evidence & review view. Working-document
