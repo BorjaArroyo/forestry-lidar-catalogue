@@ -91,6 +91,12 @@ The [curation review plan](curation/README.md) separates recorded duplicate
 evidence, source-file size checks, semantic corrections and pending decisions.
 No canonical copy is selected and no correction has been applied.
 
+An initial [dataset-specific validation package](pipelines/tls-exact-duplicate-index-v1/README.md)
+pins the TLS source's 236 duplicate-candidate files. It remains a draft;
+full input consistency and human audit are required before execution admission.
+Validation evidence and the package fingerprint are recorded in
+[the pipeline registry](pipelines/registry.json).
+
 The complete original collection was not reread point by point. Review audit
 coverage and limitations in the public Evidence & review view. Working-document
 paths are references to the original local audit, not published attachments.

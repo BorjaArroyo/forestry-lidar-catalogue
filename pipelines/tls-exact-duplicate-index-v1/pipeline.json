@@ -1,0 +1,1232 @@
+{
+  "schema_version": "1.0",
+  "pipeline_id": "tls-exact-duplicate-index-v1",
+  "version": "0.1.0",
+  "status": "draft_validation_only",
+  "execution_enabled": false,
+  "source": {
+    "record_id": "16875688",
+    "url": "https://zenodo.org/records/16875688",
+    "metadata_sha256": "534392f8da7ed9d1f5470eaee4c9220f95ba8975f52cc80a434949727e0cbb42",
+    "record_license": "cc-by-4.0",
+    "scope": "Only the 236 original PLY files in 118 recorded exact-byte duplicate candidate groups; not the complete provider dataset."
+  },
+  "inputs": [
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_20_-100_Boom13.ply",
+      "sha256": "0490661b7dea64aa6e02c41065c87dc8436c0184855f6560d8dbdca9a6958bfb",
+      "size_bytes": 2474400
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_20_-100_Boom31.ply",
+      "sha256": "6adda96e945bf810fc3dfb2a6b15d4c9e52dff8e730b46203784c61f16753dd6",
+      "size_bytes": 1866880
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_20_-100_Boom9.ply",
+      "sha256": "8262e82f946d1e4d81f902af5a56f8b0796bce8a5408912f8a7e41ae93b0cd5c",
+      "size_bytes": 24783169
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_20_-60_Boom20.ply",
+      "sha256": "5e0a64c7c8190930ff8c165d5c7d3ef21e2d093c40da8cdbb4058bd269352328",
+      "size_bytes": 3481409
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_20_-80_Boom6.ply",
+      "sha256": "6e8f2c3618454f619f65b84b5a1f1bc31c5e39f2b515e74ce8f558fe1f201b39",
+      "size_bytes": 11624033
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom12.ply",
+      "sha256": "30105cf61bb2c3745c99d1a5d4d64e7a5a5fa601db8a40992a546a48be47a314",
+      "size_bytes": 1822464
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom29.ply",
+      "sha256": "a0217d6874dbef825fcc1db98871fa414c612cd7184346d673e62b020d26b82b",
+      "size_bytes": 1305280
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom3.ply",
+      "sha256": "52ee02e9447239c5a9266e0ef778f34addab2715aa63dd0f06ab6d129f8299fc",
+      "size_bytes": 11215905
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom31.ply",
+      "sha256": "880fca25ec74e333aafcf85e90699e666ff590854c971e868b82911ec7a9b178",
+      "size_bytes": 759392
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-100_Boom4.ply",
+      "sha256": "47173d01b232bc740a69e6cb23228d505d93a8bc9f7b693c49341907134c8238",
+      "size_bytes": 8681249
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom1.ply",
+      "sha256": "cb7835ad536172b1144ba08aa837971601e69367f263984215a0c112e6fbed4d",
+      "size_bytes": 47148802
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom11.ply",
+      "sha256": "d6e76102d6501bba5a4c566606ca3826bb0ae539b3aa1c203a88b4ae328bb988",
+      "size_bytes": 1617440
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom12.ply",
+      "sha256": "27c24f030affc25101f420d7870179396ff5800a688ea04b86dca555069aef30",
+      "size_bytes": 1920000
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom22.ply",
+      "sha256": "8388125ad957fc5832624750fa20c4aa831f71fbe14006b578c0f6096085c4b4",
+      "size_bytes": 575424
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-60_Boom3.ply",
+      "sha256": "b87c3ffe2499cabf382cfcdb30183e23876bdaf03d3ec6a1e96c73d520bd77c4",
+      "size_bytes": 21156161
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-80_Boom12.ply",
+      "sha256": "aff033a9d2bf41903f33267cff6ffe90ac25bb6370b5f72892cb67958aa1617a",
+      "size_bytes": 37181008
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/train/tile_40_-80_Boom3.ply",
+      "sha256": "c9e6b4530ced4cf5cc0ac69d9e0a4f792d03f6bed551550234ae35ac4cb65c7b",
+      "size_bytes": 23072705
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_20_-100_Boom13.ply",
+      "sha256": "0490661b7dea64aa6e02c41065c87dc8436c0184855f6560d8dbdca9a6958bfb",
+      "size_bytes": 2474400
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_20_-100_Boom31.ply",
+      "sha256": "6adda96e945bf810fc3dfb2a6b15d4c9e52dff8e730b46203784c61f16753dd6",
+      "size_bytes": 1866880
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_20_-100_Boom9.ply",
+      "sha256": "8262e82f946d1e4d81f902af5a56f8b0796bce8a5408912f8a7e41ae93b0cd5c",
+      "size_bytes": 24783169
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_20_-60_Boom20.ply",
+      "sha256": "5e0a64c7c8190930ff8c165d5c7d3ef21e2d093c40da8cdbb4058bd269352328",
+      "size_bytes": 3481409
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_20_-80_Boom6.ply",
+      "sha256": "6e8f2c3618454f619f65b84b5a1f1bc31c5e39f2b515e74ce8f558fe1f201b39",
+      "size_bytes": 11624033
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom12.ply",
+      "sha256": "30105cf61bb2c3745c99d1a5d4d64e7a5a5fa601db8a40992a546a48be47a314",
+      "size_bytes": 1822464
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom29.ply",
+      "sha256": "a0217d6874dbef825fcc1db98871fa414c612cd7184346d673e62b020d26b82b",
+      "size_bytes": 1305280
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom3.ply",
+      "sha256": "52ee02e9447239c5a9266e0ef778f34addab2715aa63dd0f06ab6d129f8299fc",
+      "size_bytes": 11215905
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom31.ply",
+      "sha256": "880fca25ec74e333aafcf85e90699e666ff590854c971e868b82911ec7a9b178",
+      "size_bytes": 759392
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-100_Boom4.ply",
+      "sha256": "47173d01b232bc740a69e6cb23228d505d93a8bc9f7b693c49341907134c8238",
+      "size_bytes": 8681249
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom1.ply",
+      "sha256": "cb7835ad536172b1144ba08aa837971601e69367f263984215a0c112e6fbed4d",
+      "size_bytes": 47148802
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom11.ply",
+      "sha256": "d6e76102d6501bba5a4c566606ca3826bb0ae539b3aa1c203a88b4ae328bb988",
+      "size_bytes": 1617440
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom12.ply",
+      "sha256": "27c24f030affc25101f420d7870179396ff5800a688ea04b86dca555069aef30",
+      "size_bytes": 1920000
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom22.ply",
+      "sha256": "8388125ad957fc5832624750fa20c4aa831f71fbe14006b578c0f6096085c4b4",
+      "size_bytes": 575424
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-60_Boom3.ply",
+      "sha256": "b87c3ffe2499cabf382cfcdb30183e23876bdaf03d3ec6a1e96c73d520bd77c4",
+      "size_bytes": 21156161
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-80_Boom12.ply",
+      "sha256": "aff033a9d2bf41903f33267cff6ffe90ac25bb6370b5f72892cb67958aa1617a",
+      "size_bytes": 37181008
+    },
+    {
+      "path": "sources/16875688/originals/litchfield/trees/val/tile_40_-80_Boom3.ply",
+      "sha256": "c9e6b4530ced4cf5cc0ac69d9e0a4f792d03f6bed551550234ae35ac4cb65c7b",
+      "size_bytes": 23072705
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_009.ply",
+      "sha256": "7ca4b90b873c11454d2a34fde1de5ad8c33c5a02037b96cb00a399a20dc045cc",
+      "size_bytes": 15127350
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_013.ply",
+      "sha256": "1fad890900ae14cee497e22bc97ae9e95a7a1629938df43d7564795eb0a57a10",
+      "size_bytes": 16374110
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_008.ply",
+      "sha256": "5a9c6f30341c85ca16cecff2b5a04fd3664bee5053f8c48d81ed158ac6bad7d1",
+      "size_bytes": 4699870
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_009.ply",
+      "sha256": "aefa83003bb4073e261f76949631c2c34069504ffb1b0e1354adf680efc61b2a",
+      "size_bytes": 16940190
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_018.ply",
+      "sha256": "301e067403057dafbbce6ef3f3dc363b447d592514638d492e0a4a031e0881c4",
+      "size_bytes": 4871390
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_019.ply",
+      "sha256": "ed187c22852a832e973a26725f709ed4c1232e3ce14f64b45586960ccef6d06e",
+      "size_bytes": 6143910
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_020.ply",
+      "sha256": "00bdb9974cf8508b0017502985bcd8815faf8de57fee2aa3f53230964b6fce64",
+      "size_bytes": 2116750
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_057.ply",
+      "sha256": "6af6e70d01608a1fab151ceacabb1c10f3c8c5f4fe08d1cfd8decb09c4f49e19",
+      "size_bytes": 9900090
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_068.ply",
+      "sha256": "8a294f1d780b9e7938c97f25047f0800ea17656fbcb4d82a84b6e14de76c55ec",
+      "size_bytes": 2475470
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_090.ply",
+      "sha256": "1e08d96a841fd5dd0b8e7f125b0b7bb9643bfe22085f0ba4b4a2ed5875907d0f",
+      "size_bytes": 15423910
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_092.ply",
+      "sha256": "5058eb0673c272b61d62114c054c7ca913ce14c4cf6f8014c36683a6373879fa",
+      "size_bytes": 21984051
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_093.ply",
+      "sha256": "365d4dd556db2e2ba1db3640c9abe9881cd29cffe016b21db7a3b28466639806",
+      "size_bytes": 13344290
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_102.ply",
+      "sha256": "27cf8a3281ee78efd406080852d8edbcc4abfa3e907a98abed580d9b33bb5b46",
+      "size_bytes": 12129830
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_70.ply",
+      "sha256": "c967283d02b7c0a565a2c53034d8c840192bcede666595b7c2478657823730af",
+      "size_bytes": 1152149
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_71.ply",
+      "sha256": "fa3e25e449a744fd5aca8c5915ae39564db07806b822b3bc07a5ca89a2689dab",
+      "size_bytes": 30892631
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_72.ply",
+      "sha256": "f24e0485522cb698c5e541a8ac0c46de3576a95c9fcb6e1af5016b148b53d192",
+      "size_bytes": 7983330
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_73.ply",
+      "sha256": "2f2f1483438debd4eb94d9e163dc52ce51d191aabe9837132fccb1f24195badc",
+      "size_bytes": 9480370
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_74.ply",
+      "sha256": "071c5c8f7e56b9008decb8f8250e56940feb36e267fbe3d9a40acb616f78908d",
+      "size_bytes": 13088650
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_75.ply",
+      "sha256": "b369c0240bc313af8129762f889a7977b538c258ec2440bce701fcfba89fc224",
+      "size_bytes": 18372350
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_76.ply",
+      "sha256": "2909e60034cb09b3c06e5e9bae67666986aa6794db4e614a41cae8dbd4f74d6c",
+      "size_bytes": 6249410
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_77.ply",
+      "sha256": "445cae7a3201bd91df000668ef872d3667b31093d809b77362a69604a78eecab",
+      "size_bytes": 6834950
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_78.ply",
+      "sha256": "188b306362b9a3cb2616a2043c8a6a1763866b2d34a48decddecdc766b15439a",
+      "size_bytes": 22787511
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_80.ply",
+      "sha256": "01d37656de749b2123355fb71c7e9f867401109206a047c8fca16ce4358858d3",
+      "size_bytes": 1352649
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_B_82.ply",
+      "sha256": "bbbf291c21f9f9adf220c90b8eed11d2e0e8b91a606b136fb0dc2c38502fe3dc",
+      "size_bytes": 10440490
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_final_002.ply",
+      "sha256": "2385f02b8ee417feb8075cd141d865d96a6efcd9d3d403705330f218390b126e",
+      "size_bytes": 31384631
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_final_027.ply",
+      "sha256": "b2fc180536e33e8167796e35b086230d0de8c3de37e8c93a4e5a98f0009073d2",
+      "size_bytes": 23859471
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/train/ot_final_028.ply",
+      "sha256": "ca1e6ff8d93abf35a9ee6e0f259fb62f8ebaf791220dcbdf70843a7ee0fed545",
+      "size_bytes": 27747971
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_009.ply",
+      "sha256": "7ca4b90b873c11454d2a34fde1de5ad8c33c5a02037b96cb00a399a20dc045cc",
+      "size_bytes": 15127350
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_013.ply",
+      "sha256": "1fad890900ae14cee497e22bc97ae9e95a7a1629938df43d7564795eb0a57a10",
+      "size_bytes": 16374110
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_008.ply",
+      "sha256": "5a9c6f30341c85ca16cecff2b5a04fd3664bee5053f8c48d81ed158ac6bad7d1",
+      "size_bytes": 4699870
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_009.ply",
+      "sha256": "aefa83003bb4073e261f76949631c2c34069504ffb1b0e1354adf680efc61b2a",
+      "size_bytes": 16940190
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_018.ply",
+      "sha256": "301e067403057dafbbce6ef3f3dc363b447d592514638d492e0a4a031e0881c4",
+      "size_bytes": 4871390
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_019.ply",
+      "sha256": "ed187c22852a832e973a26725f709ed4c1232e3ce14f64b45586960ccef6d06e",
+      "size_bytes": 6143910
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_020.ply",
+      "sha256": "00bdb9974cf8508b0017502985bcd8815faf8de57fee2aa3f53230964b6fce64",
+      "size_bytes": 2116750
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_057.ply",
+      "sha256": "6af6e70d01608a1fab151ceacabb1c10f3c8c5f4fe08d1cfd8decb09c4f49e19",
+      "size_bytes": 9900090
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_068.ply",
+      "sha256": "8a294f1d780b9e7938c97f25047f0800ea17656fbcb4d82a84b6e14de76c55ec",
+      "size_bytes": 2475470
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_090.ply",
+      "sha256": "1e08d96a841fd5dd0b8e7f125b0b7bb9643bfe22085f0ba4b4a2ed5875907d0f",
+      "size_bytes": 15423910
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_092.ply",
+      "sha256": "5058eb0673c272b61d62114c054c7ca913ce14c4cf6f8014c36683a6373879fa",
+      "size_bytes": 21984051
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_093.ply",
+      "sha256": "365d4dd556db2e2ba1db3640c9abe9881cd29cffe016b21db7a3b28466639806",
+      "size_bytes": 13344290
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_102.ply",
+      "sha256": "27cf8a3281ee78efd406080852d8edbcc4abfa3e907a98abed580d9b33bb5b46",
+      "size_bytes": 12129830
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_70.ply",
+      "sha256": "c967283d02b7c0a565a2c53034d8c840192bcede666595b7c2478657823730af",
+      "size_bytes": 1152149
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_71.ply",
+      "sha256": "fa3e25e449a744fd5aca8c5915ae39564db07806b822b3bc07a5ca89a2689dab",
+      "size_bytes": 30892631
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_72.ply",
+      "sha256": "f24e0485522cb698c5e541a8ac0c46de3576a95c9fcb6e1af5016b148b53d192",
+      "size_bytes": 7983330
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_73.ply",
+      "sha256": "2f2f1483438debd4eb94d9e163dc52ce51d191aabe9837132fccb1f24195badc",
+      "size_bytes": 9480370
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_74.ply",
+      "sha256": "071c5c8f7e56b9008decb8f8250e56940feb36e267fbe3d9a40acb616f78908d",
+      "size_bytes": 13088650
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_75.ply",
+      "sha256": "b369c0240bc313af8129762f889a7977b538c258ec2440bce701fcfba89fc224",
+      "size_bytes": 18372350
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_76.ply",
+      "sha256": "2909e60034cb09b3c06e5e9bae67666986aa6794db4e614a41cae8dbd4f74d6c",
+      "size_bytes": 6249410
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_77.ply",
+      "sha256": "445cae7a3201bd91df000668ef872d3667b31093d809b77362a69604a78eecab",
+      "size_bytes": 6834950
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_78.ply",
+      "sha256": "188b306362b9a3cb2616a2043c8a6a1763866b2d34a48decddecdc766b15439a",
+      "size_bytes": 22787511
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_80.ply",
+      "sha256": "01d37656de749b2123355fb71c7e9f867401109206a047c8fca16ce4358858d3",
+      "size_bytes": 1352649
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_B_82.ply",
+      "sha256": "bbbf291c21f9f9adf220c90b8eed11d2e0e8b91a606b136fb0dc2c38502fe3dc",
+      "size_bytes": 10440490
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_final_002.ply",
+      "sha256": "2385f02b8ee417feb8075cd141d865d96a6efcd9d3d403705330f218390b126e",
+      "size_bytes": 31384631
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_final_027.ply",
+      "sha256": "b2fc180536e33e8167796e35b086230d0de8c3de37e8c93a4e5a98f0009073d2",
+      "size_bytes": 23859471
+    },
+    {
+      "path": "sources/16875688/originals/ofental/trees/val/ot_final_028.ply",
+      "sha256": "ca1e6ff8d93abf35a9ee6e0f259fb62f8ebaf791220dcbdf70843a7ee0fed545",
+      "size_bytes": 27747971
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_001.ply",
+      "sha256": "f38d68680fece2e00771ddb7e561e6aea65b386b1c94ef7ee71f93e3990c04b7",
+      "size_bytes": 3762430
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_003.ply",
+      "sha256": "08b9b180b7fff79c5a5053c374e29267720b32d456326c3185087293b908fe3f",
+      "size_bytes": 11499590
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_004.ply",
+      "sha256": "98f32c560578bd4a71d1cec82d9bca1f5e75b63302f350dbe5d696117e7dca5a",
+      "size_bytes": 1470809
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_006.ply",
+      "sha256": "5ad31e250e583082f8cdf72f5b7e854d7e777a2f1bbd2fbefa2042548a5c2519",
+      "size_bytes": 10330410
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_011.ply",
+      "sha256": "55185f8947236eea8d9c9a469d62640f3bf4418eb20dd0e4ead0e58d9a0f090d",
+      "size_bytes": 17533890
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_017.ply",
+      "sha256": "0e56bf27084c5265823d27a413d396bf8910b926dcb2cfbc713842a324d31f22",
+      "size_bytes": 3233830
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_021.ply",
+      "sha256": "96098ec7a0c6be0f0bd710d3ef38b3a3b5bbec6c861c884c39976a7a9d8faf13",
+      "size_bytes": 5206530
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_043.ply",
+      "sha256": "0066157efd4f67de91f21a8a98165957d8c02f5ff2932e59528d0fc58de15f68",
+      "size_bytes": 3276450
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_048.ply",
+      "sha256": "cfcac104cd7da3afaed007a3491e24e8137c98f32186ddedde1925846f86782e",
+      "size_bytes": 2563810
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_052.ply",
+      "sha256": "4607108800533620d30b2bd0f04b01135a47dcd2e2d177164aeb29591050b603",
+      "size_bytes": 6064510
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_057.ply",
+      "sha256": "b6c7ee481f51cb977e9131af1cb84fcde77da997a99a0361ccf220798f069b60",
+      "size_bytes": 2582210
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_059.ply",
+      "sha256": "0eddb43d9d79844a4966199840692fd892e08c810f38e4b703d59d658c190f28",
+      "size_bytes": 1516789
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_063.ply",
+      "sha256": "25202d5c09abf5f219bd34b29a4a9c868f82e6f1cbc6a1e94fd72b6627daa9c8",
+      "size_bytes": 3133810
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_073.ply",
+      "sha256": "eeef1ea922e16fc97b341b44529ef6f645c0a455e101fd29e110ae60a7db5336",
+      "size_bytes": 2303010
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_074.ply",
+      "sha256": "719c7fee9fe1371c47cf5605b40f7a8650b40d98280e5e90393f7d15d8a1db86",
+      "size_bytes": 819269
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_083.ply",
+      "sha256": "4e983371806b6056466839ff76dd3041f6b8a622f93245611e0739c0e321ddc3",
+      "size_bytes": 2428550
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_096.ply",
+      "sha256": "b327e9716f5e735b43129a5191d22bbb5c13873ddd923faa2ee1d5063e6fbfc0",
+      "size_bytes": 4589290
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_100.ply",
+      "sha256": "547c374f2f118afe4521fe57f4a7f0f40270dd3c8d69cad8192f830f4182ff04",
+      "size_bytes": 1139729
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_123.ply",
+      "sha256": "ad777a4c82d055332c5b1062753c3f65ee8e615e8d82a4e4cfe98c0b8f26db5e",
+      "size_bytes": 3535010
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_129.ply",
+      "sha256": "28b1868b8fea602ed6da6a18c3aff33849689216463da7002294d58f5ce703fa",
+      "size_bytes": 1609989
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_131.ply",
+      "sha256": "2257c9e1aff8cbb83eacbe3cf5c7932ebc27cac2f58ed680a3663b7b67b04038",
+      "size_bytes": 1420329
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_141.ply",
+      "sha256": "14f0a1d0956720fd067c8108a7e0e57588fec74c305bb5d2b401c9c01b002da9",
+      "size_bytes": 1872789
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_160.ply",
+      "sha256": "7092af75627509b1314477aee91e8c4c87d75c85f31d2fa0ab7a4e3df3513929",
+      "size_bytes": 634809
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_164.ply",
+      "sha256": "453c09b29945117837926bba2de87296cdd269826d3b9cfc3407dc1daa92f3e3",
+      "size_bytes": 1218529
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_169.ply",
+      "sha256": "876ab2cc461e96372e3fa421e935fdc795b38beb4d6b3271a7a83e81248b4a6d",
+      "size_bytes": 1441289
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_170.ply",
+      "sha256": "7b921447ae875ddf7738e683b1d5dcd1d01aa92209c97781b4617146cc4289f9",
+      "size_bytes": 1329689
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_171.ply",
+      "sha256": "bb9b02275ecd0ebf50307de24637724fcc69d926e4920cff7930bdad90fdbad0",
+      "size_bytes": 478589
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_a_184.ply",
+      "sha256": "df56b47091ed0069ea92daffb874f47148508431a414254be6821aeebf60da2a",
+      "size_bytes": 2131710
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_b_006_.ply",
+      "sha256": "94eaa6424df7259a4b13fdc6141e1aad381cc16dbe41b085c130f51597c5e78e",
+      "size_bytes": 5213430
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_b_017_.ply",
+      "sha256": "c4483a891f6984c0f7ec2085a201e90a2cb092f3173d6a0dcb571c6ac96d1382",
+      "size_bytes": 6748210
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - quad_b_037_.ply",
+      "sha256": "49ae3922e4da8083499966cd41518f66d543c43e88c536aad8052ec9df711101",
+      "size_bytes": 1132489
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_063_corrected.ply",
+      "sha256": "96ddc2862762c5da046da64757631e55c1831976292c066c8d0d38a8fc75e9d0",
+      "size_bytes": 4626930
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_075_corrected.ply",
+      "sha256": "3c612953c35633a9cd1377bb999ed79a178e2f5f53478fa9648e902ead91a65e",
+      "size_bytes": 23150511
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_077_corrected.ply",
+      "sha256": "b750f43f0ca7e304517507366b457258f86d184e50e35ea840b632598d187457",
+      "size_bytes": 3847950
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_079_corrected.ply",
+      "sha256": "904b12511a8d9de0e96e73a2b596aa8de5402524ed802681697ef876064a4a4e",
+      "size_bytes": 8255450
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_089_corrected.ply",
+      "sha256": "0675c20a12a502f2c88b7c0962981fefd0a089f1216949308ca98b941462eee0",
+      "size_bytes": 16608590
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_172_corrected.ply",
+      "sha256": "888b104f48316691ab71b9b5b55d34affd53521c57a21456dcb7ecde84c8dca0",
+      "size_bytes": 5401890
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_173_corrected.ply",
+      "sha256": "e413660de62272ce2aedc41a1fce6c280815244243ffc80eb4705650f7abbe60",
+      "size_bytes": 11629630
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/train/2018 - POINTCLOUDS - rc_174_corrected.ply",
+      "sha256": "7d0d5c91af7fd2696eec8c12f58acf14297f5f39b21a408120212b73ad2c70eb",
+      "size_bytes": 2487990
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_001.ply",
+      "sha256": "f38d68680fece2e00771ddb7e561e6aea65b386b1c94ef7ee71f93e3990c04b7",
+      "size_bytes": 3762430
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_003.ply",
+      "sha256": "08b9b180b7fff79c5a5053c374e29267720b32d456326c3185087293b908fe3f",
+      "size_bytes": 11499590
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_004.ply",
+      "sha256": "98f32c560578bd4a71d1cec82d9bca1f5e75b63302f350dbe5d696117e7dca5a",
+      "size_bytes": 1470809
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_006.ply",
+      "sha256": "5ad31e250e583082f8cdf72f5b7e854d7e777a2f1bbd2fbefa2042548a5c2519",
+      "size_bytes": 10330410
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_011.ply",
+      "sha256": "55185f8947236eea8d9c9a469d62640f3bf4418eb20dd0e4ead0e58d9a0f090d",
+      "size_bytes": 17533890
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_017.ply",
+      "sha256": "0e56bf27084c5265823d27a413d396bf8910b926dcb2cfbc713842a324d31f22",
+      "size_bytes": 3233830
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_021.ply",
+      "sha256": "96098ec7a0c6be0f0bd710d3ef38b3a3b5bbec6c861c884c39976a7a9d8faf13",
+      "size_bytes": 5206530
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_043.ply",
+      "sha256": "0066157efd4f67de91f21a8a98165957d8c02f5ff2932e59528d0fc58de15f68",
+      "size_bytes": 3276450
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_048.ply",
+      "sha256": "cfcac104cd7da3afaed007a3491e24e8137c98f32186ddedde1925846f86782e",
+      "size_bytes": 2563810
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_052.ply",
+      "sha256": "4607108800533620d30b2bd0f04b01135a47dcd2e2d177164aeb29591050b603",
+      "size_bytes": 6064510
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_057.ply",
+      "sha256": "b6c7ee481f51cb977e9131af1cb84fcde77da997a99a0361ccf220798f069b60",
+      "size_bytes": 2582210
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_059.ply",
+      "sha256": "0eddb43d9d79844a4966199840692fd892e08c810f38e4b703d59d658c190f28",
+      "size_bytes": 1516789
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_063.ply",
+      "sha256": "25202d5c09abf5f219bd34b29a4a9c868f82e6f1cbc6a1e94fd72b6627daa9c8",
+      "size_bytes": 3133810
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_073.ply",
+      "sha256": "eeef1ea922e16fc97b341b44529ef6f645c0a455e101fd29e110ae60a7db5336",
+      "size_bytes": 2303010
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_074.ply",
+      "sha256": "719c7fee9fe1371c47cf5605b40f7a8650b40d98280e5e90393f7d15d8a1db86",
+      "size_bytes": 819269
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_083.ply",
+      "sha256": "4e983371806b6056466839ff76dd3041f6b8a622f93245611e0739c0e321ddc3",
+      "size_bytes": 2428550
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_096.ply",
+      "sha256": "b327e9716f5e735b43129a5191d22bbb5c13873ddd923faa2ee1d5063e6fbfc0",
+      "size_bytes": 4589290
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_100.ply",
+      "sha256": "547c374f2f118afe4521fe57f4a7f0f40270dd3c8d69cad8192f830f4182ff04",
+      "size_bytes": 1139729
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_123.ply",
+      "sha256": "ad777a4c82d055332c5b1062753c3f65ee8e615e8d82a4e4cfe98c0b8f26db5e",
+      "size_bytes": 3535010
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_129.ply",
+      "sha256": "28b1868b8fea602ed6da6a18c3aff33849689216463da7002294d58f5ce703fa",
+      "size_bytes": 1609989
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_131.ply",
+      "sha256": "2257c9e1aff8cbb83eacbe3cf5c7932ebc27cac2f58ed680a3663b7b67b04038",
+      "size_bytes": 1420329
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_141.ply",
+      "sha256": "14f0a1d0956720fd067c8108a7e0e57588fec74c305bb5d2b401c9c01b002da9",
+      "size_bytes": 1872789
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_160.ply",
+      "sha256": "7092af75627509b1314477aee91e8c4c87d75c85f31d2fa0ab7a4e3df3513929",
+      "size_bytes": 634809
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_164.ply",
+      "sha256": "453c09b29945117837926bba2de87296cdd269826d3b9cfc3407dc1daa92f3e3",
+      "size_bytes": 1218529
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_169.ply",
+      "sha256": "876ab2cc461e96372e3fa421e935fdc795b38beb4d6b3271a7a83e81248b4a6d",
+      "size_bytes": 1441289
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_170.ply",
+      "sha256": "7b921447ae875ddf7738e683b1d5dcd1d01aa92209c97781b4617146cc4289f9",
+      "size_bytes": 1329689
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_171.ply",
+      "sha256": "bb9b02275ecd0ebf50307de24637724fcc69d926e4920cff7930bdad90fdbad0",
+      "size_bytes": 478589
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_a_184.ply",
+      "sha256": "df56b47091ed0069ea92daffb874f47148508431a414254be6821aeebf60da2a",
+      "size_bytes": 2131710
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_b_006_.ply",
+      "sha256": "94eaa6424df7259a4b13fdc6141e1aad381cc16dbe41b085c130f51597c5e78e",
+      "size_bytes": 5213430
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_b_017_.ply",
+      "sha256": "c4483a891f6984c0f7ec2085a201e90a2cb092f3173d6a0dcb571c6ac96d1382",
+      "size_bytes": 6748210
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - quad_b_037_.ply",
+      "sha256": "49ae3922e4da8083499966cd41518f66d543c43e88c536aad8052ec9df711101",
+      "size_bytes": 1132489
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_063_corrected.ply",
+      "sha256": "96ddc2862762c5da046da64757631e55c1831976292c066c8d0d38a8fc75e9d0",
+      "size_bytes": 4626930
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_075_corrected.ply",
+      "sha256": "3c612953c35633a9cd1377bb999ed79a178e2f5f53478fa9648e902ead91a65e",
+      "size_bytes": 23150511
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_077_corrected.ply",
+      "sha256": "b750f43f0ca7e304517507366b457258f86d184e50e35ea840b632598d187457",
+      "size_bytes": 3847950
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_079_corrected.ply",
+      "sha256": "904b12511a8d9de0e96e73a2b596aa8de5402524ed802681697ef876064a4a4e",
+      "size_bytes": 8255450
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_089_corrected.ply",
+      "sha256": "0675c20a12a502f2c88b7c0962981fefd0a089f1216949308ca98b941462eee0",
+      "size_bytes": 16608590
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_172_corrected.ply",
+      "sha256": "888b104f48316691ab71b9b5b55d34affd53521c57a21456dcb7ecde84c8dca0",
+      "size_bytes": 5401890
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_173_corrected.ply",
+      "sha256": "e413660de62272ce2aedc41a1fce6c280815244243ffc80eb4705650f7abbe60",
+      "size_bytes": 11629630
+    },
+    {
+      "path": "sources/16875688/originals/robsoncreek/trees/val/2018 - POINTCLOUDS - rc_174_corrected.ply",
+      "sha256": "7d0d5c91af7fd2696eec8c12f58acf14297f5f39b21a408120212b73ad2c70eb",
+      "size_bytes": 2487990
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1055.ply",
+      "sha256": "4a2eed1aeb1a642c69ebdad497e1ce6f649590707931dd0c0931044065d39de7",
+      "size_bytes": 2771450
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1074.ply",
+      "sha256": "bbe86afe54e7ae4357b4f30f930d90298d412493e531496aa8aec6e2829023bc",
+      "size_bytes": 20455131
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1090.ply",
+      "sha256": "3b7efa4cc0c04115e4b77c53b2d74ce9b850064beb174a4b086ab39bb1f7e5d2",
+      "size_bytes": 2729150
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1195a.ply",
+      "sha256": "1b35e5adc68346d1958bb97515d444d52e2b3c57d3088f0727568a6111e012dc",
+      "size_bytes": 2743350
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1195b.ply",
+      "sha256": "43176c6e73e49f255a48fb02a77a5eeb1e24c37938a989ea1c70965743ac7901",
+      "size_bytes": 178888
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1195c.ply",
+      "sha256": "0faa14742aea93f2a0e86fef8176f8442514f448de435567f1582e1d5222f020",
+      "size_bytes": 517169
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1271.ply",
+      "sha256": "15e325403c477f141756c8a83aef8737ae0bdc4233bb1104862d09f4e766331d",
+      "size_bytes": 1742369
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1339.ply",
+      "sha256": "ca0da0b2205062da14e3e78c452f7bc73161f9b8bc21eafc36729088807b435a",
+      "size_bytes": 1607109
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_134.ply",
+      "sha256": "116abb87a83d9aa28de905f1569798d96697916200b9b881c0799795624120c6",
+      "size_bytes": 13025830
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_138a.ply",
+      "sha256": "82824e40a37cab6905f94931970ccf66c0dacd0f414bd0bf4bd6422a84a72239",
+      "size_bytes": 4382370
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_138b.ply",
+      "sha256": "88a43f01a40c904d59a8881000b23e1bd2f9854310b090703bf86c565e4be814",
+      "size_bytes": 5327010
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1438a.ply",
+      "sha256": "41f3a297791c10af0a3117a66de77314de3abc6b6c6897bf525f1958d541b6d9",
+      "size_bytes": 575169
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1438b.ply",
+      "sha256": "403ef9da2d59e983d457b6bd008457d2898897a29abdc161306af4932a30d6e6",
+      "size_bytes": 1587849
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1532a.ply",
+      "sha256": "aab6334572616d7452f5b05b0d60cd8431b7ab81deba93d8c60a7695c8ba2f7a",
+      "size_bytes": 2079930
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1532b.ply",
+      "sha256": "71cbba917dcb1607f4642a05f68e7da8e0a6d38d1c52c3dbad425970d51275f1",
+      "size_bytes": 717789
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_1567.ply",
+      "sha256": "3a62110fe9212caaf324d606b9b6c1726588c506985fc59e5c734fe2db8ea83a",
+      "size_bytes": 8024810
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_2049a.ply",
+      "sha256": "948c11316be633559a63e8bde3b42f04abeae6baae5cd84046474df8688dec83",
+      "size_bytes": 2505730
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_221.ply",
+      "sha256": "9237d18a6f175a42414787f1d85ddb98df5cf9af31e1b166a4e381b56707d51e",
+      "size_bytes": 15888970
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_2232.ply",
+      "sha256": "659cb202483a4d65eecbef99daf631fbd6cf9c41042e4026444a3433747bb2d8",
+      "size_bytes": 365569
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_2240.ply",
+      "sha256": "e5e781ac4f365d5858375983ae6091f2e05cb8a0ecde168b0ad991928d6bd781",
+      "size_bytes": 573989
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_286.ply",
+      "sha256": "e70a01ae9605319e7fe438134590ed50213c47e5931f3bc3459a91d21ce69007",
+      "size_bytes": 5295250
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_29.ply",
+      "sha256": "9eac79acdbba9c204a22e55f955972e5545b4955b67ed0ad15bb196f45748639",
+      "size_bytes": 33847051
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_31.ply",
+      "sha256": "14d6259b81be0aaed6b213d8dd22fa012012504048c9c4030015a380a8d2730b",
+      "size_bytes": 19093170
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_338.ply",
+      "sha256": "caf0af22cd20ec71d85b62cf4c3dd95c1b831b5ac580af94b9421670b96e6de6",
+      "size_bytes": 20354171
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_353.ply",
+      "sha256": "1b52e71a620f15eb77440d8ae26f135541348ac58dffbff18670bc6c6caafa9e",
+      "size_bytes": 7326110
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_70.ply",
+      "sha256": "12f8e9bb209370b909d04ad5606a70167b30fdd3851b3e3bd2d113b4146810d1",
+      "size_bytes": 15778010
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_700.ply",
+      "sha256": "543504920ae04be317b67d338b211163c311b3b98781afea87edc3f6ecb6b552",
+      "size_bytes": 2749810
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_8031.ply",
+      "sha256": "efaa904f2567da280bb4dc448d2f3d30c256486426077d38251f52f8541cb8ee",
+      "size_bytes": 505469
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_8096.ply",
+      "sha256": "0c5a040de67a850cd20d1aed687b6aa5df72ec151a11337d053c259ff86caf02",
+      "size_bytes": 86168
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_8098.ply",
+      "sha256": "df74f329cf2f18d8f9bb49944436d1f77426756b9e6366d82c7e646c15a70aaf",
+      "size_bytes": 106608
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_8099a.ply",
+      "sha256": "3a9ba2a7074d649032da1fb689a516bc1853e87d5a0c871417907d9a839aeec5",
+      "size_bytes": 138068
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_8102.ply",
+      "sha256": "1b994246fc62b568c0b65f93815b061059145d58a3351a266ce43e30922630d5",
+      "size_bytes": 698049
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_8105b.ply",
+      "sha256": "5c0b7b23d36042dcf09aadf9d5e87b698a50d5a685f798611277d61dad3da299",
+      "size_bytes": 420629
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_8107d.ply",
+      "sha256": "b420f687a83f7b3fecf8c9b33a3ba64f5b9956c64fa75349e723cca2602d4887",
+      "size_bytes": 566429
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/train/wytham_winter_913.ply",
+      "sha256": "076f99282dbfd7b522b3e2dd187a15fffb22f8ef06fd743925a005b47e5af850",
+      "size_bytes": 2852750
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1055.ply",
+      "sha256": "4a2eed1aeb1a642c69ebdad497e1ce6f649590707931dd0c0931044065d39de7",
+      "size_bytes": 2771450
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1074.ply",
+      "sha256": "bbe86afe54e7ae4357b4f30f930d90298d412493e531496aa8aec6e2829023bc",
+      "size_bytes": 20455131
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1090.ply",
+      "sha256": "3b7efa4cc0c04115e4b77c53b2d74ce9b850064beb174a4b086ab39bb1f7e5d2",
+      "size_bytes": 2729150
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1195a.ply",
+      "sha256": "1b35e5adc68346d1958bb97515d444d52e2b3c57d3088f0727568a6111e012dc",
+      "size_bytes": 2743350
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1195b.ply",
+      "sha256": "43176c6e73e49f255a48fb02a77a5eeb1e24c37938a989ea1c70965743ac7901",
+      "size_bytes": 178888
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1195c.ply",
+      "sha256": "0faa14742aea93f2a0e86fef8176f8442514f448de435567f1582e1d5222f020",
+      "size_bytes": 517169
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1271.ply",
+      "sha256": "15e325403c477f141756c8a83aef8737ae0bdc4233bb1104862d09f4e766331d",
+      "size_bytes": 1742369
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1339.ply",
+      "sha256": "ca0da0b2205062da14e3e78c452f7bc73161f9b8bc21eafc36729088807b435a",
+      "size_bytes": 1607109
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_134.ply",
+      "sha256": "116abb87a83d9aa28de905f1569798d96697916200b9b881c0799795624120c6",
+      "size_bytes": 13025830
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_138a.ply",
+      "sha256": "82824e40a37cab6905f94931970ccf66c0dacd0f414bd0bf4bd6422a84a72239",
+      "size_bytes": 4382370
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_138b.ply",
+      "sha256": "88a43f01a40c904d59a8881000b23e1bd2f9854310b090703bf86c565e4be814",
+      "size_bytes": 5327010
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1438a.ply",
+      "sha256": "41f3a297791c10af0a3117a66de77314de3abc6b6c6897bf525f1958d541b6d9",
+      "size_bytes": 575169
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1438b.ply",
+      "sha256": "403ef9da2d59e983d457b6bd008457d2898897a29abdc161306af4932a30d6e6",
+      "size_bytes": 1587849
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1532a.ply",
+      "sha256": "aab6334572616d7452f5b05b0d60cd8431b7ab81deba93d8c60a7695c8ba2f7a",
+      "size_bytes": 2079930
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1532b.ply",
+      "sha256": "71cbba917dcb1607f4642a05f68e7da8e0a6d38d1c52c3dbad425970d51275f1",
+      "size_bytes": 717789
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_1567.ply",
+      "sha256": "3a62110fe9212caaf324d606b9b6c1726588c506985fc59e5c734fe2db8ea83a",
+      "size_bytes": 8024810
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_2049a.ply",
+      "sha256": "948c11316be633559a63e8bde3b42f04abeae6baae5cd84046474df8688dec83",
+      "size_bytes": 2505730
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_221.ply",
+      "sha256": "9237d18a6f175a42414787f1d85ddb98df5cf9af31e1b166a4e381b56707d51e",
+      "size_bytes": 15888970
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_2232.ply",
+      "sha256": "659cb202483a4d65eecbef99daf631fbd6cf9c41042e4026444a3433747bb2d8",
+      "size_bytes": 365569
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_2240.ply",
+      "sha256": "e5e781ac4f365d5858375983ae6091f2e05cb8a0ecde168b0ad991928d6bd781",
+      "size_bytes": 573989
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_286.ply",
+      "sha256": "e70a01ae9605319e7fe438134590ed50213c47e5931f3bc3459a91d21ce69007",
+      "size_bytes": 5295250
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_29.ply",
+      "sha256": "9eac79acdbba9c204a22e55f955972e5545b4955b67ed0ad15bb196f45748639",
+      "size_bytes": 33847051
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_31.ply",
+      "sha256": "14d6259b81be0aaed6b213d8dd22fa012012504048c9c4030015a380a8d2730b",
+      "size_bytes": 19093170
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_338.ply",
+      "sha256": "caf0af22cd20ec71d85b62cf4c3dd95c1b831b5ac580af94b9421670b96e6de6",
+      "size_bytes": 20354171
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_353.ply",
+      "sha256": "1b52e71a620f15eb77440d8ae26f135541348ac58dffbff18670bc6c6caafa9e",
+      "size_bytes": 7326110
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_70.ply",
+      "sha256": "12f8e9bb209370b909d04ad5606a70167b30fdd3851b3e3bd2d113b4146810d1",
+      "size_bytes": 15778010
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_700.ply",
+      "sha256": "543504920ae04be317b67d338b211163c311b3b98781afea87edc3f6ecb6b552",
+      "size_bytes": 2749810
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_8031.ply",
+      "sha256": "efaa904f2567da280bb4dc448d2f3d30c256486426077d38251f52f8541cb8ee",
+      "size_bytes": 505469
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_8096.ply",
+      "sha256": "0c5a040de67a850cd20d1aed687b6aa5df72ec151a11337d053c259ff86caf02",
+      "size_bytes": 86168
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_8098.ply",
+      "sha256": "df74f329cf2f18d8f9bb49944436d1f77426756b9e6366d82c7e646c15a70aaf",
+      "size_bytes": 106608
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_8099a.ply",
+      "sha256": "3a9ba2a7074d649032da1fb689a516bc1853e87d5a0c871417907d9a839aeec5",
+      "size_bytes": 138068
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_8102.ply",
+      "sha256": "1b994246fc62b568c0b65f93815b061059145d58a3351a266ce43e30922630d5",
+      "size_bytes": 698049
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_8105b.ply",
+      "sha256": "5c0b7b23d36042dcf09aadf9d5e87b698a50d5a685f798611277d61dad3da299",
+      "size_bytes": 420629
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_8107d.ply",
+      "sha256": "b420f687a83f7b3fecf8c9b33a3ba64f5b9956c64fa75349e723cca2602d4887",
+      "size_bytes": 566429
+    },
+    {
+      "path": "sources/16875688/originals/wytham/trees/val/wytham_winter_913.ply",
+      "sha256": "076f99282dbfd7b522b3e2dd187a15fffb22f8ef06fd743925a005b47e5af850",
+      "size_bytes": 2852750
+    }
+  ],
+  "transformations": [
+    {
+      "id": "verify",
+      "operation": "Rehash every selected original and compare its pinned size/SHA-256. Reject symlinks and changed inputs."
+    },
+    {
+      "id": "index",
+      "operation": "Emit a candidate duplicate-reference index. Preserve every source; leave canonical references unset and decisions pending."
+    }
+  ],
+  "semantic_contract": {
+    "units": "preserved; not interpreted",
+    "crs": "preserved; not inferred",
+    "labels": "preserved; not parsed or remapped",
+    "information_loss": "none in input data; output is only an index",
+    "task": "exact byte duplication review, not geometry equivalence or benchmark admission"
+  },
+  "environment": {
+    "validation_python": "3.11.11",
+    "third_party_dependencies": [],
+    "oci_image": "docker.io/library/python@sha256:081075da77b2b55c23c088251026fb69a7b2bf92471e491ff5fd75c192fd38e5",
+    "container_validation": "pending current run",
+    "platform": "linux/arm64"
+  },
+  "resources": {
+    "max_input_buffer_bytes": 1048576,
+    "full_selected_input_bytes": 1879383172
+  },
+  "audit": {
+    "decision": "pending",
+    "reviewer": null,
+    "blockers": [
+      "At least one pinned input differs from its recorded hash; diagnose before admission",
+      "Human audit of the final package digest pending"
+    ]
+  }
+}
