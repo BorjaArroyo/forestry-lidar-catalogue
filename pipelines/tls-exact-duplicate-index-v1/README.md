@@ -1,8 +1,8 @@
-# TLS exact-duplicate index · draft
+# TLS exact-duplicate index · validated existing combination
 
 This package contains its input contract, implementation, tests, prior analysis
-and file checksums. No original point clouds are embedded. Execution through
-Canopy remains disabled; the entrypoint only performs offline validation and
+and file checksums. No original point clouds are embedded. The Workbench adapter
+is not implemented; the entrypoint only performs offline validation and
 emits an unapproved candidate index. It does not perform curation.
 
 Use Python 3.11.11 (standard library only), with the acquisition root as input:
@@ -17,7 +17,7 @@ the input root. All selected bytes are rehashed; original paths are only opened
 for reading. validation-report.json records checked inputs and open decisions.
 No geometry or label validation is claimed. Keep validation artifacts with the
 package-lock fingerprint. The lock is a checksum manifest, not a signature or
-human approval; audit the final package digest before admission.
+human approval. Existing validated combinations do not need repeated approval.
 
 The Dockerfile pins the Python base by immutable registry digest for linux/arm64.
 Build locally, inspect the resulting image ID, and use that exact ID to validate.
@@ -33,7 +33,7 @@ Run the inspected sha256 image ID with --network=none, --read-only, --cap-drop=A
 /outputs mounts. Pass --root /inputs --output /outputs/report. Container tests can
 use --entrypoint python with test_pipeline.py. Base-image acquisition is a declared
 setup requirement; validation itself has no network dependency. Execution through
-Canopy remains blocked. See the external registry/evidence for actual validation
+the Workbench remains unavailable until an adapter is implemented. See the external registry/evidence for actual validation
 results and remaining gates; package metadata is a declaration, not approval.
 
 
@@ -55,6 +55,6 @@ python3 entrypoint.py --root /absolute/acquisition/root --stage-to /absolute/new
 
 For containers, materialize first or provide a separate writable local /staging
 mount; /inputs stays read-only and /outputs is a distinct directory. The current
-Canopy service remains blocked pending human audit. This workaround isolates the
+Workbench adapter is pending; no new human approval is needed for this validated existing-source CLI. This workaround isolates the
 pipeline from an unreliable input mount; it does not claim to fix the WebDAV
 server/client or establish the historical cause of inconsistent reads.

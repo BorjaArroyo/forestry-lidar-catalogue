@@ -1,64 +1,49 @@
-# Audited, self-contained dataset pipelines
+# Dataset-pipeline-task compatibility
 
-Every data-changing pipeline must be analyzed and audited before it becomes
-executable through Canopy. Dataset admission and pipeline admission are separate
-human decisions. A shared field name or generic converter is not an approved
-transformation. The legacy acquisition --harmonize path and the service's generic
-normalization job are blocked. Existing derived data remains historical evidence,
-not a newly certified pipeline result. Acquisition of originals and read-only
-inspection/audit remain available.
+New datasets require prior analysis and dataset-specific pipeline validation
+before catalog admission. Maintainers review that admission through a pull
+request. A validated existing combination can run repeatedly without another
+human approval. Material changes to source versions, schemas, label meanings,
+transformations, task assumptions or environments require targeted reassessment
+and validation of the affected parts, not a blanket restart of every audit.
 
-## The admission unit
+## Existing workflows
 
-Approve one immutable pipeline package for one pinned source version and explicit
-input contract. Any code, mapping, environment, input-schema or relevant source
-change invalidates approval and requires reassessment. An executable package must
-contain:
+Source-aware acquisition, integrity verification and normalization already exist.
+`normalization-policy.json` records the previously observed source IDs, schemas
+and known limitations. This preserves historical workflow scope; it does not
+retroactively certify labels, rights or benchmark suitability. Known combinations
+are enabled. New sources and unknown field schemas are blocked until analyzed.
+The deferred derivative-rights source remains deferred. Each input is copied to
+a verified local temporary snapshot before conversion, and originals are preserved.
+The existing acquisition --harmonize option uses the same compatibility controls.
+No per-execution human approval is required.
 
-- A versioned manifest identifying provider record/version, metadata fingerprint,
-  expected asset hashes and accepted field schemas, units, CRS and label meanings.
-- The complete ordered transformation graph, including each step's analysis,
-  intended task, assumptions, mappings, information loss, failure conditions and
-  evidence. Review the composition too: individually valid steps may interact.
-- Entrypoint, all scripts and mappings, locked dependencies and an immutable OCI
-  image digest/platform, plus build/source provenance. Referenced configuration,
-  models and ancillary resources must be included or checksum-pinned and staged
-  before execution. No mutable latest tags, implicit notebook state, hidden host
-  files, untracked downloads or unpublished manual steps.
-- Exact input/output layout, resource needs and supported execution backend.
-  Inputs are read-only; output goes to a new versioned directory. Source data
-  need not be embedded in the image: the pinned input contract must identify it
-  completely, and its use remains subject to the reviewed rights.
-- Executable validation fixtures with expected results/tolerances, schema and
-  semantic invariants, integrity checks, representative real-data validation,
-  failure/recovery tests and the actual validation report.
-- A human audit decision tied to the package digest, with reviewer, date, scope,
-  evidence, limitations and intended-use restrictions. Status remains draft or
-  blocked until the actual audit is complete; schema completeness alone never
-  grants admission.
+## New dataset admission
 
-## Execution contract
+Record the pinned provider version and asset hashes, variables/types, units,
+coordinate references, labels, coverage, rights, duplicates and intended tasks.
+Analyze every proposed transformation and its composition: assumptions, mappings,
+information loss, validation, failure modes and task consequences. Validate the
+complete dataset-pipeline-task combination before publishing it as compatible.
+A shared file extension is not evidence of compatible semantics.
 
-The runner must verify package, image, inputs, mappings and required assets
-against the audited digests, reject incompatible data before writing outputs,
-and record an immutable run manifest with commands, versions, source hashes,
-outputs, verification results and logs. Execution must need only the package,
-its declared inputs, a chosen output directory and the documented backend.
-Missing dependencies or unresolved audit conditions must block execution.
-A dry-run curation plan is a proposal, not an executable or approved pipeline.
+New executable packages must include their entrypoint, ordered steps, mappings,
+locked dependencies, immutable environment/platform, input/output layout, required
+assets, resource needs, fixtures and representative validation evidence. Execution
+must need only declared inputs, package, backend and chosen output directory.
+No hidden host state, mutable image references or unpinned downloads are allowed.
+Record package/configuration/input/output hashes and logs for each run. Hash or
+compatibility failures block execution regardless of prior successful validation.
+Unresolved semantic or rights decisions require expert review; automated success
+alone does not grant a new intended use.
 
-## Current delivery boundary
+## Current readiness
 
-Generic normalization entry points remain closed. The first source-specific
-prototype is pipelines/tls-exact-duplicate-index-v1: an offline exact-byte
-duplicate-index validation package with a pinned input contract, prior analysis,
-tests and package checksums. pipelines/registry.json records its evidence and
-remaining blockers. It is not an execution registry and does not admit a pipeline.
-Version 0.2 materializes pinned inputs into a verified local snapshot. All 236
-selected files pass independent host and container validation; 15 container tests
-cover failure handling. Human audit remains required. Earlier mounted-volume
-read-back failures remain documented; the WebDAV cause is unconfirmed. The local
-image is not published to a registry.
-The research converter module is retained as implementation material; importing
-it directly is outside the audited Canopy execution workflow. Existing benchmark
-recipes also remain disabled pending end-to-end validation.
+TLS exact-duplicate index is technically validated for its existing 236-file
+subset using verified local snapshots. Its CLI can validate without a new human
+approval; its Workbench adapter is not implemented and its local image is not
+registry-hosted. Read-back failures remain documented; WebDAV's cause is not
+certified. The package proposes candidate groups only, with no deletion or
+canonical selection. New curation operations and changed semantics still need
+specific analysis. Benchmark recipes remain disabled until end-to-end validation.

@@ -11,10 +11,11 @@ curation plan.
    and cross-source capture identities. Produce a dry-run correction plan with
    confidence, evidence and expected effects. Preserve originals. Metadata planning
    and source-size checks are implemented; geometric/semantic audit remains open.
-   Every transformation needs prior analysis and audit under PIPELINES.md.
+   New dataset/task combinations need prior analysis under PIPELINES.md.
 3. Traceable corrections: approve task-specific mappings, materialize versioned
    derivatives and record source hashes, recipe versions and split constraints.
-   Generic normalization is blocked pending an audited self-contained package.
+   Existing source/schema normalization runs without repeated approval. New
+   combinations require analysis and validation; actual integrity failures block.
 4. Acquisition UX: complete the destination-selection and execution-host flow
    around existing resumable Zenodo acquisition; validate realistic failure and
    recovery cases. Browser PLY inspection is already available independently.

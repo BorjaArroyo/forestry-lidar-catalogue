@@ -3,16 +3,16 @@
   "pipelines": [
     {
       "id": "tls-exact-duplicate-index-v1",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "package": "tls-exact-duplicate-index-v1/",
-      "package_lock_sha256": "62ae56c471ced55390d7d0fa668601f851390741ea4533db0142c78b10384b4c",
+      "package_lock_sha256": "61c174164752666717f2a1df6baec83a945ee4400640903ae5f90fd96b0620be",
       "execution_enabled": false,
-      "status": "awaiting_human_audit",
+      "status": "validated_adapter_pending",
       "evidence": "tls-validation-evidence.json",
-      "local_image_id": "sha256:5653b1ceff559d5b178eafa3c81c9e39a88162740968a0983eddaeab4672a8f1",
+      "local_image_id": "sha256:a21bf01aa2e85fa69ae0f464f9993e90a0925585bdd94646d549b346d5120757",
       "registry_reference": null,
       "blockers": [
-        "Human audit tied to the final package and immutable environment pending"
+        "Workbench execution adapter is not implemented"
       ],
       "required_input_policy": "verified_local_snapshot",
       "validation_summary": {
@@ -25,7 +25,9 @@
       "limits": [
         "Underlying WebDAV reliability is not certified",
         "Local image has not been published to an OCI registry"
-      ]
+      ],
+      "validation_status": "validated_existing_combination",
+      "manual_approval_per_run": false
     }
   ]
 }

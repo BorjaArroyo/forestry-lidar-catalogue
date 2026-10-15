@@ -1,8 +1,8 @@
 {
   "schema_version": "1.1",
   "pipeline_id": "tls-exact-duplicate-index-v1",
-  "package_version": "0.2.0",
-  "package_lock_sha256": "62ae56c471ced55390d7d0fa668601f851390741ea4533db0142c78b10384b4c",
+  "package_version": "0.3.0",
+  "package_lock_sha256": "61c174164752666717f2a1df6baec83a945ee4400640903ae5f90fd96b0620be",
   "operational_resolution": "Use checksum-verified local snapshots for pipeline input; original mounted data is unchanged.",
   "underlying_cause": "Unconfirmed. Original volume is WebDAV; later reads match pinned hashes. No repair or global reliability claim for the mount.",
   "historical_evidence": {
@@ -25,11 +25,11 @@
     "status": "passed",
     "files": 236,
     "full_input_validation": true,
-    "report_sha256": "ea0d3519facd7c43274651556b68d859aa1d65a66d26b1ea29bd37e2c2420f39",
+    "report_sha256": "15fba7fccaec48ffe7a9a266b5522e0c88b185aaa5eda5d7e1931b0b87afd5b7",
     "python": "3.11.11"
   },
   "container": {
-    "local_image_id": "sha256:5653b1ceff559d5b178eafa3c81c9e39a88162740968a0983eddaeab4672a8f1",
+    "local_image_id": "sha256:a21bf01aa2e85fa69ae0f464f9993e90a0925585bdd94646d549b346d5120757",
     "registry_reference": null,
     "platform": "linux/arm64",
     "network": "none",
@@ -39,7 +39,7 @@
     "test_tmpfs_bytes": 134217728,
     "validation": {
       "pipeline_id": "tls-exact-duplicate-index-v1",
-      "created_at": "2026-10-15T13:58:00.569385+00:00",
+      "created_at": "2026-10-15T14:47:21.658932+00:00",
       "mode": "validation_only",
       "python": "3.11.11",
       "platform": "Linux",
@@ -2293,11 +2293,12 @@
       ],
       "curation_applied": false,
       "scope": "Current byte hashes only; no geometry, labels, rights or benchmark split certification. No canonical member selected or source changed.",
-      "package_lock_sha256": "62ae56c471ced55390d7d0fa668601f851390741ea4533db0142c78b10384b4c",
-      "contract_sha256": "14d8a8d392e120dceebc7d5929924d7f527093d8d14d69a57ca36ac77c2e6052"
+      "package_lock_sha256": "61c174164752666717f2a1df6baec83a945ee4400640903ae5f90fd96b0620be",
+      "contract_sha256": "7f555bf76120a2b0a2f3c9d8a93698c1f54892421c62f76c0573dc01a4b3491e"
     }
   },
-  "decision": "awaiting_human_audit",
+  "decision": "validated_existing_combination",
   "curation_applied": false,
-  "limits": "All 236 declared candidate inputs pass from the verified local snapshot; this does not certify other assets, geometry, labels, rights, benchmark protocols or future WebDAV reads. Image is local, not registry-hosted."
+  "limits": "All 236 declared candidate inputs pass from the verified local snapshot; this does not certify other assets, geometry, labels, rights, benchmark protocols or future WebDAV reads. Image is local, not registry-hosted.",
+  "policy": "No repeated human approval for an existing validated dataset-pipeline-task combination. New datasets and material changes need prior analysis and targeted validation."
 }

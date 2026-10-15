@@ -20,7 +20,6 @@ WEB = REPO / 'knowledge-hub' if (REPO / 'knowledge-hub').is_dir() else REPO
 STATE = REPO / 'temp' / 'canopy-workbench'
 TOKEN = secrets.token_urlsafe(32)
 GUARD = threading.Lock()
-TRANSFORMATION_BLOCKER = "Normalization is blocked: no self-contained, dataset-specific pipeline has completed analysis and human audit yet."
 
 
 def now():
@@ -158,8 +157,6 @@ def submit(body):
     kind = body.get('kind')
     if kind not in {'acquire','audit','harmonize','benchmark'}:
         raise ValueError('Unknown job type')
-    if kind == 'harmonize':
-        raise ValueError(TRANSFORMATION_BLOCKER)
     root = directory(body.get('root', ''), exists=kind != 'acquire')
     with GUARD, FileLock(str(STATE / 'submission.lock'), timeout=0):
         if any(j['status'] in {'queued','running'} for j in jobs()):
@@ -188,6 +185,8 @@ def submit(body):
             job['expected_bytes'] = total
             job['record_id'] = rid
             save(folder / 'inventory.json', inv)
+        elif kind == 'harmonize':
+            normalization_manifests(root)
         elif kind == 'benchmark':
             recipe, image, blockers = recipe_check(body['recipe_id'], root)
             if blockers:
@@ -200,6 +199,21 @@ def submit(body):
         (folder / 'worker.pid').write_text(str(p.pid))
         # The worker owns subsequent state writes, avoiding a launch-time update race.
         return {'id':job_id,'pid':p.pid}
+
+
+def normalization_manifests(root):
+    from normalization_inputs import source_policy
+    manifests = []
+    for path in sorted((root / 'sources').glob('*/manifests/*.json')):
+        if path.name.startswith('._'):
+            continue
+        meta = read(path)
+        if int(meta['record_id']) != 15193973:
+            source_policy(int(meta['record_id']))
+        manifests.append(meta)
+    if not manifests:
+        raise ValueError('Normalization requires acquired file manifests')
+    return manifests
 
 
 def audit(root, output):
@@ -234,7 +248,16 @@ def worker(folder):
                     if audit(root, folder):
                         job['status'] = 'completed_with_errors'
                 elif job['kind'] == 'harmonize':
-                    raise ValueError(TRANSFORMATION_BLOCKER)
+                    from harmonize_lidar import harmonize
+                    results = []
+                    for meta in normalization_manifests(root):
+                        for item in meta['outputs']:
+                            result = harmonize(root, int(meta['record_id']), item)
+                            if result:
+                                results.append(result)
+                                print(f"NORMALIZATION {item['path']}: {result['status']}", flush=True)
+                    save(folder / 'harmonization-report.json', {'results': results, 'created_at': now(),
+                         'scope': 'Existing source/schema normalization; original XYZ and fields preserved. Known mapping limitations remain; no new task or rights admission.'})
                 else:
                     recipe,image = job['recipe'],job['image']
                     _,_,blockers = recipe_check(recipe['id'],root)

@@ -53,8 +53,10 @@ version-pinned Zenodo downloads into a selected absolute directory, source-aware
 duplicate-review plans, and persistent background jobs.
 Downloading and extracting assets can require substantial local and destination
 space. Original files remain preserved. Only ZIP archives are expanded.
-Normalization is blocked until a self-contained, dataset-specific pipeline has
-completed prior analysis and human audit; see [PIPELINES.md](PIPELINES.md).
+Existing source/schema normalization workflows run without repeated approval.
+New datasets and unknown schemas require prior analysis. Verified local input
+copies isolate conversion from mounted read-back instability. Existing semantic
+and rights limitations remain; see [PIPELINES.md](PIPELINES.md).
 
 Curation review groups recorded source and normalized hashes, checks source
 file sizes and proposes connected cloud identities. macOS AppleDouble sidecars
@@ -93,7 +95,8 @@ No canonical copy is selected and no correction has been applied.
 
 An initial [dataset-specific validation package](pipelines/tls-exact-duplicate-index-v1/README.md)
 pins the TLS source's 236 duplicate-candidate files. It remains a draft;
-human audit is required before execution admission. Version 0.2 validates all
+its Workbench adapter is pending; no repeated human approval is required for
+its validated existing-source CLI. Local snapshot validation covers all
 236 selected files on a verified local snapshot, independently on host and in
 the container. Original WebDAV read inconsistencies remain documented; this
 does not certify the mount or modify originals.

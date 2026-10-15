@@ -121,7 +121,7 @@ def main():
                              "recorded_read_failures": staging_report["read_failures"], "source_mutated": False}
     result.update(package_lock_sha256=package_hash, contract_sha256=sha(contract_path))
     (args.output / "validation-report.json").write_text(json.dumps(result, indent=2) + "\n")
-    print(f"Validated {len(result['checked_files'])}/{result['declared_files']} input files; execution remains blocked")
+    print(f"Validated {len(result['checked_files'])}/{result['declared_files']} input files; no curation applied")
 
 
 if __name__ == "__main__":

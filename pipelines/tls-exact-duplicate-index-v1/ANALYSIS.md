@@ -24,7 +24,7 @@ output directory. No resume or rollback of source data is required.
 This package is an offline validation prototype. Its Python validation entrypoint
 is complete and has no third-party dependencies or network calls. It is not yet
 an admitted executable pipeline: the pinned OCI build environment must be validated, all declared input
-hashes must match, and a human must audit the package before admission. A detected
+hashes must match and the affected combination must pass technical validation. A detected
 input mismatch is a blocking finding; never update expected hashes merely to
 make validation pass.
 
@@ -43,4 +43,5 @@ CRS are unchanged. Synthetic tests inject transient/short/corrupt reads, local
 read-back corruption, persistent mismatches and unsafe paths. Required real-data
 evidence is full 236-file materialization and independent host/container checks.
 This is an operational isolation strategy; the underlying WebDAV cause remains
-unconfirmed and human audit of the new package is still required.
+unconfirmed. Repeated execution of this validated existing combination needs no
+new human approval; new source/schema/task combinations require prior analysis.

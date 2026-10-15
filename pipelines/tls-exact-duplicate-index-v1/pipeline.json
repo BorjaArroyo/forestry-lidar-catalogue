@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "pipeline_id": "tls-exact-duplicate-index-v1",
-  "version": "0.2.0",
-  "status": "draft_validation_only",
+  "version": "0.3.0",
+  "status": "validated_existing_combination",
   "execution_enabled": false,
   "source": {
     "record_id": "16875688",
@@ -1227,16 +1227,14 @@
     "local_staging_bytes": 1879383172
   },
   "audit": {
-    "decision": "pending",
+    "decision": "technical_validation_complete_existing_source",
     "reviewer": null,
-    "blockers": [
-      "Human audit of the final version 0.2 package and environment pending"
-    ],
+    "blockers": [],
     "requirements": [
       "Pinned source hashes and byte counts",
       "Verified local materialization and independent local read-back",
-      "Full host and container validation of all declared inputs",
-      "Human audit tied to the final package fingerprint"
+      "Full host and container validation of all declared inputs"
     ]
-  }
+  },
+  "execution_blocker": "Workbench adapter is not implemented; validation CLI is available"
 }

@@ -2,7 +2,6 @@
 
 import hashlib
 import json
-import time
 from pathlib import Path
 
 import laspy
@@ -18,33 +17,30 @@ def sha256(path):
     return value.hexdigest()
 
 
-def verify_source(path, expected_sha256, attempts=3):
-    for attempt in range(attempts):
-        if sha256(path) == expected_sha256:
-            return
-        if attempt + 1 < attempts:
-            time.sleep(2 * (attempt + 1))
-    raise ValueError("Source changed after acquisition verification")
-
-
 def harmonize(root, source_id, item, chunk_size=500_000):
-    root = Path(root)
-    path = root / item["path"]
-    if path.suffix.lower() not in {".las", ".laz", ".ply"}:
+    from normalization_inputs import source_policy, verified_local_input
+    if Path(item["path"]).suffix.lower() not in {".las", ".laz", ".ply"}:
         return None
-    # ND terms require a separate intended-use decision for derived products.
     if source_id == 15193973:
         return {"path": item["path"], "status": "pending_derivative_rights_review"}
+    source_policy(source_id)
+    with verified_local_input(root, item) as local:
+        return _harmonize_local(root, source_id, item, chunk_size, local)
+
+
+def _harmonize_local(root, source_id, item, chunk_size, local):
+    from normalization_inputs import source_policy
+    root = Path(root)
+    path = Path(local)
     scene_id = f"{source_id}_{hashlib.sha256(item['path'].encode()).hexdigest()[:20]}"
     output = root / "harmonized" / scene_id
     marker = output / "scene.json"
     if marker.exists():
         old = json.loads(marker.read_text())
         if old.get("status") == "verified" and old["input_sha256"] == item["sha256"]:
+            source_policy(source_id, old["source_fields"])
             return old
         raise ValueError("Existing conversion differs or is incomplete")
-    verify_source(path, item["sha256"])
-    output.mkdir(parents=True, exist_ok=True)
     reader = None
     metadata = {"scene_id": scene_id, "record_id": source_id,
                 "input": item["path"], "input_sha256": item["sha256"],
@@ -74,6 +70,8 @@ def harmonize(root, source_id, item, chunk_size=500_000):
         iterator = (element.data[start:start + chunk_size]
                     for start in range(0, expected_count, chunk_size))
     try:
+        source_policy(source_id, metadata["source_fields"])
+        output.mkdir(parents=True, exist_ok=True)
         for index, points in enumerate(iterator):
             is_las = reader is not None
             raw = points.array if is_las else points
