@@ -35,9 +35,9 @@
   }
   async function catalogMode() {
     token=null;serviceControls(false);
-    $('#service-status').textContent=localService?'Local service offline':'Public catalog · local jobs only';
+    $('#service-status').textContent=localService?'Browser ready · service offline':'Browser ready · server workflows offline';
     $('#job-list').innerHTML='<p class="notice">Jobs run in your local workbench. Local directories, job history and logs are not published here.</p>';
-    message('GitHub Pages hosts the catalog and benchmark information. Downloading, preprocessing and running benchmarks require the local companion service.');
+    message('PLY inspection runs directly in this browser. The acquisition and server preprocessing workflows below require a connected execution service.');
     $('#benchmark-readiness').textContent='Execution requires the local service and a validated recipe.';
     try {
       const response=await fetch('benchmarks.json');

@@ -11,7 +11,33 @@ and container environment metadata. Catalog exports contain metadata, not
 LiDAR point clouds or model weights. Original data remains at the linked
 provider records under its declared terms.
 
-## Local companion
+## Browser PLY inspection
+
+Open the Data workbench on the public site and choose a local PLY file.
+The built-in recipe reads ASCII or binary PLY 1.0 (both byte orders), counts
+vertices, lists attributes, computes finite XYZ bounds, and checks all declared
+element records. Selected payloads stay on the device. The recipe uses a
+JavaScript Web Worker; it does not claim to run a Docker/Wasm container.
+
+The prototype accepts files up to 512 MiB and reads in 256 KiB chunks. Progress
+and cancellation are available. Execution time and the largest input byte
+buffer are reported; this buffer measurement is not total browser RAM.
+Coordinates, units and CRS are not transformed or inferred. Nonfinite XYZ
+vertices are counted and excluded from bounds. No source file is written and
+no source content hash is computed.
+
+Choose an output folder where the browser supports File System Access, or use
+Download JSON report. Reports use unique names and an existing report is never
+intentionally overwritten. Folder-picker support and permission prompts vary
+between browsers. Selecting a source file uses the standard file picker.
+
+Parser regression checks (Node.js):
+
+```bash
+node --test tests/test_ply_inspector.cjs
+```
+
+## Optional local companion
 
 GitHub Pages serves static files and cannot execute the Python workbench.
 Download or clone this repository, then use a Python 3.11 environment:

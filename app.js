@@ -116,6 +116,7 @@
   function renderCompareButton() { $('#compare-count').textContent=state.compare.size;$('#compare-open').disabled=state.compare.size<2; }
   function render() {
     renderTaskNav(); renderGraph(); renderDatasets(); renderMappings(); renderAudit();renderCompareButton();
+    $('#stats').hidden=state.view==='workbench';
     const operational=['workbench','benchmarks','environments'].includes(state.view);
     $('.toolbar').hidden=operational;$('.task-banner').hidden=operational;$('#compare-open').hidden=operational;
     $('.page-heading h1').textContent=operational?'From evidence to execution.':'Find the right data. Understand the connection.';
