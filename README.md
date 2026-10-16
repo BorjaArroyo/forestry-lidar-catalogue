@@ -75,12 +75,19 @@ separate. This is an initial review, not a complete article audit or independent
 reproduction. Shared Wytham/TLS exports must not be treated as independent sites.
 Acquisition counts are a saved workspace snapshot, not live provider availability.
 
-Both initial execution recipes are disabled. A digest-pinned container, full
-source commit, input adapter, protocol configuration and end-to-end validation
-are required before enabling a recipe. The registry references OCI images; it
-does not host them. The current runner supports prepared CPU recipes only;
-GPU execution needs an additional validated adapter. No benchmark score is
-claimed as reproduced. No images are automatically built or pulled.
+The generic TreeLearn and ForestFormer3D recipes remain disabled. The separate
+**TreeLearn · frozen Wytham on Ray** recipe is enabled only for its audited,
+SHA256-pinned export, checkpoint, protocol and public CUDA image. Its validated
+run covers all 3,378,949 frozen input points; metrics are in-source diagnostics.
+The checkpoint was finetuned on all data, so no independent score is claimed.
+
+The optional loopback service submits isolated KubeRay jobs through the host's
+existing kubectl credentials. It supports persistent tracking, cancellation and
+artifact downloads, including prediction read-back checksums. Kubernetes may pull
+the pinned public image; no local inference or Docker daemon is required for this
+recipe. Deployment setup and limitations are in
+[the remote Workbench guide](scripts/treelearn_ray/WORKBENCH.md). Local deployment
+profiles, kubeconfig, job history and outputs are never published.
 
 ## Evidence and updates
 

@@ -1,0 +1,248 @@
+{
+  "schema_version": "1.0",
+  "checked_at": "2026-10-16T16:49:03.404211+00:00",
+  "status": "full-frozen-wytham-instance-pipeline-and-evaluation-passed",
+  "source_commit": "fd240ce7caa4c444fe3418aca454dc578bc557d4",
+  "local_image": {
+    "tag": "canopy-treelearn-ray:fd240ce-cu118-ray2551-r5",
+    "id": "sha256:53be77ee76828346d2d679794549b7d68dd52d45512b0bee6117cdd19e8bf16b",
+    "architecture": "amd64",
+    "size_bytes": 11177961351,
+    "registry_digest": "sha256:bfe3194d979cec051fadb104ee817571614cc66172347a5eed1a5aa56e7fd6ac"
+  },
+  "checks": {
+    "pip_check": "passed",
+    "non_root_imports_outside_source_directory": "passed: uid=1000, cwd=/tmp",
+    "ray": "2.55.1",
+    "torch": "2.0.0+cu118",
+    "cuda_build": "11.8",
+    "driver_help": "passed: both modes present",
+    "manifest_tests": "3 passed; includes 16Gi checkpoint GPU worker contract",
+    "pinned_source_assembler": "passed using actual Git archive; Docker invocation test double",
+    "server_dry_run_gpu": "passed",
+    "server_dry_run_cpu": "passed",
+    "shared_input_transfer_and_read_back": "both SHA256 pins passed",
+    "registry_push": "passed",
+    "concrete_gpu_job_server_dry_run": "passed",
+    "concrete_cpu_job_server_dry_run": "passed",
+    "existing_namespace_registry_credentials": "none: no dockerconfigjson secrets or default imagePullSecrets",
+    "anonymous_manifest_digest": "passed without saved credentials",
+    "gpu_smoke": "passed on NVIDIA GeForce RTX 4090, CUDA 11.8, compute capability 8.9",
+    "cpu_baseline_evaluation": "passed with explicit sparse-partitions-v1; all 178 GT rows verified",
+    "benchmark_recipe_enabled": "Scoped frozen-Wytham Ray recipe only; generic recipes remain disabled",
+    "partition_regressions": "2 passed: dense upstream parity, sparse-row preservation, degenerate normalization",
+    "checkpoint_forward": "passed: strict loading, 280228 real points, finite semantic/offset predictions",
+    "saved_prediction_artifact": "passed: shapes, unique indices, semantic argmax and copied SHA256",
+    "full_pipeline": "passed: all 225 inference tiles accounted for, full source coordinates/order preserved",
+    "full_saved_artifact": "passed: read-back SHA256, 3378949 rows, 157 positive instance IDs, valid labels",
+    "full_model_evaluation": "passed: 178 GT rows retained; 177 partition-eligible",
+    "full_manifest_resources": "passed: 8 CPU, 32Gi, one GPU, two-hour deadline",
+    "full_upstream_configuration": "passed: original tiling and grouping defaults retained; strict weights and bounded resources recorded",
+    "workbench_adapter": "Offline lifecycle regressions, live read-only preflight, and existing completed-run result read-back passed; no additional GPU inference submitted"
+  },
+  "pending": [
+    "Independent held-out dataset/task validation and recovery of historical finetuning preprocessing remain outside this run"
+  ],
+  "limitations": [
+    "This run covers the complete frozen 3378949-point Wytham validation export, not the 30497066-point raw acquisition or every acquired dataset.",
+    "Checkpoint finetuned on all data: scores are in-source diagnostics and do not establish independent accuracy.",
+    "Upstream revoxelization after centering maps 2356409 ensemble coordinates back to all source points; 2 require the original KNN fallback.",
+    "Sparse-partitions-v1 is an explicit audited protocol extension; one two-point GT has undefined XY/Z metrics.",
+    "Historical finetuning preprocessing is not independently recovered; the current configuration and strict architecture match are recorded.",
+    "Published image digests pin execution; future rebuild dependency resolution may differ."
+  ],
+  "files_sha256": {
+    "ANALYSIS.md": "fc859340ec692e1058c17197672be2079ffc2edebc36ec05026906b69cabe573",
+    "Dockerfile": "39b479ae22914d1293dfd36a99d4c6a8c31999528c7e43a2ca4aaf66f56b603f",
+    "README.md": "9ce1562b653616cc68a9959eca9e2d3194a5560567bdd9b05d020d7c6895109a",
+    "build_image.py": "402f68257bfc7dcb12ca3b468aa20d8e7567e526587ac321c6b233b14f3aa882",
+    "checkpoint-lock.json": "9eaad2e109dd7d6c68082f03221ce6ab54ecf69194c2ade2750e88a4d739a62d",
+    "driver.py": "fa4f60db768ff884699e05f0d71eb6d5495457a4d74a43f69e14b30bc5c253ce",
+    "full_forest.py": "e8df4ce2754935889455099f40925a4e26a02930ae693d6d2dbffca787bd1ae5",
+    "inference_check.py": "e913c7c54900b04c2fb08a49c16a7c711111895e37e52bc5384131ccd8796fd3",
+    "partition_policy.py": "ac75245a78b4e5f4726cc3acc3adf1f9a246e99839bd915ea94919373fcf817b",
+    "render_job.py": "ff5d1f5ec6bfc5a2e2542496f598821c99b0aa568d03d6799f2efd6a6ecbcb60",
+    "requirements.txt": "5d37b5466e934b836387ba992151e7e8ab711991b30fea9c06de529b540ff283",
+    "test_partition_policy.py": "28336e28c8f4cac4e453bfd42e56b3ec5dedaa93e34b1a2984f92f0cc308b3f7",
+    "test_render_job.py": "c99751627f0d15e68de5602f656e4abc566b4982ef3de35c2843176bf8719062",
+    "workbench.py": "bb97cd3adf147f75c6dde1cd4356eea6a192ae8bec117600c5ea961bf15c76e0",
+    "test_workbench.py": "8a661572fd06d26eda33c6e50b5a824ef0c6a462f009c504ac8099bf2e8c3324",
+    "WORKBENCH.md": "c7059926ebdb6aa48ce7c62b18751be2986b1d2ab0f3a3aaed67fecb30bff83b"
+  },
+  "registry": {
+    "reference": "ghcr.io/borjaarroyo/canopy-treelearn-ray@sha256:bfe3194d979cec051fadb104ee817571614cc66172347a5eed1a5aa56e7fd6ac",
+    "visibility": "public",
+    "package_url": "https://github.com/users/BorjaArroyo/packages/container/package/canopy-treelearn-ray"
+  },
+  "gpu_run": {
+    "scope": "CUDA matrix product, sparse convolution and TreeLearn construction; no checkpoint inference",
+    "device": "NVIDIA GeForce RTX 4090",
+    "capability": [
+      8,
+      9
+    ],
+    "torch": "2.0.0+cu118",
+    "cuda": "11.8",
+    "model_parameters": 30106981,
+    "host": "canopy-treelearn-gpu-20261016-100419-r2-rjwtd-gpu-worker-zbp54",
+    "ray": "2.55.1",
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "source_commit": "fd240ce7caa4c444fe3418aca454dc578bc557d4",
+    "image": "ghcr.io/borjaarroyo/canopy-treelearn-ray@sha256:6cf959b6f75b8bac51814af81d2e28d7d3cda184475912e899dd30b98b7a2528",
+    "status": "succeeded",
+    "job_name": "canopy-treelearn-gpu-20261016-100419-r2",
+    "deployment_status": "Complete",
+    "cleanup": "Temporary RayJob deletion requested after evidence capture; persistent PVC outputs retained"
+  },
+  "cpu_run": {
+    "job_name": "canopy-tl-evaluation-20261016-103840",
+    "status": "succeeded",
+    "image": "ghcr.io/borjaarroyo/canopy-treelearn-ray@sha256:180fd96106627c836be517f4ceb4203c8477612254fe361c740f0f66222ff4e4",
+    "partition_policy": {
+      "policy": "sparse-partitions-v1",
+      "scope": "Only XY/Z partition applicability; all GT, detection and whole-instance metrics retained",
+      "xy": {
+        "total_gt": 178,
+        "eligible_gt": 177,
+        "undefined_gt": [
+          {
+            "instance_label": 859,
+            "points": 2,
+            "reason": "fewer_than_five_points"
+          }
+        ]
+      },
+      "z": {
+        "total_gt": 178,
+        "eligible_gt": 177,
+        "undefined_gt": [
+          {
+            "instance_label": 859,
+            "points": 2,
+            "reason": "fewer_than_five_points"
+          }
+        ]
+      }
+    },
+    "metrics_summary": {
+      "detection": {
+        "completeness": 10.7,
+        "omission_error_rate": 89.3,
+        "commission_error_rate": 80.2,
+        "f1_score": 13.9
+      },
+      "segmentation": {
+        "precision": 20.6,
+        "recall": 85.4,
+        "iou": 11.2
+      },
+      "all_gt_rows_retained": 178,
+      "sparse_gt_859_partition_nan_verified": true,
+      "scope": "Connected-components baseline, not TreeLearn model performance"
+    },
+    "cleanup": "Temporary RayJob removed after full artifact capture; PVC output retained"
+  },
+  "resolved_issues": [
+    {
+      "scope": "GPU smoke driver",
+      "issue": "Chained TreeLearn().cuda().eval() assigned None because upstream train() does not return self.",
+      "resolution": "Keep the model reference and call eval() separately; published as r2. Upstream source unchanged."
+    }
+  ],
+  "cpu_run_previous_failure": {
+    "job_name": "canopy-treelearn-cpu-20261016-100419",
+    "status": "failed",
+    "image": "ghcr.io/borjaarroyo/canopy-treelearn-ray@sha256:7440e46a9e0f6f8afe07f62d6eb27aa0a271d57736e0116bef5ed5b39a56bb9b",
+    "inputs_sha256_verified": true,
+    "failure": "Upstream evaluate_xy_partition assumes at least five ground-truth points: sorted_inds[-5] raises IndexError for a two-point instance.",
+    "upstream_file": "tree_learn/util/eval.py",
+    "upstream_line": 159,
+    "protocol_changed": false,
+    "cleanup": "Temporary RayJob deletion requested after evidence capture; persistent PVC outputs retained"
+  },
+  "inference_run": {
+    "scope": "Real checkpoint pointwise semantic/offset inference on one context tile; no grouping, full-forest result, or benchmark score",
+    "points": 280228,
+    "checkpoint_sha256": "eb01b97061047783989ea0c311f1ef6eaa2f8423b422ce0620b69e136c5cebf9",
+    "checkpoint_md5": "577847cafec23e3a5886a680687f5afd",
+    "checkpoint_epoch": 250,
+    "checkpoint_loading": "strict=True, weights_only=True",
+    "device": "NVIDIA GeForce RTX 3090",
+    "forward_seconds": 0.5775721687823534,
+    "peak_cuda_bytes": 388510720,
+    "semantic_class_counts": {
+      "0": 266846,
+      "1": 13382
+    },
+    "output_sha256": "f370ddd92bbe5826fdad414bd1997d4123ae09e945def18c2564634647c971b9",
+    "caveats": [
+      "Finetuned-on-all checkpoint: validation tile is not an independent test.",
+      "Prevoxelized sample and one context tile differ from the full overlapping-tile upstream pipeline.",
+      "Checkpoint architecture matches strictly; historical training configuration is not independently recovered."
+    ],
+    "host": "canopy-tl-inference-20261016-103840-r4-9hdcs-gpu-worker-84bvl",
+    "ray": "2.55.1",
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "source_commit": "fd240ce7caa4c444fe3418aca454dc578bc557d4",
+    "image": "ghcr.io/borjaarroyo/canopy-treelearn-ray@sha256:b14f68e55e3db691b48d3f2da655200a560a81dd2a327bef00da62658f53d063",
+    "status": "succeeded",
+    "job_name": "canopy-tl-inference-20261016-103840-r4",
+    "saved_artifact_verified": true,
+    "cleanup": "Temporary RayJob deleted after artifact verification; persistent PVC output retained"
+  },
+  "full_forest_run": {
+    "scope": "Full tiled instance segmentation of the frozen 3378949-point Wytham validation export, not the 30497066-point raw acquisition or independent benchmark reproduction",
+    "coverage": {
+      "checkpoint_epoch": 250,
+      "tiles": 225,
+      "overlapping_inner_predictions": 9507369,
+      "ensembled_points": 2356409,
+      "points_requiring_knn_fallback": 2,
+      "pipeline_seconds": 303.34764312487096,
+      "points": 3378949,
+      "predicted_instances": 157,
+      "non_tree_points": 817676,
+      "elapsed_seconds": 424.89779796265066
+    },
+    "metrics": {
+      "detection": {
+        "completeness": 54.5,
+        "omission_error_rate": 45.5,
+        "commission_error_rate": 23.6,
+        "f1_score": 63.6
+      },
+      "segmentation": {
+        "precision": 57.4,
+        "recall": 86.0,
+        "iou": 52.4
+      }
+    },
+    "device": "NVIDIA GeForce RTX 3090",
+    "input_sha256": "f0405d94b303862ff82fb0472785bf0cffaa60d4bd58bec6fbb92f21e0f55883",
+    "checkpoint_sha256": "eb01b97061047783989ea0c311f1ef6eaa2f8423b422ce0620b69e136c5cebf9",
+    "prediction_sha256": "a2d39f6e1d03643e6f93b44077e6956a518c6cc6489f73f3c5160be66d3fb9e5",
+    "protocol": "Pinned upstream tiling, verticality features, model, ensembling, HDBSCAN and propagation; strict checkpoint loading and sparse-partitions-v1",
+    "caveats": [
+      "Checkpoint finetuned on all: this run is not an independent held-out test.",
+      "Frozen input was already voxelized; upstream revoxelizes after centering.",
+      "Historical finetuning preprocessing is not independently recovered."
+    ],
+    "host": "canopy-tl-full-20261016-163828-l6x5s-gpu-worker-4fh2h",
+    "ray": "2.55.1",
+    "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+    "source_commit": "fd240ce7caa4c444fe3418aca454dc578bc557d4",
+    "image": "ghcr.io/borjaarroyo/canopy-treelearn-ray@sha256:bfe3194d979cec051fadb104ee817571614cc66172347a5eed1a5aa56e7fd6ac",
+    "status": "succeeded",
+    "job_name": "canopy-tl-full-20261016-163828",
+    "artifact_verification": {
+      "points": 3378949,
+      "predicted_instances": 157,
+      "all_coordinates_and_order_preserved": true,
+      "finite_integral_nonnegative_labels": true,
+      "prediction_sha256": "a2d39f6e1d03643e6f93b44077e6956a518c6cc6489f73f3c5160be66d3fb9e5",
+      "all_178_gt_rows_retained": true,
+      "partition_eligible_gt": 177
+    },
+    "cleanup": "Temporary RayJob deleted after independent artifact verification and local evidence copy; PVC outputs retained"
+  }
+}

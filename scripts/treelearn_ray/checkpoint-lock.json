@@ -1,0 +1,8 @@
+{
+  "source_url": "https://zenodo.org/api/records/16875688/files/TreeLearn_finetuned_weights_all.pth/content",
+  "size_bytes": 361611057,
+  "md5": "577847cafec23e3a5886a680687f5afd",
+  "sha256": "eb01b97061047783989ea0c311f1ef6eaa2f8423b422ce0620b69e136c5cebf9",
+  "epoch": 250,
+  "observed_loading": "strict=True, weights_only=True"
+}

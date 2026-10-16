@@ -10,6 +10,8 @@ import shutil
 import subprocess
 import sys
 import threading
+import time
+from treelearn_ray import workbench as ray_workbench
 from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs, quote
@@ -20,6 +22,7 @@ WEB = REPO / 'knowledge-hub' if (REPO / 'knowledge-hub').is_dir() else REPO
 STATE = REPO / 'temp' / 'canopy-workbench'
 TOKEN = secrets.token_urlsafe(32)
 GUARD = threading.Lock()
+RAY_CHECKED = {}
 
 
 def now():
@@ -139,6 +142,16 @@ def jobs():
     result = []
     for path in sorted((STATE / 'jobs').glob('*/job.json'), reverse=True):
         job = read(path)
+        if job.get('backend') == 'ray':
+            if job['status'] in ray_workbench.ACTIVE and time.monotonic() - RAY_CHECKED.get(job['id'], -100) > 15:
+                try:
+                    ray_workbench.reconcile(job)
+                except (ValueError, OSError, subprocess.TimeoutExpired) as e:
+                    job['connection_error'] = str(e)
+                RAY_CHECKED[job['id']] = time.monotonic()
+                save(path, job)
+            result.append(job)
+            continue
         pid_file = path.parent / 'worker.pid'
         if not job.get('pid') and pid_file.exists():
             job['pid'] = int(pid_file.read_text())
@@ -154,6 +167,8 @@ def jobs():
 
 def submit(body):
     from filelock import FileLock
+    if body.get('kind') == 'benchmark' and body.get('recipe_id') == ray_workbench.RECIPE:
+        return submit_ray(body)
     kind = body.get('kind')
     if kind not in {'acquire','audit','harmonize','benchmark'}:
         raise ValueError('Unknown job type')
@@ -199,6 +214,62 @@ def submit(body):
         (folder / 'worker.pid').write_text(str(p.pid))
         # The worker owns subsequent state writes, avoiding a launch-time update race.
         return {'id':job_id,'pid':p.pid}
+
+
+def submit_ray(body):
+    from filelock import FileLock
+    if set(body) - {'kind', 'recipe_id', 'root'}:
+        raise ValueError('Ray deployment, image and command are fixed by the audited server profile')
+    p = ray_workbench.profile(STATE)
+    if body.get('root') != p['input_dir']:
+        raise ValueError('Only the audited frozen Wytham input directory is supported')
+    with GUARD, FileLock(str(STATE / 'submission.lock'), timeout=0):
+        if any(j['status'] in ray_workbench.ACTIVE for j in jobs()):
+            raise ValueError('A Canopy job is already active')
+        ray_workbench.preflight(p)
+        remote = json.loads(ray_workbench.call(p, 'get', 'rayjobs', '-l', 'app.kubernetes.io/part-of=canopy', '-o', 'json'))
+        if any(j.get('status', {}).get('jobDeploymentStatus') not in {'Complete', 'Failed', 'ValidationFailed'} for j in remote['items']):
+            raise ValueError('An existing Canopy RayJob is still active; inspect it before submitting')
+        jid = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S') + '-' + secrets.token_hex(4)
+        job = {'id':jid, 'kind':'benchmark', 'backend':'ray', 'recipe_id':ray_workbench.RECIPE,
+               'root':p['input_dir'], 'output_dir':p['output_base']+'/'+jid,
+               'ray_name':'canopy-'+jid.lower(), 'ray_profile':p, 'status':'queued', 'created_at':now()}
+        folder = STATE / 'jobs' / jid
+        manifest = ray_workbench.manifest(job)
+        # Persist submission intent before network I/O. Never retry an uncertain create.
+        save(folder / 'job.json', job)
+        save(folder / 'rayjob.json', manifest)
+        try:
+            response = ray_workbench.call(p, 'create', '-f', '-', payload=json.dumps(manifest))
+            (folder/'worker.log').write_text(response)
+        except (ValueError, OSError, subprocess.TimeoutExpired) as e:
+            job['connection_error'] = str(e)
+            save(folder/'job.json', job)
+            raise ValueError(f'Submission outcome requires reconciliation: {jid}. Refresh jobs; do not resubmit.') from e
+        return {'id':jid, 'backend':'ray'}
+
+
+def job_path(jid):
+    if not re.fullmatch(r'[0-9T]+-[a-f0-9]{8}', jid):
+        raise ValueError('Invalid job ID')
+    return STATE / 'jobs' / jid / 'job.json'
+
+
+def cancel_ray(jid):
+    with GUARD:
+        path = job_path(jid)
+        job = read(path)
+        if job.get('backend') != 'ray' or job['status'] not in ray_workbench.ACTIVE:
+            raise ValueError('Only active Workbench Ray jobs can be cancelled')
+        # Keep cancellation intent durable even if the API response is lost.
+        job.update(cancel_requested=True, status='cancelling')
+        save(path, job)
+        try:
+            ray_workbench.cancel(job)
+        finally:
+            save(path, job)
+        RAY_CHECKED.pop(jid, None)
+        return {'id':jid, 'status':job['status']}
 
 
 def normalization_manifests(root):
@@ -304,19 +375,57 @@ class Handler(SimpleHTTPRequestHandler):
         parsed = urlparse(self.path)
         try:
             if parsed.path == '/api/state':
-                return self.send_json({'token':TOKEN,'jobs':jobs(),'registry':registry(),
+                with GUARD:
+                    current_jobs = jobs()
+                try:
+                    p = ray_workbench.profile(STATE)
+                    remote = {'configured':True, 'input_dir':p['input_dir'], 'context':p['context'], 'namespace':p['namespace']}
+                except ValueError as e:
+                    remote = {'configured':False, 'detail':str(e)}
+                return self.send_json({'token':TOKEN,'jobs':current_jobs,'registry':registry(), 'ray':remote,
                                        'records':[{'id':r['record_id'],'title':r['title']} for r in records()]})
             if parsed.path == '/api/log':
                 jid = parse_qs(parsed.query).get('id',[''])[0]
-                if not re.fullmatch(r'[0-9T]+-[a-f0-9]{8}',jid):
-                    raise ValueError('Invalid job ID')
-                p = STATE / 'jobs' / jid / 'worker.log'
+                folder = job_path(jid).parent
+                job = read(folder/'job.json')
+                if job.get('backend') == 'ray':
+                    result = ray_workbench.evidence(job)
+                    result['log'] = json.dumps(job.get('ray_status', {}), indent=2) + '\n' + result['log']
+                    return self.send_json(result)
+                p = folder / 'worker.log'
                 with p.open('rb') as f:
                     f.seek(max(0,p.stat().st_size-32000))
                     log = f.read().decode(errors='replace')
                 folder = p.parent
                 reports = {q.name:read(q) for q in folder.glob('*report.json')}
                 return self.send_json({'log':log,'reports':reports})
+            if parsed.path == '/api/artifact':
+                query = parse_qs(parsed.query)
+                jid, name = query.get('id',[''])[0], query.get('name',[''])[0]
+                job = read(job_path(jid))
+                if job.get('backend') != 'ray' or name not in ray_workbench.FILES:
+                    raise ValueError('Unknown Ray artifact')
+                folder = job_path(jid).parent/'artifacts'
+                folder.mkdir(exist_ok=True)
+                # Cache a complete read-back on disk before sending HTTP headers.
+                with GUARD:
+                    path = folder/Path(name).name
+                    if not path.exists():
+                        temporary = path.with_suffix('.partial')
+                        try:
+                            ray_workbench.download(job, name, temporary)
+                            temporary.replace(path)
+                        finally:
+                            temporary.unlink(missing_ok=True)
+                self.send_response(200)
+                self.send_header('Content-Type','application/octet-stream')
+                self.send_header('Content-Disposition',f'attachment; filename="{path.name}"')
+                self.send_header('Content-Length',str(path.stat().st_size))
+                self.send_header('Cache-Control','no-store')
+                self.end_headers()
+                with path.open('rb') as source:
+                    shutil.copyfileobj(source, self.wfile, length=1024**2)
+                return
             if parsed.path.startswith('/api/'):
                 return self.send_json({'error':'Unknown endpoint'},404)
             # Serve only the public application, never job files or repository paths.
@@ -334,7 +443,7 @@ class Handler(SimpleHTTPRequestHandler):
                 self.wfile.write(raw)
                 return
             super().do_GET()
-        except (ValueError, KeyError, OSError) as e:
+        except (ValueError, KeyError, OSError, subprocess.TimeoutExpired) as e:
             self.send_json({'error':str(e)},400)
 
     def do_POST(self):
@@ -350,6 +459,14 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.send_json(inspect_record(body['record']))
             if self.path == '/api/jobs':
                 return self.send_json(submit(body),202)
+            if self.path == '/api/cancel':
+                return self.send_json(cancel_ray(body['id']))
+            if self.path == '/api/preflight' and body['recipe_id'] == ray_workbench.RECIPE:
+                p = ray_workbench.profile(STATE)
+                if body.get('root') != p['input_dir']:
+                    raise ValueError('Use the audited frozen Wytham input directory')
+                detail = ray_workbench.preflight(p)
+                return self.send_json({'ready':True, 'blockers':[], 'detail':detail})
             if self.path == '/api/preflight':
                 _,_,blockers = recipe_check(body['recipe_id'],directory(body['root']))
                 return self.send_json({'ready':not blockers,'blockers':blockers})

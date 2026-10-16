@@ -1,7 +1,55 @@
 {
   "schema_version": "1.0",
-  "reviewed_at": "2026-10-15",
+  "reviewed_at": "2026-10-16",
   "recipes": [
+    {
+      "id": "treelearn-wytham-ray",
+      "name": "TreeLearn \u00b7 frozen Wytham on Ray",
+      "tasks": [
+        "instances"
+      ],
+      "repository": "https://github.com/ecker-lab/TreeLearn",
+      "paper": "https://arxiv.org/abs/2309.08471",
+      "guide": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/scripts/treelearn_ray/WORKBENCH.md",
+      "datasets": [
+        "16875688"
+      ],
+      "metrics": [
+        "In-source detection and segmentation diagnostics; not held-out accuracy"
+      ],
+      "stage": "Full tiled inference, grouping, propagation and sparse-partitions-v1 evaluation",
+      "image_id": "treelearn-ray-r5",
+      "command": [
+        "Audited server-side RayJob adapter"
+      ],
+      "required_files": [],
+      "enabled": true,
+      "backend": "ray",
+      "blockers": [],
+      "caveats": [
+        {
+          "kind": "Scope",
+          "text": "Only the frozen 3,378,949-point Wytham export has passed end-to-end execution. This does not cover the raw 30,497,066-point acquisition or other datasets.",
+          "url": null
+        },
+        {
+          "kind": "Exposure audit",
+          "text": "Checkpoint finetuned on all data. Metrics are in-source diagnostics and do not establish independent accuracy or published-score reproduction.",
+          "url": null
+        },
+        {
+          "kind": "Protocol audit",
+          "text": "All 178 GT rows remain. One two-point instance has undefined XY/Z partition scores (NaN); 177 instances are partition-eligible. Historical finetuning preprocessing is not independently recovered.",
+          "url": null
+        }
+      ],
+      "audit_status": "Pinned full workflow executed and read-back verified; remote lifecycle regression-tested; independent validation pending",
+      "protocol": {
+        "inputs": "Frozen export and checkpoint SHA256 revalidated by GPU worker",
+        "resources": "Isolated KubeRay job: 1 GPU, 8 CPU, 32 GiB, 2-hour deadline",
+        "outputs": "Fresh persistent PVC directory per execution; cancellation retains artifacts"
+      }
+    },
     {
       "id": "treelearn-evaluation",
       "name": "TreeLearn evaluation",
@@ -106,6 +154,17 @@
     }
   ],
   "images": [
+    {
+      "id": "treelearn-ray-r5",
+      "name": "TreeLearn CUDA \u00b7 audited Wytham r5",
+      "reference": "ghcr.io/borjaarroyo/canopy-treelearn-ray@sha256:bfe3194d979cec051fadb104ee817571614cc66172347a5eed1a5aa56e7fd6ac",
+      "commit": "fd240ce7caa4c444fe3418aca454dc578bc557d4",
+      "platform": "linux/amd64",
+      "gpu": true,
+      "validated": true,
+      "working_directory": "/opt/TreeLearn",
+      "build_source": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/tree/main/scripts/treelearn_ray"
+    },
     {
       "id": "treelearn",
       "name": "TreeLearn environment",
