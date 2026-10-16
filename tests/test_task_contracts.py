@@ -1,19 +1,19 @@
 """Small regressions for task compatibility, mappings and scientific claims."""
-import importlib.util
 import json
 from pathlib import Path
 import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+WEB = ROOT/'knowledge-hub' if (ROOT/'knowledge-hub').is_dir() else ROOT
 sys.path.insert(0,str(ROOT/'scripts'))
 import task_contracts as t
 
 
 class TaskContracts(unittest.TestCase):
     def setUp(self):
-        self.catalog=json.loads((ROOT/'knowledge-hub/catalog.json').read_text())
-        self.policy=json.loads((ROOT/'knowledge-hub/normalization-policy.json').read_text())
+        self.catalog=json.loads((WEB/'catalog.json').read_text())
+        self.policy=json.loads((WEB/'normalization-policy.json').read_text())
         self.validation=json.loads((ROOT/'scripts/treelearn_ray/workbench-validation.json').read_text())
 
     def test_native_source_mapping_is_precise_and_does_not_mutate(self):

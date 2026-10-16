@@ -71,7 +71,7 @@
     "task-dossiers.json": "f07394b08a826056f9ca6c1bdbad7efc8d5de2cadeec9529aad10a8d245dd957",
     "tests/test_knowledge_hub_service.py": "377a5e2f42f76475734530057fdcbcf9f5d75129b05e25dbc7b0969e7f58bdfd",
     "tests/test_ply_inspector.cjs": "5da45b794cdb83dd83d725329250c917203bfb0ecad9ac2da0231067174dae25",
-    "tests/test_task_contracts.py": "ae895779daceef43104aba0f5a00bcce012982c322d219b18f4cdf3ff82483e4",
+    "tests/test_task_contracts.py": "c9b3707d7407ba5a398c08884f24af3d8c95f9a320c567bc56109a87a8ee073e",
     "workbench.js": "bd06ab45a73728591468eaeb854494026dc84c51ecd3f94ea04ec7ed0fb56ea0"
   },
   "target": "https://borjaarroyo.github.io/forestry-lidar-catalogue/"
