@@ -79,8 +79,7 @@
     const edgeHtml=edges.map((m,i) => `<g class="edge-group" data-edge="${esc(m.id)}" tabindex="0" role="button" aria-label="${esc(`${names[m.source]} to ${names[m.target]}: ${m.name}`)}"><path class="edge-hit" d="${pathFor(m,i)}"/><path class="edge ${m.id===state.edge?'selected':''}" d="${pathFor(m,i)}" stroke="${kinds[m.kind].color}" stroke-dasharray="${kinds[m.kind].dash}" ${m.kind==='shared'?'':`marker-end="url(#arrow-${m.kind})"`}/><title>${esc(m.name)} — ${esc(kinds[m.kind].name)}</title></g>`).join('');
     const nodeHtml=nodes.map(d => {
       const [x,y]=positions[d.id],selected=d.id===state.selected&&!state.edge;
-      const reference=['instances','components'].includes(state.task)&&d.id==='16742708';
-      return `<g class="graph-node ${d.short.length>14?'long-name':''} ${selected?'selected':''} ${reference?'reference':''} ${supported(d)?'':'dim'}" data-node="${d.id}" tabindex="0" role="button" aria-label="${esc(`${d.name}: ${stateLabel(taskState(d))} for this task`)}" transform="translate(${x-105} ${y-46})"><rect width="210" height="92" rx="12"/><text class="node-mark" x="14" y="30">${d.spectral?'◉':'⌁'}</text><text class="node-name" x="39" y="29">${esc(d.short)}</text><text class="node-sub" x="15" y="49">${esc(d.modalities.join(' · '))}</text><text class="node-status" x="15" y="68">${esc(reference?'REFERENCE SCHEMA':stateLabel(taskState(d)).toUpperCase())}</text><title>${esc(d.name)} · ${esc(d.readiness)}</title></g>`;
+      return `<g class="graph-node ${d.short.length>14?'long-name':''} ${selected?'selected':''} ${supported(d)?'':'dim'}" data-node="${d.id}" tabindex="0" role="button" aria-label="${esc(`${d.name}: ${stateLabel(taskState(d))} for this task`)}" transform="translate(${x-105} ${y-46})"><rect width="210" height="92" rx="12"/><text class="node-mark" x="14" y="30">${d.spectral?'◉':'⌁'}</text><text class="node-name" x="39" y="29">${esc(d.short)}</text><text class="node-sub" x="15" y="49">${esc(d.modalities.join(' · '))}</text><text class="node-status" x="15" y="68">${esc(stateLabel(taskState(d)).toUpperCase())}</text><title>${esc(d.name)} · ${esc(d.readiness==='Reference schema'?'Native annotation schema':d.readiness)}</title></g>`;
     }).join('');
     $('#graph').innerHTML=`<defs>${defs}</defs><g id="graph-content" transform="translate(${state.pan.x} ${state.pan.y}) scale(${state.zoom})">${edgeHtml}${nodeHtml}</g>${nodes.length?'':'<text x="620" y="370" text-anchor="middle" fill="#7b8c70" font-size="20">No datasets match these filters.</text>'}`;
     $('#graph-count').textContent=`${nodes.length} datasets · ${edges.length} links`;
@@ -115,6 +114,7 @@
   }
   function renderCompareButton() { $('#compare-count').textContent=state.compare.size;$('#compare-open').disabled=state.compare.size<2; }
   function render() {
+    $('#task-question-panel').hidden=state.task!=='instances';
     renderTaskNav(); renderGraph(); renderDatasets(); renderMappings(); renderAudit();renderCompareButton();
     $('#stats').hidden=state.view==='workbench';
     const operational=['workbench','benchmarks','environments'].includes(state.view);

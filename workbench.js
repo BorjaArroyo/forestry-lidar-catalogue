@@ -47,6 +47,7 @@
     ['#inspect-form','#preprocess-form','#benchmark-form'].forEach(selector=>{
       document.querySelectorAll(`${selector} input, ${selector} select, ${selector} button`).forEach(el=>{el.disabled=!connected;});
     });
+    document.dispatchEvent(new CustomEvent('canopy-service-state',{detail:{connected,rayConfigured:!!snapshot?.ray?.configured}}));
     $('#benchmark-run').disabled=true;
     $('#refresh-jobs').disabled=!connected;
   }
@@ -66,7 +67,7 @@
     if(refreshing)return;
     if(!localService)return catalogMode();
     refreshing=true;
-    try {snapshot=await api('/api/state');token=snapshot.token;$('#service-status').textContent='Local service connected';if($('#inspect-form button').disabled)serviceControls(true);renderJobs(snapshot.jobs);renderRegistry(snapshot.registry);if(selectedJob){try{await loadLog(selectedJob);}catch(e){message(e.message);}}}
+    try {snapshot=await api('/api/state');token=snapshot.token;$('#service-status').textContent='Local service connected';if($('#inspect-form button').disabled)serviceControls(true);document.dispatchEvent(new CustomEvent('canopy-service-state',{detail:{connected:true,rayConfigured:!!snapshot.ray?.configured}}));renderJobs(snapshot.jobs);renderRegistry(snapshot.registry);if(selectedJob){try{await loadLog(selectedJob);}catch(e){message(e.message);}}}
     catch(e){await catalogMode();}
     finally{refreshing=false;}
   }
@@ -80,5 +81,8 @@
   $('#benchmark-form').addEventListener('input',()=>{$('#benchmark-run').disabled=true;});
   $('#benchmark-task').addEventListener('change',()=>{if(snapshot)renderRegistry(snapshot.registry);});
   $('#refresh-jobs').addEventListener('click',refresh);$('#job-export').addEventListener('click',()=>{if(evidence)save(evidence,`canopy-job-${selectedJob}.json`);});
+  document.addEventListener('canopy-inspect-source',e=>{location.hash='workbench';$('#zenodo-record').value=e.detail.record_id;$('#inspect-form').requestSubmit();message('Inspect original source assets. This does not prepare or admit a task-ready dataset.');});
+  document.addEventListener('canopy-open-recipe',e=>{location.hash='benchmarks';$('#benchmark-recipe').value=e.detail.recipe_id;configureRecipe();$('#benchmark-run').disabled=true;$('#benchmark-readiness').textContent='Diagnostic scope only. Check readiness before execution.';});
+  document.addEventListener('canopy-prepare-task',async e=>{try{await launch({kind:'prepare-task',...e.detail});location.hash='workbench';}catch(err){message(err.message);location.hash='workbench';}});
   refresh();if(localService)setInterval(()=>{if(token&&!document.hidden)refresh();},5000);
 })();

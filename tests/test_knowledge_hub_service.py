@@ -191,6 +191,28 @@ class WorkbenchTests(unittest.TestCase):
         self.assertTrue(job['cancel_requested'])
 
 
+    def test_task_preparation_blocks_changed_scope_and_existing_destination(self):
+        self.ray_profile()
+        subset = service.task_contracts.load()['prepared_subset']['id']
+        target = self.root/'prepared'
+        body = dict(kind='prepare-task',root=str(target),subset_id=subset,objective='diagnostic')
+        for override in ({'objective':'geographic'},{'subset_id':'unreviewed-source'}):
+            with self.assertRaises(ValueError): service.submit(body | override)
+        target.mkdir()
+        original = target/'keep.txt';original.write_text('keep')
+        with self.assertRaisesRegex(ValueError,'not overwritten'): service.submit(body)
+        self.assertEqual(original.read_text(),'keep')
+
+    def test_task_worker_rejects_evidence_changed_since_submission(self):
+        target = self.root/'prepared'
+        folder = service.STATE/'jobs/task-fixture'
+        service.save(folder/'job.json',dict(id='task-fixture',kind='prepare-task',root=str(target),status='queued',dossier_sha256='outdated',subset_id='wytham-frozen-reference-v1'))
+        with patch.object(service.task_contracts,'prepare_subset') as prepare:
+            service.worker(folder)
+            prepare.assert_not_called()
+        self.assertEqual(service.read(folder/'job.json')['status'],'failed')
+        self.assertFalse(target.exists())
+
 
 if __name__ == '__main__':
     unittest.main()

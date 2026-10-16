@@ -39,7 +39,8 @@
     "full_manifest_resources": "passed: 8 CPU, 32Gi, one GPU, two-hour deadline",
     "full_upstream_configuration": "passed: original tiling and grouping defaults retained; strict weights and bounded resources recorded",
     "workbench_adapter": "Full browser submission, completion tracking, 108126496-byte browser prediction download, SHA256/geometry/labels verification and temporary resource cleanup passed; see workbench-validation.json",
-    "artifact_transport": "Bounded checksummed base64 chunks resolve silent kubectl exec binary-stream truncation; offline retry/integrity regressions passed"
+    "artifact_transport": "Bounded checksummed base64 chunks resolve silent kubectl exec binary-stream truncation; offline retry/integrity regressions passed",
+    "task_reference_preparation": "Browser-triggered identity copy of the frozen Wytham reference and task-package.json passed; final input SHA256 verified, no GPU execution"
   },
   "pending": [
     "Independent held-out dataset/task validation and recovery of historical finetuning preprocessing remain outside this run"
@@ -66,8 +67,8 @@
     "requirements.txt": "5d37b5466e934b836387ba992151e7e8ab711991b30fea9c06de529b540ff283",
     "test_partition_policy.py": "28336e28c8f4cac4e453bfd42e56b3ec5dedaa93e34b1a2984f92f0cc308b3f7",
     "test_render_job.py": "c99751627f0d15e68de5602f656e4abc566b4982ef3de35c2843176bf8719062",
-    "workbench.py": "b593f124598a3c3c249a418198090238068861d83b50e58b8c522acfd2c88dc9",
-    "test_workbench.py": "c2cca99a16307297a96e862fac9ac7c0f008e4668a48b7d9498ffd28dac52214",
+    "workbench.py": "a2d95624b8fde8d2b8d33ad06f1104363bd3a9382ccb9354901e898ad27ccde6",
+    "test_workbench.py": "5c2b591eb9fc800df5124dea931a5685ac9875b2c5ee1a20660d281e7d801359",
     "WORKBENCH.md": "f4ba22441b29c0169dbdbd136f10a2b15ad1df7a706ad61dd4baa3a1edced2c8",
     "workbench-validation.json": "eda9e9a7317910d4488cef4ddd850633d38a3719a69da96c695286575bcfbdf3"
   },

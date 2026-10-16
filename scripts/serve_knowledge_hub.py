@@ -12,6 +12,7 @@ import sys
 import threading
 import time
 from treelearn_ray import workbench as ray_workbench
+import task_contracts
 from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs, quote
@@ -170,16 +171,26 @@ def submit(body):
     if body.get('kind') == 'benchmark' and body.get('recipe_id') == ray_workbench.RECIPE:
         return submit_ray(body)
     kind = body.get('kind')
-    if kind not in {'acquire','audit','harmonize','benchmark'}:
+    if kind not in {'acquire','audit','harmonize','benchmark','prepare-task'}:
         raise ValueError('Unknown job type')
-    root = directory(body.get('root', ''), exists=kind != 'acquire')
+    root = directory(body.get('root', ''), exists=kind not in {'acquire','prepare-task'})
     with GUARD, FileLock(str(STATE / 'submission.lock'), timeout=0):
-        if any(j['status'] in {'queued','running'} for j in jobs()):
+        if any(j['status'] in ray_workbench.ACTIVE for j in jobs()):
             raise ValueError('A Canopy job is already active. Wait for it to finish.')
         job_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S') + '-' + secrets.token_hex(4)
         folder = STATE / 'jobs' / job_id
         job = {'id':job_id,'kind':kind,'root':str(root),'status':'queued','created_at':now()}
-        if kind == 'acquire':
+        if kind == 'prepare-task':
+            dossier = task_contracts.load()
+            if body.get('objective') != 'diagnostic' or body.get('subset_id') != dossier['prepared_subset']['id']:
+                raise ValueError('Only the audited frozen diagnostic reference can be prepared')
+            if root.exists():
+                raise ValueError('Choose a new task-package directory; existing directories are not overwritten')
+            task_contracts_fingerprint = task_contracts.fingerprint(dossier)
+            job.update(subset_id=body['subset_id'], objective='diagnostic',
+                       dossier_sha256=task_contracts_fingerprint)
+            ray_workbench.profile(STATE)
+        elif kind == 'acquire':
             rid = int(body['record_id'])
             record = read(STATE / 'records' / f'{rid}.json')
             inv = {'records':[record]}
@@ -313,6 +324,13 @@ def worker(folder):
             job['command'] = command
             save(folder/'job.json',job)
             subprocess.run(command,check=True)
+        elif job['kind'] == 'prepare-task':
+            if task_contracts.fingerprint(task_contracts.load()) != job['dossier_sha256']:
+                raise ValueError('Task evidence or implementation changed after submission; review before retrying')
+            print('Copying the audited frozen reference with chunk and final SHA256 verification', flush=True)
+            report = task_contracts.prepare_subset(STATE, root, job['subset_id'])
+            save(folder/'task-package-report.json', report)
+            print(f'Prepared diagnostic task package in {root}', flush=True)
         else:
             with FileLock(str(lock), timeout=0):
                 if job['kind'] == 'audit':
@@ -374,6 +392,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json({'error':'Invalid host'},403)
         parsed = urlparse(self.path)
         try:
+            if parsed.path == '/api/task-dossiers':
+                return self.send_json(task_contracts.load())
             if parsed.path == '/api/state':
                 with GUARD:
                     current_jobs = jobs()

@@ -11,6 +11,21 @@ and container environment metadata. Catalog exports contain metadata, not
 LiDAR point clouds or model weights. Original data remains at the linked
 provider records under its declared terms.
 
+## Task decisions
+
+The instance-segmentation view answers two questions: whether selected data
+can supply plot-instance reference, and what a model evaluation can establish.
+Requirements, exact native-label mappings, masks and evidence fingerprints are
+explicit. FOR-v2 is a native schema, not a universal ontology. Unknown geographic
+independence is never promoted to supported. The existing finetuned-on-all
+Wytham checkpoint supports diagnostics, not independent evaluation.
+
+The connected service can prepare the already audited frozen Wytham reference
+into a new selected directory, with verified SHA256 and `task-package.json`.
+This is a copy of the 3,378,949-point prevoxelized export, not the raw acquisition
+or an independent benchmark. Other whole-dataset preparations remain gated.
+Original-source download is separately labeled and does not confer task readiness.
+
 ## Browser PLY inspection
 
 Open the Data workbench on the public site and choose a local PLY file.

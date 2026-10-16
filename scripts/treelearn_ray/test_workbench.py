@@ -90,7 +90,7 @@ class RemoteWorkflow(unittest.TestCase):
                     r.download(self.job, 'instance-predictions.npy', destination)
             self.assertFalse(destination.exists())
             with patch.object(r, 'reader', return_value='head'), patch.object(r, 'call', return_value=json.dumps({'size_bytes':len(payload),'sha256':'0'*64})):
-                with self.assertRaisesRegex(ValueError, 'Persisted prediction checksum'):
+                with self.assertRaisesRegex(ValueError, 'Persisted.*checksum'):
                     r.download(self.job, 'instance-predictions.npy', destination)
 
     def test_read_script_blocks_symlink_escape_and_streams(self):

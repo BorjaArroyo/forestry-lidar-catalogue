@@ -197,13 +197,18 @@ def download(job, name, destination):
     head = reader(p)
     args = ("exec", head, "-c", "ray-head", "--", "python", "-c", READ,
             job["output_dir"], json.dumps([name]))
+    expected = job.get("result", {}).get("prediction_sha256") if name == "instance-predictions.npy" else None
+    return copy_verified(p, args, destination, expected)
+
+
+def copy_verified(p, args, destination, expected=None):
+    """Copy one caller-allowlisted PVC artifact with bounded verified responses."""
     metadata = json.loads(call(p, *args, "stat"))
     size = metadata["size_bytes"]
-    expected = job.get("result", {}).get("prediction_sha256") if name == "instance-predictions.npy" else None
     if not isinstance(size, int) or not 0 <= size <= 2 * 1024**3 or not re.fullmatch(r"[a-f0-9]{64}", metadata["sha256"]):
         raise ValueError("Invalid artifact metadata")
     if expected and metadata["sha256"] != expected:
-        raise ValueError("Persisted prediction checksum differs from the execution report")
+        raise ValueError("Persisted artifact checksum differs from the expected contract")
     digest = hashlib.sha256()
     started = time.monotonic()
     try:
