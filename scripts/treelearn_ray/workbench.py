@@ -1,5 +1,7 @@
 """Narrow KubeRay adapter for the audited frozen Wytham workflow."""
+import base64
 import hashlib
+import time
 import json
 from pathlib import Path
 import re
@@ -67,12 +69,26 @@ def checked(name):
     p = (root / name).resolve()
     assert p.is_relative_to(root) and p != root, 'Artifact escapes output directory'
     return p
-if mode == 'download':
+if mode in ('stat', 'chunk'):
+    import base64, hashlib
     p = checked(names[0])
-    assert p.is_file() and p.stat().st_size <= 2 * 1024**3
-    with p.open('rb') as f:
-        while block := f.read(1024**2):
-            sys.stdout.buffer.write(block)
+    size = p.stat().st_size
+    assert p.is_file() and size <= 2 * 1024**3
+    if mode == 'stat':
+        digest = hashlib.sha256()
+        with p.open('rb') as f:
+            for block in iter(lambda: f.read(1024**2), b''):
+                digest.update(block)
+        print(json.dumps({'size_bytes': size, 'sha256': digest.hexdigest()}))
+    else:
+        offset, count = int(sys.argv[4]), int(sys.argv[5])
+        assert 0 <= offset < size and 0 < count <= 4 * 1024**2
+        with p.open('rb') as f:
+            f.seek(offset)
+            block = f.read(count)
+        print(json.dumps({'offset': offset, 'size_bytes': size,
+                          'sha256': hashlib.sha256(block).hexdigest(),
+                          'data': base64.b64encode(block).decode('ascii')}))
 else:
     result = {'files': [], 'reports': {}, 'log': ''}
     for name in names:
@@ -178,19 +194,41 @@ def download(job, name, destination):
     if job["status"] in ACTIVE:
         raise ValueError("Wait for execution or cancellation to finish before downloading an artifact snapshot")
     p = job["ray_profile"]
-    args = command(p, "exec", reader(p), "-c", "ray-head", "--", "python", "-c", READ,
-                   job["output_dir"], json.dumps([name]), "download")
-    with destination.open("wb") as stream:
-        result = subprocess.run(args, stdout=stream, stderr=subprocess.PIPE, timeout=120)
-    if result.returncode:
-        destination.unlink(missing_ok=True)
-        raise ValueError(result.stderr.decode(errors="replace")[-2000:])
+    head = reader(p)
+    args = ("exec", head, "-c", "ray-head", "--", "python", "-c", READ,
+            job["output_dir"], json.dumps([name]))
+    metadata = json.loads(call(p, *args, "stat"))
+    size = metadata["size_bytes"]
     expected = job.get("result", {}).get("prediction_sha256") if name == "instance-predictions.npy" else None
-    if expected:
-        digest = hashlib.sha256()
-        with destination.open("rb") as stream:
-            for block in iter(lambda: stream.read(1024**2), b""):
+    if not isinstance(size, int) or not 0 <= size <= 2 * 1024**3 or not re.fullmatch(r"[a-f0-9]{64}", metadata["sha256"]):
+        raise ValueError("Invalid artifact metadata")
+    if expected and metadata["sha256"] != expected:
+        raise ValueError("Persisted prediction checksum differs from the execution report")
+    digest = hashlib.sha256()
+    started = time.monotonic()
+    try:
+        with destination.open("wb") as stream:
+            for offset in range(0, size, 4 * 1024**2):
+                count = min(4 * 1024**2, size-offset)
+                # Large kubectl exec streams may close early with exit status zero.
+                # Bounded, self-verifying responses make truncation retryable.
+                for attempt in range(3):
+                    if time.monotonic() - started > 120:
+                        raise ValueError("Artifact transfer exceeded the two-minute limit")
+                    try:
+                        packet = json.loads(call(p, *args, "chunk", str(offset), str(count)))
+                        block = base64.b64decode(packet["data"], validate=True)
+                        if (packet["offset"] != offset or packet["size_bytes"] != size or len(block) != count
+                                or hashlib.sha256(block).hexdigest() != packet["sha256"]):
+                            raise ValueError("Artifact chunk integrity check failed")
+                        break
+                    except (ValueError, KeyError, subprocess.TimeoutExpired) as e:
+                        if attempt == 2:
+                            raise ValueError(f"Artifact chunk transfer failed at offset {offset}") from e
+                stream.write(block)
                 digest.update(block)
-        if digest.hexdigest() != expected:
-            destination.unlink(missing_ok=True)
-            raise ValueError("Prediction read-back checksum differs from the execution report")
+        if digest.hexdigest() != metadata["sha256"]:
+            raise ValueError("Artifact read-back checksum differs from its source")
+    except BaseException:
+        destination.unlink(missing_ok=True)
+        raise

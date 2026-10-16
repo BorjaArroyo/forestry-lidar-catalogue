@@ -67,7 +67,8 @@ Inspect log & evidence exposes persisted pipeline logs, JSON reports and artifac
 links. Predictions and reports become downloadable when execution or cancellation
 has finished. Downloads are staged to a complete local disk snapshot before HTTP
 transfer; prediction SHA256 is checked against the completion report. Large
-artifacts are streamed, not loaded into service RAM. Downloads require the
+artifacts use bounded, checksummed chunks and are staged on disk. Truncated
+responses are retried per chunk; the final artifact checksum must also match. Downloads require the
 configured reader head and PVC to remain available.
 
 Submission intent and the rendered manifest are saved before contacting Kubernetes.
@@ -97,4 +98,9 @@ Offline checks cover pinned manifests, input/command overrides, durable submissi
 concurrency, uncertain API responses, restart/TTL recovery, failure states,
 cancellation ownership and escaped artifact symlinks. The actual deployment also
 passed read-only admission/input preflight and a completed result read-back.
-No additional full GPU inference was submitted to test this UI integration.
+The full browser-to-Ray-to-download journey subsequently passed on 2026-10-16.
+It covered all 225 tiles and 3,378,949 points, produced 157 instances, and
+downloaded byte-identical predictions to the independently verified reference.
+The test exposed silent truncation in large kubectl exec binary streams; bounded
+base64 chunks with offset, size and SHA256 checks resolved it. See
+[workbench-validation.json](workbench-validation.json) for the run evidence.

@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-10-16",
+  "job_id": "20261016T171357-ddc03e18",
+  "ray_job": "canopy-20261016t171357-ddc03e18",
+  "status": "succeeded",
+  "image": "ghcr.io/borjaarroyo/canopy-treelearn-ray@sha256:bfe3194d979cec051fadb104ee817571614cc66172347a5eed1a5aa56e7fd6ac",
+  "source_commit": "fd240ce7caa4c444fe3418aca454dc578bc557d4",
+  "input_sha256": "f0405d94b303862ff82fb0472785bf0cffaa60d4bd58bec6fbb92f21e0f55883",
+  "checkpoint_sha256": "eb01b97061047783989ea0c311f1ef6eaa2f8423b422ce0620b69e136c5cebf9",
+  "browser_submission": true,
+  "browser_completion_tracking": true,
+  "browser_report_download_verified": true,
+  "browser_prediction_download_verified": true,
+  "download_bytes": 108126496,
+  "prediction_sha256": "a2d39f6e1d03643e6f93b44077e6956a518c6cc6489f73f3c5160be66d3fb9e5",
+  "points": 3378949,
+  "instances": 157,
+  "tiles": 225,
+  "elapsed_seconds": 376.0631477078423,
+  "finite_integral_nonnegative_labels": true,
+  "coordinates_and_order_match_previous_verified_run": true,
+  "byte_identical_to_previous_verified_run": true,
+  "scope": "Full tiled instance segmentation of the frozen 3378949-point Wytham validation export, not the 30497066-point raw acquisition or independent benchmark reproduction",
+  "limitations": [
+    "Checkpoint finetuned on all: this run is not an independent held-out test.",
+    "Frozen input was already voxelized; upstream revoxelizes after centering.",
+    "Historical finetuning preprocessing is not independently recovered."
+  ],
+  "resolved_issue": {
+    "symptom": "kubectl exec returned success after truncating a large binary stream",
+    "observed_bytes": 105283584,
+    "expected_bytes": 108126496,
+    "fix": "Bounded base64 chunks with size, offset and SHA256 verification, per-chunk retries and final SHA256; no unchecked fallback"
+  },
+  "cleanup": "Completed ownership-verified RayJob and dependent temporary cluster removed after evidence capture; PVC inputs and outputs retained"
+}

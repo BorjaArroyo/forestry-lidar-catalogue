@@ -70,20 +70,28 @@ class RemoteWorkflow(unittest.TestCase):
             self.assertIn('delete', call.call_args.args)
             self.assertNotIn('pvc', call.call_args.args)
 
-    def test_prediction_download_verifies_readback_hash(self):
-        import hashlib
-        from types import SimpleNamespace
-        self.job['status'] = 'succeeded'
-        self.job['result'] = {'prediction_sha256':hashlib.sha256(b'expected').hexdigest()}
-        def transfer(*args, **kwargs):
-            kwargs['stdout'].write(b'corrupted')
-            return SimpleNamespace(returncode=0)
+    def test_chunk_download_retries_truncation_and_verifies_final_hash(self):
+        import base64, hashlib
+        payload = b'expected'
+        digest = hashlib.sha256(payload).hexdigest()
+        self.job.update(status='succeeded', result={'prediction_sha256':digest})
+        metadata = json.dumps({'size_bytes':len(payload), 'sha256':digest})
+        packet = json.dumps({'offset':0, 'size_bytes':len(payload), 'sha256':digest,
+                             'data':base64.b64encode(payload).decode()})
         with tempfile.TemporaryDirectory(dir='temp') as folder:
             destination = Path(folder)/'prediction.npy'
-            with patch.object(r, 'reader', return_value='head'), patch.object(r.subprocess, 'run', side_effect=transfer):
-                with self.assertRaisesRegex(ValueError, 'checksum'):
+            with patch.object(r, 'reader', return_value='head'), patch.object(r, 'call', side_effect=[metadata, packet[:-5], packet]) as call:
+                r.download(self.job, 'instance-predictions.npy', destination)
+            self.assertEqual(destination.read_bytes(), payload)
+            self.assertEqual(call.call_count, 3)
+            bad = json.loads(packet);bad['offset'] = 1
+            with patch.object(r, 'reader', return_value='head'), patch.object(r, 'call', side_effect=[metadata]+[json.dumps(bad)]*3):
+                with self.assertRaisesRegex(ValueError, 'offset 0'):
                     r.download(self.job, 'instance-predictions.npy', destination)
             self.assertFalse(destination.exists())
+            with patch.object(r, 'reader', return_value='head'), patch.object(r, 'call', return_value=json.dumps({'size_bytes':len(payload),'sha256':'0'*64})):
+                with self.assertRaisesRegex(ValueError, 'Persisted prediction checksum'):
+                    r.download(self.job, 'instance-predictions.npy', destination)
 
     def test_read_script_blocks_symlink_escape_and_streams(self):
         import subprocess
@@ -96,8 +104,10 @@ class RemoteWorkflow(unittest.TestCase):
             result = subprocess.run(args, capture_output=True)
             self.assertNotEqual(result.returncode, 0)
             (root/'instance-predictions.npy').write_bytes(b'example-binary')
-            args[-2:] = ['["instance-predictions.npy"]', 'download']
-            self.assertEqual(subprocess.check_output(args), b'example-binary')
+            args[-2:] = ['["instance-predictions.npy"]', 'chunk', '0', '14']
+            import base64
+            packet = json.loads(subprocess.check_output(args))
+            self.assertEqual(base64.b64decode(packet['data']), b'example-binary')
 
 
 if __name__ == '__main__':
