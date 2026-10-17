@@ -1,6 +1,6 @@
 window.LIDAR_CATALOG = {
   "schema_version": "0.1",
-  "generated_at": "2026-10-15T08:00:59.300515+00:00",
+  "generated_at": "2026-10-17T21:42:55.468725+00:00",
   "title": "Canopy / LiDAR Knowledge Hub",
   "scope": "Acquired sources; compatibility is task-specific and does not authorize training or redistribution.",
   "summary": {
@@ -67,20 +67,205 @@ window.LIDAR_CATALOG = {
       "scanner": "RIEGL UAV systems; collection-specific models",
       "spectral": false,
       "kind": "Plot clouds",
-      "labels": "Tree instances; terrain, low vegetation, stem and branch classes",
-      "role": "Source benchmark",
-      "readiness": "Mapping review",
+      "labels": "Plot-local treeID; terrain, low vegetation, outside-tree, stem, live-branch and woody-branch classes; species in some collections",
+      "role": "Published dev/test benchmark",
+      "readiness": "Native labels; mapping incomplete",
       "tasks": [
         "instances",
         "components",
-        "geometry"
+        "geometry",
+        "species"
       ],
       "conditional": [
-        "components"
+        "components",
+        "species"
       ],
       "note": "Original semantic classes do not provide a simple wood/foliage crosswalk. Preserve the official dev/test protocol.",
       "correction": "32 files retain original classification but have no canonical semantic mapping.",
       "provenance": "Source of collections reused by FOR-instance V2; a new release is not an independent site.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "Annotated LAS plot; treeID is local to a plot. Collections and releases are not independent samples.",
+        "source_facts": [
+          {
+            "text": "Five UAV collections span Norway, Czechia, Austria, New Zealand and Australia. The provider supplies a development/test split.",
+            "url": "https://zenodo.org/records/8287792",
+            "label": "Provider record"
+          },
+          {
+            "text": "Native classification: 0 unclassified, 1 low vegetation, 2 terrain, 3 outside trees, 4 stem, 5 live branches, 6 woody branches. Live branches do not identify foliage alone. treeSP and field traits vary by collection.",
+            "url": "https://zenodo.org/records/8287792/files/FORinstance_dataset.zip",
+            "label": "Archive readMe.txt"
+          }
+        ],
+        "local_observations": [
+          "32 normalized plots retain classification in original_points; the coarse semantic view has no mapping for it. Some plots lack treeSP."
+        ],
+        "open_questions": [
+          "Resolve treeSP lookup tables per collection before species pooling.",
+          "Reconcile plot/capture ancestry with FOR-instance V2 before assigning independent splits."
+        ],
+        "published_protocol": "Development data may be split for model selection; the official test data are reserved for final evaluation.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "3598069530f4aa23c87b936baaac582b1c36483c48665359e44f42248cb7ea53",
+          "cloud_count": 32,
+          "points": 151478959,
+          "schemas": [
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "red",
+                "green",
+                "blue",
+                "treeID",
+                "treeSP"
+              ],
+              "files": 8
+            },
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "gps_time",
+                "red",
+                "green",
+                "blue",
+                "treeID",
+                "treeSP"
+              ],
+              "files": 10
+            },
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "gps_time",
+                "treeID",
+                "treeSP"
+              ],
+              "files": 10
+            },
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "red",
+                "green",
+                "blue",
+                "treeID"
+              ],
+              "files": 2
+            },
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "gps_time",
+                "red",
+                "green",
+                "blue",
+                "treeID"
+              ],
+              "files": 2
+            }
+          ]
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "documented",
+          "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review."
+        },
+        "components": {
+          "status": "partial",
+          "reason": "Native component labels are described; granularity, unknown classes and crosswalk losses remain task-specific."
+        },
+        "species": {
+          "status": "partial",
+          "reason": "treeSP occurs in some schemas and field traits vary by collection; lookup and coverage must be joined first."
+        },
+        "geometry": {
+          "status": "documented",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        }
+      },
+      "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
       "id": "8287792",
       "title": "FOR-instance: a UAV laser scanning benchmark dataset for semantic and   instance segmentation of individual trees",
       "url": "https://zenodo.org/records/8287792",
@@ -280,17 +465,85 @@ window.LIDAR_CATALOG = {
       "spectral": false,
       "kind": "Plot clouds",
       "labels": "Ground, wood, foliage and tree instances",
-      "role": "Primary benchmark",
-      "readiness": "Reference schema",
+      "role": "Published train/validation/test benchmark",
+      "readiness": "Native annotation schema",
       "tasks": [
         "instances",
         "components",
         "geometry"
       ],
-      "conditional": [],
-      "note": "Reference namespace: 1 ground, 2 wood, 3 foliage. Preserve official splits and separate development LOSO from final evaluation.",
+      "conditional": [
+        "instances",
+        "components"
+      ],
+      "note": "Native namespace: 1 terrain, 2 wood, 3 foliage. These class IDs do not define a catalog-wide ontology.",
       "correction": "Scene identities, physical sites and upstream lineage need reconciliation before claiming site-out generalization.",
       "provenance": "Includes FOR-instance descendants and additional acquisitions, including BlueCat and MLS.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "PLY plot or release-specific scene; scene count is not physical-site count.",
+        "source_facts": [
+          {
+            "text": "The record distributes training/validation data, test data and pretrained ForestFormer3D material. The associated code defines semantic_seg: 1 terrain, 2 wood, 3 foliage, with treeID for instances.",
+            "url": "https://github.com/SmartForest-no/ForestFormer3D",
+            "label": "Official implementation and release"
+          }
+        ],
+        "local_observations": [
+          "94 observed PLY files use x, y, z, semantic_seg, treeID. Their headers do not supply CRS in the saved audit."
+        ],
+        "open_questions": [
+          "Reconcile descendants of earlier collections and repeated captures.",
+          "Check source scenes, annotation coverage and component rights for the selected task."
+        ],
+        "published_protocol": "Retain the official train/validation/test identifiers for published comparisons. Geographic independence requires a separate capture-level audit.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "de53a6a750a5ff471e9266fff7d6a0b295061b4be4638312f354d94c5ffa793a",
+          "cloud_count": 94,
+          "points": 613942843,
+          "schemas": [
+            {
+              "fields": [
+                "x",
+                "y",
+                "z",
+                "semantic_seg",
+                "treeID"
+              ],
+              "files": 94
+            }
+          ]
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "partial",
+          "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review."
+        },
+        "components": {
+          "status": "partial",
+          "reason": "Native component labels are described; granularity, unknown classes and crosswalk losses remain task-specific."
+        },
+        "species": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "geometry": {
+          "status": "documented",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        }
+      },
+      "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
       "id": "16742708",
       "title": "FOR-instanceV2 dataset and pre-trained model in paper entitled \"ForestFormer3D: A Unified Framework for End-to-End Segmentation of Forest LiDAR 3D Point Clouds\"",
       "url": "https://zenodo.org/records/16742708",
@@ -342,26 +595,87 @@ window.LIDAR_CATALOG = {
         "Terrestrial"
       ],
       "domain": "Close-range forest plots",
-      "geography": "Finland",
+      "geography": "Plot locations not verified in this review",
       "scanner": "Close-range sensing; see source publication",
       "spectral": false,
       "kind": "Plot clouds",
-      "labels": "Forest component and tree annotations; mapping review required",
+      "labels": "Ground, trunk, two branch orders, foliage, miscellany; tree and first-order-branch IDs; structural trait tables",
       "role": "Rights review",
       "readiness": "Derivatives deferred",
       "tasks": [
+        "instances",
         "components",
         "geometry",
-        "instances"
+        "biomass"
       ],
       "conditional": [
-        "components",
         "instances",
-        "geometry"
+        "components",
+        "geometry",
+        "biomass"
       ],
       "note": "Three point-cloud conversions were deliberately deferred for derivative-rights review. Acquisition is complete.",
       "correction": "Do not interpret acquired files as admitted training data. Keep the intended-use review explicit.",
       "provenance": "Recorded source license includes NC and ND terms; component and intended-use review is outstanding.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "Three LAS plots with per-tree trait tables and first-order-branch references.",
+        "source_facts": [
+          {
+            "text": "Tree identity is stored in point_source_id, component class in classification, and first-order-branch identity in gps_time; these LAS fields have dataset-specific meanings.",
+            "url": "https://zenodo.org/records/15193973",
+            "label": "Provider field definitions"
+          },
+          {
+            "text": "Readme classes: 1 ground, 2 trunk, 3 first-order branch, 4 higher-order branch, 5 foliage, 6 miscellany. Tree/branch tables supply structural references.",
+            "url": "https://zenodo.org/records/15193973/files/Readme.pdf",
+            "label": "Provider Readme, sections 1–4"
+          }
+        ],
+        "local_observations": [
+          "All 11 selected assets were acquired; three cloud conversions remain deferred. Zero normalized files does not mean the source has no point clouds."
+        ],
+        "open_questions": [
+          "Verify plot locations and acquisition details from the associated paper; this review does not establish their coordinates.",
+          "Resolve intended-use and component terms before generating derivatives."
+        ],
+        "published_protocol": "No executable task-specific split or evaluator is admitted in this hub.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "e8d372ca11a5067b7e572d092618edf7aa7339ee1679619bce8f79aac0134a31",
+          "cloud_count": 0,
+          "points": 0,
+          "schemas": []
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "partial",
+          "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review."
+        },
+        "components": {
+          "status": "partial",
+          "reason": "Native component labels are described; granularity, unknown classes and crosswalk losses remain task-specific."
+        },
+        "species": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "geometry": {
+          "status": "partial",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "biomass": {
+          "status": "partial",
+          "reason": "Structural references or derived models require variable-level provenance; independent biomass truth is not established."
+        }
+      },
+      "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
       "id": "15193973",
       "title": "ForestSemantic: A Dataset for Semantic Learning of Forest from Close-Range Sensing",
       "url": "https://zenodo.org/records/15193973",
@@ -392,7 +706,7 @@ window.LIDAR_CATALOG = {
       "spectral": true,
       "kind": "Plot clouds",
       "labels": "Ground, low vegetation, trunk, branches, foliage, woody debris; no tree IDs",
-      "role": "Semantic auxiliary",
+      "role": "Published semantic benchmark",
       "readiness": "Partial crosswalk",
       "tasks": [
         "components",
@@ -400,11 +714,101 @@ window.LIDAR_CATALOG = {
         "spectral"
       ],
       "conditional": [
-        "components"
+        "components",
+        "spectral"
       ],
       "note": "Six plots: four training and two test files. SWIR 1550 nm, NIR 905 nm, Green 532 nm; normalized reflectance and VI.",
       "correction": "Current coarse view does not map low vegetation or woody debris. Preserve both in a richer source namespace.",
       "provenance": "Potential relationships to other FGI collections require capture-level evidence; shared institutions do not prove overlap.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "Six annotated multispectral plots: four training and two test plots.",
+        "source_facts": [
+          {
+            "text": "HeliALS data include SWIR 1550 nm, NIR 905 nm, Green 532 nm and a vegetation index; the provider describes these channels as normalized to [0,1].",
+            "url": "https://zenodo.org/records/17172162",
+            "label": "Provider attributes"
+          },
+          {
+            "text": "semantic_GT: 0 ground, 1 low vegetation, 2 trunk, 3 branches, 4 foliage, 5 woody debris. No individual-tree reference is documented.",
+            "url": "https://zenodo.org/records/17172162",
+            "label": "Provider labels and split"
+          }
+        ],
+        "local_observations": [
+          "All six normalized files retain native fields. The coarse view merges trunk/branches and leaves low vegetation/debris unknown."
+        ],
+        "open_questions": [
+          "Recover the exact normalization and spatial alignment before spectral pooling.",
+          "Resolve task treatment of low vegetation and fallen wood; retain native classes."
+        ],
+        "published_protocol": "The provider uses four plots for training and two for evaluation; this does not certify site separation.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "bdf25852feed4b84da9b8c1b618de6a044f0fc9eeb5bba2f13b6f4e2ae3e87b2",
+          "cloud_count": 6,
+          "points": 9600927,
+          "schemas": [
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "gps_time",
+                "red",
+                "green",
+                "blue",
+                "SWIR",
+                "NIR",
+                "Green",
+                "VI",
+                "semantic_GT"
+              ],
+              "files": 6
+            }
+          ]
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "unsupported",
+          "reason": "Only semantic reference is documented; class IDs cannot supply tree identity."
+        },
+        "components": {
+          "status": "partial",
+          "reason": "Native component labels are described; granularity, unknown classes and crosswalk losses remain task-specific."
+        },
+        "species": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "geometry": {
+          "status": "documented",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "partial",
+          "reason": "Multispectral attributes are documented; radiometric equivalence across acquisitions is unverified."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        }
+      },
+      "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
       "id": "17172162",
       "title": "ForestSemantic-MS Dataset: multispectral LiDAR forest point clouds for fine-grained forest semantic segmentation",
       "url": "https://zenodo.org/records/17172162",
@@ -494,12 +898,12 @@ window.LIDAR_CATALOG = {
         "Airborne"
       ],
       "domain": "Forest and mixed-object plots",
-      "geography": "Finland",
+      "geography": "Espoonlahti, Espoo, Finland",
       "scanner": "Multispectral high-density airborne laser scanning",
       "spectral": true,
       "kind": "Plot clouds",
       "labels": "Tree instances; other, tree, building, vehicle, pole, out",
-      "role": "Reserved evaluation",
+      "role": "Published instance benchmark",
       "readiness": "Instance crosswalk",
       "tasks": [
         "instances",
@@ -507,11 +911,116 @@ window.LIDAR_CATALOG = {
         "spectral"
       ],
       "conditional": [
-        "instances"
+        "instances",
+        "spectral"
       ],
-      "note": "External terminal evaluation in the existing study. Its broad tree class cannot supervise wood/foliage discrimination.",
-      "correction": "Keep class 5 out-points masked and retain native semantic categories. Do not move reserved data into fitting.",
-      "provenance": "19 files with per-scanner radiometric channels; units and calibration remain channel-specific.",
+      "note": "Native classes include built objects. The local study uses only selected test plots; the provider also supplies training data.",
+      "correction": "Retain native categories and the out mask. Do not infer wood/foliage labels from the broad tree category.",
+      "provenance": "Single Espoonlahti acquisition area; split plots do not by themselves establish geographic generalization.",
+      "study_context": "The local forestseg study reserves its selected test plots for terminal evaluation. This reservation is not a provider-wide restriction.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "19 cylindrical plots; tree_index is unique within each plot.",
+        "source_facts": [
+          {
+            "text": "The Espoonlahti acquisition contains 19 plots and 1,561 annotated trees. It also contains buildings, vehicles and poles. Tree annotation targets identifiable trees at least 3 m high and boundary trees approximately half inside.",
+            "url": "https://zenodo.org/records/19351234",
+            "label": "Pinned provider description, sections 1 and 3"
+          },
+          {
+            "text": "Native classification: 0 other, 1 tree, 2 building, 3 vehicle, 4 pole, 5 out. The source benchmark excludes class 5; its unsupervised and learned methods treat classes 2–4 differently.",
+            "url": "https://zenodo.org/records/19351234",
+            "label": "Pinned provider description, section 3.1"
+          }
+        ],
+        "local_observations": [
+          "19 normalized LAS files retain radiometric attributes and native classes. The coarse instance view masks out-points without deleting source points."
+        ],
+        "open_questions": [
+          "Choose the evaluator-specific boundary/background policy before comparing scores.",
+          "Review channel calibration and model exposure to Espoonlahti."
+        ],
+        "published_protocol": "13 training and 6 test plots; optional validation plots 1019, 1022, 1031 come from training. These are plots from one acquisition area, not 19 independent zones.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "d60fb6fab63dfbcb1bd9d815059909b5626a918e8c5cbf2d79623677223cf720",
+          "cloud_count": 19,
+          "points": 60793586,
+          "schemas": [
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "overlap",
+                "scanner_channel",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "user_data",
+                "scan_angle",
+                "point_source_id",
+                "gps_time",
+                "red",
+                "green",
+                "blue",
+                "Amplitude",
+                "Reflectance",
+                "Deviation",
+                "reflectance_1",
+                "reflectance_2",
+                "reflectance_3",
+                "amplitude_1",
+                "amplitude_2",
+                "amplitude_3",
+                "deviation_1",
+                "deviation_2",
+                "deviation_3",
+                "intensity_1",
+                "intensity_2",
+                "intensity_3",
+                "tree_index",
+                "edge",
+                "dead"
+              ],
+              "files": 19
+            }
+          ]
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "partial",
+          "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review."
+        },
+        "components": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "species": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "geometry": {
+          "status": "documented",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "partial",
+          "reason": "Multispectral attributes are documented; radiometric equivalence across acquisitions is unverified."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        }
+      },
       "id": "19351234",
       "title": "FGI-EMIT: a multispectral high-density airborne laser scanning benchmark dataset for individual tree segmentation",
       "url": "https://zenodo.org/records/19351234",
@@ -636,7 +1145,7 @@ window.LIDAR_CATALOG = {
       "spectral": true,
       "kind": "Plot clouds",
       "labels": "Plots 1–2: tree instances, foliage, wood, understory; 18 unlabeled plots",
-      "role": "Reserved evaluation",
+      "role": "Partial-label spectral dataset",
       "readiness": "Partial supervision",
       "tasks": [
         "instances",
@@ -646,11 +1155,130 @@ window.LIDAR_CATALOG = {
       ],
       "conditional": [
         "instances",
-        "components"
+        "components",
+        "spectral"
       ],
-      "note": "Only two plots are labeled. The existing study reserves them for external evaluation and excludes unlabeled plots from fitting.",
-      "correction": "Coordinates are already ground-normalized. Do not run a second terrain normalization. Keep understory distinct.",
-      "provenance": "Labeled and unlabeled subsets have different permitted roles in the frozen study protocol.",
+      "note": "Two plots supply instance/component reference. The provider cylinder split and the local plot reservation are different protocols.",
+      "correction": "Use z as the supplied terrain-normalized height. Retain understory as a native class and preserve the 18 unlabeled plots as unlabeled.",
+      "provenance": "One Evo acquisition area; labeled and unlabeled subsets do not constitute independent geographic domains.",
+      "study_context": "The local forestseg study reserves plots 1–2 for terminal evaluation and excludes plots 3–20 from fitting. The source paper used unlabeled data for training.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "20 plots from the Evo acquisition; only plots 1 and 2 have manual labels.",
+        "source_facts": [
+          {
+            "text": "Ground points were removed and a terrain model was already subtracted from z. The 18 other plots have no manual labels.",
+            "url": "https://zenodo.org/records/15913427",
+            "label": "Provider preprocessing and label coverage"
+          },
+          {
+            "text": "Labeled plots carry tree_index and classification: 0 foliage, 1 wood, 2 understory. red/green/blue store scanner reflectances at 1550/905/532 nm, rather than visible RGB.",
+            "url": "https://zenodo.org/records/15913427",
+            "label": "Provider attributes"
+          },
+          {
+            "text": "The published experiment splits overlapping cylinders, including selected test cylinders inside plots 1 and 2; remaining cylinders were used for training.",
+            "url": "https://zenodo.org/records/15913427",
+            "label": "Provider data-split table"
+          }
+        ],
+        "local_observations": [
+          "The saved schemas distinguish 2 files with tree_index from 18 without it. The coarse view leaves understory unknown and preserves it natively."
+        ],
+        "open_questions": [
+          "Recover cylinder geometry, overlap and model exposure when reproducing the published experiment.",
+          "Calibrate radiometry before cross-source transfer; do not normalize terrain a second time."
+        ],
+        "published_protocol": "The provider cylinder split differs from the local study, which reserves both labeled plots and excludes the 18 unlabeled plots from fitting.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "e9008d5079b8e230288bc7e28e22eb819aa85aa81f063c098913c9e36e29f7b3",
+          "cloud_count": 20,
+          "points": 128533887,
+          "schemas": [
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "overlap",
+                "scanner_channel",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "user_data",
+                "scan_angle",
+                "point_source_id",
+                "gps_time",
+                "red",
+                "green",
+                "blue"
+              ],
+              "files": 18
+            },
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "overlap",
+                "scanner_channel",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "user_data",
+                "scan_angle",
+                "point_source_id",
+                "gps_time",
+                "red",
+                "green",
+                "blue",
+                "tree_index"
+              ],
+              "files": 2
+            }
+          ]
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "partial",
+          "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review."
+        },
+        "components": {
+          "status": "partial",
+          "reason": "Native component labels are described; granularity, unknown classes and crosswalk losses remain task-specific."
+        },
+        "species": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "geometry": {
+          "status": "documented",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "partial",
+          "reason": "Multispectral attributes are documented; radiometric equivalence across acquisitions is unverified."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        }
+      },
       "id": "15913427",
       "title": "EvoMS: multispectral LiDAR forest point clouds with partial semantic annotations",
       "url": "https://zenodo.org/records/15913427",
@@ -763,11 +1391,11 @@ window.LIDAR_CATALOG = {
       ],
       "domain": "Central European forest inventories",
       "geography": "Poland; location precision is limited",
-      "scanner": "Terrestrial laser scanning; inspect acquisition-specific metadata",
+      "scanner": "FARO Focus 3D X130 · Trimble TX5",
       "spectral": false,
       "kind": "Plot clouds",
-      "labels": "Tree IDs, species and completeness flags; no wood/foliage labels established",
-      "role": "Instance expansion candidate",
+      "labels": "Plot-local treeID; treeSP with partial species coverage; completelyInside crown flag",
+      "role": "Instance and species candidate",
       "readiness": "Coverage review",
       "tasks": [
         "instances",
@@ -781,6 +1409,118 @@ window.LIDAR_CATALOG = {
       "note": "272 plots. Completeness and boundary flags matter for evaluation. Species fields require a verified lookup table.",
       "correction": "Rounded locations do not certify site separation. This source dominates the collection by point count.",
       "provenance": "Conservative campaign/site grouping is needed; per-file instance IDs are not globally unique.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "272 circular TLS plots (15 m radius); tree identity is plot-local.",
+        "source_facts": [
+          {
+            "text": "The provider reports 10,417 trees, with species labels for 7,465 across 30 species. treeSP=0 conflates non-tree points and unknown species; completelyInside marks complete versus cropped crowns.",
+            "url": "https://zenodo.org/records/19127709",
+            "label": "Provider annotation coverage"
+          },
+          {
+            "text": "Six Polish forest districts were scanned using FARO Focus 3D X130 and Trimble TX5. species_id.csv gives the taxonomic lookup; plot_summary.csv locations are rounded to a kilometer.",
+            "url": "https://zenodo.org/records/19127709",
+            "label": "Provider acquisition and companion tables"
+          }
+        ],
+        "local_observations": [
+          "272 normalized plots retain treeID, treeSP, PointID and completelyInside. The coarse normalizer does not establish wood/foliage semantics."
+        ],
+        "open_questions": [
+          "Join species_id.csv and preserve unknown species; the label coverage percentage describes trees, not points.",
+          "Group campaigns and nearby plots conservatively; rounded coordinates cannot certify separation."
+        ],
+        "published_protocol": "No frozen train/validation/test protocol for this source has been admitted by the hub.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "2e22e773cebdd3c81b82c3ee2a1d5ed1c98fc5ff8b09d76e885ba3dc36d5f249",
+          "cloud_count": 272,
+          "points": 18762160941,
+          "schemas": [
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "gps_time",
+                "red",
+                "green",
+                "blue",
+                "PointID",
+                "treeID",
+                "treeSP",
+                "completelyInside"
+              ],
+              "files": 51
+            },
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "PointID",
+                "treeID",
+                "treeSP",
+                "completelyInside"
+              ],
+              "files": 221
+            }
+          ]
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "partial",
+          "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review."
+        },
+        "components": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "species": {
+          "status": "partial",
+          "reason": "Species reference is partial; retain unknowns and verify the per-source lookup and tree linkage."
+        },
+        "geometry": {
+          "status": "documented",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        }
+      },
+      "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
       "id": "19127709",
       "title": "TreeScanPL10k: A Central European tree species dataset of annotated terrestrial laser scanning point clouds",
       "url": "https://zenodo.org/records/19127709",
@@ -897,7 +1637,7 @@ window.LIDAR_CATALOG = {
       "spectral": false,
       "kind": "Plots + extracted trees",
       "labels": "Plot-level ground/tree semantics and instances; extracted-tree exports vary",
-      "role": "Site-transfer candidate",
+      "role": "Four-site instance benchmark",
       "readiness": "Overlap review",
       "tasks": [
         "instances",
@@ -906,9 +1646,110 @@ window.LIDAR_CATALOG = {
       "conditional": [
         "instances"
       ],
-      "note": "Boundary trees are repeated between folders. Whole plots and extracted trees are related views, not independent samples.",
+      "note": "Plot references and derived tree exports are different evaluation units. The validated frozen Wytham run covers only one diagnostic export.",
       "correction": "118 byte-identical train/validation tree copies; Wytham also overlaps the separate Wytham collection.",
       "provenance": "Provider documents boundary duplication. Site-level grouping must include all derived tree exports.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "Four physical plots, spatial train/validation/test areas, and derived individual-tree exports.",
+        "source_facts": [
+          {
+            "text": "Litchfield, Wytham, Ofental and Robson Creek cover savanna, temperate and tropical forests. Plot PLYs use semantic 0 ground / 1 tree and instance IDs; individual-tree exports vary.",
+            "url": "https://zenodo.org/records/16875688",
+            "label": "Provider format and sites"
+          },
+          {
+            "text": "Trees crossing area boundaries are included in multiple folders. The provider supplies finetuned TreeLearn and ForAINet weights; folder separation does not imply independent tree samples.",
+            "url": "https://zenodo.org/records/16875688",
+            "label": "Provider duplication and weights notes"
+          }
+        ],
+        "local_observations": [
+          "3,271 normalized files combine plot clouds and extracted trees. Recorded hashes identify 118 extra tree copies across train/validation and 280 across this record and Wytham."
+        ],
+        "open_questions": [
+          "Resolve each checkpoint training and model-selection exposure.",
+          "Retain plot-area boundary policies and group all derivatives of the same capture."
+        ],
+        "published_protocol": "Spatial areas within four sites support the provider protocol. Independent-zone evaluation requires an explicit held-out site and reviewed checkpoint exposure.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "534392f8da7ed9d1f5470eaee4c9220f95ba8975f52cc80a434949727e0cbb42",
+          "cloud_count": 3271,
+          "points": 1577458464,
+          "schemas": [
+            {
+              "fields": [
+                "x",
+                "y",
+                "z",
+                "semantic",
+                "instance"
+              ],
+              "files": 2473
+            },
+            {
+              "fields": [
+                "x",
+                "y",
+                "z"
+              ],
+              "files": 776
+            },
+            {
+              "fields": [
+                "x",
+                "y",
+                "z",
+                "red",
+                "green",
+                "blue",
+                "instance",
+                "semantic"
+              ],
+              "files": 12
+            },
+            {
+              "fields": [
+                "x",
+                "y",
+                "z",
+                "instance",
+                "semantic"
+              ],
+              "files": 10
+            }
+          ]
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "partial",
+          "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review."
+        },
+        "components": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "species": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "geometry": {
+          "status": "documented",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        }
+      },
+      "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
       "id": "16875688",
       "title": "TLS forest instance segmentation benchmark: 2983 manually segmented trees from four plots",
       "url": "https://zenodo.org/records/16875688",
@@ -999,7 +1840,7 @@ window.LIDAR_CATALOG = {
       "spectral": false,
       "kind": "Plots + paired tree exports",
       "labels": "StemID; manual and automatic trees; plot treeIDv1 and updated treeIDv2",
-      "role": "Annotation-variant benchmark",
+      "role": "Versioned annotation candidate",
       "readiness": "Mapping gap",
       "tasks": [
         "instances",
@@ -1011,6 +1852,135 @@ window.LIDAR_CATALOG = {
       "note": "515 manual/automatic tree pairs are annotation variants, not duplicate ground truth. Six full plots retain two label versions.",
       "correction": "All 1,036 files currently lack mapped canonical instance IDs despite preserving the source fields.",
       "provenance": "The local README documents updated labels and shared lineage with TreeLearn. Keep v1, v2 and predictions separate.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "Six PLS plots and 515 paired manual/automatic tree exports.",
+        "source_facts": [
+          {
+            "text": "Manual and automatic segmentations originate from the same six LAUT plots. Automatic outputs are predictions, not a second independent reference.",
+            "url": "https://zenodo.org/records/16910335",
+            "label": "Provider lineage"
+          },
+          {
+            "text": "Complete-plot README identifies treeIDv1 as Tockner labels and treeIDv2 as Henrich revisions; classification 2 ground, 3 unlabeled, 4 tree. Corrected tree bases differ between versions.",
+            "url": "https://zenodo.org/records/16910335/files/PLS_manual_segmentation_complete_point_clouds.zip",
+            "label": "Archive Readme.md"
+          }
+        ],
+        "local_observations": [
+          "1,036 normalized files preserve native attributes, but the existing coarse instance view does not read StemID or treeIDv1/v2. It must not be used as complete reference."
+        ],
+        "open_questions": [
+          "Select and pin annotation version, background/unknown handling and complete-plot coverage.",
+          "Reconcile capture and annotation ancestry with TreeLearn training data."
+        ],
+        "published_protocol": "No executable, versioned plot-reference adapter is admitted here; preserve manual references and predictions separately.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "af6e09df89313979a144908c5f19d72144c82a47710975b52bfd77a583c4a5d6",
+          "cloud_count": 1036,
+          "points": 683056645,
+          "schemas": [
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "gps_time",
+                "StemID"
+              ],
+              "files": 515
+            },
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "gps_time",
+                "StemID",
+                "randomCol",
+                "runJay"
+              ],
+              "files": 515
+            },
+            {
+              "fields": [
+                "X",
+                "Y",
+                "Z",
+                "intensity",
+                "return_number",
+                "number_of_returns",
+                "scan_direction_flag",
+                "edge_of_flight_line",
+                "classification",
+                "synthetic",
+                "key_point",
+                "withheld",
+                "scan_angle_rank",
+                "user_data",
+                "point_source_id",
+                "gps_time",
+                "treeIDv2",
+                "treeIDv1"
+              ],
+              "files": 6
+            }
+          ]
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "partial",
+          "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review."
+        },
+        "components": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "species": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "geometry": {
+          "status": "documented",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        }
+      },
+      "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
       "id": "16910335",
       "title": "LAUTx - Individual Tree Point Clouds From Austrian Forest Inventory Plots",
       "url": "https://zenodo.org/records/16910335",
@@ -1142,7 +2112,7 @@ window.LIDAR_CATALOG = {
       "spectral": false,
       "kind": "Individual trees + QSMs",
       "labels": "876 isolated-tree clouds; tree identity in filenames; derived QSMs",
-      "role": "Structure research",
+      "role": "Tree structure and QSM collection",
       "readiness": "Shared-capture review",
       "tasks": [
         "geometry",
@@ -1154,6 +2124,74 @@ window.LIDAR_CATALOG = {
       "note": "A single-tree export supports tree-level studies, not full-scene detection scoring. QSM variants are derived reconstructions.",
       "correction": "PLY and TXT are alternative encodings. 280 harmonized trees exactly match the TLS benchmark; all 876 names and point counts match.",
       "provenance": "The collection contains 876 tree identities; 835 were included in the source analysis after boundary conditions.",
+      "review": {
+        "reviewed_at": "2026-10-17",
+        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "observation_unit": "876 isolated-tree identities and QSM reconstructions; not a complete plot reference.",
+        "source_facts": [
+          {
+            "text": "Leaf-off scans were collected in 2015–2016 with a RIEGL VZ-400. The release contains 876 trees; the paper analysis uses 835 after applying plot-boundary conditions.",
+            "url": "https://zenodo.org/records/7307956",
+            "label": "Provider acquisition and analysis scope"
+          },
+          {
+            "text": "PLY/TXT are tree exports and MAT files are TreeQSM reconstructions. Numeric-letter IDs can identify stems sharing a base. Raw scene scans are linked separately.",
+            "url": "https://zenodo.org/records/7307956",
+            "label": "Provider file and identity definitions"
+          }
+        ],
+        "local_observations": [
+          "876 XYZ-only PLY exports were normalized. 280 complete recorded chunk sequences match the TLS benchmark; all 876 names/point counts match, which alone does not prove every geometry identical."
+        ],
+        "open_questions": [
+          "Link census traits, stem/base identities and QSM versions for the intended structural task.",
+          "QSM-derived quantities are not automatically independent ground truth for biomass estimation."
+        ],
+        "published_protocol": "Apply the published boundary inclusion rule for its 835-tree analysis; isolated trees cannot measure full-scene omissions and commissions.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "fef0d85bbd0fdf654729919cb113941becc109882896a87958657997960e2f24",
+          "cloud_count": 876,
+          "points": 159220306,
+          "schemas": [
+            {
+              "fields": [
+                "x",
+                "y",
+                "z"
+              ],
+              "files": 876
+            }
+          ]
+        },
+        "observations_current": true
+      },
+      "source_task_support": {
+        "instances": {
+          "status": "unsupported",
+          "reason": "Isolated-tree exports do not reconstruct background or complete plot reference required for scene-level scoring."
+        },
+        "components": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "species": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "geometry": {
+          "status": "documented",
+          "reason": "XYZ can support geometry/consistency diagnostics; it cannot establish segmentation accuracy without reference."
+        },
+        "spectral": {
+          "status": "not_documented",
+          "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+        },
+        "biomass": {
+          "status": "derived_only",
+          "reason": "Structural references or derived models require variable-level provenance; independent biomass truth is not established."
+        }
+      },
+      "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
       "id": "7307956",
       "title": "Terrestrial laser scanning data Wytham Woods: individual trees and quantitative structure models (QSMs)",
       "url": "https://zenodo.org/records/7307956",
@@ -1204,17 +2242,38 @@ window.LIDAR_CATALOG = {
       "tasks": [
         "instances"
       ],
-      "name": "Retain tree identity",
-      "rule": "Retain positive treeID values; define coverage and unknown/background masks explicitly. Keep upstream dev/test provenance.",
+      "name": "Legacy tree-ID projection",
+      "rule": "The existing converter retains positive treeID; it does not map terrain or out-points into a reviewed task mask.",
       "loss": "Semantic classes differ. This does not supply a reliable foliage label or prove independent acquisitions.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "Existing converter inspected; task compatibility not validated",
+      "implementation": "Existing source-aware projection in scripts/harmonize_lidar.py; no complete task pipeline validated by this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/8287792"
+        },
+        {
+          "label": "Inspected converter",
+          "url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/scripts/harmonize_lidar.py"
         }
-      ]
+      ],
+      "contract": {
+        "status": "legacy_code_inspection",
+        "input": "LAS treeID + classification + plot identity",
+        "output": "Existing coarse instance view; classification remains unmapped",
+        "steps": [
+          "instance[:] = -1",
+          "instance[treeID > 0] = treeID[treeID > 0]",
+          "semantic[:] = 0; semantic_valid[:] = False",
+          "instance_valid = instance >= 0; preserve native classification"
+        ],
+        "preconditions": [
+          "This describes existing converter behavior, not a complete task adapter.",
+          "Terrain and outside-tree masking are unresolved for task admission; do not infer that positive IDs establish complete coverage."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "v1-v2-lineage",
@@ -1228,14 +2287,28 @@ window.LIDAR_CATALOG = {
       "name": "Shared collection lineage",
       "rule": "Reconcile collection, plot and annotation descendants before splitting.",
       "loss": "No full point-set overlap audit has been completed. Dataset-out is not certified site-out.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "No audited transfer function registered",
+      "implementation": "Not executable; no complete transformation package is registered for this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/8287792"
         }
-      ]
+      ],
+      "contract": {
+        "status": "review_required",
+        "input": "Collection, plot, capture and annotation identities",
+        "output": "Candidate dependency groups",
+        "steps": [
+          "join releases on reviewed capture identity; do not join on record ID alone",
+          "assign every annotation descendant to its capture group before splitting"
+        ],
+        "preconditions": [
+          "Full point-set overlap and capture reconciliation remain incomplete."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "tls-v2",
@@ -1245,17 +2318,34 @@ window.LIDAR_CATALOG = {
       "tasks": [
         "instances"
       ],
-      "name": "Instance-schema crosswalk",
+      "name": "Instance-schema crosswalk · label helper",
       "rule": "Map positive instance values; ground is semantic=0 in the source. Keep plot and boundary-tree groups together.",
       "loss": "Source tree semantics cannot be converted to wood/foliage ground truth.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "Label helper tested; complete task pipeline not validated",
+      "implementation": "See exact task-label helper in scripts/task_contracts.py; it is not a whole-dataset pipeline.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/16875688"
         }
-      ]
+      ],
+      "contract": {
+        "status": "tested_label_helper",
+        "input": "Annotated plot PLY instance + semantic (0 ground, 1 tree)",
+        "output": "Task instance IDs: -1 unknown, 0 background, positive trees",
+        "steps": [
+          "out.instance[:] = -1",
+          "out.instance[instance > 0] = instance[instance > 0]",
+          "out.instance[semantic == 0] = 0",
+          "out.valid = out.instance >= 0"
+        ],
+        "preconditions": [
+          "Require both fields and validated integral values.",
+          "Exclude XYZ-only exports from plot reference; audit complete plot/area coverage."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "treescan-v2",
@@ -1268,14 +2358,34 @@ window.LIDAR_CATALOG = {
       "name": "Tree IDs + coverage policy",
       "rule": "Map positive treeID and retain completelyInside, species and source PointID attributes. Specify incomplete-tree scoring.",
       "loss": "The view adds no ground/wood/foliage annotations; locations are insufficient for strict site-out certification.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "Existing converter inspected; task compatibility not validated",
+      "implementation": "Existing source-aware projection in scripts/harmonize_lidar.py; no complete task pipeline validated by this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/19127709"
+        },
+        {
+          "label": "Inspected converter",
+          "url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/scripts/harmonize_lidar.py"
         }
-      ]
+      ],
+      "contract": {
+        "status": "legacy_code_inspection",
+        "input": "LAS treeID, treeSP, completelyInside + plot ID",
+        "output": "Proposed instance projection with native species/coverage metadata",
+        "steps": [
+          "out.instance[:] = -1; out.instance[treeID > 0] = treeID[treeID > 0]",
+          "retain treeSP and completelyInside without recoding",
+          "join species_id.csv on treeSP; keep treeSP == 0 unknown/non-tree"
+        ],
+        "preconditions": [
+          "Choose how treeID==0 is scored; the legacy view currently leaves it unknown.",
+          "Declare cropped-crown scoring and verify taxonomic lookup; no wood/foliage inference."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "fgi-v2",
@@ -1286,16 +2396,37 @@ window.LIDAR_CATALOG = {
         "instances"
       ],
       "name": "Instance IDs with out-mask",
-      "rule": "Map tree_index, preserve native class meanings and mask class=5 out-points according to the protocol.",
-      "loss": "Reserved external evaluation; tree versus other is not wood versus foliage.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "rule": "Existing coarse instance projection with class-5 unknown mask; no rows deleted. Retain native background/object distinctions.",
+      "loss": "The local study reserves selected test plots. Provider training data remain a separate published split; broad tree labels cannot supervise wood/foliage.",
+      "evidence_status": "Existing converter inspected; task compatibility not validated",
+      "implementation": "Existing source-aware projection in scripts/harmonize_lidar.py; no complete task pipeline validated by this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/19351234"
+        },
+        {
+          "label": "Inspected converter",
+          "url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/scripts/harmonize_lidar.py"
         }
-      ]
+      ],
+      "contract": {
+        "status": "legacy_code_inspection",
+        "input": "LAS tree_index + classification",
+        "output": "Legacy coarse instance view; native classes retained",
+        "steps": [
+          "out.instance[:] = -1; out.instance[tree_index > 0] = tree_index[tree_index > 0]",
+          "out.instance[classification in {2,3,4}] = 0",
+          "out.instance[classification == 5] = -1",
+          "out.valid = out.instance >= 0; retain all source rows"
+        ],
+        "preconditions": [
+          "This describes the existing converter, not a validated FGI evaluator adapter.",
+          "Choose learned versus unsupervised filtering; class 0 is not automatically terrain."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "evo-v2",
@@ -1307,16 +2438,38 @@ window.LIDAR_CATALOG = {
         "components"
       ],
       "name": "Two labeled plots only",
-      "rule": "On plots 1–2: foliage 0→3, wood 1→2; preserve understory as its own class. Retain tree_index and normalized-height provenance.",
-      "loss": "18 plots lack annotations. Do not terrain-normalize again or use reserved evaluation plots for model selection.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "rule": "Existing coarse projection on labeled plots only; native understory retained. The local study reservation and provider cylinder split differ.",
+      "loss": "Understory remains unknown in the coarse view. The 18 unlabeled plots cannot provide reference accuracy; the provider did use unlabeled data for training.",
+      "evidence_status": "Existing converter inspected; task compatibility not validated",
+      "implementation": "Existing source-aware projection in scripts/harmonize_lidar.py; no complete task pipeline validated by this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/15913427"
+        },
+        {
+          "label": "Inspected converter",
+          "url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/scripts/harmonize_lidar.py"
         }
-      ]
+      ],
+      "contract": {
+        "status": "legacy_code_inspection",
+        "input": "Labeled plots 1/2: tree_index, classification; all plots: normalized XYZ",
+        "output": "Legacy coarse instance/semantic view with source labels",
+        "steps": [
+          "semantic[:] = 0; instance[:] = -1",
+          "if plot_id in {1,2}: instance[tree_index > 0] = tree_index[tree_index > 0]",
+          "if plot_id in {1,2}: semantic[classification == 0] = 3; semantic[classification == 1] = 2",
+          "leave understory unknown in coarse semantic view; retain native classification == 2",
+          "copy XYZ; do not subtract another terrain model"
+        ],
+        "preconditions": [
+          "Identify labeled files from pinned source identity, not presence of the standard LAS classification field.",
+          "Keep published cylinder protocol separate from the local terminal-evaluation reservation."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "ms-v2",
@@ -1329,14 +2482,37 @@ window.LIDAR_CATALOG = {
       "name": "Collapse component granularity",
       "rule": "Ground 0→ground; trunk 2 and branches 3→wood; foliage 4→foliage. Retain low vegetation and woody debris separately.",
       "loss": "Collapsing subclasses loses detail. Whether fallen woody debris belongs to a target wood task requires an explicit task definition.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "Existing converter inspected; task compatibility not validated",
+      "implementation": "Existing source-aware projection in scripts/harmonize_lidar.py; no complete task pipeline validated by this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/17172162"
+        },
+        {
+          "label": "Inspected converter",
+          "url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/scripts/harmonize_lidar.py"
         }
-      ]
+      ],
+      "contract": {
+        "status": "legacy_code_inspection",
+        "input": "LAS semantic_GT: native classes 0–5",
+        "output": "Legacy coarse semantic view, plus unchanged native labels",
+        "steps": [
+          "semantic[:] = 0",
+          "semantic[semantic_GT == 0] = 1",
+          "semantic[semantic_GT in {2,3}] = 2",
+          "semantic[semantic_GT == 4] = 3",
+          "semantic_valid = semantic > 0; instance[:] = -1",
+          "retain low vegetation (1) and woody debris (5) in original_points"
+        ],
+        "preconditions": [
+          "The coarse projection loses trunk/branch separation and does not supervise classes 1/5.",
+          "This projection alone is not a task-validated pipeline."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "ms-no-instance",
@@ -1349,14 +2525,27 @@ window.LIDAR_CATALOG = {
       "name": "No instance reference",
       "rule": "No tree-instance labels are documented. A semantic crosswalk cannot manufacture independent instance ground truth.",
       "loss": "Pseudo-labeling would be a separate model-generated training arm, not reference evaluation.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "No admitted transformation",
+      "implementation": "Not executable; no complete transformation package is registered for this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/17172162"
         }
-      ]
+      ],
+      "contract": {
+        "status": "blocked",
+        "input": "semantic_GT only",
+        "output": "No instance reference",
+        "steps": [
+          "STOP: no documented native tree-instance labels"
+        ],
+        "preconditions": [
+          "Model pseudo-labels must be marked as predictions and cannot replace independent reference."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "forestsemantic-v2",
@@ -1370,14 +2559,28 @@ window.LIDAR_CATALOG = {
       "name": "Derivative-rights review",
       "rule": "Keep source annotations intact; settle intended use and component terms before producing aligned derivatives.",
       "loss": "Three conversions remain intentionally deferred. Metadata availability does not grant derivative permission.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "No admitted transformation",
+      "implementation": "Not executable; no complete transformation package is registered for this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/15193973"
         }
-      ]
+      ],
+      "contract": {
+        "status": "blocked",
+        "input": "Native LAS and reference tables; derivative-rights gate closed",
+        "output": "No derivative admitted",
+        "steps": [
+          "STOP before conversion while existing rights-review gate remains closed"
+        ],
+        "preconditions": [
+          "Retain native tree IDs in point_source_id, branch IDs in gps_time and six component classes.",
+          "Settle intended-use terms and validate task mapping before enabling a derivative."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "lautx-v2",
@@ -1387,17 +2590,32 @@ window.LIDAR_CATALOG = {
       "tasks": [
         "instances"
       ],
-      "name": "Versioned instance crosswalk",
-      "rule": "For full plots, choose and record treeIDv2 or treeIDv1; preserve both. For manual tree exports retain StemID. Keep automatic outputs as predictions.",
+      "name": "Missing versioned instance adapter",
+      "rule": "No task adapter is registered. Native manual references, two plot-label versions and automatic outputs require separate roles.",
       "loss": "The current coarse export misses these instance fields. Different label versions and automatic segmentations are not interchangeable references.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "No audited transfer function registered",
+      "implementation": "Not executable; no complete transformation package is registered for this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/16910335"
         }
-      ]
+      ],
+      "contract": {
+        "status": "review_required",
+        "input": "Complete-plot LAS: treeIDv1, treeIDv2, classification",
+        "output": "No admitted reference adapter",
+        "steps": [
+          "STOP: neither StemID nor treeIDv1/v2 is read by the existing harmonizer",
+          "Before any implementation, review the selected annotation version, classification semantics and coverage together"
+        ],
+        "preconditions": [
+          "Original fields are preserved, but the coarse instance output is unknown.",
+          "A proposed field choice does not constitute an audited transformation."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "wytham-overlap",
@@ -1412,8 +2630,8 @@ window.LIDAR_CATALOG = {
       "name": "Shared Wytham tree exports",
       "rule": "280 complete harmonized chunk sequences match exactly. All 876 Wytham tree names appear in the TLS collection with matching point counts.",
       "loss": "Group shared tree/capture identities across datasets before splitting. The remaining pairs require geometry-level confirmation.",
-      "evidence_status": "Payload-hash metadata",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "Recorded metadata evidence; no geometry reread",
+      "implementation": "Not executable; no complete transformation package is registered for this relationship.",
       "evidence": [
         {
           "label": "Acquisition and curation audit",
@@ -1427,7 +2645,23 @@ window.LIDAR_CATALOG = {
           "label": "TLS benchmark source",
           "url": "https://zenodo.org/records/16875688"
         }
-      ]
+      ],
+      "contract": {
+        "status": "dependency_evidence",
+        "input": "Recorded complete chunk-hash sequences, filenames and point counts",
+        "output": "Dependency candidates; no deletion plan",
+        "steps": [
+          "confirmed = pairs with matching complete recorded chunk sequences",
+          "name_count_only = matching names/counts without full geometry confirmation",
+          "keep evidence levels separate; group shared captures before assigning splits"
+        ],
+        "preconditions": [
+          "280 cross-source extras have hash-sequence evidence.",
+          "876 matching names/counts are not 876 independently verified geometry matches."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "spectral-fgi",
@@ -1440,14 +2674,28 @@ window.LIDAR_CATALOG = {
       "name": "Channel calibration review",
       "rule": "Check wavelength, radiometric units, calibration and co-registration per capture before pooling spectral channels.",
       "loss": "Shared channel names or research institutions do not prove equal radiometry or independent sites.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "No audited transfer function registered",
+      "implementation": "Not executable; no complete transformation package is registered for this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/17172162"
         }
-      ]
+      ],
+      "contract": {
+        "status": "review_required",
+        "input": "Native wavelengths, radiometric units, calibration and registration",
+        "output": "No registered radiometric transfer",
+        "steps": [
+          "STOP: no calibrated transfer parameters or validated transformation are registered"
+        ],
+        "preconditions": [
+          "Matching channel names/wavelengths do not establish equivalent reflectance.",
+          "Review acquisition calibration and capture independence first."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     },
     {
       "id": "spectral-evo",
@@ -1460,14 +2708,28 @@ window.LIDAR_CATALOG = {
       "name": "Spectral alignment candidate",
       "rule": "Retain channel definitions and verify normalization and acquisition geometry. Preserve external evaluation reservations.",
       "loss": "No validated radiometric transfer function is currently registered.",
-      "evidence_status": "Documented",
-      "implementation": "Specification only; no transformation executed by this hub",
+      "evidence_status": "No audited transfer function registered",
+      "implementation": "Not executable; no complete transformation package is registered for this relationship.",
       "evidence": [
         {
           "label": "Source record",
           "url": "https://zenodo.org/records/15913427"
         }
-      ]
+      ],
+      "contract": {
+        "status": "review_required",
+        "input": "Native wavelengths, radiometric units, calibration and registration",
+        "output": "No registered radiometric transfer",
+        "steps": [
+          "STOP: no calibrated transfer parameters or validated transformation are registered"
+        ],
+        "preconditions": [
+          "Matching channel names/wavelengths do not establish equivalent reflectance.",
+          "Review acquisition calibration and capture independence first."
+        ],
+        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
+        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+      }
     }
   ],
   "findings": [
@@ -1476,7 +2738,7 @@ window.LIDAR_CATALOG = {
       "severity": "high",
       "title": "398 duplicate normalized exports",
       "count": 398,
-      "description": "118 within the TLS benchmark and 280 across Wytham/TLS share complete recorded chunk-hash sequences. No originals have been deleted.",
+      "description": "Complete recorded chunk-hash sequences identify these extra exports. These are saved hash records, not a current payload reread or a deletion decision.",
       "datasets": [
         "16875688",
         "7307956"
@@ -1499,7 +2761,7 @@ window.LIDAR_CATALOG = {
       "severity": "high",
       "title": "1,036 files need an instance crosswalk",
       "count": 1036,
-      "description": "StemID and treeIDv1/v2 survive in original_points but are not read by the existing harmonizer. 515 manual/automatic pairs must remain separate annotation variants.",
+      "description": "StemID and treeIDv1/v2 survive in original_points but are not read by the existing harmonizer. Manual/automatic pairs must remain separate annotation variants.",
       "datasets": [
         "16910335"
       ],
@@ -1510,7 +2772,7 @@ window.LIDAR_CATALOG = {
       "severity": "medium",
       "title": "Available source labels are not all mapped",
       "count": 38,
-      "description": "FOR v1 classification is unmapped in 32 files. Six ForestSemantic-MS files preserve low vegetation and woody debris without a coarse semantic assignment. This requires task-specific mapping decisions.",
+      "description": "FOR v1 classification is unmapped; ForestSemantic-MS preserves low vegetation and woody debris without a coarse semantic assignment. This requires task-specific mapping decisions.",
       "datasets": [
         "8287792",
         "17172162"
@@ -1522,7 +2784,7 @@ window.LIDAR_CATALOG = {
       "severity": "high",
       "title": "No certified site-out split yet",
       "count": 5626,
-      "description": "All normalized records still carry split=unassigned and physical_site=pending_review. Cross-dataset identities and annotation descendants must be grouped before evaluation.",
+      "description": "Records counted here lack reviewed site or split metadata. Cross-dataset identities and annotation descendants must be grouped before evaluation.",
       "datasets": [
         "8287792",
         "16742708",
@@ -6436,7 +7698,17 @@ window.LIDAR_CATALOG = {
       "points": 251142
     }
   ],
+  "content_review": {
+    "reviewed_at": "2026-10-17",
+    "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
+    "profiles_sha256": "58cc2310e01612fce4393c1d97a69dbdb9103b2f45bee1382c594a192c835074",
+    "relationships_sha256": "0cedb7630ec7524a7b1cbb7bdd392efb96f6f4b24dfac55e1016c8fe44b30fca"
+  },
   "evidence": [
+    {
+      "name": "Public content review and remaining questions",
+      "url": "CONTENT-REVIEW.md"
+    },
     {
       "name": "Pinned inventory",
       "path": "docs/lidar-acquisition-inventory.json"
@@ -6460,8 +7732,8 @@ window.LIDAR_CATALOG = {
   ],
   "audit_scope": {
     "metadata": "All 96 asset manifests, 15,400 stored-file records, 5,626 normalized cloud records and 48,177 chunk records.",
-    "payload_samples": "40 chunks / 17,102,064 points across all 20 observed source field schemas.",
-    "limits": "No full reread of all 22.15 billion points, order-invariant geometry audit, scanner calibration validation, or final license admission. Duplicate groups are evidence for review, not deletion instructions.",
+    "payload_samples": "Historical 2026-10-15 payload sample: 40 chunks / 17,102,064 points across 20 then-observed source field schemas; not rerun by this builder.",
+    "limits": "No current full-payload reread, order-invariant geometry audit, scanner calibration validation, or final license admission. Duplicate groups are evidence for review, not deletion instructions.",
     "curation_applied": false
   },
   "snapshot_provenance": {

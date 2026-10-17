@@ -106,6 +106,14 @@ profiles, kubeconfig, job history and outputs are never published.
 
 ## Evidence and updates
 
+[The content review](CONTENT-REVIEW.md) distinguishes provider reports, saved
+local observations, code inspection and unresolved questions across all ten sources.
+The initial article entries are documentation/code reviews; full methods/results
+critiques remain pending. Curated profiles and relationship contracts are published
+in `dataset-profiles.json` and `relationships.json`; source relevance does not
+constitute scientific or execution admission.
+
+
 Dataset proposals and admission reviews follow [CONTRIBUTING.md](CONTRIBUTING.md).
 New or changed dataset entries require evidence-backed, task-specific review
 records and maintainer review before publication. The initial ten records remain

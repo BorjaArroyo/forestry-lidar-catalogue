@@ -68,6 +68,11 @@ def assess_dataset(catalog, policy, record_id, role):
         raise ValueError('Unsupported evaluation objective')
     dataset = next(d for d in catalog['datasets'] if d['id'] == record_id)
     profile = PROFILES.get(record_id)
+    source_reference = dataset.get('source_task_support', {}).get('instances', {})
+    if profile is None and source_reference.get('status') in {'documented','partial'}:
+        profile = {'reference':'conditional', 'reason':source_reference['reason'], 'mapping':None,
+                   'loss':'Native labels are described, but no executable plot-reference adapter is admitted for this source.',
+                   'coverage':'Review the selected plots, annotation version, boundary masks and coverage before scoring.'}
     requirements = []
     def check(name, status, reason):
         requirements.append({'requirement':name, 'status':status, 'reason':reason})
@@ -88,7 +93,7 @@ def assess_dataset(catalog, policy, record_id, role):
     if role == 'geographic':
         check('Independent evaluation zones', 'unknown', 'Provide model training/adaptation exposure and selected capture lineage. Different record IDs are insufficient.')
     status = ('unsupported' if profile.get('reference') == 'unsupported' or source.get('status') == 'rights_review'
-              else 'conditional' if record_id in PROFILES else 'unknown')
+              else 'conditional' if profile.get('reference') == 'conditional' else 'unknown')
     return {'dataset_id':record_id, 'dataset_name':dataset['name'], 'role':role,
             'status':status, 'execution_ready':False, 'requirements':requirements, 'mapping_source':profile['mapping'],
             'information_loss':profile['loss'], 'source_url':dataset['url'],
@@ -130,6 +135,13 @@ def build(catalog, policy, validation):
                     'selection_exposure_complete':False, 'geographic_identity_complete':False,
                     'published_protocol_exact':False}
         claims = {role:assess_experiment(exposure, role) for role in ('diagnostic','geographic','reproduction')}
+        assessment = assess_dataset(catalog, policy, rid, 'diagnostic')
+        if rid != '16875688':
+            claims['diagnostic'] = {'status':assessment['status'], 'objective':'diagnostic',
+                'reason':'Source relevance is described separately. No validated plot-instance diagnostic run or complete adapter exists for this selection.'}
+        if assessment['status'] == 'unsupported':
+            claims = {role:{'status':'unsupported', 'objective':role,
+                            'reason':'Plot-instance reference is unavailable or the existing derivative gate is closed for this selection.'} for role in claims}
         if PROFILES.get(rid, {}).get('reference') == 'unsupported':
             claims = {role:{'status':'unsupported', 'objective':role,
                             'reason':'This source cannot supply the plot-instance reference required by this task. Geometry-only diagnostics are a different task.'} for role in claims}

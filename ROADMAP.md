@@ -1,27 +1,40 @@
 # Incremental delivery plan
 
-Each increment ends with a tested, reviewable change. Do not treat planned
-capabilities as available, and do not modify source payloads without a reviewed
-curation plan.
+## Main workflow · work in progress
 
-1. Dataset admission: proposal template, analysis record, task assessments,
-   snapshot validation and human PR review. Implemented; required GitHub branch
-   protection and the first actual human admission reviews remain to be arranged.
-2. Curation baseline: recheck integrity, exact/near duplicates, annotation variants
-   and cross-source capture identities. Produce a dry-run correction plan with
-   confidence, evidence and expected effects. Preserve originals. Metadata planning
-   and source-size checks are implemented; geometric/semantic audit remains open.
-   New dataset/task combinations need prior analysis under PIPELINES.md.
-3. Traceable corrections: approve task-specific mappings, materialize versioned
-   derivatives and record source hashes, recipe versions and split constraints.
-   Existing source/schema normalization runs without repeated approval. New
-   combinations require analysis and validation; actual integrity failures block.
-4. Acquisition UX: complete the destination-selection and execution-host flow
-   around existing resumable Zenodo acquisition; validate realistic failure and
-   recovery cases. Browser PLY inspection is already available independently.
-5. One validated benchmark: select a method and protocol, pin source and OCI
-   image digests, validate input adapters and run end to end before enabling it.
-   Current registry entries are specifications, with execution disabled.
-6. Expand the knowledge graph: add reviewed task affinities, implemented transfer
-   functions, benchmark evidence and article caveats as the earlier steps provide
-   evidence. No inferred model transferability from matching schemas alone.
+The MVP must let a user choose a task, discover compatible public sources,
+download the selected inputs and execute an audited transformation into a chosen
+directory. This complete workflow is not available yet. The catalog, original
+Zenodo acquisition and legacy source-aware normalization are existing pieces;
+they do not establish a complete task-specific preparation workflow.
+
+1. Finish one narrow task/source path end to end. State its required variables,
+   reference unit, coverage, masks, units, losses and intended uses. Show why the
+   selected source qualifies, with evidence and explicit unresolved conditions.
+2. Connect that source selection to the exact version/assets needed for the task,
+   resumable integrity-checked download and the chosen destination. Distinguish
+   original-source retrieval from ready-to-use task data.
+3. Admit a self-contained transformation only after prior analysis and validation
+   of the full dataset-pipeline-task combination. Pin inputs, environment, code,
+   configuration and outputs. Preserve originals and native labels.
+4. Validate the complete user path and recovery behavior on real inputs. Keep it
+   marked work in progress until that scope is demonstrated. Expand source/task
+   coverage incrementally; never infer readiness from a matching file extension.
+
+## Existing limited evidence
+
+- Ten legacy source records have documentation/metadata reviews; they are not
+  universally admitted for scientific use. New sources require prior analysis.
+- The frozen Wytham diagnostic reference can be copied and hash-verified. This
+  does not transform the raw acquisition or provide independent evaluation.
+- A pinned TreeLearn Ray workflow ran on that frozen input. It is an in-source
+  diagnostic, not a reproduced paper score or geographically independent result.
+- The TLS duplicate-index CLI is validated for a 236-file subset; Workbench
+  integration is pending and it does not delete or select canonical copies.
+
+## Secondary work · deferred
+
+Complete article audits, more benchmarks, registry expansion, geometric curation
+and broader transfer graphs follow the main task-discovery-download-transform
+workflow. Generic TreeLearn/ForestFormer3D recipes remain disabled. GitHub branch
+protection and human admission reviews are separate outstanding governance work.

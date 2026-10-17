@@ -12,11 +12,11 @@
   const byId = Object.fromEntries(data.datasets.map(d => [d.id, d]));
   const kinds = {
     direct: {name:'Direct alignment', color:'#3f8972', dash:''},
-    transform: {name:'Transformation', color:'#587b9b', dash:''},
-    partial: {name:'Lossy / partial', color:'#c19b4b', dash:'7 4'},
+    transform: {name:'Proposed / scoped projection', color:'#587b9b', dash:''},
+    partial: {name:'Coarse label projection', color:'#c19b4b', dash:'7 4'},
     blocked: {name:'Unsupported / blocked', color:'#ba7e70', dash:'3 5'},
     unknown: {name:'Needs evidence', color:'#a4ac9c', dash:'4 5'},
-    shared: {name:'Shared data', color:'#917ba4', dash:'8 4'},
+    shared: {name:'Recorded dependency', color:'#917ba4', dash:'8 4'},
   };
   const state = {view:'graph', task:'instances', search:'', platform:'all', role:'all', selected:'16742708', edge:null, compare:new Set(), hiddenKinds:new Set(), zoom:1, pan:{x:0,y:0}};
   const positions = {
@@ -24,20 +24,29 @@
     '17172162':[190,485], '19351234':[580,105], '15913427':[185,300],
     '19127709':[890,650], '16875688':[1000,120], '16910335':[1020,465], '7307956':[1040,295],
   };
-  const supported = d => d.tasks.includes(state.task);
+  const supported = d => ['documented','partial','derived_only'].includes(taskState(d));
   const matches = d => {
     const text = [d.name,d.title,d.labels,d.scanner,d.domain,d.geography,d.license,...d.source_fields].join(' ').toLowerCase();
     return (!state.search || text.includes(state.search.toLowerCase())) &&
       (state.platform === 'all' || d.modalities.includes(state.platform)) &&
-      (state.role === 'all' || (state.role === 'evaluation' && d.role === 'Reserved evaluation') || (state.role === 'spectral' && d.spectral) || (state.role === 'rights' && d.id === '15193973'));
+      (state.role === 'all' || (state.role === 'evaluation' && ['19351234','15913427'].includes(d.id)) || (state.role === 'spectral' && d.spectral) || (state.role === 'rights' && d.id === '15193973'));
   };
   const visibleDatasets = () => data.datasets.filter(matches);
   const visibleMappings = () => {
     const ids = new Set(visibleDatasets().map(d => d.id));
     return data.mappings.filter(m => m.tasks.includes(state.task) && !state.hiddenKinds.has(m.kind) && ids.has(m.source) && ids.has(m.target));
   };
-  const taskState = (d, task = state.task) => d.tasks.includes(task) ? d.conditional.includes(task) ? 'conditional' : 'yes' : 'no';
-  const stateLabel = value => ({yes:'Available',conditional:'Conditional',no:'No reference'})[value];
+  const taskState = (d, task = state.task) => d.source_task_support?.[task]?.status || 'unreviewed';
+  const stateLabel = value => ({documented:'Source documented',partial:'Subset / conditions',not_documented:'Not established',unsupported:'No task reference',derived_only:'Derived models only',unreviewed:'Not reviewed'})[value];
+  const taskClass = value => ({documented:'yes',partial:'conditional',derived_only:'conditional',unsupported:'no',not_documented:'no',unreviewed:'no'})[value];
+  function sourceReview(d) {
+    const r=d.review;if(!r)return '<p>Source review is pending.</p>';
+    return `<h4>Observation unit</h4><p>${esc(r.observation_unit)}</p><h4>Reported by the source</h4>${r.source_facts.map(f=>`<p>${esc(f.text)} ${link(f.label,f.url)}</p>`).join('')}<h4>Published protocol</h4><p>${esc(r.published_protocol)}</p><h4>Local study context</h4><p>${esc(d.study_context)}</p><h4>Saved local observations</h4><ul>${r.local_observations.map(f=>`<li>${esc(f)}</li>`).join('')}</ul><p class="evidence-tag">${r.observations_current?'Observation metadata matches the reviewed snapshot.':'Metadata changed; these historical observations need rechecking.'}</p><h4>Unresolved before scientific use</h4><ul>${r.open_questions.map(f=>`<li>${esc(f)}</li>`).join('')}</ul><p class="evidence-tag">Reviewed ${esc(r.reviewed_at)} · ${esc(r.scope)}</p>`;
+  }
+  function contractHtml(m) {
+    const c=m.contract;if(!c)return '<p>No precise specification is registered.</p>';
+    return `<h4>Contract status</h4><p>${esc(c.status.replaceAll('_',' '))}</p><h4>Input → output</h4><p>${esc(c.input)} → ${esc(c.output)}</p><h4>Ordered specification / pseudocode</h4><pre>${esc(c.steps.join('\n'))}</pre><h4>Preconditions and unresolved decisions</h4><ul>${c.preconditions.map(p=>`<li>${esc(p)}</li>`).join('')}</ul><p>${esc(c.preserved)}</p><p class="evidence-tag">${esc(c.target_scope)}</p>`;
+  }
   function safeUrl(url) { try { const parsed = new URL(url); return /^https?:$/.test(parsed.protocol) ? parsed.href : '#'; } catch { return '#'; } }
   function badge(text, type = 'neutral') { return `<span class="badge ${esc(type)}">${esc(text)}</span>`; }
   function link(label, url) { return `<a class="source-link" href="${esc(safeUrl(url))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`; }
@@ -87,12 +96,12 @@
     if(nodes.length)renderInspector();
     else $('#inspector').innerHTML='<div class="inspector-top">NO MATCHING DATASET</div><h3>Try another filter.</h3><p>Clear the search or change the platform and role filters to explore the collection.</p>';
   }
-  function tasksHtml(d) { return data.tasks.map(t => `<div class="task-mini"><span>${esc(t.name)}</span><span class="task-state ${taskState(d,t.id)}">${stateLabel(taskState(d,t.id))}</span></div>`).join(''); }
+  function tasksHtml(d) { return data.tasks.map(t => `<div class="task-mini" title="${esc(d.source_task_support?.[t.id]?.reason||'Not reviewed')}"><span>${esc(t.name)}</span><span class="task-state ${taskClass(taskState(d,t.id))}">${stateLabel(taskState(d,t.id))}</span></div><p class="evidence-tag">${esc(d.source_task_support?.[t.id]?.reason||'Not reviewed')}</p>`).join(''); }
   function inspectorDataset(d) {
-    return `<div class="inspector-top"><span>DATASET PROFILE</span><span class="record-number">${esc(d.id)}</span></div><div class="dataset-avatar">${d.spectral?'◉':'⌁'}</div><h3>${esc(d.name)}</h3><div class="badges">${badge(d.role,d.role==='Reserved evaluation'?'gold':d.role==='Rights review'?'red':'neutral')}${badge(d.readiness)}</div><p>${esc(d.domain)}</p><div class="mini-stats"><div><strong>${number(d.cloud_count)}</strong><small>normalized files</small></div><div><strong>${compact(d.points)}</strong><small>stored points</small></div></div><dl><div class="meta-row"><dt>Platform</dt><dd>${esc(d.modalities.join(' · '))}</dd></div><div class="meta-row"><dt>Location</dt><dd>${esc(d.geography)}</dd></div><div class="meta-row"><dt>License</dt><dd>${esc(d.license.toUpperCase())}<br><span class="evidence-tag">Record-declared terms</span></dd></div></dl><h4>Source task availability</h4>${tasksHtml(d)}<p class="notice">${esc(d.correction)}</p><div class="inspector-actions"><button class="button" data-detail="${d.id}">Open full dataset profile ↗</button><button class="button" data-compare="${d.id}">${state.compare.has(d.id)?'✓ Remove from comparison':'+ Add to comparison'}</button></div>${link('View source record',d.url)}`;
+    return `<div class="inspector-top"><span>DATASET PROFILE</span><span class="record-number">${esc(d.id)}</span></div><div class="dataset-avatar">${d.spectral?'◉':'⌁'}</div><h3>${esc(d.name)}</h3><div class="badges">${badge(d.role,d.role==='Reserved evaluation'?'gold':d.role==='Rights review'?'red':'neutral')}${badge(d.readiness)}</div><p>${esc(d.domain)}</p><div class="mini-stats"><div><strong>${number(d.cloud_count)}</strong><small>normalized files</small></div><div><strong>${compact(d.points)}</strong><small>stored points</small></div></div><dl><div class="meta-row"><dt>Platform</dt><dd>${esc(d.modalities.join(' · '))}</dd></div><div class="meta-row"><dt>Location</dt><dd>${esc(d.geography)}</dd></div><div class="meta-row"><dt>License</dt><dd>${esc(d.license.toUpperCase())}<br><span class="evidence-tag">Record-declared terms</span></dd></div></dl><h4>Source evidence by task</h4>${tasksHtml(d)}<p class="notice">${esc(d.correction)}</p><div class="inspector-actions"><button class="button" data-detail="${d.id}">Open full dataset profile ↗</button><button class="button" data-compare="${d.id}">${state.compare.has(d.id)?'✓ Remove from comparison':'+ Add to comparison'}</button></div>${link('View source record',d.url)}`;
   }
   function inspectorMapping(m) {
-    return `<div class="inspector-top"><span>RELATIONSHIP</span><span class="record-number">${esc(m.id)}</span></div>${badge(kinds[m.kind].name,m.kind==='blocked'?'red':m.kind==='partial'?'gold':'neutral')}<p class="mapping-flow">${esc(names[m.source])} ${m.kind==='shared'?'↔':'→'} ${esc(names[m.target])}</p><h3 class="mapping-detail-name">${esc(m.name)}</h3><h4>Rule / prerequisites</h4><p>${esc(m.rule)}</p><h4>Limits & information loss</h4><p class="notice">${esc(m.loss)}</p><h4>Evidence status</h4><p>${esc(m.evidence_status)}</p>${evidenceHtml(m)}<h4>Execution state</h4><p>${esc(m.implementation)}</p><div class="inspector-actions"><button class="button" data-detail="${m.source}">Inspect ${esc(names[m.source])}</button><button class="button" data-detail="${m.target}">Inspect ${esc(names[m.target])}</button></div>`;
+    return `<div class="inspector-top"><span>RELATIONSHIP</span><span class="record-number">${esc(m.id)}</span></div>${badge(kinds[m.kind].name,m.kind==='blocked'?'red':m.kind==='partial'?'gold':'neutral')}<p class="mapping-flow">${esc(names[m.source])} ${m.kind==='shared'?'↔':'→'} ${esc(names[m.target])}</p><h3 class="mapping-detail-name">${esc(m.name)}</h3><p>${esc(m.rule)}</p>${contractHtml(m)}<h4>Limits & information loss</h4><p class="notice">${esc(m.loss)}</p><h4>Evidence status</h4><p>${esc(m.evidence_status)}</p>${evidenceHtml(m)}<h4>Execution state</h4><p>${esc(m.implementation)}</p><div class="inspector-actions"><button class="button" data-detail="${m.source}">Inspect ${esc(names[m.source])}</button><button class="button" data-detail="${m.target}">Inspect ${esc(names[m.target])}</button></div>`;
   }
   function renderInspector() {
     if(state.edge){const m=data.mappings.find(m=>m.id===state.edge);if(m){$('#inspector').innerHTML=inspectorMapping(m);return;}}
@@ -100,17 +109,17 @@
   }
   function renderDatasets() {
     const rows=visibleDatasets();$('#catalog-count').textContent=`${rows.length} of ${data.datasets.length} datasets`;
-    $('#dataset-grid').innerHTML=rows.map(d=>`<article class="dataset-card"><div class="card-top">${badge(d.modalities.join(' · '))}${badge(stateLabel(taskState(d)),taskState(d)==='no'?'neutral':taskState(d)==='conditional'?'gold':'')} </div><h3>${esc(d.name)}</h3><p>${esc(d.labels)}</p><div class="badges">${badge(d.role,d.role==='Reserved evaluation'?'gold':d.role==='Rights review'?'red':'neutral')}${d.spectral?badge('Multispectral'):''}</div><div class="card-stats"><span><b>${number(d.cloud_count)}</b>cloud files</span><span><b>${compact(d.points)}</b>points</span></div><div class="card-bottom"><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" ${state.compare.has(d.id)?'checked':''}>Compare</label><button data-detail="${d.id}">Explore dataset ↗</button></div></article>`).join('')||'<div class="empty">No datasets match your search. Try clearing the platform or role filter.</div>';
+    $('#dataset-grid').innerHTML=rows.map(d=>`<article class="dataset-card"><div class="card-top">${badge(d.modalities.join(' · '))}${badge(stateLabel(taskState(d)),taskClass(taskState(d))==='no'?'neutral':taskClass(taskState(d))==='conditional'?'gold':'')} </div><h3>${esc(d.name)}</h3><p>${esc(d.labels)}</p><div class="badges">${badge(d.role,d.role==='Reserved evaluation'?'gold':d.role==='Rights review'?'red':'neutral')}${d.spectral?badge('Multispectral'):''}</div><div class="card-stats"><span><b>${number(d.cloud_count)}</b>cloud files</span><span><b>${compact(d.points)}</b>points</span></div><div class="card-bottom"><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" ${state.compare.has(d.id)?'checked':''}>Compare</label><button data-detail="${d.id}">Explore dataset ↗</button></div></article>`).join('')||'<div class="empty">No datasets match your search. Try clearing the platform or role filter.</div>';
   }
   function renderMappings() {
     const rows=visibleMappings();
-    $('#mapping-list').innerHTML=rows.map(m=>`<article class="mapping-card"><div>${badge(kinds[m.kind].name,m.kind==='blocked'?'red':m.kind==='partial'?'gold':'neutral')}<h3>${esc(m.name)}</h3><div class="mapping-flow">${esc(names[m.source])} ${m.kind==='shared'?'↔':'→'} ${esc(names[m.target])}</div><span class="evidence-tag">${esc(m.evidence_status)}</span></div><div><p>${esc(m.rule)}</p><p class="warning-text">${esc(m.loss)}</p></div><button data-inspect-edge="${m.id}">Inspect evidence ↗</button></article>`).join('')||'<div class="empty">No registered relationships for this task and these filters. Absence of a link does not establish incompatibility.</div>';
+    $('#mapping-list').innerHTML=rows.map(m=>`<article class="mapping-card"><div>${badge(kinds[m.kind].name,m.kind==='blocked'?'red':m.kind==='partial'?'gold':'neutral')}<h3>${esc(m.name)}</h3><div class="mapping-flow">${esc(names[m.source])} ${m.kind==='shared'?'↔':'→'} ${esc(names[m.target])}</div><span class="evidence-tag">${esc(m.evidence_status)}</span></div><div><p>${esc(m.rule)}</p><p class="warning-text">${esc(m.loss)}</p><details><summary>Precise contract and preconditions</summary>${contractHtml(m)}</details></div><button data-inspect-edge="${m.id}">Inspect evidence ↗</button></article>`).join('')||'<div class="empty">No registered relationships for this task and these filters. Absence of a link does not establish incompatibility.</div>';
   }
   function renderAudit() {
     $('#scope').innerHTML=`<div><h3>What was audited</h3><p>${esc(data.audit_scope.metadata)}</p><p>${esc(data.audit_scope.payload_samples)}</p></div><div><h3>What remains open</h3><p>${esc(data.audit_scope.limits)}</p></div>`;
     const ids=new Set(visibleDatasets().map(d=>d.id));
     $('#findings').innerHTML=data.findings.filter(f=>f.datasets.some(d=>ids.has(d))).map(f=>`<article class="finding"><div class="finding-meta">${badge(f.severity==='high'?'Priority review':'Review',f.severity==='high'?'red':'gold')}<span>${esc(f.state)}</span></div><h3>${esc(f.title)}</h3><p>${esc(f.description)}</p><div class="badges">${f.datasets.slice(0,4).map(d=>badge(names[d]||d)).join('')}${f.datasets.length>4?badge(`+${f.datasets.length-4} more`):''}</div>${f.id==='duplicates'?'<button class="button small" data-show-duplicates="true">Inspect duplicate groups ↗</button>':''}</article>`).join('')||'<div class="empty">No findings match these filters.</div>';
-    $('#evidence-docs').innerHTML=data.evidence.map(e=>`<div class="evidence-doc">${esc(e.name)}<code>${esc(e.path)}</code>${window.CANOPY_PUBLIC?'<small>Local audit reference · full working document is not published</small>':`<button class="button small" data-copy-path="${esc(e.path)}">Copy repository path</button>`}</div>`).join('');
+    $('#evidence-docs').innerHTML=data.evidence.map(e=>e.url?`<div class="evidence-doc">${link(e.name,new URL(e.url,location.href).href)}</div>`:`<div class="evidence-doc">${esc(e.name)}<code>${esc(e.path)}</code>${window.CANOPY_PUBLIC?'<small>Local audit reference · full working document is not published</small>':`<button class="button small" data-copy-path="${esc(e.path)}">Copy repository path</button>`}</div>`).join('');
   }
   function renderCompareButton() { $('#compare-count').textContent=state.compare.size;$('#compare-open').disabled=state.compare.size<2; }
   function render() {
@@ -119,8 +128,8 @@
     $('#stats').hidden=state.view==='workbench';
     const operational=['workbench','benchmarks','environments'].includes(state.view);
     $('.toolbar').hidden=operational;$('.task-banner').hidden=operational;$('#compare-open').hidden=operational;
-    $('.page-heading h1').textContent=operational?'From evidence to execution.':'Find the right data. Understand the connection.';
-    $('.page-heading p').textContent=operational?'Acquire datasets, prepare traceable derivatives, and inspect benchmark readiness.':'Explore what each dataset can support, how labels align, and where the evidence ends.';
+    $('.page-heading h1').textContent=operational?'From evidence to execution.':'Inspect the evidence behind each dataset.';
+    $('.page-heading p').textContent=operational?'Acquire datasets, prepare traceable derivatives, and inspect benchmark readiness.':'Source documentation, saved local observations and unresolved questions. Scientific compatibility is assessed for each task.';
     const labels={graph:'Compatibility graph',datasets:'Dataset catalog',mappings:'Transformations',audit:'Evidence & review',workbench:'Data workbench',benchmarks:'Benchmarks',environments:'Image registry'};
     $$('.nav-item').forEach(b=>{b.classList.toggle('active',b.dataset.view===state.view);b.setAttribute('aria-current',b.dataset.view===state.view?'page':'false');});
     $$('.view').forEach(el=>el.hidden=el.id!==`view-${state.view}`);$('#breadcrumb-view').textContent=labels[state.view];
@@ -129,7 +138,7 @@
   function detail(id) {
     const d=byId[id]; if(!d)return;
     $('#detail-dialog-title').textContent=d.name;
-    $('#dialog-detail').innerHTML=`<div class="detail-body"><section><div class="badges">${badge(d.role)}${badge(d.license.toUpperCase(),'neutral')}${badge(d.version,'neutral')}</div><h4>Acquisition context</h4><p>${esc(d.geography)}<br>${esc(d.scanner)}</p><h4>Annotations & coverage</h4><p>${esc(d.labels)}</p><p>${esc(d.note)}</p><h4>Task availability</h4>${tasksHtml(d)}<p class="notice">${esc(d.correction)}</p>${link('Source record and published license',d.url)}</section><section><h4>Lineage and independence</h4><p>${esc(d.provenance)}</p><h4>Coordinates</h4><p>${esc(d.coordinate_policy)}</p><p class="evidence-tag">${(d.coordinate_references||[]).map(c=>`${esc(c.value)}: ${c.files} files`).join(" · ")||"Conversion deferred"}</p><h4>Observed source fields</h4><div class="field-pills">${d.source_fields.map(f=>`<code>${esc(f)}</code>`).join('')||'<span class="evidence-tag">Conversion deferred; inspect source definitions.</span>'}</div><h4>Stored evidence</h4><p>${d.assets} acquired assets · ${number(d.cloud_count)} normalized files · ${number(d.chunks)} chunks${d.deferred_clouds?` · ${d.deferred_clouds} conversions deferred`:''}</p><p class="evidence-tag">File counts include individual-tree exports. They are not independent-site counts.</p>${d.example_paths.map(p=>`<code class="raw-path">${esc(p)}</code>`).join('')}<h4>Current task relationships</h4><p>${data.mappings.filter(m=>m.tasks.includes(state.task)&&(m.source===id||m.target===id)).map(m=>esc(m.name)).join(' · ')||'No relationship registered for this task.'}</p><button class="button" data-compare="${d.id}">${state.compare.has(id)?'✓ Remove from comparison':'+ Add to comparison'}</button></section></div>`;
+    $('#dialog-detail').innerHTML=`<div class="detail-body"><section><div class="badges">${badge(d.role)}${badge(d.license.toUpperCase(),'neutral')}${badge(d.version,'neutral')}</div><h4>Acquisition context</h4><p>${esc(d.geography)}<br>${esc(d.scanner)}</p><h4>Annotations & coverage</h4><p>${esc(d.labels)}</p><p>${esc(d.note)}</p><h4>Source evidence by task</h4><p class="evidence-tag">These entries describe source content. They do not approve a dataset–pipeline–task combination.</p>${tasksHtml(d)}${sourceReview(d)}<p class="notice">${esc(d.correction)}</p>${link('Source record and published license',d.url)}</section><section><h4>Lineage and independence</h4><p>${esc(d.provenance)}</p><h4>Coordinates</h4><p>${esc(d.coordinate_policy)}</p><p class="evidence-tag">${(d.coordinate_references||[]).map(c=>`${esc(c.value)}: ${c.files} files`).join(" · ")||"Conversion deferred"}</p><h4>Observed source field names</h4><p class="evidence-tag">Names from saved schemas; field types, ranges and units have not been uniformly audited.</p><div class="field-pills">${d.source_fields.map(f=>`<code>${esc(f)}</code>`).join('')||'<span class="evidence-tag">Conversion deferred; inspect source definitions.</span>'}</div><h4>Stored evidence</h4><p>${d.assets} acquired assets · ${number(d.cloud_count)} normalized files · ${number(d.chunks)} chunks${d.deferred_clouds?` · ${d.deferred_clouds} conversions deferred`:''}</p><p class="evidence-tag">File counts include individual-tree exports. They are not independent-site counts.</p>${d.example_paths.map(p=>`<code class="raw-path">${esc(p)}</code>`).join('')}<h4>Current task relationships</h4><p>${data.mappings.filter(m=>m.tasks.includes(state.task)&&(m.source===id||m.target===id)).map(m=>esc(m.name)).join(' · ')||'No relationship registered for this task.'}</p><button class="button" data-compare="${d.id}">${state.compare.has(id)?'✓ Remove from comparison':'+ Add to comparison'}</button></section></div>`;
     if(!$('#detail-dialog').open)$('#detail-dialog').showModal();
   }
   function toggleCompare(id) {
@@ -139,7 +148,7 @@
   }
   function showCompare() {
     const rows=[...state.compare].map(id=>byId[id]);
-    const fields=[['Platform',d=>d.modalities.join(' · ')],['Source annotations',d=>d.labels],['Current task',d=>stateLabel(taskState(d))],['Study role',d=>d.role],['Cloud files',d=>number(d.cloud_count)],['Points',d=>compact(d.points)],['Multispectral',d=>d.spectral?'Available; calibration review required':'No documented multispectral channels'],['Location',d=>d.geography],['Record license',d=>d.license.toUpperCase()],['Readiness',d=>d.readiness],['Main caveat',d=>d.correction],['Source',d=>d.url]];
+    const fields=[['Platform',d=>d.modalities.join(' · ')],['Source annotations',d=>d.labels],['Current task',d=>stateLabel(taskState(d))],['Catalog description',d=>d.role],['Cloud files',d=>number(d.cloud_count)],['Points',d=>compact(d.points)],['Multispectral',d=>d.spectral?'Available; calibration review required':'No documented multispectral channels'],['Location',d=>d.geography],['Record license',d=>d.license.toUpperCase()],['Readiness',d=>d.readiness],['Main caveat',d=>d.correction],['Source',d=>d.url]];
     $('#compare-content').innerHTML=`<div class="scroll-table"><table><thead><tr><th>Attribute</th>${rows.map(d=>`<th>${esc(d.name)}</th>`).join('')}</tr></thead><tbody>${fields.map(([name,fn])=>`<tr><td>${esc(name)}</td>${rows.map(d=>`<td>${name==='Source'?link('Published record',fn(d)):esc(fn(d))}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="graph-help">Availability is not permission to train. External-evaluation reservations and annotation coverage remain binding within the existing study.</p>`;
     $('#compare-dialog').showModal();
   }

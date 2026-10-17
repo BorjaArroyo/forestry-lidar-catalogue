@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "reviewed_at": "2026-10-16",
+  "reviewed_at": "2026-10-17",
   "recipes": [
     {
       "id": "treelearn-wytham-ray",
@@ -35,12 +35,12 @@
         {
           "kind": "Exposure audit",
           "text": "Checkpoint finetuned on all data. Metrics are in-source diagnostics and do not establish independent accuracy or published-score reproduction.",
-          "url": null
+          "url": "https://zenodo.org/records/16875688"
         },
         {
           "kind": "Protocol audit",
           "text": "All 178 GT rows remain. One two-point instance has undefined XY/Z partition scores (NaN); 177 instances are partition-eligible. Historical finetuning preprocessing is not independently recovered.",
-          "url": null
+          "url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/scripts/treelearn_ray/ANALYSIS.md"
         }
       ],
       "audit_status": "Pinned full workflow executed and read-back verified; remote lifecycle regression-tested; independent validation pending",
@@ -48,7 +48,13 @@
         "inputs": "Frozen export and checkpoint SHA256 revalidated by GPU worker",
         "resources": "Isolated KubeRay job: 1 GPU, 8 CPU, 32 GiB, 2-hour deadline",
         "outputs": "Fresh persistent PVC directory per execution; cancellation retains artifacts"
-      }
+      },
+      "review_scope": {
+        "article": "Full methods/results critique remains pending; no article-wide audit is claimed.",
+        "evidence": "Upstream documentation and selected code paths; local execution evidence only where explicitly stated.",
+        "comparison": "Published-score reproduction, execution repeatability and independent geographic evaluation are separate claims."
+      },
+      "dataset_scope": "Only the pinned Wytham validation export from record 16875688, with the finetuned-on-all checkpoint. Neither the full TLS source nor an unseen site is validated."
     },
     {
       "id": "treelearn-evaluation",
@@ -58,10 +64,9 @@
       ],
       "repository": "https://github.com/ecker-lab/TreeLearn",
       "paper": "https://arxiv.org/abs/2309.08471",
-      "guide": "https://github.com/ecker-lab/TreeLearn/blob/main/docs/evaluation.md",
+      "guide": "https://github.com/ecker-lab/TreeLearn/blob/fd240ce7caa4c444fe3418aca454dc578bc557d4/docs/evaluation.md",
       "datasets": [
-        "16875688",
-        "7307956"
+        "16875688"
       ],
       "metrics": [
         "Detection: completeness, omission error, commission error, F1",
@@ -87,12 +92,12 @@
         {
           "kind": "Author-documented",
           "text": "Unlabeled points belonging to annotated trees can penalize segmentation scores. Keep the evaluator\u2019s boundary and commission-error rules when comparing results.",
-          "url": "https://github.com/ecker-lab/TreeLearn/blob/main/docs/evaluation.md"
+          "url": "https://github.com/ecker-lab/TreeLearn/blob/fd240ce7caa4c444fe3418aca454dc578bc557d4/docs/evaluation.md"
         },
         {
           "kind": "Author-documented",
           "text": "Ground-truth and predictions must share coordinates. Evaluation propagates predictions to reference points; the authors recommend 0.1 m voxel sampling.",
-          "url": "https://github.com/ecker-lab/TreeLearn/blob/main/docs/evaluation.md"
+          "url": "https://github.com/ecker-lab/TreeLearn/blob/fd240ce7caa4c444fe3418aca454dc578bc557d4/docs/evaluation.md"
         },
         {
           "kind": "Local audit",
@@ -102,7 +107,7 @@
         {
           "kind": "Code inspection",
           "text": "The evaluator writes results beside the predictions. An adapter must redirect those outputs before use with read-only dataset mounts.",
-          "url": "https://github.com/ecker-lab/TreeLearn/blob/main/tools/evaluation/evaluate.py"
+          "url": "https://github.com/ecker-lab/TreeLearn/blob/fd240ce7caa4c444fe3418aca454dc578bc557d4/tools/evaluation/evaluate.py"
         }
       ],
       "audit_status": "Upstream documentation reviewed; paper-wide critique and independent reproduction pending",
@@ -110,8 +115,14 @@
         "matching": "Hungarian matching; minimum IoU 0.5 in upstream example",
         "unmatched_prediction_filter": "Minimum precision 0.5 in upstream example",
         "reference_sampling": "0.1 m voxels recommended by authors",
-        "split": "Explicit site-disjoint split and model exposure review required; not imposed by the evaluator"
-      }
+        "split": "Reproduce the named source split for paper comparison. Claim independent geographic accuracy only after disjoint capture and checkpoint-exposure review."
+      },
+      "review_scope": {
+        "article": "Full methods/results critique remains pending; no article-wide audit is claimed.",
+        "evidence": "Upstream documentation and selected code paths; local execution evidence only where explicitly stated.",
+        "comparison": "Published-score reproduction, execution repeatability and independent geographic evaluation are separate claims."
+      },
+      "dataset_scope": "Candidate complete annotated plot clouds only. Record 7307956 contains isolated trees and cannot supply full-scene omissions, commissions or background reference."
     },
     {
       "id": "forestformer3d",
@@ -150,7 +161,13 @@
           "url": null
         }
       ],
-      "audit_status": "Installation and inference documentation reviewed; complete article audit and independent reproduction pending"
+      "audit_status": "Installation and inference documentation reviewed; full article audit and independent reproduction pending",
+      "review_scope": {
+        "article": "Full methods/results critique remains pending; no article-wide audit is claimed.",
+        "evidence": "Upstream documentation and selected code paths; local execution evidence only where explicitly stated.",
+        "comparison": "Published-score reproduction, execution repeatability and independent geographic evaluation are separate claims."
+      },
+      "dataset_scope": "The FOR-instance V2 release is the published benchmark association. No new-source adapter, independent-zone protocol or local reproduced score is admitted."
     }
   ],
   "images": [

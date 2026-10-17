@@ -46,4 +46,4 @@ approval; its Workbench adapter is not implemented and its local image is not
 registry-hosted. Read-back failures remain documented; WebDAV's cause is not
 certified. The package proposes candidate groups only, with no deletion or
 canonical selection. New curation operations and changed semantics still need
-specific analysis. Benchmark recipes remain disabled until end-to-end validation.
+specific analysis. The frozen Wytham TreeLearn recipe has verified Ray execution for its pinned diagnostic export only. Generic TreeLearn and ForestFormer3D recipes remain disabled. Successful execution does not certify independent accuracy or reproduction of a published score.
