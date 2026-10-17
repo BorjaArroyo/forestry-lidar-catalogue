@@ -14,7 +14,7 @@
     ]
   },
   "snapshot": {
-    "catalog_sha256": "bea4706d7aebcc25c93fb32e02498d81f5619942c50b91d8b1983349f8ba390e",
+    "catalog_sha256": "f318b673984bbec6240b4d22982f1c3635c8c82c3d2216e54cd86f759382526f",
     "policy_sha256": "0056a2f30868194dfc843d774058939c0a4cefb252adede10373656a5b0b21dc",
     "runtime_evidence_sha256": "c45e47516380a4c26dbb0147f4f76948bb35a27a6c3abd72a506b2da99235d3c",
     "implementation_sha256": "70c8ca9d1b000d288212d7ad088629ce75e3beb5090872d0cef8581ef2391a88"

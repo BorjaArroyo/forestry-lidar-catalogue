@@ -3,6 +3,7 @@
   'use strict';
   const data = window.LIDAR_CATALOG;
   if (!data) { document.querySelector('main').textContent = 'Catalog unavailable. Rebuild catalog.js using the documented command.'; return; }
+  const tasks = data.tasks.filter(t => t.visible ?? (t.id === 'instances'));
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -54,8 +55,8 @@
   function toast(text) { $('#toast').textContent=text; $('#toast').hidden=false; clearTimeout(toast.timer); toast.timer=setTimeout(() => $('#toast').hidden=true, 3200); }
 
   function renderTaskNav() {
-    $('#task-nav').innerHTML = data.tasks.map(t => `<button class="task-option ${t.id===state.task?'active':''}" data-task="${esc(t.id)}" aria-pressed="${t.id===state.task}">${esc(t.name)}</button>`).join('');
-    const task=data.tasks.find(t => t.id===state.task);
+    $('#task-nav').innerHTML = tasks.map(t => `<button class="task-option ${t.id===state.task?'active':''}" data-task="${esc(t.id)}" aria-pressed="${t.id===state.task}">${esc(t.name)}</button>`).join('');
+    const task=tasks.find(t => t.id===state.task);
     $('#task-title').textContent=task.title; $('#task-description').textContent=task.description;
   }
   function renderStats() {
@@ -96,7 +97,7 @@
     if(nodes.length)renderInspector();
     else $('#inspector').innerHTML='<div class="inspector-top">NO MATCHING DATASET</div><h3>Try another filter.</h3><p>Clear the search or change the platform and role filters to explore the collection.</p>';
   }
-  function tasksHtml(d) { return data.tasks.map(t => `<div class="task-mini" title="${esc(d.source_task_support?.[t.id]?.reason||'Not reviewed')}"><span>${esc(t.name)}</span><span class="task-state ${taskClass(taskState(d,t.id))}">${stateLabel(taskState(d,t.id))}</span></div><p class="evidence-tag">${esc(d.source_task_support?.[t.id]?.reason||'Not reviewed')}</p>`).join(''); }
+  function tasksHtml(d) { return tasks.map(t => `<div class="task-mini" title="${esc(d.source_task_support?.[t.id]?.reason||'Not reviewed')}"><span>${esc(t.name)}</span><span class="task-state ${taskClass(taskState(d,t.id))}">${stateLabel(taskState(d,t.id))}</span></div><p class="evidence-tag">${esc(d.source_task_support?.[t.id]?.reason||'Not reviewed')}</p>`).join(''); }
   function inspectorDataset(d) {
     return `<div class="inspector-top"><span>DATASET PROFILE</span><span class="record-number">${esc(d.id)}</span></div><div class="dataset-avatar">${d.spectral?'◉':'⌁'}</div><h3>${esc(d.name)}</h3><div class="badges">${badge(d.role,d.role==='Reserved evaluation'?'gold':d.role==='Rights review'?'red':'neutral')}${badge(d.readiness)}</div><p>${esc(d.domain)}</p><div class="mini-stats"><div><strong>${number(d.cloud_count)}</strong><small>normalized files</small></div><div><strong>${compact(d.points)}</strong><small>stored points</small></div></div><dl><div class="meta-row"><dt>Platform</dt><dd>${esc(d.modalities.join(' · '))}</dd></div><div class="meta-row"><dt>Location</dt><dd>${esc(d.geography)}</dd></div><div class="meta-row"><dt>License</dt><dd>${esc(d.license.toUpperCase())}<br><span class="evidence-tag">Record-declared terms</span></dd></div></dl><h4>Source evidence by task</h4>${tasksHtml(d)}<p class="notice">${esc(d.correction)}</p><div class="inspector-actions"><button class="button" data-detail="${d.id}">Open full dataset profile ↗</button><button class="button" data-compare="${d.id}">${state.compare.has(d.id)?'✓ Remove from comparison':'+ Add to comparison'}</button></div>${link('View source record',d.url)}`;
   }
@@ -128,8 +129,8 @@
     $('#stats').hidden=state.view==='workbench';
     const operational=['workbench','benchmarks','environments'].includes(state.view);
     $('.toolbar').hidden=operational;$('.task-banner').hidden=operational;$('#compare-open').hidden=operational;
-    $('.page-heading h1').textContent=operational?'From evidence to execution.':'Inspect the evidence behind each dataset.';
-    $('.page-heading p').textContent=operational?'Acquire datasets, prepare traceable derivatives, and inspect benchmark readiness.':'Source documentation, saved local observations and unresolved questions. Scientific compatibility is assessed for each task.';
+    $('.page-heading h1').textContent=operational?'From evidence to execution.':'Find data for individual-tree segmentation.';
+    $('.page-heading p').textContent=operational?'Acquire datasets, prepare traceable derivatives, and inspect benchmark readiness.':'Source documentation, saved local observations and unresolved questions. The current focus is individual-tree segmentation; other tasks are TBD.';
     const labels={graph:'Compatibility graph',datasets:'Dataset catalog',mappings:'Transformations',audit:'Evidence & review',workbench:'Data workbench',benchmarks:'Benchmarks',environments:'Image registry'};
     $$('.nav-item').forEach(b=>{b.classList.toggle('active',b.dataset.view===state.view);b.setAttribute('aria-current',b.dataset.view===state.view?'page':'false');});
     $$('.view').forEach(el=>el.hidden=el.id!==`view-${state.view}`);$('#breadcrumb-view').textContent=labels[state.view];
@@ -159,7 +160,7 @@
   document.addEventListener('click',event=>{
     const target=event.target.closest('button, [data-node], [data-edge]');if(!target)return;
     if(target.dataset.view)selectView(target.dataset.view);
-    if(target.dataset.task){state.task=target.dataset.task;state.selected=({instances:'16742708',components:'16742708',species:'19127709',geometry:'7307956',spectral:'17172162',biomass:'7307956'})[state.task];state.edge=null;state.hiddenKinds.clear();render();}
+    if(target.dataset.task && tasks.some(t => t.id === target.dataset.task)){state.task=target.dataset.task;state.selected=({instances:'16742708',})[state.task];state.edge=null;state.hiddenKinds.clear();render();}
     if(target.dataset.node){state.selected=target.dataset.node;state.edge=null;renderGraph();}
     if(target.dataset.edge){state.edge=target.dataset.edge;renderGraph();}
     if(target.dataset.kind){const k=target.dataset.kind;state.hiddenKinds.has(k)?state.hiddenKinds.delete(k):state.hiddenKinds.add(k);renderGraph();renderMappings();}
@@ -196,5 +197,5 @@
   if(['graph','datasets','mappings','audit','workbench','benchmarks','environments'].includes(location.hash.slice(1)))state.view=location.hash.slice(1);
   renderStats();render();
   // Exposed read-only state is useful for integrations and smoke checks.
-  window.CanopyHub={catalog:data,getState:()=>({...state,compare:[...state.compare],hiddenKinds:[...state.hiddenKinds]})};
+  window.CanopyHub={catalog:data,activeTasks:tasks,getState:()=>({...state,compare:[...state.compare],hiddenKinds:[...state.hiddenKinds]})};
 })();

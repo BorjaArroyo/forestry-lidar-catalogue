@@ -13,6 +13,11 @@ provider records under its declared terms.
 
 ## Task decisions
 
+The visible task is individual-tree segmentation. Other research tasks are hidden
+from navigation, profile task assessments and benchmark filters, and recorded as
+TBD in metadata. Their source descriptions remain preserved for future review.
+
+
 The instance-segmentation view answers two questions: whether selected data
 can supply plot-instance reference, and what a model evaluation can establish.
 Requirements, exact native-label mappings, masks and evidence fingerprints are

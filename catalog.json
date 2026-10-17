@@ -20,39 +20,51 @@
   "tasks": [
     {
       "id": "instances",
-      "name": "Tree instances",
+      "name": "Tree segmentation",
       "title": "Individual-tree segmentation",
-      "description": "Requires instance identity, annotation coverage, and boundary rules."
+      "description": "Requires instance identity, annotation coverage, and boundary rules.",
+      "visible": true,
+      "status": "work_in_progress"
     },
     {
       "id": "components",
       "name": "Forest components",
       "title": "Wood, foliage & ground",
-      "description": "Class meanings must match; tree labels alone do not identify wood or foliage."
+      "description": "Class meanings must match; tree labels alone do not identify wood or foliage.",
+      "visible": false,
+      "status": "tbd"
     },
     {
       "id": "species",
       "name": "Tree species",
       "title": "Species classification",
-      "description": "Requires documented species labels linked to tree identities."
+      "description": "Requires documented species labels linked to tree identities.",
+      "visible": false,
+      "status": "tbd"
     },
     {
       "id": "geometry",
       "name": "Geometry & robustness",
       "title": "Geometry and consistency checks",
-      "description": "Unlabeled clouds can test consistency and distributions, not segmentation accuracy."
+      "description": "Unlabeled clouds can test consistency and distributions, not segmentation accuracy.",
+      "visible": false,
+      "status": "tbd"
     },
     {
       "id": "spectral",
       "name": "Multispectral",
       "title": "Spectral learning",
-      "description": "Wavelengths, channel units, normalization, and registration must be checked."
+      "description": "Wavelengths, channel units, normalization, and registration must be checked.",
+      "visible": false,
+      "status": "tbd"
     },
     {
       "id": "biomass",
       "name": "Tree structure",
       "title": "Structure and biomass research",
-      "description": "QSMs are derived models; independent reference measurements are required for accuracy claims."
+      "description": "QSMs are derived models; independent reference measurements are required for accuracy claims.",
+      "visible": false,
+      "status": "tbd"
     }
   ],
   "datasets": [

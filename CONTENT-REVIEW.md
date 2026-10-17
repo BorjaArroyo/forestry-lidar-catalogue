@@ -1,5 +1,11 @@
 # Content review · 17 October 2026
 
+The current product focus is **individual-tree segmentation**. Other research
+tasks are hidden from navigation, dataset task assessments and benchmark filters,
+and retained as **TBD** in exported metadata. Source descriptions and native
+attributes remain preserved. The complete task-discovery-download-transform
+workflow is still work in progress.
+
 This review corrects the existing ten-record catalog. It checked provider
 descriptions, selected source READMEs, saved acquisition/conversion metadata,
 the current converter, and existing execution evidence. It did **not** reread

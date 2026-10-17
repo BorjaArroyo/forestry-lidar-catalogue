@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 TASKS = [
-    ('instances', 'Tree instances', 'Individual-tree segmentation', 'Requires instance identity, annotation coverage, and boundary rules.'),
+    ('instances', 'Tree segmentation', 'Individual-tree segmentation', 'Requires instance identity, annotation coverage, and boundary rules.'),
     ('components', 'Forest components', 'Wood, foliage & ground', 'Class meanings must match; tree labels alone do not identify wood or foliage.'),
     ('species', 'Tree species', 'Species classification', 'Requires documented species labels linked to tree identities.'),
     ('geometry', 'Geometry & robustness', 'Geometry and consistency checks', 'Unlabeled clouds can test consistency and distributions, not segmentation accuracy.'),
@@ -44,6 +44,10 @@ def build(inventory, status, outputs):
     byte_groups=[g for g in source_groups.values() if len(g)>1]
     point_groups=[g for g in byte_groups if any(Path(x['path']).suffix=='.ply' for x in g)]
     catalog={'schema_version':'0.1','generated_at':datetime.now(timezone.utc).isoformat(),'title':'Canopy / LiDAR Knowledge Hub','scope':'Acquired sources; compatibility is task-specific and does not authorize training or redistribution.','summary':{'datasets':len(datasets),'assets':len(status['completed']),'clouds':len(scenes),'points':sum(x['point_count'] for x in scenes),'chunks':sum(len(x['chunks']) for x in scenes),'deferred':3,'acquisition_errors':len(status['errors']),'conversion_errors':len(status['conversion_errors']),'duplicate_source_groups':len(byte_groups),'duplicate_cloud_copies':sum(len(g)-1 for g in point_groups),'identical_scene_groups':len(identical),'identical_scene_extras':sum(len(g)-1 for g in identical)},'tasks':[{'id':a,'name':b,'title':c,'description':d} for a,b,c,d in TASKS],'datasets':datasets}
+    # Visibility describes product scope, not scientific readiness of a dataset.
+    for task in catalog['tasks']:
+        task.update(visible=task['id']=='instances',
+                    status='work_in_progress' if task['id']=='instances' else 'tbd')
     catalog['mappings'] = json.loads(json.dumps(RELATIONSHIPS))
     for dataset in datasets:
         review = dataset['review']
