@@ -21,7 +21,7 @@
     "curation/file-check-summary.json": "c033617489f3ce1081d866099a566776781f160542d9d8148502fc77497cda22",
     "dataset-profiles.json": "c53cfb988e2527072a00b1ac90324b41602e821c71c382180bafddf2b5311778",
     "docs/lidar-acquisition-inventory.json": "9cb6f7b02c6f107be7c43a267946cc613b9cc33aa0d076a53215152926007b76",
-    "index.html": "57fec256615cba23c227a2072e1af5a1239dc3335875a9d42c9b8edf1ea6a47f",
+    "index.html": "8670d904d2c6075aa4b996e8096b12aae585eb7455105360c20aee7891f816eb",
     "normalization-policy.json": "b1b31d59bced8acf287654f3c879d5d8589af2383a1278107dbc59ba586e35ae",
     "pipelines/registry.json": "83b3110c80dc6cf339ac17e6e4836a5bdc1dda4b1a2f6fc7fe5baf9775d4012a",
     "pipelines/tls-exact-duplicate-index-v1/ANALYSIS.md": "644f723adbdae618c69565c50133b41ba69004896d300595e1339e00212a839f",
@@ -77,7 +77,7 @@
     "tests/test_knowledge_hub_service.py": "377a5e2f42f76475734530057fdcbcf9f5d75129b05e25dbc7b0969e7f58bdfd",
     "tests/test_ply_inspector.cjs": "5da45b794cdb83dd83d725329250c917203bfb0ecad9ac2da0231067174dae25",
     "tests/test_task_contracts.py": "c9b3707d7407ba5a398c08884f24af3d8c95f9a320c567bc56109a87a8ee073e",
-    "workbench.js": "e8c1a51c2f5228e8391f15f2c5e7ffd46889d711067bd1f5cad65e40b632f35f"
+    "workbench.js": "5c2ef4fab2517b3c753c55842f1d47cfbff7916103539d1a4b106e26ff429e34"
   },
   "target": "https://borjaarroyo.github.io/forestry-lidar-catalogue/"
 }
