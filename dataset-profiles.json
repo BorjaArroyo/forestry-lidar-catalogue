@@ -207,7 +207,23 @@
         "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
       }
     },
-    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply."
+    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
+    "discovery": {
+      "unit": "plots",
+      "unit_label": "Plot / scene clouds",
+      "instance_reference": {
+        "status": "plots",
+        "label": "Plot-level tree IDs reported"
+      },
+      "coverage": "Annotated plots from five collections; native classification includes terrain and outside-tree points.",
+      "limitation": "Preserve the official dev/test split and reconcile shared captures with V2.",
+      "preparation": {
+        "status": "tbd",
+        "label": "Task pipeline TBD",
+        "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+        "limited_reference_copy": false
+      }
+    }
   },
   "16742708": {
     "name": "FOR-instance V2",
@@ -300,7 +316,23 @@
         "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
       }
     },
-    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply."
+    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
+    "discovery": {
+      "unit": "plots",
+      "unit_label": "Plot / scene clouds",
+      "instance_reference": {
+        "status": "plots",
+        "label": "Plot-level tree IDs reported"
+      },
+      "coverage": "Scene files include treeID and component labels; scene count is not independent-site count.",
+      "limitation": "Capture lineage and annotation coverage remain unresolved.",
+      "preparation": {
+        "status": "tbd",
+        "label": "Task pipeline TBD",
+        "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+        "limited_reference_copy": false
+      }
+    }
   },
   "15193973": {
     "name": "ForestSemantic",
@@ -388,7 +420,23 @@
         "reason": "Structural references or derived models require variable-level provenance; independent biomass truth is not established."
       }
     },
-    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply."
+    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
+    "discovery": {
+      "unit": "plots",
+      "unit_label": "Plot clouds",
+      "instance_reference": {
+        "status": "plots",
+        "label": "Plot-level tree IDs reported"
+      },
+      "coverage": "Three source plots include tree and branch IDs, with structural reference tables.",
+      "limitation": "Derivative preparation is deferred for intended-use and rights review.",
+      "preparation": {
+        "status": "blocked",
+        "label": "Rights review required",
+        "detail": "The existing derivative-rights gate remains closed.",
+        "limited_reference_copy": false
+      }
+    }
   },
   "17172162": {
     "name": "ForestSemantic-MS",
@@ -503,7 +551,23 @@
         "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
       }
     },
-    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply."
+    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
+    "discovery": {
+      "unit": "plots",
+      "unit_label": "Plot clouds",
+      "instance_reference": {
+        "status": "none",
+        "label": "No tree-instance labels documented"
+      },
+      "coverage": "Six plots have component labels; semantic classes do not identify individual trees.",
+      "limitation": "Cannot supply the plot-instance reference required for segmentation accuracy.",
+      "preparation": {
+        "status": "tbd",
+        "label": "Task pipeline TBD",
+        "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+        "limited_reference_copy": false
+      }
+    }
   },
   "19351234": {
     "name": "FGI-EMIT",
@@ -632,6 +696,22 @@
       "biomass": {
         "status": "not_documented",
         "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
+      }
+    },
+    "discovery": {
+      "unit": "plots",
+      "unit_label": "Plot clouds",
+      "instance_reference": {
+        "status": "plots",
+        "label": "Plot-level tree IDs reported"
+      },
+      "coverage": "Annotations target identifiable trees at least 3 m high and qualifying boundary trees.",
+      "limitation": "Boundary masks and background treatment must match the chosen protocol.",
+      "preparation": {
+        "status": "tbd",
+        "label": "Task pipeline TBD",
+        "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+        "limited_reference_copy": false
       }
     }
   },
@@ -779,6 +859,22 @@
         "status": "not_documented",
         "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
       }
+    },
+    "discovery": {
+      "unit": "plots",
+      "unit_label": "Plot clouds",
+      "instance_reference": {
+        "status": "plots",
+        "label": "Only 2 of 20 plots labeled"
+      },
+      "coverage": "Plots 1–2 have manual instances; the other 18 are unlabeled. Ground was removed and height normalized.",
+      "limitation": "Do not normalize terrain again; the published cylinder split is a distinct protocol.",
+      "preparation": {
+        "status": "tbd",
+        "label": "Task pipeline TBD",
+        "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+        "limited_reference_copy": false
+      }
     }
   },
   "19127709": {
@@ -917,7 +1013,23 @@
         "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
       }
     },
-    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply."
+    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
+    "discovery": {
+      "unit": "plots",
+      "unit_label": "Plot clouds",
+      "instance_reference": {
+        "status": "plots",
+        "label": "Plot-level tree IDs reported"
+      },
+      "coverage": "Plot-local IDs include a complete/cropped crown flag; species labels cover only some trees.",
+      "limitation": "Rounded locations do not establish independent evaluation zones.",
+      "preparation": {
+        "status": "tbd",
+        "label": "Task pipeline TBD",
+        "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+        "limited_reference_copy": false
+      }
+    }
   },
   "16875688": {
     "name": "Four-site TLS benchmark",
@@ -1042,7 +1154,23 @@
         "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
       }
     },
-    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply."
+    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
+    "discovery": {
+      "unit": "mixed",
+      "unit_label": "Plots + tree exports",
+      "instance_reference": {
+        "status": "plots",
+        "label": "Plot labels; tree exports vary"
+      },
+      "coverage": "Four physical plots have spatial split areas and derived tree exports, including XYZ-only files.",
+      "limitation": "Boundary trees repeat across folders; Wytham also overlaps another record.",
+      "preparation": {
+        "status": "tbd",
+        "label": "Task pipeline TBD",
+        "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+        "limited_reference_copy": true
+      }
+    }
   },
   "16910335": {
     "name": "LAUTx",
@@ -1195,7 +1323,23 @@
         "reason": "No suitable reference for this task is established in this review; this is not proof that none exists."
       }
     },
-    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply."
+    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
+    "discovery": {
+      "unit": "mixed",
+      "unit_label": "Plots + paired tree exports",
+      "instance_reference": {
+        "status": "plots",
+        "label": "Versioned plot labels reported"
+      },
+      "coverage": "Six plots carry treeIDv1/v2; paired manual and automatic tree exports have different roles.",
+      "limitation": "The current coarse converter does not read the native instance fields.",
+      "preparation": {
+        "status": "tbd",
+        "label": "Task pipeline TBD",
+        "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+        "limited_reference_copy": false
+      }
+    }
   },
   "7307956": {
     "name": "Wytham Woods",
@@ -1287,6 +1431,22 @@
         "reason": "Structural references or derived models require variable-level provenance; independent biomass truth is not established."
       }
     },
-    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply."
+    "study_context": "No fixed local fitting/evaluation reservation is asserted by this catalog. Task and model exposure review still apply.",
+    "discovery": {
+      "unit": "trees",
+      "unit_label": "Isolated trees + QSMs",
+      "instance_reference": {
+        "status": "trees",
+        "label": "Isolated-tree identities only"
+      },
+      "coverage": "Individual-tree exports and derived reconstructions do not include complete scene background.",
+      "limitation": "Cannot reconstruct plot-level omissions, commissions or complete reference.",
+      "preparation": {
+        "status": "tbd",
+        "label": "Task pipeline TBD",
+        "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+        "limited_reference_copy": false
+      }
+    }
   }
 }

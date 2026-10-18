@@ -71,6 +71,18 @@ class CatalogContent(unittest.TestCase):
         evaluator=next(r for r in registry['recipes'] if r['id']=='treelearn-evaluation')
         self.assertNotIn('7307956',evaluator['datasets'])
 
+    def test_discovery_does_not_turn_reference_labels_into_pipeline_readiness(self):
+        sources={d['id']:d['discovery'] for d in self.catalog['datasets']}
+        # Native reference can exist while derivative preparation remains blocked.
+        self.assertEqual(sources['15193973']['instance_reference']['status'],'plots')
+        self.assertEqual(sources['15193973']['preparation']['status'],'blocked')
+        self.assertEqual(sources['17172162']['instance_reference']['status'],'none')
+        self.assertEqual(sources['7307956']['instance_reference']['status'],'trees')
+        # A verified copy of a frozen export is not a pipeline for the raw record.
+        self.assertTrue(sources['16875688']['preparation']['limited_reference_copy'])
+        self.assertEqual(sources['16875688']['preparation']['status'],'tbd')
+        self.assertFalse(any(d['preparation']['status']=='ready' for d in sources.values()))
+
 
 if __name__=='__main__':
     unittest.main()

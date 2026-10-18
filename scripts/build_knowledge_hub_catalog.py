@@ -32,6 +32,7 @@ def build(inventory, status, outputs):
         ds=dict(PROFILES[sid], id=str(sid), title=record['title'], url=record['url'], doi=record.get('doi'), version=record.get('version') or 'Pinned record', license=record.get('license_declared',{}).get('id','unknown'), cloud_count=len(rows), points=sum(x['point_count'] for x in rows), chunks=sum(len(x['chunks']) for x in rows), assets=len(record['files']), source_fields=sorted({f for x in rows for f in x['source_fields']}), schemas=[{'fields':list(k),'files':v} for k,v in fields.items()], example_paths=[x['input'] for x in rows[:3]])
         crs=collections.Counter(x.get('source_crs') or 'Unknown / not recorded' for x in rows)
         ds['source_metadata_sha256']=record.get('metadata_sha256')
+        ds['download_bytes']=sum(asset['size_bytes'] for asset in record['files'])
         ds['coordinate_references']=[{'value':k if k!='None' else 'Unknown / not recorded','files':v} for k,v in crs.items()]
         ds['coordinate_policy']='Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.'
         ds['deferred_clouds']=3 if sid==15193973 else 0

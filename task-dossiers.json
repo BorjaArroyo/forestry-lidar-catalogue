@@ -14,7 +14,7 @@
     ]
   },
   "snapshot": {
-    "catalog_sha256": "f318b673984bbec6240b4d22982f1c3635c8c82c3d2216e54cd86f759382526f",
+    "catalog_sha256": "6ca68abdf83ae7b6b000037e2495f2c13f3b32628b0a3ce7a8a35177eaa786ac",
     "policy_sha256": "0056a2f30868194dfc843d774058939c0a4cefb252adede10373656a5b0b21dc",
     "runtime_evidence_sha256": "c45e47516380a4c26dbb0147f4f76948bb35a27a6c3abd72a506b2da99235d3c",
     "implementation_sha256": "70c8ca9d1b000d288212d7ad088629ce75e3beb5090872d0cef8581ef2391a88"
@@ -58,7 +58,7 @@
       "source_url": "https://zenodo.org/records/8287792",
       "evidence": {
         "provider_metadata_sha256": "3598069530f4aa23c87b936baaac582b1c36483c48665359e44f42248cb7ea53",
-        "catalog_dataset_sha256": "0d15dfbcfcf4df0ea332babc58ecf3b0d15252eb93f165684c8989694242f0e6",
+        "catalog_dataset_sha256": "c76007e54babaf5e93a6faee3bd7cadc133acd425e71bf91e3b06808ccf49efb",
         "policy_source_sha256": "e2ad80cef383244ac6a7e4827c69b5e1b4b491c1258a3fe59bf91c64558093d0"
       },
       "originals_action": {
@@ -111,7 +111,7 @@
       "source_url": "https://zenodo.org/records/8287792",
       "evidence": {
         "provider_metadata_sha256": "3598069530f4aa23c87b936baaac582b1c36483c48665359e44f42248cb7ea53",
-        "catalog_dataset_sha256": "0d15dfbcfcf4df0ea332babc58ecf3b0d15252eb93f165684c8989694242f0e6",
+        "catalog_dataset_sha256": "c76007e54babaf5e93a6faee3bd7cadc133acd425e71bf91e3b06808ccf49efb",
         "policy_source_sha256": "e2ad80cef383244ac6a7e4827c69b5e1b4b491c1258a3fe59bf91c64558093d0"
       },
       "originals_action": {
@@ -159,7 +159,7 @@
       "source_url": "https://zenodo.org/records/16742708",
       "evidence": {
         "provider_metadata_sha256": "de53a6a750a5ff471e9266fff7d6a0b295061b4be4638312f354d94c5ffa793a",
-        "catalog_dataset_sha256": "48424a3b2d933b73b50d018222504478104bd57dc020f746c611654f673b91f8",
+        "catalog_dataset_sha256": "c641ad47de4816bb9edda3ce0e954e09b4d8c568ca79c32fe29643cc563252a4",
         "policy_source_sha256": "90fb5301d256e0565eada8ae3265b956bf182069ebaaa1fa9f4e391f1c47ea55"
       },
       "originals_action": {
@@ -212,7 +212,7 @@
       "source_url": "https://zenodo.org/records/16742708",
       "evidence": {
         "provider_metadata_sha256": "de53a6a750a5ff471e9266fff7d6a0b295061b4be4638312f354d94c5ffa793a",
-        "catalog_dataset_sha256": "48424a3b2d933b73b50d018222504478104bd57dc020f746c611654f673b91f8",
+        "catalog_dataset_sha256": "c641ad47de4816bb9edda3ce0e954e09b4d8c568ca79c32fe29643cc563252a4",
         "policy_source_sha256": "90fb5301d256e0565eada8ae3265b956bf182069ebaaa1fa9f4e391f1c47ea55"
       },
       "originals_action": {
@@ -260,7 +260,7 @@
       "source_url": "https://zenodo.org/records/15193973",
       "evidence": {
         "provider_metadata_sha256": "e8d372ca11a5067b7e572d092618edf7aa7339ee1679619bce8f79aac0134a31",
-        "catalog_dataset_sha256": "0615ab3bc72b3bfdd32f71dcdf25ae400fe0e46eb546ba203e8a4349a7946a0a",
+        "catalog_dataset_sha256": "1d5bdcca7409a1677d4d76f4449909b335226ab2608059dd24772ffd702cca76",
         "policy_source_sha256": "58e323925e8d9281b494d7662c9dcfc65229d36420abb8ab808050a4850b0cfd"
       },
       "originals_action": {
@@ -313,7 +313,7 @@
       "source_url": "https://zenodo.org/records/15193973",
       "evidence": {
         "provider_metadata_sha256": "e8d372ca11a5067b7e572d092618edf7aa7339ee1679619bce8f79aac0134a31",
-        "catalog_dataset_sha256": "0615ab3bc72b3bfdd32f71dcdf25ae400fe0e46eb546ba203e8a4349a7946a0a",
+        "catalog_dataset_sha256": "1d5bdcca7409a1677d4d76f4449909b335226ab2608059dd24772ffd702cca76",
         "policy_source_sha256": "58e323925e8d9281b494d7662c9dcfc65229d36420abb8ab808050a4850b0cfd"
       },
       "originals_action": {
@@ -361,7 +361,7 @@
       "source_url": "https://zenodo.org/records/17172162",
       "evidence": {
         "provider_metadata_sha256": "bdf25852feed4b84da9b8c1b618de6a044f0fc9eeb5bba2f13b6f4e2ae3e87b2",
-        "catalog_dataset_sha256": "2170ba2d77573f69b6a6493db660d87dc6eea4d845ef471a6b01e02437f7274e",
+        "catalog_dataset_sha256": "f37be6bcf250bc67c6eae80641b43d0f4ec416ed43d1e226d5214c3855fed7a2",
         "policy_source_sha256": "5345e54a28ac6d77b1eac03f23ce013fc968856e153f95203bc53e8a7e8656c5"
       },
       "originals_action": {
@@ -414,7 +414,7 @@
       "source_url": "https://zenodo.org/records/17172162",
       "evidence": {
         "provider_metadata_sha256": "bdf25852feed4b84da9b8c1b618de6a044f0fc9eeb5bba2f13b6f4e2ae3e87b2",
-        "catalog_dataset_sha256": "2170ba2d77573f69b6a6493db660d87dc6eea4d845ef471a6b01e02437f7274e",
+        "catalog_dataset_sha256": "f37be6bcf250bc67c6eae80641b43d0f4ec416ed43d1e226d5214c3855fed7a2",
         "policy_source_sha256": "5345e54a28ac6d77b1eac03f23ce013fc968856e153f95203bc53e8a7e8656c5"
       },
       "originals_action": {
@@ -462,7 +462,7 @@
       "source_url": "https://zenodo.org/records/19351234",
       "evidence": {
         "provider_metadata_sha256": "d60fb6fab63dfbcb1bd9d815059909b5626a918e8c5cbf2d79623677223cf720",
-        "catalog_dataset_sha256": "aa6d8b65ba66eb1d9ebf4741cf7ade5bb712fe8a421e071a238cc5afd1ff3279",
+        "catalog_dataset_sha256": "1ac2d4a9ddb70d0ef68ff8c46eccaa873fafc4f0d57e350d0b542873f3f8c1bd",
         "policy_source_sha256": "c695e6df37fb1ff6bc62a4f86e4279f591af923bb73e0abfb24dd3c2cd44d6ef"
       },
       "originals_action": {
@@ -515,7 +515,7 @@
       "source_url": "https://zenodo.org/records/19351234",
       "evidence": {
         "provider_metadata_sha256": "d60fb6fab63dfbcb1bd9d815059909b5626a918e8c5cbf2d79623677223cf720",
-        "catalog_dataset_sha256": "aa6d8b65ba66eb1d9ebf4741cf7ade5bb712fe8a421e071a238cc5afd1ff3279",
+        "catalog_dataset_sha256": "1ac2d4a9ddb70d0ef68ff8c46eccaa873fafc4f0d57e350d0b542873f3f8c1bd",
         "policy_source_sha256": "c695e6df37fb1ff6bc62a4f86e4279f591af923bb73e0abfb24dd3c2cd44d6ef"
       },
       "originals_action": {
@@ -563,7 +563,7 @@
       "source_url": "https://zenodo.org/records/15913427",
       "evidence": {
         "provider_metadata_sha256": "e9008d5079b8e230288bc7e28e22eb819aa85aa81f063c098913c9e36e29f7b3",
-        "catalog_dataset_sha256": "5f585de7db047e7e28cf422476fdba8dc434c0cc1043fb3bb4e9f80ea351cf79",
+        "catalog_dataset_sha256": "73213d0d5245f794a001c2e820086ab039967f7c5d11f9e5d2b98b1c60982bfb",
         "policy_source_sha256": "fb34491bf3ae5b5004669d36459125c7013e0f322e521d70b106509f5e1fd954"
       },
       "originals_action": {
@@ -616,7 +616,7 @@
       "source_url": "https://zenodo.org/records/15913427",
       "evidence": {
         "provider_metadata_sha256": "e9008d5079b8e230288bc7e28e22eb819aa85aa81f063c098913c9e36e29f7b3",
-        "catalog_dataset_sha256": "5f585de7db047e7e28cf422476fdba8dc434c0cc1043fb3bb4e9f80ea351cf79",
+        "catalog_dataset_sha256": "73213d0d5245f794a001c2e820086ab039967f7c5d11f9e5d2b98b1c60982bfb",
         "policy_source_sha256": "fb34491bf3ae5b5004669d36459125c7013e0f322e521d70b106509f5e1fd954"
       },
       "originals_action": {
@@ -664,7 +664,7 @@
       "source_url": "https://zenodo.org/records/19127709",
       "evidence": {
         "provider_metadata_sha256": "2e22e773cebdd3c81b82c3ee2a1d5ed1c98fc5ff8b09d76e885ba3dc36d5f249",
-        "catalog_dataset_sha256": "51f49dbc019a2ebff6757ee8e07ba48378a04a1cf3a59c2d46e603f0847b426a",
+        "catalog_dataset_sha256": "24c5ddcfe59280c3a1aa3a7f6bf7a242565365900826197350bc8a56e6d855dc",
         "policy_source_sha256": "05b11dcc381c5064f8253aad725163fd3039a0236f3b15d80fa01cd751931a4b"
       },
       "originals_action": {
@@ -717,7 +717,7 @@
       "source_url": "https://zenodo.org/records/19127709",
       "evidence": {
         "provider_metadata_sha256": "2e22e773cebdd3c81b82c3ee2a1d5ed1c98fc5ff8b09d76e885ba3dc36d5f249",
-        "catalog_dataset_sha256": "51f49dbc019a2ebff6757ee8e07ba48378a04a1cf3a59c2d46e603f0847b426a",
+        "catalog_dataset_sha256": "24c5ddcfe59280c3a1aa3a7f6bf7a242565365900826197350bc8a56e6d855dc",
         "policy_source_sha256": "05b11dcc381c5064f8253aad725163fd3039a0236f3b15d80fa01cd751931a4b"
       },
       "originals_action": {
@@ -765,7 +765,7 @@
       "source_url": "https://zenodo.org/records/16875688",
       "evidence": {
         "provider_metadata_sha256": "534392f8da7ed9d1f5470eaee4c9220f95ba8975f52cc80a434949727e0cbb42",
-        "catalog_dataset_sha256": "b6a84b56d7c0de233c8d18b512325f7dc21a1b13592bc705b23d19069a14c77a",
+        "catalog_dataset_sha256": "6bd127b5f8737bffcd28527677500eb337c57da9379a5b99062685d4ec7c9e70",
         "policy_source_sha256": "149d1232e7fadfddd560532fae28be11d92b60a3ddeee824c507fb01fe7d750b"
       },
       "originals_action": {
@@ -818,7 +818,7 @@
       "source_url": "https://zenodo.org/records/16875688",
       "evidence": {
         "provider_metadata_sha256": "534392f8da7ed9d1f5470eaee4c9220f95ba8975f52cc80a434949727e0cbb42",
-        "catalog_dataset_sha256": "b6a84b56d7c0de233c8d18b512325f7dc21a1b13592bc705b23d19069a14c77a",
+        "catalog_dataset_sha256": "6bd127b5f8737bffcd28527677500eb337c57da9379a5b99062685d4ec7c9e70",
         "policy_source_sha256": "149d1232e7fadfddd560532fae28be11d92b60a3ddeee824c507fb01fe7d750b"
       },
       "originals_action": {
@@ -866,7 +866,7 @@
       "source_url": "https://zenodo.org/records/16910335",
       "evidence": {
         "provider_metadata_sha256": "af6e09df89313979a144908c5f19d72144c82a47710975b52bfd77a583c4a5d6",
-        "catalog_dataset_sha256": "05b2c1b587d3eb1f553f7c50b94a7ff6840f322099bab3c3946b6edb567e657f",
+        "catalog_dataset_sha256": "a9c33a26d831d60dcd5fedd5679e115c01dceaf4d9d90a14f51e893c9131446f",
         "policy_source_sha256": "66c4bda2f93e0a75754dfed75fb04440dddb580ba3ba299d703a55b8bd717743"
       },
       "originals_action": {
@@ -919,7 +919,7 @@
       "source_url": "https://zenodo.org/records/16910335",
       "evidence": {
         "provider_metadata_sha256": "af6e09df89313979a144908c5f19d72144c82a47710975b52bfd77a583c4a5d6",
-        "catalog_dataset_sha256": "05b2c1b587d3eb1f553f7c50b94a7ff6840f322099bab3c3946b6edb567e657f",
+        "catalog_dataset_sha256": "a9c33a26d831d60dcd5fedd5679e115c01dceaf4d9d90a14f51e893c9131446f",
         "policy_source_sha256": "66c4bda2f93e0a75754dfed75fb04440dddb580ba3ba299d703a55b8bd717743"
       },
       "originals_action": {
@@ -967,7 +967,7 @@
       "source_url": "https://zenodo.org/records/7307956",
       "evidence": {
         "provider_metadata_sha256": "fef0d85bbd0fdf654729919cb113941becc109882896a87958657997960e2f24",
-        "catalog_dataset_sha256": "9207601f1410c5baec0a5e0ed024fa7d86a8618c8310aae4e459d7f44ae5fba2",
+        "catalog_dataset_sha256": "1107d1fd1e52850a71338728c9678a508e5c6b8836dd94772d1e62afa7713f81",
         "policy_source_sha256": "ba3c10d641c1204e35fb7b8be16da8163c577d8a488dd616175760b6099b16ee"
       },
       "originals_action": {
@@ -1020,7 +1020,7 @@
       "source_url": "https://zenodo.org/records/7307956",
       "evidence": {
         "provider_metadata_sha256": "fef0d85bbd0fdf654729919cb113941becc109882896a87958657997960e2f24",
-        "catalog_dataset_sha256": "9207601f1410c5baec0a5e0ed024fa7d86a8618c8310aae4e459d7f44ae5fba2",
+        "catalog_dataset_sha256": "1107d1fd1e52850a71338728c9678a508e5c6b8836dd94772d1e62afa7713f81",
         "policy_source_sha256": "ba3c10d641c1204e35fb7b8be16da8163c577d8a488dd616175760b6099b16ee"
       },
       "originals_action": {

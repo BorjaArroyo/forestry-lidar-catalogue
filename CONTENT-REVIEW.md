@@ -105,3 +105,17 @@ annotation completeness, native meanings and types, coordinate units and datum,
 capture/site lineage, rights for the intended use, exact preprocessing and
 checkpoint/model-selection exposure. These are open evidence requirements,
 not implied approvals or newly implemented capabilities.
+
+## Sources-first presentation · 18 October 2026
+
+Sources is now the entry point. Discovery summaries expose the data unit, reported
+instance reference, coverage, preparation gap and a key limitation. Reference
+availability is independent from pipeline readiness: no complete-source pipeline
+is marked ready. The ForestSemantic derivative gate remains closed, and the
+frozen Wytham reference copy remains a separate limited operation.
+
+Filters and comparisons use those independent dimensions. Record download sizes
+sum pinned provider assets; they do not estimate a ready-to-use task subset or
+expanded storage. Historical local counts are shown only in workspace evidence.
+Model-exposure and diagnostic controls remain in an explicit advanced disclosure.
+No source payloads, source labels or scientific admission decisions changed.

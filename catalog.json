@@ -461,7 +461,24 @@
         }
       ],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 0
+      "deferred_clouds": 0,
+      "discovery": {
+        "unit": "plots",
+        "unit_label": "Plot / scene clouds",
+        "instance_reference": {
+          "status": "plots",
+          "label": "Plot-level tree IDs reported"
+        },
+        "coverage": "Annotated plots from five collections; native classification includes terrain and outside-tree points.",
+        "limitation": "Preserve the official dev/test split and reconcile shared captures with V2.",
+        "preparation": {
+          "status": "tbd",
+          "label": "Task pipeline TBD",
+          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "limited_reference_copy": false
+        }
+      },
+      "download_bytes": 1643251814
     },
     {
       "name": "FOR-instance V2",
@@ -598,7 +615,24 @@
         }
       ],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 0
+      "deferred_clouds": 0,
+      "discovery": {
+        "unit": "plots",
+        "unit_label": "Plot / scene clouds",
+        "instance_reference": {
+          "status": "plots",
+          "label": "Plot-level tree IDs reported"
+        },
+        "coverage": "Scene files include treeID and component labels; scene count is not independent-site count.",
+        "limitation": "Capture lineage and annotation coverage remain unresolved.",
+        "preparation": {
+          "status": "tbd",
+          "label": "Task pipeline TBD",
+          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "limited_reference_copy": false
+        }
+      },
+      "download_bytes": 3001526346
     },
     {
       "name": "ForestSemantic",
@@ -704,7 +738,24 @@
       "source_metadata_sha256": "e8d372ca11a5067b7e572d092618edf7aa7339ee1679619bce8f79aac0134a31",
       "coordinate_references": [],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 3
+      "deferred_clouds": 3,
+      "discovery": {
+        "unit": "plots",
+        "unit_label": "Plot clouds",
+        "instance_reference": {
+          "status": "plots",
+          "label": "Plot-level tree IDs reported"
+        },
+        "coverage": "Three source plots include tree and branch IDs, with structural reference tables.",
+        "limitation": "Derivative preparation is deferred for intended-use and rights review.",
+        "preparation": {
+          "status": "blocked",
+          "label": "Rights review required",
+          "detail": "The existing derivative-rights gate remains closed.",
+          "limited_reference_copy": false
+        }
+      },
+      "download_bytes": 2595621534
     },
     {
       "name": "ForestSemantic-MS",
@@ -901,7 +952,24 @@
         }
       ],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 0
+      "deferred_clouds": 0,
+      "discovery": {
+        "unit": "plots",
+        "unit_label": "Plot clouds",
+        "instance_reference": {
+          "status": "none",
+          "label": "No tree-instance labels documented"
+        },
+        "coverage": "Six plots have component labels; semantic classes do not identify individual trees.",
+        "limitation": "Cannot supply the plot-instance reference required for segmentation accuracy.",
+        "preparation": {
+          "status": "tbd",
+          "label": "Task pipeline TBD",
+          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "limited_reference_copy": false
+        }
+      },
+      "download_bytes": 131104665
     },
     {
       "name": "FGI-EMIT",
@@ -1143,7 +1211,24 @@
         }
       ],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 0
+      "deferred_clouds": 0,
+      "discovery": {
+        "unit": "plots",
+        "unit_label": "Plot clouds",
+        "instance_reference": {
+          "status": "plots",
+          "label": "Plot-level tree IDs reported"
+        },
+        "coverage": "Annotations target identifiable trees at least 3 m high and qualifying boundary trees.",
+        "limitation": "Boundary masks and background treatment must match the chosen protocol.",
+        "preparation": {
+          "status": "tbd",
+          "label": "Task pipeline TBD",
+          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "limited_reference_copy": false
+        }
+      },
+      "download_bytes": 2445009717
     },
     {
       "name": "EvoMS",
@@ -1393,7 +1478,24 @@
         }
       ],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 0
+      "deferred_clouds": 0,
+      "discovery": {
+        "unit": "plots",
+        "unit_label": "Plot clouds",
+        "instance_reference": {
+          "status": "plots",
+          "label": "Only 2 of 20 plots labeled"
+        },
+        "coverage": "Plots 1–2 have manual instances; the other 18 are unlabeled. Ground was removed and height normalized.",
+        "limitation": "Do not normalize terrain again; the published cylinder split is a distinct protocol.",
+        "preparation": {
+          "status": "tbd",
+          "label": "Task pipeline TBD",
+          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "limited_reference_copy": false
+        }
+      },
+      "download_bytes": 4643758820
     },
     {
       "name": "TreeScanPL10K",
@@ -1635,7 +1737,24 @@
         }
       ],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 0
+      "deferred_clouds": 0,
+      "discovery": {
+        "unit": "plots",
+        "unit_label": "Plot clouds",
+        "instance_reference": {
+          "status": "plots",
+          "label": "Plot-level tree IDs reported"
+        },
+        "coverage": "Plot-local IDs include a complete/cropped crown flag; species labels cover only some trees.",
+        "limitation": "Rounded locations do not establish independent evaluation zones.",
+        "preparation": {
+          "status": "tbd",
+          "label": "Task pipeline TBD",
+          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "limited_reference_copy": false
+        }
+      },
+      "download_bytes": 94420538633
     },
     {
       "name": "Four-site TLS benchmark",
@@ -1838,7 +1957,24 @@
         }
       ],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 0
+      "deferred_clouds": 0,
+      "discovery": {
+        "unit": "mixed",
+        "unit_label": "Plots + tree exports",
+        "instance_reference": {
+          "status": "plots",
+          "label": "Plot labels; tree exports vary"
+        },
+        "coverage": "Four physical plots have spatial split areas and derived tree exports, including XYZ-only files.",
+        "limitation": "Boundary trees repeat across folders; Wytham also overlaps another record.",
+        "preparation": {
+          "status": "tbd",
+          "label": "Task pipeline TBD",
+          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "limited_reference_copy": true
+        }
+      },
+      "download_bytes": 14984947900
     },
     {
       "name": "LAUTx",
@@ -2110,7 +2246,24 @@
         }
       ],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 0
+      "deferred_clouds": 0,
+      "discovery": {
+        "unit": "mixed",
+        "unit_label": "Plots + paired tree exports",
+        "instance_reference": {
+          "status": "plots",
+          "label": "Versioned plot labels reported"
+        },
+        "coverage": "Six plots carry treeIDv1/v2; paired manual and automatic tree exports have different roles.",
+        "limitation": "The current coarse converter does not read the native instance fields.",
+        "preparation": {
+          "status": "tbd",
+          "label": "Task pipeline TBD",
+          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "limited_reference_copy": false
+        }
+      },
+      "download_bytes": 7818016570
     },
     {
       "name": "Wytham Woods",
@@ -2242,7 +2395,24 @@
         }
       ],
       "coordinate_policy": "Original numeric XYZ preserved. Missing CRS is not inferred; unit and height-datum compatibility require source-level review.",
-      "deferred_clouds": 0
+      "deferred_clouds": 0,
+      "discovery": {
+        "unit": "trees",
+        "unit_label": "Isolated trees + QSMs",
+        "instance_reference": {
+          "status": "trees",
+          "label": "Isolated-tree identities only"
+        },
+        "coverage": "Individual-tree exports and derived reconstructions do not include complete scene background.",
+        "limitation": "Cannot reconstruct plot-level omissions, commissions or complete reference.",
+        "preparation": {
+          "status": "tbd",
+          "label": "Task pipeline TBD",
+          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "limited_reference_copy": false
+        }
+      },
+      "download_bytes": 42804917584
     }
   ],
   "mappings": [
@@ -7713,7 +7883,7 @@
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "profiles_sha256": "58cc2310e01612fce4393c1d97a69dbdb9103b2f45bee1382c594a192c835074",
+    "profiles_sha256": "c53cfb988e2527072a00b1ac90324b41602e821c71c382180bafddf2b5311778",
     "relationships_sha256": "0cedb7630ec7524a7b1cbb7bdd392efb96f6f4b24dfac55e1016c8fe44b30fca"
   },
   "evidence": [

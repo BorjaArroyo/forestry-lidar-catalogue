@@ -11,6 +11,17 @@ and container environment metadata. Catalog exports contain metadata, not
 LiDAR point clouds or model weights. Original data remains at the linked
 provider records under its declared terms.
 
+## Sources first
+
+The entry point compares public sources by platform, data unit, reported instance
+reference and task preparation. Cards and comparisons keep annotation availability
+separate from pipeline readiness. No complete-source pipeline is marked ready.
+Record sizes cover all pinned assets, not a task-specific subset. Source details
+expose preparation, then expandable evidence, native fields and relationships.
+Original download review transfers the selected record to the connected workbench;
+it does not start acquisition. Historical workspace counts, graph relationships
+and the frozen Wytham/TreeLearn diagnostic are secondary views.
+
 ## Task decisions
 
 The visible task is individual-tree segmentation. Other research tasks are hidden
