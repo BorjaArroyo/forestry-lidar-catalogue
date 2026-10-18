@@ -127,8 +127,9 @@ local observations, code inspection and unresolved questions across all ten sour
 The initial article entries are documentation/code reviews; full methods/results
 critiques remain pending. Curated entities and relationships are authored in
 `knowledge-model.json`, validated by `knowledge-model.schema.json` and reference
-checks. See [the data model](DATA-MODEL.md). `dataset-profiles.json` and
-`relationships.json` are generated compatibility views; source relevance does not
+checks. See [the data model](DATA-MODEL.md) and the
+[FOR-instance contract description](FOR-INSTANCE.md). Profiles and relationship
+views are generated directly into the catalog; source relevance does not
 constitute scientific or execution admission.
 
 

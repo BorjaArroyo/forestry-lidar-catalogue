@@ -94,10 +94,14 @@ are no longer listed as full-scene evaluation reference.
 ## Maintaining this distinction
 
 [knowledge-model.json](knowledge-model.json) is the curated authoring source.
-[dataset-profiles.json](dataset-profiles.json) and
-[relationships.json](relationships.json) are generated compatibility views.
+Profiles and relationship views are generated directly into the catalog.
 The [data model](DATA-MODEL.md) describes typed references, JSON Schema validation
 and the lossless storage migration. This does not change the reviewed content.
+
+The [FOR-instance contract review](FOR-INSTANCE.md) adds a bounded header and
+documentation inspection dated 2026-10-18. It records a split-file scope
+discrepancy and distinguishes existing normalization from proposed task masks.
+This is metadata analysis, not execution or task admission.
 The builder combines them with acquisition metadata. Derived catalog and task
 snapshots must be regenerated together. Historical observation claims are marked
 stale when their reviewed metadata changes. Numeric findings come from the

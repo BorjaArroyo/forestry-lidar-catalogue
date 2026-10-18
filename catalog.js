@@ -2417,47 +2417,6 @@ window.LIDAR_CATALOG = {
   ],
   "mappings": [
     {
-      "id": "v1-v2",
-      "source": "8287792",
-      "target": "16742708",
-      "kind": "transform",
-      "tasks": [
-        "instances"
-      ],
-      "name": "Legacy tree-ID projection",
-      "rule": "The existing converter retains positive treeID; it does not map terrain or out-points into a reviewed task mask.",
-      "loss": "Semantic classes differ. This does not supply a reliable foliage label or prove independent acquisitions.",
-      "evidence_status": "Existing converter inspected; task compatibility not validated",
-      "implementation": "Existing source-aware projection in scripts/harmonize_lidar.py; no complete task pipeline validated by this relationship.",
-      "evidence": [
-        {
-          "label": "Source record",
-          "url": "https://zenodo.org/records/8287792"
-        },
-        {
-          "label": "Inspected converter",
-          "url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/scripts/harmonize_lidar.py"
-        }
-      ],
-      "contract": {
-        "status": "legacy_code_inspection",
-        "input": "LAS treeID + classification + plot identity",
-        "output": "Existing coarse instance view; classification remains unmapped",
-        "steps": [
-          "instance[:] = -1",
-          "instance[treeID > 0] = treeID[treeID > 0]",
-          "semantic[:] = 0; semantic_valid[:] = False",
-          "instance_valid = instance >= 0; preserve native classification"
-        ],
-        "preconditions": [
-          "This describes existing converter behavior, not a complete task adapter.",
-          "Terrain and outside-tree masking are unresolved for task admission; do not infer that positive IDs establish complete coverage."
-        ],
-        "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
-        "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
-      }
-    },
-    {
       "id": "v1-v2-lineage",
       "source": "8287792",
       "target": "16742708",
@@ -7883,10 +7842,8 @@ window.LIDAR_CATALOG = {
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "profiles_sha256": "c53cfb988e2527072a00b1ac90324b41602e821c71c382180bafddf2b5311778",
-    "relationships_sha256": "0cedb7630ec7524a7b1cbb7bdd392efb96f6f4b24dfac55e1016c8fe44b30fca",
-    "model_sha256": "1afc1e204c14e62b4a8684fc4e18c83e5090e7e0ac8d4d1aad0168ef093629c1",
-    "model_schema_sha256": "8dcbb98d4e4bd7de9567378165f95272e5649b6d45664be5fc89d248c8bcd0e0"
+    "model_sha256": "b3d0e90a022663493082ce8d6e7fc379f91b1ed1cf159c4d34016a55051c3024",
+    "model_schema_sha256": "5cf0d2d3a74c6a450b49d1f96ae220a29f91a01405eaec5183940123b6e09e25"
   },
   "evidence": [
     {

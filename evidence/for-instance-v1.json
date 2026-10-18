@@ -1,0 +1,1503 @@
+{
+  "scope": "All 32 acquired LAS headers and a prefix of at most 2048 points per distinct dimension schema; not a full payload or annotation audit",
+  "files": [
+    {
+      "path": "CULS/plot_1_annotated.las",
+      "manifest_sha256": "ac25839859856f3b2a27609696efb48a2a1feb6c3fe8630e7d0ec66de14c8b97",
+      "manifest_size_bytes": 61767583,
+      "point_count": 1816672,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "b0a9c91ea48c3b97",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        480599.0,
+        5601162.0,
+        0.0
+      ],
+      "crs": "EPSG:25833",
+      "published_split": "dev"
+    },
+    {
+      "path": "CULS/plot_2_annotated.las",
+      "manifest_sha256": "109cfc06a89d212741494c19ec410eba22dc544ba661d3883986187dceeac50c",
+      "manifest_size_bytes": 134168067,
+      "point_count": 3946098,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "b0a9c91ea48c3b97",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        480600.0,
+        5601204.0,
+        0.0
+      ],
+      "crs": "EPSG:25833",
+      "published_split": "test"
+    },
+    {
+      "path": "CULS/plot_3_annotated.las",
+      "manifest_sha256": "c9ae170025ea88fc5a6c4c557830298503fb575e51d4a5eb40cd118fb92585aa",
+      "manifest_size_bytes": 104887879,
+      "point_count": 3084916,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "b0a9c91ea48c3b97",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        480609.0,
+        5601255.0,
+        0.0
+      ],
+      "crs": "EPSG:25833",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_10_annotated.las",
+      "manifest_sha256": "4ece2e386bcdc41da3fbd77c65551535e015e66d91b9595af977b905c23becf7",
+      "manifest_size_bytes": 170788485,
+      "point_count": 4066375,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599095.0,
+        6655167.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_11_annotated.las",
+      "manifest_sha256": "ab995964efc8cd9da8efc39f574da8c3b341765c7ab6ce4e6c40698c427f4499",
+      "manifest_size_bytes": 229500663,
+      "point_count": 6374998,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599141.0,
+        6655582.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_12_annotated.las",
+      "manifest_sha256": "64f03731a41c595163c026f7c1e5c6a8c21b9eb6130c77e03bec740ae9d3e4a9",
+      "manifest_size_bytes": 283183251,
+      "point_count": 7866181,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599141.0,
+        6655605.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_13_annotated.las",
+      "manifest_sha256": "6ee7dabf6a4b48f38600f6f071d18ff2b7e86d57ecee9c7ffffc2fc233704423",
+      "manifest_size_bytes": 241401147,
+      "point_count": 6705567,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599143.0,
+        6655629.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_16_annotated.las",
+      "manifest_sha256": "65b41d22a029aa8ad063825605b16dc28e38619b38d85c71e0a6a0b074825174",
+      "manifest_size_bytes": 196571787,
+      "point_count": 5460307,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599168.0,
+        6655527.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_17_annotated.las",
+      "manifest_sha256": "c24dbcf7be191d512fb4a25d4310d31334cfc407e17b187488710e19ad0ffd54",
+      "manifest_size_bytes": 248044983,
+      "point_count": 6890118,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599169.0,
+        6655554.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "test"
+    },
+    {
+      "path": "NIBIO/plot_18_annotated.las",
+      "manifest_sha256": "72467ab3c1ac800d1e37e8796d24959f630d172c303296cd0c93a2e16595b847",
+      "manifest_size_bytes": 248944983,
+      "point_count": 6915118,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599168.0,
+        6655573.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "test"
+    },
+    {
+      "path": "NIBIO/plot_19_annotated.las",
+      "manifest_sha256": "10b7bd4cbcf46a5de5b3dd0673ccb53db413517ac2303e9d7fcd5f6fdeffd6aa",
+      "manifest_size_bytes": 254229315,
+      "point_count": 7061905,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599167.0,
+        6655598.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_1_annotated.las",
+      "manifest_sha256": "ea26fcc304104bccb8bdc72c73127ea327342bbf9658d6b05f7fb888d46666a1",
+      "manifest_size_bytes": 210030051,
+      "point_count": 5000698,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599066.0,
+        6655080.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "test"
+    },
+    {
+      "path": "NIBIO/plot_21_annotated.las",
+      "manifest_sha256": "3f47ecd982a33cf60166b5d776326f7f454b6697cd06323aa92e628feb62ff03",
+      "manifest_size_bytes": 210487803,
+      "point_count": 5846863,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599191.0,
+        6655529.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_22_annotated.las",
+      "manifest_sha256": "963aae2279e2adbf6d4abb0912fbd965dc7a16d5a96b0c53b7dab811c0933822",
+      "manifest_size_bytes": 229198587,
+      "point_count": 6366607,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599190.0,
+        6655552.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "test"
+    },
+    {
+      "path": "NIBIO/plot_23_annotated.las",
+      "manifest_sha256": "df2ddf60590a375657c463ad7d59b6a847801c9d478703c82e594cbf3616913e",
+      "manifest_size_bytes": 221882307,
+      "point_count": 6163377,
+      "las_version": "1.2",
+      "point_format": 1,
+      "schema_id": "21ea848fdb3a9165",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599191.0,
+        6655576.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "test"
+    },
+    {
+      "path": "NIBIO/plot_2_annotated.las",
+      "manifest_sha256": "35553ba6f8ba643f1b50c41c66bd9769fe3c970d40b39bb4aa2b17c919fd4445",
+      "manifest_size_bytes": 211158675,
+      "point_count": 5027570,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599072.0,
+        6655102.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_3_annotated.las",
+      "manifest_sha256": "b29a00463a1f4c2a14ebca12cfc20a4f53497c5aa769e378504401dd3908c29b",
+      "manifest_size_bytes": 222702459,
+      "point_count": 5302422,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599070.0,
+        6655123.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_4_annotated.las",
+      "manifest_sha256": "13e71dbb152bfbe9a139c78e24009346e0cc776f292aaf0d9d64f56d2aae010a",
+      "manifest_size_bytes": 242024349,
+      "point_count": 5762467,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599069.0,
+        6655152.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_5_annotated.las",
+      "manifest_sha256": "3c43cb2ccc793c89e2948ba36d36e7919f32cb957d348136da9efe518ad8de7c",
+      "manifest_size_bytes": 219393237,
+      "point_count": 5223631,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599071.0,
+        6655168.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "test"
+    },
+    {
+      "path": "NIBIO/plot_6_annotated.las",
+      "manifest_sha256": "bc1dfd47e5e03225d01a766b05134244b2e73aeaae3e930bdd416eebabb41388",
+      "manifest_size_bytes": 191157771,
+      "point_count": 4551358,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599090.0,
+        6655066.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_7_annotated.las",
+      "manifest_sha256": "3ce47370f425a378dcfdec76c213610b6bb5b595258476e58de9073a0a9e4ace",
+      "manifest_size_bytes": 207641091,
+      "point_count": 4943818,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599092.0,
+        6655094.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_8_annotated.las",
+      "manifest_sha256": "bf1b938f0707794d466f1574222b0027d578499510abbf0f3a02ceaeca0e9026",
+      "manifest_size_bytes": 221338299,
+      "point_count": 5269942,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599094.0,
+        6655117.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_9_annotated.las",
+      "manifest_sha256": "dd796afed442707363ca7b2ea00cecec5de0023a71b670b3545f1d09058a20ae",
+      "manifest_size_bytes": 218207157,
+      "point_count": 5195391,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "210d943d719c0852",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599092.0,
+        6655139.0,
+        0.0
+      ],
+      "crs": "EPSG:25832",
+      "published_split": "dev"
+    },
+    {
+      "path": "RMIT/test.las",
+      "manifest_sha256": "693c109e19738ecf780523694aa21ea300aea92763f07bbd2b3970b02c03ca00",
+      "manifest_size_bytes": 12153263,
+      "point_count": 357435,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "9df28e16590594f4",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        524188.0,
+        5248490.0,
+        0.0
+      ],
+      "crs": null,
+      "published_split": "test"
+    },
+    {
+      "path": "RMIT/train.las",
+      "manifest_sha256": "ae5afc37d5ad5a1aa0edc924e482f665f35d1d1206c665f916758460a724b06a",
+      "manifest_size_bytes": 50429545,
+      "point_count": 1483208,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "9df28e16590594f4",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        524188.0,
+        5248490.0,
+        0.0
+      ],
+      "crs": null,
+      "published_split": "dev"
+    },
+    {
+      "path": "SCION/plot_31_annotated.las",
+      "manifest_sha256": "f6a6e9d8b243d7f240df916abafabed21f23bf594d3bc552f15851d0da78d972",
+      "manifest_size_bytes": 101236993,
+      "point_count": 2977537,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "b0a9c91ea48c3b97",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886428.0,
+        5771787.0,
+        0.0
+      ],
+      "crs": "EPSG:2193",
+      "published_split": "test"
+    },
+    {
+      "path": "SCION/plot_35_annotated.las",
+      "manifest_sha256": "1ce5a2560e158b49080e5d61952a8cf8e58b7d12963046566d854540b34a4363",
+      "manifest_size_bytes": 108265507,
+      "point_count": 3184258,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "b0a9c91ea48c3b97",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886470.0,
+        5771814.0,
+        0.0
+      ],
+      "crs": "EPSG:2193",
+      "published_split": "dev"
+    },
+    {
+      "path": "SCION/plot_39_annotated.las",
+      "manifest_sha256": "1bccec15bc1557a15fa9a15d9ed0151f536540c1fbcf3ae5ab95274793fcb640",
+      "manifest_size_bytes": 64079787,
+      "point_count": 1884678,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "b0a9c91ea48c3b97",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886524.0,
+        5771870.0,
+        0.0
+      ],
+      "crs": "EPSG:2193",
+      "published_split": "dev"
+    },
+    {
+      "path": "SCION/plot_61_annotated.las",
+      "manifest_sha256": "13721d7121db86fe1bdcc010ea64c4013950f6a8cc587473a2529ae7340e42d1",
+      "manifest_size_bytes": 122035371,
+      "point_count": 3589254,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "b0a9c91ea48c3b97",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886468.0,
+        5771775.0,
+        0.0
+      ],
+      "crs": "EPSG:2193",
+      "published_split": "test"
+    },
+    {
+      "path": "SCION/plot_87_annotated.las",
+      "manifest_sha256": "85499b2447be3105479cfad85650c5105da7afefd2e83af1d6d96b53de70a0b4",
+      "manifest_size_bytes": 112584833,
+      "point_count": 3311297,
+      "las_version": "1.2",
+      "point_format": 2,
+      "schema_id": "b0a9c91ea48c3b97",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886461.0,
+        5771731.0,
+        0.0
+      ],
+      "crs": "EPSG:2193",
+      "published_split": "dev"
+    },
+    {
+      "path": "TUWIEN/test.las",
+      "manifest_sha256": "e78b32400163088e0c301eb55d5be0cb54aa2c5d10c1a52ad3e9daf7d2717dc6",
+      "manifest_size_bytes": 95762531,
+      "point_count": 2280049,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "b76c70d5b99995c2",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        527668.0,
+        5340143.0,
+        0.0
+      ],
+      "crs": null,
+      "published_split": "test"
+    },
+    {
+      "path": "TUWIEN/train.las",
+      "manifest_sha256": "9395980682dd05af61baae5c7380307e68f11eae99a18b45bbb0aa71cbed6ca9",
+      "manifest_size_bytes": 317891921,
+      "point_count": 7568844,
+      "las_version": "1.2",
+      "point_format": 3,
+      "schema_id": "b76c70d5b99995c2",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        527693.0,
+        5340127.0,
+        0.0
+      ],
+      "crs": null,
+      "published_split": "dev"
+    }
+  ],
+  "schemas": {
+    "b0a9c91ea48c3b97": {
+      "fields": [
+        {
+          "name": "X",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Y",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Z",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "intensity",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "return_number",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "number_of_returns",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "scan_direction_flag",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "edge_of_flight_line",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "classification",
+          "dtype": "bitfield",
+          "bits": 5
+        },
+        {
+          "name": "synthetic",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "key_point",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "withheld",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "scan_angle_rank",
+          "dtype": "int8",
+          "bits": 8
+        },
+        {
+          "name": "user_data",
+          "dtype": "uint8",
+          "bits": 8
+        },
+        {
+          "name": "point_source_id",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "red",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "green",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "blue",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "treeID",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "treeSP",
+          "dtype": "int32",
+          "bits": 32
+        }
+      ],
+      "sample_file": "CULS/plot_1_annotated.las",
+      "sample_points": 2048,
+      "sample_classification_values": [
+        4
+      ],
+      "sample_tree_id_min": 1101,
+      "sample_tree_id_max": 1101
+    },
+    "210d943d719c0852": {
+      "fields": [
+        {
+          "name": "X",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Y",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Z",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "intensity",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "return_number",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "number_of_returns",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "scan_direction_flag",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "edge_of_flight_line",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "classification",
+          "dtype": "bitfield",
+          "bits": 5
+        },
+        {
+          "name": "synthetic",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "key_point",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "withheld",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "scan_angle_rank",
+          "dtype": "int8",
+          "bits": 8
+        },
+        {
+          "name": "user_data",
+          "dtype": "uint8",
+          "bits": 8
+        },
+        {
+          "name": "point_source_id",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "gps_time",
+          "dtype": "float64",
+          "bits": 64
+        },
+        {
+          "name": "red",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "green",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "blue",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "treeID",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "treeSP",
+          "dtype": "int32",
+          "bits": 32
+        }
+      ],
+      "sample_file": "NIBIO/plot_10_annotated.las",
+      "sample_points": 2048,
+      "sample_classification_values": [
+        4
+      ],
+      "sample_tree_id_min": 1,
+      "sample_tree_id_max": 1
+    },
+    "21ea848fdb3a9165": {
+      "fields": [
+        {
+          "name": "X",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Y",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Z",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "intensity",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "return_number",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "number_of_returns",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "scan_direction_flag",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "edge_of_flight_line",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "classification",
+          "dtype": "bitfield",
+          "bits": 5
+        },
+        {
+          "name": "synthetic",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "key_point",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "withheld",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "scan_angle_rank",
+          "dtype": "int8",
+          "bits": 8
+        },
+        {
+          "name": "user_data",
+          "dtype": "uint8",
+          "bits": 8
+        },
+        {
+          "name": "point_source_id",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "gps_time",
+          "dtype": "float64",
+          "bits": 64
+        },
+        {
+          "name": "treeID",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "treeSP",
+          "dtype": "int32",
+          "bits": 32
+        }
+      ],
+      "sample_file": "NIBIO/plot_11_annotated.las",
+      "sample_points": 2048,
+      "sample_classification_values": [
+        4
+      ],
+      "sample_tree_id_min": 1,
+      "sample_tree_id_max": 1
+    },
+    "9df28e16590594f4": {
+      "fields": [
+        {
+          "name": "X",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Y",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Z",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "intensity",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "return_number",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "number_of_returns",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "scan_direction_flag",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "edge_of_flight_line",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "classification",
+          "dtype": "bitfield",
+          "bits": 5
+        },
+        {
+          "name": "synthetic",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "key_point",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "withheld",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "scan_angle_rank",
+          "dtype": "int8",
+          "bits": 8
+        },
+        {
+          "name": "user_data",
+          "dtype": "uint8",
+          "bits": 8
+        },
+        {
+          "name": "point_source_id",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "red",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "green",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "blue",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "treeID",
+          "dtype": "float64",
+          "bits": 64
+        }
+      ],
+      "sample_file": "RMIT/test.las",
+      "sample_points": 2048,
+      "sample_classification_values": [
+        4,
+        5
+      ],
+      "sample_tree_id_min": 1,
+      "sample_tree_id_max": 1
+    },
+    "b76c70d5b99995c2": {
+      "fields": [
+        {
+          "name": "X",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Y",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "Z",
+          "dtype": "int32",
+          "bits": 32
+        },
+        {
+          "name": "intensity",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "return_number",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "number_of_returns",
+          "dtype": "bitfield",
+          "bits": 3
+        },
+        {
+          "name": "scan_direction_flag",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "edge_of_flight_line",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "classification",
+          "dtype": "bitfield",
+          "bits": 5
+        },
+        {
+          "name": "synthetic",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "key_point",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "withheld",
+          "dtype": "bitfield",
+          "bits": 1
+        },
+        {
+          "name": "scan_angle_rank",
+          "dtype": "int8",
+          "bits": 8
+        },
+        {
+          "name": "user_data",
+          "dtype": "uint8",
+          "bits": 8
+        },
+        {
+          "name": "point_source_id",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "gps_time",
+          "dtype": "float64",
+          "bits": 64
+        },
+        {
+          "name": "red",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "green",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "blue",
+          "dtype": "uint16",
+          "bits": 16
+        },
+        {
+          "name": "treeID",
+          "dtype": "float64",
+          "bits": 64
+        }
+      ],
+      "sample_file": "TUWIEN/test.las",
+      "sample_points": 2048,
+      "sample_classification_values": [
+        5
+      ],
+      "sample_tree_id_min": 0,
+      "sample_tree_id_max": 0
+    }
+  },
+  "record_id": "8287792",
+  "reviewed_at": "2026-10-18",
+  "manifest_scope": "Recorded acquisition hashes are retained as provenance; LAS payloads were not rehashed in this review",
+  "recorded_archive_sha256": "a1dfe3b8dab377a5a7cb74af47a6a6e0bef6664ae202c72112948d77ff97e1af",
+  "documentation": [
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/data_split_metadata.csv",
+      "size_bytes": 3219,
+      "sha256": "dd64aa338681f8f4166f8d175879a2b0b0158ecf222497ec6f7f0b23bc4fce94"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/readMe.txt",
+      "size_bytes": 1657,
+      "sha256": "33cbd505abb29f65ea7a91d8f1a6356eaf40062f87232147b3a1424585cdef3c"
+    }
+  ],
+  "partition_review": {
+    "csv_rows": 82,
+    "acquired_las_files": 32,
+    "matched_counts": {
+      "dev": 21,
+      "test": 11
+    },
+    "unmatched_rows": [
+      {
+        "path": "NIBIO2/plot1_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot10_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot12_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot13_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot14_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot15_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot16_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot2_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot20_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot21_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot22_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot23_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot24_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot25_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot26_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot27_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot28_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot3_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot31_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot32_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot33_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot34_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot35_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot38_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot39_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot40_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot41_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot42_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot43_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot44_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot45_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot46_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot47_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot48_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot49_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot50_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot51_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot52_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot53_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot54_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot55_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot56_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot57_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot58_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot59_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot6_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot60_annotated.las",
+        "folder": "NIBIO2",
+        "split": "test"
+      },
+      {
+        "path": "NIBIO2/plot61_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot8_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      },
+      {
+        "path": "NIBIO2/plot9_annotated.las",
+        "folder": "NIBIO2",
+        "split": "dev"
+      }
+    ],
+    "las_without_split": [],
+    "interpretation": "The manifest and verified split CSV disagree in scope: all 50 unmatched entries belong to NIBIO2. The source of this discrepancy remains unresolved."
+  }
+}

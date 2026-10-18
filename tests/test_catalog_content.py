@@ -9,13 +9,14 @@ WEB = ROOT/'knowledge-hub' if (ROOT/'knowledge-hub').is_dir() else ROOT
 sys.path.insert(0,str(ROOT/'scripts'))
 import build_knowledge_hub_catalog as builder
 import task_contracts
+import knowledge_model
 
 
 class CatalogContent(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.catalog = json.loads((WEB/'catalog.json').read_text())
-        cls.profiles = json.loads((WEB/'dataset-profiles.json').read_text())
+        cls.profiles, _, _ = knowledge_model.project(knowledge_model.load())
         cls.inventory = json.loads((ROOT/'docs/lidar-acquisition-inventory.json').read_text())
 
     def test_all_profiles_distinguish_reported_observed_and_unresolved(self):

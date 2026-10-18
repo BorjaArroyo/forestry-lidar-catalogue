@@ -6,7 +6,7 @@ import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from knowledge_model import load as load_model, project, model_hashes, write_profile_views
+from knowledge_model import load as load_model, project, model_hashes
 
 # Curated source facts and proposals are separate from observed acquisition counts.
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,7 +61,7 @@ def build(inventory, status, outputs):
     ]
     catalog['duplicates']=[{'kind':'Identical normalized data','records':[str(x['record_id']) for x in g],'paths':[x['input'] for x in g],'points':g[0]['point_count']} for g in identical]
     catalog['duplicate_examples']=[{'kind':'Identical normalized data','records':[str(x['record_id']) for x in g],'paths':[x['input'] for x in g],'points':g[0]['point_count']} for g in identical[:8]]
-    catalog['content_review']={'reviewed_at':'2026-10-17','scope':'Source documentation, saved metadata and existing code; no new scientific admission','profiles_sha256':hashlib.sha256((CONTENT/'dataset-profiles.json').read_bytes()).hexdigest(),'relationships_sha256':hashlib.sha256((CONTENT/'relationships.json').read_bytes()).hexdigest()}
+    catalog['content_review']={'reviewed_at':'2026-10-17','scope':'Source documentation, saved metadata and existing code; no new scientific admission'}
     catalog['content_review'].update(model_hashes(CONTENT))
     catalog['evidence']=[{'name':'Public content review and remaining questions','url':'CONTENT-REVIEW.md'},{'name':'Pinned inventory','path':'docs/lidar-acquisition-inventory.json'},{'name':'Acquisition and recovery log','path':'docs/lidar-acquisition-log.md'},{'name':'Annotation definitions','path':'docs/annotations.md'},{'name':'Training and generalization protocol','path':'docs/lidar-training-data-plan.md'},{'name':'Prior provenance audit','path':'docs/data-provenance-audit.md'}]
     catalog['audit_scope']={'metadata':f"All {len(status['completed']):,} asset manifests, {len(outputs):,} stored-file records, {len(scenes):,} normalized cloud records and {sum(len(x['chunks']) for x in scenes):,} chunk records.",'payload_samples':'Historical 2026-10-15 payload sample: 40 chunks / 17,102,064 points across 20 then-observed source field schemas; not rerun by this builder.','limits':'No current full-payload reread, order-invariant geometry audit, scanner calibration validation, or final license admission. Duplicate groups are evidence for review, not deletion instructions.','curation_applied':False}
@@ -78,7 +78,6 @@ def main():
     for r in inventory['records']:
         for a in r['files']:
             m=json.loads((args.root/'sources'/str(r['record_id'])/'manifests'/(a['name']+'.json')).read_text());outputs.extend(dict(x,record_id=r['record_id'],asset=a['name']) for x in m['outputs'])
-    write_profile_views(CONTENT)
     catalog=build(inventory,status,outputs)
     catalog['snapshot_provenance']={'inventory_sha256':hashlib.sha256(args.inventory.read_bytes()).hexdigest(),'acquisition_status_sha256':hashlib.sha256((args.root/'acquisition-status.json').read_bytes()).hexdigest(),'builder':'scripts/build_knowledge_hub_catalog.py','sample_audit_date':'2026-10-15'}
     assert len({x['id'] for x in catalog['datasets']})==len(catalog['datasets'])

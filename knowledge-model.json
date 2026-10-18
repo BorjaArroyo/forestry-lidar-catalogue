@@ -1,6 +1,6 @@
 {
   "$schema": "knowledge-model.schema.json",
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "nodes": {
     "task:instances": {
       "type": "task",
@@ -1323,6 +1323,451 @@
       "data": {
         "local": "docs/lidar-acquisition-log.md"
       }
+    },
+    "evidence:for-instance-header-review-20261018": {
+      "type": "evidence",
+      "data": {
+        "local": "evidence/for-instance-v1.json",
+        "sha256": "6f75798938676dc190725cb56f0b400afb4cfc17d6a7842806de355a9ca9b510"
+      }
+    },
+    "coordinates:for-instance-source:1.0.0": {
+      "type": "coordinate_frame",
+      "data": {
+        "name": "FOR-instance per-file source coordinate metadata",
+        "version": "1.0.0",
+        "xy_units": "Metres for the 28 headers with projected EPSG CRS; unverified for the remaining four files",
+        "z_units": "Not independently certified by this header review",
+        "crs": "Per-file EPSG:25833 (3), EPSG:25832 (20), EPSG:2193 (5), absent (4)",
+        "interpretation": "Do not infer vertical datum, normalize terrain or reproject",
+        "evidence_refs": [
+          "evidence:436d29d4b138da3ec9f25086",
+          "evidence:for-instance-header-review-20261018"
+        ]
+      }
+    },
+    "contract:for-instance-native:1.0.0": {
+      "type": "data_contract",
+      "data": {
+        "name": "FOR-instance v1 native LAS plot",
+        "version": "1.0.0",
+        "status": "documented_and_header_observed",
+        "format": "LAS",
+        "observation_unit": "One acquired LAS plot; identities are scoped by record and relative plot path",
+        "fields": [
+          {
+            "name": "X/Y/Z",
+            "dtypes": [
+              "int32"
+            ],
+            "shape": [
+              "N",
+              3
+            ],
+            "meaning": "Stored coordinate integers; decode each axis with its own LAS scale and offset",
+            "required": true
+          },
+          {
+            "name": "treeID",
+            "dtypes": [
+              "int32",
+              "float64"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "Native plot-local tree identifier; floating representation must be checked for finite integral values",
+            "required": true
+          },
+          {
+            "name": "classification",
+            "dtypes": [
+              "uint5"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "Native seven-class annotation; LAS bitfield storage observed in the five schemas",
+            "required": true
+          },
+          {
+            "name": "treeSP",
+            "dtypes": [
+              "int32"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "Collection-specific species code, absent in four acquired plots; not required for instance segmentation",
+            "required": false
+          }
+        ],
+        "coordinate_ref": "coordinates:for-instance-source:1.0.0",
+        "partitioning": "Join data_split_metadata.csv on exact relative LAS path; 21 dev and 11 test matches, plus 50 unmatched NIBIO2 rows",
+        "annotation_codes": [
+          {
+            "field": "classification",
+            "code": 0,
+            "meaning": "Unclassified scattered points not annotated"
+          },
+          {
+            "field": "classification",
+            "code": 1,
+            "meaning": "Low vegetation: not tree or ground"
+          },
+          {
+            "field": "classification",
+            "code": 2,
+            "meaning": "Terrain"
+          },
+          {
+            "field": "classification",
+            "code": 3,
+            "meaning": "Trees outside measured/annotated plots"
+          },
+          {
+            "field": "classification",
+            "code": 4,
+            "meaning": "Stem"
+          },
+          {
+            "field": "classification",
+            "code": 5,
+            "meaning": "Live branches / green crown; not a pure foliage label"
+          },
+          {
+            "field": "classification",
+            "code": 6,
+            "meaning": "Woody branches"
+          }
+        ],
+        "invariants": [
+          "Scope is the 32 LAS files recorded by the acquisition manifest, not all 82 CSV entries",
+          "Native classes and complete original point records remain preserved",
+          "No global tree identity or independent-site split is inferred"
+        ],
+        "evidence_refs": [
+          "evidence:436d29d4b138da3ec9f25086",
+          "evidence:for-instance-header-review-20261018"
+        ]
+      }
+    },
+    "contract:for-instance-legacy-chunks:1.0.0": {
+      "type": "data_contract",
+      "data": {
+        "name": "Existing FOR-instance normalized chunks",
+        "version": "1.0.0",
+        "status": "existing_code_inspected",
+        "format": "NPZ chunks plus scene metadata",
+        "observation_unit": "One acquired LAS plot; identities are scoped by record and relative plot path",
+        "fields": [
+          {
+            "name": "xyz",
+            "dtypes": [
+              "float64"
+            ],
+            "shape": [
+              "N",
+              3
+            ],
+            "meaning": "Decoded numeric source XYZ in unchanged row order",
+            "required": true
+          },
+          {
+            "name": "instance",
+            "dtypes": [
+              "int64"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "-1 initially; retain positive native treeID",
+            "required": true
+          },
+          {
+            "name": "instance_valid",
+            "dtypes": [
+              "bool"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "instance >= 0; this legacy mask is not the proposed task reference mask",
+            "required": true
+          },
+          {
+            "name": "semantic",
+            "dtypes": [
+              "int8"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "All zero: unknown; native classification is not mapped for record 8287792",
+            "required": true
+          },
+          {
+            "name": "semantic_valid",
+            "dtypes": [
+              "bool"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "All false for the existing FOR-instance v1 normalization",
+            "required": true
+          },
+          {
+            "name": "original_points",
+            "dtypes": [
+              "native_structured_record"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "Original native fields and storage types",
+            "required": true
+          }
+        ],
+        "coordinate_ref": "coordinates:for-instance-source:1.0.0",
+        "partitioning": "The existing converter records split=unassigned",
+        "annotation_codes": [],
+        "invariants": [
+          "Input and output point counts and row order agree",
+          "scene_id = record_id + first 20 hex characters of SHA256(acquisition-relative input path)",
+          "No reviewed ground, low-vegetation or outside-tree task mask is produced"
+        ],
+        "evidence_refs": [
+          "evidence:436d29d4b138da3ec9f25086",
+          "evidence:for-instance-header-review-20261018"
+        ]
+      }
+    },
+    "contract:for-instance-plot-instances:0.1.0": {
+      "type": "data_contract",
+      "data": {
+        "name": "Proposed plot-instance task package",
+        "version": "0.1.0",
+        "status": "proposed",
+        "format": "NPZ chunks plus task-package.json",
+        "observation_unit": "One acquired LAS plot; identities are scoped by record and relative plot path",
+        "fields": [
+          {
+            "name": "xyz",
+            "dtypes": [
+              "float64"
+            ],
+            "shape": [
+              "N",
+              3
+            ],
+            "meaning": "Unchanged decoded source coordinates",
+            "required": true
+          },
+          {
+            "name": "instance",
+            "dtypes": [
+              "int64"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "-1 unknown/excluded; 0 non-tree; positive IDs remain scene-local",
+            "required": true
+          },
+          {
+            "name": "instance_valid",
+            "dtypes": [
+              "bool"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "instance >= 0 under an explicit versioned annotation-mask policy",
+            "required": true
+          },
+          {
+            "name": "original_points",
+            "dtypes": [
+              "native_structured_record"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "Retained native fields for traceability",
+            "required": true
+          },
+          {
+            "name": "published_split",
+            "dtypes": [
+              "string"
+            ],
+            "shape": [],
+            "meaning": "Scene metadata: dev or test from the exact provider path join",
+            "required": true
+          },
+          {
+            "name": "native_schema_ref",
+            "dtypes": [
+              "string"
+            ],
+            "shape": [],
+            "meaning": "Scene metadata key into native LAS dimension descriptors embedded in task-package.json",
+            "required": true
+          }
+        ],
+        "coordinate_ref": "coordinates:for-instance-source:1.0.0",
+        "partitioning": "Preserve provider dev/test; no new train/validation or geographic split is assigned",
+        "annotation_codes": [],
+        "invariants": [
+          "Preserve all rows and native labels; express exclusions through masks",
+          "Do not convert unclassified or outside-plot points into known background",
+          "Keep mask policy version and excluded-point counts in package provenance",
+          "Published test membership does not prove geographic independence"
+        ],
+        "evidence_refs": [
+          "evidence:436d29d4b138da3ec9f25086",
+          "evidence:for-instance-header-review-20261018"
+        ]
+      }
+    },
+    "transformation:for-instance-existing-normalization:1.0.0": {
+      "type": "transformation",
+      "data": {
+        "name": "Existing LAS decoding and positive-ID projection",
+        "version": "1.0.0",
+        "status": "legacy_code_inspected",
+        "execution_enabled": false,
+        "implementation": {
+          "path": "scripts/harmonize_lidar.py",
+          "sha256": "3ba155822d47b793237194ca0b0860748685cc4732490f09349c9f936f2d26b9",
+          "entrypoint": "_harmonize_local"
+        },
+        "rules": [
+          {
+            "id": "decode",
+            "expression": "xyz[:,axis] = raw_XYZ[:,axis] * las_scale[axis] + las_offset[axis]",
+            "status": "inspected"
+          },
+          {
+            "id": "instances",
+            "expression": "instance[:] = -1; instance[treeID > 0] = treeID[treeID > 0].astype(int64)",
+            "status": "inspected"
+          },
+          {
+            "id": "semantics",
+            "expression": "semantic[:] = 0; semantic_valid[:] = False; instance_valid = instance >= 0",
+            "status": "inspected"
+          }
+        ],
+        "preconditions": [
+          "Previously registered source and exact native field schema",
+          "Finite XYZ; finite integral treeID values",
+          "Verified input bytes under the existing acquisition policy"
+        ],
+        "preserves": [
+          "Source numeric XYZ after LAS decoding",
+          "Point order and native structured records"
+        ],
+        "losses": [
+          "The coarse semantic view carries no FOR-instance native classes; original_points retains them"
+        ],
+        "blockers": [
+          "Code inspection describes historical normalization, not a complete audited task preparation"
+        ],
+        "evidence_refs": [
+          "evidence:436d29d4b138da3ec9f25086",
+          "evidence:for-instance-header-review-20261018"
+        ]
+      }
+    },
+    "transformation:for-instance-task-preparation:0.1.0": {
+      "type": "transformation",
+      "data": {
+        "name": "Proposed reference masks and published split attachment",
+        "version": "0.1.0",
+        "status": "proposed",
+        "execution_enabled": false,
+        "implementation": null,
+        "rules": [
+          {
+            "id": "native_dimensions",
+            "expression": "classification = unpack_LAS_dimension(original_points, native_schema_ref, 'classification'); require classification in {0,1,2,3,4,5,6}",
+            "status": "proposed"
+          },
+          {
+            "id": "unknown",
+            "expression": "instance[classification in {0,3}] = -1",
+            "status": "proposed"
+          },
+          {
+            "id": "ground",
+            "expression": "instance[classification == 2] = 0",
+            "status": "proposed"
+          },
+          {
+            "id": "trees",
+            "expression": "instance[(classification in {4,5,6}) & (treeID > 0)] = treeID; retain -1 otherwise",
+            "status": "proposed"
+          },
+          {
+            "id": "low_vegetation",
+            "expression": "STOP until the task/evaluator inclusion policy for classification == 1 is reviewed",
+            "status": "unresolved"
+          },
+          {
+            "id": "split",
+            "expression": "published_split = unique_exact_path_join(plot_path, data_split_metadata.csv); report all unmatched CSV rows",
+            "status": "proposed"
+          }
+        ],
+        "preconditions": [
+          "An explicit reviewed mask policy",
+          "Per-file coordinate information retained",
+          "Exact provider split path join with scope discrepancy reported",
+          "Native LAS dimension descriptors are retained so packed classification can be decoded explicitly"
+        ],
+        "preserves": [
+          "All coordinates, rows, source IDs and original labels",
+          "Official dev/test membership"
+        ],
+        "losses": [
+          "Reference scoring excludes unknown/masked points; counts and policy must be reported"
+        ],
+        "blockers": [
+          "Resolve the 50 unmatched NIBIO2 split entries before claiming complete-source coverage",
+          "Audit low vegetation, boundary masks and classification/treeID conflicts on the full selected scope",
+          "Review numeric ID ranges and all floating treeID values",
+          "Implement and validate the complete task adapter; no execution is admitted"
+        ],
+        "evidence_refs": [
+          "evidence:436d29d4b138da3ec9f25086",
+          "evidence:for-instance-header-review-20261018"
+        ]
+      }
+    },
+    "pipeline:for-instance-plot-instances:0.1.0": {
+      "type": "pipeline_spec",
+      "data": {
+        "name": "FOR-instance original to plot-instance reference",
+        "version": "0.1.0",
+        "status": "draft",
+        "execution_enabled": false,
+        "source_ref": "zenodo:8287792",
+        "task_ref": "task:instances",
+        "input_ref": "contract:for-instance-native:1.0.0",
+        "output_ref": "contract:for-instance-plot-instances:0.1.0",
+        "transformation_refs": [
+          "transformation:for-instance-existing-normalization:1.0.0",
+          "transformation:for-instance-task-preparation:0.1.0"
+        ],
+        "asset_name": "FORinstance_dataset.zip",
+        "selection": "The 32 manifest-recorded LAS plots plus readMe.txt and data_split_metadata.csv; field-trait CSVs are retained as source material but unused by this task description",
+        "evidence_refs": [
+          "evidence:436d29d4b138da3ec9f25086",
+          "evidence:for-instance-header-review-20261018"
+        ]
+      }
     }
   },
   "edges": {
@@ -1986,50 +2431,6 @@
         "conditional_order": 0
       }
     },
-    "relation:v1-v2": {
-      "type": "dataset_relationship",
-      "source": "zenodo:8287792",
-      "target": "zenodo:16742708",
-      "task_refs": [
-        "task:instances"
-      ],
-      "order": 0,
-      "data": {
-        "kind": "transform",
-        "name": "Legacy tree-ID projection",
-        "rule": "The existing converter retains positive treeID; it does not map terrain or out-points into a reviewed task mask.",
-        "loss": "Semantic classes differ. This does not supply a reliable foliage label or prove independent acquisitions.",
-        "evidence_status": "Existing converter inspected; task compatibility not validated",
-        "implementation": "Existing source-aware projection in scripts/harmonize_lidar.py; no complete task pipeline validated by this relationship.",
-        "evidence": [
-          {
-            "label": "Source record",
-            "evidence_ref": "evidence:436d29d4b138da3ec9f25086"
-          },
-          {
-            "label": "Inspected converter",
-            "evidence_ref": "evidence:20037cf123f7bc643f4b6e21"
-          }
-        ],
-        "contract": {
-          "status": "legacy_code_inspection",
-          "input": "LAS treeID + classification + plot identity",
-          "output": "Existing coarse instance view; classification remains unmapped",
-          "steps": [
-            "instance[:] = -1",
-            "instance[treeID > 0] = treeID[treeID > 0]",
-            "semantic[:] = 0; semantic_valid[:] = False",
-            "instance_valid = instance >= 0; preserve native classification"
-          ],
-          "preconditions": [
-            "This describes existing converter behavior, not a complete task adapter.",
-            "Terrain and outside-tree masking are unresolved for task admission; do not infer that positive IDs establish complete coverage."
-          ],
-          "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
-          "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
-        }
-      }
-    },
     "relation:v1-v2-lineage": {
       "type": "dataset_relationship",
       "source": "zenodo:8287792",
@@ -2038,7 +2439,7 @@
         "task:geometry",
         "task:components"
       ],
-      "order": 1,
+      "order": 0,
       "data": {
         "kind": "unknown",
         "name": "Shared collection lineage",
@@ -2075,7 +2476,7 @@
       "task_refs": [
         "task:instances"
       ],
-      "order": 2,
+      "order": 1,
       "data": {
         "kind": "transform",
         "name": "Instance-schema crosswalk · label helper",
@@ -2115,7 +2516,7 @@
       "task_refs": [
         "task:instances"
       ],
-      "order": 3,
+      "order": 2,
       "data": {
         "kind": "transform",
         "name": "Tree IDs + coverage policy",
@@ -2158,7 +2559,7 @@
       "task_refs": [
         "task:instances"
       ],
-      "order": 4,
+      "order": 3,
       "data": {
         "kind": "transform",
         "name": "Instance IDs with out-mask",
@@ -2203,7 +2604,7 @@
         "task:instances",
         "task:components"
       ],
-      "order": 5,
+      "order": 4,
       "data": {
         "kind": "partial",
         "name": "Two labeled plots only",
@@ -2248,7 +2649,7 @@
       "task_refs": [
         "task:components"
       ],
-      "order": 6,
+      "order": 5,
       "data": {
         "kind": "partial",
         "name": "Collapse component granularity",
@@ -2294,7 +2695,7 @@
       "task_refs": [
         "task:instances"
       ],
-      "order": 7,
+      "order": 6,
       "data": {
         "kind": "blocked",
         "name": "No instance reference",
@@ -2331,7 +2732,7 @@
         "task:instances",
         "task:components"
       ],
-      "order": 8,
+      "order": 7,
       "data": {
         "kind": "blocked",
         "name": "Derivative-rights review",
@@ -2368,7 +2769,7 @@
       "task_refs": [
         "task:instances"
       ],
-      "order": 9,
+      "order": 8,
       "data": {
         "kind": "transform",
         "name": "Missing versioned instance adapter",
@@ -2408,7 +2809,7 @@
         "task:geometry",
         "task:biomass"
       ],
-      "order": 10,
+      "order": 9,
       "data": {
         "kind": "shared",
         "name": "Shared Wytham tree exports",
@@ -2455,7 +2856,7 @@
       "task_refs": [
         "task:spectral"
       ],
-      "order": 11,
+      "order": 10,
       "data": {
         "kind": "unknown",
         "name": "Channel calibration review",
@@ -2492,7 +2893,7 @@
       "task_refs": [
         "task:spectral"
       ],
-      "order": 12,
+      "order": 11,
       "data": {
         "kind": "unknown",
         "name": "Spectral alignment candidate",
@@ -2521,6 +2922,42 @@
           "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
         }
       }
+    },
+    "flow:for-instance-native": {
+      "type": "data_flow",
+      "role": "describes",
+      "source": "zenodo:8287792",
+      "target": "contract:for-instance-native:1.0.0"
+    },
+    "flow:for-instance-decode-input": {
+      "type": "data_flow",
+      "role": "consumes",
+      "source": "transformation:for-instance-existing-normalization:1.0.0",
+      "target": "contract:for-instance-native:1.0.0"
+    },
+    "flow:for-instance-decode-output": {
+      "type": "data_flow",
+      "role": "produces",
+      "source": "transformation:for-instance-existing-normalization:1.0.0",
+      "target": "contract:for-instance-legacy-chunks:1.0.0"
+    },
+    "flow:for-instance-prepare-input": {
+      "type": "data_flow",
+      "role": "consumes",
+      "source": "transformation:for-instance-task-preparation:0.1.0",
+      "target": "contract:for-instance-legacy-chunks:1.0.0"
+    },
+    "flow:for-instance-prepare-output": {
+      "type": "data_flow",
+      "role": "produces",
+      "source": "transformation:for-instance-task-preparation:0.1.0",
+      "target": "contract:for-instance-plot-instances:0.1.0"
+    },
+    "flow:for-instance-task": {
+      "type": "data_flow",
+      "role": "designed_for",
+      "source": "contract:for-instance-plot-instances:0.1.0",
+      "target": "task:instances"
     }
   }
 }

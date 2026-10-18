@@ -8,7 +8,7 @@
     },
     "schema_version": {
       "enum": [
-        "1.0"
+        "1.1"
       ]
     },
     "nodes": {
@@ -478,6 +478,10 @@
                   "type": "string",
                   "format": "uri",
                   "pattern": "^https://"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
                 }
               },
               "required": [
@@ -491,6 +495,10 @@
                 "local": {
                   "type": "string",
                   "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
                 }
               },
               "required": [
@@ -517,6 +525,18 @@
         },
         {
           "$ref": "#/$defs/evidence"
+        },
+        {
+          "$ref": "#/$defs/dataContract"
+        },
+        {
+          "$ref": "#/$defs/transformation"
+        },
+        {
+          "$ref": "#/$defs/pipelineSpec"
+        },
+        {
+          "$ref": "#/$defs/coordinateFrame"
         }
       ]
     },
@@ -742,8 +762,513 @@
         },
         {
           "$ref": "#/$defs/datasetRelationship"
+        },
+        {
+          "$ref": "#/$defs/dataFlow"
         }
       ]
+    },
+    "contractField": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dtypes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "shape": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "integer",
+                "minimum": 1
+              }
+            ]
+          }
+        },
+        "meaning": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "dtypes",
+        "shape",
+        "meaning",
+        "required"
+      ],
+      "additionalProperties": false
+    },
+    "dataContract": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "data_contract"
+          ]
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "status": {
+              "enum": [
+                "documented_and_header_observed",
+                "existing_code_inspected",
+                "proposed"
+              ]
+            },
+            "format": {
+              "type": "string",
+              "minLength": 1
+            },
+            "observation_unit": {
+              "type": "string",
+              "minLength": 1
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/contractField"
+              },
+              "minItems": 1
+            },
+            "coordinate_ref": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+            },
+            "partitioning": {
+              "type": "string",
+              "minLength": 1
+            },
+            "annotation_codes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "code": {
+                    "type": "integer"
+                  },
+                  "meaning": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "field",
+                  "code",
+                  "meaning"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "invariants": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "status",
+            "format",
+            "observation_unit",
+            "fields",
+            "coordinate_ref",
+            "partitioning",
+            "annotation_codes",
+            "invariants",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "type",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "transformation": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "transformation"
+          ]
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "status": {
+              "enum": [
+                "legacy_code_inspected",
+                "proposed"
+              ]
+            },
+            "execution_enabled": {
+              "enum": [
+                false
+              ]
+            },
+            "implementation": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "entrypoint": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "sha256",
+                    "entrypoint"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "expression": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "status": {
+                    "enum": [
+                      "inspected",
+                      "proposed",
+                      "unresolved"
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "expression",
+                  "status"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "preconditions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "preserves": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "losses": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "blockers": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "status",
+            "execution_enabled",
+            "implementation",
+            "rules",
+            "preconditions",
+            "preserves",
+            "losses",
+            "blockers",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "type",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "pipelineSpec": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "pipeline_spec"
+          ]
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "status": {
+              "enum": [
+                "draft"
+              ]
+            },
+            "execution_enabled": {
+              "enum": [
+                false
+              ]
+            },
+            "source_ref": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+            },
+            "task_ref": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+            },
+            "input_ref": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+            },
+            "output_ref": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+            },
+            "transformation_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "asset_name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "selection": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "status",
+            "execution_enabled",
+            "source_ref",
+            "task_ref",
+            "input_ref",
+            "output_ref",
+            "transformation_refs",
+            "asset_name",
+            "selection",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "type",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "dataFlow": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "data_flow"
+          ]
+        },
+        "role": {
+          "enum": [
+            "describes",
+            "consumes",
+            "produces",
+            "designed_for"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+        }
+      },
+      "required": [
+        "type",
+        "role",
+        "source",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "coordinateFrame": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "coordinate_frame"
+          ]
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "xy_units": {
+              "type": "string",
+              "minLength": 1
+            },
+            "z_units": {
+              "type": "string",
+              "minLength": 1
+            },
+            "crs": {
+              "type": "string",
+              "minLength": 1
+            },
+            "interpretation": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "xy_units",
+            "z_units",
+            "crs",
+            "interpretation",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "type",
+        "data"
+      ],
+      "additionalProperties": false
     }
   }
 }

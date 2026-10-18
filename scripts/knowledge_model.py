@@ -53,19 +53,56 @@ def validate(model, schema):
             if key != 'task:' + data['key']:
                 raise ValueError('Task identity does not match its key')
             tasks.add(key)
-        else:
+        elif node['type'] == 'evidence':
             if not key.startswith('evidence:'):
                 raise ValueError('Evidence identity must use the evidence namespace')
             locator = tuple(data.items())
             if locator in locators:
                 raise ValueError('Evidence resources must be shared by reference, not duplicated')
             locators.add(locator)
+        else:
+            namespaces = {'data_contract': 'contract:', 'transformation': 'transformation:',
+                          'pipeline_spec': 'pipeline:', 'coordinate_frame': 'coordinates:'}
+            if not key.startswith(namespaces[node['type']]) or not key.endswith(':' + data['version']):
+                raise ValueError('Contract, transformation and pipeline identity must include their version')
+            for evidence in data['evidence_refs']:
+                require(evidence, 'evidence')
+            if node['type'] == 'data_contract':
+                require(data['coordinate_ref'], 'coordinate_frame')
+                fields = [field['name'] for field in data['fields']]
+                if len(fields) != len(set(fields)):
+                    raise ValueError('Contract field names must be unique')
+            elif node['type'] == 'pipeline_spec':
+                for field, kind in (('source_ref', 'source_release'), ('task_ref', 'task'),
+                                    ('input_ref', 'data_contract'), ('output_ref', 'data_contract')):
+                    require(data[field], kind)
+                for operation in data['transformation_refs']:
+                    require(operation, 'transformation')
     if not sources or not tasks:
         raise ValueError('The graph requires sources and tasks')
     _ordered([nodes[t]['data']['order'] for t in tasks], 'Tasks')
     support = {}
     relationship_orders = []
+    flows = set()
+    ports = {}
     for key, edge in edges.items():
+        if edge['type'] == 'data_flow':
+            endpoint_types = {'describes': ('source_release', 'data_contract'),
+                              'consumes': ('transformation', 'data_contract'),
+                              'produces': ('transformation', 'data_contract'),
+                              'designed_for': ('data_contract', 'task')}
+            if not key.startswith('flow:'):
+                raise ValueError('Data-flow identity must use the flow namespace')
+            source_type, target_type = endpoint_types[edge['role']]
+            require(edge['source'], source_type)
+            require(edge['target'], target_type)
+            link = edge['role'], edge['source'], edge['target']
+            if link in flows:
+                raise ValueError('Duplicate data-flow relationship')
+            flows.add(link)
+            if edge['role'] in {'consumes', 'produces'}:
+                ports.setdefault(edge['source'], {}).setdefault(edge['role'], set()).add(edge['target'])
+            continue
         require(edge['source'], 'source_release')
         if edge['type'] == 'task_support':
             require(edge['target'], 'task')
@@ -93,6 +130,24 @@ def validate(model, schema):
             _ordered([value[field] for (s, _), value in support.items()
                       if s == source and value[field] is not None], source + ':' + field)
     _ordered(relationship_orders, 'Relationships')
+    for key, node in nodes.items():
+        if node['type'] == 'transformation':
+            if set(ports.get(key, {})) != {'consumes', 'produces'}:
+                raise ValueError('Every described transformation needs explicit input and output contracts')
+        elif node['type'] == 'pipeline_spec':
+            data = node['data']
+            if ('describes', data['source_ref'], data['input_ref']) not in flows:
+                raise ValueError('Pipeline source does not describe its input contract')
+            if ('designed_for', data['output_ref'], data['task_ref']) not in flows:
+                raise ValueError('Pipeline output is not associated with its intended task')
+            available = {data['input_ref']}
+            for operation in data['transformation_refs']:
+                port = ports.get(operation, {})
+                if not port.get('consumes') or not port['consumes'] <= available:
+                    raise ValueError('Pipeline metadata has disconnected or out-of-order contracts')
+                available.update(port.get('produces', set()))
+            if data['output_ref'] not in available:
+                raise ValueError('Pipeline metadata does not reach its declared output')
     return model
 
 
@@ -140,10 +195,8 @@ def project(model):
 
 
 def check_views(content=CONTENT):
-    profiles, relationships, tasks = project(load(content / 'knowledge-model.json'))
-    for name, expected in (('dataset-profiles.json', profiles), ('relationships.json', relationships)):
-        if read_json(content / name) != expected:
-            raise ValueError(f'{name} differs from the canonical graph; regenerate the catalog views')
+    graph = load(content / 'knowledge-model.json')
+    profiles, relationships, tasks = project(graph)
     catalog = read_json(content / 'catalog.json')
     if {d['id'] for d in catalog['datasets']} != set(profiles):
         raise ValueError('Catalog source membership differs from the canonical graph')
@@ -157,6 +210,21 @@ def check_views(content=CONTENT):
         actual['review'].pop('observations_current', None)
         if actual != profile:
             raise ValueError(f"Catalog source view is stale: {dataset['id']}")
+    root = content.parent if content.name == 'knowledge-hub' else content
+    for node in graph['nodes'].values():
+        data = node['data']
+        pinned = data.get('implementation') if node['type'] == 'transformation' else None
+        if node['type'] == 'evidence' and 'local' in data and 'sha256' in data:
+            pinned = {'path': data['local'], 'sha256': data['sha256']}
+            base = content
+        else:
+            base = root
+        if pinned:
+            path = (base / pinned['path']).resolve()
+            if not path.is_relative_to(base.resolve()) or path.is_symlink():
+                raise ValueError('Pinned metadata artifact escapes its declared root')
+            if hashlib.sha256(path.read_bytes()).hexdigest() != pinned['sha256']:
+                raise ValueError(f"Pinned metadata artifact changed: {pinned['path']}")
 
 
 def model_hashes(content=CONTENT):
@@ -172,11 +240,12 @@ def export_views(content=CONTENT):
     if {d['id'] for d in catalog['datasets']} != set(profiles):
         raise ValueError('Changed source membership requires rebuilding from the acquisition inventory')
 
-    write_profile_views(content)
     if catalog['tasks'] != tasks:
         catalog['tasks'] = tasks
     if catalog['mappings'] != relationships:
-        catalog['mappings'] = relationships
+        previous = {mapping['id']: mapping for mapping in catalog['mappings']}
+        catalog['mappings'] = [previous[m['id']] if previous.get(m['id']) == m else m
+                               for m in relationships]
     for dataset in catalog['datasets']:
         profile = copy.deepcopy(profiles[dataset['id']])
         current = {k: dataset[k] for k in ('source_metadata_sha256', 'cloud_count', 'points', 'schemas')}
@@ -185,9 +254,6 @@ def export_views(content=CONTENT):
             if dataset.get(key) != value:
                 dataset[key] = value
     catalog['content_review'].update(model_hashes(content))
-    for name, key in (('dataset-profiles.json', 'profiles_sha256'),
-                      ('relationships.json', 'relationships_sha256')):
-        catalog['content_review'][key] = hashlib.sha256((content / name).read_bytes()).hexdigest()
     _write_json(content / 'catalog.json', catalog)
     snapshot = json.dumps(catalog, indent=2, ensure_ascii=False)
     (content / 'catalog.js').write_text('window.LIDAR_CATALOG = ' + snapshot + ';\n')
@@ -197,12 +263,6 @@ def export_views(content=CONTENT):
 def _write_json(path, value):
     if not path.exists() or read_json(path) != value:
         path.write_text(json.dumps(value, indent=2, ensure_ascii=False) + '\n')
-
-
-def write_profile_views(content=CONTENT):
-    profiles, relationships, _ = project(load(content / 'knowledge-model.json'))
-    _write_json(content / 'dataset-profiles.json', profiles)
-    _write_json(content / 'relationships.json', relationships)
 
 
 if __name__ == '__main__':
