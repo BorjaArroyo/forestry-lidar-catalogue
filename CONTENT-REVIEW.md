@@ -1,7 +1,7 @@
 # Content review · 17 October 2026
 
 The current product focus is **individual-tree segmentation**. Other research
-tasks are hidden from navigation, dataset task assessments and benchmark filters,
+tasks are hidden from navigation, dataset task assessments,
 and retained as **TBD** in exported metadata. Source descriptions and native
 attributes remain preserved. The complete task-discovery-download-transform
 workflow is still work in progress.
@@ -64,7 +64,7 @@ being excluded from a different frozen local study.
 
 ## Transformations and the historical graph
 
-The 13 registered relationships now distinguish inspected legacy code, a tested
+The registered relationships now distinguish inspected legacy code, a tested
 label helper, missing adapters, recorded dependencies and unresolved transfer
 functions. Each records input, output, ordered steps and preconditions.
 
@@ -102,8 +102,7 @@ The [FOR-instance contract review](FOR-INSTANCE.md) adds a bounded header and
 documentation inspection dated 2026-10-18. It records a split-file scope
 discrepancy and distinguishes existing normalization from proposed task masks.
 This is metadata analysis, not execution or task admission.
-The builder combines them with acquisition metadata. Derived catalog and task
-snapshots must be regenerated together. Historical observation claims are marked
+The builder combines them with acquisition metadata. Derived catalog snapshots must be regenerated from the canonical model. Historical observation claims are marked
 stale when their reviewed metadata changes. Numeric findings come from the
 supplied metadata, rather than fixed historical counts.
 
@@ -119,10 +118,20 @@ Sources is now the entry point. Discovery summaries expose the data unit, report
 instance reference, coverage, preparation gap and a key limitation. Reference
 availability is independent from pipeline readiness: no complete-source pipeline
 is marked ready. The ForestSemantic derivative gate remains closed, and the
-frozen Wytham reference copy remains a separate limited operation.
+frozen Wytham reference-copy evidence remains historical.
 
 Filters and comparisons use those independent dimensions. Record download sizes
 sum pinned provider assets; they do not estimate a ready-to-use task subset or
-expanded storage. Historical local counts are shown only in workspace evidence.
-Model-exposure and diagnostic controls remain in an explicit advanced disclosure.
+expanded storage. Historical local counts remain labeled inside source evidence.
+Experimental graph, diagnostic and benchmark controls have been retired.
 No source payloads, source labels or scientific admission decisions changed.
+
+## Product cleanup · 18 October 2026
+
+The current application offers source discovery, comparison and verified original
+downloads only. Experimental graph navigation, PLY inspection, generic
+preprocessing, frozen reference preparation and benchmark/image controls were
+removed from the UI and callable service. Their code and evidence are archived
+in the research checkout and recoverable from the previous public Git revision.
+New record IDs cannot bypass source admission through the download API.
+FOR-instance preparation stays disabled until its complete adapter is validated.

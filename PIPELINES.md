@@ -7,17 +7,13 @@ human approval. Material changes to source versions, schemas, label meanings,
 transformations, task assumptions or environments require targeted reassessment
 and validation of the affected parts, not a blanket restart of every audit.
 
-## Existing workflows
+## Current workflow
 
-Source-aware acquisition, integrity verification and normalization already exist.
-`normalization-policy.json` records the previously observed source IDs, schemas
-and known limitations. This preserves historical workflow scope; it does not
-retroactively certify labels, rights or benchmark suitability. Known combinations
-are enabled. New sources and unknown field schemas are blocked until analyzed.
-The deferred derivative-rights source remains deferred. Each input is copied to
-a verified local temporary snapshot before conversion, and originals are preserved.
-The existing acquisition --harmonize option uses the same compatibility controls.
-No per-execution human approval is required.
+The current service only acquires pinned records from the reviewed inventory.
+It verifies transfer integrity and ZIP extraction and preserves original assets.
+There is no admitted task transformation. The source-specific normalization code
+and policy remain historical evidence for interpreting existing exports. They
+do not make those outputs ready for instance-segmentation training or scoring.
 
 ## New dataset admission
 
@@ -40,10 +36,8 @@ alone does not grant a new intended use.
 
 ## Current readiness
 
-TLS exact-duplicate index is technically validated for its existing 236-file
-subset using verified local snapshots. Its CLI can validate without a new human
-approval; its Workbench adapter is not implemented and its local image is not
-registry-hosted. Read-back failures remain documented; WebDAV's cause is not
-certified. The package proposes candidate groups only, with no deletion or
-canonical selection. New curation operations and changed semantics still need
-specific analysis. The frozen Wytham TreeLearn recipe has verified Ray execution for its pinned diagnostic export only. Generic TreeLearn and ForestFormer3D recipes remain disabled. Successful execution does not certify independent accuracy or reproduction of a published score.
+FOR-instance has versioned contracts and a disabled draft pipeline. Complete
+source and output validation are still required. Earlier TLS duplicate-index
+and frozen Wytham diagnostic packages retain historical validation evidence in
+the archive. Their scope does not admit raw-source task preparation, independent
+accuracy or reproduction of a published score. They are not service operations.

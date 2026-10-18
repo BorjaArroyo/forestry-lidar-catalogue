@@ -70,16 +70,14 @@ After editing the model, refresh presentation metadata without reading LiDAR:
 
 ```bash
 python scripts/knowledge_model.py --export-views
-python scripts/task_contracts.py --output knowledge-hub/task-dossiers.json
 python scripts/knowledge_model.py
 python tests/test_knowledge_model.py
 ```
 
 Use the configured ingestion environment with the pinned dependencies. In the
-public checkout, metadata files are at the repository root and the dossier output
-path is `task-dossiers.json`. Export retains observation timestamps, counts and
-acquisition provenance; it does not advance scientific review dates. Task dossiers
-must be regenerated because they fingerprint the catalog.
+public checkout, metadata files are at the repository root. Export retains
+observation timestamps, counts and acquisition provenance; it does not advance
+scientific review dates. Retired experimental dossiers are not generated.
 
 Changed source membership requires the existing inventory-backed catalog build,
 which projects the graph into the catalog. Publication and CI check schema,
@@ -90,5 +88,5 @@ tasks. Migration to 1.1 retains the source profiles and tasks, adds the ETL
 description types, replaces the obsolete FOR-v2 anchor and removes redundant
 exports. The current schema requires version 1.1; unknown versions fail instead
 of being interpreted through an old shape. This Canopy-specific profile does not
-claim DCAT, STAC, Croissant or SSSOM conformance. Benchmark registries, executable
-pipeline packages and operational jobs retain their existing representations.
+claim DCAT, STAC, Croissant or SSSOM conformance. Experimental benchmark registries and execution packages are archived outside the
+current application. Original-download jobs retain their durable job records.

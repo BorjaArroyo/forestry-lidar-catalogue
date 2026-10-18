@@ -1065,7 +1065,7 @@
               "status": "tbd",
               "label": "Task pipeline TBD",
               "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
-              "limited_reference_copy": true
+              "limited_reference_copy": false
             }
           }
         }

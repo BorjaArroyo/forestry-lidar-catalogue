@@ -1971,7 +1971,7 @@ window.LIDAR_CATALOG = {
           "status": "tbd",
           "label": "Task pipeline TBD",
           "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
-          "limited_reference_copy": true
+          "limited_reference_copy": false
         }
       },
       "download_bytes": 14984947900
@@ -7842,7 +7842,7 @@ window.LIDAR_CATALOG = {
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "model_sha256": "b3d0e90a022663493082ce8d6e7fc379f91b1ed1cf159c4d34016a55051c3024",
+    "model_sha256": "8daf2df9d871745a0b27f01e2b7e5fefd7d2a492026436749bc050a7d281d362",
     "model_schema_sha256": "5cf0d2d3a74c6a450b49d1f96ae220a29f91a01405eaec5183940123b6e09e25"
   },
   "evidence": [

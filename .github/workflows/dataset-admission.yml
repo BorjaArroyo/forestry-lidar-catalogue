@@ -14,9 +14,6 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
           python3 scripts/test_catalog_reviews.py
-          python3 scripts/test_lidar_curation.py
-          python3 pipelines/tls-exact-duplicate-index-v1/test_pipeline.py
-          python3 pipelines/tls-exact-duplicate-index-v1/test_staging.py
           git show "$BASE_SHA:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
           python3 scripts/validate_catalog_reviews.py --base "$RUNNER_TEMP/base-catalog.json"
           python3 - <<'PYTHON'
@@ -28,6 +25,10 @@ jobs:
           PYTHON
       - name: Validate curated graph and generated views
         run: |
-          python3 -m pip install jsonschema==4.26.0
+          python3 -m pip install -r requirements.txt
           python3 scripts/knowledge_model.py
           python3 tests/test_knowledge_model.py
+          python3 tests/test_catalog_content.py
+          python3 tests/test_knowledge_hub_service.py
+          node --check app.js
+          node --check workbench.js
