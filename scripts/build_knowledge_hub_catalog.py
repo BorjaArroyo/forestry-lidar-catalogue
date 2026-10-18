@@ -1,26 +1,18 @@
 """Build a portable knowledge-hub snapshot from pinned acquisition evidence."""
 import argparse
 import collections
+import copy
 import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-
-
-TASKS = [
-    ('instances', 'Tree segmentation', 'Individual-tree segmentation', 'Requires instance identity, annotation coverage, and boundary rules.'),
-    ('components', 'Forest components', 'Wood, foliage & ground', 'Class meanings must match; tree labels alone do not identify wood or foliage.'),
-    ('species', 'Tree species', 'Species classification', 'Requires documented species labels linked to tree identities.'),
-    ('geometry', 'Geometry & robustness', 'Geometry and consistency checks', 'Unlabeled clouds can test consistency and distributions, not segmentation accuracy.'),
-    ('spectral', 'Multispectral', 'Spectral learning', 'Wavelengths, channel units, normalization, and registration must be checked.'),
-    ('biomass', 'Tree structure', 'Structure and biomass research', 'QSMs are derived models; independent reference measurements are required for accuracy claims.'),
-]
+from knowledge_model import load as load_model, project, model_hashes, write_profile_views
 
 # Curated source facts and proposals are separate from observed acquisition counts.
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT/'knowledge-hub' if (ROOT/'knowledge-hub').is_dir() else ROOT
-PROFILES = {int(k):v for k,v in json.loads((CONTENT/'dataset-profiles.json').read_text()).items()}
-RELATIONSHIPS = json.loads((CONTENT/'relationships.json').read_text())
+profiles, RELATIONSHIPS, TASKS = project(load_model())
+PROFILES = {int(k): v for k, v in profiles.items()}
 
 
 def build(inventory, status, outputs):
@@ -29,7 +21,7 @@ def build(inventory, status, outputs):
     for record in inventory['records']:
         sid=record['record_id']; rows=[x for x in scenes if x['record_id']==sid]
         fields=collections.Counter(tuple(x['source_fields']) for x in rows)
-        ds=dict(PROFILES[sid], id=str(sid), title=record['title'], url=record['url'], doi=record.get('doi'), version=record.get('version') or 'Pinned record', license=record.get('license_declared',{}).get('id','unknown'), cloud_count=len(rows), points=sum(x['point_count'] for x in rows), chunks=sum(len(x['chunks']) for x in rows), assets=len(record['files']), source_fields=sorted({f for x in rows for f in x['source_fields']}), schemas=[{'fields':list(k),'files':v} for k,v in fields.items()], example_paths=[x['input'] for x in rows[:3]])
+        ds=dict(copy.deepcopy(PROFILES[sid]), id=str(sid), title=record['title'], url=record['url'], doi=record.get('doi'), version=record.get('version') or 'Pinned record', license=record.get('license_declared',{}).get('id','unknown'), cloud_count=len(rows), points=sum(x['point_count'] for x in rows), chunks=sum(len(x['chunks']) for x in rows), assets=len(record['files']), source_fields=sorted({f for x in rows for f in x['source_fields']}), schemas=[{'fields':list(k),'files':v} for k,v in fields.items()], example_paths=[x['input'] for x in rows[:3]])
         crs=collections.Counter(x.get('source_crs') or 'Unknown / not recorded' for x in rows)
         ds['source_metadata_sha256']=record.get('metadata_sha256')
         ds['download_bytes']=sum(asset['size_bytes'] for asset in record['files'])
@@ -44,11 +36,7 @@ def build(inventory, status, outputs):
     for x in outputs:source_groups[(x['sha256'],x['size_bytes'])].append(x)
     byte_groups=[g for g in source_groups.values() if len(g)>1]
     point_groups=[g for g in byte_groups if any(Path(x['path']).suffix=='.ply' for x in g)]
-    catalog={'schema_version':'0.1','generated_at':datetime.now(timezone.utc).isoformat(),'title':'Canopy / LiDAR Knowledge Hub','scope':'Acquired sources; compatibility is task-specific and does not authorize training or redistribution.','summary':{'datasets':len(datasets),'assets':len(status['completed']),'clouds':len(scenes),'points':sum(x['point_count'] for x in scenes),'chunks':sum(len(x['chunks']) for x in scenes),'deferred':3,'acquisition_errors':len(status['errors']),'conversion_errors':len(status['conversion_errors']),'duplicate_source_groups':len(byte_groups),'duplicate_cloud_copies':sum(len(g)-1 for g in point_groups),'identical_scene_groups':len(identical),'identical_scene_extras':sum(len(g)-1 for g in identical)},'tasks':[{'id':a,'name':b,'title':c,'description':d} for a,b,c,d in TASKS],'datasets':datasets}
-    # Visibility describes product scope, not scientific readiness of a dataset.
-    for task in catalog['tasks']:
-        task.update(visible=task['id']=='instances',
-                    status='work_in_progress' if task['id']=='instances' else 'tbd')
+    catalog={'schema_version':'0.1','generated_at':datetime.now(timezone.utc).isoformat(),'title':'Canopy / LiDAR Knowledge Hub','scope':'Acquired sources; compatibility is task-specific and does not authorize training or redistribution.','summary':{'datasets':len(datasets),'assets':len(status['completed']),'clouds':len(scenes),'points':sum(x['point_count'] for x in scenes),'chunks':sum(len(x['chunks']) for x in scenes),'deferred':3,'acquisition_errors':len(status['errors']),'conversion_errors':len(status['conversion_errors']),'duplicate_source_groups':len(byte_groups),'duplicate_cloud_copies':sum(len(g)-1 for g in point_groups),'identical_scene_groups':len(identical),'identical_scene_extras':sum(len(g)-1 for g in identical)},'tasks':copy.deepcopy(TASKS),'datasets':datasets}
     catalog['mappings'] = json.loads(json.dumps(RELATIONSHIPS))
     for dataset in datasets:
         review = dataset['review']
@@ -74,6 +62,7 @@ def build(inventory, status, outputs):
     catalog['duplicates']=[{'kind':'Identical normalized data','records':[str(x['record_id']) for x in g],'paths':[x['input'] for x in g],'points':g[0]['point_count']} for g in identical]
     catalog['duplicate_examples']=[{'kind':'Identical normalized data','records':[str(x['record_id']) for x in g],'paths':[x['input'] for x in g],'points':g[0]['point_count']} for g in identical[:8]]
     catalog['content_review']={'reviewed_at':'2026-10-17','scope':'Source documentation, saved metadata and existing code; no new scientific admission','profiles_sha256':hashlib.sha256((CONTENT/'dataset-profiles.json').read_bytes()).hexdigest(),'relationships_sha256':hashlib.sha256((CONTENT/'relationships.json').read_bytes()).hexdigest()}
+    catalog['content_review'].update(model_hashes(CONTENT))
     catalog['evidence']=[{'name':'Public content review and remaining questions','url':'CONTENT-REVIEW.md'},{'name':'Pinned inventory','path':'docs/lidar-acquisition-inventory.json'},{'name':'Acquisition and recovery log','path':'docs/lidar-acquisition-log.md'},{'name':'Annotation definitions','path':'docs/annotations.md'},{'name':'Training and generalization protocol','path':'docs/lidar-training-data-plan.md'},{'name':'Prior provenance audit','path':'docs/data-provenance-audit.md'}]
     catalog['audit_scope']={'metadata':f"All {len(status['completed']):,} asset manifests, {len(outputs):,} stored-file records, {len(scenes):,} normalized cloud records and {sum(len(x['chunks']) for x in scenes):,} chunk records.",'payload_samples':'Historical 2026-10-15 payload sample: 40 chunks / 17,102,064 points across 20 then-observed source field schemas; not rerun by this builder.','limits':'No current full-payload reread, order-invariant geometry audit, scanner calibration validation, or final license admission. Duplicate groups are evidence for review, not deletion instructions.','curation_applied':False}
     return catalog
@@ -89,6 +78,7 @@ def main():
     for r in inventory['records']:
         for a in r['files']:
             m=json.loads((args.root/'sources'/str(r['record_id'])/'manifests'/(a['name']+'.json')).read_text());outputs.extend(dict(x,record_id=r['record_id'],asset=a['name']) for x in m['outputs'])
+    write_profile_views(CONTENT)
     catalog=build(inventory,status,outputs)
     catalog['snapshot_provenance']={'inventory_sha256':hashlib.sha256(args.inventory.read_bytes()).hexdigest(),'acquisition_status_sha256':hashlib.sha256((args.root/'acquisition-status.json').read_bytes()).hexdigest(),'builder':'scripts/build_knowledge_hub_catalog.py','sample_audit_date':'2026-10-15'}
     assert len({x['id'] for x in catalog['datasets']})==len(catalog['datasets'])

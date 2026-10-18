@@ -26,3 +26,8 @@ jobs:
           script = Path('catalog.js').read_text()
           assert json.loads(script.split('=', 1)[1].strip().rstrip(';')) == catalog, 'Catalog snapshots differ'
           PYTHON
+      - name: Validate curated graph and generated views
+        run: |
+          python3 -m pip install jsonschema==4.26.0
+          python3 scripts/knowledge_model.py
+          python3 tests/test_knowledge_model.py

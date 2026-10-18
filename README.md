@@ -125,8 +125,10 @@ profiles, kubeconfig, job history and outputs are never published.
 [The content review](CONTENT-REVIEW.md) distinguishes provider reports, saved
 local observations, code inspection and unresolved questions across all ten sources.
 The initial article entries are documentation/code reviews; full methods/results
-critiques remain pending. Curated profiles and relationship contracts are published
-in `dataset-profiles.json` and `relationships.json`; source relevance does not
+critiques remain pending. Curated entities and relationships are authored in
+`knowledge-model.json`, validated by `knowledge-model.schema.json` and reference
+checks. See [the data model](DATA-MODEL.md). `dataset-profiles.json` and
+`relationships.json` are generated compatibility views; source relevance does not
 constitute scientific or execution admission.
 
 

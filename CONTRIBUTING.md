@@ -4,6 +4,10 @@ Anyone can propose a dataset through a Dataset proposal issue. Only maintainers
 publish catalog changes after analysis and human review in a pull request.
 Downloading or inspecting a source does not admit it to this catalog.
 
+Author curated entries in `knowledge-model.json`; profile, relationship and
+catalog files are generated views. Follow [DATA-MODEL.md](DATA-MODEL.md) to
+refresh and validate them. The storage model does not change admission rules.
+
 ## Process
 
 1. Propose a version-specific provider record, intended tasks and motivation.

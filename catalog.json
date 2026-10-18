@@ -7884,7 +7884,9 @@
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
     "profiles_sha256": "c53cfb988e2527072a00b1ac90324b41602e821c71c382180bafddf2b5311778",
-    "relationships_sha256": "0cedb7630ec7524a7b1cbb7bdd392efb96f6f4b24dfac55e1016c8fe44b30fca"
+    "relationships_sha256": "0cedb7630ec7524a7b1cbb7bdd392efb96f6f4b24dfac55e1016c8fe44b30fca",
+    "model_sha256": "1afc1e204c14e62b4a8684fc4e18c83e5090e7e0ac8d4d1aad0168ef093629c1",
+    "model_schema_sha256": "8dcbb98d4e4bd7de9567378165f95272e5649b6d45664be5fc89d248c8bcd0e0"
   },
   "evidence": [
     {

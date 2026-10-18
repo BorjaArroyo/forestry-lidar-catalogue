@@ -93,8 +93,11 @@ are no longer listed as full-scene evaluation reference.
 
 ## Maintaining this distinction
 
-[dataset-profiles.json](dataset-profiles.json) is the curated profile source;
-[relationships.json](relationships.json) holds precise relationship contracts.
+[knowledge-model.json](knowledge-model.json) is the curated authoring source.
+[dataset-profiles.json](dataset-profiles.json) and
+[relationships.json](relationships.json) are generated compatibility views.
+The [data model](DATA-MODEL.md) describes typed references, JSON Schema validation
+and the lossless storage migration. This does not change the reviewed content.
 The builder combines them with acquisition metadata. Derived catalog and task
 snapshots must be regenerated together. Historical observation claims are marked
 stale when their reviewed metadata changes. Numeric findings come from the
