@@ -138,3 +138,12 @@ The existing source-detail panel and exported catalog project native measurement
 contracts and their channel descriptors from graph references. They are derived
 views, not additional authoring files. Public evidence includes its bounded scope
 and inspector fingerprint; full source/adapter validation remains separate.
+
+## Executable task-package contract
+
+The [task-package contract](TASK-PACKAGE.md) formalizes existing FOR-instance
+1.0 outputs with `task-package.schema.json` and an independent binary validator
+and streaming reader in `scripts/task_package.py`. A regression check binds the
+reader's array types/shapes to the existing graph output contract. Schema checks
+do not replace payload checks or scientific admission. This increment changes
+neither the curated model version nor the producer's pinned execution package.

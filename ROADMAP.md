@@ -8,6 +8,15 @@ attributes, conservative reference masks, source/output checksums and exact
 published dev/test assignments are retained. Existing matching outputs resume.
 The 50 absent NIBIO2 partition entries remain explicit; they are not invented.
 Full input and output validation is pinned to the exact implementation/package.
+The [task-package contract](TASK-PACKAGE.md) now has an independent validator and
+streaming reader. The local download-and-prepare workflow requires complete
+prepared-package validation before completion and retains the report hash.
+Browser preparation now has bounded Firefox acceptance for one complete reviewed
+plot, including native byte-equivalence and ZIP export. See BROWSER-PREPARATION.md.
+Selective ZIP intake now retrieves one reviewed plot from Zenodo without the whole
+archive. Expanded acceptance covers Firefox direct intake for RMIT and Chromium intake
+for CULS, including byte-identical preservation of its additional native attribute.
+Full-archive verification and coverage across the other native schemas remain pending.
 
 ## Next increment: a second source through the existing workflow
 

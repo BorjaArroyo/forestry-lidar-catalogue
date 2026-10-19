@@ -1,0 +1,33 @@
+{
+  "evidence_version": "1.0.0",
+  "reviewed_at": "2026-10-19",
+  "status": "succeeded",
+  "scope": "Dependency discovery in the existing pinned converted container under Node WASI; not browser preparation admission",
+  "runtime_sha256": "ed78cdc4ab4e1334ec7396eda4db5bc058e4e42825142af06096e1fd762275e3",
+  "runtime_lock_sha256": "20008afe5dc593216ff894a682b9e632fdddbaafb9923e54a72bafa981539beb",
+  "node_version": "v26.5.0",
+  "host": {
+    "system": "Darwin",
+    "architecture": "arm64"
+  },
+  "guest_python": "3.11.5",
+  "modules_present": {
+    "numpy": false,
+    "laspy": false,
+    "filelock": false,
+    "jsonschema": false
+  },
+  "probe_source": "import importlib.util\nimport json\nimport platform\nprint(\"CANOPY_DEPS=\" + json.dumps({\"python\":platform.python_version(),\"modules\":{name:importlib.util.find_spec(name) is not None for name in [\"numpy\",\"laspy\",\"filelock\",\"jsonschema\"]}}))\n",
+  "probe_sha256": "d459c0d15017b0c562c8f0b16ea7042b487ef926a0bbeafcd1c5379b8d45b4ec",
+  "single_run_timing_ms": {
+    "compile_and_instantiate": 113.95587499999999,
+    "guest_start_and_probe": 12414.9895
+  },
+  "runtime_transfer": "Already downloaded local artifact; SHA256 checked before execution",
+  "conclusion": "The supplied runtime lacks the pinned dependencies needed by the audited preparation and independent validator. Reproducible image construction and output equivalence remain required.",
+  "limitations": [
+    "Module discovery is not an import/execution compatibility test",
+    "One Node host run, not a Firefox benchmark or a per-point throughput measurement",
+    "No dataset preparation or full-source scalability was tested"
+  ]
+}

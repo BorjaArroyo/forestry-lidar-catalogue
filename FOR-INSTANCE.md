@@ -94,3 +94,6 @@ limits and recorded input verification attempts. No source is modified or delete
 Allow space for lossless derived arrays plus the largest verified input snapshot.
 The connected workbench offers this same command for already downloaded sources,
 or after its pinned Zenodo download. Other source adapters remain TBD.
+
+The [task-package contract and independent reader](TASK-PACKAGE.md) formalize
+these existing outputs without changing the audited producer or its hashes.

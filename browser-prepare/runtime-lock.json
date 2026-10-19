@@ -1,0 +1,152 @@
+{
+  "version": "1.1.0",
+  "pyodide": "314.0.7",
+  "python": "3.14.2",
+  "numpy": "2.4.6",
+  "laspy": "2.7.0",
+  "files": {
+    "pyodide.mjs": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.mjs",
+      "sha256": "6f1d60f7bf529beb300f0f47983c921d3982363640ba20af0e38efdddbc66109",
+      "size_bytes": 17931
+    },
+    "pyodide.asm.mjs": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.mjs",
+      "sha256": "f7cdc8ece80678ceb712f8e65ebe6d3a83203a180c399865f49612a051693635",
+      "size_bytes": 1250344
+    },
+    "pyodide.asm.wasm": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.asm.wasm",
+      "sha256": "cc36e3cab04fdfc9a63ff13eb52eae2b911bf46c025cc7b281f394bd3de1d5e6",
+      "size_bytes": 9598218
+    },
+    "python_stdlib.zip": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/python_stdlib.zip",
+      "sha256": "fa1957e5777068fc4f7437f96d860ae2fbe9c19732ba06c84e004ec16dd7dd7a",
+      "size_bytes": 2545637
+    },
+    "pyodide-lock.json": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide-lock.json",
+      "sha256": "5dc2fc119108bc148c7457dc86e7675b5c87e1cafd420b9c34c1eaef7b36c010",
+      "size_bytes": 119077
+    },
+    "jsonschema-4.26.0-py3-none-any.whl": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/jsonschema-4.26.0-py3-none-any.whl",
+      "sha256": "7ce77bd37ad161555c166d815bf1bc84980fd388a74059c73c9bc9214faa0a6e",
+      "size_bytes": 55406
+    },
+    "jsonschema_specifications-2025.9.1-py3-none-any.whl": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+      "sha256": "8e4353ea148aca60a2ea2aabbc068a62cf8d3deab5ee3ef91cfb991ecdb61c1b",
+      "size_bytes": 17467
+    },
+    "referencing-0.37.0-py3-none-any.whl": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/referencing-0.37.0-py3-none-any.whl",
+      "sha256": "db67659fe2ec73040d2b9785f0c8a7c45b8c1ca03dc2cd8e8b1fbc6f752854d8",
+      "size_bytes": 16903
+    },
+    "typing_extensions-4.15.0-py3-none-any.whl": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/typing_extensions-4.15.0-py3-none-any.whl",
+      "sha256": "4fec68770a05408e668a4fa53d6bf4f0f684b9dacf820c7c5d6e97d3ad225e29",
+      "size_bytes": 44613
+    },
+    "rpds_py-0.30.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/rpds_py-0.30.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "sha256": "9997dcfaee4465d4e877397c0f95fb9ec1dddb0e9da6dac94e96ff9621cdcd05",
+      "size_bytes": 115722
+    },
+    "attrs-26.1.0-py3-none-any.whl": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/attrs-26.1.0-py3-none-any.whl",
+      "sha256": "0506ebb8e46c83017941a7239eecb2f74420d332cf1f341bddc43a217ab0bb66",
+      "size_bytes": 67548
+    },
+    "six-1.17.0-py2.py3-none-any.whl": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/six-1.17.0-py2.py3-none-any.whl",
+      "sha256": "228c50f73aa7addf2c2ccf2979c256802a59ab69cad8152b31b9443cc8140f42",
+      "size_bytes": 11050
+    },
+    "pyrsistent-0.20.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyrsistent-0.20.0-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "sha256": "6252303d76b705f83c68a78fd2d7860be5b39f84482fee8aced8b52d7fd5ae80",
+      "size_bytes": 58223
+    },
+    "numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/numpy-2.4.6-cp314-cp314-pyemscripten_2026_0_wasm32.whl",
+      "sha256": "a292c1f5d7d8a2208cd5e94fc467604c131cabcd2fc14fed6eefde121e7fabdf",
+      "size_bytes": 2960568
+    },
+    "laspy-2.7.0-py3-none-any.whl": {
+      "url": "https://files.pythonhosted.org/packages/ed/fb/ae27ebca327117e35cc717a3a87afdcbbf10d5aac52e405d16ebe777357e/laspy-2.7.0-py3-none-any.whl",
+      "sha256": "15f5344c62a1023461996bdf5d1ba5fdd813e96694a524fee712931134f3792f",
+      "size_bytes": 86056
+    },
+    "filelock-4.0.12-py3-none-any.whl": {
+      "url": "https://files.pythonhosted.org/packages/da/a1/b047e1c486a2c66283633b7dbb73872ca16ca1ce6a426f70d4d037fc8e1c/filelock-4.0.12-py3-none-any.whl",
+      "sha256": "5f17ee83ecee8a6f3e389c75822fb70a1c2f0506b99438a6dffa1d56793588c8",
+      "size_bytes": 111732
+    },
+    "zip.min.js": {
+      "url": "browser-prepare/vendor/zip.min.js",
+      "sha256": "932c4626c366ace05094d4648220621b9868d305256c1143a3f3e3a38dd974b0",
+      "size_bytes": 170001
+    },
+    "scripts/for_instance/prepare.py": {
+      "url": "scripts/for_instance/prepare.py",
+      "sha256": "b7ddc8ef8c9b8ebc53a5b896bc2633eb7c6928e5b68e7b49b9b0b48f96c89f04",
+      "size_bytes": 16984
+    },
+    "scripts/for_instance/source-lock.json": {
+      "url": "scripts/for_instance/source-lock.json",
+      "sha256": "ba4c66fe29f31772352d73768e3f979e9a291060a408652ebef675e253ac1a0e",
+      "size_bytes": 40637
+    },
+    "scripts/for_instance/policy.json": {
+      "url": "scripts/for_instance/policy.json",
+      "sha256": "e9dca018888df2a7014406ea81c6468140be67f87b6f3dffcf1770de1de4b4e4",
+      "size_bytes": 1009
+    },
+    "scripts/for_instance/requirements.txt": {
+      "url": "scripts/for_instance/requirements.txt",
+      "sha256": "28953bc6a122c71e12714fbc894818c7e07a66928585c476af31423f5fe80c75",
+      "size_bytes": 43
+    },
+    "scripts/for_instance/package-lock.json": {
+      "url": "scripts/for_instance/package-lock.json",
+      "sha256": "046ab6fdb02c76b1750e20c0e44bea6f28e564c66f682935173fed930464254f",
+      "size_bytes": 377
+    },
+    "scripts/task_package.py": {
+      "url": "scripts/task_package.py",
+      "sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+      "size_bytes": 14087
+    },
+    "task-package.schema.json": {
+      "url": "task-package.schema.json",
+      "sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+      "size_bytes": 11424
+    },
+    "browser-prepare/kernel.py": {
+      "url": "browser-prepare/kernel.py",
+      "sha256": "5d6f0ab294b09684f943fe0abf59121b37fa61dd25c99c9d13f8eff08431b20e",
+      "size_bytes": 4590
+    },
+    "pyodide.js": {
+      "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.js",
+      "sha256": "3141b814715a72e59b51b1b18b9ceae5bf19f7c852417e431bb0a34feadf825c",
+      "size_bytes": 18912
+    },
+    "browser-prepare/intake.js": {
+      "url": "browser-prepare/intake.js",
+      "sha256": "03f6e2c83bbd07cb962c7717e58f0b2b7dc0efefb7ad53cc7521d1fbba28b755",
+      "size_bytes": 5227
+    }
+  },
+  "zip_js": "2.20.0",
+  "provider_archive": {
+    "record_id": 8287792,
+    "name": "FORinstance_dataset.zip",
+    "size_bytes": 1643251814,
+    "provider_checksum": "md5:01fd03ba4068648e21fb4591fbff34c4",
+    "download_url": "https://zenodo.org/api/records/8287792/files/FORinstance_dataset.zip/content"
+  }
+}

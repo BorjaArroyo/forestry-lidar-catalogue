@@ -1,0 +1,230 @@
+import {extractPlot, localReader, providerReader} from './intake.js';
+/* Fixed preparation only. User files never leave this worker or this origin. */
+const base = new URL('../', self.location.href);
+const nativeFetch = self.fetch.bind(self);
+const phase = text => self.postMessage({type: 'phase', text});
+const digest = async bytes => [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
+  .map(x => x.toString(16).padStart(2, '0')).join('');
+let active = false;
+
+async function checked(entry) {
+  const response = await nativeFetch(new URL(entry.url, base), {cache: 'no-cache', signal: AbortSignal.timeout(120000)});
+  if (!response.ok) throw Error(`Artifact HTTP ${response.status}: ${entry.url}`);
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  if (bytes.byteLength !== entry.size_bytes || await digest(bytes) !== entry.sha256)
+    throw Error(`Artifact integrity mismatch: ${entry.url}`);
+  return bytes;
+}
+
+async function boot(lock) {
+  const cache = new Map();
+  const byURL = new Map(Object.values(lock.files).map(entry => [new URL(entry.url, base).href, entry]));
+  async function asset(name) {
+    const entry = lock.files[name];
+    if (!entry) throw Error(`Unpinned runtime artifact: ${name}`);
+    return checked(entry);
+  }
+  // Pyodide's own runtime/package fetches must pass the same pinned checks.
+  self.fetch = async (input, options) => {
+    const url = new URL(input instanceof Request ? input.url : String(input), base).href;
+    if (url.startsWith('blob:')) return nativeFetch(input, options);
+    const entry = byURL.get(url);
+    if (!entry) throw Error(`Runtime requested an unpinned artifact: ${url}`);
+    if (!cache.has(url)) cache.set(url, checked(entry));
+    return new Response(await cache.get(url), {headers: {'Content-Type': url.endsWith('.wasm') ? 'application/wasm' : 'application/octet-stream'}});
+  };
+  const blobURL = (bytes, type = 'text/javascript') => URL.createObjectURL(new Blob([bytes], {type}));
+  const bootstrapURL = blobURL(await asset('pyodide.mjs'));
+  const moduleURL = blobURL(await asset('pyodide.asm.mjs'));
+  const stdlibURL = blobURL(await asset('python_stdlib.zip'), 'application/zip');
+  try {
+    const {loadPyodide} = await import(bootstrapURL);
+    const createPyodideModule = (await import(moduleURL)).default;
+    const py = await loadPyodide({
+      indexURL: 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/',
+      packageBaseUrl: 'https://cdn.jsdelivr.net/pyodide/v314.0.7/full/',
+      lockFileContents: JSON.parse(new TextDecoder().decode(await asset('pyodide-lock.json'))),
+      stdLibURL: stdlibURL, createPyodideModule,
+      stdout: () => {}, stderr: text => console.warn(text),
+    });
+    await py.loadPackage(['numpy', 'jsonschema'], {errorCallback: message => { throw Error(message); }});
+    for (const name of ['laspy-2.7.0-py3-none-any.whl', 'filelock-4.0.12-py3-none-any.whl']) {
+      py.FS.writeFile('/' + name, await asset(name));
+      py.runPython(`import sys; sys.path.insert(0, '/${name}')`);
+    }
+    for (const [name, entry] of Object.entries(lock.files)) {
+      if (!name.startsWith('scripts/') && !['task-package.schema.json', 'browser-prepare/kernel.py'].includes(name)) continue;
+      const path = '/app/' + name;
+      py.FS.mkdirTree(path.slice(0, path.lastIndexOf('/')));
+      py.FS.writeFile(path, await checked(entry));
+    }
+    py.runPython("import sys; sys.path[:0] = ['/app/browser-prepare', '/app/scripts']; from kernel import Preparation; from task_package import TaskPackage; import json, numpy, laspy, platform");
+    const versions = JSON.parse(py.runPython("json.dumps(dict(python=platform.python_version(), numpy=numpy.__version__, laspy=laspy.__version__))"));
+    for (const name of ['python', 'numpy', 'laspy']) if (versions[name] !== lock[name]) throw Error(`Runtime version mismatch: ${name}`);
+    cache.clear();
+    return py;
+  } finally {
+    for (const url of [bootstrapURL, moduleURL, stdlibURL]) URL.revokeObjectURL(url);
+  }
+}
+
+async function directory(root, path) {
+  let current = root;
+  for (const part of path.split('/').filter(Boolean)) current = await current.getDirectoryHandle(part, {create: true});
+  return current;
+}
+
+async function write(root, path, bytes) {
+  const parts = path.split('/');
+  const parent = await directory(root, parts.slice(0, -1).join('/'));
+  const file = await parent.getFileHandle(parts.at(-1), {create: true});
+  const handle = await file.createSyncAccessHandle();
+  try {
+    handle.truncate(0);
+    let offset = 0;
+    while (offset < bytes.byteLength) {
+      const count = handle.write(bytes.subarray(offset), {at: offset});
+      if (!count) throw Error('Browser storage write stopped');
+      offset += count;
+    }
+    handle.flush();
+  } finally { handle.close(); }
+  return file;
+}
+
+async function loadZip(lock) {
+  if (!self.zip) {
+    const url = URL.createObjectURL(new Blob([await checked(lock.files['zip.min.js'])], {type: 'text/javascript'}));
+    try { await import(url); } finally { URL.revokeObjectURL(url); }
+    self.zip.configure({useWebWorkers: false, chunkSize: 1024 ** 2});
+  }
+  return self.zip;
+}
+
+async function stagePlot(root, request, plot, lock) {
+  const zip = await loadZip(lock);
+  const remote = request.mode === 'zenodo' ? providerReader(zip, lock.provider_archive, plot, nativeFetch) : null;
+  const reader = remote?.reader || localReader(zip, request.file);
+  const staged = await root.getFileHandle('source.las', {create: true});
+  const access = await staged.createSyncAccessHandle();
+  let intake;
+  try {
+    access.truncate(0);
+    intake = await extractPlot(zip, reader, plot, (bytes, offset) => {
+      let written = 0;
+      while (written < bytes.length) {
+        const count = access.write(bytes.subarray(written), {at: offset + written});
+        if (!count) throw Error('Staged LAS write stopped');
+        written += count;
+      }
+    }, (received, total) => phase(`Extracted ${Math.round(received / 1048576)} of ${Math.ceil(total / 1048576)} MiB for the selected plot…`));
+    access.flush();
+  } finally { access.close(); }
+  return {file: await staged.getFile(), intake: {kind: request.mode === 'zenodo' ? 'zenodo-ranges' : 'local-zip',
+    ...intake, ...(remote ? remote.stats : {})}};
+}
+
+async function run(request) {
+  let {file} = request;
+  const mode = request.mode || 'las';
+  if (!['las', 'zip', 'zenodo'].includes(mode)) throw Error('Unsupported source input mode');
+  if (mode !== 'zenodo' && (!(file instanceof File) || !file.size)) throw Error('Choose a complete FOR-instance LAS or ZIP file');
+  const origin = await navigator.storage.getDirectory();
+  const jobs = await origin.getDirectoryHandle('canopy-preparation', {create: true});
+  const job = crypto.randomUUID();
+  const root = await jobs.getDirectoryHandle(job, {create: true});
+  self.postMessage({type: 'job', id: job});
+  return navigator.locks.request('canopy-preparation:' + job, async () => {
+    let py;
+    try {
+      const lockResponse = await nativeFetch(new URL('browser-prepare/runtime-lock.json', base), {cache: 'no-store'});
+      if (!lockResponse.ok) throw Error('Runtime lock unavailable');
+      const lockBytes = new Uint8Array(await lockResponse.arrayBuffer());
+      const lock = JSON.parse(new TextDecoder().decode(lockBytes));
+      const source = JSON.parse(new TextDecoder().decode(await checked(lock.files['scripts/for_instance/source-lock.json'])));
+      const candidates = source.plots.filter(plot => mode === 'las' ? plot.size_bytes === file.size : plot.path === request.selected_path);
+      if (!candidates.length) throw Error('Input does not identify a complete reviewed LAS plot');
+      const required = Math.max(...candidates.map(p => (mode === 'las' ? 0 : p.size_bytes) + 2 * (p.size_bytes + p.points * 34 + Math.ceil(p.points / 250000) * 65536))) + 64 * 1024 ** 2;
+      const estimate = await navigator.storage.estimate();
+      if (!Number.isFinite(estimate.quota) || estimate.quota - (estimate.usage || 0) < required)
+        throw Error(`Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for chunks and ZIP export`);
+      await checked(lock.files['browser-prepare/intake.js']);
+      let intake = {kind: 'local-las', archive_verification: 'Provider ZIP not checked; selected LAS SHA256 is verified below'};
+      if (mode !== 'las') {
+        phase(mode === 'zenodo' ? 'Retrieving the selected plot from Zenodo using bounded byte ranges…' : 'Reading the selected plot from the local ZIP…');
+        ({file, intake} = await stagePlot(root, {...request, mode}, candidates[0], lock));
+      }
+      phase('Loading the pinned Python runtime and dependencies…');
+      py = await boot(lock);
+      py.FS.mkdir('/input');
+      py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: [{name: 'source.las', data: file}]}, '/input');
+      phase('Verifying the complete source LAS against the reviewed SHA256…');
+      py.runPython("prep = Preparation('/input/source.las', '/app/scripts/for_instance')");
+      const scene = JSON.parse(py.runPython('json.dumps(prep.scene)'));
+      if (mode !== 'las' && scene.path !== candidates[0].path) throw Error('Extracted LAS belongs to a different reviewed plot');
+      const files = [];
+      for (;;) {
+        const chunk = JSON.parse(py.runPython("json.dumps(prep.next_block('/chunk.npz'))"));
+        if (!chunk) break;
+        // Await each OPFS write before producing another block: bounded backpressure.
+        const handle = await write(root, chunk.path, py.FS.readFile('/chunk.npz'));
+        py.FS.unlink('/chunk.npz');
+        files.push({path: chunk.path, handle});
+        phase(`Prepared ${(chunk.offset + chunk.points).toLocaleString()} of ${scene.points.toLocaleString()} points…`);
+      }
+      py.FS.unmount('/input');
+      if (mode !== 'las') await root.removeEntry('source.las');
+      const manifestText = py.runPython('json.dumps(prep.manifest, indent=2)') + '\n';
+      const manifest = JSON.parse(manifestText);
+      files.push({path: 'task-package.json', handle: await write(root, 'task-package.json', new TextEncoder().encode(manifestText))});
+      py.FS.mkdirTree('/output/plots/' + scene.id);
+      const mounted = await Promise.all(files.filter(f => f.path.endsWith('.npz')).map(async f => ({name: f.path.split('/').at(-1), data: await f.handle.getFile()})));
+      py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: mounted}, '/output/plots/' + scene.id);
+      py.FS.writeFile('/output/task-package.json', manifestText);
+      phase('Independently validating every exported array and whole-plot count…');
+      const report = JSON.parse(py.runPython("json.dumps(TaskPackage('/output', allow_selection=True).validate())"));
+      const evidence = {status: 'validated', coverage: 'one-complete-selected-plot', report,
+        runtime: {pyodide: lock.pyodide, python: lock.python, numpy: lock.numpy, laspy: lock.laspy, zip_js: lock.zip_js},
+        runtime_lock_sha256: await digest(lockBytes),
+        user_agent: navigator.userAgent, source_sha256: scene.sha256, intake,
+        limitations: ['Selected LAS verified; whole-provider-archive checksum not checked in this run',
+          'No claim of annotation correctness or geographic independence', 'OPFS is temporary browser storage; export the ZIP before clearing it']};
+      files.push({path: 'browser-run.json', handle: await write(root, 'browser-run.json', new TextEncoder().encode(JSON.stringify(evidence, null, 2) + '\n'))});
+      phase('Writing the downloadable ZIP from browser storage…');
+      const zip = await loadZip(lock);
+      const archive = await root.getFileHandle('prepared.zip', {create: true});
+      const access = await archive.createSyncAccessHandle();
+      let position = 0;
+      try {
+        access.truncate(0);
+        const output = new WritableStream({write(bytes) {
+          let offset = 0;
+          while (offset < bytes.length) {
+            const count = access.write(bytes.subarray(offset), {at: position});
+            if (!count) throw Error('ZIP write stopped');
+            offset += count; position += count;
+          }
+        }});
+        const writer = new zip.ZipWriter(output, {level: 0, zip64: true});
+        for (const entry of files) await writer.add(entry.path, new zip.BlobReader(await entry.handle.getFile()));
+        await writer.close(); access.flush();
+      } finally { access.close(); }
+      const outputFile = await archive.getFile();
+      await write(root, 'complete.json', new TextEncoder().encode(JSON.stringify({size_bytes: outputFile.size, evidence})));
+      self.postMessage({type: 'result', job, file: outputFile, evidence});
+    } catch (error) {
+      // Only this run's uniquely named staging data is removed.
+      await jobs.removeEntry(job, {recursive: true}).catch(() => {});
+      throw error;
+    } finally {
+      py?.runPython("prep.reader.close() if 'prep' in globals() else None");
+    }
+  });
+}
+
+self.onmessage = async ({data}) => {
+  if (active) return;
+  active = true;
+  try { await run(data); }
+  catch (error) { self.postMessage({type: 'error', error: String(error.message || error)}); }
+};

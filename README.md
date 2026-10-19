@@ -84,6 +84,18 @@ nothing else moves.
 
 ## FOR-instance output
 
+The [task-package contract and reader](TASK-PACKAGE.md) formalize these outputs.
+The service now completes preparation only after the independent validator has
+checked every prepared chunk. The workbench distinguishes downloading, preparing
+and checking output, and exports the validation report with its artifact hashes.
+Independently validate a complete package or inspect one bounded block:
+
+```bash
+python scripts/task_package.py validate /absolute/prepared-package
+python scripts/task_package.py sample /absolute/prepared-package
+```
+
+
 The self-contained package in `scripts/for_instance/` includes its entrypoint,
 source lock, exact requirements, mask policy, hashes and offline regression tests.
 It accepts only the reviewed release, preserves all rows, XYZ and native fields,
@@ -143,6 +155,7 @@ python tests/test_catalog_content.py
 python tests/test_knowledge_hub_service.py
 python tests/test_pinned_sources.py
 python scripts/for_instance/test_pipeline.py
+python tests/test_task_package.py
 node --check app.js
 node --check workbench.js
 ```
@@ -155,18 +168,20 @@ credentials, machine paths and unrelated research work.
 The [FGI-EMIT measurement review](FGI-EMIT.md) documents native multispectral channels, source-specific missingness and unresolved calibration. Preparation remains TBD.
 
 
-## Browser container feasibility lab
+## Prepare a plot in the browser
 
-Open the [Download & prepare view](https://borjaarroyo.github.io/forestry-lidar-catalogue/#workbench)
-for read-only inspection of an uncompressed LAS up to 1 MiB and verified
-small downloads of pinned record assets, all inside the browser. A pinned upstream
-Python/Linux/x86-64 container runs on WebAssembly through container2wasm/Bochs;
-no local Python or Docker service is required for execution. The selected LAS
-stays in the browser. A synthetic example, a real FOR-instance subset,
-cancellation and JSON evidence export are available. This is a feasibility
-lab, not FOR-instance or FGI-EMIT preparation.
+The Download & prepare view now prepares one complete reviewed FOR-instance LAS
+without a processing backend, using a local LAS, a local ZIP, or a selected member
+retrieved directly from the pinned Zenodo ZIP. It checks the LAS SHA256, processes bounded
+blocks using Pyodide/laspy/NumPy, independently validates all outputs and offers a
+ZIP download from browser storage. The previous Linux emulator is no longer loaded.
 
-The first runtime fetch is 145.6 MB; WASM starts with approximately 256 MB of
-linear memory, with additional browser memory use. Runtime chunks, the assembled
-WASM and the fixed operation are SHA256 checked. Read [the experiment scope](BROWSER-CONTAINERS.md)
-before interpreting its results or extending the operation.
+Firefox 157 acceptance covers a complete 357,435-point plot; its two NPZ files
+are byte-identical to the native reference. Selective ZIP intake also passed in native Firefox for that plot. A second
+Chromium run prepared all 1,816,672 CULS plot points, preserving treeSP and
+producing eight NPZ files identical to the audited native reference. The full
+provider-archive checksum remains explicitly unchecked. Whole-release
+browser preparation, LAZ, other native schemas and larger browser runs remain pending. See
+[BROWSER-PREPARATION.md](BROWSER-PREPARATION.md) for the exact contract, evidence,
+storage behavior and limitations. The existing native service remains available
+for whole-archive acquisition and preparation into a chosen directory.

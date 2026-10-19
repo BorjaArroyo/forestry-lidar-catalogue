@@ -15,13 +15,20 @@
     const url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));
     const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
+  function jobLabel(job) {
+    const phases={starting:'Starting',downloading:'Downloading originals',preparing:'Preparing instances',validating:'Checking prepared data'};
+    return job.status==='running'?(phases[job.phase]||job.status):job.status;
+  }
   function renderJobs(jobs) {
-    $('#job-list').innerHTML=jobs.length?jobs.map(j=>`<article class="job-row"><div><strong>${j.kind==='prepare-instances'?'Prepare instances':'Original source'} · ${esc(j.record_id)}</strong><small>${esc(j.root)}</small>${j.output?`<small>Prepared output: ${esc(j.output)}</small>`:''}<small>${esc(j.created_at)}</small>${j.error?`<p class="notice">${esc(j.error)}</p>`:''}</div><span class="badge ${j.status==='failed'?'red':'neutral'}">${esc(j.status)}</span><button class="button small" data-job="${esc(j.id)}">Inspect log & evidence</button></article>`).join(''):'<p class="notice">No data jobs in this service. Catalog counts describe a separate saved workspace.</p>';
+    $('#job-list').innerHTML=jobs.length?jobs.map(j=>`<article class="job-row"><div><strong>${j.kind==='prepare-instances'?'Prepare instances':'Original source'} · ${esc(j.record_id)}</strong><small>${esc(j.root)}</small>${j.output?`<small>Prepared output: ${esc(j.output)}</small>`:''}<small>${esc(j.created_at)}</small>${j.error?`<p class="notice">${esc(j.error)}</p>`:''}</div><span class="badge ${j.status==='failed'?'red':'neutral'}">${esc(jobLabel(j))}</span><button class="button small" data-job="${esc(j.id)}">Inspect log & evidence</button></article>`).join(''):'<p class="notice">No data jobs in this service. Catalog counts describe a separate saved workspace.</p>';
   }
   async function loadLog(id) {
     selectedJob=id;const result=await api(`/api/log?id=${encodeURIComponent(id)}`);
     evidence={job:snapshot.jobs.find(j=>j.id===id),...result};
     $('#job-detail').hidden=false;$('#job-log').textContent=result.log||'No execution log yet.';
+    const report=result.reports['task-package-report.json'];
+    $('#job-result').hidden=!report;
+    $('#job-result').textContent=report?.status==='validated'?`Checked ${report.plots} scenes and ${report.points.toLocaleString()} points against the preparation contract. ${report.unmatched_split_rows} published partition entries remain unmatched. This checks prepared data, not annotation completeness or geographic independence.`:report?'Historical preparation report; independent contract validation was not recorded.':'';
   }
   function controls(connected) {
     document.querySelectorAll('#inspect-form input, #inspect-form select, #inspect-form button, #record-preview input, #record-preview button, #prepare-form input, #prepare-form button').forEach(el=>{el.disabled=!connected;});
@@ -31,9 +38,9 @@
   }
   function catalogMode() {
     token=null;controls(false);
-    $('#service-status').textContent='Original downloads · service offline';
+    $('#service-status').textContent='Whole-archive service offline';
     $('#job-list').textContent='Jobs and destination paths stay on the service host.';
-    message('The public site provides source discovery and provider links. To download verified originals into a chosen directory, run the local service described in the repository README. FOR-instance preparation is available through that service; other adapters remain TBD.');
+    message('You can retrieve and prepare a reviewed FOR-instance plot above without a local service. Whole-archive acquisition and preparation into a directory use the optional local service described in the README. Other source adapters remain TBD.');
   }
   async function refresh() {
     if(refreshing)return;

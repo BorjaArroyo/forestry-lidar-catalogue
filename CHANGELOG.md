@@ -1,5 +1,56 @@
 # Changelog
 
+## Browser acceptance and publication
+
+- Verified direct Zenodo intake and preparation of the complete RMIT test plot
+  through native Firefox UI.
+- Verified a complete second source schema in CULS: 1,816,672 points, treeSP
+  preserved, eight exported NPZ files identical to the audited native reference.
+- Retained explicit limits: two of five native schemas, no full-archive checksum
+  or scientific generalization claim.
+
+
+## Selective FOR-instance ZIP intake
+
+- Added local ZIP and bounded provider-range inputs to the existing plot preparer.
+- Verified the complete RMIT test plot directly from Zenodo using 8 requests and
+  3,659,162 transferred bytes; native validation and NPZ reference checks passed.
+- Added offline ZIP64/Deflate/Deflate64-literal, corruption, traversal and range
+  bounds regressions against the exact vendored ZIP library.
+- Whole-archive checksum verification is explicitly outside this selection scope.
+
+
+## Browser plot preparation
+
+- Replaced the active Linux-emulator inspection panel with a fixed Pyodide worker,
+  bounded LAS preparation, OPFS storage and incremental ZIP64 export.
+- Added explicit selection manifests without weakening complete-release validation.
+- Verified one complete 357,435-point plot in Firefox and native Python; both NPZ
+  payloads are byte-identical. Full archive intake and broader browser admission
+  remain work in progress.
+
+
+## End-to-end preparation validation
+
+- Require independent contract validation before a preparation job completes,
+  preserving a validation-report hash and visible workflow phases.
+- Cover HTTP fixture download, extraction, preparation, validation and unchanged
+  resume; reject output corruption even after the producer exits successfully.
+- Serve the published container assets through the local service while refusing
+  private job files outside the publication manifest.
+- Correct the unsupported browser throughput extrapolation and record the
+  pinned WASI runtime's missing preparation dependencies with bounded evidence.
+
+## Task-package contract and reader
+
+- Formalize the existing FOR-instance 1.0 manifest with JSON Schema 2020-12.
+- Add an independent prepared-array validator and bounded scene reader, preserving
+  int64 identities, native records, source-scoped labels and published partitions.
+- Test output corruption, reference masks, coordinate precision, scene identity,
+  chunk continuity and agreement with the curated graph contract.
+- Keep the audited producer and its hashes unchanged; browser preparation and
+  FGI-EMIT admission remain separate work.
+
 Notable changes to the catalogue, the knowledge graph and its validation
 contracts. The graph's `schema_version` gates structural migrations; presentation
 and tooling changes are listed here without a version bump. Follows

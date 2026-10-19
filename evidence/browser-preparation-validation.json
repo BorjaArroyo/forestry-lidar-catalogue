@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-19",
+  "status": "passed",
+  "scope": "One complete original RMIT/test.las, Firefox 157 on macOS; no full-release or large-archive admission",
+  "source_sha256": "693c109e19738ecf780523694aa21ea300aea92763f07bbd2b3970b02c03ca00",
+  "source_size_bytes": 12153263,
+  "points": 357435,
+  "chunks": 2,
+  "zip_size_bytes": 24324161,
+  "zip_sha256": "1042d4ccd543c64ecb19db81b7a8ac88be3617aa657dd0a1e9b8306123dad9c3",
+  "browser_run": {
+    "status": "validated",
+    "coverage": "one-complete-selected-plot",
+    "report": {
+      "status": "validated",
+      "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+      "coverage": "explicit-selection",
+      "pipeline": "for-instance-plot-instances:1.0.0",
+      "plots": 1,
+      "points": 357435,
+      "chunks": 2,
+      "manifest_sha256": "38397020f5851167eabcdcdb6c94a25b727d85da8e4a42264f5d1773d19c794f",
+      "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+      "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+      "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+    },
+    "runtime": {
+      "pyodide": "314.0.7",
+      "python": "3.14.2",
+      "numpy": "2.4.6",
+      "laspy": "2.7.0",
+      "zip_js": "2.20.0"
+    },
+    "runtime_lock_sha256": "3b286aabdde535daba28f64f62cdfefe4f991d916aab2578ca0e232c9abd4e91",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:157.0) Gecko/20100101 Firefox/157.0",
+    "source_sha256": "693c109e19738ecf780523694aa21ea300aea92763f07bbd2b3970b02c03ca00",
+    "limitations": [
+      "Selected LAS verified; provider ZIP not downloaded or reverified in this run",
+      "No claim of annotation correctness or geographic independence",
+      "OPFS is temporary browser storage; export the ZIP before clearing it"
+    ]
+  },
+  "native_validation": {
+    "status": "validated",
+    "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+    "coverage": "explicit-selection",
+    "pipeline": "for-instance-plot-instances:1.0.0",
+    "plots": 1,
+    "points": 357435,
+    "chunks": 2,
+    "manifest_sha256": "38397020f5851167eabcdcdb6c94a25b727d85da8e4a42264f5d1773d19c794f",
+    "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+    "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+    "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+  },
+  "array_comparisons": [
+    {
+      "path": "plots/8287792-f563eb02e6248cd34655/00000.npz",
+      "points": 250000,
+      "arrays_equal": [
+        "instance",
+        "instance_valid",
+        "native_class",
+        "original_points",
+        "xyz"
+      ],
+      "npz_bytes_identical": true
+    },
+    {
+      "path": "plots/8287792-f563eb02e6248cd34655/00001.npz",
+      "points": 107435,
+      "arrays_equal": [
+        "instance",
+        "instance_valid",
+        "native_class",
+        "original_points",
+        "xyz"
+      ],
+      "npz_bytes_identical": true
+    }
+  ],
+  "test_method": "A local acceptance page supplied the unchanged public LAS as a File. The actual browser worker wrote OPFS chunks and ZIP; a test-only loopback capture saved that output for native validation. OS file picker and save dialog automation were not completed.",
+  "limitations": [
+    "Not all 32 plots or all five native schemas were run in Firefox",
+    "No full-archive provider download, ZIP intake, LAZ support or processing resume after page close",
+    "No peak-memory or throughput benchmark",
+    "Browser environment differs from pinned native NumPy; equality checked on this complete plot only"
+  ],
+  "regression_checks": {
+    "python_tests": 90,
+    "result": "passed",
+    "includes": [
+      "83 catalogue, service, selection and contract tests",
+      "7 unchanged audited producer tests",
+      "Node small-asset verifier checks",
+      "JavaScript syntax, publication hashes and local runtime pins"
+    ]
+  },
+  "application_artifacts": {
+    "browser-prepare/kernel.py": "5d6f0ab294b09684f943fe0abf59121b37fa61dd25c99c9d13f8eff08431b20e",
+    "browser-prepare/worker.js": "70397b56c99fafc4bc9e9a756d037366f1abd5b7525c86dd387a23262a011a4a",
+    "browser-prepare/ui.js": "8d7e43fe1661bf3322689fe9f427b3aa607eb1581b91ea5d10ce0435a16eb9b1",
+    "browser-prepare/runtime-lock.json": "3b286aabdde535daba28f64f62cdfefe4f991d916aab2578ca0e232c9abd4e91",
+    "scripts/task_package.py": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+    "task-package.schema.json": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+    "tests/test_browser_preparation.py": "e9999877afd3e336898e6df3898235082c24963d2cf7cc050425400c06864147"
+  },
+  "integrated_ui_acceptance": {
+    "browser": "Codex in-app Chromium browser",
+    "local_file_chooser": "passed with complete RMIT/test.las",
+    "preparation": "357435 points, 2 blocks; independent validation passed",
+    "zip_download": "passed; CRC and NPZ SHA256 verified in saved ZIP",
+    "same_tab_reload_recovery": "passed; download link restored",
+    "scope": "Integrated production page on loopback; Firefox processing acceptance is recorded separately above"
+  }
+}

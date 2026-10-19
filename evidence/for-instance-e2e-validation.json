@@ -1,0 +1,47 @@
+{
+  "evidence_version": "1.0.0",
+  "reviewed_at": "2026-10-19",
+  "status": "succeeded",
+  "scope": "Offline HTTP integration with native LAS fixtures; not a new Zenodo or browser-preparation run",
+  "source_profile": "FOR-instance 1.0 fixture profile, not a new admitted release",
+  "producer_package_sha256_unchanged": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a",
+  "fixture": {
+    "scenes": 2,
+    "points": 18,
+    "archive_format": "ZIP",
+    "provider": "Temporary localhost HTTP server"
+  },
+  "checks": [
+    "Real service HTTP session token, submission and evidence endpoints exercised",
+    "Actual HTTP fixture download, checksum verification and ZIP extraction",
+    "Unchanged producer executed in a subprocess against the verified download",
+    "Independent validator read all prepared fixture blocks before job completion",
+    "Validation report SHA256 recorded in the job and report returned by API",
+    "Workflow phases recorded: starting, downloading, preparing, validating, completed",
+    "Resume made no second provider request and did not rewrite the prepared chunk",
+    "A changed reference mask with an updated block checksum after producer success prevented completion",
+    "Published LAS/Python container assets served by HTTP; private job JSON refused as a static file"
+  ],
+  "tests": {
+    "service_integration": 13,
+    "task_package": 16,
+    "producer": 7,
+    "knowledge_model": 28,
+    "catalog_content": 4,
+    "admission_reviews": 5,
+    "total": 73
+  },
+  "artifacts": {
+    "scripts/serve_knowledge_hub.py": "8b3d5aaba496768451cd1dd0e4a4f99c9a463b7fa633f37a3455657daadd9fe3",
+    "tests/test_knowledge_hub_service.py": "92b680f553df3a38155cc27417db45e0e197a81983105ae125702a6bddef1b48",
+    "scripts/task_package.py": "e0b265598896865c4133da00ec84c6a509ec37df90ace5b390fa3423a9e6e173",
+    "task-package.schema.json": "b4095ed71593b26f2ab72833315d179075e6d04445e9adb0817c99a69d9e93d3",
+    "workbench.js": "5153b560072a883b7f4e5ac903c9b3b320c1d80d3aecfb6c8cf27ac6882f9318",
+    "index.html": "b334918063f5e90b8f9bfff268961d80f190817cd0bfcba59cfd040e96952864"
+  },
+  "limitations": [
+    "The provider boundary is replaced by loopback and worker launch is synchronous in the fixture; detached worker startup has a separate regression",
+    "The public browser runtime still lacks preparation dependencies",
+    "No new full validation of 151478959 prepared points or geographic/annotation certification is claimed"
+  ]
+}

@@ -1,6 +1,11 @@
-# Browser container feasibility experiment
+# Historical browser container feasibility experiment
 
-The experimental section embedded in the catalogue's Download & prepare view (assets under `container-lab/`) executes a fixed, read-only LAS
+This experiment is no longer loaded by the workbench. The active bounded
+plot-preparation path is documented in [BROWSER-PREPARATION.md](BROWSER-PREPARATION.md).
+The runtime, fixtures and evidence below are retained as historical reproducibility
+material; they do not describe the current browser preparation environment.
+
+The previous experimental section in the catalogue's Download & prepare view (assets under `container-lab/`) executes a fixed, read-only LAS
 inspection operation inside a Python/Linux/x86-64 container converted upstream
 by container2wasm. The emulator is Bochs compiled to WASI. Browser JavaScript
 provides WASI file descriptors and a Web Worker; Python performs the LAS parsing.
@@ -81,13 +86,22 @@ locally and contains no provider data.
 The public GitHub Pages route executed the real FOR-instance subset in Firefox:
 the exported evidence matched the pinned native reference field for field
 (identical report, operation and input hashes, runtime bytes as pinned) and
-measured 21 s for 20,000 points inside the emulated container. That measured
-rate also quantifies the boundary: a whole-source coordinate scan of the
-151,478,959-point archive would take on the order of two days of browser
-computation, before any transformation, so whole-source browser preparation
-is out of scope on evidence, not assumption. Remaining manual check: a
-bounded provider download through the section's asset picker with its
-verification message and save-to-disk export. Multisource preprocessing and
-dataset transformations still require the local service path and their own
-admission review; this prototype does not make public-site local-directory
-forms operational.
+reported about 21 s total elapsed time for 20,000 points. That timer includes
+runtime loading, hashing, compilation and guest startup, so it is not a point
+processing rate and cannot justify a two-day full-source extrapolation. Whole
+source browser preparation remains unverified. Measure cold/warm loading,
+compilation, guest startup and actual processing separately across several
+input sizes before making a scalability claim.
+
+A bounded Node WASI probe of the same pinned runtime found none of the current
+preparation/validation dependencies: NumPy, laspy, filelock or jsonschema. Guest
+startup plus the probe took about 12.4 s in that host run; this is not a Firefox
+benchmark or a per-point measurement. The runtime therefore cannot execute the
+existing audited package as supplied. A reproducible runtime containing the
+pinned dependencies and native/browser output-equivalence checks is required.
+See [the bounded probe evidence](evidence/browser-runtime-dependencies.json).
+
+Remaining manual check: a bounded provider download through the section's asset
+picker with its verification message and save-to-disk export. Dataset
+transformations still use the admitted local service path; this prototype does
+not make public-site local-directory forms operational.

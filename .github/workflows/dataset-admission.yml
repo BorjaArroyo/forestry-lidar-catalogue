@@ -18,7 +18,7 @@ jobs:
           # On pull_request, compare against the merge base; on push, against the previous commit.
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
-          python3 scripts/test_catalog_reviews.py
+          python3 tests/test_catalog_reviews.py
           git show "$BASE_SHA:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
           python3 scripts/validate_catalog_reviews.py --base "$RUNNER_TEMP/base-catalog.json"
           python3 - <<'PYTHON'
@@ -37,8 +37,15 @@ jobs:
           python3 tests/test_knowledge_hub_service.py
           python3 tests/test_pinned_sources.py
           python3 scripts/for_instance/test_pipeline.py
+          python3 tests/test_task_package.py
+          python3 tests/test_browser_preparation.py
           python3 tests/test_browser_container.py
           node tests/test_container_lab_js.mjs
+          node --test tests/test_browser_intake.mjs
+          node --check browser-prepare/intake.js
+          node --check browser-prepare/worker.js
+          node --check browser-prepare/ui.js
+          node --check browser-prepare/download-ui.js
           node --check container-lab/worker.js
           node --check container-lab/ui.js
           node --check app.js

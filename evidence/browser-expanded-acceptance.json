@@ -1,0 +1,134 @@
+{
+  "date": "2026-10-19",
+  "status": "passed",
+  "scope": "Expanded acceptance: native Firefox direct-Zenodo RMIT workflow, plus a second complete native schema in Chromium with independent native output validation",
+  "firefox": {
+    "status": "passed",
+    "browser": "Native Firefox on macOS",
+    "input": "Zenodo byte ranges",
+    "plot": "RMIT/test.las",
+    "validated_points": 357435,
+    "validated_chunks": 2,
+    "verification": "Observed successful source verification, independent browser validation and ZIP generation through native Firefox UI",
+    "scope": "Saved ZIP native validation was not repeated in this Firefox run; earlier reference equivalence is recorded separately"
+  },
+  "culs": {
+    "browser_run": {
+      "status": "validated",
+      "coverage": "one-complete-selected-plot",
+      "report": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "for-instance-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 1816672,
+        "chunks": 8,
+        "manifest_sha256": "0d6b13f5a0430f378102ca56e2b8378695d86b0b3dfd1bdccae85ef5d0542f33",
+        "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+        "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+        "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+      },
+      "runtime": {
+        "pyodide": "314.0.7",
+        "python": "3.14.2",
+        "numpy": "2.4.6",
+        "laspy": "2.7.0",
+        "zip_js": "2.20.0"
+      },
+      "runtime_lock_sha256": "a8cb75beb0c086fd8fed2f628510c145486a03e197756a7b43e789e50fefa77a",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "source_sha256": "ac25839859856f3b2a27609696efb48a2a1feb6c3fe8630e7d0ec66de14c8b97",
+      "intake": {
+        "kind": "zenodo-ranges",
+        "archive_member": "CULS/plot_1_annotated.las",
+        "compression_method": 8,
+        "extracted_size_bytes": 61767583,
+        "archive_entries": 44,
+        "crc32_checked": true,
+        "archive_verification": "Selected LAS only; whole-archive checksum not checked",
+        "requests": 23,
+        "bytes_received": 19615280
+      },
+      "limitations": [
+        "Selected LAS verified; whole-provider-archive checksum not checked in this run",
+        "No claim of annotation correctness or geographic independence",
+        "OPFS is temporary browser storage; export the ZIP before clearing it"
+      ]
+    },
+    "native_validation": {
+      "status": "validated",
+      "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+      "coverage": "explicit-selection",
+      "pipeline": "for-instance-plot-instances:1.0.0",
+      "plots": 1,
+      "points": 1816672,
+      "chunks": 8,
+      "manifest_sha256": "0d6b13f5a0430f378102ca56e2b8378695d86b0b3dfd1bdccae85ef5d0542f33",
+      "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+      "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+      "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+    },
+    "native_schema_ref": "536c605fd02e9007593e",
+    "additional_native_dimension": "treeSP",
+    "reference": "Existing audited native-prepared CULS scene; all eight reference NPZ payload hashes were rechecked",
+    "reference_comparisons": [
+      {
+        "path": "plots/8287792-3961f2ad683305e56c38/00000.npz",
+        "points": 250000,
+        "npz_bytes_identical": true
+      },
+      {
+        "path": "plots/8287792-3961f2ad683305e56c38/00001.npz",
+        "points": 250000,
+        "npz_bytes_identical": true
+      },
+      {
+        "path": "plots/8287792-3961f2ad683305e56c38/00002.npz",
+        "points": 250000,
+        "npz_bytes_identical": true
+      },
+      {
+        "path": "plots/8287792-3961f2ad683305e56c38/00003.npz",
+        "points": 250000,
+        "npz_bytes_identical": true
+      },
+      {
+        "path": "plots/8287792-3961f2ad683305e56c38/00004.npz",
+        "points": 250000,
+        "npz_bytes_identical": true
+      },
+      {
+        "path": "plots/8287792-3961f2ad683305e56c38/00005.npz",
+        "points": 250000,
+        "npz_bytes_identical": true
+      },
+      {
+        "path": "plots/8287792-3961f2ad683305e56c38/00006.npz",
+        "points": 250000,
+        "npz_bytes_identical": true
+      },
+      {
+        "path": "plots/8287792-3961f2ad683305e56c38/00007.npz",
+        "points": 66672,
+        "npz_bytes_identical": true
+      }
+    ],
+    "zip_sha256": "bce756f29b1981467a68bb906441f0196c31532914750a0e3afcfce430fe30c9",
+    "zip_size_bytes": 123565065
+  },
+  "limitations": [
+    "Two complete plots and two of five native schemas covered; remaining plots and schemas not admitted by these tests",
+    "No whole-provider-archive checksum verification in selective runs",
+    "No annotation-quality, geographic-independence or benchmark-reproduction certification",
+    "No browser peak-memory or throughput benchmark"
+  ],
+  "implementation_artifacts": {
+    "browser-prepare/worker.js": "f648d926c898a1103126bfcda27c4fae92bc4c8b3b6750b0f7b38d0e870ce722",
+    "browser-prepare/intake.js": "03f6e2c83bbd07cb962c7717e58f0b2b7dc0efefb7ad53cc7521d1fbba28b755",
+    "browser-prepare/kernel.py": "5d6f0ab294b09684f943fe0abf59121b37fa61dd25c99c9d13f8eff08431b20e",
+    "browser-prepare/runtime-lock.json": "a8cb75beb0c086fd8fed2f628510c145486a03e197756a7b43e789e50fefa77a",
+    "scripts/task_package.py": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+    "task-package.schema.json": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e"
+  }
+}

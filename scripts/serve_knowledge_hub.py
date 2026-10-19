@@ -228,7 +228,7 @@ def job_path(jid):
 
 def worker(folder):
     job = read(folder / 'job.json')
-    job.update(status='running',pid=os.getpid(),started_at=now())
+    job.update(status='running',phase='starting',pid=os.getpid(),started_at=now())
     save(folder / 'job.json', job)
     try:
         root = Path(job['root'])
@@ -241,6 +241,7 @@ def worker(folder):
             state_root = folder.parents[2]
             command = [sys.executable,str(REPO/'scripts/acquire_lidar.py'),'--inventory',str(folder/'inventory.json'),
                        '--root',str(root),'--stage',str(state_root/('canopy-stage-'+hashlib.sha256(str(root).encode()).hexdigest()[:16])),'--resume']
+            job['phase'] = 'downloading'
             job['command'] = command
             save(folder/'job.json',job)
             subprocess.run(command,check=True)
@@ -249,16 +250,22 @@ def worker(folder):
             if status['package_sha256'] != job['package_sha256']:
                 raise ValueError('Pipeline changed after submission; inspect before resuming')
             command = [sys.executable,str(INSTANCE_PACKAGE/'prepare.py'),'--input',str(root),'--output',job['output']]
+            job['phase'] = 'preparing'
             job['preparation_command'] = command
             save(folder/'job.json',job)
             subprocess.run(command,check=True)
-            package = read(Path(job['output'])/'task-package.json')
-            save(folder/'task-package-report.json', {'pipeline':package['pipeline'],
-                 'package_sha256':package['package_sha256'], 'plots':len(package['scenes']),
-                 'points':sum(s['points'] for s in package['scenes']),
-                 'unmatched_split_rows':len(package['unmatched_split_rows']),
-                 'geographic_independence':package['geographic_independence']})
+            job['phase'] = 'validating'
+            save(folder/'job.json',job)
+            from task_package import TaskPackage
+            prepared = TaskPackage(Path(job['output']), profile=INSTANCE_PACKAGE)
+            report = prepared.validate()
+            package = prepared.manifest
+            report.update(unmatched_split_rows=len(package['unmatched_split_rows']),
+                          geographic_independence=package['geographic_independence'])
+            save(folder/'task-package-report.json', report)
+            job['validation_report_sha256'] = sha(folder/'task-package-report.json')
         job['status'] = 'completed'
+        job['phase'] = 'completed'
     except Exception as exc:
         job.update(status='failed',error=str(exc))
         print(f'FAILED: {exc}',flush=True)
@@ -313,7 +320,11 @@ class Handler(SimpleHTTPRequestHandler):
             # Serve only the public application, never job files or repository paths.
             relative = Path(parsed.path.lstrip('/') or 'index.html')
             path = (WEB/relative).resolve()
-            if not path.is_relative_to(WEB) or not path.is_file() or path.suffix not in {'.html','.js','.css','.json','.jpg'}:
+            public_files = read(WEB/'publication-manifest.json')['files']
+            if not path.is_relative_to(WEB) or not path.is_file():
+                return self.send_json({'error':'Not found'},404)
+            name = path.relative_to(WEB).as_posix()
+            if name not in public_files and name != 'publication-manifest.json':
                 return self.send_json({'error':'Not found'},404)
             if path.name == 'index.html':
                 raw = path.read_bytes().replace(b'window.CANOPY_PUBLIC = true;', b'window.CANOPY_PUBLIC = false;')

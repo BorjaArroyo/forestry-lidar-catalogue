@@ -1,0 +1,42 @@
+{
+  "evidence_version": "1.0.0",
+  "reviewed_at": "2026-10-19",
+  "status": "succeeded",
+  "scope": "Complete manifest/profile validation plus one real prepared block; not a new full-payload audit",
+  "full_prepared_payload_validation": false,
+  "contract": "contract:for-instance-plot-instances:1.0.0",
+  "producer_pipeline": "for-instance-plot-instances:1.0.0",
+  "producer_package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a",
+  "manifest_sha256": "236a1b3d6e64092f3d3ba749e7f40e46b6171ea6f05778161e24769c2932e68b",
+  "manifest_matches_previous_full_validation": true,
+  "metadata_scenes": 32,
+  "points_declared_in_manifest": 151478959,
+  "sample": {
+    "scene_id": "8287792-3961f2ad683305e56c38",
+    "chunk_path": "plots/8287792-3961f2ad683305e56c38/00000.npz",
+    "chunk_sha256": "1faf052ea39e0c44bd6c5db1d09eb6ca04cbc1a38319c31e0438b974a748c893",
+    "row_offset": 0,
+    "points_read": 250000,
+    "xyz_dtype": "float64",
+    "instance_dtype": "int64",
+    "read_only_arrays": true
+  },
+  "artifacts": {
+    "task-package.schema.json": "b4095ed71593b26f2ab72833315d179075e6d04445e9adb0817c99a69d9e93d3",
+    "scripts/task_package.py": "e0b265598896865c4133da00ec84c6a509ec37df90ace5b390fa3423a9e6e173",
+    "tests/test_task_package.py": "5ebde01650db923077540e6a83b84d34dbfa0d21c8f382e09fa4ba64b5081119"
+  },
+  "checks": [
+    "Closed manifest schema and complete reviewed source membership",
+    "Source, package and reference-policy pins unchanged",
+    "Real block hash and binary array types/shapes verified",
+    "Real XYZ and reference masks reconstructed independently from native records",
+    "Native structured records and int64 instance IDs retained by reader",
+    "16 contract tests and 55 existing regression tests passed"
+  ],
+  "limitations": [
+    "Real-data reading is bounded to the declared 250000-point block; complete validation was exercised on native LAS fixtures",
+    "Prepared-array consistency does not independently certify raw-source native attribute equivalence, annotation completeness, geographic independence or article-specific scoring",
+    "Browser preparation and FGI-EMIT task admission are not provided by this increment"
+  ]
+}

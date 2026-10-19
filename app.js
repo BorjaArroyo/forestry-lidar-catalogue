@@ -100,7 +100,7 @@
     const downloading=state.view==='workbench';
     $('#breadcrumb-view').textContent=downloading?'Download & prepare':'Sources';
     $('.page-heading h1').textContent=downloading?'Download and prepare instance data.':'Find a source for tree segmentation.';
-    $('.page-heading p').textContent=downloading?'Retrieve pinned originals or prepare the reviewed FOR-instance archive in a chosen directory.':'Compare reference coverage and limitations. FOR-instance archive preparation is validated; other adapters remain work in progress.';
+    $('.page-heading p').textContent=downloading?'Choose a reviewed FOR-instance plot from Zenodo, a local ZIP or a LAS, and prepare a verified package.':'Compare reference coverage and limitations. FOR-instance archive preparation is validated; other adapters remain work in progress.';
     $$('.nav-item').forEach(b=>{b.classList.toggle('active',b.dataset.view===state.view);b.setAttribute('aria-current',b.dataset.view===state.view?'page':'false');});
     $$('.view').forEach(el=>el.hidden=el.id!==`view-${state.view}`);
   }
