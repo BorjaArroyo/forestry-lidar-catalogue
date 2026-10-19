@@ -1,0 +1,106 @@
+{
+  "dataset_id": "16742708",
+  "dataset_sha256": "6bdc2146132d138eb6d3bbd97cccad773137622678bd558606b118fab5b6a056",
+  "decision": "admitted",
+  "reviewed_by": "Mistral Vibe automated technical analysis; no independent human scientific review is claimed",
+  "reviewed_at": "2026-10-19",
+  "proposal_url": "https://zenodo.org/records/16742708",
+  "scope": "Previously catalogued record 16742708 (FOR-instance V2): admit the published catalog view and its evidence-backed native class vocabulary (semantic_seg: 1 terrain, 2 wood, 3 foliage; treeID for instances) only. The record is a superset that includes descendants of FOR-instance V1 collections plus additional BlueCat and MLS acquisitions; shared captures mean it is not an independent sample. No preparation, adapter, pipeline or benchmark is admitted.",
+  "limitations": "Editorial admission of the record view only. No payload download or full-payload reread, no annotation certification, no adapter, no site-out claim. Capture ancestry with FOR-instance V1 remains unresolved and must be reconciled before pooled use or independent-zone evaluation. GPL-3.0-or-later is the provider declaration, not an intended-use determination.",
+  "analysis": {
+    "provenance": {
+      "finding": "Pinned Zenodo record and the official ForestFormer3D implementation define the native namespace: semantic_seg 1 terrain, 2 wood, 3 foliage, with treeID for instances. The release includes descendants of earlier FOR-instance collections and additional acquisitions, including BlueCat and MLS.",
+      "evidence": [
+        "knowledge-model.json",
+        "catalog.json",
+        "https://zenodo.org/records/16742708",
+        "https://github.com/SmartForest-no/ForestFormer3D"
+      ]
+    },
+    "rights": {
+      "finding": "Provider-declared GPL-3.0-or-later is recorded with attribution links. This is not a general intended-use or component-rights determination.",
+      "evidence": [
+        "knowledge-model.json",
+        "https://zenodo.org/records/16742708"
+      ]
+    },
+    "integrity": {
+      "finding": "Saved audit metadata describes 94 PLY files and 613,942,843 points with one observed schema (x, y, z, semantic_seg, treeID). Pinned provider file names, sizes and checksums were verified unchanged against provider metadata on 2026-10-19; no payload download or read-back was performed for this editorial admission.",
+      "evidence": [
+        "catalog.json",
+        "docs/lidar-acquisition-inventory.json",
+        "https://zenodo.org/records/16742708"
+      ]
+    },
+    "schema": {
+      "finding": "One observed native schema across 94 PLY files; no CRS is recorded in the saved audit. The class vocabulary is now declared as source-scoped data (class_semantics) evidence-linked to the provider code; these class IDs do not define a catalog-wide ontology.",
+      "evidence": [
+        "knowledge-model.json",
+        "catalog.json",
+        "https://github.com/SmartForest-no/ForestFormer3D"
+      ]
+    },
+    "coverage": {
+      "finding": "94 scenes across the published train/validation/test releases; scene count is not independent-site count. Official split identifiers are retained as metadata; no new split is asserted.",
+      "evidence": [
+        "catalog.json",
+        "https://zenodo.org/records/16742708"
+      ]
+    },
+    "duplicates": {
+      "finding": "Shared capture ancestry with FOR-instance V1 is recorded and unresolved. As a superset, overlap with V1 must be reconciled before pooled use; no deduplication or independence claim is made.",
+      "evidence": [
+        "knowledge-model.json",
+        "catalog.json",
+        "https://zenodo.org/records/16742708"
+      ]
+    }
+  },
+  "tasks": {
+    "instances": {
+      "status": "conditional",
+      "rationale": "Native treeID instance reference and class vocabulary are recorded from the provider code; plot coverage, boundary rules, adapter and experiment protocol remain conditions.",
+      "evidence": [
+        "knowledge-model.json",
+        "catalog.json",
+        "https://github.com/SmartForest-no/ForestFormer3D"
+      ]
+    },
+    "components": {
+      "status": "conditional",
+      "rationale": "semantic_seg provides terrain, wood and foliage labels; granularity and crosswalk losses remain task-specific and no coarse ontology mapping is asserted.",
+      "evidence": [
+        "knowledge-model.json",
+        "https://github.com/SmartForest-no/ForestFormer3D"
+      ]
+    },
+    "geometry": {
+      "status": "unknown",
+      "rationale": "Outside this editorial record admission; no geometry diagnostics or accuracy claims are asserted.",
+      "evidence": [
+        "knowledge-model.json"
+      ]
+    },
+    "species": {
+      "status": "unknown",
+      "rationale": "No species reference is documented in the saved audit; this is not proof that none exists.",
+      "evidence": [
+        "knowledge-model.json"
+      ]
+    },
+    "spectral": {
+      "status": "unknown",
+      "rationale": "No spectral reference is documented in the saved audit; this is not proof that none exists.",
+      "evidence": [
+        "knowledge-model.json"
+      ]
+    },
+    "biomass": {
+      "status": "unknown",
+      "rationale": "No biomass reference is documented in the saved audit; this is not proof that none exists.",
+      "evidence": [
+        "knowledge-model.json"
+      ]
+    }
+  }
+}
