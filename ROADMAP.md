@@ -1,21 +1,26 @@
-# Instance-segmentation MVP gates
+# Instance-segmentation MVP
 
-The current product covers discovery, source comparison and verified original
-downloads. The complete task-ready preparation workflow is **not finished**.
+## FOR-instance v1: validated narrow path
 
-1. Complete the FOR-instance source audit: actual archive membership, full label
-   ranges and conflicts, annotation coverage, coordinates and published split.
-2. Resolve task masks from primary evidence. Preserve unknown reference, native
-   fields and originals; do not mistake unlabeled small trees for known background.
-3. Implement one self-contained, versioned FOR-instance adapter with pinned
-   inputs, code, configuration and environment. Validate the complete combination
-   on Ray, including recovery and output integrity.
-4. Demonstrate the user path from source selection to task-ready files in the
-   chosen directory. Keep preparation TBD until that path passes validation.
-5. Record capture/site lineage and model exposure before claiming performance
-   in other zones. An official dev/test split alone is insufficient evidence.
+Source discovery and comparison lead to a pinned Zenodo download and a local,
+self-contained preparation for the 32 LAS plots in that archive. Native rows and
+attributes, conservative reference masks, source/output checksums and exact
+published dev/test assignments are retained. Existing matching outputs resume.
+The 50 absent NIBIO2 partition entries remain explicit; they are not invented.
+Full input and output validation is pinned to the exact implementation/package.
 
-New sources require the admission review in CONTRIBUTING.md. Broader tasks,
-graph exploration, article audits, benchmarks and image-registry integration are
-deferred. Their experimental code and existing narrow validation evidence are
-archived; they are not available operations in this product build.
+## Remaining scientific and coverage work
+
+1. Resolve the archive's missing NIBIO2 scope with upstream evidence before
+   claiming coverage of all 82 partition rows.
+2. Reconcile physical captures shared with FOR-instance V2 and define site/campaign
+   groups before selecting geographically independent evaluation zones.
+3. Review annotation completeness, boundary treatment, vertical datum and model
+   exposure for each intended experiment. The preparation mask is conservative,
+   not a reproduced article evaluator or independent accuracy claim.
+4. Admit each additional source/adapter only after the same source-specific
+   analysis, self-contained package and validation process. Other adapters stay TBD.
+
+Broader tasks, graph exploration, article audits, benchmarks, geometric curation
+and image-registry integration remain deferred. Their old experimental code is
+archived and is not reactivated by this pipeline.

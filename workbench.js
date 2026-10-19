@@ -1,4 +1,4 @@
-/* Explicit original-source downloads; task preparation is not available yet. */
+/* Pinned originals and the audited FOR-instance preparation run on the service host. */
 (() => {
   'use strict';
   const $ = s => document.querySelector(s);
@@ -16,7 +16,7 @@
     const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
   function renderJobs(jobs) {
-    $('#job-list').innerHTML=jobs.length?jobs.map(j=>`<article class="job-row"><div><strong>Original source · ${esc(j.record_id)}</strong><small>${esc(j.root)}</small><small>${esc(j.created_at)}</small>${j.error?`<p class="notice">${esc(j.error)}</p>`:''}</div><span class="badge ${j.status==='failed'?'red':'neutral'}">${esc(j.status)}</span><button class="button small" data-job="${esc(j.id)}">Inspect log & evidence</button></article>`).join(''):'<p class="notice">No original-download jobs in this service. Catalog counts describe a separate saved workspace.</p>';
+    $('#job-list').innerHTML=jobs.length?jobs.map(j=>`<article class="job-row"><div><strong>${j.kind==='prepare-instances'?'Prepare instances':'Original source'} · ${esc(j.record_id)}</strong><small>${esc(j.root)}</small>${j.output?`<small>Prepared output: ${esc(j.output)}</small>`:''}<small>${esc(j.created_at)}</small>${j.error?`<p class="notice">${esc(j.error)}</p>`:''}</div><span class="badge ${j.status==='failed'?'red':'neutral'}">${esc(j.status)}</span><button class="button small" data-job="${esc(j.id)}">Inspect log & evidence</button></article>`).join(''):'<p class="notice">No data jobs in this service. Catalog counts describe a separate saved workspace.</p>';
   }
   async function loadLog(id) {
     selectedJob=id;const result=await api(`/api/log?id=${encodeURIComponent(id)}`);
@@ -24,15 +24,16 @@
     $('#job-detail').hidden=false;$('#job-log').textContent=result.log||'No execution log yet.';
   }
   function controls(connected) {
-    document.querySelectorAll('#inspect-form input, #inspect-form select, #inspect-form button, #record-preview input, #record-preview button').forEach(el=>{el.disabled=!connected;});
+    document.querySelectorAll('#inspect-form input, #inspect-form select, #inspect-form button, #record-preview input, #record-preview button, #prepare-form input, #prepare-form button').forEach(el=>{el.disabled=!connected;});
     $('#refresh-jobs').disabled=!connected;
+    document.querySelectorAll('#prepare-form input, #prepare-form button').forEach(el=>{el.disabled=!connected||!snapshot?.preparation?.available;});
     document.dispatchEvent(new CustomEvent('canopy-service-state',{detail:{connected}}));
   }
   function catalogMode() {
     token=null;controls(false);
     $('#service-status').textContent='Original downloads · service offline';
     $('#job-list').textContent='Jobs and destination paths stay on the service host.';
-    message('The public site provides source discovery and provider links. To download verified originals into a chosen directory, run the local service described in the repository README. Task preparation remains TBD.');
+    message('The public site provides source discovery and provider links. To download verified originals into a chosen directory, run the local service described in the repository README. FOR-instance preparation is available through that service; other adapters remain TBD.');
   }
   async function refresh() {
     if(refreshing)return;
@@ -40,7 +41,8 @@
     refreshing=true;
     try {
       snapshot=await api('/api/state');token=snapshot.token;
-      $('#service-status').textContent='Local download service connected';controls(true);renderJobs(snapshot.jobs);
+      $('#service-status').textContent='Local data service connected';controls(true);renderJobs(snapshot.jobs);
+      $('#preparation-status').textContent=snapshot.preparation?.available?'Validated on all 32 archive plots. Runs locally; no Ray required.':(snapshot.preparation?.detail||'Preparation unavailable');
       if(selectedJob)await loadLog(selectedJob);
     } catch(e){catalogMode();}
     finally{refreshing=false;}
@@ -51,7 +53,7 @@
     try {
       record=await api('/api/inspect',{record:$('#zenodo-record').value});
       const bytes=record.files.reduce((n,f)=>n+f.size_bytes,0);
-      $('#record-preview').innerHTML=`<h4>${esc(record.title)}</h4><p>${record.files.length} assets · ${(bytes/1e9).toFixed(2)} GB compressed · ${esc(record.license_declared?.id || 'License not declared')}</p><details><summary>Pinned assets and provider checksums</summary><ul>${record.files.map(f=>`<li>${esc(f.name)} · ${esc(f.provider_checksum)}</li>`).join('')}</ul></details><p class="evidence-tag">Downloads include all record assets. Extraction needs additional space. Only ZIP archives are expanded. Published checksums verify transfer integrity; they do not certify annotation correctness.</p><label>Destination directory on the service host<input id="download-root" required placeholder="/absolute/path/to/new-record-directory"></label><button class="button" id="download-start">Download / resume verified originals</button>`;
+      $('#record-preview').innerHTML=`<h4>${esc(record.title)}</h4><p>${record.files.length} assets · ${(bytes/1e9).toFixed(2)} GB compressed · ${esc(record.license_declared?.id || 'License not declared')}</p><details><summary>Pinned assets and provider checksums</summary><ul>${record.files.map(f=>`<li>${esc(f.name)} · ${esc(f.provider_checksum)}</li>`).join('')}</ul></details><p class="evidence-tag">Downloads include all record assets. Extraction needs additional space. Only ZIP archives are expanded. Published checksums verify transfer integrity; they do not certify annotation correctness.</p><label>Destination directory on the service host<input id="download-root" required placeholder="/absolute/path/to/new-record-directory"></label>${record.record_id===8287792&&snapshot?.preparation?.available?'<label><input id="prepare-after" type="checkbox"> Prepare instance data after download</label><label>Separate prepared-output directory<input id="prepare-output" placeholder="/absolute/path/to/new-instance-package"></label><p class="evidence-tag">32 plots in this archive; 50 NIBIO2 partition entries are absent. Unknown points are retained with a reference mask. No new geographic split.</p>':''}<button class="button" id="download-start">Download / resume selected workflow</button>`;
       $('#record-preview').scrollIntoView({block:'start'});
     } catch(err){$('#record-preview').textContent=err.message;}
   });
@@ -62,11 +64,23 @@
         if(!token)throw new Error('The local download service is not connected');
         button.disabled=true;
         try {
-          const result=await api('/api/jobs',{kind:'acquire',record_id:record.record_id,root:$('#download-root').value});
+          const body={kind:'acquire',record_id:record.record_id,root:$('#download-root').value};
+          if($('#prepare-after')?.checked){
+            if(!$('#prepare-output').value.trim())throw new Error('Choose a separate prepared-output directory');
+            body.prepare_output=$('#prepare-output').value;
+          }
+          const result=await api('/api/jobs',body);
           selectedJob=result.id;message('Download started. Originals, checkpoints and verification logs are retained.');await refresh();
         } finally {button.disabled=!token;}
       }
       if(button.dataset.job)await loadLog(button.dataset.job);
+    } catch(err){message(err.message);}
+  });
+  $('#prepare-form').addEventListener('submit',async e=>{
+    e.preventDefault();
+    try {
+      const result=await api('/api/jobs',{kind:'prepare-instances',record_id:8287792,root:$('#prepare-input').value,output:$('#prepare-destination').value});
+      selectedJob=result.id;message('FOR-instance preparation started locally. Originals remain unchanged.');await refresh();
     } catch(err){message(err.message);}
   });
   $('#refresh-jobs').addEventListener('click',refresh);

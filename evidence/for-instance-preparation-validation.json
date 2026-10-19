@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0.0",
+  "reviewed_at": "2026-10-19",
+  "status": "succeeded",
+  "pipeline": "for-instance-plot-instances:1.0.0",
+  "implementation_sha256": "b7ddc8ef8c9b8ebc53a5b896bc2633eb7c6928e5b68e7b49b9b0b48f96c89f04",
+  "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a",
+  "source_archive_sha256": "a1dfe3b8dab377a5a7cb74af47a6a6e0bef6664ae202c72112948d77ff97e1af",
+  "source_provider_checksum": "md5:01fd03ba4068648e21fb4591fbff34c4",
+  "plots": 32,
+  "points": 151478959,
+  "chunks": 623,
+  "native_schemas": 5,
+  "reference_counts": {
+    "unknown_points": 81335662,
+    "background_points": 7733592,
+    "tree_points": 62409705
+  },
+  "published_splits": {
+    "dev": 21,
+    "test": 11
+  },
+  "unmatched_split_rows": 50,
+  "output_manifest_sha256": "236a1b3d6e64092f3d3ba749e7f40e46b6171ea6f05778161e24769c2932e68b",
+  "output_bytes": 10914385792,
+  "input_retry_count": 0,
+  "execution": "Local Python process; fresh Zenodo acquisition, verified extraction, staged input checks and output read-back; no Ray or Kubernetes",
+  "environment": {
+    "python": "3.11.11",
+    "system": "Darwin",
+    "architecture": "arm64",
+    "laspy": "2.7.0",
+    "numpy": "2.2.6",
+    "filelock": "4.0.12"
+  },
+  "checks": [
+    "Pinned provider checksum and archive SHA256 matched",
+    "39 extracted source files matched the reviewed acquisition",
+    "All 32 LAS files matched reviewed size and SHA256",
+    "All point rows and native structured fields retained exactly",
+    "Float64 XYZ and native classification rechecked from original records",
+    "Conservative instance arrays and validity masks rechecked from original records",
+    "Each NPZ reloaded without pickle and hashed",
+    "All complete source point/class counts matched the prior full audit",
+    "All source dev/test assignments retained; 50 absent NIBIO2 rows reported",
+    "Completed package independently reverified by the CLI",
+    "Web-submitted local worker completed verification of all 32 prepared plots"
+  ],
+  "limitations": [
+    "Technical validation of this exact archive and conservative policy, not annotation certification",
+    "No independent-zone or article-specific scoring claim",
+    "The separate WebDAV attempt encountered transient input inconsistencies and was stopped; the mounted service is not certified by this local run"
+  ]
+}

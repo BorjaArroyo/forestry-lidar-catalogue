@@ -251,3 +251,6 @@ dialog{padding:18px}
 .source-filters .select-label select{font-size:11px}
 .source-detail p,.source-detail li{font-size:13px}
 }
+
+.work-card input[type=checkbox]{display:inline-block;width:auto;margin:0 8px 0 0}
+.source-status.preparation-ready{background:#e0efe4;color:#28553c}

@@ -1,0 +1,1693 @@
+{
+  "record_id": 8287792,
+  "download_sha256": "a1dfe3b8dab377a5a7cb74af47a6a6e0bef6664ae202c72112948d77ff97e1af",
+  "provider_checksum": "md5:01fd03ba4068648e21fb4591fbff34c4",
+  "files": {
+    "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las": {
+      "sha256": "ac25839859856f3b2a27609696efb48a2a1feb6c3fe8630e7d0ec66de14c8b97",
+      "size_bytes": 61767583
+    },
+    "sources/8287792/originals/FORinstance_dataset/CULS/plot_2_annotated.las": {
+      "sha256": "109cfc06a89d212741494c19ec410eba22dc544ba661d3883986187dceeac50c",
+      "size_bytes": 134168067
+    },
+    "sources/8287792/originals/FORinstance_dataset/CULS/plot_3_annotated.las": {
+      "sha256": "c9ae170025ea88fc5a6c4c557830298503fb575e51d4a5eb40cd118fb92585aa",
+      "size_bytes": 104887879
+    },
+    "sources/8287792/originals/FORinstance_dataset/CULS/tree_data_CULS.csv": {
+      "sha256": "1f0204c536fb07b6362f5c6222fb38e9defcc53349156cbd9aaaf6943904101a",
+      "size_bytes": 685
+    },
+    "sources/8287792/originals/FORinstance_dataset/data_split_metadata.csv": {
+      "sha256": "dd64aa338681f8f4166f8d175879a2b0b0158ecf222497ec6f7f0b23bc4fce94",
+      "size_bytes": 3219
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_10_annotated.las": {
+      "sha256": "4ece2e386bcdc41da3fbd77c65551535e015e66d91b9595af977b905c23becf7",
+      "size_bytes": 170788485
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_11_annotated.las": {
+      "sha256": "ab995964efc8cd9da8efc39f574da8c3b341765c7ab6ce4e6c40698c427f4499",
+      "size_bytes": 229500663
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_12_annotated.las": {
+      "sha256": "64f03731a41c595163c026f7c1e5c6a8c21b9eb6130c77e03bec740ae9d3e4a9",
+      "size_bytes": 283183251
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_13_annotated.las": {
+      "sha256": "6ee7dabf6a4b48f38600f6f071d18ff2b7e86d57ecee9c7ffffc2fc233704423",
+      "size_bytes": 241401147
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_16_annotated.las": {
+      "sha256": "65b41d22a029aa8ad063825605b16dc28e38619b38d85c71e0a6a0b074825174",
+      "size_bytes": 196571787
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_17_annotated.las": {
+      "sha256": "c24dbcf7be191d512fb4a25d4310d31334cfc407e17b187488710e19ad0ffd54",
+      "size_bytes": 248044983
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_18_annotated.las": {
+      "sha256": "72467ab3c1ac800d1e37e8796d24959f630d172c303296cd0c93a2e16595b847",
+      "size_bytes": 248944983
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_19_annotated.las": {
+      "sha256": "10b7bd4cbcf46a5de5b3dd0673ccb53db413517ac2303e9d7fcd5f6fdeffd6aa",
+      "size_bytes": 254229315
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_1_annotated.las": {
+      "sha256": "ea26fcc304104bccb8bdc72c73127ea327342bbf9658d6b05f7fb888d46666a1",
+      "size_bytes": 210030051
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_21_annotated.las": {
+      "sha256": "3f47ecd982a33cf60166b5d776326f7f454b6697cd06323aa92e628feb62ff03",
+      "size_bytes": 210487803
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_22_annotated.las": {
+      "sha256": "963aae2279e2adbf6d4abb0912fbd965dc7a16d5a96b0c53b7dab811c0933822",
+      "size_bytes": 229198587
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_23_annotated.las": {
+      "sha256": "df2ddf60590a375657c463ad7d59b6a847801c9d478703c82e594cbf3616913e",
+      "size_bytes": 221882307
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_2_annotated.las": {
+      "sha256": "35553ba6f8ba643f1b50c41c66bd9769fe3c970d40b39bb4aa2b17c919fd4445",
+      "size_bytes": 211158675
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_3_annotated.las": {
+      "sha256": "b29a00463a1f4c2a14ebca12cfc20a4f53497c5aa769e378504401dd3908c29b",
+      "size_bytes": 222702459
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_4_annotated.las": {
+      "sha256": "13e71dbb152bfbe9a139c78e24009346e0cc776f292aaf0d9d64f56d2aae010a",
+      "size_bytes": 242024349
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_5_annotated.las": {
+      "sha256": "3c43cb2ccc793c89e2948ba36d36e7919f32cb957d348136da9efe518ad8de7c",
+      "size_bytes": 219393237
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_6_annotated.las": {
+      "sha256": "bc1dfd47e5e03225d01a766b05134244b2e73aeaae3e930bdd416eebabb41388",
+      "size_bytes": 191157771
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_7_annotated.las": {
+      "sha256": "3ce47370f425a378dcfdec76c213610b6bb5b595258476e58de9073a0a9e4ace",
+      "size_bytes": 207641091
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_8_annotated.las": {
+      "sha256": "bf1b938f0707794d466f1574222b0027d578499510abbf0f3a02ceaeca0e9026",
+      "size_bytes": 221338299
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_9_annotated.las": {
+      "sha256": "dd796afed442707363ca7b2ea00cecec5de0023a71b670b3545f1d09058a20ae",
+      "size_bytes": 218207157
+    },
+    "sources/8287792/originals/FORinstance_dataset/NIBIO/tree_data_NIBIO.csv": {
+      "sha256": "315484d677b1c80811f9de4c7fb585fa25daf75f8ec0730fabe6d4a6af1042ee",
+      "size_bytes": 5212
+    },
+    "sources/8287792/originals/FORinstance_dataset/readMe.txt": {
+      "sha256": "33cbd505abb29f65ea7a91d8f1a6356eaf40062f87232147b3a1424585cdef3c",
+      "size_bytes": 1657
+    },
+    "sources/8287792/originals/FORinstance_dataset/RMIT/test.las": {
+      "sha256": "693c109e19738ecf780523694aa21ea300aea92763f07bbd2b3970b02c03ca00",
+      "size_bytes": 12153263
+    },
+    "sources/8287792/originals/FORinstance_dataset/RMIT/train.las": {
+      "sha256": "ae5afc37d5ad5a1aa0edc924e482f665f35d1d1206c665f916758460a724b06a",
+      "size_bytes": 50429545
+    },
+    "sources/8287792/originals/FORinstance_dataset/RMIT/tree_data_RMIT.csv": {
+      "sha256": "5f8cdd699f2dca5f88885b4a96306f76e844c08f0f10ee34c8224db341cbde4c",
+      "size_bytes": 1025
+    },
+    "sources/8287792/originals/FORinstance_dataset/SCION/plot_31_annotated.las": {
+      "sha256": "f6a6e9d8b243d7f240df916abafabed21f23bf594d3bc552f15851d0da78d972",
+      "size_bytes": 101236993
+    },
+    "sources/8287792/originals/FORinstance_dataset/SCION/plot_35_annotated.las": {
+      "sha256": "1ce5a2560e158b49080e5d61952a8cf8e58b7d12963046566d854540b34a4363",
+      "size_bytes": 108265507
+    },
+    "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las": {
+      "sha256": "1bccec15bc1557a15fa9a15d9ed0151f536540c1fbcf3ae5ab95274793fcb640",
+      "size_bytes": 64079787
+    },
+    "sources/8287792/originals/FORinstance_dataset/SCION/plot_61_annotated.las": {
+      "sha256": "13721d7121db86fe1bdcc010ea64c4013950f6a8cc587473a2529ae7340e42d1",
+      "size_bytes": 122035371
+    },
+    "sources/8287792/originals/FORinstance_dataset/SCION/plot_87_annotated.las": {
+      "sha256": "85499b2447be3105479cfad85650c5105da7afefd2e83af1d6d96b53de70a0b4",
+      "size_bytes": 112584833
+    },
+    "sources/8287792/originals/FORinstance_dataset/SCION/tree_data_SCION.csv": {
+      "sha256": "f9dc6c9d402e14ba41a37d8bdf4e6ec91446536650fb2c04a99de371464a3eda",
+      "size_bytes": 1772
+    },
+    "sources/8287792/originals/FORinstance_dataset/TUWIEN/test.las": {
+      "sha256": "e78b32400163088e0c301eb55d5be0cb54aa2c5d10c1a52ad3e9daf7d2717dc6",
+      "size_bytes": 95762531
+    },
+    "sources/8287792/originals/FORinstance_dataset/TUWIEN/train.las": {
+      "sha256": "9395980682dd05af61baae5c7380307e68f11eae99a18b45bbb0aa71cbed6ca9",
+      "size_bytes": 317891921
+    },
+    "sources/8287792/originals/FORinstance_dataset/TUWIEN/tree_data_TUWIEN.csv": {
+      "sha256": "8b541b82831952d4e82f16dd823cb988dc1147aafd37b99cc52762f4bb59eddc",
+      "size_bytes": 1761
+    }
+  },
+  "plots": [
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+      "sha256": "ac25839859856f3b2a27609696efb48a2a1feb6c3fe8630e7d0ec66de14c8b97",
+      "size_bytes": 61767583,
+      "points": 1816672,
+      "class_counts": [
+        0,
+        0,
+        1110745,
+        326760,
+        37067,
+        333152,
+        8948
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        480599.0,
+        5601162.0,
+        0.0
+      ],
+      "crs": "EPSG:25833"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/CULS/plot_2_annotated.las",
+      "sha256": "109cfc06a89d212741494c19ec410eba22dc544ba661d3883986187dceeac50c",
+      "size_bytes": 134168067,
+      "points": 3946098,
+      "class_counts": [
+        0,
+        0,
+        1327324,
+        1366012,
+        74702,
+        1118547,
+        59513
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        480600.0,
+        5601204.0,
+        0.0
+      ],
+      "crs": "EPSG:25833"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/CULS/plot_3_annotated.las",
+      "sha256": "c9ae170025ea88fc5a6c4c557830298503fb575e51d4a5eb40cd118fb92585aa",
+      "size_bytes": 104887879,
+      "points": 3084916,
+      "class_counts": [
+        0,
+        0,
+        1177324,
+        862096,
+        74877,
+        922420,
+        48199
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        480609.0,
+        5601255.0,
+        0.0
+      ],
+      "crs": "EPSG:25833"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_10_annotated.las",
+      "sha256": "4ece2e386bcdc41da3fbd77c65551535e015e66d91b9595af977b905c23becf7",
+      "size_bytes": 170788485,
+      "points": 4066375,
+      "class_counts": [
+        1,
+        843729,
+        21333,
+        1641822,
+        91710,
+        1420489,
+        47291
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599095.0,
+        6655167.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_11_annotated.las",
+      "sha256": "ab995964efc8cd9da8efc39f574da8c3b341765c7ab6ce4e6c40698c427f4499",
+      "size_bytes": 229500663,
+      "points": 6374998,
+      "class_counts": [
+        48,
+        865708,
+        68003,
+        2473115,
+        235474,
+        2569552,
+        163098
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599141.0,
+        6655582.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_12_annotated.las",
+      "sha256": "64f03731a41c595163c026f7c1e5c6a8c21b9eb6130c77e03bec740ae9d3e4a9",
+      "size_bytes": 283183251,
+      "points": 7866181,
+      "class_counts": [
+        2600,
+        992431,
+        32303,
+        3785688,
+        239406,
+        2664109,
+        149644
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599141.0,
+        6655605.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_13_annotated.las",
+      "sha256": "6ee7dabf6a4b48f38600f6f071d18ff2b7e86d57ecee9c7ffffc2fc233704423",
+      "size_bytes": 241401147,
+      "points": 6705567,
+      "class_counts": [
+        1296,
+        758490,
+        57574,
+        3638064,
+        200970,
+        1901473,
+        147700
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599143.0,
+        6655629.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_16_annotated.las",
+      "sha256": "65b41d22a029aa8ad063825605b16dc28e38619b38d85c71e0a6a0b074825174",
+      "size_bytes": 196571787,
+      "points": 5460307,
+      "class_counts": [
+        62,
+        696845,
+        40367,
+        2591773,
+        191333,
+        1769312,
+        170615
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599168.0,
+        6655527.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_17_annotated.las",
+      "sha256": "c24dbcf7be191d512fb4a25d4310d31334cfc407e17b187488710e19ad0ffd54",
+      "size_bytes": 248044983,
+      "points": 6890118,
+      "class_counts": [
+        2381,
+        780829,
+        50299,
+        3446411,
+        281358,
+        2174901,
+        153939
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599169.0,
+        6655554.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_18_annotated.las",
+      "sha256": "72467ab3c1ac800d1e37e8796d24959f630d172c303296cd0c93a2e16595b847",
+      "size_bytes": 248944983,
+      "points": 6915118,
+      "class_counts": [
+        0,
+        1115073,
+        46756,
+        3688517,
+        235139,
+        1681110,
+        148523
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599168.0,
+        6655573.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_19_annotated.las",
+      "sha256": "10b7bd4cbcf46a5de5b3dd0673ccb53db413517ac2303e9d7fcd5f6fdeffd6aa",
+      "size_bytes": 254229315,
+      "points": 7061905,
+      "class_counts": [
+        815,
+        927231,
+        60312,
+        3926261,
+        240312,
+        1770350,
+        136624
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599167.0,
+        6655598.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_1_annotated.las",
+      "sha256": "ea26fcc304104bccb8bdc72c73127ea327342bbf9658d6b05f7fb888d46666a1",
+      "size_bytes": 210030051,
+      "points": 5000698,
+      "class_counts": [
+        0,
+        537794,
+        16796,
+        2096197,
+        168738,
+        2067483,
+        113690
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599066.0,
+        6655080.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_21_annotated.las",
+      "sha256": "3f47ecd982a33cf60166b5d776326f7f454b6697cd06323aa92e628feb62ff03",
+      "size_bytes": 210487803,
+      "points": 5846863,
+      "class_counts": [
+        0,
+        824634,
+        42850,
+        2835198,
+        191192,
+        1801670,
+        151319
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599191.0,
+        6655529.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_22_annotated.las",
+      "sha256": "963aae2279e2adbf6d4abb0912fbd965dc7a16d5a96b0c53b7dab811c0933822",
+      "size_bytes": 229198587,
+      "points": 6366607,
+      "class_counts": [
+        46,
+        961603,
+        57677,
+        3112896,
+        201094,
+        1863182,
+        170109
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599190.0,
+        6655552.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_23_annotated.las",
+      "sha256": "df2ddf60590a375657c463ad7d59b6a847801c9d478703c82e594cbf3616913e",
+      "size_bytes": 221882307,
+      "points": 6163377,
+      "class_counts": [
+        889,
+        909626,
+        64064,
+        2924016,
+        213148,
+        1913456,
+        138178
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599191.0,
+        6655576.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_2_annotated.las",
+      "sha256": "35553ba6f8ba643f1b50c41c66bd9769fe3c970d40b39bb4aa2b17c919fd4445",
+      "size_bytes": 211158675,
+      "points": 5027570,
+      "class_counts": [
+        0,
+        578436,
+        19120,
+        1977184,
+        149605,
+        2166319,
+        136906
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599072.0,
+        6655102.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_3_annotated.las",
+      "sha256": "b29a00463a1f4c2a14ebca12cfc20a4f53497c5aa769e378504401dd3908c29b",
+      "size_bytes": 222702459,
+      "points": 5302422,
+      "class_counts": [
+        0,
+        786144,
+        18067,
+        2197442,
+        170343,
+        2027761,
+        102665
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599070.0,
+        6655123.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_4_annotated.las",
+      "sha256": "13e71dbb152bfbe9a139c78e24009346e0cc776f292aaf0d9d64f56d2aae010a",
+      "size_bytes": 242024349,
+      "points": 5762467,
+      "class_counts": [
+        0,
+        874287,
+        17730,
+        2699488,
+        168232,
+        1915151,
+        87579
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599069.0,
+        6655152.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_5_annotated.las",
+      "sha256": "3c43cb2ccc793c89e2948ba36d36e7919f32cb957d348136da9efe518ad8de7c",
+      "size_bytes": 219393237,
+      "points": 5223631,
+      "class_counts": [
+        0,
+        1093049,
+        20502,
+        2289441,
+        146435,
+        1607624,
+        66580
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599071.0,
+        6655168.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_6_annotated.las",
+      "sha256": "bc1dfd47e5e03225d01a766b05134244b2e73aeaae3e930bdd416eebabb41388",
+      "size_bytes": 191157771,
+      "points": 4551358,
+      "class_counts": [
+        360,
+        574036,
+        19233,
+        2341155,
+        108129,
+        1461403,
+        47042
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599090.0,
+        6655066.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_7_annotated.las",
+      "sha256": "3ce47370f425a378dcfdec76c213610b6bb5b595258476e58de9073a0a9e4ace",
+      "size_bytes": 207641091,
+      "points": 4943818,
+      "class_counts": [
+        272,
+        737297,
+        18775,
+        2598262,
+        104609,
+        1398215,
+        86388
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599092.0,
+        6655094.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_8_annotated.las",
+      "sha256": "bf1b938f0707794d466f1574222b0027d578499510abbf0f3a02ceaeca0e9026",
+      "size_bytes": 221338299,
+      "points": 5269942,
+      "class_counts": [
+        0,
+        792556,
+        19913,
+        2327215,
+        133785,
+        1894249,
+        102224
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599094.0,
+        6655117.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/NIBIO/plot_9_annotated.las",
+      "sha256": "dd796afed442707363ca7b2ea00cecec5de0023a71b670b3545f1d09058a20ae",
+      "size_bytes": 218207157,
+      "points": 5195391,
+      "class_counts": [
+        0,
+        729917,
+        18401,
+        2681930,
+        96100,
+        1613067,
+        55976
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        599092.0,
+        6655139.0,
+        0.0
+      ],
+      "crs": "EPSG:25832"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/RMIT/test.las",
+      "sha256": "693c109e19738ecf780523694aa21ea300aea92763f07bbd2b3970b02c03ca00",
+      "size_bytes": 12153263,
+      "points": 357435,
+      "class_counts": [
+        0,
+        20952,
+        132882,
+        24840,
+        21043,
+        145023,
+        12695
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        524188.0,
+        5248490.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+      "sha256": "ae5afc37d5ad5a1aa0edc924e482f665f35d1d1206c665f916758460a724b06a",
+      "size_bytes": 50429545,
+      "points": 1483208,
+      "class_counts": [
+        0,
+        67243,
+        615630,
+        114381,
+        64007,
+        558579,
+        63368
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        524188.0,
+        5248490.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/SCION/plot_31_annotated.las",
+      "sha256": "f6a6e9d8b243d7f240df916abafabed21f23bf594d3bc552f15851d0da78d972",
+      "size_bytes": 101236993,
+      "points": 2977537,
+      "class_counts": [
+        0,
+        88694,
+        213509,
+        646987,
+        67519,
+        1819399,
+        141429
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886428.0,
+        5771787.0,
+        0.0
+      ],
+      "crs": "EPSG:2193"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/SCION/plot_35_annotated.las",
+      "sha256": "1ce5a2560e158b49080e5d61952a8cf8e58b7d12963046566d854540b34a4363",
+      "size_bytes": 108265507,
+      "points": 3184258,
+      "class_counts": [
+        0,
+        87396,
+        161183,
+        774180,
+        50163,
+        1879490,
+        231846
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886470.0,
+        5771814.0,
+        0.0
+      ],
+      "crs": "EPSG:2193"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las",
+      "sha256": "1bccec15bc1557a15fa9a15d9ed0151f536540c1fbcf3ae5ab95274793fcb640",
+      "size_bytes": 64079787,
+      "points": 1884678,
+      "class_counts": [
+        0,
+        74065,
+        183248,
+        308542,
+        56835,
+        1132957,
+        129031
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886524.0,
+        5771870.0,
+        0.0
+      ],
+      "crs": "EPSG:2193"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/SCION/plot_61_annotated.las",
+      "sha256": "13721d7121db86fe1bdcc010ea64c4013950f6a8cc587473a2529ae7340e42d1",
+      "size_bytes": 122035371,
+      "points": 3589254,
+      "class_counts": [
+        0,
+        126499,
+        149876,
+        1209318,
+        63482,
+        1892318,
+        147761
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886468.0,
+        5771775.0,
+        0.0
+      ],
+      "crs": "EPSG:2193"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/SCION/plot_87_annotated.las",
+      "sha256": "85499b2447be3105479cfad85650c5105da7afefd2e83af1d6d96b53de70a0b4",
+      "size_bytes": 112584833,
+      "points": 3311297,
+      "class_counts": [
+        0,
+        152789,
+        240503,
+        706757,
+        73749,
+        1996986,
+        140513
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        1886461.0,
+        5771731.0,
+        0.0
+      ],
+      "crs": "EPSG:2193"
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/TUWIEN/test.las",
+      "sha256": "e78b32400163088e0c301eb55d5be0cb54aa2c5d10c1a52ad3e9daf7d2717dc6",
+      "size_bytes": 95762531,
+      "points": 2280049,
+      "class_counts": [
+        0,
+        38052,
+        420329,
+        685970,
+        37334,
+        1029878,
+        68486
+      ],
+      "published_split": "test",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        527668.0,
+        5340143.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/TUWIEN/train.las",
+      "sha256": "9395980682dd05af61baae5c7380307e68f11eae99a18b45bbb0aa71cbed6ca9",
+      "size_bytes": 317891921,
+      "points": 7568844,
+      "class_counts": [
+        0,
+        63104,
+        1290964,
+        1631853,
+        211357,
+        3828436,
+        543130
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        527693.0,
+        5340127.0,
+        0.0
+      ],
+      "crs": null
+    }
+  ],
+  "split_rows": [
+    {
+      "path": "CULS/plot_1_annotated.las",
+      "folder": "CULS",
+      "split": "dev"
+    },
+    {
+      "path": "CULS/plot_2_annotated.las",
+      "folder": "CULS",
+      "split": "test"
+    },
+    {
+      "path": "CULS/plot_3_annotated.las",
+      "folder": "CULS",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_1_annotated.las",
+      "folder": "NIBIO",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO/plot_10_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_11_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_12_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_13_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_16_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_17_annotated.las",
+      "folder": "NIBIO",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO/plot_18_annotated.las",
+      "folder": "NIBIO",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO/plot_19_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_2_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_21_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_22_annotated.las",
+      "folder": "NIBIO",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO/plot_23_annotated.las",
+      "folder": "NIBIO",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO/plot_3_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_4_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_5_annotated.las",
+      "folder": "NIBIO",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO/plot_6_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_7_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_8_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO/plot_9_annotated.las",
+      "folder": "NIBIO",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot1_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot10_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot12_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot13_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot14_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot15_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot16_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot2_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot20_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot21_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot22_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot23_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot24_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot25_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot26_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot27_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot28_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot3_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot31_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot32_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot33_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot34_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot35_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot38_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot39_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot40_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot41_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot42_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot43_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot44_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot45_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot46_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot47_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot48_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot49_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot50_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot51_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot52_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot53_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot54_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot55_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot56_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot57_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot58_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot59_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot6_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot60_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot61_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot8_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot9_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "RMIT/test.las",
+      "folder": "RMIT",
+      "split": "test"
+    },
+    {
+      "path": "RMIT/train.las",
+      "folder": "RMIT",
+      "split": "dev"
+    },
+    {
+      "path": "SCION/plot_31_annotated.las",
+      "folder": "SCION",
+      "split": "test"
+    },
+    {
+      "path": "SCION/plot_35_annotated.las",
+      "folder": "SCION",
+      "split": "dev"
+    },
+    {
+      "path": "SCION/plot_39_annotated.las",
+      "folder": "SCION",
+      "split": "dev"
+    },
+    {
+      "path": "SCION/plot_61_annotated.las",
+      "folder": "SCION",
+      "split": "test"
+    },
+    {
+      "path": "SCION/plot_87_annotated.las",
+      "folder": "SCION",
+      "split": "dev"
+    },
+    {
+      "path": "TUWIEN/test.las",
+      "folder": "TUWIEN",
+      "split": "test"
+    },
+    {
+      "path": "TUWIEN/train.las",
+      "folder": "TUWIEN",
+      "split": "dev"
+    }
+  ],
+  "unmatched_split_rows": [
+    {
+      "path": "NIBIO2/plot1_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot10_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot12_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot13_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot14_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot15_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot16_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot2_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot20_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot21_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot22_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot23_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot24_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot25_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot26_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot27_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot28_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot3_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot31_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot32_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot33_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot34_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot35_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot38_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot39_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot40_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot41_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot42_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot43_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot44_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot45_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot46_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot47_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot48_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot49_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot50_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot51_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot52_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot53_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot54_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot55_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot56_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot57_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot58_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot59_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot6_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot60_annotated.las",
+      "folder": "NIBIO2",
+      "split": "test"
+    },
+    {
+      "path": "NIBIO2/plot61_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot8_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    },
+    {
+      "path": "NIBIO2/plot9_annotated.las",
+      "folder": "NIBIO2",
+      "split": "dev"
+    }
+  ]
+}

@@ -9,9 +9,10 @@ and validation of the affected parts, not a blanket restart of every audit.
 
 ## Current workflow
 
-The current service only acquires pinned records from the reviewed inventory.
+The current service acquires pinned records from the reviewed inventory and
+prepares the FOR-instance v1 archive with its validated adapter.
 It verifies transfer integrity and ZIP extraction and preserves original assets.
-There is no admitted task transformation. The source-specific normalization code
+Other task transformations remain unadmitted. The source-specific normalization code
 and policy remain historical evidence for interpreting existing exports. They
 do not make those outputs ready for instance-segmentation training or scoring.
 
@@ -36,8 +37,10 @@ alone does not grant a new intended use.
 
 ## Current readiness
 
-FOR-instance has versioned contracts and a disabled draft pipeline. Complete
-source and output validation are still required. Earlier TLS duplicate-index
+FOR-instance has versioned contracts and a self-contained local pipeline
+validated across the complete 32-plot archive. Source/output hashes, conservative
+masks, native fields and split membership remain explicit. The 50 absent NIBIO2
+entries prevent a claim of coverage of all 82 partition rows. Earlier TLS duplicate-index
 and frozen Wytham diagnostic packages retain historical validation evidence in
 the archive. Their scope does not admit raw-source task preparation, independent
 accuracy or reproduction of a published score. They are not service operations.

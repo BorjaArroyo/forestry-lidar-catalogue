@@ -8,18 +8,20 @@ Published at https://borjaarroyo.github.io/forestry-lidar-catalogue/.
 ## Current scope
 
 - Ten pinned source records, search, filters, comparison and metadata export.
-- Source labels and task preparation are reported separately. No complete-source
-  instance preparation pipeline is audited yet.
+- Source labels and task preparation are reported separately. FOR-instance has a validated local preparation for all 32 LAS plots present
+  in its pinned archive. Other source adapters remain TBD.
 - The local service downloads all assets of a reviewed record into a chosen
   directory, checks provider checksums, verifies ZIP extraction, preserves
   originals and supports checkpoint-based resume.
 - FOR-instance has [versioned contracts and evidence](FOR-INSTANCE.md).
-  Its task adapter remains a disabled draft. Published dev/test assignments do
-  not establish geographic independence.
+  The adapter preserves native data and published dev/test assignments. Those
+  assignments do not establish geographic independence.
 
-**The end-to-end instance-segmentation MVP is still work in progress.**
-Task-specific asset selection, executable transformation and task-ready outputs
-remain pending. Do not interpret a successful download as semantic validation,
+**The narrow instance-segmentation path is available for FOR-instance v1.**
+Download its pinned archive and prepare the 32 available plots, or reuse an
+existing verified acquisition. The 50 NIBIO2 entries missing from this archive
+remain explicitly reported. Other sources and independent-zone evaluation are
+still work in progress. Do not interpret a successful download as semantic validation,
 scientific admission or a new independent evaluation zone.
 
 ## Run original downloads locally
@@ -37,7 +39,9 @@ In the research checkout, use the existing ingestion environment and
 `scripts/lidar-ingestion-requirements.txt` instead of the public requirements.
 Open http://127.0.0.1:8765/#workbench. Inspect a source, review its assets and
 enter a new absolute destination directory. Only admitted inventory records
-are accepted; this operation does not add new records to the catalog.
+are accepted; this operation does not add new records to the catalog. For FOR-instance, select
+"Prepare instance data after download" and a separate output directory, or use
+the existing-acquisition preparation form. Preparation runs locally, without Ray.
 
 Resume uses the same matching single-record destination and staging directory.
 A nonempty unrelated destination is rejected. Only ZIP assets are expanded.
@@ -49,6 +53,27 @@ The service binds to loopback and is intended for one trusted local user.
 Closing the browser or stopping the HTTP service does not cancel an already
 launched download worker. Job state and logs remain in `temp/canopy-workbench/`.
 They are excluded from publication. Export evidence before removing local state.
+
+## FOR-instance output
+
+The self-contained package in `scripts/for_instance/` includes its entrypoint,
+source lock, exact requirements, mask policy, hashes and offline regression tests.
+It accepts only the reviewed release, preserves all rows, XYZ and native fields,
+and writes NPZ chunks plus `task-package.json`. Unknown-reference points remain
+available for inference; terrain and positive tree IDs have explicit masks. No
+spatial curation, normalization, benchmark score or new geographic split is added.
+
+```bash
+python scripts/for_instance/prepare.py --input /absolute/acquisition --output /absolute/new-instance-package
+```
+
+Failed input reads retry at most three times against unchanged expected hashes.
+Only verified input snapshots are converted. Complete plots are checkpointed;
+matching interrupted outputs resume without rewriting verified plots. Existing
+unrelated destinations, changed package contracts and corrupt outputs are rejected.
+Allow space for lossless outputs (about 11 GB for this release) and the largest
+input snapshot. `evidence/for-instance-preparation-validation.json` records the
+full-source validation scope and implementation/package fingerprints.
 
 ## Evidence and maintenance
 
@@ -88,6 +113,7 @@ python scripts/knowledge_model.py
 python tests/test_knowledge_model.py
 python tests/test_catalog_content.py
 python tests/test_knowledge_hub_service.py
+python scripts/for_instance/test_pipeline.py
 node --check app.js
 node --check workbench.js
 ```

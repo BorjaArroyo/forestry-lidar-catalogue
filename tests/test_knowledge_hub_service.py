@@ -6,6 +6,8 @@ from pathlib import Path
 import tempfile
 import subprocess
 import sys
+import threading
+import time
 import unittest
 from unittest.mock import patch
 REPO = Path(__file__).resolve().parents[1]
@@ -58,7 +60,20 @@ class WorkbenchTests(unittest.TestCase):
         stage.mkdir()
         (stage / '8287792_fixture.txt').write_bytes(payload)
         try:
-            service.worker(folder)
+            import numpy  # Match the threaded service after loading preparation dependencies.
+            errors=[]
+            def launch():
+                try:
+                    service.launch_worker(folder)
+                except Exception as error:
+                    errors.append(error)
+            thread=threading.Thread(target=launch)
+            thread.start();thread.join(timeout=5)
+            self.assertFalse(thread.is_alive())
+            self.assertFalse(errors)
+            deadline=time.monotonic()+5
+            while service.read(folder/'job.json')['status'] in {'queued','running'} and time.monotonic()<deadline:
+                time.sleep(.02)
             self.assertEqual(service.read(folder / 'job.json')['status'], 'completed')
             self.assertFalse(any(stage.iterdir()))
             original = root / 'sources/8287792/originals/fixture.txt'
@@ -83,5 +98,52 @@ class WorkbenchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'another inventory'):
             service.submit({'kind': 'acquire', 'record_id': 8287792, 'root': str(target)})
         self.assertEqual((target / 'inventory.json').read_bytes(), original)
+    def test_preparation_rejects_other_sources_and_overrides(self):
+        for body in [
+            {'kind':'prepare-instances','record_id':16742708,'root':str(self.root),'output':str(self.root/'output')},
+            {'kind':'prepare-instances','record_id':8287792,'root':str(self.root),'output':str(self.root/'output'),'command':['sh']},
+            {'kind':'acquire','record_id':16742708,'root':str(self.root/'source'),'prepare_output':str(self.root/'output')},
+        ]:
+            with self.subTest(body=body), self.assertRaises(ValueError):
+                service.submit(body)
+        self.assertFalse((service.STATE/'jobs').exists() and list((service.STATE/'jobs').glob('*/job.json')))
+
+    def test_pipeline_changes_after_submission_block_the_worker(self):
+        folder=service.STATE/'jobs/preparation-fixture'
+        service.save(folder/'job.json',dict(id='fixture',kind='prepare-instances',root=str(self.root),output=str(self.root/'output'),status='queued',package_sha256='old'))
+        with patch.object(service,'preparation_status',return_value={'package_sha256':'new'}), patch.object(service.subprocess,'run') as run:
+            service.worker(folder)
+            run.assert_not_called()
+        self.assertEqual(service.read(folder/'job.json')['status'],'failed')
+        self.assertFalse((self.root/'output').exists())
+
+    def test_preparation_worker_runs_the_self_contained_offline_package(self):
+        spec=importlib.util.spec_from_file_location('instance_fixture',REPO/'scripts/for_instance/test_pipeline.py')
+        fixture=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(fixture)
+        case=fixture.PipelineTests('test_lossless_fields_masks_splits_and_no_source_mutation')
+        case.setUp()
+        try:
+            fingerprint=fixture.pipeline.package_fingerprint(case.package)
+            folder=service.STATE/'jobs/preparation-fixture'
+            service.save(folder/'job.json',dict(id='fixture',kind='prepare-instances',root=str(case.source),output=str(case.output),status='queued',package_sha256=fingerprint))
+            with patch.object(service,'INSTANCE_PACKAGE',case.package), patch.object(service,'preparation_status',return_value={'package_sha256':fingerprint}):
+                service.worker(folder)
+            self.assertEqual(service.read(folder/'job.json')['status'],'completed')
+            report=service.read(folder/'task-package-report.json')
+            self.assertEqual((report['plots'],report['points'],report['unmatched_split_rows']),(2,18,1))
+        finally:
+            case.tearDown()
+
+    def test_failed_worker_start_is_persisted_instead_of_left_queued(self):
+        folder=service.STATE/'jobs/failed-launch'
+        service.save(folder/'job.json',dict(id='fixture',kind='acquire',status='queued',root=str(self.root)))
+        with patch.object(service.os,'posix_spawn',return_value=123456), patch.object(service.os,'waitpid',return_value=(123456,11)):
+            with self.assertRaisesRegex(ValueError,'exit -11'):
+                service.launch_worker(folder)
+        job=service.read(folder/'job.json')
+        self.assertEqual(job['status'],'failed')
+        self.assertIn('finished_at',job)
+
 if __name__ == '__main__':
     unittest.main()

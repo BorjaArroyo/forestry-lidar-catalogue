@@ -58,6 +58,6 @@ class CatalogContent(unittest.TestCase):
         self.assertEqual(sources['7307956']['instance_reference']['status'], 'trees')
         self.assertFalse(sources['16875688']['preparation']['limited_reference_copy'])
         self.assertEqual(sources['16875688']['preparation']['status'], 'tbd')
-        self.assertFalse(any((d['preparation']['status'] == 'ready' for d in sources.values())))
+        self.assertEqual({rid for rid, d in sources.items() if d['preparation']['status']=='ready'}, {'8287792'})
 if __name__ == '__main__':
     unittest.main()

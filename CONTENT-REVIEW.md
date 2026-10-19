@@ -135,3 +135,15 @@ removed from the UI and callable service. Their code and evidence are archived
 in the research checkout and recoverable from the previous public Git revision.
 New record IDs cannot bypass source admission through the download API.
 FOR-instance preparation stays disabled until its complete adapter is validated.
+
+## FOR-instance archive preparation · 19 October 2026
+
+A complete read-only source audit resolved numeric ID validity and confirmed the
+32-file archive membership. The paper qualifies low vegetation as including
+unannotated small trees. The new conservative adapter retains classes 0/1/3 and
+unassigned tree points as unknown reference, retains terrain as provider
+background, and preserves all native rows and official dev/test assignments.
+Execution admission is scoped to the exact 32-plot pinned archive and is bound
+to complete output verification evidence. It does not recover absent NIBIO2
+files, certify annotations, reproduce an evaluator or establish geographic
+independence. Other source adapters and experimental product areas stay deferred.

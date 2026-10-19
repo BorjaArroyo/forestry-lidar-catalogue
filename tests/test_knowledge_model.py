@@ -88,6 +88,9 @@ class KnowledgeModel(unittest.TestCase):
             shutil.copyfile(WEB / 'evidence/for-instance-v1.json', folder / 'evidence/for-instance-v1.json')
             (folder / 'scripts').mkdir()
             shutil.copyfile(ROOT / 'scripts/harmonize_lidar.py', folder / 'scripts/harmonize_lidar.py')
+            shutil.copytree(ROOT / 'scripts/for_instance', folder / 'scripts/for_instance', ignore=shutil.ignore_patterns('__pycache__'))
+            for source in (WEB / 'evidence').glob('*.json'):
+                shutil.copyfile(source, folder / 'evidence' / source.name)
             before = model.read_json(folder / 'catalog.json')
             model.export_views(folder)
             after = model.read_json(folder / 'catalog.json')
@@ -114,11 +117,11 @@ class KnowledgeModel(unittest.TestCase):
         tree = next(f for f in native['fields'] if f['name'] == 'treeID')
         self.assertEqual(tree['dtypes'], ['int32', 'float64'])
         self.assertEqual({x['code'] for x in native['annotation_codes']}, set(range(7)))
-        pipeline = nodes['pipeline:for-instance-plot-instances:0.1.0']['data']
-        self.assertFalse(pipeline['execution_enabled'])
-        self.assertEqual(pipeline['status'], 'draft')
+        pipeline = nodes['pipeline:for-instance-plot-instances:1.0.0']['data']
+        self.assertTrue(pipeline['execution_enabled'])
+        self.assertEqual(pipeline['status'], 'validated')
         for operation in pipeline['transformation_refs']:
-            self.assertFalse(nodes[operation]['data']['execution_enabled'])
+            self.assertTrue(nodes[operation]['data']['execution_enabled'])
         self.assertNotIn('relation:v1-v2', self.graph['edges'])
 
     def test_for_instance_partition_discrepancy_keeps_its_observation_scope(self):
@@ -137,14 +140,19 @@ class KnowledgeModel(unittest.TestCase):
         self.rejects(lambda g: g['edges'].pop('flow:for-instance-decode-output'))
 
     def test_pipeline_metadata_cannot_skip_contracts_or_enable_execution(self):
-        key = 'pipeline:for-instance-plot-instances:0.1.0'
-        self.rejects(lambda g: g['nodes'][key]['data']['transformation_refs'].reverse())
+        key = 'pipeline:for-instance-plot-instances:1.0.0'
+        self.rejects(lambda g: g['nodes'][key]['data']['transformation_refs'].insert(0, 'transformation:for-instance-existing-normalization:1.0.0'))
         self.graph = model.load()
-        self.rejects(lambda g: g['nodes'][key]['data'].update(execution_enabled=True))
+        self.rejects(lambda g: g['nodes'][key]['data'].pop('validation_ref'))
 
     def test_contract_identity_tracks_the_declared_version(self):
         self.rejects(lambda g: g['nodes']['contract:for-instance-native:1.0.0']['data'].update(version='2.0.0'))
 
+
+    def test_ready_badge_requires_an_enabled_source_specific_pipeline(self):
+        self.rejects(lambda g: g['nodes']['zenodo:16742708']['data']['profile']['discovery']['preparation'].update(status='ready'))
+        self.graph=model.load()
+        self.rejects(lambda g: g['nodes']['transformation:for-instance-task-preparation:1.0.0']['data']['blockers'].append('unresolved'))
 
 if __name__ == '__main__':
     (ROOT / 'temp').mkdir(exist_ok=True)

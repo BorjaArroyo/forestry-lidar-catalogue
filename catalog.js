@@ -470,11 +470,11 @@ window.LIDAR_CATALOG = {
           "label": "Plot-level tree IDs reported"
         },
         "coverage": "Annotated plots from five collections; native classification includes terrain and outside-tree points.",
-        "limitation": "Preserve the official dev/test split and reconcile shared captures with V2.",
+        "limitation": "The archive has 32 plots; 50 NIBIO2 CSV entries are absent. Preserve unknown-reference masks and official dev/test; shared captures with V2 remain unresolved.",
         "preparation": {
-          "status": "tbd",
-          "label": "Task pipeline TBD",
-          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "status": "ready",
+          "label": "Validated 32-plot archive preparation",
+          "detail": "A self-contained local adapter preserves all 32 archive plots, native fields, conservative reference masks and official dev/test. Its full validation covers 151,478,959 points. The 50 absent NIBIO2 CSV rows remain reported; annotation completeness and geographic independence are not certified.",
           "limited_reference_copy": false
         }
       },
@@ -7842,8 +7842,8 @@ window.LIDAR_CATALOG = {
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "model_sha256": "8daf2df9d871745a0b27f01e2b7e5fefd7d2a492026436749bc050a7d281d362",
-    "model_schema_sha256": "5cf0d2d3a74c6a450b49d1f96ae220a29f91a01405eaec5183940123b6e09e25"
+    "model_sha256": "6f711f53bc5c4603d9ffc6bda9c1940fe6b4928c43e752bdd51da026911cd502",
+    "model_schema_sha256": "f4aba1011014d40f3b48732e6a9d7020a16efc39407dcff34b8623fdc10bcc09"
   },
   "evidence": [
     {

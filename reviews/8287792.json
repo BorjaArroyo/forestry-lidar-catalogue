@@ -1,0 +1,128 @@
+{
+  "dataset_id": "8287792",
+  "dataset_sha256": "4e76f83d8503b18f69b4b6b6dadc3457cb4580d7fd872c7c6a76b5fec5c71107",
+  "decision": "admitted",
+  "reviewed_by": "Codex automated technical analysis; no independent human scientific review is claimed",
+  "reviewed_at": "2026-10-19",
+  "proposal_url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/FOR-INSTANCE.md",
+  "scope": "Previously catalogued release 8287792: admit the exact 32-plot archive and local conservative reference preparation only, following the user-authorized existing-source workflow",
+  "limitations": "Not universal scientific admission. No annotation certification, missing NIBIO2 recovery, independent-zone evaluation or reproduction of an article-specific evaluator. Other task adapters remain TBD.",
+  "analysis": {
+    "provenance": {
+      "finding": "Pinned Zenodo record, provider checksum, archive SHA256 and all selected native file hashes are retained.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json",
+        "https://zenodo.org/records/8287792",
+        "https://arxiv.org/pdf/2309.01279"
+      ]
+    },
+    "rights": {
+      "finding": "Provider-declared CC-BY-4.0 is recorded with attribution links. This is not a general intended-use rights determination.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json",
+        "https://zenodo.org/records/8287792",
+        "https://arxiv.org/pdf/2309.01279"
+      ]
+    },
+    "integrity": {
+      "finding": "Fresh local download/extraction and all 32 plots / 151,478,959 points verified; all 623 output chunks passed read-back, native-record checks and SHA256.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json",
+        "https://zenodo.org/records/8287792",
+        "https://arxiv.org/pdf/2309.01279"
+      ]
+    },
+    "schema": {
+      "finding": "Five observed native schemas, int32/float64 treeID, native packed classes and coordinate descriptors are retained; invalid numeric values and class/ID conflicts block execution.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json",
+        "https://zenodo.org/records/8287792",
+        "https://arxiv.org/pdf/2309.01279"
+      ]
+    },
+    "coverage": {
+      "finding": "32 plots in this exact archive, 21 dev and 11 test. Fifty NIBIO2 CSV rows are absent and explicitly reported. Unknown reference retains all points with masks.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json",
+        "https://zenodo.org/records/8287792",
+        "https://arxiv.org/pdf/2309.01279"
+      ]
+    },
+    "duplicates": {
+      "finding": "No deduplication or new independent-site claim. Capture ancestry with FOR-instance V2 remains unresolved and must be reviewed before independent evaluation.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json",
+        "https://zenodo.org/records/8287792",
+        "https://arxiv.org/pdf/2309.01279"
+      ]
+    }
+  },
+  "tasks": {
+    "instances": {
+      "status": "conditional",
+      "rationale": "The conservative instance representation is technically validated for the pinned archive; annotation completeness and experiment protocol remain conditions.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json"
+      ]
+    },
+    "components": {
+      "status": "unknown",
+      "rationale": "Outside this instance-preparation review; no new task admission or adapter is asserted.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json"
+      ]
+    },
+    "species": {
+      "status": "unknown",
+      "rationale": "Outside this instance-preparation review; no new task admission or adapter is asserted.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json"
+      ]
+    },
+    "geometry": {
+      "status": "unknown",
+      "rationale": "Outside this instance-preparation review; no new task admission or adapter is asserted.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json"
+      ]
+    },
+    "spectral": {
+      "status": "unknown",
+      "rationale": "Outside this instance-preparation review; no new task admission or adapter is asserted.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json"
+      ]
+    },
+    "biomass": {
+      "status": "unknown",
+      "rationale": "Outside this instance-preparation review; no new task admission or adapter is asserted.",
+      "evidence": [
+        "FOR-INSTANCE.md",
+        "evidence/for-instance-full-audit-20261018.json",
+        "evidence/for-instance-preparation-validation.json"
+      ]
+    }
+  }
+}

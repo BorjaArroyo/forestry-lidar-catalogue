@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import sys
 import threading
+import time
 from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
@@ -20,6 +21,7 @@ STATE = REPO / 'temp' / 'canopy-workbench'
 TOKEN = secrets.token_urlsafe(32)
 GUARD = threading.Lock()
 ACTIVE = {'queued', 'running', 'cancelling'}
+INSTANCE_PACKAGE = REPO / 'scripts/for_instance'
 
 
 def now():
@@ -69,6 +71,39 @@ def inspect_record(value):
     return record
 
 
+def preparation_status():
+    from for_instance.prepare import package_fingerprint, read
+    from knowledge_model import load
+    model = load(WEB / 'knowledge-model.json')
+    if not model['nodes']['pipeline:for-instance-plot-instances:1.0.0']['data']['execution_enabled']:
+        raise ValueError('FOR-instance preparation is not enabled by the reviewed model')
+    validation = read(WEB / 'evidence/for-instance-preparation-validation.json')
+    fingerprint = package_fingerprint(INSTANCE_PACKAGE)
+    if validation.get('status') != 'succeeded' or validation.get('package_sha256') != fingerprint or validation.get('plots') != 32 or validation.get('points') != 151478959:
+        raise ValueError('FOR-instance preparation has not passed complete-source validation')
+    return {'record_id':8287792, 'pipeline':'for-instance-plot-instances:1.0.0',
+            'package_sha256':fingerprint, 'scope':'32 archive plots; 50 NIBIO2 split rows absent',
+            'available':True}
+
+
+def preparation_destination(root, output, fingerprint):
+    if root == output or output.is_relative_to(root) or root.is_relative_to(output):
+        raise ValueError('Prepared output must be separate from original-source directories')
+    if output.exists():
+        marker = output/'task-package.json'
+        marker = marker if marker.exists() else output/'.incomplete.json'
+        if not marker.exists() or read(marker).get('package_sha256') != fingerprint:
+            raise ValueError('Existing output is not a matching resumable instance package')
+
+
+def preparation_input(root, output):
+    from for_instance.prepare import source_selection, read
+    status = preparation_status()
+    preparation_destination(root, output, status['package_sha256'])
+    source_selection(root, read(INSTANCE_PACKAGE / 'source-lock.json'))
+    return status
+
+
 def jobs():
     result = []
     for path in sorted((STATE / 'jobs').glob('*/job.json'), reverse=True):
@@ -80,6 +115,13 @@ def jobs():
         pid_file = path.parent / 'worker.pid'
         if not job.get('pid') and pid_file.exists():
             job['pid'] = int(pid_file.read_text())
+        if job.get('pid'):
+            try:
+                stopped, _ = os.waitpid(job['pid'],os.WNOHANG)
+                if stopped:
+                    job = read(path)
+            except ChildProcessError:
+                pass
         if job['status'] in {'queued','running'} and job.get('pid'):
             try:
                 os.kill(job['pid'], 0)
@@ -92,9 +134,10 @@ def jobs():
 def submit(body):
     from filelock import FileLock
     kind = body.get('kind')
-    if kind != 'acquire' or set(body) - {'kind', 'record_id', 'root'}:
-        raise ValueError('Only original-source acquisition is available in this build')
-    root = directory(body.get('root', ''), exists=False)
+    allowed = {'kind','record_id','root','output'} if kind == 'prepare-instances' else {'kind','record_id','root','prepare_output'}
+    if kind not in {'acquire','prepare-instances'} or set(body) - allowed:
+        raise ValueError('Only original-source acquisition and the audited FOR-instance preparation are available')
+    root = directory(body.get('root', ''), exists=kind == 'prepare-instances')
     with GUARD, FileLock(str(STATE / 'submission.lock'), timeout=0):
         if any(j['status'] in ACTIVE for j in jobs()):
             raise ValueError('A Canopy job is already active. Wait for it to finish.')
@@ -102,32 +145,73 @@ def submit(body):
         folder = STATE / 'jobs' / job_id
         job = {'id':job_id,'kind':kind,'root':str(root),'status':'queued','created_at':now()}
         rid = int(body['record_id'])
-        record = inspect_record(rid)
-        inv = {'records':[record]}
-        if (root / 'inventory.json').exists():
-            inv = read(root / 'inventory.json')
-            if [r['record_id'] for r in inv['records']] != [rid]:
-                raise ValueError('Destination belongs to another inventory. Select a new record directory.')
-            if inv['records'][0]['files'] != record['files']:
-                raise ValueError('Pinned asset inventory differs from destination; inspect before resuming')
-        elif root.exists() and any(root.iterdir()):
-            raise ValueError('Choose an empty destination or a matching acquisition directory')
-        parent = root
-        while not parent.exists():
-            parent = parent.parent
-        total = sum(f['size_bytes'] for f in record['files'])
-        if shutil.disk_usage(parent).free < total:
-            raise ValueError('Insufficient destination space even for compressed assets')
-        job['expected_bytes'] = total
+        if rid != 8287792 and (kind == 'prepare-instances' or body.get('prepare_output')):
+            raise ValueError('Only the reviewed FOR-instance release has an admitted instance adapter')
         job['record_id'] = rid
-        save(folder / 'inventory.json', inv)
+        if kind == 'prepare-instances':
+            if rid != 8287792:
+                raise ValueError('Only the reviewed FOR-instance release has an admitted instance adapter')
+            output = directory(body.get('output',''), exists=False)
+            ready = preparation_input(root, output)
+            job.update(output=str(output), package_sha256=ready['package_sha256'])
+        else:
+            record = inspect_record(rid)
+            inv = {'records':[record]}
+            if (root / 'inventory.json').exists():
+                inv = read(root / 'inventory.json')
+                if [r['record_id'] for r in inv['records']] != [rid]:
+                    raise ValueError('Destination belongs to another inventory. Select a new record directory.')
+                if inv['records'][0]['files'] != record['files']:
+                    raise ValueError('Pinned asset inventory differs from destination; inspect before resuming')
+            elif root.exists() and any(root.iterdir()):
+                raise ValueError('Choose an empty destination or a matching acquisition directory')
+            parent = root
+            while not parent.exists():
+                parent = parent.parent
+            total = sum(f['size_bytes'] for f in record['files'])
+            if shutil.disk_usage(parent).free < total:
+                raise ValueError('Insufficient destination space even for compressed assets')
+            job['expected_bytes'] = total
+            job['record_id'] = rid
+            save(folder / 'inventory.json', inv)
+            if body.get('prepare_output'):
+                if rid != 8287792:
+                    raise ValueError('Only FOR-instance supports download followed by audited preparation')
+                output = directory(body['prepare_output'], exists=False)
+                ready = preparation_status()
+                preparation_destination(root, output, ready['package_sha256'])
+                job.update(output=str(output), package_sha256=ready['package_sha256'])
         save(folder / 'job.json', job)
+        pid = launch_worker(folder)
+        return {'id':job_id,'pid':pid}
+
+
+def launch_worker(folder):
+    # posix_spawn avoids forking the multithreaded macOS HTTP process after NumPy loads.
+    command = [sys.executable,str(Path(__file__).resolve()),'--worker',str(folder)]
+    try:
         with (folder / 'worker.log').open('ab') as log:
-            p = subprocess.Popen([sys.executable,str(Path(__file__).resolve()),'--worker',str(folder)],
-                                 stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
-        (folder / 'worker.pid').write_text(str(p.pid))
-        # The worker owns subsequent state writes, avoiding a launch-time update race.
-        return {'id':job_id,'pid':p.pid}
+            pid = os.posix_spawn(sys.executable, command, os.environ,
+                file_actions=[(os.POSIX_SPAWN_OPEN,0,'/dev/null',os.O_RDONLY,0),
+                              (os.POSIX_SPAWN_DUP2,log.fileno(),1),
+                              (os.POSIX_SPAWN_DUP2,log.fileno(),2)], setsid=True)
+        (folder / 'worker.pid').write_text(str(pid))
+        deadline = time.monotonic() + 2
+        while time.monotonic() < deadline:
+            current = read(folder / 'job.json')
+            if current['status'] != 'queued':
+                return pid
+            stopped, status = os.waitpid(pid,os.WNOHANG)
+            if stopped:
+                raise ValueError(f'Worker stopped during startup (exit {os.waitstatus_to_exitcode(status)}); inspect its log')
+            time.sleep(.02)
+        return pid
+    except (OSError, ValueError) as error:
+        current = read(folder / 'job.json')
+        current.update(status='failed',error=str(error),finished_at=now())
+        save(folder / 'job.json',current)
+        raise
+
 
 def job_path(jid):
     if not re.fullmatch(r'[0-9T]+-[a-f0-9]{8}', jid):
@@ -140,13 +224,28 @@ def worker(folder):
     save(folder / 'job.json', job)
     try:
         root = Path(job['root'])
-        if job['kind'] != 'acquire':
-            raise ValueError('This worker only supports original-source acquisition')
-        command = [sys.executable,str(REPO/'scripts/acquire_lidar.py'),'--inventory',str(folder/'inventory.json'),
-                   '--root',str(root),'--stage',str(REPO/'temp'/('canopy-stage-'+hashlib.sha256(str(root).encode()).hexdigest()[:16])),'--resume']
-        job['command'] = command
-        save(folder/'job.json',job)
-        subprocess.run(command,check=True)
+        if job['kind'] not in {'acquire','prepare-instances'}:
+            raise ValueError('Unsupported job type')
+        if job['kind'] == 'acquire':
+            command = [sys.executable,str(REPO/'scripts/acquire_lidar.py'),'--inventory',str(folder/'inventory.json'),
+                       '--root',str(root),'--stage',str(REPO/'temp'/('canopy-stage-'+hashlib.sha256(str(root).encode()).hexdigest()[:16])),'--resume']
+            job['command'] = command
+            save(folder/'job.json',job)
+            subprocess.run(command,check=True)
+        if 'output' in job:
+            status = preparation_status()
+            if status['package_sha256'] != job['package_sha256']:
+                raise ValueError('Pipeline changed after submission; inspect before resuming')
+            command = [sys.executable,str(INSTANCE_PACKAGE/'prepare.py'),'--input',str(root),'--output',job['output']]
+            job['preparation_command'] = command
+            save(folder/'job.json',job)
+            subprocess.run(command,check=True)
+            package = read(Path(job['output'])/'task-package.json')
+            save(folder/'task-package-report.json', {'pipeline':package['pipeline'],
+                 'package_sha256':package['package_sha256'], 'plots':len(package['scenes']),
+                 'points':sum(s['points'] for s in package['scenes']),
+                 'unmatched_split_rows':len(package['unmatched_split_rows']),
+                 'geographic_independence':package['geographic_independence']})
         job['status'] = 'completed'
     except Exception as exc:
         job.update(status='failed',error=str(exc))
@@ -177,14 +276,18 @@ class Handler(SimpleHTTPRequestHandler):
         try:
             if parsed.path == '/api/state':
                 with GUARD:
-                    current_jobs = [j for j in jobs() if j['kind'] == 'acquire']
-                return self.send_json({'token':TOKEN, 'jobs':current_jobs,
+                    current_jobs = [j for j in jobs() if j['kind'] in {'acquire','prepare-instances'}]
+                try:
+                    preparation = preparation_status()
+                except (ValueError, OSError) as e:
+                    preparation = {'available':False,'detail':str(e)}
+                return self.send_json({'token':TOKEN, 'jobs':current_jobs, 'preparation':preparation,
                                        'records':[{'id':r['record_id'],'title':r['title']} for r in records()]})
             if parsed.path == '/api/log':
                 jid = parse_qs(parsed.query).get('id',[''])[0]
                 folder = job_path(jid).parent
                 job = read(folder/'job.json')
-                if job['kind'] != 'acquire':
+                if job['kind'] not in {'acquire','prepare-instances'}:
                     raise ValueError('Historical experiments are outside this build')
                 p = folder / 'worker.log'
                 with p.open('rb') as f:

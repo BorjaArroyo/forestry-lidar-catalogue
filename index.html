@@ -5,8 +5,8 @@
   <meta name="description" content="Public LiDAR sources for individual-tree segmentation. Discover datasets and inspect preparation evidence; other research tasks are TBD.">
   <title>Canopy — LiDAR knowledge hub</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231b5047'/%3E%3Cpath d='M16 5 5 23h8v5h6v-5h8Z' fill='%23e7c477'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="style.css?v=instance-core-v1">
-  <script>window.CANOPY_PUBLIC = true;</script><script defer src="catalog.js"></script><script defer src="app.js?v=instance-core-v1"></script><script defer src="workbench.js?v=instance-core-v1"></script></head>
+  <link rel="stylesheet" href="style.css?v=instance-preparation-v1">
+  <script>window.CANOPY_PUBLIC = true;</script><script>window.CANOPY_PUBLIC = true;</script><script defer src="catalog.js"></script><script defer src="app.js?v=instance-preparation-v1"></script><script defer src="workbench.js?v=instance-preparation-v1"></script></head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <aside class="sidebar">
@@ -15,7 +15,7 @@
     <div class="nav-label">EXPLORE</div>
     <nav aria-label="Source navigation"><button class="nav-item active" data-view="datasets"><span>▦</span> Sources <b id="dataset-count">10</b></button></nav>
     <div class="nav-label">DOWNLOAD</div>
-    <nav aria-label="Preparation navigation"><button class="nav-item" data-view="workbench"><span>↧</span> Original downloads</button></nav>
+    <nav aria-label="Preparation navigation"><button class="nav-item" data-view="workbench"><span>↧</span> Download & prepare</button></nav>
     <div class="nav-label task-label">CURRENT FOCUS</div>
     <p class="sidebar-note">Individual-tree segmentation</p><p class="sidebar-note">Other research tasks: TBD.</p>
     <div class="sidebar-bottom"><div><strong>Evidence before readiness</strong><small>Source reference ≠ audited preparation</small></div></div>
@@ -29,15 +29,15 @@
 <label class="select-label">Platform<select id="platform"><option value="all">All platforms</option><option>Airborne</option><option>Terrestrial</option><option>Mobile</option></select></label>
 <label class="select-label">Data unit<select id="unit"><option value="all">All data units</option><option value="plots">Plot / scene clouds</option><option value="mixed">Plots + tree exports</option><option value="trees">Isolated-tree exports</option><option value="unknown">Unit not reviewed</option></select></label>
 <label class="select-label">Instance reference<select id="reference"><option value="all">All reference states</option><option value="plots">Plot-level IDs reported</option><option value="trees">Tree identities only</option><option value="none">No instance labels</option><option value="unknown">Not reviewed</option></select></label>
-<label class="select-label">Task preparation<select id="preparation"><option value="all">All preparation states</option><option value="tbd">Pipeline TBD</option><option value="blocked">Rights review required</option></select></label>
+<label class="select-label">Task preparation<select id="preparation"><option value="all">All preparation states</option><option value="ready">Validated archive preparation</option><option value="tbd">Pipeline TBD</option><option value="blocked">Rights review required</option></select></label>
 <button id="reset" class="button text-button">Reset filters</button></div>
-      <section id="view-datasets" class="view"><div class="section-heading"><div><h2>Public sources</h2><p>Reported instance reference and audited preparation are separate decisions.</p></div><span id="catalog-count" class="muted" role="status" aria-live="polite"></span></div><p class="source-scope">No whole-source preparation pipeline is audited yet. Downloads retrieve original assets. They do not produce task-ready training or evaluation data.</p><div id="dataset-grid" class="dataset-grid"></div></section>
+      <section id="view-datasets" class="view"><div class="section-heading"><div><h2>Public sources</h2><p>Reported instance reference and audited preparation are separate decisions.</p></div><span id="catalog-count" class="muted" role="status" aria-live="polite"></span></div><p class="source-scope">FOR-instance has a validated preparation for the 32 plots present in its pinned archive. Other source adapters remain TBD. Preparation does not establish geographic independence or annotation completeness.</p><div id="dataset-grid" class="dataset-grid"></div></section>
       <section id="view-workbench" class="view" hidden>
-<div class="section-heading"><div><h2>Original source downloads</h2><p>Version-pinned sources → checksum verification → originals.</p></div><span id="service-status" class="badge neutral">Connecting to local service…</span></div>
+<div class="section-heading"><div><h2>Download sources and prepare instances</h2><p>Version-pinned sources → checksum verification → originals.</p></div><span id="service-status" class="badge neutral">Connecting to local service…</span></div>
 <article class="work-card"><h3>Reviewed source records</h3><p>Choose a pinned catalog source. New sources need prior admission review.</p><form id="inspect-form"><label>Source record<select id="zenodo-record" required></select></label><button class="button" type="submit" disabled>Inspect original assets</button></form><div id="record-preview"></div></article>
 <p id="workbench-message" class="notice" role="status" hidden></p>
-<article class="work-card"><h3>Task preparation · TBD</h3><p>No complete-source instance transformation is audited yet. FOR-instance has versioned contracts and unresolved validation requirements. Preparation, curation and benchmark execution are not offered in this build.</p></article>
-<div class="section-heading"><div><h2>Download jobs</h2><p>Workers preserve progress when the browser closes.</p></div><button id="refresh-jobs" class="button small" disabled>Refresh jobs</button></div>
+<article class="work-card"><h3>Prepare FOR-instance data locally</h3><p id="preparation-status">Connect the local service to prepare the reviewed archive.</p><p>Preserve all points, original attributes and dev/test assignments. Classes 0/1/3 and tree points without a positive ID have unknown reference; terrain is background. This is a conservative preparation policy, not a reproduced benchmark protocol. The 50 NIBIO2 rows absent from the archive remain reported.</p><form id="prepare-form"><label>Existing acquisition directory<input id="prepare-input" required placeholder="/absolute/path/to/acquisition" disabled></label><label>Separate prepared-output directory<input id="prepare-destination" required placeholder="/absolute/path/to/new-instance-package" disabled></label><button class="button" type="submit" disabled>Prepare / resume FOR-instance package</button></form></article>
+<div class="section-heading"><div><h2>Data jobs</h2><p>Workers preserve progress when the browser closes.</p></div><button id="refresh-jobs" class="button small" disabled>Refresh jobs</button></div>
 <div id="job-list"></div><article id="job-detail" class="work-card" hidden><h3>Execution evidence</h3><button id="job-export" class="button small">Download job evidence</button><pre id="job-log"></pre></article>
 </section>
 <footer><span>CANOPY <span class="footer-divider">/</span> Evidence before equivalence.</span><span id="snapshot-date"></span></footer>

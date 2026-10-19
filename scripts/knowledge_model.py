@@ -67,6 +67,13 @@ def validate(model, schema):
                 raise ValueError('Contract, transformation and pipeline identity must include their version')
             for evidence in data['evidence_refs']:
                 require(evidence, 'evidence')
+            if data.get('execution_enabled'):
+                require(data.get('validation_ref'), 'evidence')
+                validation = nodes[data['validation_ref']]['data']
+                if data['status'] != 'validated' or data['validation_ref'] not in data['evidence_refs'] or not {'local','sha256'} <= set(validation):
+                    raise ValueError('Enabled execution requires validated status and pinned local validation evidence')
+                if node['type'] == 'transformation' and (not data['implementation'] or data['blockers'] or any(r['status'] == 'unresolved' for r in data['rules'])):
+                    raise ValueError('Enabled transformation requires implementation and resolved blockers/rules')
             if node['type'] == 'data_contract':
                 require(data['coordinate_ref'], 'coordinate_frame')
                 fields = [field['name'] for field in data['fields']]
@@ -78,6 +85,13 @@ def validate(model, schema):
                     require(data[field], kind)
                 for operation in data['transformation_refs']:
                     require(operation, 'transformation')
+                    if data['execution_enabled'] and not nodes[operation]['data']['execution_enabled']:
+                        raise ValueError('Enabled pipeline cannot contain a disabled transformation')
+    for source in sources:
+        if nodes[source]['data']['profile']['discovery']['preparation']['status'] == 'ready':
+            admitted = [n for n in nodes.values() if n['type'] == 'pipeline_spec' and n['data']['source_ref'] == source and n['data']['task_ref'] == 'task:instances' and n['data']['execution_enabled']]
+            if len(admitted) != 1:
+                raise ValueError('A ready source requires exactly one enabled instance pipeline for its pinned release')
     if not sources or not tasks:
         raise ValueError('The graph requires sources and tasks')
     _ordered([nodes[t]['data']['order'] for t in tasks], 'Tasks')
@@ -225,6 +239,24 @@ def check_views(content=CONTENT):
                 raise ValueError('Pinned metadata artifact escapes its declared root')
             if hashlib.sha256(path.read_bytes()).hexdigest() != pinned['sha256']:
                 raise ValueError(f"Pinned metadata artifact changed: {pinned['path']}")
+
+
+    for node in graph['nodes'].values():
+        data = node['data']
+        if node['type'] == 'transformation' and data['execution_enabled']:
+            validation = read_json(content / graph['nodes'][data['validation_ref']]['data']['local'])
+            implementation = data['implementation']
+            if validation.get('status') != 'succeeded' or validation.get('implementation_sha256') != implementation['sha256']:
+                raise ValueError('Execution evidence does not validate the current implementation')
+            package = root / Path(implementation['path']).parent
+            package_lock = read_json(package / 'package-lock.json')['files']
+            for name, expected in package_lock.items():
+                artifact = (package / name).resolve()
+                if not artifact.is_relative_to(package.resolve()) or hashlib.sha256(artifact.read_bytes()).hexdigest() != expected:
+                    raise ValueError('Execution package differs from its locked artifact: ' + name)
+            fingerprint = hashlib.sha256(json.dumps(package_lock, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+            if validation.get('package_sha256') != fingerprint:
+                raise ValueError('Execution package has no matching complete validation')
 
 
 def model_hashes(content=CONTENT):

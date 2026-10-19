@@ -1,0 +1,24 @@
+{
+  "id": "for-instance-conservative-reference:1.0.0",
+  "unknown": -1,
+  "background": 0,
+  "tree": "Positive native treeID, scoped by record and plot path",
+  "rules": {
+    "0,1,3": "unknown; retained for inference",
+    "2": "background, instance=0",
+    "4,5,6": "positive treeID; otherwise unknown"
+  },
+  "instance_valid": "instance >= 0",
+  "preserved": "All source points, native fields, decoded XYZ and published dev/test assignment",
+  "limitations": [
+    "This mask is a Canopy policy; it does not reproduce a particular article evaluator.",
+    "Ground labels are provider annotations, not newly certified terrain.",
+    "No geometric curation, point removal, centering, voxelization, reprojection or height normalization.",
+    "50 NIBIO2 rows are absent from this pinned archive.",
+    "Official dev/test does not establish independence across capture, site or model exposure."
+  ],
+  "evidence": [
+    "https://arxiv.org/pdf/2309.01279#page=8",
+    "https://zenodo.org/records/8287792"
+  ]
+}

@@ -86,7 +86,13 @@ references, evidence/code pins and graph/catalog consistency.
 Version 1.0 preserved the original ten profiles, thirteen relationships and six
 tasks. Migration to 1.1 retains the source profiles and tasks, adds the ETL
 description types, replaces the obsolete FOR-v2 anchor and removes redundant
-exports. The current schema requires version 1.1; unknown versions fail instead
+exports. Version 1.2 replaces the unimplemented FOR-instance 0.1 draft with a direct
+source-to-task 1.0 adapter. Execution flags can be enabled only with validated
+status, resolved rules, pinned code and local validation evidence. An enabled
+pipeline must contain enabled transformations; a ready source badge must resolve
+to one enabled instance pipeline. Publication also verifies package artifact
+hashes and the validation report binding to code and package. The current schema
+requires version 1.2; unknown versions fail instead
 of being interpreted through an old shape. This Canopy-specific profile does not
 claim DCAT, STAC, Croissant or SSSOM conformance. Experimental benchmark registries and execution packages are archived outside the
 current application. Original-download jobs retain their durable job records.

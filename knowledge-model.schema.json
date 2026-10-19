@@ -8,7 +8,7 @@
     },
     "schema_version": {
       "enum": [
-        "1.1"
+        "1.2"
       ]
     },
     "nodes": {
@@ -241,7 +241,8 @@
             "status": {
               "enum": [
                 "tbd",
-                "blocked"
+                "blocked",
+                "ready"
               ]
             },
             "label": {
@@ -839,7 +840,8 @@
               "enum": [
                 "documented_and_header_observed",
                 "existing_code_inspected",
-                "proposed"
+                "proposed",
+                "validated"
               ]
             },
             "format": {
@@ -951,13 +953,12 @@
             "status": {
               "enum": [
                 "legacy_code_inspected",
-                "proposed"
+                "proposed",
+                "validated"
               ]
             },
             "execution_enabled": {
-              "enum": [
-                false
-              ]
+              "type": "boolean"
             },
             "implementation": {
               "oneOf": [
@@ -1006,7 +1007,8 @@
                     "enum": [
                       "inspected",
                       "proposed",
-                      "unresolved"
+                      "unresolved",
+                      "validated"
                     ]
                   }
                 },
@@ -1055,6 +1057,10 @@
               },
               "minItems": 1,
               "uniqueItems": true
+            },
+            "validation_ref": {
+              "type": "string",
+              "pattern": "^evidence:[A-Za-z0-9_.:-]+$"
             }
           },
           "required": [
@@ -1100,13 +1106,12 @@
             },
             "status": {
               "enum": [
-                "draft"
+                "draft",
+                "validated"
               ]
             },
             "execution_enabled": {
-              "enum": [
-                false
-              ]
+              "type": "boolean"
             },
             "source_ref": {
               "type": "string",
@@ -1149,6 +1154,10 @@
               },
               "minItems": 1,
               "uniqueItems": true
+            },
+            "validation_ref": {
+              "type": "string",
+              "pattern": "^evidence:[A-Za-z0-9_.:-]+$"
             }
           },
           "required": [

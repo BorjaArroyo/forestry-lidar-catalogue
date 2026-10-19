@@ -1,6 +1,6 @@
 {
   "$schema": "knowledge-model.schema.json",
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "nodes": {
     "task:instances": {
       "type": "task",
@@ -271,11 +271,11 @@
               "label": "Plot-level tree IDs reported"
             },
             "coverage": "Annotated plots from five collections; native classification includes terrain and outside-tree points.",
-            "limitation": "Preserve the official dev/test split and reconcile shared captures with V2.",
+            "limitation": "The archive has 32 plots; 50 NIBIO2 CSV entries are absent. Preserve unknown-reference masks and official dev/test; shared captures with V2 remain unresolved.",
             "preparation": {
-              "status": "tbd",
-              "label": "Task pipeline TBD",
-              "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+              "status": "ready",
+              "label": "Validated 32-plot archive preparation",
+              "detail": "A self-contained local adapter preserves all 32 archive plots, native fields, conservative reference masks and official dev/test. Its full validation covers 151,478,959 points. The 50 absent NIBIO2 CSV rows remain reported; annotation completeness and geographic independence are not certified.",
               "limited_reference_copy": false
             }
           }
@@ -1413,7 +1413,7 @@
           {
             "field": "classification",
             "code": 1,
-            "meaning": "Low vegetation: not tree or ground"
+            "meaning": "Low vegetation includes small unannotated trees, understory, bushes and herbs; readme wording is less precise than the paper"
           },
           {
             "field": "classification",
@@ -1442,13 +1442,15 @@
           }
         ],
         "invariants": [
-          "Scope is the 32 LAS files recorded by the acquisition manifest, not all 82 CSV entries",
+          "Scope is all 32 LAS plots in the checksum-verified pinned archive, not all 82 partition-table entries",
           "Native classes and complete original point records remain preserved",
           "No global tree identity or independent-site split is inferred"
         ],
         "evidence_refs": [
           "evidence:436d29d4b138da3ec9f25086",
-          "evidence:for-instance-header-review-20261018"
+          "evidence:for-instance-header-review-20261018",
+          "evidence:for-instance-paper-2309.01279",
+          "evidence:for-instance-complete-audit-20261018"
         ]
       }
     },
@@ -1543,94 +1545,6 @@
         ]
       }
     },
-    "contract:for-instance-plot-instances:0.1.0": {
-      "type": "data_contract",
-      "data": {
-        "name": "Proposed plot-instance task package",
-        "version": "0.1.0",
-        "status": "proposed",
-        "format": "NPZ chunks plus task-package.json",
-        "observation_unit": "One acquired LAS plot; identities are scoped by record and relative plot path",
-        "fields": [
-          {
-            "name": "xyz",
-            "dtypes": [
-              "float64"
-            ],
-            "shape": [
-              "N",
-              3
-            ],
-            "meaning": "Unchanged decoded source coordinates",
-            "required": true
-          },
-          {
-            "name": "instance",
-            "dtypes": [
-              "int64"
-            ],
-            "shape": [
-              "N"
-            ],
-            "meaning": "-1 unknown/excluded; 0 non-tree; positive IDs remain scene-local",
-            "required": true
-          },
-          {
-            "name": "instance_valid",
-            "dtypes": [
-              "bool"
-            ],
-            "shape": [
-              "N"
-            ],
-            "meaning": "instance >= 0 under an explicit versioned annotation-mask policy",
-            "required": true
-          },
-          {
-            "name": "original_points",
-            "dtypes": [
-              "native_structured_record"
-            ],
-            "shape": [
-              "N"
-            ],
-            "meaning": "Retained native fields for traceability",
-            "required": true
-          },
-          {
-            "name": "published_split",
-            "dtypes": [
-              "string"
-            ],
-            "shape": [],
-            "meaning": "Scene metadata: dev or test from the exact provider path join",
-            "required": true
-          },
-          {
-            "name": "native_schema_ref",
-            "dtypes": [
-              "string"
-            ],
-            "shape": [],
-            "meaning": "Scene metadata key into native LAS dimension descriptors embedded in task-package.json",
-            "required": true
-          }
-        ],
-        "coordinate_ref": "coordinates:for-instance-source:1.0.0",
-        "partitioning": "Preserve provider dev/test; no new train/validation or geographic split is assigned",
-        "annotation_codes": [],
-        "invariants": [
-          "Preserve all rows and native labels; express exclusions through masks",
-          "Do not convert unclassified or outside-plot points into known background",
-          "Keep mask policy version and excluded-point counts in package provenance",
-          "Published test membership does not prove geographic independence"
-        ],
-        "evidence_refs": [
-          "evidence:436d29d4b138da3ec9f25086",
-          "evidence:for-instance-header-review-20261018"
-        ]
-      }
-    },
     "transformation:for-instance-existing-normalization:1.0.0": {
       "type": "transformation",
       "data": {
@@ -1681,92 +1595,216 @@
         ]
       }
     },
-    "transformation:for-instance-task-preparation:0.1.0": {
-      "type": "transformation",
+    "contract:for-instance-plot-instances:1.0.0": {
+      "type": "data_contract",
       "data": {
-        "name": "Proposed reference masks and published split attachment",
-        "version": "0.1.0",
-        "status": "proposed",
-        "execution_enabled": false,
-        "implementation": null,
-        "rules": [
+        "name": "FOR-instance plot-instance package",
+        "version": "1.0.0",
+        "status": "validated",
+        "format": "Uncompressed NPZ chunks and task-package.json",
+        "observation_unit": "One acquired LAS plot; identities are scoped by record and relative plot path",
+        "fields": [
           {
-            "id": "native_dimensions",
-            "expression": "classification = unpack_LAS_dimension(original_points, native_schema_ref, 'classification'); require classification in {0,1,2,3,4,5,6}",
-            "status": "proposed"
+            "name": "xyz",
+            "dtypes": [
+              "float64"
+            ],
+            "shape": [
+              "N",
+              3
+            ],
+            "meaning": "Unchanged decoded source coordinates",
+            "required": true
           },
           {
-            "id": "unknown",
-            "expression": "instance[classification in {0,3}] = -1",
-            "status": "proposed"
+            "name": "instance",
+            "dtypes": [
+              "int64"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "-1 unknown/excluded; 0 non-tree; positive IDs remain scene-local",
+            "required": true
           },
           {
-            "id": "ground",
-            "expression": "instance[classification == 2] = 0",
-            "status": "proposed"
+            "name": "instance_valid",
+            "dtypes": [
+              "bool"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "True for native terrain or a positively identified tree point; false for classes 0/1/3 and tree points without positive ID",
+            "required": true
           },
           {
-            "id": "trees",
-            "expression": "instance[(classification in {4,5,6}) & (treeID > 0)] = treeID; retain -1 otherwise",
-            "status": "proposed"
+            "name": "native_class",
+            "dtypes": [
+              "uint8"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "Unpacked native LAS annotation codes 0–6, unchanged",
+            "required": true
           },
           {
-            "id": "low_vegetation",
-            "expression": "STOP until the task/evaluator inclusion policy for classification == 1 is reviewed",
-            "status": "unresolved"
+            "name": "original_points",
+            "dtypes": [
+              "native_structured_record"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "Retained native fields for traceability",
+            "required": true
           },
           {
-            "id": "split",
-            "expression": "published_split = unique_exact_path_join(plot_path, data_split_metadata.csv); report all unmatched CSV rows",
-            "status": "proposed"
+            "name": "published_split",
+            "dtypes": [
+              "string"
+            ],
+            "shape": [],
+            "meaning": "Scene metadata: dev or test from the exact provider path join",
+            "required": true
+          },
+          {
+            "name": "native_schema_ref",
+            "dtypes": [
+              "string"
+            ],
+            "shape": [],
+            "meaning": "Scene metadata key into native LAS dimension descriptors embedded in task-package.json",
+            "required": true
           }
         ],
-        "preconditions": [
-          "An explicit reviewed mask policy",
-          "Per-file coordinate information retained",
-          "Exact provider split path join with scope discrepancy reported",
-          "Native LAS dimension descriptors are retained so packed classification can be decoded explicitly"
-        ],
-        "preserves": [
-          "All coordinates, rows, source IDs and original labels",
-          "Official dev/test membership"
-        ],
-        "losses": [
-          "Reference scoring excludes unknown/masked points; counts and policy must be reported"
-        ],
-        "blockers": [
-          "Resolve the 50 unmatched NIBIO2 split entries before claiming complete-source coverage",
-          "Audit low vegetation, boundary masks and classification/treeID conflicts on the full selected scope",
-          "Review numeric ID ranges and all floating treeID values",
-          "Implement and validate the complete task adapter; no execution is admitted"
+        "coordinate_ref": "coordinates:for-instance-source:1.0.0",
+        "partitioning": "Preserve provider dev/test; no new train/validation or geographic split is assigned",
+        "annotation_codes": [],
+        "invariants": [
+          "Preserve all rows and native labels; express exclusions through masks",
+          "Do not convert unclassified or outside-plot points into known background",
+          "Keep mask policy version and excluded-point counts in package provenance",
+          "Published test membership does not prove geographic independence"
         ],
         "evidence_refs": [
           "evidence:436d29d4b138da3ec9f25086",
-          "evidence:for-instance-header-review-20261018"
+          "evidence:for-instance-header-review-20261018",
+          "evidence:for-instance-paper-2309.01279",
+          "evidence:for-instance-complete-audit-20261018",
+          "evidence:for-instance-preparation-validation-20261019"
         ]
       }
     },
-    "pipeline:for-instance-plot-instances:0.1.0": {
+    "transformation:for-instance-task-preparation:1.0.0": {
+      "type": "transformation",
+      "data": {
+        "name": "Verified LAS decoding, conservative reference masks and published split attachment",
+        "version": "1.0.0",
+        "status": "validated",
+        "execution_enabled": true,
+        "implementation": {
+          "path": "scripts/for_instance/prepare.py",
+          "sha256": "b7ddc8ef8c9b8ebc53a5b896bc2633eb7c6928e5b68e7b49b9b0b48f96c89f04",
+          "entrypoint": "prepare"
+        },
+        "rules": [
+          {
+            "id": "decode",
+            "expression": "xyz[:,axis] = native_XYZ[:,axis] * scale[axis] + offset[axis]; preserve all rows and complete native structured records",
+            "status": "validated"
+          },
+          {
+            "id": "unknown",
+            "expression": "instance[:] = -1; instance[classification == 2] = 0",
+            "status": "validated"
+          },
+          {
+            "id": "trees",
+            "expression": "mask = (classification in {4,5,6}) & (treeID > 0); instance[mask] = int64(treeID[mask]); instance_valid = instance >= 0",
+            "status": "validated"
+          },
+          {
+            "id": "invariants",
+            "expression": "require classes in {0..6}; require finite integral int64 treeID; reject positive treeID outside classes {4,5,6}; verify input SHA256, complete class counts and output read-back",
+            "status": "validated"
+          },
+          {
+            "id": "split",
+            "expression": "preserve exact provider dev/test path join; retain all 50 unmatched NIBIO2 rows in task-package.json",
+            "status": "validated"
+          }
+        ],
+        "preconditions": [
+          "Exact 32-plot source lock from record 8287792, version 1, verified per-file SHA256 and native types",
+          "Output is separate from originals; source/staging read-back and output verification must succeed",
+          "No reprojection, height normalization, downsampling or geographic-independence claim"
+        ],
+        "preserves": [
+          "All point rows, native structured storage and native classes",
+          "Float64 source XYZ, plot-local positive IDs, official dev/test membership",
+          "Native LAS dimension descriptors, scales, offsets and observed CRS"
+        ],
+        "losses": [
+          "Only terrain and positively identified tree points are admitted to the conservative reference mask; all excluded points remain available for inference",
+          "This policy is not an implementation of an article-specific scoring protocol"
+        ],
+        "blockers": [],
+        "evidence_refs": [
+          "evidence:436d29d4b138da3ec9f25086",
+          "evidence:for-instance-header-review-20261018",
+          "evidence:for-instance-paper-2309.01279",
+          "evidence:for-instance-complete-audit-20261018",
+          "evidence:for-instance-preparation-validation-20261019"
+        ],
+        "validation_ref": "evidence:for-instance-preparation-validation-20261019"
+      }
+    },
+    "pipeline:for-instance-plot-instances:1.0.0": {
       "type": "pipeline_spec",
       "data": {
-        "name": "FOR-instance original to plot-instance reference",
-        "version": "0.1.0",
-        "status": "draft",
-        "execution_enabled": false,
+        "name": "FOR-instance pinned archive to conservative plot-instance reference",
+        "version": "1.0.0",
+        "status": "validated",
+        "execution_enabled": true,
         "source_ref": "zenodo:8287792",
         "task_ref": "task:instances",
         "input_ref": "contract:for-instance-native:1.0.0",
-        "output_ref": "contract:for-instance-plot-instances:0.1.0",
+        "output_ref": "contract:for-instance-plot-instances:1.0.0",
         "transformation_refs": [
-          "transformation:for-instance-existing-normalization:1.0.0",
-          "transformation:for-instance-task-preparation:0.1.0"
+          "transformation:for-instance-task-preparation:1.0.0"
         ],
         "asset_name": "FORinstance_dataset.zip",
-        "selection": "The 32 manifest-recorded LAS plots plus readMe.txt and data_split_metadata.csv; field-trait CSVs are retained as source material but unused by this task description",
+        "selection": "All 32 LAS plots present in the pinned archive plus its partition CSV; 50 absent NIBIO2 rows remain reported. Other support files are preserved in the acquisition but not transformed.",
         "evidence_refs": [
           "evidence:436d29d4b138da3ec9f25086",
-          "evidence:for-instance-header-review-20261018"
-        ]
+          "evidence:for-instance-header-review-20261018",
+          "evidence:for-instance-paper-2309.01279",
+          "evidence:for-instance-complete-audit-20261018",
+          "evidence:for-instance-preparation-validation-20261019"
+        ],
+        "validation_ref": "evidence:for-instance-preparation-validation-20261019"
+      }
+    },
+    "evidence:for-instance-paper-2309.01279": {
+      "type": "evidence",
+      "data": {
+        "url": "https://arxiv.org/pdf/2309.01279"
+      }
+    },
+    "evidence:for-instance-complete-audit-20261018": {
+      "type": "evidence",
+      "data": {
+        "local": "evidence/for-instance-full-audit-20261018.json",
+        "sha256": "6d31be76e230c2691fbb2dab0d708409c0996f40be14541fecf3569fd17263d1"
+      }
+    },
+    "evidence:for-instance-preparation-validation-20261019": {
+      "type": "evidence",
+      "data": {
+        "local": "evidence/for-instance-preparation-validation.json",
+        "sha256": "d403395faa13d2aed608c79a1682532f2dbce22f52f87b7cbc7ed981adf4cff0"
       }
     }
   },
@@ -2944,19 +2982,19 @@
     "flow:for-instance-prepare-input": {
       "type": "data_flow",
       "role": "consumes",
-      "source": "transformation:for-instance-task-preparation:0.1.0",
-      "target": "contract:for-instance-legacy-chunks:1.0.0"
+      "source": "transformation:for-instance-task-preparation:1.0.0",
+      "target": "contract:for-instance-native:1.0.0"
     },
     "flow:for-instance-prepare-output": {
       "type": "data_flow",
       "role": "produces",
-      "source": "transformation:for-instance-task-preparation:0.1.0",
-      "target": "contract:for-instance-plot-instances:0.1.0"
+      "source": "transformation:for-instance-task-preparation:1.0.0",
+      "target": "contract:for-instance-plot-instances:1.0.0"
     },
     "flow:for-instance-task": {
       "type": "data_flow",
       "role": "designed_for",
-      "source": "contract:for-instance-plot-instances:0.1.0",
+      "source": "contract:for-instance-plot-instances:1.0.0",
       "target": "task:instances"
     }
   }
