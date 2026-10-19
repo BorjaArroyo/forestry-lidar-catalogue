@@ -9,6 +9,43 @@ published dev/test assignments are retained. Existing matching outputs resume.
 The 50 absent NIBIO2 partition entries remain explicit; they are not invented.
 Full input and output validation is pinned to the exact implementation/package.
 
+## Next increment: a second source through the existing workflow
+
+Prioritize FGI-EMIT, pinned record
+[19351234](https://zenodo.org/records/19351234), before adding consumers,
+benchmark execution or other product features. This is a candidate selection,
+not execution admission: its preparation stays TBD until validation is complete.
+
+The [official repository](https://github.com/ruoppa/fgi_emit) documents 19 plots
+from Espoonlahti, Finland, with plot-local tree instances and multispectral ALS
+attributes. This complements FOR-instance's five UAV collections and tests
+whether the existing representation can express different source semantics.
+The local acquisition contains 19 LAS files and saved verified manifests; their
+payload hashes still need to be rechecked for the new package. Existing research
+conversion code is evidence to review, not an admitted task adapter.
+
+The measurement-metadata increment is complete: see [FGI-EMIT](../FGI-EMIT.md).
+All headers and bounded prefixes are reviewed; full-payload integrity and the
+executable adapter remain pending. The existing source detail displays these
+descriptors without changing preparation readiness.
+
+Remaining admission work:
+
+1. Reverify the pinned assets and all original plots; audit label counts,
+   instance coverage, native attributes, coordinate metadata and source terms
+   (CC BY-NC-SA 4.0). Record explicit assumptions and unresolved questions.
+2. Define a source-specific, lossless preparation policy. Preserve boundary
+   points and their masks, radiometric fields, native classes and plot-local IDs.
+   FGI-EMIT class 2 means building, not FOR-instance terrain. Review the historical
+   converter's point removal, class offsets and coordinate shift before reuse.
+3. Preserve the official 13 training / 6 test assignments. Keep the three
+   recommended validation plots as an optional protocol, not a silent rewrite.
+   These plots belong to one acquisition area; they are not 19 independent zones.
+   Audit capture ancestry and model exposure before claiming independent transfer.
+4. Validate all 19 plots and source/output provenance, then admit the package to
+   the existing download-and-prepare workflow and check FOR-instance regression.
+   No new benchmark or model integration is part of this increment.
+
 ## Remaining scientific and coverage work
 
 1. Resolve the archive's missing NIBIO2 scope with upstream evidence before

@@ -17,6 +17,7 @@ change does not introduce an ETL executor, change transformations or certify pip
 | Source-task assessment | `support:<record-id>:<task-key>` | Source/task references, support, rationale and display positions |
 | Dataset relationship | `relation:<stable-id>` | Source references, applicable task references, evidence and existing contract |
 | Data contract | `contract:<name>:<version>` | Fields, types, shapes, annotations, invariants and coordinate reference |
+| Measurement channel | `channel:<source-scanner>:<version>` | Source-scoped sensor, wavelength, calibration state and evidence |
 | Coordinate description | `coordinates:<name>:<version>` | Shared frame information, unresolved units/datum and evidence |
 | Transformation | `transformation:<name>:<version>` | Input/output relationships, precise rules, implementation fingerprint, limits and review state |
 | Pipeline specification | `pipeline:<name>:<version>` | Source, task, selected asset and ordered transformation references |
@@ -42,10 +43,12 @@ These are qualified metadata relationships, not proof of transitive compatibilit
 Metadata cycles remain allowed. Pipeline descriptions additionally require
 connected input/output contracts in their declared order; this introduces no executor.
 
-[FOR-instance](FOR-INSTANCE.md) is the first precise source/transformation model.
-It replaces its obsolete direct FOR-v2 projection link with three contracts,
-two operations and a disabled draft pipeline. Code inspection and proposed task
-rules retain distinct states. Data-flow edge roles are `describes`, `consumes`,
+[FOR-instance](FOR-INSTANCE.md) has a validated direct archive-to-task pipeline.
+Its inspected historical conversion remains a disabled evidence branch. The
+[FGI-EMIT measurement review](FGI-EMIT.md) adds a native contract with 39 typed
+fields and three source-scoped sensor channels. Its preparation stays TBD.
+Code inspection, bounded measurement observations and execution admission retain
+distinct states. Data-flow edge roles are `describes`, `consumes`,
 `produces` and `designed_for`; the last records intent, not scientific admission.
 
 ## Validation and editing
@@ -91,8 +94,41 @@ source-to-task 1.0 adapter. Execution flags can be enabled only with validated
 status, resolved rules, pinned code and local validation evidence. An enabled
 pipeline must contain enabled transformations; a ready source badge must resolve
 to one enabled instance pipeline. Publication also verifies package artifact
-hashes and the validation report binding to code and package. The current schema
-requires version 1.2; unknown versions fail instead
+hashes and the validation report binding to code and package. Version 1.3 adds optional typed field measurements, measurement-channel nodes and
+pipeline input requirements. Existing observation snapshots and FOR-instance
+execution/code evidence are retained. The current schema requires version 1.3; unknown versions fail instead
 of being interpreted through an old shape. This Canopy-specific profile does not
 claim DCAT, STAC, Croissant or SSSOM conformance. Experimental benchmark registries and execution packages are archived outside the
 current application. Original-download jobs retain their durable job records.
+
+
+## Measurement descriptors and input requirements
+
+Native contracts keep geometry, reference labels, provenance, display fields and
+quantitative measurements separate. Each measurement names a shared channel,
+quantity, semantic status, unit with explicit unknown state, documented sentinels
+or unspecified missingness, association method/distance/status and evidence.
+Calibration belongs to the source-scoped channel; sharing a wavelength is not a
+cross-source calibration assertion. Validated calibration or association requires
+pinned local validation evidence.
+
+FGI-EMIT intensity/amplitude zero is missing measurement data. Reflectance zero
+can be numerically valid while -9999 is its sentinel. The reference tree_index
+zero has a different meaning. Pseudo RGB has conflicting source descriptions and
+remains display data. Native units, scaling and missingness are never guessed
+from field names. Headers and bounded prefixes do not certify whole-source
+availability or physical alignment.
+
+Optional pipeline input requirements refer to fields of the input contract, with
+purpose, unit, missingness policy and calibration/association requirements. An
+enabled feature declaration must resolve to a typed measurement with documented
+semantics and missingness; requested units and validation states must match.
+A null requested unit means no physical-unit constraint is asserted, not unitless
+or cross-source compatibility. Draft requirements may retain unmet conditions;
+this does not enable their execution. Runtime validity masks and availability
+checks remain the responsibility of an audited implementation.
+
+The existing source-detail panel and exported catalog project native measurement
+contracts and their channel descriptors from graph references. They are derived
+views, not additional authoring files. Public evidence includes its bounded scope
+and inspector fingerprint; full source/adapter validation remains separate.

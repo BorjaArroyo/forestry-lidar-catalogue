@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT / 'knowledge-hub' if (ROOT / 'knowledge-hub').is_dir() else ROOT
 sys.path.insert(0, str(ROOT / 'scripts'))
 import knowledge_model as model
+from audit_fgi_measurements import measurement_counts
 
 
 class KnowledgeModel(unittest.TestCase):
@@ -153,6 +154,89 @@ class KnowledgeModel(unittest.TestCase):
         self.rejects(lambda g: g['nodes']['zenodo:16742708']['data']['profile']['discovery']['preparation'].update(status='ready'))
         self.graph=model.load()
         self.rejects(lambda g: g['nodes']['transformation:for-instance-task-preparation:1.0.0']['data']['blockers'].append('unresolved'))
+
+    def test_fgi_contract_keeps_measurements_reference_and_display_distinct(self):
+        contract = self.graph['nodes']['contract:fgi-emit-native:1.0.0']['data']
+        fields = {f['name']: f for f in contract['fields']}
+        self.assertEqual(len(fields), 39)
+        self.assertEqual(sum(f['role'] == 'measurement' for f in fields.values()), 12)
+        for name, sentinel in [('intensity_1', 0), ('amplitude_1', 0),
+                               ('reflectance_1', -9999), ('deviation_1', 65535)]:
+            self.assertEqual(fields[name]['measurement']['missingness']['values'], [sentinel])
+        self.assertEqual(fields['tree_index']['role'], 'reference')
+        self.assertNotIn('measurement', fields['tree_index'])
+        self.assertEqual(fields['red']['role'], 'display')
+        self.assertEqual(fields['red']['measurement']['semantic_status'], 'conflicting')
+        self.assertEqual(fields['red']['measurement']['missingness']['values'], [])
+        profiles, _, _ = model.project(self.graph)
+        projected = profiles['19351234']['native_measurement_contracts'][0]
+        self.assertEqual(projected['fields'], contract['fields'])
+        self.assertEqual([c['wavelength_nm'] for c in projected['channels']], [1550, 905, 532])
+        self.assertEqual(profiles['19351234']['discovery']['preparation']['status'], 'tbd')
+
+    def test_measurement_channels_are_typed_evidenced_and_source_scoped(self):
+        channel = 'channel:fgi-emit-scanner-1:1.0.0'
+        self.rejects(lambda g: g['nodes'].pop(channel))
+        self.graph = model.load()
+        self.rejects(lambda g: g['nodes'][channel]['data'].update(source_ref='zenodo:8287792'))
+        self.graph = model.load()
+        self.rejects(lambda g: g['nodes'][channel]['data']['calibration'].update(status='validated'))
+
+    def test_measurement_metadata_cannot_invent_units_missingness_or_alignment(self):
+        key = 'contract:fgi-emit-native:1.0.0'
+        def field(g, name):
+            return next(f for f in g['nodes'][key]['data']['fields'] if f['name'] == name)['measurement']
+        self.rejects(lambda g: field(g, 'reflectance_1')['unit'].update(symbol='dB'))
+        self.graph = model.load()
+        self.rejects(lambda g: field(g, 'red')['missingness'].update(values=[0]))
+        self.graph = model.load()
+        self.rejects(lambda g: field(g, 'reflectance_1')['association'].update(status='validated'))
+
+    def test_finite_sentinels_are_missing_but_numeric_zero_is_quantity_specific(self):
+        result = measurement_counts([0, 1, -9999, float('nan'), float('inf')], -9999)
+        self.assertEqual(result, {'sampled_points': 5, 'sentinel_count': 1,
+                                  'nonfinite_count': 2, 'valid_count': 2})
+        self.assertEqual(measurement_counts([0, 1], 0)['valid_count'], 1)
+        self.assertEqual(measurement_counts([0, 1], -9999)['valid_count'], 2)
+
+    def test_feature_requirements_block_unverified_measurements_without_admitting_a_pipeline(self):
+        nodes = self.graph['nodes']
+        requirement = {'field': 'reflectance_1', 'purpose': 'feature', 'unit': None,
+                       'missing_policy': 'mask', 'calibration': 'not_required',
+                       'association': 'not_required'}
+        description = {'input_ref': 'contract:fgi-emit-native:1.0.0',
+                       'execution_enabled': True, 'input_requirements': [requirement]}
+        # This helper checks declarations only; it grants no execution admission.
+        model.validate_input_requirements(description, nodes)
+        for change in [{'field': 'absent'}, {'unit': 'dB'}, {'missing_policy': 'preserve'},
+                       {'calibration': 'validated'}, {'association': 'validated'}, {'field': 'red'}]:
+            with self.subTest(change=change):
+                changed = copy.deepcopy(description)
+                changed['input_requirements'][0].update(change)
+                with self.assertRaises(ValueError):
+                    model.validate_input_requirements(changed, nodes)
+        draft = copy.deepcopy(description)
+        draft['execution_enabled'] = False
+        draft['input_requirements'][0]['calibration'] = 'validated'
+        model.validate_input_requirements(draft, nodes)
+
+    def test_input_requirements_reject_dangling_fields_and_duplicates(self):
+        key = 'pipeline:for-instance-plot-instances:1.0.0'
+        self.rejects(lambda g: g['nodes'][key]['data']['input_requirements'][0].update(field='reflectance_1'))
+        self.graph = model.load()
+        self.rejects(lambda g: g['nodes'][key]['data']['input_requirements'].append(
+            copy.deepcopy(g['nodes'][key]['data']['input_requirements'][0])))
+
+    def test_fgi_evidence_retains_its_bounded_observation_scope(self):
+        audit = model.read_json(WEB / 'evidence/fgi-emit-measurements.json')
+        self.assertEqual(len(audit['plots']), 19)
+        self.assertEqual(audit['sampled_points'], 190000)
+        self.assertEqual(audit['header_points'], 60793586)
+        self.assertTrue(audit['metadata_asset']['integrity_verified'])
+        self.assertTrue(all(p['sample']['points'] == 10000 and not p['payload_sha256_reverified']
+                            and p['crs'] is None for p in audit['plots']))
+        self.assertEqual(sum(p['split'] == 'train' for p in audit['plots']), 13)
+        self.assertEqual(sum(p['split'] == 'test' for p in audit['plots']), 6)
 
 if __name__ == '__main__':
     (ROOT / 'temp').mkdir(exist_ok=True)

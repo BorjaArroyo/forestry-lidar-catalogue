@@ -999,27 +999,37 @@ window.LIDAR_CATALOG = {
       "provenance": "Single Espoonlahti acquisition area; split plots do not by themselves establish geographic generalization.",
       "study_context": "The local forestseg study reserves its selected test plots for terminal evaluation. This reservation is not a provider-wide restriction.",
       "review": {
-        "reviewed_at": "2026-10-17",
-        "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+        "reviewed_at": "2026-10-19",
+        "scope": "Existing-source metadata review: provider metadata integrity, all 19 native headers and 190000 prefix points. No whole-payload validation or executable task admission.",
         "observation_unit": "19 cylindrical plots; tree_index is unique within each plot.",
         "source_facts": [
           {
             "text": "The Espoonlahti acquisition contains 19 plots and 1,561 annotated trees. It also contains buildings, vehicles and poles. Tree annotation targets identifiable trees at least 3 m high and boundary trees approximately half inside.",
-            "url": "https://zenodo.org/records/19351234",
-            "label": "Pinned provider description, sections 1 and 3"
+            "label": "Pinned provider description, sections 1 and 3",
+            "url": "https://zenodo.org/records/19351234"
           },
           {
             "text": "Native classification: 0 other, 1 tree, 2 building, 3 vehicle, 4 pole, 5 out. The source benchmark excludes class 5; its unsupervised and learned methods treat classes 2–4 differently.",
-            "url": "https://zenodo.org/records/19351234",
-            "label": "Pinned provider description, section 3.1"
+            "label": "Pinned provider description, section 3.1",
+            "url": "https://zenodo.org/records/19351234"
+          },
+          {
+            "text": "Three source scanners have wavelengths 1550, 905 and 532 nm. Each channel has its own missing-value convention. The RGB descriptions disagree between metadata.yaml and public Table 4.",
+            "label": "Provider scanner and attribute description",
+            "url": "https://research.aalto.fi/en/datasets/fgi-emit-a-multispectral-high-density-airborne-laser-scanning-ben/"
           }
         ],
         "local_observations": [
-          "19 normalized LAS files retain radiometric attributes and native classes. The coarse instance view masks out-points without deleting source points."
+          "19 normalized LAS files retain radiometric attributes and native classes. The coarse instance view masks out-points without deleting source points.",
+          "All 19 native headers share one 39-field schema and contain no CRS. Their point counts sum to 60,793,586; source payload hashes were not recomputed in this audit.",
+          "190,000 stored-order prefix points were inspected. Suffix fields retain documented sentinels; the finite numeric zero is missing for intensity/amplitude, while reference tree_index zero means no assigned instance.",
+          "All suffix-channel headers report nearest-neighbor association within 0.25 m. This describes association provenance, not validated co-registration or calibration."
         ],
         "open_questions": [
           "Choose the evaluator-specific boundary/background policy before comparing scores.",
-          "Review channel calibration and model exposure to Espoonlahti."
+          "Review channel calibration and model exposure to Espoonlahti.",
+          "Resolve RGB intensity-versus-reflectance descriptions and suffix-field units/scaling before treating them as quantitative features.",
+          "Complete full-payload integrity, reference coverage and source-specific preparation validation; prefix missingness counts cannot establish full-source channel availability."
         ],
         "published_protocol": "13 training and 6 test plots; optional validation plots 1019, 1022, 1031 come from training. These are plots from one acquisition area, not 19 independent zones.",
         "observations_snapshot": {
@@ -1224,11 +1234,996 @@ window.LIDAR_CATALOG = {
         "preparation": {
           "status": "tbd",
           "label": "Task pipeline TBD",
-          "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+          "detail": "Typed multispectral metadata has been reviewed on all 19 headers and bounded prefixes. Full-payload integrity, reference policy and a self-contained task adapter remain TBD.",
           "limited_reference_copy": false
         }
       },
-      "download_bytes": 2445009717
+      "download_bytes": 2445009717,
+      "native_measurement_contracts": [
+        {
+          "id": "contract:fgi-emit-native:1.0.0",
+          "name": "FGI-EMIT native multispectral LAS plot",
+          "version": "1.0.0",
+          "status": "documented_and_header_observed",
+          "format": "LAS 1.4 point format 7",
+          "observation_unit": "One native plot; 19 headers and 10000 prefix points per plot inspected, without full-payload or task validation.",
+          "fields": [
+            {
+              "name": "X",
+              "dtypes": [
+                "int32"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Stored coordinate integer decoded with this axis LAS scale and offset; no CRS is supplied.",
+              "required": true,
+              "role": "coordinate"
+            },
+            {
+              "name": "Y",
+              "dtypes": [
+                "int32"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Stored coordinate integer decoded with this axis LAS scale and offset; no CRS is supplied.",
+              "required": true,
+              "role": "coordinate"
+            },
+            {
+              "name": "Z",
+              "dtypes": [
+                "int32"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Stored coordinate integer decoded with this axis LAS scale and offset; no CRS is supplied.",
+              "required": true,
+              "role": "coordinate"
+            },
+            {
+              "name": "intensity",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "return_number",
+              "dtypes": [
+                "uint4"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "number_of_returns",
+              "dtypes": [
+                "uint4"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "synthetic",
+              "dtypes": [
+                "uint1"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "key_point",
+              "dtypes": [
+                "uint1"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "withheld",
+              "dtypes": [
+                "uint1"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "overlap",
+              "dtypes": [
+                "uint1"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "scanner_channel",
+              "dtypes": [
+                "uint2"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "scan_direction_flag",
+              "dtypes": [
+                "uint1"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "edge_of_flight_line",
+              "dtypes": [
+                "uint1"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "classification",
+              "dtypes": [
+                "uint8"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Manually generated semantic annotation. Intended for removing particular types of objects from the data.",
+              "required": true,
+              "role": "reference"
+            },
+            {
+              "name": "user_data",
+              "dtypes": [
+                "uint8"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Origin scanner ID: 1, 2 or 3. This is distinct from the packed LAS scanner_channel field.",
+              "required": true,
+              "role": "provenance"
+            },
+            {
+              "name": "scan_angle",
+              "dtypes": [
+                "int16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "point_source_id",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "gps_time",
+              "dtypes": [
+                "float64"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Native LAS attribute retained without a task-specific interpretation.",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "red",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Pseudo color from scanner 1. YAML says scaled intensity; public Table 4 says scaled reflectance. Physical quantity and scaling are unresolved.",
+              "required": true,
+              "role": "display",
+              "measurement": {
+                "quantity": "pseudocolor",
+                "semantic_status": "conflicting",
+                "channel_ref": "channel:fgi-emit-scanner-1:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Display encoding; physical quantity and scaling unresolved."
+                },
+                "missingness": {
+                  "status": "not_documented",
+                  "values": [],
+                  "detail": "YAML NULL means no sentinel is specified. Zero must not be treated as a missing-value rule."
+                },
+                "association": {
+                  "method": "not_documented",
+                  "max_distance_m": null,
+                  "status": "not_documented",
+                  "detail": "The RGB mapping and alignment are not established by this audit."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-description",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "green",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Pseudo color from scanner 2. YAML says scaled intensity; public Table 4 says scaled reflectance. Physical quantity and scaling are unresolved.",
+              "required": true,
+              "role": "display",
+              "measurement": {
+                "quantity": "pseudocolor",
+                "semantic_status": "conflicting",
+                "channel_ref": "channel:fgi-emit-scanner-2:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Display encoding; physical quantity and scaling unresolved."
+                },
+                "missingness": {
+                  "status": "not_documented",
+                  "values": [],
+                  "detail": "YAML NULL means no sentinel is specified. Zero must not be treated as a missing-value rule."
+                },
+                "association": {
+                  "method": "not_documented",
+                  "max_distance_m": null,
+                  "status": "not_documented",
+                  "detail": "The RGB mapping and alignment are not established by this audit."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-description",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "blue",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Pseudo color from scanner 3. YAML says scaled intensity; public Table 4 says scaled reflectance. Physical quantity and scaling are unresolved.",
+              "required": true,
+              "role": "display",
+              "measurement": {
+                "quantity": "pseudocolor",
+                "semantic_status": "conflicting",
+                "channel_ref": "channel:fgi-emit-scanner-3:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Display encoding; physical quantity and scaling unresolved."
+                },
+                "missingness": {
+                  "status": "not_documented",
+                  "values": [],
+                  "detail": "YAML NULL means no sentinel is specified. Zero must not be treated as a missing-value rule."
+                },
+                "association": {
+                  "method": "not_documented",
+                  "max_distance_m": null,
+                  "status": "not_documented",
+                  "detail": "The RGB mapping and alignment are not established by this audit."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-description",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "Amplitude",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Echo signal amplitude [dB]",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "Reflectance",
+              "dtypes": [
+                "int16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Echo signal reflectance [dB]",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "Deviation",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Pulse shape deviation",
+              "required": true,
+              "role": "native_attribute"
+            },
+            {
+              "name": "reflectance_1",
+              "dtypes": [
+                "float32"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided reflectance associated from scanner 1; native header: VUX nn.refl., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "reflectance",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-1:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    -9999
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "reflectance_2",
+              "dtypes": [
+                "float32"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided reflectance associated from scanner 2; native header: miniVUX nn.refl., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "reflectance",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-2:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    -9999
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "reflectance_3",
+              "dtypes": [
+                "float32"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided reflectance associated from scanner 3; native header: VQ840G nn.refl., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "reflectance",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-3:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    -9999
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "amplitude_1",
+              "dtypes": [
+                "float32"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided amplitude associated from scanner 1; native header: VUX nn.amp., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "amplitude",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-1:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    0
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "amplitude_2",
+              "dtypes": [
+                "float32"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided amplitude associated from scanner 2; native header: miniVUX nn.amp., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "amplitude",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-2:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    0
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "amplitude_3",
+              "dtypes": [
+                "float32"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided amplitude associated from scanner 3; native header: VQ840G nn.amp., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "amplitude",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-3:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    0
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "deviation_1",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided echo_deviation associated from scanner 1; native header: VUX nn.echdev., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "echo_deviation",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-1:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    65535
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "deviation_2",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided echo_deviation associated from scanner 2; native header: miniVUX nn.echdev., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "echo_deviation",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-2:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    65535
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "deviation_3",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided echo_deviation associated from scanner 3; native header: VQ840G nn.echdev., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "echo_deviation",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-3:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    65535
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "intensity_1",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided intensity associated from scanner 1; native header: VUX nn.int., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "intensity",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-1:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    0
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "intensity_2",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided intensity associated from scanner 2; native header: miniVUX nn.int., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "intensity",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-2:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    0
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "intensity_3",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Source-provided intensity associated from scanner 3; native header: VQ840G nn.int., r=0.25m.",
+              "required": true,
+              "role": "measurement",
+              "measurement": {
+                "quantity": "intensity",
+                "semantic_status": "documented",
+                "channel_ref": "channel:fgi-emit-scanner-3:1.0.0",
+                "unit": {
+                  "symbol": null,
+                  "status": "unknown",
+                  "detail": "Suffix-field unit and scaling are not established by metadata.yaml or the LAS header; do not inherit units from similarly named base fields."
+                },
+                "missingness": {
+                  "status": "documented_sentinel",
+                  "values": [
+                    0
+                  ],
+                  "detail": "Provider metadata sentinel; validity requires both finiteness and inequality to the sentinel. No imputation is admitted."
+                },
+                "association": {
+                  "method": "nearest_neighbor",
+                  "max_distance_m": 0.25,
+                  "status": "header_reported",
+                  "detail": "Reported by every inspected LAS extra-dimension description. Spatial association accuracy is not validated."
+                },
+                "evidence_refs": [
+                  "evidence:fgi-emit-metadata",
+                  "evidence:fgi-emit-measurements-20261019"
+                ]
+              }
+            },
+            {
+              "name": "tree_index",
+              "dtypes": [
+                "uint16"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Plot-local instance reference; 0 means no assigned tree instance. The metadata missing_val 0 must not be interpreted as missing sensor data or proof of annotation completeness.",
+              "required": true,
+              "role": "reference"
+            },
+            {
+              "name": "edge",
+              "dtypes": [
+                "uint8"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Tree instances on the edge of the plot with some parts missing have this value set to 1 for all points. All other points have this value set to 0.",
+              "required": true,
+              "role": "reference"
+            },
+            {
+              "name": "dead",
+              "dtypes": [
+                "uint8"
+              ],
+              "shape": [
+                "N"
+              ],
+              "meaning": "Tree instances identified as dead via visual inspection have this value set to 1 for all points. All other points have this value set to 0.",
+              "required": true,
+              "role": "reference"
+            }
+          ],
+          "coordinate_ref": "coordinates:fgi-emit-source:1.0.0",
+          "partitioning": "Retain the source 13 train / 6 test directories. Optional validation plots 1019, 1022 and 1031 belong to training; no new split is applied.",
+          "annotation_codes": [
+            {
+              "field": "classification",
+              "code": 0,
+              "meaning": "Other, including ground and understory; not a terrain-only class"
+            },
+            {
+              "field": "classification",
+              "code": 1,
+              "meaning": "Tree instance"
+            },
+            {
+              "field": "classification",
+              "code": 2,
+              "meaning": "Building"
+            },
+            {
+              "field": "classification",
+              "code": 3,
+              "meaning": "Vehicle"
+            },
+            {
+              "field": "classification",
+              "code": 4,
+              "meaning": "Pole"
+            },
+            {
+              "field": "classification",
+              "code": 5,
+              "meaning": "Out-of-plot trees without instance annotation"
+            }
+          ],
+          "invariants": [
+            "The origin scanner is encoded by user_data with values 1/2/3, not by LAS scanner_channel.",
+            "Instance zero is an annotation convention; sensor sentinels do not define instance-reference validity.",
+            "Keep all native fields and points; no class shift, dropping, coordinate recentering, imputation or radiometric normalization is admitted.",
+            "Prefix counts describe only sampled stored-order prefixes; no whole-source completeness or channel co-observation is certified.",
+            "Calibration, association accuracy, RGB quantity and physical suffix-field units remain unresolved."
+          ],
+          "evidence_refs": [
+            "evidence:fgi-emit-metadata",
+            "evidence:fgi-emit-official",
+            "evidence:fgi-emit-description",
+            "evidence:fgi-emit-measurements-20261019"
+          ],
+          "channels": [
+            {
+              "id": "channel:fgi-emit-scanner-1:1.0.0",
+              "name": "FGI-EMIT scanner 1",
+              "version": "1.0.0",
+              "source_ref": "zenodo:19351234",
+              "scanner_id": 1,
+              "sensor_model": "RIEGL VUX-1HA",
+              "wavelength_nm": 1550,
+              "calibration": {
+                "status": "not_verified",
+                "detail": "No radiometric calibration, scaling or cross-source comparability is validated by this header and prefix audit."
+              },
+              "evidence_refs": [
+                "evidence:fgi-emit-official",
+                "evidence:fgi-emit-description",
+                "evidence:fgi-emit-measurements-20261019"
+              ]
+            },
+            {
+              "id": "channel:fgi-emit-scanner-2:1.0.0",
+              "name": "FGI-EMIT scanner 2",
+              "version": "1.0.0",
+              "source_ref": "zenodo:19351234",
+              "scanner_id": 2,
+              "sensor_model": "RIEGL miniVUX-1DL",
+              "wavelength_nm": 905,
+              "calibration": {
+                "status": "not_verified",
+                "detail": "No radiometric calibration, scaling or cross-source comparability is validated by this header and prefix audit."
+              },
+              "evidence_refs": [
+                "evidence:fgi-emit-official",
+                "evidence:fgi-emit-description",
+                "evidence:fgi-emit-measurements-20261019"
+              ]
+            },
+            {
+              "id": "channel:fgi-emit-scanner-3:1.0.0",
+              "name": "FGI-EMIT scanner 3",
+              "version": "1.0.0",
+              "source_ref": "zenodo:19351234",
+              "scanner_id": 3,
+              "sensor_model": "RIEGL VQ-840-G",
+              "wavelength_nm": 532,
+              "calibration": {
+                "status": "not_verified",
+                "detail": "No radiometric calibration, scaling or cross-source comparability is validated by this header and prefix audit."
+              },
+              "evidence_refs": [
+                "evidence:fgi-emit-official",
+                "evidence:fgi-emit-description",
+                "evidence:fgi-emit-measurements-20261019"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "EvoMS",
@@ -7842,8 +8837,8 @@ window.LIDAR_CATALOG = {
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "model_sha256": "6f711f53bc5c4603d9ffc6bda9c1940fe6b4928c43e752bdd51da026911cd502",
-    "model_schema_sha256": "f4aba1011014d40f3b48732e6a9d7020a16efc39407dcff34b8623fdc10bcc09"
+    "model_sha256": "274c1006be5910d21153da0a3e864d3ccae6113959ff9b6b2b559e61f270cfcf",
+    "model_schema_sha256": "a17c12e6e849f55b322c4f0fd3cd6ab513d094fc78efa055f0c92e085bba0640"
   },
   "evidence": [
     {

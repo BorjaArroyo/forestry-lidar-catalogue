@@ -1,0 +1,2586 @@
+{
+  "schema_version": "1.0",
+  "record_id": "19351234",
+  "audited_at": "2026-10-19T09:12:55.711516+00:00",
+  "inspector": {
+    "path": "scripts/audit_fgi_measurements.py",
+    "sha256": "ca1b279dd582a423fedf1b560bd5a6283168f29adfe07d263e55e884c40784f8"
+  },
+  "scope": "All original plot headers and bounded point prefixes; not a full payload or task-preparation validation",
+  "environment": {
+    "python": "3.11.11",
+    "laspy": "2.7.0",
+    "numpy": "2.2.6",
+    "pyyaml": "6.0.3"
+  },
+  "metadata_asset": {
+    "name": "metadata.yaml",
+    "sha256": "e8891b43eb0d6ca3b649a61ff79ce50a3e0bc0c6b93e14a1e5c1de09d55a482b",
+    "provider_checksum": "md5:a42b36c6f11e7c571b29d9006129c458",
+    "integrity_verified": true,
+    "definitions": {
+      "red": {
+        "description": "Scaled intensity from scanner 1. For visualizing point cloud with pseudo colors.",
+        "missing_val": null
+      },
+      "green": {
+        "description": "Scaled intensity from scanner 2. For visualizing point cloud with pseudo colors.",
+        "missing_val": null
+      },
+      "blue": {
+        "description": "Scaled intensity from scanner 3. For visualizing point cloud with pseudo colors.",
+        "missing_val": null
+      },
+      "intensity_1": {
+        "description": "Intensity from scanner 1.",
+        "missing_val": 0
+      },
+      "intensity_2": {
+        "description": "Intensity from scanner 2.",
+        "missing_val": 0
+      },
+      "intensity_3": {
+        "description": "Intensity from scanner 3.",
+        "missing_val": 0
+      },
+      "amplitude_1": {
+        "description": "Amplitude from scanner 1.",
+        "missing_val": 0
+      },
+      "amplitude_2": {
+        "description": "Amplitude from scanner 2.",
+        "missing_val": 0
+      },
+      "amplitude_3": {
+        "description": "Amplitude from scanner 3.",
+        "missing_val": 0
+      },
+      "reflectance_1": {
+        "description": "Reflectance from scanner 1.",
+        "missing_val": -9999
+      },
+      "reflectance_2": {
+        "description": "Reflectance from scanner 2.",
+        "missing_val": -9999
+      },
+      "reflectance_3": {
+        "description": "Reflectance from scanner 3.",
+        "missing_val": -9999
+      },
+      "deviation_1": {
+        "description": "Echo deviation from scanner 1. Note that the number of missing echo deviation values is slightly higher than the number of missing intensity, amplitude or reflectance values.",
+        "missing_val": 65535
+      },
+      "deviation_2": {
+        "description": "Echo deviation from scanner 2. Note that the number of missing echo deviation values is slightly higher than the number of missing intensity, amplitude or reflectance values.",
+        "missing_val": 65535
+      },
+      "deviation_3": {
+        "description": "Echo deviation from scanner 3. Note that the number of missing echo deviation values is slightly higher than the number of missing intensity, amplitude or reflectance values.",
+        "missing_val": 65535
+      },
+      "tree_index": {
+        "description": "Manually generated tree instance annotation. All points in a tree instance share the same value, and each tree instance within a plot has a unique index. Points not belonging to any tree instance have tree_index set to 0.",
+        "missing_val": 0
+      },
+      "edge": {
+        "description": "Tree instances on the edge of the plot with some parts missing have this value set to 1 for all points. All other points have this value set to 0.",
+        "missing_val": null
+      },
+      "dead": {
+        "description": "Tree instances identified as dead via visual inspection have this value set to 1 for all points. All other points have this value set to 0.",
+        "missing_val": null
+      },
+      "user_data": {
+        "description": "This value indicates which scanner an individual point is originally from. The points have been labeled either 1, 2, or 3 for scanners 1, 2, and 3 respectively.",
+        "missing_val": null
+      },
+      "classification": {
+        "description": "Manually generated semantic annotation. Intended for removing particular types of objects from the data.",
+        "missing_val": null,
+        "class_names": {
+          "0": "other",
+          "1": "tree",
+          "2": "building",
+          "3": "vehicle",
+          "4": "pole",
+          "5": "out"
+        }
+      }
+    }
+  },
+  "header_points": 60793586,
+  "sampled_points": 190000,
+  "schemas": {
+    "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562": {
+      "fields": [
+        {
+          "name": "X",
+          "dtype": "int32",
+          "description": ""
+        },
+        {
+          "name": "Y",
+          "dtype": "int32",
+          "description": ""
+        },
+        {
+          "name": "Z",
+          "dtype": "int32",
+          "description": ""
+        },
+        {
+          "name": "intensity",
+          "dtype": "uint16",
+          "description": ""
+        },
+        {
+          "name": "return_number",
+          "dtype": "uint4",
+          "description": ""
+        },
+        {
+          "name": "number_of_returns",
+          "dtype": "uint4",
+          "description": ""
+        },
+        {
+          "name": "synthetic",
+          "dtype": "uint1",
+          "description": ""
+        },
+        {
+          "name": "key_point",
+          "dtype": "uint1",
+          "description": ""
+        },
+        {
+          "name": "withheld",
+          "dtype": "uint1",
+          "description": ""
+        },
+        {
+          "name": "overlap",
+          "dtype": "uint1",
+          "description": ""
+        },
+        {
+          "name": "scanner_channel",
+          "dtype": "uint2",
+          "description": ""
+        },
+        {
+          "name": "scan_direction_flag",
+          "dtype": "uint1",
+          "description": ""
+        },
+        {
+          "name": "edge_of_flight_line",
+          "dtype": "uint1",
+          "description": ""
+        },
+        {
+          "name": "classification",
+          "dtype": "uint8",
+          "description": ""
+        },
+        {
+          "name": "user_data",
+          "dtype": "uint8",
+          "description": ""
+        },
+        {
+          "name": "scan_angle",
+          "dtype": "int16",
+          "description": ""
+        },
+        {
+          "name": "point_source_id",
+          "dtype": "uint16",
+          "description": ""
+        },
+        {
+          "name": "gps_time",
+          "dtype": "float64",
+          "description": ""
+        },
+        {
+          "name": "red",
+          "dtype": "uint16",
+          "description": ""
+        },
+        {
+          "name": "green",
+          "dtype": "uint16",
+          "description": ""
+        },
+        {
+          "name": "blue",
+          "dtype": "uint16",
+          "description": ""
+        },
+        {
+          "name": "Amplitude",
+          "dtype": "uint16",
+          "description": "Echo signal amplitude [dB]"
+        },
+        {
+          "name": "Reflectance",
+          "dtype": "int16",
+          "description": "Echo signal reflectance [dB]"
+        },
+        {
+          "name": "Deviation",
+          "dtype": "uint16",
+          "description": "Pulse shape deviation"
+        },
+        {
+          "name": "reflectance_1",
+          "dtype": "float32",
+          "description": "VUX nn.refl., r=0.25m"
+        },
+        {
+          "name": "reflectance_2",
+          "dtype": "float32",
+          "description": "miniVUX nn.refl., r=0.25m"
+        },
+        {
+          "name": "reflectance_3",
+          "dtype": "float32",
+          "description": "VQ840G nn.refl., r=0.25m"
+        },
+        {
+          "name": "amplitude_1",
+          "dtype": "float32",
+          "description": "VUX nn.amp., r=0.25m"
+        },
+        {
+          "name": "amplitude_2",
+          "dtype": "float32",
+          "description": "miniVUX nn.amp., r=0.25m"
+        },
+        {
+          "name": "amplitude_3",
+          "dtype": "float32",
+          "description": "VQ840G nn.amp., r=0.25m"
+        },
+        {
+          "name": "deviation_1",
+          "dtype": "uint16",
+          "description": "VUX nn.echdev., r=0.25m"
+        },
+        {
+          "name": "deviation_2",
+          "dtype": "uint16",
+          "description": "miniVUX nn.echdev., r=0.25m"
+        },
+        {
+          "name": "deviation_3",
+          "dtype": "uint16",
+          "description": "VQ840G nn.echdev., r=0.25m"
+        },
+        {
+          "name": "intensity_1",
+          "dtype": "uint16",
+          "description": "VUX nn.int., r=0.25m"
+        },
+        {
+          "name": "intensity_2",
+          "dtype": "uint16",
+          "description": "miniVUX nn.int., r=0.25m"
+        },
+        {
+          "name": "intensity_3",
+          "dtype": "uint16",
+          "description": "VQ840G nn.int., r=0.25m"
+        },
+        {
+          "name": "tree_index",
+          "dtype": "uint16",
+          "description": ""
+        },
+        {
+          "name": "edge",
+          "dtype": "uint8",
+          "description": ""
+        },
+        {
+          "name": "dead",
+          "dtype": "uint8",
+          "description": ""
+        }
+      ],
+      "plot_count": 19
+    }
+  },
+  "plots": [
+    {
+      "path": "sources/19351234/originals/training/training/plot_1001.las",
+      "split": "train",
+      "saved_payload_sha256": "f9c35723cef4956a72cd0839c0d1c1ce75069d2d6ef0e40e5ba0f607cbdc7520",
+      "payload_sha256_reverified": false,
+      "size_bytes": 253600611,
+      "header_sha256": "d888e02888a98a4f49ef3bda01213b40727ed5247fbc2cf5037432f9ce63f398",
+      "points": 3092643,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -19.9975,
+          -19.9985,
+          0.0
+        ],
+        [
+          19.9975,
+          19.9985,
+          25.547
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "8face694d93126de5b97c7e28f66a615d60883663b38be798270b3dd7c4fa31e",
+        "origin_scanner_counts": {
+          "1": 4308,
+          "2": 1068,
+          "3": 4624
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 38,
+            "nonfinite_count": 0,
+            "valid_count": 9962
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 354,
+            "nonfinite_count": 0,
+            "valid_count": 9646
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 21,
+            "nonfinite_count": 0,
+            "valid_count": 9979
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 38,
+            "nonfinite_count": 0,
+            "valid_count": 9962
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 354,
+            "nonfinite_count": 0,
+            "valid_count": 9646
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 21,
+            "nonfinite_count": 0,
+            "valid_count": 9979
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 38,
+            "nonfinite_count": 0,
+            "valid_count": 9962
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 354,
+            "nonfinite_count": 0,
+            "valid_count": 9646
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 21,
+            "nonfinite_count": 0,
+            "valid_count": 9979
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 38,
+            "nonfinite_count": 0,
+            "valid_count": 9962
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 354,
+            "nonfinite_count": 0,
+            "valid_count": 9646
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 38,
+            "nonfinite_count": 0,
+            "valid_count": 9962
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1003.las",
+      "split": "train",
+      "saved_payload_sha256": "11e019007a07a7da343abdebeea2e2d42ab819bd9348bbe5cfb0b92c0483d1ba",
+      "payload_sha256_reverified": false,
+      "size_bytes": 189321221,
+      "header_sha256": "1d3c05aed916102bf25953b301cb340d952185e587ddb9b67029980c3b0c2b2e",
+      "points": 2308748,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -19.997999999999998,
+          -19.9985,
+          0.0
+        ],
+        [
+          19.997999999999998,
+          19.9985,
+          28.898
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "0bd96c22c3b3213306cc1956bdb0578010937e24e34b207c7c92d7d232713f80",
+        "origin_scanner_counts": {
+          "1": 4918,
+          "2": 2264,
+          "3": 2818
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 186,
+            "nonfinite_count": 0,
+            "valid_count": 9814
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1492,
+            "nonfinite_count": 0,
+            "valid_count": 8508
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1102,
+            "nonfinite_count": 0,
+            "valid_count": 8898
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 186,
+            "nonfinite_count": 0,
+            "valid_count": 9814
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1492,
+            "nonfinite_count": 0,
+            "valid_count": 8508
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1102,
+            "nonfinite_count": 0,
+            "valid_count": 8898
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 186,
+            "nonfinite_count": 0,
+            "valid_count": 9814
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1492,
+            "nonfinite_count": 0,
+            "valid_count": 8508
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1102,
+            "nonfinite_count": 0,
+            "valid_count": 8898
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 188,
+            "nonfinite_count": 0,
+            "valid_count": 9812
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1492,
+            "nonfinite_count": 0,
+            "valid_count": 8508
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1113,
+            "nonfinite_count": 0,
+            "valid_count": 8887
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1005.las",
+      "split": "train",
+      "saved_payload_sha256": "cf452ee0638931e29a67a12cc1edf737fab12c641ad53d15543d3d5f00d8c968",
+      "payload_sha256_reverified": false,
+      "size_bytes": 251583985,
+      "header_sha256": "3f76bd97b42a5dcea82fc09305194239fe9ab812956c741ff4a94799b43ab52a",
+      "points": 3068050,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.999,
+          -24.996499999999997,
+          0.0
+        ],
+        [
+          24.999,
+          24.996499999999997,
+          20.59
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "b29bf8ab4367e1e6bbfed89e35adf09d9715bceb6bc36aacee63a591033501c5",
+        "origin_scanner_counts": {
+          "1": 4937,
+          "2": 1027,
+          "3": 4036
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 21,
+            "nonfinite_count": 0,
+            "valid_count": 9979
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 473,
+            "nonfinite_count": 0,
+            "valid_count": 9527
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 9,
+            "nonfinite_count": 0,
+            "valid_count": 9991
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 21,
+            "nonfinite_count": 0,
+            "valid_count": 9979
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 473,
+            "nonfinite_count": 0,
+            "valid_count": 9527
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 9,
+            "nonfinite_count": 0,
+            "valid_count": 9991
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 21,
+            "nonfinite_count": 0,
+            "valid_count": 9979
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 473,
+            "nonfinite_count": 0,
+            "valid_count": 9527
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 9,
+            "nonfinite_count": 0,
+            "valid_count": 9991
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 21,
+            "nonfinite_count": 0,
+            "valid_count": 9979
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 473,
+            "nonfinite_count": 0,
+            "valid_count": 9527
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 28,
+            "nonfinite_count": 0,
+            "valid_count": 9972
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1009.las",
+      "split": "train",
+      "saved_payload_sha256": "5ff095f92c5e4048bcf16aabe311e2016303158c4d4e1e0f60e3fd9ad0be98fd",
+      "payload_sha256_reverified": false,
+      "size_bytes": 316482475,
+      "header_sha256": "56f70c24391dfad2db3c403b195f54d98718077712e25360f4f4efe61a72e228",
+      "points": 3859495,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.997999999999998,
+          -24.997,
+          0.0
+        ],
+        [
+          24.997999999999998,
+          24.997,
+          25.212
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "56121eef98294b355b2c0bc0e4542a396db6d466b4b95796931c77350865fbcd",
+        "origin_scanner_counts": {
+          "1": 4148,
+          "2": 1301,
+          "3": 4551
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 329,
+            "nonfinite_count": 0,
+            "valid_count": 9671
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1146,
+            "nonfinite_count": 0,
+            "valid_count": 8854
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 85,
+            "nonfinite_count": 0,
+            "valid_count": 9915
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 329,
+            "nonfinite_count": 0,
+            "valid_count": 9671
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1146,
+            "nonfinite_count": 0,
+            "valid_count": 8854
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 85,
+            "nonfinite_count": 0,
+            "valid_count": 9915
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 329,
+            "nonfinite_count": 0,
+            "valid_count": 9671
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1146,
+            "nonfinite_count": 0,
+            "valid_count": 8854
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 85,
+            "nonfinite_count": 0,
+            "valid_count": 9915
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 331,
+            "nonfinite_count": 0,
+            "valid_count": 9669
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1146,
+            "nonfinite_count": 0,
+            "valid_count": 8854
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 98,
+            "nonfinite_count": 0,
+            "valid_count": 9902
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1010.las",
+      "split": "train",
+      "saved_payload_sha256": "156206ac40604b28db2b9116609bef750c48cff2426183dad21392101d72c30e",
+      "payload_sha256_reverified": false,
+      "size_bytes": 297013707,
+      "header_sha256": "0bbcd5914452af29e75283f2478a5ba6b7ae6bbabe026df41b7386374313b29e",
+      "points": 3622071,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.994999999999997,
+          -24.994,
+          0.0
+        ],
+        [
+          24.994999999999997,
+          24.994,
+          42.789
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "657766cd462bef434e8e22327377df9f0ee662d1eed9e1b4c0902be4f256ddd8",
+        "origin_scanner_counts": {
+          "1": 4693,
+          "2": 1655,
+          "3": 3652
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 11,
+            "nonfinite_count": 0,
+            "valid_count": 9989
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 24,
+            "nonfinite_count": 0,
+            "valid_count": 9976
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 14,
+            "nonfinite_count": 0,
+            "valid_count": 9986
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 11,
+            "nonfinite_count": 0,
+            "valid_count": 9989
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 24,
+            "nonfinite_count": 0,
+            "valid_count": 9976
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 14,
+            "nonfinite_count": 0,
+            "valid_count": 9986
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 11,
+            "nonfinite_count": 0,
+            "valid_count": 9989
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 24,
+            "nonfinite_count": 0,
+            "valid_count": 9976
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 14,
+            "nonfinite_count": 0,
+            "valid_count": 9986
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 11,
+            "nonfinite_count": 0,
+            "valid_count": 9989
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 24,
+            "nonfinite_count": 0,
+            "valid_count": 9976
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 16,
+            "nonfinite_count": 0,
+            "valid_count": 9984
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1013.las",
+      "split": "train",
+      "saved_payload_sha256": "06931d04a92a3fb58b17ca7db3eecbacb2068b8ab95530157579462c371653b0",
+      "payload_sha256_reverified": false,
+      "size_bytes": 296707929,
+      "header_sha256": "6a677933f380e3a4b6e72b929a5be017759389375f2820e25cc8ffb3ad0f8e41",
+      "points": 3618342,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.9975,
+          -24.999499999999998,
+          0.0
+        ],
+        [
+          24.9975,
+          24.999499999999998,
+          31.061999999999998
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "901dd47a30444d68f11e4e7bcb82205ba3b787e6749890bb437991da0832485a",
+        "origin_scanner_counts": {
+          "1": 2808,
+          "2": 1255,
+          "3": 5937
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 110,
+            "nonfinite_count": 0,
+            "valid_count": 9890
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1230,
+            "nonfinite_count": 0,
+            "valid_count": 8770
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 110,
+            "nonfinite_count": 0,
+            "valid_count": 9890
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1230,
+            "nonfinite_count": 0,
+            "valid_count": 8770
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 110,
+            "nonfinite_count": 0,
+            "valid_count": 9890
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1230,
+            "nonfinite_count": 0,
+            "valid_count": 8770
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 110,
+            "nonfinite_count": 0,
+            "valid_count": 9890
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1230,
+            "nonfinite_count": 0,
+            "valid_count": 8770
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 13,
+            "nonfinite_count": 0,
+            "valid_count": 9987
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1019.las",
+      "split": "train",
+      "saved_payload_sha256": "5fbe516928d9eb78c325d47e0bf9cf606b308f484674002aaf909da86aac4b5b",
+      "payload_sha256_reverified": false,
+      "size_bytes": 308716419,
+      "header_sha256": "e47add32c8d642c1f9c2846bb12401079d31d89dd77a49f35d7f7012ab27bb4d",
+      "points": 3764787,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -29.9975,
+          -29.997,
+          0.0
+        ],
+        [
+          29.9975,
+          29.997,
+          12.503
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "c6aa4314fa0d374a745d4ceab3e8a822e2dc6fbef439838110b94d32f61a4036",
+        "origin_scanner_counts": {
+          "1": 5693,
+          "2": 2290,
+          "3": 2017
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 1,
+            "nonfinite_count": 0,
+            "valid_count": 9999
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1,
+            "nonfinite_count": 0,
+            "valid_count": 9999
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 1,
+            "nonfinite_count": 0,
+            "valid_count": 9999
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1,
+            "nonfinite_count": 0,
+            "valid_count": 9999
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 1,
+            "nonfinite_count": 0,
+            "valid_count": 9999
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1,
+            "nonfinite_count": 0,
+            "valid_count": 9999
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 1,
+            "nonfinite_count": 0,
+            "valid_count": 9999
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1,
+            "nonfinite_count": 0,
+            "valid_count": 9999
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1020.las",
+      "split": "train",
+      "saved_payload_sha256": "38d3e0e2afada767bfa7428a283a326c51ef557aeb94da156d5e9dccbe7b7d7e",
+      "payload_sha256_reverified": false,
+      "size_bytes": 288784351,
+      "header_sha256": "9da8058d860771b3bceb004fd0f94caff35c10d902c91d32515552ab2919a5ef",
+      "points": 3521713,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -29.997999999999998,
+          -29.999,
+          0.0
+        ],
+        [
+          29.997999999999998,
+          29.999,
+          24.930999999999997
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "6e24715467adfe357d0e5224160b46f5c6d15657265740dabf3eddaaacf1d31a",
+        "origin_scanner_counts": {
+          "1": 6727,
+          "2": 1154,
+          "3": 2119
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 186,
+            "nonfinite_count": 0,
+            "valid_count": 9814
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 2069,
+            "nonfinite_count": 0,
+            "valid_count": 7931
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 883,
+            "nonfinite_count": 0,
+            "valid_count": 9117
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 186,
+            "nonfinite_count": 0,
+            "valid_count": 9814
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 2069,
+            "nonfinite_count": 0,
+            "valid_count": 7931
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 883,
+            "nonfinite_count": 0,
+            "valid_count": 9117
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 186,
+            "nonfinite_count": 0,
+            "valid_count": 9814
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 2069,
+            "nonfinite_count": 0,
+            "valid_count": 7931
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 883,
+            "nonfinite_count": 0,
+            "valid_count": 9117
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 188,
+            "nonfinite_count": 0,
+            "valid_count": 9812
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 2069,
+            "nonfinite_count": 0,
+            "valid_count": 7931
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 884,
+            "nonfinite_count": 0,
+            "valid_count": 9116
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1022.las",
+      "split": "train",
+      "saved_payload_sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e",
+      "payload_sha256_reverified": false,
+      "size_bytes": 136718713,
+      "header_sha256": "3001a80cbf211ac77b2ac89f4f224005dbfc4db75ff0117febe2f7f4d41e2108",
+      "points": 1667254,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -19.9985,
+          -19.9985,
+          0.0
+        ],
+        [
+          19.9985,
+          19.9985,
+          23.072
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "5093e826e3cc709eaf07d059ccf162f2ea95089d3f9dc025999372f92fd5bf07",
+        "origin_scanner_counts": {
+          "1": 4378,
+          "2": 1522,
+          "3": 4100
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 217,
+            "nonfinite_count": 0,
+            "valid_count": 9783
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1108,
+            "nonfinite_count": 0,
+            "valid_count": 8892
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 642,
+            "nonfinite_count": 0,
+            "valid_count": 9358
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 217,
+            "nonfinite_count": 0,
+            "valid_count": 9783
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1108,
+            "nonfinite_count": 0,
+            "valid_count": 8892
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 642,
+            "nonfinite_count": 0,
+            "valid_count": 9358
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 217,
+            "nonfinite_count": 0,
+            "valid_count": 9783
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1108,
+            "nonfinite_count": 0,
+            "valid_count": 8892
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 642,
+            "nonfinite_count": 0,
+            "valid_count": 9358
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 217,
+            "nonfinite_count": 0,
+            "valid_count": 9783
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 1108,
+            "nonfinite_count": 0,
+            "valid_count": 8892
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 661,
+            "nonfinite_count": 0,
+            "valid_count": 9339
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1023.las",
+      "split": "train",
+      "saved_payload_sha256": "dc94bebcc53397aa927fbbf940f893a5cbdd44c844562491a9c80b8af7211faf",
+      "payload_sha256_reverified": false,
+      "size_bytes": 451870789,
+      "header_sha256": "8aebfef33cdc70f4b78b7f911b70c3b3e44cfee7f2db56544bebe70e83be3eb5",
+      "points": 5510572,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -29.997,
+          -29.997999999999998,
+          0.0
+        ],
+        [
+          29.997,
+          29.997999999999998,
+          25.581
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "d35697957aa29c782d846c79e4d326706a2a3dbf2f339bdbc3c671d7929bdec7",
+        "origin_scanner_counts": {
+          "1": 4614,
+          "2": 1723,
+          "3": 3663
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 70,
+            "nonfinite_count": 0,
+            "valid_count": 9930
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 651,
+            "nonfinite_count": 0,
+            "valid_count": 9349
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 65,
+            "nonfinite_count": 0,
+            "valid_count": 9935
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 70,
+            "nonfinite_count": 0,
+            "valid_count": 9930
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 651,
+            "nonfinite_count": 0,
+            "valid_count": 9349
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 65,
+            "nonfinite_count": 0,
+            "valid_count": 9935
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 70,
+            "nonfinite_count": 0,
+            "valid_count": 9930
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 651,
+            "nonfinite_count": 0,
+            "valid_count": 9349
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 65,
+            "nonfinite_count": 0,
+            "valid_count": 9935
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 70,
+            "nonfinite_count": 0,
+            "valid_count": 9930
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 651,
+            "nonfinite_count": 0,
+            "valid_count": 9349
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 93,
+            "nonfinite_count": 0,
+            "valid_count": 9907
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1024.las",
+      "split": "train",
+      "saved_payload_sha256": "98ec8a4b5f2b1e294933181e9f1fd676c2887e61677c41a30fdabb9fa74797e2",
+      "payload_sha256_reverified": false,
+      "size_bytes": 281473641,
+      "header_sha256": "af1c6b8dfc60b7b1fbfff11c5ef017f887e679bc698878c8e1adba73386c255f",
+      "points": 3432558,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.9975,
+          -24.997999999999998,
+          0.0
+        ],
+        [
+          24.9975,
+          24.997999999999998,
+          31.770999999999997
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "2187f74ba2a265072e406c59368a47f8b5698987c974dc5bb0dae8dee983d735",
+        "origin_scanner_counts": {
+          "1": 4534,
+          "2": 1313,
+          "3": 4153
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 52,
+            "nonfinite_count": 0,
+            "valid_count": 9948
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 554,
+            "nonfinite_count": 0,
+            "valid_count": 9446
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 127,
+            "nonfinite_count": 0,
+            "valid_count": 9873
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 52,
+            "nonfinite_count": 0,
+            "valid_count": 9948
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 554,
+            "nonfinite_count": 0,
+            "valid_count": 9446
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 127,
+            "nonfinite_count": 0,
+            "valid_count": 9873
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 52,
+            "nonfinite_count": 0,
+            "valid_count": 9948
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 554,
+            "nonfinite_count": 0,
+            "valid_count": 9446
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 127,
+            "nonfinite_count": 0,
+            "valid_count": 9873
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 58,
+            "nonfinite_count": 0,
+            "valid_count": 9942
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 554,
+            "nonfinite_count": 0,
+            "valid_count": 9446
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 147,
+            "nonfinite_count": 0,
+            "valid_count": 9853
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1027.las",
+      "split": "train",
+      "saved_payload_sha256": "26e78e87e26e36b932631cc52f78797a611ca55162f07a70aef06ec0db45e41c",
+      "payload_sha256_reverified": false,
+      "size_bytes": 332607611,
+      "header_sha256": "4aef1047e99879f2d42525cb0d7ffe428ec617ac80b453ce4a5243ad09f45517",
+      "points": 4056143,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.9975,
+          -24.9985,
+          0.0
+        ],
+        [
+          24.9975,
+          24.9985,
+          24.858999999999998
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "a5da27cec8a294350efc3b81da51eb63eed3c713c49d0d3fd983de7ac8bb6f7f",
+        "origin_scanner_counts": {
+          "1": 8159,
+          "2": 434,
+          "3": 1407
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 18,
+            "nonfinite_count": 0,
+            "valid_count": 9982
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 5620,
+            "nonfinite_count": 0,
+            "valid_count": 4380
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 2451,
+            "nonfinite_count": 0,
+            "valid_count": 7549
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 18,
+            "nonfinite_count": 0,
+            "valid_count": 9982
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 5620,
+            "nonfinite_count": 0,
+            "valid_count": 4380
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 2451,
+            "nonfinite_count": 0,
+            "valid_count": 7549
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 18,
+            "nonfinite_count": 0,
+            "valid_count": 9982
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 5620,
+            "nonfinite_count": 0,
+            "valid_count": 4380
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 2451,
+            "nonfinite_count": 0,
+            "valid_count": 7549
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 18,
+            "nonfinite_count": 0,
+            "valid_count": 9982
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 5620,
+            "nonfinite_count": 0,
+            "valid_count": 4380
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 2452,
+            "nonfinite_count": 0,
+            "valid_count": 7548
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1031.las",
+      "split": "train",
+      "saved_payload_sha256": "1bd2b5d1997d05ef87c99708b90aab0071d7f6f9240934855f35ed674e8a5cb0",
+      "payload_sha256_reverified": false,
+      "size_bytes": 259035571,
+      "header_sha256": "908bd1c35ae8fca496f3858685207a8b98f13c67ca43adfdd2e0a5339a73b0ac",
+      "points": 3158923,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.9985,
+          -24.997999999999998,
+          0.0
+        ],
+        [
+          24.9985,
+          24.997999999999998,
+          25.983999999999998
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "8d27e03af5f79670ce0b5410cc8563463a99095e8a0dfeba8555eb5fefdcdfa9",
+        "origin_scanner_counts": {
+          "1": 4484,
+          "2": 1347,
+          "3": 4169
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 316,
+            "nonfinite_count": 0,
+            "valid_count": 9684
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 859,
+            "nonfinite_count": 0,
+            "valid_count": 9141
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 654,
+            "nonfinite_count": 0,
+            "valid_count": 9346
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 316,
+            "nonfinite_count": 0,
+            "valid_count": 9684
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 859,
+            "nonfinite_count": 0,
+            "valid_count": 9141
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 654,
+            "nonfinite_count": 0,
+            "valid_count": 9346
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 316,
+            "nonfinite_count": 0,
+            "valid_count": 9684
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 859,
+            "nonfinite_count": 0,
+            "valid_count": 9141
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 654,
+            "nonfinite_count": 0,
+            "valid_count": 9346
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 316,
+            "nonfinite_count": 0,
+            "valid_count": 9684
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 859,
+            "nonfinite_count": 0,
+            "valid_count": 9141
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 658,
+            "nonfinite_count": 0,
+            "valid_count": 9342
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1002.las",
+      "split": "test",
+      "saved_payload_sha256": "f0a99e41cb8e69b7b0ea956e50a3b8cf63266f8872714f7102f98d92699a7154",
+      "payload_sha256_reverified": false,
+      "size_bytes": 155148869,
+      "header_sha256": "c7f1bf9f4fa5a5ca89e0c069fb534efb8e34afba2a7c572f6df6e0a23a789bf6",
+      "points": 1892012,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -19.9975,
+          -19.997,
+          0.0
+        ],
+        [
+          19.9975,
+          19.997,
+          25.322
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "309ba6b1f89611e92750595e88b4720a7643a1c0c19357aef6eb5f27e8ff0ddb",
+        "origin_scanner_counts": {
+          "1": 5049,
+          "2": 835,
+          "3": 4116
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 288,
+            "nonfinite_count": 0,
+            "valid_count": 9712
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 3446,
+            "nonfinite_count": 0,
+            "valid_count": 6554
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1052,
+            "nonfinite_count": 0,
+            "valid_count": 8948
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 288,
+            "nonfinite_count": 0,
+            "valid_count": 9712
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 3446,
+            "nonfinite_count": 0,
+            "valid_count": 6554
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1052,
+            "nonfinite_count": 0,
+            "valid_count": 8948
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 288,
+            "nonfinite_count": 0,
+            "valid_count": 9712
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 3446,
+            "nonfinite_count": 0,
+            "valid_count": 6554
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1052,
+            "nonfinite_count": 0,
+            "valid_count": 8948
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 291,
+            "nonfinite_count": 0,
+            "valid_count": 9709
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 3446,
+            "nonfinite_count": 0,
+            "valid_count": 6554
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1065,
+            "nonfinite_count": 0,
+            "valid_count": 8935
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1004.las",
+      "split": "test",
+      "saved_payload_sha256": "55e8b671a1c4492a4c28b303c12dd1ddee98597838de7a25c1a87279ade1b0a1",
+      "payload_sha256_reverified": false,
+      "size_bytes": 192476335,
+      "header_sha256": "3ed116df7e34f0d45da62ec3c8452ef822cf2afbb1c300a38630504e5c20bde7",
+      "points": 2347225,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -19.997999999999998,
+          -19.999,
+          0.0
+        ],
+        [
+          19.997999999999998,
+          19.999,
+          32.195
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "fa7b773c1720d273b36380a15ada11c2e9da8faae785651ea9fe812088e1c136",
+        "origin_scanner_counts": {
+          "1": 5172,
+          "2": 1062,
+          "3": 3766
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 529,
+            "nonfinite_count": 0,
+            "valid_count": 9471
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 3523,
+            "nonfinite_count": 0,
+            "valid_count": 6477
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1368,
+            "nonfinite_count": 0,
+            "valid_count": 8632
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 529,
+            "nonfinite_count": 0,
+            "valid_count": 9471
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 3523,
+            "nonfinite_count": 0,
+            "valid_count": 6477
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1368,
+            "nonfinite_count": 0,
+            "valid_count": 8632
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 529,
+            "nonfinite_count": 0,
+            "valid_count": 9471
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 3523,
+            "nonfinite_count": 0,
+            "valid_count": 6477
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1368,
+            "nonfinite_count": 0,
+            "valid_count": 8632
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 529,
+            "nonfinite_count": 0,
+            "valid_count": 9471
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 3523,
+            "nonfinite_count": 0,
+            "valid_count": 6477
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 1368,
+            "nonfinite_count": 0,
+            "valid_count": 8632
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1008.las",
+      "split": "test",
+      "saved_payload_sha256": "a1f6aa1414c98dd4ae4bb0e9b907a5ffb29a798cdc01f977e2dd2269859fe95c",
+      "payload_sha256_reverified": false,
+      "size_bytes": 163729021,
+      "header_sha256": "5dff27dfef766e21e13ca11f9f262ce313bfb67fe1889397fbbdb21f428fac3f",
+      "points": 1996648,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.999499999999998,
+          -24.997999999999998,
+          0.0
+        ],
+        [
+          24.999499999999998,
+          24.997999999999998,
+          26.587999999999997
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "bf4100b738e2bc84237ae43e5af0e7b8eee66af725aca73b3f674d8dc9a1b40d",
+        "origin_scanner_counts": {
+          "1": 4803,
+          "2": 1394,
+          "3": 3803
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 0,
+            "nonfinite_count": 0,
+            "valid_count": 10000
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1012.las",
+      "split": "test",
+      "saved_payload_sha256": "9f18287c8d10e5674c816a2486d2f26f8028d02b9ef00a732bb15b0e0bf2cbd3",
+      "payload_sha256_reverified": false,
+      "size_bytes": 257832139,
+      "header_sha256": "1f5aaf5fb04359bc27193c51f2e0d94dc1988cdf765b64db18803179bd417955",
+      "points": 3144247,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.9985,
+          -24.9985,
+          0.0
+        ],
+        [
+          24.9985,
+          24.9985,
+          30.043999999999997
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "ab7de5354de9fd8b6714273157baf8ea242315002658a3c4da8cbc5a19c4faeb",
+        "origin_scanner_counts": {
+          "1": 5058,
+          "2": 1543,
+          "3": 3399
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 25,
+            "nonfinite_count": 0,
+            "valid_count": 9975
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 125,
+            "nonfinite_count": 0,
+            "valid_count": 9875
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 15,
+            "nonfinite_count": 0,
+            "valid_count": 9985
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 25,
+            "nonfinite_count": 0,
+            "valid_count": 9975
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 125,
+            "nonfinite_count": 0,
+            "valid_count": 9875
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 15,
+            "nonfinite_count": 0,
+            "valid_count": 9985
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 25,
+            "nonfinite_count": 0,
+            "valid_count": 9975
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 125,
+            "nonfinite_count": 0,
+            "valid_count": 9875
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 15,
+            "nonfinite_count": 0,
+            "valid_count": 9985
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 25,
+            "nonfinite_count": 0,
+            "valid_count": 9975
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 125,
+            "nonfinite_count": 0,
+            "valid_count": 9875
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 22,
+            "nonfinite_count": 0,
+            "valid_count": 9978
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1018.las",
+      "split": "test",
+      "saved_payload_sha256": "99973c1ce5466cef1b2cbe569d65007ae500a5040f92f6670bdbe06aadbde48a",
+      "payload_sha256_reverified": false,
+      "size_bytes": 236517387,
+      "header_sha256": "cab5812590d24323b54736c81cbbd0f3af370cb104056057cd21d1bc2daf9108",
+      "points": 2884311,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -24.999499999999998,
+          -24.997999999999998,
+          0.0
+        ],
+        [
+          24.999499999999998,
+          24.997999999999998,
+          30.273999999999997
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "6fdb0fe61628d54d56d87912f6c872188f9fe365d47df4c0c32f8d13a01f9e0a",
+        "origin_scanner_counts": {
+          "1": 5078,
+          "2": 890,
+          "3": 4032
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 428,
+            "nonfinite_count": 0,
+            "valid_count": 9572
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 4797,
+            "nonfinite_count": 0,
+            "valid_count": 5203
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 975,
+            "nonfinite_count": 0,
+            "valid_count": 9025
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 428,
+            "nonfinite_count": 0,
+            "valid_count": 9572
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 4797,
+            "nonfinite_count": 0,
+            "valid_count": 5203
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 975,
+            "nonfinite_count": 0,
+            "valid_count": 9025
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 428,
+            "nonfinite_count": 0,
+            "valid_count": 9572
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 4797,
+            "nonfinite_count": 0,
+            "valid_count": 5203
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 975,
+            "nonfinite_count": 0,
+            "valid_count": 9025
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 428,
+            "nonfinite_count": 0,
+            "valid_count": 9572
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 4797,
+            "nonfinite_count": 0,
+            "valid_count": 5203
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 977,
+            "nonfinite_count": 0,
+            "valid_count": 9023
+          }
+        }
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1028.las",
+      "split": "test",
+      "saved_payload_sha256": "d17d3820989ac9d3e0cbe3fac10b5e0ec3746cdf1ec0f786bb3738f9dfb36261",
+      "payload_sha256_reverified": false,
+      "size_bytes": 315527093,
+      "header_sha256": "65607bdd36dc544b9be57937540f39f35bdf0ce4bd8dd5b2830862017db927ed",
+      "points": 3847844,
+      "schema_sha256": "791c9444567f095d31c5258c1b85c83ae8345befa09a8604b277a22490eea562",
+      "las_version": "1.4",
+      "point_format": 7,
+      "scale": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offset": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "bounds": [
+        [
+          -29.9975,
+          -29.999499999999998,
+          0.0
+        ],
+        [
+          29.9975,
+          29.999499999999998,
+          19.590999999999998
+        ]
+      ],
+      "crs": null,
+      "sample": {
+        "selection": "first_points_in_stored_order",
+        "points": 10000,
+        "native_records_sha256": "949a07a91a93cc294e172972b12a6601daebf119e556c0712aad3e58c7ff8834",
+        "origin_scanner_counts": {
+          "1": 3262,
+          "2": 1657,
+          "3": 5081
+        },
+        "measurements": {
+          "intensity_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 17,
+            "nonfinite_count": 0,
+            "valid_count": 9983
+          },
+          "intensity_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 306,
+            "nonfinite_count": 0,
+            "valid_count": 9694
+          },
+          "intensity_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 111,
+            "nonfinite_count": 0,
+            "valid_count": 9889
+          },
+          "amplitude_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 17,
+            "nonfinite_count": 0,
+            "valid_count": 9983
+          },
+          "amplitude_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 306,
+            "nonfinite_count": 0,
+            "valid_count": 9694
+          },
+          "amplitude_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 111,
+            "nonfinite_count": 0,
+            "valid_count": 9889
+          },
+          "reflectance_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 17,
+            "nonfinite_count": 0,
+            "valid_count": 9983
+          },
+          "reflectance_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 306,
+            "nonfinite_count": 0,
+            "valid_count": 9694
+          },
+          "reflectance_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 111,
+            "nonfinite_count": 0,
+            "valid_count": 9889
+          },
+          "deviation_1": {
+            "sampled_points": 10000,
+            "sentinel_count": 30,
+            "nonfinite_count": 0,
+            "valid_count": 9970
+          },
+          "deviation_2": {
+            "sampled_points": 10000,
+            "sentinel_count": 306,
+            "nonfinite_count": 0,
+            "valid_count": 9694
+          },
+          "deviation_3": {
+            "sampled_points": 10000,
+            "sentinel_count": 111,
+            "nonfinite_count": 0,
+            "valid_count": 9889
+          }
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Prefix samples are not representative estimates of whole-plot channel availability.",
+    "LAS payload hashes are copied from saved manifests, not recomputed by this audit.",
+    "Header descriptions report nearest-neighbor channels within 0.25 m; association accuracy and calibration are not validated.",
+    "Source YAML calls RGB scaled intensity; the public description calls it scaled reflectance. The physical quantity remains unresolved.",
+    "No preparation, model execution, cross-source calibration or independent accuracy is validated."
+  ]
+}

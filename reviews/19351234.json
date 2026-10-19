@@ -1,0 +1,128 @@
+{
+  "dataset_id": "19351234",
+  "dataset_sha256": "d0738e42d39abd0ef879ecba77e8224b3f208f3a8bad54245c9595b96b394004",
+  "decision": "admitted",
+  "reviewed_by": "Codex automated metadata analysis; no independent human scientific review is claimed",
+  "reviewed_at": "2026-10-19",
+  "proposal_url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/FGI-EMIT.md",
+  "scope": "Existing-source metadata publication only, authorized by the user. This admits typed descriptors and bounded observation evidence; task preparation remains TBD.",
+  "limitations": "No full-payload verification, task adapter, radiometric calibration, spatial association accuracy, model readiness or independent geographic accuracy is admitted.",
+  "analysis": {
+    "provenance": {
+      "finding": "Previously catalogued pinned record. Source metadata passed its provider MD5 and saved SHA256; source-scoped sensors and native headers are documented.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "rights": {
+      "finding": "Provider-declared CC BY-NC-SA 4.0 and attribution remain explicit. This change publishes metadata evidence and code, not source clouds or a task-use admission.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "integrity": {
+      "finding": "Metadata integrity, original file sizes and all 19 headers inspected. Full LAS payload hashes were not recomputed; saved checksums are labelled historical.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "schema": {
+      "finding": "One 39-field native schema, three scanner channels, twelve quantitative suffix fields and three disputed pseudo-color display fields. Units/calibration remain unresolved.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "coverage": {
+      "finding": "19 headers and 190000 stored-order prefix points. Header counts sum to 60793586. Samples do not establish whole-source channel availability or complete reference.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "duplicates": {
+      "finding": "No deduplication or model-exposure certification. One acquisition area; 19 plots are not 19 independent geographic zones.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    }
+  },
+  "tasks": {
+    "instances": {
+      "status": "conditional",
+      "rationale": "Native tree-instance reference is documented, but complete source/adapter validation remains pending.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "components": {
+      "status": "unknown",
+      "rationale": "Outside this metadata review; no task-specific preparation is admitted.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "species": {
+      "status": "unknown",
+      "rationale": "Outside this metadata review; no task-specific preparation is admitted.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "geometry": {
+      "status": "unknown",
+      "rationale": "Outside this metadata review; no task-specific preparation is admitted.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "spectral": {
+      "status": "unknown",
+      "rationale": "Outside this metadata review; no task-specific preparation is admitted.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    },
+    "biomass": {
+      "status": "unknown",
+      "rationale": "Outside this metadata review; no task-specific preparation is admitted.",
+      "evidence": [
+        "FGI-EMIT.md",
+        "evidence/fgi-emit-measurements.json",
+        "https://zenodo.org/records/19351234",
+        "https://github.com/ruoppa/fgi_emit"
+      ]
+    }
+  }
+}

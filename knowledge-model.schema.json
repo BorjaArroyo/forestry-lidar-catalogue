@@ -8,7 +8,7 @@
     },
     "schema_version": {
       "enum": [
-        "1.2"
+        "1.3"
       ]
     },
     "nodes": {
@@ -538,6 +538,9 @@
         },
         {
           "$ref": "#/$defs/coordinateFrame"
+        },
+        {
+          "$ref": "#/$defs/measurementChannel"
         }
       ]
     },
@@ -806,6 +809,19 @@
         },
         "required": {
           "type": "boolean"
+        },
+        "role": {
+          "enum": [
+            "coordinate",
+            "measurement",
+            "reference",
+            "provenance",
+            "display",
+            "native_attribute"
+          ]
+        },
+        "measurement": {
+          "$ref": "#/$defs/measurementDescriptor"
         }
       },
       "required": [
@@ -1158,6 +1174,13 @@
             "validation_ref": {
               "type": "string",
               "pattern": "^evidence:[A-Za-z0-9_.:-]+$"
+            },
+            "input_requirements": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/inputRequirement"
+              },
+              "minItems": 1
             }
           },
           "required": [
@@ -1276,6 +1299,294 @@
       "required": [
         "type",
         "data"
+      ],
+      "additionalProperties": false
+    },
+    "measurementUnit": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "documented",
+            "unknown"
+          ]
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "symbol",
+        "status",
+        "detail"
+      ],
+      "additionalProperties": false
+    },
+    "measurementMissingness": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "enum": [
+            "documented_sentinel",
+            "not_documented"
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "uniqueItems": true
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "status",
+        "values",
+        "detail"
+      ],
+      "additionalProperties": false
+    },
+    "measurementAssociation": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "enum": [
+            "nearest_neighbor",
+            "not_documented"
+          ]
+        },
+        "max_distance_m": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "exclusiveMinimum": 0
+        },
+        "status": {
+          "enum": [
+            "header_reported",
+            "not_documented",
+            "validated"
+          ]
+        },
+        "validation_ref": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "method",
+        "max_distance_m",
+        "status",
+        "detail"
+      ],
+      "additionalProperties": false
+    },
+    "measurementDescriptor": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "enum": [
+            "intensity",
+            "amplitude",
+            "reflectance",
+            "echo_deviation",
+            "pseudocolor"
+          ]
+        },
+        "semantic_status": {
+          "enum": [
+            "documented",
+            "conflicting"
+          ]
+        },
+        "channel_ref": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+        },
+        "unit": {
+          "$ref": "#/$defs/measurementUnit"
+        },
+        "missingness": {
+          "$ref": "#/$defs/measurementMissingness"
+        },
+        "association": {
+          "$ref": "#/$defs/measurementAssociation"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "quantity",
+        "semantic_status",
+        "channel_ref",
+        "unit",
+        "missingness",
+        "association",
+        "evidence_refs"
+      ],
+      "additionalProperties": false
+    },
+    "measurementChannel": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": [
+            "measurement_channel"
+          ]
+        },
+        "data": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "source_ref": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+            },
+            "scanner_id": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sensor_model": {
+              "type": "string",
+              "minLength": 1
+            },
+            "wavelength_nm": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "calibration": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "enum": [
+                    "not_verified",
+                    "validated"
+                  ]
+                },
+                "detail": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "validation_ref": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+                }
+              },
+              "required": [
+                "status",
+                "detail"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_refs": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "source_ref",
+            "scanner_id",
+            "sensor_model",
+            "wavelength_nm",
+            "calibration",
+            "evidence_refs"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "type",
+        "data"
+      ],
+      "additionalProperties": false
+    },
+    "inputRequirement": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "string",
+          "minLength": 1
+        },
+        "purpose": {
+          "enum": [
+            "preserve",
+            "feature",
+            "reference",
+            "geometry"
+          ]
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "missing_policy": {
+          "enum": [
+            "preserve",
+            "mask",
+            "reject"
+          ]
+        },
+        "calibration": {
+          "enum": [
+            "not_required",
+            "validated"
+          ]
+        },
+        "association": {
+          "enum": [
+            "not_required",
+            "validated"
+          ]
+        }
+      },
+      "required": [
+        "field",
+        "purpose",
+        "unit",
+        "missing_policy",
+        "calibration",
+        "association"
       ],
       "additionalProperties": false
     }

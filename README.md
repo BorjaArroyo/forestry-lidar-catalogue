@@ -122,3 +122,5 @@ In the research checkout the JavaScript files are under `knowledge-hub/`.
 The publication builder uses an explicit allowlist and records file SHA256 in
 `publication-manifest.json`. It excludes archives, previews, local logs,
 credentials, machine paths and unrelated research work.
+
+The [FGI-EMIT measurement review](FGI-EMIT.md) documents native multispectral channels, source-specific missingness and unresolved calibration. Preparation remains TBD.
