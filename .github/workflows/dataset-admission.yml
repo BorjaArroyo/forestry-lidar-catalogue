@@ -1,5 +1,9 @@
 name: Dataset admission
-on: pull_request
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -11,7 +15,8 @@ jobs:
           fetch-depth: 0
       - name: Validate added and changed dataset reviews
         env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          # On pull_request, compare against the merge base; on push, against the previous commit.
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
           python3 scripts/test_catalog_reviews.py
           git show "$BASE_SHA:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
@@ -30,6 +35,7 @@ jobs:
           python3 tests/test_knowledge_model.py
           python3 tests/test_catalog_content.py
           python3 tests/test_knowledge_hub_service.py
+          python3 tests/test_pinned_sources.py
           python3 scripts/for_instance/test_pipeline.py
           node --check app.js
           node --check workbench.js

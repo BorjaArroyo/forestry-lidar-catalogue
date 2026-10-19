@@ -32,6 +32,12 @@ unsupported cases. Native support and operational preparation stay independent.
 `listing_order` and `conditional_order` retain existing display selections; a null
 position means absent from that list, not scientific incompatibility.
 
+Source profiles may declare `class_semantics`: the source's native classification
+codes as evidence-backed data (`code`, `term`, `evidence_ref`). Codes are scoped
+to their source — FOR-instance class 2 is terrain while FGI-EMIT class 2 is
+building — and a preparation admitted as `ready` must declare them, so class
+collisions between sources are checked by validation rather than read in prose.
+
 Source identity is the version-specific Zenodo record. Concept-level dataset
 families are not guessed from names. Versions, assets and acquisition observations
 remain in their existing inventories, joined by record ID. Tree IDs stay scene-local.

@@ -478,7 +478,44 @@ window.LIDAR_CATALOG = {
           "limited_reference_copy": false
         }
       },
-      "download_bytes": 1643251814
+      "download_bytes": 1643251814,
+      "class_semantics": [
+        {
+          "code": "0",
+          "term": "unclassified",
+          "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+        },
+        {
+          "code": "1",
+          "term": "low vegetation",
+          "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+        },
+        {
+          "code": "2",
+          "term": "terrain",
+          "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+        },
+        {
+          "code": "3",
+          "term": "outside trees",
+          "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+        },
+        {
+          "code": "4",
+          "term": "stem",
+          "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+        },
+        {
+          "code": "5",
+          "term": "live branches",
+          "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+        },
+        {
+          "code": "6",
+          "term": "woody branches",
+          "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+        }
+      ]
     },
     {
       "name": "FOR-instance V2",
@@ -632,7 +669,24 @@ window.LIDAR_CATALOG = {
           "limited_reference_copy": false
         }
       },
-      "download_bytes": 3001526346
+      "download_bytes": 3001526346,
+      "class_semantics": [
+        {
+          "code": "1",
+          "term": "terrain",
+          "evidence_ref": "evidence:d2fbfac86be5da85fd83a052"
+        },
+        {
+          "code": "2",
+          "term": "wood",
+          "evidence_ref": "evidence:d2fbfac86be5da85fd83a052"
+        },
+        {
+          "code": "3",
+          "term": "foliage",
+          "evidence_ref": "evidence:d2fbfac86be5da85fd83a052"
+        }
+      ]
     },
     {
       "name": "ForestSemantic",
@@ -2222,6 +2276,38 @@ window.LIDAR_CATALOG = {
               ]
             }
           ]
+        }
+      ],
+      "class_semantics": [
+        {
+          "code": "0",
+          "term": "other",
+          "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+        },
+        {
+          "code": "1",
+          "term": "tree",
+          "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+        },
+        {
+          "code": "2",
+          "term": "building",
+          "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+        },
+        {
+          "code": "3",
+          "term": "vehicle",
+          "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+        },
+        {
+          "code": "4",
+          "term": "pole",
+          "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+        },
+        {
+          "code": "5",
+          "term": "out",
+          "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
         }
       ]
     },
@@ -8837,8 +8923,8 @@ window.LIDAR_CATALOG = {
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "model_sha256": "274c1006be5910d21153da0a3e864d3ccae6113959ff9b6b2b559e61f270cfcf",
-    "model_schema_sha256": "a17c12e6e849f55b322c4f0fd3cd6ab513d094fc78efa055f0c92e085bba0640"
+    "model_sha256": "fc52044854936a36852fb40e33434295b29b5ca0607650356f909ae497a0d082",
+    "model_schema_sha256": "7cc1e4cc71e4bfb0c4913dbd144a5394bf4248df3333656ccff5d119ec0c4d87"
   },
   "evidence": [
     {

@@ -52,6 +52,26 @@ class KnowledgeModel(unittest.TestCase):
     def test_record_identity_is_version_scoped(self):
         self.rejects(lambda g: g['nodes']['zenodo:8287792']['data'].update(record_id='9'))
 
+    def test_ready_preparation_requires_declared_class_semantics(self):
+        self.rejects(lambda g: g['nodes']['zenodo:8287792']['data']['profile'].pop('class_semantics'))
+
+    def test_class_semantics_codes_are_unique_and_evidence_backed(self):
+        self.rejects(lambda g: g['nodes']['zenodo:19351234']['data']['profile']['class_semantics'][1].update(code='0'))
+        self.graph = model.load()
+        self.rejects(lambda g: g['nodes']['zenodo:16742708']['data']['profile']['class_semantics'][0].update(evidence_ref='evidence:missing'))
+
+    def test_class_codes_are_source_scoped_data(self):
+        def terms(record):
+            profile = self.graph['nodes'][record]['data']['profile']
+            return {entry['code']: entry['term'] for entry in profile['class_semantics']}
+        for_v1, for_v2, fgi = terms('zenodo:8287792'), terms('zenodo:16742708'), terms('zenodo:19351234')
+        self.assertEqual(for_v1['1'], 'low vegetation')
+        self.assertEqual(for_v2['1'], 'terrain')
+        self.assertEqual(for_v1['2'], 'terrain')
+        self.assertEqual(fgi['2'], 'building')
+        self.assertEqual(len(for_v1), 7)
+        self.assertEqual(len(fgi), 6)
+
     def test_evidence_must_exist_and_be_shared(self):
         evidence = next(k for k, v in self.graph['nodes'].items() if v['type'] == 'evidence')
         self.rejects(lambda g: g['nodes'].pop(evidence))

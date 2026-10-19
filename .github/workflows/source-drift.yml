@@ -1,0 +1,17 @@
+name: Pinned source drift
+on:
+  schedule:
+    # 06:00 UTC daily; the catalogue is curated in Europe.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compare pinned records against provider metadata
+        run: |
+          python3 scripts/check_pinned_sources.py
+          python3 tests/test_pinned_sources.py

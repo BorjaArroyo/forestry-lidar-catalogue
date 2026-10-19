@@ -5,6 +5,28 @@ reference coverage and inspect source evidence and limitations.
 
 Published at https://borjaarroyo.github.io/forestry-lidar-catalogue/.
 
+## How the pieces fit
+
+A pinned provider **record** (10 sources) is curated into the graph. A verified
+local **download** of a reviewed record feeds a source-specific, validated
+**preparation** that produces a **task package** with native fields, reference
+masks and published splits:
+
+```
+record (pinned Zenodo release)          read-only curation
+   └── download (provider checksums, resume)     requires the local service
+          └── prepare (source-specific adapter)   validated end to end
+                 └── task package (NPZ + provenance)   no benchmark claims added
+```
+
+Quick paths:
+
+- **Browse the catalog**: open the published site above. No setup required.
+- **Get FOR-instance locally**: run the download service (below) and select
+  "Prepare instance data after download".
+- **Add a source or transformation**: read [CONTRIBUTING.md](CONTRIBUTING.md)
+  first; admission requires reviews, evidence and passing validation.
+
 ## Current scope
 
 - Ten pinned source records, search, filters, comparison and metadata export.
@@ -113,6 +135,7 @@ python scripts/knowledge_model.py
 python tests/test_knowledge_model.py
 python tests/test_catalog_content.py
 python tests/test_knowledge_hub_service.py
+python tests/test_pinned_sources.py
 python scripts/for_instance/test_pipeline.py
 node --check app.js
 node --check workbench.js

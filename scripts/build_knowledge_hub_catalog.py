@@ -4,9 +4,8 @@ import collections
 import copy
 import hashlib
 import json
-from datetime import datetime, timezone
 from pathlib import Path
-from knowledge_model import load as load_model, project, model_hashes
+from knowledge_model import load as load_model, project, model_hashes, snapshot_timestamp
 
 # Curated source facts and proposals are separate from observed acquisition counts.
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,7 +35,7 @@ def build(inventory, status, outputs):
     for x in outputs:source_groups[(x['sha256'],x['size_bytes'])].append(x)
     byte_groups=[g for g in source_groups.values() if len(g)>1]
     point_groups=[g for g in byte_groups if any(Path(x['path']).suffix=='.ply' for x in g)]
-    catalog={'schema_version':'0.1','generated_at':datetime.now(timezone.utc).isoformat(),'title':'Canopy / LiDAR Knowledge Hub','scope':'Acquired sources; compatibility is task-specific and does not authorize training or redistribution.','summary':{'datasets':len(datasets),'assets':len(status['completed']),'clouds':len(scenes),'points':sum(x['point_count'] for x in scenes),'chunks':sum(len(x['chunks']) for x in scenes),'deferred':3,'acquisition_errors':len(status['errors']),'conversion_errors':len(status['conversion_errors']),'duplicate_source_groups':len(byte_groups),'duplicate_cloud_copies':sum(len(g)-1 for g in point_groups),'identical_scene_groups':len(identical),'identical_scene_extras':sum(len(g)-1 for g in identical)},'tasks':copy.deepcopy(TASKS),'datasets':datasets}
+    catalog={'schema_version':'0.1','generated_at':snapshot_timestamp(ROOT),'title':'Canopy / LiDAR Knowledge Hub','scope':'Acquired sources; compatibility is task-specific and does not authorize training or redistribution.','summary':{'datasets':len(datasets),'assets':len(status['completed']),'clouds':len(scenes),'points':sum(x['point_count'] for x in scenes),'chunks':sum(len(x['chunks']) for x in scenes),'deferred':3,'acquisition_errors':len(status['errors']),'conversion_errors':len(status['conversion_errors']),'duplicate_source_groups':len(byte_groups),'duplicate_cloud_copies':sum(len(g)-1 for g in point_groups),'identical_scene_groups':len(identical),'identical_scene_extras':sum(len(g)-1 for g in identical)},'tasks':copy.deepcopy(TASKS),'datasets':datasets}
     catalog['mappings'] = json.loads(json.dumps(RELATIONSHIPS))
     for dataset in datasets:
         review = dataset['review']

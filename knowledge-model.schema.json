@@ -307,6 +307,38 @@
           "type": "string",
           "minLength": 1
         },
+        "class_semantics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)$"
+              },
+              "term": {
+                "type": "string",
+                "minLength": 1
+              },
+              "evidence_ref": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*:[A-Za-z0-9_.:-]+$"
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "code",
+              "term",
+              "evidence_ref"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
         "role": {
           "type": "string",
           "minLength": 1

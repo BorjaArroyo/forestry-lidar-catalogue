@@ -102,6 +102,43 @@
           "spectral": false,
           "kind": "Plot clouds",
           "labels": "Plot-local treeID; terrain, low vegetation, outside-tree, stem, live-branch and woody-branch classes; species in some collections",
+          "class_semantics": [
+            {
+              "code": "0",
+              "term": "unclassified",
+              "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+            },
+            {
+              "code": "1",
+              "term": "low vegetation",
+              "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+            },
+            {
+              "code": "2",
+              "term": "terrain",
+              "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+            },
+            {
+              "code": "3",
+              "term": "outside trees",
+              "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+            },
+            {
+              "code": "4",
+              "term": "stem",
+              "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+            },
+            {
+              "code": "5",
+              "term": "live branches",
+              "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+            },
+            {
+              "code": "6",
+              "term": "woody branches",
+              "evidence_ref": "evidence:801067957a7667f9f154cfd8"
+            }
+          ],
           "role": "Published dev/test benchmark",
           "readiness": "Native labels; mapping incomplete",
           "note": "Original semantic classes do not provide a simple wood/foliage crosswalk. Preserve the official dev/test protocol.",
@@ -306,6 +343,23 @@
           "spectral": false,
           "kind": "Plot clouds",
           "labels": "Ground, wood, foliage and tree instances",
+          "class_semantics": [
+            {
+              "code": "1",
+              "term": "terrain",
+              "evidence_ref": "evidence:d2fbfac86be5da85fd83a052"
+            },
+            {
+              "code": "2",
+              "term": "wood",
+              "evidence_ref": "evidence:d2fbfac86be5da85fd83a052"
+            },
+            {
+              "code": "3",
+              "term": "foliage",
+              "evidence_ref": "evidence:d2fbfac86be5da85fd83a052"
+            }
+          ],
           "role": "Published train/validation/test benchmark",
           "readiness": "Native annotation schema",
           "note": "Native namespace: 1 terrain, 2 wood, 3 foliage. These class IDs do not define a catalog-wide ontology.",
@@ -582,6 +636,38 @@
           "spectral": true,
           "kind": "Plot clouds",
           "labels": "Tree instances; other, tree, building, vehicle, pole, out",
+          "class_semantics": [
+            {
+              "code": "0",
+              "term": "other",
+              "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+            },
+            {
+              "code": "1",
+              "term": "tree",
+              "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+            },
+            {
+              "code": "2",
+              "term": "building",
+              "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+            },
+            {
+              "code": "3",
+              "term": "vehicle",
+              "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+            },
+            {
+              "code": "4",
+              "term": "pole",
+              "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+            },
+            {
+              "code": "5",
+              "term": "out",
+              "evidence_ref": "evidence:35d3dc9ef0e54211d26b6c35"
+            }
+          ],
           "role": "Published instance benchmark",
           "readiness": "Instance crosswalk",
           "note": "Native classes include built objects. The local study uses only selected test plots; the provider also supplies training data.",

@@ -3,12 +3,35 @@ import argparse
 import copy
 import hashlib
 import json
+import os
+import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 
 from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTENT = ROOT / 'knowledge-hub' if (ROOT / 'knowledge-hub').is_dir() else ROOT
+
+
+def snapshot_timestamp(root=ROOT):
+    """Date a snapshot by reproducible provenance, not by wall-clock build time.
+
+    SOURCE_DATE_EPOCH wins when set; otherwise the HEAD commit date of the
+    content checkout, so identical inputs and commits regenerate identical
+    bytes. Only a checkout without git history falls back to the current time.
+    """
+    epoch = os.environ.get('SOURCE_DATE_EPOCH')
+    if epoch:
+        return datetime.fromtimestamp(int(epoch), tz=timezone.utc).isoformat()
+    try:
+        head = subprocess.run(['git', '-C', str(root), 'log', '-1', '--format=%cI'],
+                              capture_output=True, text=True, timeout=10)
+        if head.returncode == 0 and head.stdout.strip():
+            return head.stdout.strip()
+    except (OSError, subprocess.SubprocessError):
+        pass
+    return datetime.now(timezone.utc).isoformat()
 
 
 def read_json(path):
@@ -84,6 +107,13 @@ def validate(model, schema):
             if key != 'zenodo:' + data['record_id']:
                 raise ValueError('Source identity must match its version-specific Zenodo record')
             sources.add(key)
+            semantics = data['profile'].get('class_semantics')
+            if semantics:
+                codes = [entry['code'] for entry in semantics]
+                if len(codes) != len(set(codes)):
+                    raise ValueError(f'{key}: class semantics codes must be unique within a source')
+                for entry in semantics:
+                    require(entry['evidence_ref'], 'evidence')
             for fact in data['profile']['review']['source_facts']:
                 require(fact['evidence_ref'], 'evidence')
                 if 'url' not in nodes[fact['evidence_ref']]['data']:
@@ -159,6 +189,8 @@ def validate(model, schema):
             admitted = [n for n in nodes.values() if n['type'] == 'pipeline_spec' and n['data']['source_ref'] == source and n['data']['task_ref'] == 'task:instances' and n['data']['execution_enabled']]
             if len(admitted) != 1:
                 raise ValueError('A ready source requires exactly one enabled instance pipeline for its pinned release')
+            if not nodes[source]['data']['profile'].get('class_semantics'):
+                raise ValueError('A ready preparation must declare its native class semantics as source-scoped data')
     if not sources or not tasks:
         raise ValueError('The graph requires sources and tasks')
     _ordered([nodes[t]['data']['order'] for t in tasks], 'Tasks')
