@@ -1,0 +1,33 @@
+{
+  "repo": "https://github.com/ktock/demo-images",
+  "commit": "9ff24d9e8e1fa9873ce31176706bf431d48770ac",
+  "demo_commit": "8228aaa4a7c9d179cbe266a119e69f58746f1742",
+  "source_image_recipe": "python:3.11-alpine",
+  "source_image_digest": "not recorded upstream",
+  "converter_version": "not recorded upstream",
+  "files": [
+    {
+      "path": "amd64-python-wasi-container00.wasm",
+      "size_bytes": 50000000,
+      "sha256": "8dcb79e96711a173aeb8b8b599ee3a83bc1dbb9ee3671706a6141ffed569e84c"
+    },
+    {
+      "path": "amd64-python-wasi-container01.wasm",
+      "size_bytes": 50000000,
+      "sha256": "5c54419a800ca54c44acb80fbd822e11e45cc2d88837fca6cc1ad4f61b55c424"
+    },
+    {
+      "path": "amd64-python-wasi-container02.wasm",
+      "size_bytes": 45588571,
+      "sha256": "4683ba18f70bef0c1da22bd33b947a911899c08051f8a60b3b619d5cd20b0590"
+    }
+  ],
+  "base_url": "https://raw.githubusercontent.com/ktock/demo-images/9ff24d9e8e1fa9873ce31176706bf431d48770ac/",
+  "wasm_sha256": "ed78cdc4ab4e1334ec7396eda4db5bc058e4e42825142af06096e1fd762275e3",
+  "operation_sha256": "1d9173bef4d3d36053d23d3aa634b7d3a7a6fad0738593e5ae9b1bff0ae7009f",
+  "shim": {
+    "package": "@bjorn3/browser_wasi_shim",
+    "version": "0.4.2"
+  },
+  "scope": "Experimental upstream converted container; source image digest and converter version are not recorded upstream. Not admitted for dataset preparation."
+}

@@ -43,3 +43,10 @@ and tooling changes are listed here without a version bump. Follows
 - Initial publication: ten pinned source records, search and comparison views,
   download service with checksum verification, reviewed dataset admission
   workflow and the schema-validated property graph (schema version 0.1).
+
+## Browser container feasibility lab
+
+- Added fixed, read-only LAS inspection in an upstream Python/Linux container running on WebAssembly/WASI.
+- Verified the golden LAS in native Python, Node WASI and Firefox on a static local page.
+- Added a public experimental workbench entry, immutable runtime hashes, explicit 1 MiB scope and six operation regression tests.
+- Full source preparation, reproducible image builds and complete public Firefox file/export acceptance remain pending.

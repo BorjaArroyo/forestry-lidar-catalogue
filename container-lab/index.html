@@ -1,0 +1,6 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Canopy · WASI container proof</title>
+<style>body{font:16px system-ui;max-width:950px;margin:40px auto;background:#f7f8f4;color:#173e36;padding:20px}button,input{font:inherit;padding:10px;margin:8px 8px 8px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid #cdd7d0;padding:16px;background:white}small{display:block}</style>
+<h1>LAS inspection inside a WebAssembly container</h1><p>Python runs inside an upstream container2wasm Linux/x86-64 container. No local Python service is used. Prototype: uncompressed LAS up to 1 MiB.</p>
+<p>The pinned upstream runtime download is 145.6 MB and starts with about 256 MB of WebAssembly memory. Total browser memory is higher. This is not a whole-dataset preparation pipeline. Runtime build provenance is incomplete; use this lab only for feasibility checks.</p>
+<label>Choose a small LAS file <input type="file" id="file" accept=".las"></label><div><button id="sample">Run synthetic LAS example</button><button id="run" disabled>Inspect selected LAS</button><button id="cancel" disabled>Cancel</button><button id="download" disabled>Download JSON evidence</button></div>
+<p id="status" role="status">Ready. Your selected file stays in this browser.</p><pre id="result">No result yet.</pre><script type="module" src="./ui.js"></script></html>

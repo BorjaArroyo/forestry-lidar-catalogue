@@ -147,3 +147,18 @@ The publication builder uses an explicit allowlist and records file SHA256 in
 credentials, machine paths and unrelated research work.
 
 The [FGI-EMIT measurement review](FGI-EMIT.md) documents native multispectral channels, source-specific missingness and unresolved calibration. Preparation remains TBD.
+
+
+## Browser container feasibility lab
+
+Open [the public container lab](https://borjaarroyo.github.io/forestry-lidar-catalogue/container-lab/)
+for read-only inspection of an uncompressed LAS up to 1 MiB. A pinned upstream
+Python/Linux/x86-64 container runs on WebAssembly through container2wasm/Bochs;
+no local Python or Docker service is required for execution. The selected LAS
+stays in the browser. A synthetic example, cancellation and JSON evidence export
+are available. This is a feasibility lab, not FOR-instance or FGI-EMIT preparation.
+
+The first runtime fetch is 145.6 MB; WASM starts with approximately 256 MB of
+linear memory, with additional browser memory use. Runtime chunks, the assembled
+WASM and the fixed operation are SHA256 checked. Read [the experiment scope](BROWSER-CONTAINERS.md)
+before interpreting its results or extending the operation.
