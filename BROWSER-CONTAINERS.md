@@ -78,11 +78,16 @@ locally and contains no provider data.
 
 ## Next acceptance checks
 
-Verify the public GitHub Pages route in Firefox: file selection, the real
-subset run, a bounded provider download with its verification message, and
-report export. Native reference equivalence for the real subset is covered
-offline by tests; the in-browser run remains manual. Whole-source downloads,
-multisource preprocessing and dataset transformations still require the local
-service path and their own admission review. Existing local preparation
-remains a separate path; this prototype does not make public-site
-local-directory forms operational.
+The public GitHub Pages route executed the real FOR-instance subset in Firefox:
+the exported evidence matched the pinned native reference field for field
+(identical report, operation and input hashes, runtime bytes as pinned) and
+measured 21 s for 20,000 points inside the emulated container. That measured
+rate also quantifies the boundary: a whole-source coordinate scan of the
+151,478,959-point archive would take on the order of two days of browser
+computation, before any transformation, so whole-source browser preparation
+is out of scope on evidence, not assumption. Remaining manual check: a
+bounded provider download through the page's asset picker with its
+verification message and save-to-disk export. Multisource preprocessing and
+dataset transformations still require the local service path and their own
+admission review; this prototype does not make public-site local-directory
+forms operational.
