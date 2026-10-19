@@ -42,4 +42,17 @@ class BrowserContainer(unittest.TestCase):
         self.assertIn(lock['commit'],lock['base_url'])
         self.assertEqual(lock['shim']['version'],'0.4.2')
 
+    def test_real_for_instance_subset_matches_native_reference(self):
+        data=(LAB/'real-subset.las').read_bytes()
+        lock=json.loads((LAB/'runtime-lock.json').read_text())['real_subset']
+        self.assertEqual(hashlib.sha256(data).hexdigest(),lock['sha256'])
+        self.assertEqual(lock['source_record'],'8287792')
+        self.assertEqual(lock['license'],'cc-by-4.0')
+        result=inspector.inspect(data)
+        self.assertEqual(result['point_count'],20000)
+        self.assertEqual(result['point_format'],2)
+        self.assertEqual(result['finite_xyz_points'],20000)
+        self.assertEqual(result['bounds'],{'min':[1886524.87,5771858.677,0.0],'max':[1886537.936,5771873.654,21.7]})
+        self.assertEqual(result['input_sha256'],lock['sha256'])
+
 if __name__=='__main__':unittest.main()

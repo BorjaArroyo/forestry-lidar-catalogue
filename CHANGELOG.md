@@ -7,6 +7,14 @@ and tooling changes are listed here without a version bump. Follows
 
 ## 2026-10-19
 
+- The browser container lab gains backendless bounded downloads and a
+  real-data path: small pinned record assets (8 MiB bound) stream directly
+  from the provider in the browser with pinned size and provider-MD5
+  verification against the public inventory, and a real FOR-instance subset
+  (first 20,000 points of SCION plot 39, CC-BY-4.0, provenance pinned in
+  runtime-lock.json) runs through the WASI container for output-equivalence
+  checks. Offline tests cover the native reference report, the MD5
+  implementation (RFC 1321 vectors) and the download verification logic.
 - Service and acquisition state now resolves from one configurable root:
   `CANOPY_STATE` when set, otherwise the checkout's `temp/`. Jobs, staging,
   locks and a new per-acquisition index (`acquisitions/index.json` with the

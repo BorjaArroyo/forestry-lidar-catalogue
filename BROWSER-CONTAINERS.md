@@ -6,6 +6,28 @@ by container2wasm. The emulator is Bochs compiled to WASI. Browser JavaScript
 provides WASI file descriptors and a Web Worker; Python performs the LAS parsing.
 This is actual container execution on WebAssembly, not a JavaScript LAS parser.
 
+## Backendless bounded downloads
+
+The page can also download small pinned record assets directly from the
+provider in the browser: the pinned public inventory is loaded, assets within
+an 8 MiB prototype bound are listed, the file is streamed from Zenodo and the
+pinned size and the provider's MD5 checksum are verified before use
+(`download.js`, `md5.js`). No server, proxy or local service participates; the
+provider must send permissive CORS, which Zenodo does. Verified bytes stay in
+the browser and can be saved to disk. Downloads do not resume across reloads,
+and whole-archive acquisition (up to 3 GB) still requires the local service.
+
+## Real-data subset
+
+`real-subset.las` is a bounded real subset for output-equivalence checks: the
+first 20,000 point records of `SCION/plot_39_annotated.las` from the pinned
+FOR-instance record 8287792 (CC-BY-4.0), with the legacy point count patched to
+match and no other header field modified. Its SHA256, the source plot and the
+source file SHA256 are pinned in `runtime-lock.json`; the offline test
+reproduces the native reference report (point count, format, decoded bounds)
+and the page refuses to run the subset on a checksum mismatch. FOR-instance
+is attributed here as the data source; this subset is not a dataset release.
+
 ## Evidence and boundaries
 
 A native Python reference and Node WASI execution agreed on the golden fixture's
@@ -56,8 +78,11 @@ locally and contains no provider data.
 
 ## Next acceptance checks
 
-Verify the public GitHub Pages route in Firefox, file selection and report
-export. Then test a bounded real LAS subset and output equivalence before
-considering streaming, complete source downloads or dataset transformations.
-Existing local preparation remains a separate path; this prototype does not
-make public-site local-directory forms operational.
+Verify the public GitHub Pages route in Firefox: file selection, the real
+subset run, a bounded provider download with its verification message, and
+report export. Native reference equivalence for the real subset is covered
+offline by tests; the in-browser run remains manual. Whole-source downloads,
+multisource preprocessing and dataset transformations still require the local
+service path and their own admission review. Existing local preparation
+remains a separate path; this prototype does not make public-site
+local-directory forms operational.

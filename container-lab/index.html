@@ -2,5 +2,10 @@
 <style>body{font:16px system-ui;max-width:950px;margin:40px auto;background:#f7f8f4;color:#173e36;padding:20px}button,input{font:inherit;padding:10px;margin:8px 8px 8px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;border:1px solid #cdd7d0;padding:16px;background:white}small{display:block}</style>
 <h1>LAS inspection inside a WebAssembly container</h1><p>Python runs inside an upstream container2wasm Linux/x86-64 container. No local Python service is used. Prototype: uncompressed LAS up to 1 MiB.</p>
 <p>The pinned upstream runtime download is 145.6 MB and starts with about 256 MB of WebAssembly memory. Total browser memory is higher. This is not a whole-dataset preparation pipeline. Runtime build provenance is incomplete; use this lab only for feasibility checks.</p>
-<label>Choose a small LAS file <input type="file" id="file" accept=".las"></label><div><button id="sample">Run synthetic LAS example</button><button id="run" disabled>Inspect selected LAS</button><button id="cancel" disabled>Cancel</button><button id="download" disabled>Download JSON evidence</button></div>
-<p id="status" role="status">Ready. Your selected file stays in this browser.</p><pre id="result">No result yet.</pre><script type="module" src="./ui.js"></script></html>
+<label>Choose a small LAS file <input type="file" id="file" accept=".las"></label><div><button id="sample">Run synthetic LAS example</button><button id="real">Run real FOR-instance subset</button><button id="run" disabled>Inspect selected LAS</button><button id="cancel" disabled>Cancel</button><button id="download" disabled>Download JSON evidence</button></div>
+<p id="status" role="status">Ready. Your selected file stays in this browser.</p>
+<h2>Download a pinned asset without a backend</h2>
+<p>The browser downloads directly from the provider (Zenodo). Size and the provider's MD5 are checked against the published pinned inventory. Small assets only (8 MiB prototype bound); large archives still need the local service. Verified downloads stay in this browser and can be saved to disk.</p>
+<label>Pinned asset <select id="asset"></select></label><div><button id="fetch">Download and verify</button><button id="save" disabled>Save to disk</button><button id="inspect-downloaded" disabled>Inspect downloaded LAS in container</button></div>
+<p id="dl-status" role="status">Loading pinned inventory…</p>
+<pre id="result">No result yet.</pre><script type="module" src="./ui.js"></script></html>

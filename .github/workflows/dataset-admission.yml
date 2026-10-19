@@ -38,6 +38,7 @@ jobs:
           python3 tests/test_pinned_sources.py
           python3 scripts/for_instance/test_pipeline.py
           python3 tests/test_browser_container.py
+          node tests/test_container_lab_js.mjs
           node --check container-lab/worker.js
           node --check container-lab/ui.js
           node --check app.js
