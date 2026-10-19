@@ -1,6 +1,6 @@
 # Browser container feasibility experiment
 
-The experimental page under `container-lab/` executes a fixed, read-only LAS
+The experimental section embedded in the catalogue's Download & prepare view (assets under `container-lab/`) executes a fixed, read-only LAS
 inspection operation inside a Python/Linux/x86-64 container converted upstream
 by container2wasm. The emulator is Bochs compiled to WASI. Browser JavaScript
 provides WASI file descriptors and a Web Worker; Python performs the LAS parsing.
@@ -8,7 +8,7 @@ This is actual container execution on WebAssembly, not a JavaScript LAS parser.
 
 ## Backendless bounded downloads
 
-The page can also download small pinned record assets directly from the
+The section can also download small pinned record assets directly from the
 provider in the browser: the pinned public inventory is loaded, assets within
 an 8 MiB prototype bound are listed, the file is streamed from Zenodo and the
 pinned size and the provider's MD5 checksum are verified before use
@@ -25,14 +25,14 @@ FOR-instance record 8287792 (CC-BY-4.0), with the legacy point count patched to
 match and no other header field modified. Its SHA256, the source plot and the
 source file SHA256 are pinned in `runtime-lock.json`; the offline test
 reproduces the native reference report (point count, format, decoded bounds)
-and the page refuses to run the subset on a checksum mismatch. FOR-instance
+and the section refuses to run the subset on a checksum mismatch. FOR-instance
 is attributed here as the data source; this subset is not a dataset release.
 
 ## Evidence and boundaries
 
 A native Python reference and Node WASI execution agreed on the golden fixture's
 input SHA256, three points and decoded XYZ bounds, including projected-scale
-coordinate precision. The Firefox static-page test displayed completed execution
+coordinate precision. The Firefox embedded-section test displayed completed execution
 and the expected input and operation hashes. The guest reports Python 3.11.5,
 Linux and x86_64. Host artifact hashes and scope are included in the JSON report.
 
@@ -44,7 +44,7 @@ calibration, complete dataset coverage or a preparation pipeline. Its File input
 and synthetic example use the same read-only virtual mapping. Source files are
 not modified. Invalid input produces an explicit error; cancellation terminates
 the worker. The 120-second timeout also terminates it. Browser jobs do not resume
-or survive closing the page.
+or survive closing the browser page.
 
 ## Runtime and filesystem
 
@@ -55,7 +55,7 @@ measurement of total resident process memory or proof of multi-GB scalability.
 
 Only the selected LAS and the fixed inspector are mapped into the container.
 No arbitrary host paths, Docker socket, local HTTP API or container networking
-are exposed. The page fetches runtime artifacts and its code; selected data is
+are exposed. The browser fetches runtime artifacts and its code; selected data is
 not uploaded. The report is exported through a normal browser download, without
 requiring File System Access directory-picker support.
 
@@ -86,7 +86,7 @@ rate also quantifies the boundary: a whole-source coordinate scan of the
 151,478,959-point archive would take on the order of two days of browser
 computation, before any transformation, so whole-source browser preparation
 is out of scope on evidence, not assumption. Remaining manual check: a
-bounded provider download through the page's asset picker with its
+bounded provider download through the section's asset picker with its
 verification message and save-to-disk export. Multisource preprocessing and
 dataset transformations still require the local service path and their own
 admission review; this prototype does not make public-site local-directory

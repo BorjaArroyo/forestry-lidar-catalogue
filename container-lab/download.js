@@ -3,7 +3,7 @@
 // Bounded to MAX_DOWNLOAD_BYTES so this prototype stays honest about scale.
 import { md5 } from './md5.js';
 
-export const INVENTORY_URL = '../docs/lidar-acquisition-inventory.json';
+export const INVENTORY_URL = 'docs/lidar-acquisition-inventory.json';
 export const MAX_DOWNLOAD_BYTES = 8 * 1024 * 1024;
 
 export function smallAssets(inventory, limit = MAX_DOWNLOAD_BYTES) {

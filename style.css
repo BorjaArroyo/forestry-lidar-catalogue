@@ -186,7 +186,8 @@ dialog{padding:18px}
 .job-row{display:flex;align-items:center;gap:18px;padding:20px;background:#fffef9;border:1px solid #dce1d6;border-radius:10px;margin:12px 0}
 .job-row>div{flex:1;min-width:0}
 .job-row small{display:block;overflow-wrap:anywhere;margin-top:7px;color:#697963}
-#job-log{background:#143d34;color:#e9f0df;border-radius:8px;padding:20px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:450px;overflow:auto;font-size:12px}
+#job-log,.evidence-log{background:#143d34;color:#e9f0df;border-radius:8px;padding:20px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:450px;overflow:auto;font-size:12px}
+.lab-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
 @media(max-width:1000px){
 .workbench-grid{grid-template-columns:1fr}
 .job-row{flex-wrap:wrap}

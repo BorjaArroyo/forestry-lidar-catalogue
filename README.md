@@ -157,12 +157,14 @@ The [FGI-EMIT measurement review](FGI-EMIT.md) documents native multispectral ch
 
 ## Browser container feasibility lab
 
-Open [the public container lab](https://borjaarroyo.github.io/forestry-lidar-catalogue/container-lab/)
-for read-only inspection of an uncompressed LAS up to 1 MiB. A pinned upstream
+Open the [Download & prepare view](https://borjaarroyo.github.io/forestry-lidar-catalogue/#workbench)
+for read-only inspection of an uncompressed LAS up to 1 MiB and verified
+small downloads of pinned record assets, all inside the browser. A pinned upstream
 Python/Linux/x86-64 container runs on WebAssembly through container2wasm/Bochs;
 no local Python or Docker service is required for execution. The selected LAS
-stays in the browser. A synthetic example, cancellation and JSON evidence export
-are available. This is a feasibility lab, not FOR-instance or FGI-EMIT preparation.
+stays in the browser. A synthetic example, a real FOR-instance subset,
+cancellation and JSON evidence export are available. This is a feasibility
+lab, not FOR-instance or FGI-EMIT preparation.
 
 The first runtime fetch is 145.6 MB; WASM starts with approximately 256 MB of
 linear memory, with additional browser memory use. Runtime chunks, the assembled

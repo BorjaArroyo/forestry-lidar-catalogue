@@ -7,6 +7,10 @@ and tooling changes are listed here without a version bump. Follows
 
 ## 2026-10-19
 
+- The browser container lab is no longer a separate page: its controls are
+  embedded in the catalogue's Download & prepare view with the site's own
+  styling and navigation (`#workbench`), while the runtime, worker, fixtures
+  and lock stay under `container-lab/`. The standalone lab page was removed.
 - The browser container lab gains backendless bounded downloads and a
   real-data path: small pinned record assets (8 MiB bound) stream directly
   from the provider in the browser with pinned size and provider-MD5
