@@ -7,6 +7,11 @@ and tooling changes are listed here without a version bump. Follows
 
 ## 2026-10-19
 
+- Service and acquisition state now resolves from one configurable root:
+  `CANOPY_STATE` when set, otherwise the checkout's `temp/`. Jobs, staging,
+  locks and a new per-acquisition index (`acquisitions/index.json` with the
+  canonical workspace path and its acquisition-status SHA256) live together
+  under that root, keeping local workspaces locatable without scattered state.
 - Added `class_semantics` to source profiles: native classification codes as
   evidence-backed, source-scoped data (FOR-instance v1, FOR-instance V2,
   FGI-EMIT). Validation now rejects a `ready` preparation without declared

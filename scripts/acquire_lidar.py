@@ -286,6 +286,27 @@ def main():
     args = parser.parse_args()
     with FileLock(str(args.stage.parent / "lidar-acquisition.lock"), timeout=0):
         run(args)
+        record_acquisition_index(args)
+
+
+def record_acquisition_index(args):
+    """Record the canonical location of this acquisition under the state root.
+
+    The index lives beside the staging area, so every workspace can be found
+    again without remembering where it was placed, and its identity is pinned
+    by the SHA256 of its acquisition-status file.
+    """
+    status_path = args.root / "acquisition-status.json"
+    index_path = args.stage.parent / "acquisitions" / "index.json"
+    index_path.parent.mkdir(parents=True, exist_ok=True)
+    index = json.loads(index_path.read_text()) if index_path.exists() else {"acquisitions": {}}
+    status = json.loads(status_path.read_text())
+    index["acquisitions"][str(args.root.resolve())] = {
+        "acquisition_status_sha256": hashlib.sha256(status_path.read_bytes()).hexdigest(),
+        "completed_assets": len(status.get("completed", [])),
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+    }
+    save_json(index_path, index)
 
 
 def run(args):

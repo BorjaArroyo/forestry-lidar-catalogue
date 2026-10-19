@@ -73,8 +73,14 @@ run other writers with unrelated staging/lock directories against the same root.
 The service binds to loopback and is intended for one trusted local user.
 
 Closing the browser or stopping the HTTP service does not cancel an already
-launched download worker. Job state and logs remain in `temp/canopy-workbench/`.
-They are excluded from publication. Export evidence before removing local state.
+launched download worker. Job state and logs remain in `temp/canopy-workbench/`,
+staging areas in `temp/canopy-stage-*`, and every completed acquisition is
+recorded in `temp/acquisitions/index.json` with its canonical path and
+status SHA256, so workspaces stay locatable. They are excluded from
+publication. Export evidence before removing local state. Set `CANOPY_STATE`
+to an absolute directory to keep all of this state (jobs, staging, locks and
+the acquisition index) in one dedicated root outside the checkout instead;
+nothing else moves.
 
 ## FOR-instance output
 

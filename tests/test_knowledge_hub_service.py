@@ -2,6 +2,7 @@
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import tempfile
 import subprocess
@@ -26,9 +27,12 @@ class WorkbenchTests(unittest.TestCase):
         self.root = Path(self.scratch.name)
         self.state_patch = patch.object(service, 'STATE', self.root / 'state')
         self.state_patch.start()
+        self.root_patch = patch.object(service, 'STATE_ROOT', self.root)
+        self.root_patch.start()
         service.STATE.mkdir()
 
     def tearDown(self):
+        self.root_patch.stop()
         self.state_patch.stop()
         self.scratch.cleanup()
 
@@ -56,7 +60,7 @@ class WorkbenchTests(unittest.TestCase):
         service.save(folder / 'inventory.json', {'records': [{'record_id': 8287792, 'files': [asset]}]})
         job = {'id': 'offline-acquisition', 'kind': 'acquire', 'root': str(root), 'status': 'queued'}
         service.save(folder / 'job.json', job)
-        stage = REPO / 'temp' / ('canopy-stage-' + hashlib.sha256(str(root).encode()).hexdigest()[:16])
+        stage = service.STATE_ROOT / ('canopy-stage-' + hashlib.sha256(str(root).encode()).hexdigest()[:16])
         stage.mkdir()
         (stage / '8287792_fixture.txt').write_bytes(payload)
         try:
@@ -79,11 +83,23 @@ class WorkbenchTests(unittest.TestCase):
             original = root / 'sources/8287792/originals/fixture.txt'
             self.assertEqual(original.read_bytes(), payload)
             self.assertEqual(len(service.read(root / 'acquisition-status.json')['completed']), 1)
+            index = service.read(service.STATE_ROOT / 'acquisitions' / 'index.json')
+            entry = index['acquisitions'][str(root.resolve())]
+            self.assertEqual(entry['completed_assets'], 1)
+            self.assertEqual(entry['acquisition_status_sha256'],
+                             hashlib.sha256((root / 'acquisition-status.json').read_bytes()).hexdigest())
             service.worker(folder)
             self.assertEqual(service.read(folder / 'job.json')['status'], 'completed')
             self.assertEqual(original.read_bytes(), payload)
         finally:
             stage.rmdir()
+
+    def test_state_root_follows_canopy_state_and_defaults_to_checkout_temp(self):
+        with patch.dict(os.environ, {'CANOPY_STATE': str(self.root / 'dedicated')}):
+            self.assertEqual(service.state_root(), self.root / 'dedicated')
+        without = {key: value for key, value in os.environ.items() if key != 'CANOPY_STATE'}
+        with patch.dict(os.environ, without, clear=True):
+            self.assertEqual(service.state_root(), REPO / 'temp')
 
     def test_retired_operations_are_not_submittable(self):
         for kind in ['audit', 'harmonize', 'benchmark', 'prepare-task']:

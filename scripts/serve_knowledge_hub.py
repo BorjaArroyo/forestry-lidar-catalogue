@@ -17,7 +17,15 @@ from urllib.parse import urlparse, parse_qs
 
 REPO = Path(__file__).resolve().parents[1]
 WEB = REPO / 'knowledge-hub' if (REPO / 'knowledge-hub').is_dir() else REPO
-STATE = REPO / 'temp' / 'canopy-workbench'
+
+
+def state_root():
+    """Resolve the single state root: CANOPY_STATE when set, else the checkout temp/."""
+    return Path(os.environ.get('CANOPY_STATE') or REPO / 'temp')
+
+
+STATE_ROOT = state_root()
+STATE = STATE_ROOT / 'canopy-workbench'
 TOKEN = secrets.token_urlsafe(32)
 GUARD = threading.Lock()
 ACTIVE = {'queued', 'running', 'cancelling'}
@@ -227,8 +235,12 @@ def worker(folder):
         if job['kind'] not in {'acquire','prepare-instances'}:
             raise ValueError('Unsupported job type')
         if job['kind'] == 'acquire':
+            # Staging, locks and the acquisition index stay colocated with the
+            # state root that owns this job (folder = ROOT/canopy-workbench/jobs/<id>),
+            # so a relocated root moves them together in the worker process too.
+            state_root = folder.parents[2]
             command = [sys.executable,str(REPO/'scripts/acquire_lidar.py'),'--inventory',str(folder/'inventory.json'),
-                       '--root',str(root),'--stage',str(REPO/'temp'/('canopy-stage-'+hashlib.sha256(str(root).encode()).hexdigest()[:16])),'--resume']
+                       '--root',str(root),'--stage',str(state_root/('canopy-stage-'+hashlib.sha256(str(root).encode()).hexdigest()[:16])),'--resume']
             job['command'] = command
             save(folder/'job.json',job)
             subprocess.run(command,check=True)
