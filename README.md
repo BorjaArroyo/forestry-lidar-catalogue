@@ -203,3 +203,9 @@ and verifies the selected source, runs the admitted transformation and independe
 validator, and exports a ZIP with `task-plan.json` and `task-validation.json`.
 The local service enforces the same request for whole-archive preparation.
 See [Task requirements and consumption](TASK-REQUIREMENTS.md).
+
+## Load prepared dataset folders
+
+Workbench exports `dataset.json` and preserved partition/source folders in a ZIP.
+Extract it and use `TaskDataset`. See [TASK-DATASET.md](TASK-DATASET.md) for the
+layout, bounded loader and composition of existing prepared subsets.

@@ -1,0 +1,203 @@
+{
+  "schema_version": "1.0.0",
+  "status": "validated",
+  "date": "2026-10-20",
+  "scope": "Two complete RMIT scenes exported in partition folders and independently reloaded outside the browser",
+  "browser": {
+    "status": "validated",
+    "dataset": {
+      "status": "validated",
+      "dataset_sha256": "ff00f4618871347d353f892fdd6fe01fa007d751c5b01998c59ad1241b438ada",
+      "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+      "validator_sha256": "c8e74bc5487c43129d165e60551dd637351fa0b096d2d1b3cb2077a07f3542dc",
+      "packages": 2,
+      "scenes": 2,
+      "points": 1840643,
+      "partitions": [
+        "dev",
+        "test"
+      ]
+    },
+    "task_plan": {
+      "schema_version": "1.1.0",
+      "task_ref": "task:instances",
+      "source_ref": "zenodo:8287792",
+      "use": "inference",
+      "variables": {
+        "xyz": "required",
+        "instance_reference": "off",
+        "reflectance": "optional"
+      },
+      "allowed_partitions": [
+        "dev",
+        "train",
+        "test"
+      ],
+      "pipeline_ref": "pipeline:for-instance-plot-instances:1.0.0",
+      "output_ref": "contract:for-instance-plot-instances:1.0.0",
+      "status": "ready",
+      "included": {
+        "xyz": [
+          "xyz"
+        ]
+      },
+      "omitted": {
+        "reflectance": "No audited output for this variable in the selected source pipeline"
+      },
+      "blockers": [],
+      "dependencies_sha256": "88c9ea30ec6830b514a230f68c4afd0449f3cee19cfdd1fed645214e6b77cef2",
+      "fingerprint_scope": "task-source-dependency-closure-v1",
+      "scope": "Preparation and consumption requirements; no training run or benchmark evaluator is certified"
+    },
+    "task_validation": {
+      "status": "validated",
+      "task_plan_sha256": "7457b47d317a734136a00ec7aa8c34e454ab08248b3bce9d25f9cb6e0553f204",
+      "plan_validator_sha256": "f8383a43964f2da2996c2f25aa314a325350e9df047d80a6db34c79e6a4c7020",
+      "use": "inference",
+      "included": {
+        "xyz": [
+          "xyz"
+        ]
+      },
+      "omitted": {
+        "reflectance": "No audited output for this variable in the selected source pipeline"
+      },
+      "package": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "for-instance-plot-instances:1.0.0",
+        "plots": 2,
+        "points": 1840643,
+        "chunks": 8,
+        "manifest_sha256": "b0c9c2ca2a81e19776d806ab8920e30819773b264130d064843b9b635a75d370",
+        "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+        "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+        "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+      },
+      "eligible_scenes": [
+        "8287792-f563eb02e6248cd34655",
+        "8287792-ff06e9f6b188b107e261"
+      ],
+      "eligible_points": 1840643,
+      "limitations": [
+        "Use instance_valid for supervised loss and reference comparisons",
+        "Official partitions are preserved; geographic independence is not established",
+        "Evaluation preparation is not an audited article scoring protocol"
+      ]
+    },
+    "consumer_sample": {
+      "scene_id": "8287792-f563eb02e6248cd34655",
+      "published_split": "test",
+      "row_offset": 0,
+      "arrays": {
+        "xyz": {
+          "shape": [
+            250000,
+            3
+          ],
+          "dtype": "float64"
+        }
+      }
+    },
+    "coverage": "complete-selected-plots",
+    "selection": {
+      "kind": "explicit-plots",
+      "paths": [
+        "sources/8287792/originals/FORinstance_dataset/RMIT/test.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las"
+      ],
+      "available_plots": 32,
+      "archive_verification": "Not performed by this selection; each selected LAS is SHA256 verified against the reviewed release"
+    },
+    "report": {
+      "status": "validated",
+      "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+      "coverage": "explicit-selection",
+      "pipeline": "for-instance-plot-instances:1.0.0",
+      "plots": 2,
+      "points": 1840643,
+      "chunks": 8,
+      "manifest_sha256": "b0c9c2ca2a81e19776d806ab8920e30819773b264130d064843b9b635a75d370",
+      "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+      "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+      "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+    },
+    "runtime": {
+      "pyodide": "314.0.7",
+      "python": "3.14.2",
+      "numpy": "2.4.6",
+      "laspy": "2.7.0",
+      "zip_js": "2.20.0"
+    },
+    "runtime_lock_sha256": "231966d3e87ada543ec8ae30c5d56b7ac581bfeafd27b9a3c8fc5e40fbbef257",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "source_sha256": null,
+    "intake": {
+      "kind": "selected-dataset",
+      "plots": [
+        {
+          "path": "sources/8287792/originals/FORinstance_dataset/RMIT/test.las",
+          "kind": "zenodo-ranges",
+          "archive_member": "RMIT/test.las",
+          "compression_method": 8,
+          "extracted_size_bytes": 12153263,
+          "archive_entries": 44,
+          "crc32_checked": true,
+          "archive_verification": "Selected LAS only; whole-archive checksum not checked",
+          "requests": 8,
+          "bytes_received": 3659162
+        },
+        {
+          "path": "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+          "kind": "zenodo-ranges",
+          "archive_member": "RMIT/train.las",
+          "compression_method": 8,
+          "extracted_size_bytes": 50429545,
+          "archive_entries": 44,
+          "crc32_checked": true,
+          "archive_verification": "Selected LAS only; whole-archive checksum not checked",
+          "requests": 19,
+          "bytes_received": 14854327
+        }
+      ]
+    },
+    "limitations": [
+      "Selected LAS verified; whole-provider-archive checksum not checked in this run",
+      "No claim of annotation correctness or geographic independence",
+      "OPFS is temporary browser storage; export the ZIP before clearing it"
+    ]
+  },
+  "native": {
+    "status": "validated",
+    "dataset_sha256": "ff00f4618871347d353f892fdd6fe01fa007d751c5b01998c59ad1241b438ada",
+    "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+    "validator_sha256": "c8e74bc5487c43129d165e60551dd637351fa0b096d2d1b3cb2077a07f3542dc",
+    "packages": 2,
+    "scenes": 2,
+    "points": 1840643,
+    "partitions": [
+      "dev",
+      "test"
+    ],
+    "zip_sha256": "00e79e6554cfe84daebb9533cac0cafa7617b16ffcf5a361bf8731cc3bddc803",
+    "native_reference_byte_equivalence": true
+  },
+  "training_example": {
+    "status": "validated",
+    "dataset_sha256": "062821072179cc1abca2740e2f70d19b09f41d24a06e424a880d6e00791267cd",
+    "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+    "validator_sha256": "c8e74bc5487c43129d165e60551dd637351fa0b096d2d1b3cb2077a07f3542dc",
+    "packages": 1,
+    "scenes": 1,
+    "points": 1483208,
+    "partitions": [
+      "dev"
+    ]
+  },
+  "limits": [
+    "FOR-instance is the only admitted source adapter",
+    "Published partitions do not establish geographic independence",
+    "No persistent subset accumulator in the web interface yet"
+  ]
+}

@@ -194,3 +194,10 @@ This bounded case does not establish full-release browser scalability. Browser
 storage must hold the prepared selection and ZIP; interrupted batches restart.
 The optional local service retains its audited full-release execution. Combining
 sources with unadmitted adapters or unequal feature contracts remains unavailable.
+
+## Partition-folder export
+
+New exports use the [task dataset folder contract](TASK-DATASET.md). Each selected
+partition contains independently validated source packages and unchanged NPZ
+blocks. The worker validates the final layout with `TaskDataset` before ZIP
+completion. Historical ZIPs retain their original layout and captured reports.

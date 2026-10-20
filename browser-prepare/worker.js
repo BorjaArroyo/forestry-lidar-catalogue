@@ -55,12 +55,12 @@ async function boot(lock) {
       py.runPython(`import sys; sys.path.insert(0, '/${name}')`);
     }
     for (const [name, entry] of Object.entries(lock.files)) {
-      if (!name.startsWith('scripts/') && !['task-package.schema.json', 'knowledge-model.json', 'knowledge-model.schema.json', 'browser-prepare/kernel.py', 'browser-prepare/batch.py'].includes(name)) continue;
+      if (!name.startsWith('scripts/') && !['task-package.schema.json', 'task-dataset.schema.json', 'knowledge-model.json', 'knowledge-model.schema.json', 'browser-prepare/kernel.py', 'browser-prepare/batch.py'].includes(name)) continue;
       const path = '/app/' + name;
       py.FS.mkdirTree(path.slice(0, path.lastIndexOf('/')));
       py.FS.writeFile(path, await checked(entry));
     }
-    py.runPython("import sys; sys.path[:0] = ['/app/browser-prepare', '/app/scripts']; from kernel import Preparation; from batch import combine_manifests; from task_package import TaskPackage; from task_plan import plan_request, check_plan, validate_prepared, iter_task_blocks; from knowledge_model import load as load_model; import json, numpy, laspy, platform");
+    py.runPython("import sys; sys.path[:0] = ['/app/browser-prepare', '/app/scripts']; from kernel import Preparation; from batch import combine_manifests; from task_package import TaskPackage; from task_dataset import compose_layout, encoded, TaskDataset; from task_plan import plan_request, check_plan, validate_prepared, iter_task_blocks; from knowledge_model import load as load_model; import json, numpy, laspy, platform");
     const versions = JSON.parse(py.runPython("json.dumps(dict(python=platform.python_version(), numpy=numpy.__version__, laspy=laspy.__version__))"));
     for (const name of ['python', 'numpy', 'laspy']) if (versions[name] !== lock[name]) throw Error(`Runtime version mismatch: ${name}`);
     cache.clear();
@@ -217,7 +217,33 @@ async function run(request) {
       const intake = intakes.length === 1 ? intakes[0] : {kind: 'selected-dataset', plots: intakes};
       for (const [path, value] of [['task-plan.json', taskPlan], ['task-validation.json', taskValidation]])
         files.push({path, handle: await write(root, path, new TextEncoder().encode(JSON.stringify(value, null, 2) + '\n'))});
-      const evidence = {status: 'validated', task_plan: taskPlan, task_validation: taskValidation, consumer_sample: consumerSample, coverage: manifests.length === 1 ? 'one-complete-selected-plot' : 'complete-selected-plots', selection: manifest.selection, report,
+      phase('Organizing the dataset into published-partition folders…');
+      py.globals.set('dataset_manifest_json', manifestText);
+      const layout = JSON.parse(py.runPython("folder_layout = compose_layout(task_model, [dict(plan=task_plan, manifest=json.loads(dataset_manifest_json))]); json.dumps(dict(copies=folder_layout['copies'], documents={k:encoded(v).decode() for k,v in folder_layout['documents'].items()}))"));
+      const blocks = new Map(files.filter(f => f.path.endsWith('.npz')).map(f => [f.path, f]));
+      const exportFiles = [], mounts = new Map();
+      for (const [path, source] of Object.entries(layout.copies)) {
+        const block = blocks.get(source.path);
+        if (!block) throw Error('Dataset layout refers to an absent prepared block');
+        exportFiles.push({path, handle: block.handle});
+        const parent = path.slice(0, path.lastIndexOf('/'));
+        if (!mounts.has(parent)) mounts.set(parent, []);
+        mounts.get(parent).push({name: path.split('/').at(-1), data: await block.handle.getFile()});
+      }
+      for (const [parent, blobs] of mounts) {
+        py.FS.mkdirTree('/dataset/' + parent);
+        py.FS.mount(py.FS.filesystems.WORKERFS, {blobs}, '/dataset/' + parent);
+      }
+      for (const [path, text] of Object.entries(layout.documents)) {
+        const target = '/dataset/' + path;
+        py.FS.mkdirTree(target.slice(0, target.lastIndexOf('/'))); py.FS.writeFile(target, text);
+        exportFiles.push({path, handle: await write(root, 'folder-export/' + path, new TextEncoder().encode(text))});
+      }
+      phase('Validating the complete dataset through the common folder reader…');
+      const datasetReport = JSON.parse(py.runPython("folder_dataset = TaskDataset('/dataset', task_model); folder_report = folder_dataset.validate(); json.dumps(folder_report)"));
+      const datasetText = JSON.stringify(datasetReport, null, 2) + '\n';
+      exportFiles.push({path: 'dataset-validation.json', handle: await write(root, 'folder-export/dataset-validation.json', new TextEncoder().encode(datasetText))});
+      const evidence = {status: 'validated', dataset: datasetReport, task_plan: taskPlan, task_validation: taskValidation, consumer_sample: consumerSample, coverage: manifests.length === 1 ? 'one-complete-selected-plot' : 'complete-selected-plots', selection: manifest.selection, report,
         runtime: {pyodide: lock.pyodide, python: lock.python, numpy: lock.numpy, laspy: lock.laspy, zip_js: lock.zip_js},
         runtime_lock_sha256: await digest(lockBytes),
         user_agent: navigator.userAgent, source_sha256: manifests.length === 1 ? manifests[0].scenes[0].sha256 : null, intake,
@@ -240,7 +266,8 @@ async function run(request) {
           }
         }});
         const writer = new zip.ZipWriter(output, {level: 0, zip64: true});
-        for (const entry of files) await writer.add(entry.path, new zip.BlobReader(await entry.handle.getFile()));
+        const provenance = files.filter(f => !f.path.endsWith('.npz')).map(f => ({...f, path: f.path === 'task-package.json' ? 'provenance/selection-task-package.json' : f.path}));
+        for (const entry of [...exportFiles, ...provenance]) await writer.add(entry.path, new zip.BlobReader(await entry.handle.getFile()));
         await writer.close(); access.flush();
       } finally { access.close(); }
       const outputFile = await archive.getFile();

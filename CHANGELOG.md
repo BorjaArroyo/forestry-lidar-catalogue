@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-20 — Loadable task dataset folders
+
+- Added a versioned folder index binding canonical task variables and source plans.
+- Browser exports preserve partition/source folders, independently checked packages and unchanged arrays.
+- Added a bounded loader and composition of existing prepared subsets with strict deduplication and no overwrite.
+
 ## 2026-10-20 — Workbench prepares dataset selections
 
 - Renamed the preparation workspace to Workbench.
