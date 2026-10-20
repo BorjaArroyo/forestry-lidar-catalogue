@@ -33,7 +33,7 @@
   function controls(connected) {
     document.querySelectorAll('#inspect-form input, #inspect-form select, #inspect-form button, #record-preview input, #record-preview button, #prepare-form input, #prepare-form button').forEach(el=>{el.disabled=!connected;});
     $('#refresh-jobs').disabled=!connected;
-    document.querySelectorAll('#prepare-form input, #prepare-form button').forEach(el=>{el.disabled=!connected||!snapshot?.preparation?.available;});
+    document.querySelectorAll('#prepare-form input, #prepare-form button').forEach(el=>{el.disabled=!connected||!snapshot?.preparation?.available||window.CanopyTaskSelection.assess('8287792',window.CanopyHub.getTaskRequest()).status!=='ready';});
     document.dispatchEvent(new CustomEvent('canopy-service-state',{detail:{connected}}));
   }
   function catalogMode() {
@@ -75,6 +75,7 @@
           if($('#prepare-after')?.checked){
             if(!$('#prepare-output').value.trim())throw new Error('Choose a separate prepared-output directory');
             body.prepare_output=$('#prepare-output').value;
+            body.task_request=window.CanopyHub.getTaskRequest();
           }
           const result=await api('/api/jobs',body);
           selectedJob=result.id;message('Download started. Originals, checkpoints and verification logs are retained.');await refresh();
@@ -86,13 +87,14 @@
   $('#prepare-form').addEventListener('submit',async e=>{
     e.preventDefault();
     try {
-      const result=await api('/api/jobs',{kind:'prepare-instances',record_id:8287792,root:$('#prepare-input').value,output:$('#prepare-destination').value});
+      const result=await api('/api/jobs',{kind:'prepare-instances',record_id:8287792,root:$('#prepare-input').value,output:$('#prepare-destination').value,task_request:window.CanopyHub.getTaskRequest()});
       selectedJob=result.id;message('FOR-instance preparation started locally. Originals remain unchanged.');await refresh();
     } catch(err){message(err.message);}
   });
   $('#refresh-jobs').addEventListener('click',refresh);
   $('#job-export').addEventListener('click',()=>{if(evidence)save(evidence,`canopy-job-${selectedJob}.json`);});
   document.addEventListener('canopy-inspect-source',e=>{location.hash='workbench';$('#zenodo-record').value=e.detail.record_id;$('#inspect-form').requestSubmit();message('Review the original assets. Downloading does not prepare task-ready data.');});
+  document.addEventListener('canopy-task-request',()=>controls(Boolean(token)));
   refresh();
   if(localService)setInterval(()=>{if(!document.hidden)refresh();},5000);
 })();

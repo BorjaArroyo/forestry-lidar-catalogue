@@ -1,0 +1,365 @@
+{
+  "status": "succeeded",
+  "source": "FOR-instance record 8287792; complete RMIT/train.las",
+  "browser": {
+    "status": "validated",
+    "task_plan": {
+      "schema_version": "1.0.0",
+      "task_ref": "task:instances",
+      "source_ref": "zenodo:8287792",
+      "use": "training",
+      "variables": {
+        "xyz": "required",
+        "instance_reference": "required",
+        "reflectance": "optional"
+      },
+      "allowed_partitions": [
+        "dev",
+        "train"
+      ],
+      "pipeline_ref": "pipeline:for-instance-plot-instances:1.0.0",
+      "output_ref": "contract:for-instance-plot-instances:1.0.0",
+      "status": "ready",
+      "included": {
+        "xyz": [
+          "xyz"
+        ],
+        "instance_reference": [
+          "instance",
+          "instance_valid"
+        ]
+      },
+      "omitted": {
+        "reflectance": "No audited output for this variable in the selected source pipeline"
+      },
+      "blockers": [],
+      "model_sha256": "1f22795e9a3c746389bf6c643024a798fdfb8f790de7bc668a382b0821a7fbfa",
+      "scope": "Preparation and consumption requirements; no training run or benchmark evaluator is certified"
+    },
+    "task_validation": {
+      "status": "validated",
+      "task_plan_sha256": "59f5384e2685eefb8f68e8bee1dfa451d21e9e1097ba2ce11aa6c9f630dcb546",
+      "plan_validator_sha256": "b56a0a9f254e7e608eb09bfd6193c84f96ef25d5e0405df92665d4cc608de118",
+      "use": "training",
+      "included": {
+        "xyz": [
+          "xyz"
+        ],
+        "instance_reference": [
+          "instance",
+          "instance_valid"
+        ]
+      },
+      "omitted": {
+        "reflectance": "No audited output for this variable in the selected source pipeline"
+      },
+      "package": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "for-instance-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 1483208,
+        "chunks": 6,
+        "manifest_sha256": "a1096649a1fc71eb70c83d510faa3a4a1bc41f8cd2b5b6532ebd736c7718e8cf",
+        "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+        "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+        "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+      },
+      "eligible_scenes": [
+        "8287792-ff06e9f6b188b107e261"
+      ],
+      "eligible_points": 1483208,
+      "limitations": [
+        "Use instance_valid for supervised loss and reference comparisons",
+        "Official partitions are preserved; geographic independence is not established",
+        "Evaluation preparation is not an audited article scoring protocol"
+      ]
+    },
+    "consumer_sample": {
+      "scene_id": "8287792-ff06e9f6b188b107e261",
+      "published_split": "dev",
+      "row_offset": 0,
+      "arrays": {
+        "xyz": {
+          "shape": [
+            250000,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "instance": {
+          "shape": [
+            250000
+          ],
+          "dtype": "int64"
+        },
+        "instance_valid": {
+          "shape": [
+            250000
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    "coverage": "one-complete-selected-plot",
+    "report": {
+      "status": "validated",
+      "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+      "coverage": "explicit-selection",
+      "pipeline": "for-instance-plot-instances:1.0.0",
+      "plots": 1,
+      "points": 1483208,
+      "chunks": 6,
+      "manifest_sha256": "a1096649a1fc71eb70c83d510faa3a4a1bc41f8cd2b5b6532ebd736c7718e8cf",
+      "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+      "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+      "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+    },
+    "runtime": {
+      "pyodide": "314.0.7",
+      "python": "3.14.2",
+      "numpy": "2.4.6",
+      "laspy": "2.7.0",
+      "zip_js": "2.20.0"
+    },
+    "runtime_lock_sha256": "c7e8149d21279b603c2de8952ab23e51d14d57704f209d6c164bfa5eeed4e4d9",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "source_sha256": "ae5afc37d5ad5a1aa0edc924e482f665f35d1d1206c665f916758460a724b06a",
+    "intake": {
+      "kind": "zenodo-ranges",
+      "archive_member": "RMIT/train.las",
+      "compression_method": 8,
+      "extracted_size_bytes": 50429545,
+      "archive_entries": 44,
+      "crc32_checked": true,
+      "archive_verification": "Selected LAS only; whole-archive checksum not checked",
+      "requests": 19,
+      "bytes_received": 14854327
+    },
+    "limitations": [
+      "Selected LAS verified; whole-provider-archive checksum not checked in this run",
+      "No claim of annotation correctness or geographic independence",
+      "OPFS is temporary browser storage; export the ZIP before clearing it"
+    ]
+  },
+  "native_task_validation": {
+    "status": "validated",
+    "task_plan_sha256": "59f5384e2685eefb8f68e8bee1dfa451d21e9e1097ba2ce11aa6c9f630dcb546",
+    "plan_validator_sha256": "b2143d1ea16d549b5ceb894569e9e7227f48a0de9bfe27ceb27973537e0ab94f",
+    "use": "training",
+    "included": {
+      "xyz": [
+        "xyz"
+      ],
+      "instance_reference": [
+        "instance",
+        "instance_valid"
+      ]
+    },
+    "omitted": {
+      "reflectance": "No audited output for this variable in the selected source pipeline"
+    },
+    "package": {
+      "status": "validated",
+      "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+      "coverage": "explicit-selection",
+      "pipeline": "for-instance-plot-instances:1.0.0",
+      "plots": 1,
+      "points": 1483208,
+      "chunks": 6,
+      "manifest_sha256": "a1096649a1fc71eb70c83d510faa3a4a1bc41f8cd2b5b6532ebd736c7718e8cf",
+      "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+      "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+      "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+    },
+    "eligible_scenes": [
+      "8287792-ff06e9f6b188b107e261"
+    ],
+    "eligible_points": 1483208,
+    "limitations": [
+      "Use instance_valid for supervised loss and reference comparisons",
+      "Official partitions are preserved; geographic independence is not established",
+      "Evaluation preparation is not an audited article scoring protocol"
+    ]
+  },
+  "reference_chunks": [
+    {
+      "path": "plots/8287792-ff06e9f6b188b107e261/00000.npz",
+      "sha256": "d055134dbc4763ce41b5b77549bab508e5be592e44ae014fdc6a1d450add19c6",
+      "native_byte_identical": true
+    },
+    {
+      "path": "plots/8287792-ff06e9f6b188b107e261/00001.npz",
+      "sha256": "10490e6b2af2b5e2125cba08d2afbd9861bb4018c46d33e599d7f815bcc70d6e",
+      "native_byte_identical": true
+    },
+    {
+      "path": "plots/8287792-ff06e9f6b188b107e261/00002.npz",
+      "sha256": "904dcdbc293c0d4744c025841c15b4a4f3f5647e91592e784be647d1ccebfb30",
+      "native_byte_identical": true
+    },
+    {
+      "path": "plots/8287792-ff06e9f6b188b107e261/00003.npz",
+      "sha256": "c79315d1ac19ebf059f0153a14908f121ba90af7872de65dd3f52d2036b268db",
+      "native_byte_identical": true
+    },
+    {
+      "path": "plots/8287792-ff06e9f6b188b107e261/00004.npz",
+      "sha256": "eace3af1f04cd9c89574b6d9aab666651ec526033b10cd0bfcf14ffcf9a240ac",
+      "native_byte_identical": true
+    },
+    {
+      "path": "plots/8287792-ff06e9f6b188b107e261/00005.npz",
+      "sha256": "ba2494f8b8007fc124a7ac1fe9c76fa24630fb755a2131227228947b69484d7d",
+      "native_byte_identical": true
+    }
+  ],
+  "limitations": [
+    "One complete plot, not a new full-release audit",
+    "FGI-EMIT feature preparation remains unadmitted",
+    "No model training, annotation-quality certification or geographic-independence claim"
+  ],
+  "checked_at": "2026-10-20T07:53:25.581956+00:00",
+  "implementation": {
+    "scripts/task_plan.py": "b2143d1ea16d549b5ceb894569e9e7227f48a0de9bfe27ceb27973537e0ab94f",
+    "scripts/knowledge_model.py": "09d9d5386dbc969e17c77aa1e291e38de9dae3b2ff9e4c88b8cb75ef1817eedd",
+    "scripts/serve_knowledge_hub.py": "75d1e53269db636baade86716be46d56617ae1e5636facd2ad979d6fa6ea418e",
+    "knowledge-model.json": "2daf4dcd8497bbd061555cf188ca5e16e3f5e78e9e26dc981750d53801def5a2",
+    "knowledge-model.schema.json": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2",
+    "task-selection.js": "68e616071cc0979e87253fc3e53209bee3d671369b3d23fc52716d1341e762e2",
+    "browser-prepare/worker.js": "d347ee7a21884f9a81ec2edc2cb16293f84fb7d9ead91b54173d23446a2be6d2",
+    "scripts/for_instance/prepare.py": "b7ddc8ef8c9b8ebc53a5b896bc2633eb7c6928e5b68e7b49b9b0b48f96c89f04"
+  },
+  "regressions": {
+    "task_request_tests": 7,
+    "http_service_tests": 14,
+    "javascript_python_decision_parity_cases": 18,
+    "required_unavailable_variable_rejected_before_acquisition": true,
+    "all_tests": 94,
+    "zip_intake_tests": 13
+  },
+  "inference_browser": {
+    "status": "validated",
+    "task_plan": {
+      "schema_version": "1.0.0",
+      "task_ref": "task:instances",
+      "source_ref": "zenodo:8287792",
+      "use": "inference",
+      "variables": {
+        "xyz": "required",
+        "instance_reference": "off",
+        "reflectance": "optional"
+      },
+      "allowed_partitions": [
+        "dev",
+        "train",
+        "test"
+      ],
+      "pipeline_ref": "pipeline:for-instance-plot-instances:1.0.0",
+      "output_ref": "contract:for-instance-plot-instances:1.0.0",
+      "status": "ready",
+      "included": {
+        "xyz": [
+          "xyz"
+        ]
+      },
+      "omitted": {
+        "reflectance": "No audited output for this variable in the selected source pipeline"
+      },
+      "blockers": [],
+      "model_sha256": "1f22795e9a3c746389bf6c643024a798fdfb8f790de7bc668a382b0821a7fbfa",
+      "scope": "Preparation and consumption requirements; no training run or benchmark evaluator is certified"
+    },
+    "task_validation": {
+      "status": "validated",
+      "task_plan_sha256": "2ba439b9ccc861191ba072a3c2b4702107118f82a8f8792e70f0515d82d52bff",
+      "plan_validator_sha256": "b2143d1ea16d549b5ceb894569e9e7227f48a0de9bfe27ceb27973537e0ab94f",
+      "use": "inference",
+      "included": {
+        "xyz": [
+          "xyz"
+        ]
+      },
+      "omitted": {
+        "reflectance": "No audited output for this variable in the selected source pipeline"
+      },
+      "package": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "for-instance-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 357435,
+        "chunks": 2,
+        "manifest_sha256": "38397020f5851167eabcdcdb6c94a25b727d85da8e4a42264f5d1773d19c794f",
+        "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+        "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+        "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+      },
+      "eligible_scenes": [
+        "8287792-f563eb02e6248cd34655"
+      ],
+      "eligible_points": 357435,
+      "limitations": [
+        "Use instance_valid for supervised loss and reference comparisons",
+        "Official partitions are preserved; geographic independence is not established",
+        "Evaluation preparation is not an audited article scoring protocol"
+      ]
+    },
+    "consumer_sample": {
+      "scene_id": "8287792-f563eb02e6248cd34655",
+      "published_split": "test",
+      "row_offset": 0,
+      "arrays": {
+        "xyz": {
+          "shape": [
+            250000,
+            3
+          ],
+          "dtype": "float64"
+        }
+      }
+    },
+    "coverage": "one-complete-selected-plot",
+    "report": {
+      "status": "validated",
+      "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+      "coverage": "explicit-selection",
+      "pipeline": "for-instance-plot-instances:1.0.0",
+      "plots": 1,
+      "points": 357435,
+      "chunks": 2,
+      "manifest_sha256": "38397020f5851167eabcdcdb6c94a25b727d85da8e4a42264f5d1773d19c794f",
+      "schema_sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
+      "validator_sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
+      "package_sha256": "bfac736354ea36f23130f18e3e41d6b577b3ae8f5b74525458968ec5dada128a"
+    },
+    "runtime": {
+      "pyodide": "314.0.7",
+      "python": "3.14.2",
+      "numpy": "2.4.6",
+      "laspy": "2.7.0",
+      "zip_js": "2.20.0"
+    },
+    "runtime_lock_sha256": "df727a88d201fd73c8c1615ce8999f2477cf3d36a1b57b203781f9712168fd2a",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "source_sha256": "693c109e19738ecf780523694aa21ea300aea92763f07bbd2b3970b02c03ca00",
+    "intake": {
+      "kind": "zenodo-ranges",
+      "archive_member": "RMIT/test.las",
+      "compression_method": 8,
+      "extracted_size_bytes": 12153263,
+      "archive_entries": 44,
+      "crc32_checked": true,
+      "archive_verification": "Selected LAS only; whole-archive checksum not checked",
+      "requests": 8,
+      "bytes_received": 3659162
+    },
+    "limitations": [
+      "Selected LAS verified; whole-provider-archive checksum not checked in this run",
+      "No claim of annotation correctness or geographic independence",
+      "OPFS is temporary browser storage; export the ZIP before clearing it"
+    ]
+  }
+}

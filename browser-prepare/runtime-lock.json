@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "pyodide": "314.0.7",
   "python": "3.14.2",
   "numpy": "2.4.6",
@@ -139,6 +139,26 @@
       "url": "browser-prepare/intake.js",
       "sha256": "03f6e2c83bbd07cb962c7717e58f0b2b7dc0efefb7ad53cc7521d1fbba28b755",
       "size_bytes": 5227
+    },
+    "scripts/task_plan.py": {
+      "url": "scripts/task_plan.py",
+      "sha256": "b2143d1ea16d549b5ceb894569e9e7227f48a0de9bfe27ceb27973537e0ab94f",
+      "size_bytes": 8742
+    },
+    "scripts/knowledge_model.py": {
+      "url": "scripts/knowledge_model.py",
+      "sha256": "09d9d5386dbc969e17c77aa1e291e38de9dae3b2ff9e4c88b8cb75ef1817eedd",
+      "size_bytes": 29536
+    },
+    "knowledge-model.json": {
+      "url": "knowledge-model.json",
+      "sha256": "2daf4dcd8497bbd061555cf188ca5e16e3f5e78e9e26dc981750d53801def5a2",
+      "size_bytes": 171519
+    },
+    "knowledge-model.schema.json": {
+      "url": "knowledge-model.schema.json",
+      "sha256": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2",
+      "size_bytes": 46687
     }
   },
   "zip_js": "2.20.0",

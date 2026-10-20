@@ -1,6 +1,6 @@
 {
   "$schema": "knowledge-model.schema.json",
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "nodes": {
     "task:instances": {
       "type": "task",
@@ -11,7 +11,129 @@
         "visible": true,
         "status": "work_in_progress",
         "key": "instances",
-        "order": 0
+        "order": 0,
+        "requirements": {
+          "variables": [
+            {
+              "key": "xyz",
+              "label": "Geometry",
+              "purpose": "geometry",
+              "default": "required",
+              "detail": "Native decoded coordinates; no resampling, normalization or inferred CRS.",
+              "output_fields": [
+                {
+                  "name": "xyz",
+                  "dtypes": [
+                    "float64"
+                  ],
+                  "shape": [
+                    "N",
+                    3
+                  ]
+                }
+              ],
+              "quantity": null,
+              "minimum_channels": 0
+            },
+            {
+              "key": "instance_reference",
+              "label": "Tree-instance reference",
+              "purpose": "reference",
+              "default": "off",
+              "detail": "Scene-local identities and a conservative validity mask; annotation completeness is not certified.",
+              "output_fields": [
+                {
+                  "name": "instance",
+                  "dtypes": [
+                    "int64"
+                  ],
+                  "shape": [
+                    "N"
+                  ]
+                },
+                {
+                  "name": "instance_valid",
+                  "dtypes": [
+                    "bool"
+                  ],
+                  "shape": [
+                    "N"
+                  ]
+                }
+              ],
+              "quantity": null,
+              "minimum_channels": 0
+            },
+            {
+              "key": "reflectance",
+              "label": "Multispectral reflectance",
+              "purpose": "measurement",
+              "default": "optional",
+              "detail": "At least two documented spectral channels with separate validity masks. Native units, calibration and association require source-specific review; RGB is not a substitute.",
+              "output_fields": [
+                {
+                  "name": "features",
+                  "dtypes": [
+                    "float32"
+                  ],
+                  "shape": [
+                    "N",
+                    "C"
+                  ]
+                },
+                {
+                  "name": "feature_valid",
+                  "dtypes": [
+                    "bool"
+                  ],
+                  "shape": [
+                    "N",
+                    "C"
+                  ]
+                }
+              ],
+              "quantity": "reflectance",
+              "minimum_channels": 2
+            }
+          ],
+          "uses": {
+            "training": {
+              "label": "Training data",
+              "required_variables": [
+                "xyz",
+                "instance_reference"
+              ],
+              "allowed_partitions": [
+                "dev",
+                "train"
+              ],
+              "detail": "Keep published partitions; consume instance_valid for supervised loss. Published test scenes are excluded from this consumer. No train/validation split or model fit is created."
+            },
+            "evaluation": {
+              "label": "Evaluation data",
+              "required_variables": [
+                "xyz",
+                "instance_reference"
+              ],
+              "allowed_partitions": [
+                "test"
+              ],
+              "detail": "Prepare published test reference arrays; the scoring protocol and independent-zone split require a separate audit."
+            },
+            "inference": {
+              "label": "Inference data",
+              "required_variables": [
+                "xyz"
+              ],
+              "allowed_partitions": [
+                "dev",
+                "train",
+                "test"
+              ],
+              "detail": "Reference labels are optional for inference; the source adapter may still preserve them losslessly."
+            }
+          }
+        }
       }
     },
     "task:components": {
@@ -1906,7 +2028,16 @@
             "calibration": "not_required",
             "association": "not_required"
           }
-        ]
+        ],
+        "variable_outputs": {
+          "xyz": [
+            "xyz"
+          ],
+          "instance_reference": [
+            "instance",
+            "instance_valid"
+          ]
+        }
       }
     },
     "evidence:for-instance-paper-2309.01279": {

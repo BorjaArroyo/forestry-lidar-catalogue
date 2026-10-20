@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-20 — Task requirements reach audited preparation
+
+- Model 1.4 separates data use, minimum required variables and optional measurements.
+- Discovery distinguishes native spectral candidates from executable output support.
+- Browser and local service bind requests to the unchanged audited FOR-instance adapter, validate payloads and requests, and export their plans.
+- The bounded consumer excludes published test scenes from training and never fabricates absent optional channels.
+- Complete RMIT training-plot browser acceptance and native byte-equivalence are recorded; FGI-EMIT preparation remains TBD.
+
+
 ## Browser acceptance and publication
 
 - Verified direct Zenodo intake and preparation of the complete RMIT test plot

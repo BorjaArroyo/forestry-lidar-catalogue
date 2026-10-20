@@ -142,9 +142,21 @@ def jobs():
 def submit(body):
     from filelock import FileLock
     kind = body.get('kind')
-    allowed = {'kind','record_id','root','output'} if kind == 'prepare-instances' else {'kind','record_id','root','prepare_output'}
+    allowed = {'kind','record_id','root','output','task_request'} if kind == 'prepare-instances' else {'kind','record_id','root','prepare_output','task_request'}
     if kind not in {'acquire','prepare-instances'} or set(body) - allowed:
         raise ValueError('Only original-source acquisition and the audited FOR-instance preparation are available')
+    task_plan = None
+    if 'task_request' in body:
+        from knowledge_model import load
+        from task_plan import plan_request, check_plan
+        request = body['task_request']
+        if not isinstance(request, dict) or set(request) - {'use', 'variables'}:
+            raise ValueError('Invalid task request')
+        if kind != 'prepare-instances' and not body.get('prepare_output'):
+            raise ValueError('A task request requires audited preparation, not only acquisition')
+        model = load(WEB / 'knowledge-model.json')
+        task_plan = plan_request(model, body['record_id'], request.get('use', 'training'), request.get('variables'))
+        check_plan(model, task_plan)
     root = directory(body.get('root', ''), exists=kind == 'prepare-instances')
     with GUARD, FileLock(str(STATE / 'submission.lock'), timeout=0):
         if any(j['status'] in ACTIVE for j in jobs()):
@@ -156,6 +168,9 @@ def submit(body):
         if rid != 8287792 and (kind == 'prepare-instances' or body.get('prepare_output')):
             raise ValueError('Only the reviewed FOR-instance release has an admitted instance adapter')
         job['record_id'] = rid
+        if task_plan is not None:
+            job['task_plan'] = task_plan
+            job['task_plan_validator_sha256'] = sha(REPO / 'scripts/task_plan.py')
         if kind == 'prepare-instances':
             if rid != 8287792:
                 raise ValueError('Only the reviewed FOR-instance release has an admitted instance adapter')
@@ -232,6 +247,14 @@ def worker(folder):
     save(folder / 'job.json', job)
     try:
         root = Path(job['root'])
+        task_model = None
+        if 'task_plan' in job:
+            from knowledge_model import load
+            from task_plan import check_plan
+            if sha(REPO / 'scripts/task_plan.py') != job['task_plan_validator_sha256']:
+                raise ValueError('Task request validator changed after submission')
+            task_model = load(WEB / 'knowledge-model.json')
+            check_plan(task_model, job['task_plan'])
         if job['kind'] not in {'acquire','prepare-instances'}:
             raise ValueError('Unsupported job type')
         if job['kind'] == 'acquire':
@@ -258,7 +281,14 @@ def worker(folder):
             save(folder/'job.json',job)
             from task_package import TaskPackage
             prepared = TaskPackage(Path(job['output']), profile=INSTANCE_PACKAGE)
-            report = prepared.validate()
+            if task_model is not None:
+                from task_plan import validate_prepared
+                task_report = validate_prepared(task_model, job['task_plan'], prepared)
+                report = {**task_report['package'], 'task_request':task_report}
+                save(Path(job['output'])/'task-plan.json', job['task_plan'])
+                save(Path(job['output'])/'task-validation.json', task_report)
+            else:
+                report = prepared.validate()
             package = prepared.manifest
             report.update(unmatched_split_rows=len(package['unmatched_split_rows']),
                           geographic_independence=package['geographic_independence'])

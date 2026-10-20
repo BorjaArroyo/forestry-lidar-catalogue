@@ -185,3 +185,18 @@ browser preparation, LAZ, other native schemas and larger browser runs remain pe
 [BROWSER-PREPARATION.md](BROWSER-PREPARATION.md) for the exact contract, evidence,
 storage behavior and limitations. The existing native service remains available
 for whole-archive acquisition and preparation into a chosen directory.
+
+
+## Choose requirements and execute an audited preparation
+
+Select training, evaluation or inference data and mark extra variables required,
+optional or off. Optional multispectral measurements retain FOR-instance as a
+candidate and are explicitly omitted from its output. Required reflectance blocks
+that route; FGI-EMIT remains a native-channel candidate with preparation TBD.
+
+Open FOR-instance and choose **Prepare data for this request**. The browser
+restricts the reviewed plots to the published partitions for that use, downloads
+and verifies the selected source, runs the admitted transformation and independent
+validator, and exports a ZIP with `task-plan.json` and `task-validation.json`.
+The local service enforces the same request for whole-archive preparation.
+See [Task requirements and consumption](TASK-REQUIREMENTS.md).

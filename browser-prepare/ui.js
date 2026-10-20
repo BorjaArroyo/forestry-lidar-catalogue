@@ -1,6 +1,34 @@
 const $ = id => document.getElementById(id);
 let worker, job, resultURL, watchdog;
 let initialized = false;
+let plots = [];
+const getRequest = () => window.CanopyHub?.getTaskRequest() || window.CanopyTaskSelection.normalize();
+function refreshPlots() {
+  const selected = $('prepare-plot').value;
+  const request = getRequest();
+  const allowed = window.CanopyTaskSelection.task.requirements.uses[request.use].allowed_partitions;
+  $('prepare-plot').replaceChildren();
+  for (const plot of plots.filter(p => allowed.includes(p.published_split))) {
+    const option = document.createElement('option');
+    option.value = plot.path;
+    option.textContent = `${plot.path.split('FORinstance_dataset/')[1]} · ${plot.published_split} · ${(plot.size_bytes / 1048576).toFixed(1)} MiB`;
+    $('prepare-plot').append(option);
+  }
+  if ([...$('prepare-plot').options].some(o => o.value === selected)) $('prepare-plot').value = selected;
+}
+function requestChanged() {
+  if (worker) { status('The active run keeps its submitted request. New requirements apply to the next run.'); return; }
+  refreshPlots();
+  const result = window.CanopyTaskSelection.assess('8287792', getRequest());
+  $('prepare-download').hidden = true;
+  status(result.status === 'ready' ? 'Request updated. Prepare again to produce a ZIP bound to these requirements.' : result.blockers.join('. '));
+  controls(false);
+}
+document.addEventListener('canopy-task-request', requestChanged);
+document.addEventListener('canopy-prepare-task', ({detail}) => {
+  if (detail.record_id !== '8287792' || worker) return;
+  $('prepare-mode').value = 'zenodo'; requestChanged();
+});
 const storageKey = 'canopy-preparation-job';
 function remember(id) {
   job = id;
@@ -10,6 +38,7 @@ const supported = Boolean(window.Worker && window.isSecureContext && navigator.s
 const status = text => { $('prepare-status').textContent = text; };
 
 function controls(running) {
+  document.dispatchEvent(new CustomEvent('canopy-preparation-state',{detail:{running:running && initialized}}));
   const mode = $('prepare-mode').value;
   const local = mode !== 'zenodo';
   const locked = running || !initialized;
@@ -20,7 +49,8 @@ function controls(running) {
   $('prepare-file').disabled = locked || !local;
   $('prepare-plot-label').hidden = mode === 'las';
   $('prepare-plot').disabled = locked || !$('prepare-plot').options.length;
-  $('prepare-run').disabled = !supported || locked || (local && !$('prepare-file').files.length) || (mode !== 'las' && !$('prepare-plot').value);
+  const ready = window.CanopyTaskSelection.assess('8287792', getRequest()).status === 'ready';
+  $('prepare-run').disabled = !ready || !supported || locked || (local && !$('prepare-file').files.length) || (mode !== 'las' && !$('prepare-plot').value);
   $('prepare-cancel').disabled = !running || !initialized;
 }
 
@@ -37,6 +67,8 @@ async function removeJob(id) {
 $('prepare-file').onchange = () => controls(false);
 $('prepare-mode').onchange = () => controls(false);
 $('prepare-run').onclick = async () => {
+  const request = getRequest();
+  if (window.CanopyTaskSelection.assess('8287792', request).status !== 'ready') { status('This request has no admitted FOR-instance preparation.'); return; }
   controls(true);
   $('prepare-download').hidden = true;
   $('prepare-clear').disabled = true;
@@ -46,7 +78,7 @@ $('prepare-run').onclick = async () => {
     // Discard this panel's previous export only when starting its replacement.
     worker?.terminate();
     await removeJob(job); remember(null);
-    worker = new Worker(new URL('./worker.js?v=archive-intake-v1', import.meta.url), {type: 'module'});
+    worker = new Worker(new URL('./worker.js?v=task-request-v1', import.meta.url), {type: 'module'});
     worker.onmessage = ({data}) => {
       clearTimeout(watchdog);
       if (!['result', 'error'].includes(data.type)) watchdog = setTimeout(() => {
@@ -62,7 +94,7 @@ $('prepare-run').onclick = async () => {
         $('prepare-download').hidden = false;
         $('prepare-clear').disabled = false;
         const r = data.evidence.report;
-        status(`Validated: ${r.points.toLocaleString()} points in ${r.chunks} blocks. Download the ZIP to keep it.`);
+        status(`Validated for ${data.evidence.task_plan.use}: ${r.points.toLocaleString()} points in ${r.chunks} blocks. Optional omissions: ${Object.keys(data.evidence.task_plan.omitted).join(', ') || 'none'}. Download the ZIP to keep it.`);
         $('prepare-result').textContent = JSON.stringify(data.evidence, null, 2);
         worker.terminate(); worker = null; controls(false);
       } else {
@@ -78,7 +110,7 @@ $('prepare-run').onclick = async () => {
       controls(false);
     };
     status('Checking source membership and available browser storage…');
-    worker.postMessage({mode: $('prepare-mode').value, selected_path: $('prepare-plot').value, file: $('prepare-file').files[0]});
+    worker.postMessage({mode: $('prepare-mode').value, selected_path: $('prepare-plot').value, file: $('prepare-file').files[0], task_request: request});
   } catch (error) { status(error.message); controls(false); }
 };
 $('prepare-cancel').onclick = async () => {
@@ -116,7 +148,7 @@ async function recover() {
         $('prepare-download').download = 'for-instance-selected-plot.zip';
         $('prepare-download').hidden = false;
         $('prepare-result').textContent = JSON.stringify(complete.evidence, null, 2);
-        status('Recovered the previous ZIP. Download it or clear temporary output.');
+        status(`Recovered the previous ZIP for ${complete.evidence.task_plan?.use || 'historical preparation'}. Its saved plan describes that run. Prepare again to apply the current request.`);
       } catch { status('Previous run was interrupted. Clear it or select the original LAS to restart this plot.'); }
     });
   } catch (error) {
@@ -129,12 +161,8 @@ async function loadPlots() {
     const response = await fetch(new URL('../scripts/for_instance/source-lock.json', import.meta.url));
     if (!response.ok) throw Error('Reviewed plot list unavailable');
     const source = await response.json();
-    for (const plot of [...source.plots].sort((a, b) => a.size_bytes - b.size_bytes)) {
-      const option = document.createElement('option');
-      option.value = plot.path;
-      option.textContent = `${plot.path.split('FORinstance_dataset/')[1]} · ${plot.published_split} · ${(plot.size_bytes / 1048576).toFixed(1)} MiB`;
-      $('prepare-plot').append(option);
-    }
+    plots = [...source.plots].sort((a, b) => a.size_bytes - b.size_bytes);
+    refreshPlots();
   } catch (error) { status(error.message); }
 }
 controls(true);

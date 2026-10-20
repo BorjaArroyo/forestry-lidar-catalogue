@@ -40,6 +40,15 @@ class WorkbenchTests(unittest.TestCase):
         self.state_patch.stop()
         self.scratch.cleanup()
 
+    def test_required_unsupported_variable_is_rejected_before_any_acquisition(self):
+        body=dict(kind='acquire',record_id=8287792,root=str(self.root/'download'),
+                  prepare_output=str(self.root/'prepared'),
+                  task_request={'use':'training','variables':{'reflectance':'required'}})
+        with patch.object(service,'inspect_record') as inspect, patch.object(service,'launch_worker') as launch:
+            with self.assertRaisesRegex(ValueError,'blocked'): service.submit(body)
+            inspect.assert_not_called();launch.assert_not_called()
+        self.assertFalse((self.root/'download').exists())
+
     def test_record_validation(self):
         self.assertEqual(service.inspect_record('8287792')['record_id'], 8287792)
         for invalid in ['../8287792', 'https://other.example/records/8287792', '0', '999999999']:
@@ -216,7 +225,7 @@ class WorkbenchTests(unittest.TestCase):
             real_save(path,value)
         root=self.root/'fresh-download'
         output=self.root/'prepared'
-        body=dict(kind='acquire',record_id=8287792,root=str(root),prepare_output=str(output))
+        body=dict(kind='acquire',record_id=8287792,root=str(root),prepare_output=str(output),task_request={'use':'training','variables':{'reflectance':'optional'}})
         with patch.object(service,'INSTANCE_PACKAGE',case.package), patch.object(service,'preparation_status',return_value={'available':True,'package_sha256':fingerprint}), patch.object(service,'records',return_value=[record]), patch.object(service,'launch_worker',side_effect=launch), patch.object(service.subprocess,'run',side_effect=run), patch.object(acquisition,'open_asset',side_effect=open_asset), patch.object(service,'save',side_effect=save):
             class LocalHandler(service.Handler):
                 def log_message(self,*args):
@@ -250,6 +259,11 @@ class WorkbenchTests(unittest.TestCase):
                 urlopen(private,timeout=5)
             self.assertEqual(refused.exception.code,404)
             self.assertEqual(job['status'],'completed')
+            self.assertEqual(job['task_plan']['status'],'ready')
+            self.assertEqual(report['task_request']['eligible_points'],9)
+            self.assertEqual(list(report['task_request']['omitted']),['reflectance'])
+            self.assertTrue((output/'task-plan.json').is_file())
+            self.assertTrue((output/'task-validation.json').is_file())
             self.assertEqual(list(dict.fromkeys(phases)),['starting','downloading','preparing','validating','completed'])
             self.assertEqual((report['status'],report['plots'],report['points']),('validated',2,18))
             self.assertEqual(job['validation_report_sha256'],service.sha(folder/'task-package-report.json'))

@@ -53,12 +53,12 @@ async function boot(lock) {
       py.runPython(`import sys; sys.path.insert(0, '/${name}')`);
     }
     for (const [name, entry] of Object.entries(lock.files)) {
-      if (!name.startsWith('scripts/') && !['task-package.schema.json', 'browser-prepare/kernel.py'].includes(name)) continue;
+      if (!name.startsWith('scripts/') && !['task-package.schema.json', 'knowledge-model.json', 'knowledge-model.schema.json', 'browser-prepare/kernel.py'].includes(name)) continue;
       const path = '/app/' + name;
       py.FS.mkdirTree(path.slice(0, path.lastIndexOf('/')));
       py.FS.writeFile(path, await checked(entry));
     }
-    py.runPython("import sys; sys.path[:0] = ['/app/browser-prepare', '/app/scripts']; from kernel import Preparation; from task_package import TaskPackage; import json, numpy, laspy, platform");
+    py.runPython("import sys; sys.path[:0] = ['/app/browser-prepare', '/app/scripts']; from kernel import Preparation; from task_package import TaskPackage; from task_plan import plan_request, check_plan, validate_prepared, iter_task_blocks; from knowledge_model import load as load_model; import json, numpy, laspy, platform");
     const versions = JSON.parse(py.runPython("json.dumps(dict(python=platform.python_version(), numpy=numpy.__version__, laspy=laspy.__version__))"));
     for (const name of ['python', 'numpy', 'laspy']) if (versions[name] !== lock[name]) throw Error(`Runtime version mismatch: ${name}`);
     cache.clear();
@@ -149,18 +149,22 @@ async function run(request) {
       if (!Number.isFinite(estimate.quota) || estimate.quota - (estimate.usage || 0) < required)
         throw Error(`Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for chunks and ZIP export`);
       await checked(lock.files['browser-prepare/intake.js']);
+      phase('Checking task requirements against the pinned audited pipeline…');
+      py = await boot(lock);
+      py.globals.set('request_json', JSON.stringify(request.task_request || {}));
+      const taskPlan = JSON.parse(py.runPython("task_model = load_model('/app/knowledge-model.json'); task_request = json.loads(request_json); task_plan = plan_request(task_model, '8287792', task_request.get('use', 'training'), task_request.get('variables')); check_plan(task_model, task_plan); json.dumps(task_plan)"));
+      if (mode !== 'las' && !taskPlan.allowed_partitions.includes(candidates[0].published_split)) throw Error('Selected plot belongs to a published partition excluded from this task use');
       let intake = {kind: 'local-las', archive_verification: 'Provider ZIP not checked; selected LAS SHA256 is verified below'};
       if (mode !== 'las') {
         phase(mode === 'zenodo' ? 'Retrieving the selected plot from Zenodo using bounded byte ranges…' : 'Reading the selected plot from the local ZIP…');
         ({file, intake} = await stagePlot(root, {...request, mode}, candidates[0], lock));
       }
-      phase('Loading the pinned Python runtime and dependencies…');
-      py = await boot(lock);
       py.FS.mkdir('/input');
       py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: [{name: 'source.las', data: file}]}, '/input');
       phase('Verifying the complete source LAS against the reviewed SHA256…');
       py.runPython("prep = Preparation('/input/source.las', '/app/scripts/for_instance')");
       const scene = JSON.parse(py.runPython('json.dumps(prep.scene)'));
+      if (!taskPlan.allowed_partitions.includes(scene.published_split)) throw Error('Source belongs to a published partition excluded from this task use');
       if (mode !== 'las' && scene.path !== candidates[0].path) throw Error('Extracted LAS belongs to a different reviewed plot');
       const files = [];
       for (;;) {
@@ -182,8 +186,12 @@ async function run(request) {
       py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: mounted}, '/output/plots/' + scene.id);
       py.FS.writeFile('/output/task-package.json', manifestText);
       phase('Independently validating every exported array and whole-plot count…');
-      const report = JSON.parse(py.runPython("json.dumps(TaskPackage('/output', allow_selection=True).validate())"));
-      const evidence = {status: 'validated', coverage: 'one-complete-selected-plot', report,
+      const taskValidation = JSON.parse(py.runPython("task_package = TaskPackage('/output', allow_selection=True); task_validation = validate_prepared(task_model, task_plan, task_package); json.dumps(task_validation)"));
+      const report = taskValidation.package;
+      const consumerSample = JSON.parse(py.runPython("sample = next(iter_task_blocks(task_model, task_plan, task_package)); json.dumps(dict(scene_id=sample['scene_id'], published_split=sample['published_split'], row_offset=sample['row_offset'], arrays={k:dict(shape=list(v.shape), dtype=str(v.dtype)) for k,v in sample['arrays'].items()}))"));
+      for (const [path, value] of [['task-plan.json', taskPlan], ['task-validation.json', taskValidation]])
+        files.push({path, handle: await write(root, path, new TextEncoder().encode(JSON.stringify(value, null, 2) + '\n'))});
+      const evidence = {status: 'validated', task_plan: taskPlan, task_validation: taskValidation, consumer_sample: consumerSample, coverage: 'one-complete-selected-plot', report,
         runtime: {pyodide: lock.pyodide, python: lock.python, numpy: lock.numpy, laspy: lock.laspy, zip_js: lock.zip_js},
         runtime_lock_sha256: await digest(lockBytes),
         user_agent: navigator.userAgent, source_sha256: scene.sha256, intake,

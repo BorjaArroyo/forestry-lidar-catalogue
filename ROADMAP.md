@@ -18,6 +18,18 @@ archive. Expanded acceptance covers Firefox direct intake for RMIT and Chromium 
 for CULS, including byte-identical preservation of its additional native attribute.
 Full-archive verification and coverage across the other native schemas remain pending.
 
+## Task requirements through audited execution
+
+The instance task now controls mandatory and optional variables for training,
+evaluation and inference. The browser and local service bind the request to the
+admitted FOR-instance pipeline and independently validate both data and request.
+The consumer preserves source identities and excludes official test scenes from
+training use. Optional channels are omitted explicitly; required channels without
+an admitted producer block execution. See TASK-REQUIREMENTS.md.
+
+This closes one source-specific path, not multi-source training preparation.
+FGI-EMIT admission below remains the next increment.
+
 ## Next increment: a second source through the existing workflow
 
 Prioritize FGI-EMIT, pinned record

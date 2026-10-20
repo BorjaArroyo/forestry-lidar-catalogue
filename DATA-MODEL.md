@@ -147,3 +147,21 @@ and streaming reader in `scripts/task_package.py`. A regression check binds the
 reader's array types/shapes to the existing graph output contract. Schema checks
 do not replace payload checks or scientific admission. This increment changes
 neither the curated model version nor the producer's pinned execution package.
+
+
+## Task requirements and executable requests (1.4)
+
+The instance task now declares variables, typed output requirements, default
+optional choices, use-specific minimums, and permitted published partitions.
+Admitted pipelines explicitly bind variables to their output contracts. Validation
+rejects missing bindings, wrong types/shapes, undefined variables, and spectral
+outputs without corresponding audited measurement inputs. Native candidate
+measurements remain separate from pipeline output admission.
+
+`scripts/task_plan.py` resolves and checks requests, gates complete independent
+package validation, and streams only requested arrays and allowed partitions.
+The browser and local service export the exact plan and validation report. The
+source-specific FOR-instance producer and reference policy are unchanged.
+See [Task requirements](TASK-REQUIREMENTS.md). The schema now requires model 1.4;
+older versions need explicit migration. No source membership or scientific
+preparation-readiness claim is promoted by this increment.

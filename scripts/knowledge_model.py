@@ -85,6 +85,70 @@ def validate_input_requirements(data, nodes):
             raise ValueError('Required channel association has not been validated')
 
 
+def validate_task_requirements(nodes):
+    """Validate typed task outputs against existing source pipeline contracts."""
+    for key, node in nodes.items():
+        if node['type'] != 'task' or 'requirements' not in node['data']:
+            continue
+        req = node['data']['requirements']
+        variables = {v['key']: v for v in req['variables']}
+        if len(variables) != len(req['variables']):
+            raise ValueError('Duplicate task variable')
+        if any(not set(use['required_variables']) <= set(variables) for use in req['uses'].values()):
+            raise ValueError('Task use names an undefined variable')
+        for variable in variables.values():
+            measurement = variable['purpose'] == 'measurement'
+            if measurement != bool(variable['quantity']) or measurement != (variable['minimum_channels'] > 0):
+                raise ValueError('Spectral constraints require a measurement variable')
+            fields = variable['output_fields']
+            if len({f['name'] for f in fields}) != len(fields):
+                raise ValueError('Duplicate variable output field')
+        for pipeline in (n['data'] for n in nodes.values() if n['type'] == 'pipeline_spec' and n['data']['task_ref'] == key):
+            bindings = pipeline.get('variable_outputs', {})
+            if pipeline['execution_enabled'] and not bindings:
+                raise ValueError('Enabled task pipeline needs explicit variable outputs')
+            output = {f['name']:f for f in nodes[pipeline['output_ref']]['data']['fields']}
+            for name, fields in bindings.items():
+                if name not in variables:
+                    raise ValueError('Pipeline binds an undefined task variable')
+                expected = variables[name]['output_fields']
+                if fields != [f['name'] for f in expected]:
+                    raise ValueError('Pipeline output binding differs from task variable fields')
+                for field in expected:
+                    actual = output.get(field['name'])
+                    if not actual or any(actual[k] != field[k] for k in ['dtypes', 'shape']) or not actual['required']:
+                        raise ValueError('Pipeline output does not meet task dtype/shape requirements')
+                if variables[name]['purpose'] == 'measurement':
+                    native = {f['name']:f for f in nodes[pipeline['input_ref']]['data']['fields']}
+                    channels = set()
+                    for requirement in pipeline.get('input_requirements', []):
+                        field = native[requirement['field']]
+                        m = field.get('measurement', {})
+                        if requirement['purpose']=='feature' and m.get('quantity')==variables[name]['quantity']:
+                            channels.add(m['channel_ref'])
+                    if len(channels) < variables[name]['minimum_channels']:
+                        raise ValueError('Task measurement output lacks audited channel input requirements')
+            if pipeline['execution_enabled']:
+                if not any(set(u['required_variables']) <= set(bindings) for u in req['uses'].values()):
+                    raise ValueError('Pipeline cannot satisfy any declared task use')
+
+def source_task_context(model, source_ref):
+    """Project reviewed outputs separately from native spectral descriptions."""
+    nodes = model['nodes']
+    native = [nodes[e['target']]['data'] for e in model['edges'].values()
+              if e['type']=='data_flow' and e['role']=='describes' and e['source']==source_ref]
+    spectra = []
+    for contract in native:
+        for field in contract['fields']:
+            m = field.get('measurement')
+            if field.get('role')=='measurement' and m and m['quantity']=='reflectance' and m['semantic_status']=='documented':
+                channel = nodes[m['channel_ref']]['data']
+                spectra.append(dict(field=field['name'], channel_ref=m['channel_ref'], wavelength_nm=channel['wavelength_nm']))
+    pipelines = [{'id':key, 'output_ref':n['data']['output_ref'], 'variable_outputs':copy.deepcopy(n['data'].get('variable_outputs', {}))}
+                 for key,n in nodes.items() if n['type']=='pipeline_spec' and n['data']['source_ref']==source_ref and n['data']['task_ref']=='task:instances' and n['data']['execution_enabled']]
+    return dict(pipelines=pipelines, native_reflectance=spectra,
+                note='Native availability does not admit feature extraction, calibration or a preparation pipeline.')
+
 def validate(model, schema):
     """Check JSON structure, reference types and lossless projection invariants."""
     Draft202012Validator.check_schema(schema)
@@ -267,6 +331,7 @@ def validate(model, schema):
                 available.update(port.get('produces', set()))
             if data['output_ref'] not in available:
                 raise ValueError('Pipeline metadata does not reach its declared output')
+    validate_task_requirements(nodes)
     return model
 
 
@@ -323,6 +388,10 @@ def project(model):
                             tasks=[nodes[t]['data']['key'] for t in edge['task_refs']])
         relationship['evidence'] = [evidence(item) for item in relationship['evidence']]
         relationships.append(relationship)
+    for task in tasks:
+        if 'requirements' in task:
+            task['preparation_sources'] = {key.removeprefix('zenodo:'): source_task_context(model, key)
+                                           for key, node in nodes.items() if node['type'] == 'source_release'}
     return profiles, relationships, tasks
 
 

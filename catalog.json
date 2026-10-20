@@ -19,52 +19,256 @@
   },
   "tasks": [
     {
-      "id": "instances",
       "name": "Tree segmentation",
       "title": "Individual-tree segmentation",
       "description": "Requires instance identity, annotation coverage, and boundary rules.",
       "visible": true,
-      "status": "work_in_progress"
+      "status": "work_in_progress",
+      "requirements": {
+        "variables": [
+          {
+            "key": "xyz",
+            "label": "Geometry",
+            "purpose": "geometry",
+            "default": "required",
+            "detail": "Native decoded coordinates; no resampling, normalization or inferred CRS.",
+            "output_fields": [
+              {
+                "name": "xyz",
+                "dtypes": [
+                  "float64"
+                ],
+                "shape": [
+                  "N",
+                  3
+                ]
+              }
+            ],
+            "quantity": null,
+            "minimum_channels": 0
+          },
+          {
+            "key": "instance_reference",
+            "label": "Tree-instance reference",
+            "purpose": "reference",
+            "default": "off",
+            "detail": "Scene-local identities and a conservative validity mask; annotation completeness is not certified.",
+            "output_fields": [
+              {
+                "name": "instance",
+                "dtypes": [
+                  "int64"
+                ],
+                "shape": [
+                  "N"
+                ]
+              },
+              {
+                "name": "instance_valid",
+                "dtypes": [
+                  "bool"
+                ],
+                "shape": [
+                  "N"
+                ]
+              }
+            ],
+            "quantity": null,
+            "minimum_channels": 0
+          },
+          {
+            "key": "reflectance",
+            "label": "Multispectral reflectance",
+            "purpose": "measurement",
+            "default": "optional",
+            "detail": "At least two documented spectral channels with separate validity masks. Native units, calibration and association require source-specific review; RGB is not a substitute.",
+            "output_fields": [
+              {
+                "name": "features",
+                "dtypes": [
+                  "float32"
+                ],
+                "shape": [
+                  "N",
+                  "C"
+                ]
+              },
+              {
+                "name": "feature_valid",
+                "dtypes": [
+                  "bool"
+                ],
+                "shape": [
+                  "N",
+                  "C"
+                ]
+              }
+            ],
+            "quantity": "reflectance",
+            "minimum_channels": 2
+          }
+        ],
+        "uses": {
+          "training": {
+            "label": "Training data",
+            "required_variables": [
+              "xyz",
+              "instance_reference"
+            ],
+            "allowed_partitions": [
+              "dev",
+              "train"
+            ],
+            "detail": "Keep published partitions; consume instance_valid for supervised loss. Published test scenes are excluded from this consumer. No train/validation split or model fit is created."
+          },
+          "evaluation": {
+            "label": "Evaluation data",
+            "required_variables": [
+              "xyz",
+              "instance_reference"
+            ],
+            "allowed_partitions": [
+              "test"
+            ],
+            "detail": "Prepare published test reference arrays; the scoring protocol and independent-zone split require a separate audit."
+          },
+          "inference": {
+            "label": "Inference data",
+            "required_variables": [
+              "xyz"
+            ],
+            "allowed_partitions": [
+              "dev",
+              "train",
+              "test"
+            ],
+            "detail": "Reference labels are optional for inference; the source adapter may still preserve them losslessly."
+          }
+        }
+      },
+      "id": "instances",
+      "preparation_sources": {
+        "8287792": {
+          "pipelines": [
+            {
+              "id": "pipeline:for-instance-plot-instances:1.0.0",
+              "output_ref": "contract:for-instance-plot-instances:1.0.0",
+              "variable_outputs": {
+                "xyz": [
+                  "xyz"
+                ],
+                "instance_reference": [
+                  "instance",
+                  "instance_valid"
+                ]
+              }
+            }
+          ],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "16742708": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "15193973": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "17172162": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "19351234": {
+          "pipelines": [],
+          "native_reflectance": [
+            {
+              "field": "reflectance_1",
+              "channel_ref": "channel:fgi-emit-scanner-1:1.0.0",
+              "wavelength_nm": 1550
+            },
+            {
+              "field": "reflectance_2",
+              "channel_ref": "channel:fgi-emit-scanner-2:1.0.0",
+              "wavelength_nm": 905
+            },
+            {
+              "field": "reflectance_3",
+              "channel_ref": "channel:fgi-emit-scanner-3:1.0.0",
+              "wavelength_nm": 532
+            }
+          ],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "15913427": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "19127709": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "16875688": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "16910335": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "7307956": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        }
+      }
     },
     {
-      "id": "components",
       "name": "Forest components",
       "title": "Wood, foliage & ground",
       "description": "Class meanings must match; tree labels alone do not identify wood or foliage.",
       "visible": false,
-      "status": "tbd"
+      "status": "tbd",
+      "id": "components"
     },
     {
-      "id": "species",
       "name": "Tree species",
       "title": "Species classification",
       "description": "Requires documented species labels linked to tree identities.",
       "visible": false,
-      "status": "tbd"
+      "status": "tbd",
+      "id": "species"
     },
     {
-      "id": "geometry",
       "name": "Geometry & robustness",
       "title": "Geometry and consistency checks",
       "description": "Unlabeled clouds can test consistency and distributions, not segmentation accuracy.",
       "visible": false,
-      "status": "tbd"
+      "status": "tbd",
+      "id": "geometry"
     },
     {
-      "id": "spectral",
       "name": "Multispectral",
       "title": "Spectral learning",
       "description": "Wavelengths, channel units, normalization, and registration must be checked.",
       "visible": false,
-      "status": "tbd"
+      "status": "tbd",
+      "id": "spectral"
     },
     {
-      "id": "biomass",
       "name": "Tree structure",
       "title": "Structure and biomass research",
       "description": "QSMs are derived models; independent reference measurements are required for accuracy claims.",
       "visible": false,
-      "status": "tbd"
+      "status": "tbd",
+      "id": "biomass"
     }
   ],
   "datasets": [
@@ -8923,8 +9127,8 @@
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "model_sha256": "fc52044854936a36852fb40e33434295b29b5ca0607650356f909ae497a0d082",
-    "model_schema_sha256": "7cc1e4cc71e4bfb0c4913dbd144a5394bf4248df3333656ccff5d119ec0c4d87"
+    "model_sha256": "2daf4dcd8497bbd061555cf188ca5e16e3f5e78e9e26dc981750d53801def5a2",
+    "model_schema_sha256": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2"
   },
   "evidence": [
     {

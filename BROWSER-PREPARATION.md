@@ -150,3 +150,14 @@ scene without defining a new meaning or feature normalization for treeSP.
 The complete-plot browser coverage is now two plots and two of five native
 schemas. It does not admit all 32 plots, establish geographic independence or
 verify the checksum of the full provider ZIP.
+
+
+## Task-bound requests
+
+The task controls now select training, evaluation or inference requirements and
+mandatory/optional measurements. The worker resolves the request against pinned
+model 1.4 before source intake and validates it after complete payload validation.
+Only reviewed partitions permitted for the chosen use appear in the selector.
+The ZIP includes the saved plan, task validation and consumer-block evidence.
+A source-native spectral candidate does not enable an unadmitted adapter.
+See TASK-REQUIREMENTS.md for the executable contract and evidence scope.

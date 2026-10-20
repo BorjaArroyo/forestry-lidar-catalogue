@@ -8,7 +8,7 @@
     },
     "schema_version": {
       "enum": [
-        "1.3"
+        "1.4"
       ]
     },
     "nodes": {
@@ -474,6 +474,234 @@
             "order": {
               "type": "integer",
               "minimum": 0
+            },
+            "requirements": {
+              "type": "object",
+              "properties": {
+                "variables": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9_]*$"
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "purpose": {
+                        "enum": [
+                          "geometry",
+                          "reference",
+                          "measurement"
+                        ]
+                      },
+                      "default": {
+                        "enum": [
+                          "required",
+                          "optional",
+                          "off"
+                        ]
+                      },
+                      "detail": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "output_fields": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "dtypes": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "minItems": 1,
+                              "uniqueItems": true
+                            },
+                            "shape": {
+                              "type": "array",
+                              "items": {
+                                "type": [
+                                  "string",
+                                  "integer"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "name",
+                            "dtypes",
+                            "shape"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "minItems": 1
+                      },
+                      "quantity": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "minimum_channels": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "label",
+                      "purpose",
+                      "default",
+                      "detail",
+                      "output_fields",
+                      "quantity",
+                      "minimum_channels"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                },
+                "uses": {
+                  "type": "object",
+                  "properties": {
+                    "training": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "required_variables": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1,
+                          "uniqueItems": true
+                        },
+                        "allowed_partitions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1,
+                          "uniqueItems": true
+                        },
+                        "detail": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "required_variables",
+                        "allowed_partitions",
+                        "detail"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "evaluation": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "required_variables": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1,
+                          "uniqueItems": true
+                        },
+                        "allowed_partitions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1,
+                          "uniqueItems": true
+                        },
+                        "detail": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "required_variables",
+                        "allowed_partitions",
+                        "detail"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "inference": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "required_variables": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1,
+                          "uniqueItems": true
+                        },
+                        "allowed_partitions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1,
+                          "uniqueItems": true
+                        },
+                        "detail": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "required_variables",
+                        "allowed_partitions",
+                        "detail"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "training",
+                    "evaluation",
+                    "inference"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "variables",
+                "uses"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -1213,6 +1441,19 @@
                 "$ref": "#/$defs/inputRequirement"
               },
               "minItems": 1
+            },
+            "variable_outputs": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              }
             }
           },
           "required": [
