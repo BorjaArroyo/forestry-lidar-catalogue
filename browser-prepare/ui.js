@@ -1,4 +1,4 @@
-import {sameRequest} from './dataset-draft.js';
+import {emptyDraft, readDraft, sameRequest} from './dataset-draft.js';
 import {DraftPanel} from './draft-panel.js';
 import {datasetPlots} from './selection.js';
 import {RunSession} from './run-session.js?v=2';
@@ -44,6 +44,33 @@ function clearPlan() {
   if (planURL) URL.revokeObjectURL(planURL);
   planURL = null; $('dataset-plan').hidden = true;
 }
+function applyImportedPlan(data) {
+  const {plan, source_plots: sourcePlots} = data;
+  const task = plan.task_plan, record = task.source_ref.replace(/^zenodo:/, '');
+  const profile = profileForPipeline(task.pipeline_ref);
+  if (!profile || profile.recordId !== record) throw Error('Imported source has no available browser implementation');
+  const request = selection.normalize(task.use, task.variables), result = selection.assess(record, request);
+  if (!sameRequest(request, {use:task.use, variables:task.variables}) || result.status !== 'ready' || result.pipeline_ref !== task.pipeline_ref)
+    throw Error('Imported task requirements differ from this page. Reload the page and try again.');
+  const membership = sourcePlots.map(plot => ({...plot, collection:profile.collectionOf(plot)}));
+  const byPath = new Map(membership.map(plot => [plot.path, plot]));
+  const draft = emptyDraft(request);
+  draft.subsets = plan.subsets.map(paths => ({record_id:record, pipeline_ref:task.pipeline_ref, paths,
+    collections:[...new Set(paths.map(path => byPath.get(path).collection))],
+    partitions:[...new Set(paths.map(path => byPath.get(path).published_split))]}));
+  readDraft(JSON.stringify(draft), selection.normalize);
+  // The worker is finished; allow the normal task setter before locking UI changes.
+  controls(); busy = true;
+  try {
+    window.CanopyHub.setTaskRequest(request);
+    $('prepare-source').value = record; $('prepare-mode').value = 'zenodo';
+    plots = membership.sort((a,b) => a.size_bytes-b.size_bytes); sourceMembership.set(record, plots); initialized = true;
+    draftPanel.replace(draft); refreshPlots(); hideExport();
+    $('prepare-source-status').textContent = `${catalog.datasets.find(s => s.id === record).name}: imported source and pipeline verified.`;
+    pendingReviewKey = JSON.stringify(planIntent()); showPlan(plan);
+    status('Saved plan verified and imported. Review its summary, then prepare the exact selection.');
+  } finally { busy = false; }
+}
 function showPlan(plan) {
   clearPlan(); reviewedPlan = plan; reviewedKey = pendingReviewKey;
   const {totals, task_plan: task, output} = plan;
@@ -87,6 +114,7 @@ function controls() {
   const intent = planIntent(), key = intent ? JSON.stringify(intent) : null;
   if (reviewedPlan && key !== reviewedKey) clearPlan();
   $('prepare-review').disabled = !supported || running || !intent;
+  $('dataset-plan-file').disabled = !supported || running;
   if (mode === 'zenodo' && !reviewedPlan) $('prepare-run').disabled = true;
   $('prepare-cancel').disabled = !session.running;
   $('prepare-clear').disabled = running || !job;
@@ -168,7 +196,10 @@ const session = new RunSession({
   event(data) {
     if (data.type === 'job') remember(data.id);
     else if (data.type === 'phase') status(data.text);
-    else if (data.type === 'result' && data.operation === 'review') {
+    else if (data.type === 'result' && data.operation === 'import') {
+      reviewing = false;
+      try { applyImportedPlan(data); } catch (error) { status('Plan import failed: ' + error.message); }
+    } else if (data.type === 'result' && data.operation === 'review') {
       reviewing = false; showPlan(data.plan);
       status('Plan checked. Review the summary, then prepare this exact dataset. No source LAS has been downloaded.');
     } else if (data.type === 'result') {
@@ -205,13 +236,30 @@ $('prepare-mode').onchange = controls;
 $('prepare-collections').onchange = $('prepare-partitions').onchange = () => { refreshPlots(false); controls(); };
 $('prepare-plot').onchange = controls;
 $('prepare-source').onchange = sourceChanged;
+$('dataset-plan-file').onchange = async () => {
+  if (busy || session.running) return;
+  const file = $('dataset-plan-file').files[0];
+  if (!file) return;
+  busy = true; controls();
+  try {
+    if (file.size > 1048576) throw Error('Plan files must be JSON up to 1 MiB');
+    const text = await file.text(), candidate = JSON.parse(text);
+    const source = candidate?.task_plan?.source_ref;
+    if (typeof source !== 'string' || !/^zenodo:[1-9][0-9]*$/.test(source)) throw Error('Choose a dataset-plan.json with a reviewed Zenodo source');
+    reviewing = true;
+    session.start(() => new Worker(new URL('./worker.js?v=two-sources-v1', import.meta.url), {type:'module'}),
+      {operation:'import', mode:'zenodo', record_id:source.slice(7), plan_text:text});
+    status('Checking the imported plan against current source, pipeline and runtime pins…');
+  } catch (error) { reviewing = false; status('Plan import failed: ' + error.message); }
+  finally { busy = false; $('dataset-plan-file').value = ''; controls(); }
+};
 $('prepare-review').onclick = () => {
   if (busy || session.running || $('prepare-review').disabled) return;
   const intent = planIntent();
   if (!intent) return;
   clearPlan(); pendingReviewKey = JSON.stringify(intent); reviewing = true;
   try {
-    session.start(() => new Worker(new URL('./worker.js?v=dataset-plan-v1', import.meta.url), {type: 'module'}), {operation: 'review', ...intent});
+    session.start(() => new Worker(new URL('./worker.js?v=two-sources-v1', import.meta.url), {type: 'module'}), {operation: 'review', ...intent});
     status('Resolving the plan against pinned source metadata and audited task requirements…');
   } catch (error) { reviewing = false; status(error.message); }
   controls();
@@ -229,7 +277,7 @@ $('prepare-run').onclick = async () => {
   busy = true; controls(); hideExport(); $('prepare-clear').disabled = true; $('prepare-result').textContent = '';
   try {
     await removeJob(job); remember(null);
-    session.start(() => new Worker(new URL('./worker.js?v=dataset-plan-v1', import.meta.url), {type: 'module'}), {
+    session.start(() => new Worker(new URL('./worker.js?v=two-sources-v1', import.meta.url), {type: 'module'}), {
       record_id: record, mode: $('prepare-mode').value, selected_paths: saved?.paths || selectedValues('prepare-plot'),
       file: $('prepare-file').files[0], task_request: request, execution_plan: reviewedPlan,
     });

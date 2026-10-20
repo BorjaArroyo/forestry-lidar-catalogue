@@ -78,7 +78,7 @@ async function loadContext(profile) {
   const sourceBytes = await checked(lock.files[profile.sourceLock]);
   const source = JSON.parse(new TextDecoder().decode(sourceBytes));
   if (String(source.record_id) !== profile.recordId) throw Error('Reviewed source membership belongs to another release');
-  for (const path of ['browser-prepare/intake.js', 'browser-prepare/selection.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js']) await checked(lock.files[path]);
+  for (const path of ['browser-prepare/worker.js', 'browser-prepare/intake.js', 'browser-prepare/selection.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js', 'browser-prepare/profiles/fgi-emit.js']) await checked(lock.files[path]);
   phase('Checking task requirements and exact versions; no source LAS is downloaded yet…');
   const py = await boot(lock);
   py.globals.set('source_json', JSON.stringify(source));
@@ -102,11 +102,19 @@ async function review(request) {
   if (request.mode !== 'zenodo') throw Error('Dataset plan review currently supports Zenodo selections');
   const profile = profileForSource(request.record_id);
   if (!profile) throw Error('No browser implementation for this reviewed source');
-  const {py} = await loadContext(profile);
-  taskForRequest(py, profile, request);
-  py.globals.set('subsets_json', JSON.stringify(request.subset_paths));
-  const plan = JSON.parse(py.runPython("execution_plan = dataset_plan.resolve(task_model, source_lock, **dataset_pins, use=task_plan['use'], variables=task_plan['variables'], subsets=json.loads(subsets_json)); json.dumps(execution_plan)"));
-  self.postMessage({type: 'result', operation: 'review', plan});
+  const {py, source} = await loadContext(profile);
+  let plan;
+  if (request.operation === 'import') {
+    if (typeof request.plan_text !== 'string' || request.plan_text.length > 1048576) throw Error('Plan files must be JSON up to 1 MiB');
+    py.globals.set('imported_plan_text', request.plan_text);
+    plan = JSON.parse(py.runPython("from task_package import decode_json; execution_plan = dataset_plan.check(task_model, source_lock, decode_json(imported_plan_text), **dataset_pins); json.dumps(execution_plan)"));
+    if (plan.task_plan.source_ref !== 'zenodo:' + profile.recordId || plan.task_plan.pipeline_ref !== profile.pipelineRef) throw Error('Imported plan belongs to another implementation');
+  } else {
+    taskForRequest(py, profile, request);
+    py.globals.set('subsets_json', JSON.stringify(request.subset_paths));
+    plan = JSON.parse(py.runPython("execution_plan = dataset_plan.resolve(task_model, source_lock, **dataset_pins, use=task_plan['use'], variables=task_plan['variables'], subsets=json.loads(subsets_json)); json.dumps(execution_plan)"));
+  }
+  self.postMessage({type: 'result', operation: request.operation, plan, source_plots: request.operation === 'import' ? source.plots : undefined});
 }
 
 async function directory(root, path) {
@@ -144,7 +152,9 @@ async function loadZip(lock) {
 
 async function stagePlot(root, request, plot, lock) {
   const zip = await loadZip(lock);
-  const remote = request.mode === 'zenodo' ? providerReader(zip, lock.provider_archive, plot, nativeFetch) : null;
+  const profile = profileForSource(request.record_id);
+  const asset = profile.archiveForPlot ? profile.archiveForPlot(lock, plot) : lock.provider_archive;
+  const remote = request.mode === 'zenodo' ? providerReader(zip, asset, plot, nativeFetch) : null;
   const reader = remote?.reader || localReader(zip, request.file);
   const staged = await root.getFileHandle('source.las', {create: true});
   const access = await staged.createSyncAccessHandle();
@@ -187,7 +197,9 @@ async function preparePlot(py, root, file, profile, taskPlan, expectedPath, file
     py.FS.mkdirTree('/output/plots/' + scene.id);
     const mounted = await Promise.all(sceneFiles.map(async f => ({name: f.path.split('/').at(-1), data: await f.handle.getFile()})));
     py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: mounted}, '/output/plots/' + scene.id);
-    return JSON.parse(py.runPython('json.dumps(prep.manifest)'));
+    // Keep the authoritative JSON text: JavaScript otherwise turns 1.0 into 1 in native schema descriptors.
+    const manifestText = py.runPython('json.dumps(prep.manifest)');
+    return {manifest: JSON.parse(manifestText), manifestText};
   } finally {
     py.runPython("prep.reader.close() if 'prep' in globals() else None");
     py.FS.unmount('/input');
@@ -225,14 +237,14 @@ async function run(request) {
         selectPlots(source.plots, executionPlan ? executionPlan.plots.map(p => p.path) : request.selected_paths || (request.selected_path ? [request.selected_path] : []));
       if (!candidates.length) throw Error('Input does not identify complete reviewed plots');
       if (mode !== 'las' && candidates.some(p => !taskPlan.allowed_partitions.includes(p.published_split))) throw Error('Selected dataset contains a published partition excluded from this task use');
-      const outputEstimate = p => p.size_bytes + p.points * 34 + Math.ceil(p.points / 250000) * 65536;
+      const outputEstimate = p => p.size_bytes + p.points * (profile.derivedBytesPerPoint || 34) + Math.ceil(p.points / 250000) * 65536;
       const preparedBytes = mode === 'las' ? Math.max(...candidates.map(outputEstimate)) : candidates.reduce((n,p) => n + outputEstimate(p), 0);
       const required = executionPlan?.totals.estimated_browser_storage_bytes ??
         (2 * preparedBytes + (mode === 'las' ? 0 : Math.max(...candidates.map(p => p.size_bytes))) + 64 * 1024 ** 2);
       const estimate = await navigator.storage.estimate();
       if (!Number.isFinite(estimate.quota) || estimate.quota - (estimate.usage || 0) < required)
         throw Error(`Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for the selected dataset and ZIP export`);
-      const files = [], manifests = [], intakes = [];
+      const files = [], manifests = [], manifestTexts = [], intakes = [];
       py.FS.mkdir('/input');
       const queue = mode === 'las' ? [null] : candidates;
       for (const [index, plot] of queue.entries()) {
@@ -242,12 +254,12 @@ async function run(request) {
           phase(`Reading plot ${index + 1} of ${queue.length}: ${profile.plotLabel(plot.path)}…`);
           ({file, intake} = await stagePlot(root, {...request, mode}, plot, lock));
         }
-        const manifest = await preparePlot(py, root, file, profile, taskPlan, plot?.path, files);
-        manifests.push(manifest); intakes.push({path: manifest.scenes[0].path, ...intake});
+        const {manifest, manifestText} = await preparePlot(py, root, file, profile, taskPlan, plot?.path, files);
+        manifests.push(manifest); manifestTexts.push(manifestText); intakes.push({path: manifest.scenes[0].path, ...intake});
         if (plot) await root.removeEntry('source.las');
       }
-      py.globals.set('manifests_json', JSON.stringify(manifests));
-      const manifestText = py.runPython('json.dumps(combine_manifests(json.loads(manifests_json)), indent=2)') + '\n';
+      py.globals.set('manifests_json', JSON.stringify(manifestTexts));
+      const manifestText = py.runPython('json.dumps(combine_manifests([json.loads(text) for text in json.loads(manifests_json)]), indent=2)') + '\n';
       const manifest = JSON.parse(manifestText);
       let planValidation = null;
       if (executionPlan) {
@@ -291,7 +303,7 @@ async function run(request) {
       const datasetReport = JSON.parse(py.runPython("folder_dataset = TaskDataset('/dataset', task_model); folder_report = folder_dataset.validate(); json.dumps(folder_report)"));
       const datasetText = JSON.stringify(datasetReport, null, 2) + '\n';
       exportFiles.push({path: 'dataset-validation.json', handle: await write(root, 'folder-export/dataset-validation.json', new TextEncoder().encode(datasetText))});
-      const evidence = {status: 'validated', dataset: datasetReport, task_plan: taskPlan, task_validation: taskValidation, consumer_sample: consumerSample, coverage: manifests.length === 1 ? 'one-complete-selected-plot' : 'complete-selected-plots', selection: manifest.selection, report,
+      const evidence = {status: 'validated', prepared_scenes: manifest.scenes, dataset: datasetReport, task_plan: taskPlan, task_validation: taskValidation, consumer_sample: consumerSample, coverage: manifests.length === 1 ? 'one-complete-selected-plot' : 'complete-selected-plots', selection: manifest.selection, report,
         runtime: {pyodide: lock.pyodide, python: lock.python, numpy: lock.numpy, laspy: lock.laspy, zip_js: lock.zip_js},
         runtime_lock_sha256: runtimeHash, dataset_plan: executionPlan, dataset_plan_validation: planValidation,
         user_agent: navigator.userAgent, source_sha256: manifests.length === 1 ? manifests[0].scenes[0].sha256 : null, intake,
@@ -334,6 +346,6 @@ async function run(request) {
 self.onmessage = async ({data}) => {
   if (active) return;
   active = true;
-  try { if (data.operation === 'review') await review(data); else await run(data); }
+  try { if (['review', 'import'].includes(data.operation)) await review(data); else await run(data); }
   catch (error) { self.postMessage({type: 'error', code: error.code, error: String(error.message || error)}); }
 };

@@ -183,7 +183,25 @@ window.LIDAR_CATALOG = {
           "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
         },
         "19351234": {
-          "pipelines": [],
+          "pipelines": [
+            {
+              "id": "pipeline:fgi-emit-plot-instances:1.0.0",
+              "output_ref": "contract:fgi-emit-plot-instances:1.0.0",
+              "variable_outputs": {
+                "xyz": [
+                  "xyz"
+                ],
+                "instance_reference": [
+                  "instance",
+                  "instance_valid"
+                ],
+                "reflectance": [
+                  "features",
+                  "feature_valid"
+                ]
+              }
+            }
+          ],
           "native_reflectance": [
             {
               "field": "reflectance_1",
@@ -1242,7 +1260,7 @@ window.LIDAR_CATALOG = {
       "kind": "Plot clouds",
       "labels": "Tree instances; other, tree, building, vehicle, pole, out",
       "role": "Published instance benchmark",
-      "readiness": "Instance crosswalk",
+      "readiness": "Audited source-specific preparation",
       "tasks": [
         "instances",
         "geometry",
@@ -1257,8 +1275,8 @@ window.LIDAR_CATALOG = {
       "provenance": "Single Espoonlahti acquisition area; split plots do not by themselves establish geographic generalization.",
       "study_context": "The local forestseg study reserves its selected test plots for terminal evaluation. This reservation is not a provider-wide restriction.",
       "review": {
-        "reviewed_at": "2026-10-19",
-        "scope": "Existing-source metadata review: provider metadata integrity, all 19 native headers and 190000 prefix points. No whole-payload validation or executable task admission.",
+        "reviewed_at": "2026-10-20",
+        "scope": "Full provider archive checksums, all 19 original payload SHA256, every point and independent prepared-array validation; no model/evaluator/calibration certification",
         "observation_unit": "19 cylindrical plots; tree_index is unique within each plot.",
         "source_facts": [
           {
@@ -1281,13 +1299,13 @@ window.LIDAR_CATALOG = {
           "19 normalized LAS files retain radiometric attributes and native classes. The coarse instance view masks out-points without deleting source points.",
           "All 19 native headers share one 39-field schema and contain no CRS. Their point counts sum to 60,793,586; source payload hashes were not recomputed in this audit.",
           "190,000 stored-order prefix points were inspected. Suffix fields retain documented sentinels; the finite numeric zero is missing for intensity/amplitude, while reference tree_index zero means no assigned instance.",
-          "All suffix-channel headers report nearest-neighbor association within 0.25 m. This describes association provenance, not validated co-registration or calibration."
+          "All suffix-channel headers report nearest-neighbor association within 0.25 m. This describes association provenance, not validated co-registration or calibration.",
+          "2026-10-20 full-source audit and adapter validation cover 60,793,586 points, 1,561 native instances and both official partitions. Class 0/5 remain unknown; native reflectance masks are explicit."
         ],
         "open_questions": [
           "Choose the evaluator-specific boundary/background policy before comparing scores.",
           "Review channel calibration and model exposure to Espoonlahti.",
-          "Resolve RGB intensity-versus-reflectance descriptions and suffix-field units/scaling before treating them as quantitative features.",
-          "Complete full-payload integrity, reference coverage and source-specific preparation validation; prefix missingness counts cannot establish full-source channel availability."
+          "Resolve RGB intensity-versus-reflectance descriptions and suffix-field units/scaling before treating them as quantitative features."
         ],
         "published_protocol": "13 training and 6 test plots; optional validation plots 1019, 1022, 1031 come from training. These are plots from one acquisition area, not 19 independent zones.",
         "observations_snapshot": {
@@ -1346,7 +1364,7 @@ window.LIDAR_CATALOG = {
       "source_task_support": {
         "instances": {
           "status": "partial",
-          "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review."
+          "reason": "An independently validated conservative task adapter preserves all points, original IDs, official partitions and native spectral channels; article scoring and geographic transfer remain separate."
         },
         "components": {
           "status": "not_documented",
@@ -1490,9 +1508,9 @@ window.LIDAR_CATALOG = {
         "coverage": "Annotations target identifiable trees at least 3 m high and qualifying boundary trees.",
         "limitation": "Boundary masks and background treatment must match the chosen protocol.",
         "preparation": {
-          "status": "tbd",
-          "label": "Task pipeline TBD",
-          "detail": "Typed multispectral metadata has been reviewed on all 19 headers and bounded prefixes. Full-payload integrity, reference policy and a self-contained task adapter remain TBD.",
+          "status": "ready",
+          "label": "Audited geometry, instances and native spectral masks",
+          "detail": "All 19 original LAS files and 60,793,586 points passed full integrity and source-specific preparation validation. Native spectral units, calibration, annotation completeness and geographic independence remain unresolved.",
           "limited_reference_copy": false
         }
       },
@@ -9127,7 +9145,7 @@ window.LIDAR_CATALOG = {
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "model_sha256": "2daf4dcd8497bbd061555cf188ca5e16e3f5e78e9e26dc981750d53801def5a2",
+    "model_sha256": "3390b57d089588af2cd08edb6772bc321c73cf121dabfa5ba359f6439c15d7b9",
     "model_schema_sha256": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2"
   },
   "evidence": [

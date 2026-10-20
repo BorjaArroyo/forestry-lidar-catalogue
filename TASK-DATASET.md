@@ -62,7 +62,7 @@ plans fail closed. The destination must be new. Interrupted native exports retai
 an `.incomplete.json` marker; existing outputs are never overwritten. Validation
 binds the dataset index, schema and reader hashes.
 
-FOR-instance remains the only executable source profile.
+FOR-instance and FGI-EMIT have executable, independently validated source profiles.
 
 Workbench now saves public-source subsets in **My dataset**. Add collections or
 partitions, remove individual subsets and reload without losing the draft. This
@@ -106,6 +106,33 @@ manifest fingerprint. Scientific producer policies are unchanged.
 Source LAS sizes are not compressed transfer sizes. Browser storage is an
 estimate, checked again against available quota before intake. Published split
 preservation does not establish geographic independence. The plan is downloadable
-before execution; importing/replaying external plan files and resumable multi-source
-execution remain work in progress. Local LAS/ZIP preparation keeps its existing
+before execution. Use **Import a saved dataset plan** to validate and restore its exact selection and requirements. Import never starts a download and rejects changed versions or pins before replacing the current draft. Interrupted runs still restart; reusing partial output is outside this increment. Local LAS/ZIP preparation keeps its existing
 request and payload validation and does not yet produce this public-source plan.
+
+
+## FGI-EMIT and optional native channels
+
+FGI-EMIT preserves 13 official `train` and six `test` plots. `features[:, 0:3]`
+contains unchanged `reflectance_1/2/3` (1550/905/532 nm). `feature_valid` is a
+separate mask for each finite value unequal to -9999; invalid source values stay
+unchanged. Units/calibration and provider nearest-neighbor association accuracy
+remain unresolved. RGB is preserved only inside original records, not substituted
+for these measurements. See [FGI-EMIT.md](FGI-EMIT.md).
+
+The native entrypoint prepares one complete reviewed LAS into a new directory:
+
+```bash
+python scripts/fgi_emit/prepare.py --input /absolute/plot_1022.las --output /absolute/new-fgi-package
+python scripts/task_package.py validate /absolute/new-fgi-package --allow-selection
+```
+
+The common export command can compose already prepared FOR-instance and FGI-EMIT
+packages if both satisfy the requested task variables. Original source identities,
+partition folders and optional omissions stay explicit. A consumer must handle
+missing optional variables; the loader never fabricates shared spectral columns
+or certifies cross-source calibration. Browser plans still contain one source.
+
+[Browser scale evidence](evidence/browser-bulk-validation.json) covers four complete
+FOR-instance plots from three collections, 5,541,993 points and 24 blocks. Every
+block matches the audited native reference. This is a bounded larger-selection
+test, not full-release browser scalability or interrupted-job resumption.

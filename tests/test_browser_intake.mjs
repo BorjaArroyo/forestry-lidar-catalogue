@@ -136,3 +136,10 @@ test('cumulative transfer is capped even when individual ranges are valid', asyn
   for (let i = 0; i < 4; i++) await remote.reader.readUint8Array(0, MAX_RANGE_BYTES);
   await assert.rejects(remote.reader.readUint8Array(0, MAX_RANGE_BYTES), /selected-plot bound/);
 });
+
+test('FGI members retain their archive-specific training/test directories', () => {
+  assert.equal(memberName({path:'sources/19351234/originals/training/training/plot_1001.las'}),'training/plot_1001.las');
+  assert.equal(memberName({path:'sources/19351234/originals/test/test/plot_1002.las'}),'test/plot_1002.las');
+  assert.throws(()=>memberName({path:'sources/19351234/originals/test/../training/plot.las'}));
+  assert.throws(()=>memberName({path:'sources/unknown/originals/training/plot.las'}));
+});

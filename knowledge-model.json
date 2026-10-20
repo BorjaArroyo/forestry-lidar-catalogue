@@ -791,14 +791,14 @@
             }
           ],
           "role": "Published instance benchmark",
-          "readiness": "Instance crosswalk",
+          "readiness": "Audited source-specific preparation",
           "note": "Native classes include built objects. The local study uses only selected test plots; the provider also supplies training data.",
           "correction": "Retain native categories and the out mask. Do not infer wood/foliage labels from the broad tree category.",
           "provenance": "Single Espoonlahti acquisition area; split plots do not by themselves establish geographic generalization.",
           "study_context": "The local forestseg study reserves its selected test plots for terminal evaluation. This reservation is not a provider-wide restriction.",
           "review": {
-            "reviewed_at": "2026-10-19",
-            "scope": "Existing-source metadata review: provider metadata integrity, all 19 native headers and 190000 prefix points. No whole-payload validation or executable task admission.",
+            "reviewed_at": "2026-10-20",
+            "scope": "Full provider archive checksums, all 19 original payload SHA256, every point and independent prepared-array validation; no model/evaluator/calibration certification",
             "observation_unit": "19 cylindrical plots; tree_index is unique within each plot.",
             "source_facts": [
               {
@@ -821,13 +821,13 @@
               "19 normalized LAS files retain radiometric attributes and native classes. The coarse instance view masks out-points without deleting source points.",
               "All 19 native headers share one 39-field schema and contain no CRS. Their point counts sum to 60,793,586; source payload hashes were not recomputed in this audit.",
               "190,000 stored-order prefix points were inspected. Suffix fields retain documented sentinels; the finite numeric zero is missing for intensity/amplitude, while reference tree_index zero means no assigned instance.",
-              "All suffix-channel headers report nearest-neighbor association within 0.25 m. This describes association provenance, not validated co-registration or calibration."
+              "All suffix-channel headers report nearest-neighbor association within 0.25 m. This describes association provenance, not validated co-registration or calibration.",
+              "2026-10-20 full-source audit and adapter validation cover 60,793,586 points, 1,561 native instances and both official partitions. Class 0/5 remain unknown; native reflectance masks are explicit."
             ],
             "open_questions": [
               "Choose the evaluator-specific boundary/background policy before comparing scores.",
               "Review channel calibration and model exposure to Espoonlahti.",
-              "Resolve RGB intensity-versus-reflectance descriptions and suffix-field units/scaling before treating them as quantitative features.",
-              "Complete full-payload integrity, reference coverage and source-specific preparation validation; prefix missingness counts cannot establish full-source channel availability."
+              "Resolve RGB intensity-versus-reflectance descriptions and suffix-field units/scaling before treating them as quantitative features."
             ],
             "published_protocol": "13 training and 6 test plots; optional validation plots 1019, 1022, 1031 come from training. These are plots from one acquisition area, not 19 independent zones.",
             "observations_snapshot": {
@@ -892,9 +892,9 @@
             "coverage": "Annotations target identifiable trees at least 3 m high and qualifying boundary trees.",
             "limitation": "Boundary masks and background treatment must match the chosen protocol.",
             "preparation": {
-              "status": "tbd",
-              "label": "Task pipeline TBD",
-              "detail": "Typed multispectral metadata has been reviewed on all 19 headers and bounded prefixes. Full-payload integrity, reference policy and a self-contained task adapter remain TBD.",
+              "status": "ready",
+              "label": "Audited geometry, instances and native spectral masks",
+              "detail": "All 19 original LAS files and 60,793,586 points passed full integrity and source-specific preparation validation. Native spectral units, calibration, annotation completeness and geographic independence remain unresolved.",
               "limited_reference_copy": false
             }
           }
@@ -3089,6 +3089,333 @@
           "evidence:fgi-emit-measurements-20261019"
         ]
       }
+    },
+    "evidence:fgi-emit-full-audit-20261020": {
+      "type": "evidence",
+      "data": {
+        "local": "evidence/fgi-emit-full-audit.json",
+        "sha256": "c144a9405672ec5771f526edd68e98a5909e038702c81a4dfb0b68344b0c747d"
+      }
+    },
+    "evidence:fgi-emit-preparation-validation-20261020": {
+      "type": "evidence",
+      "data": {
+        "local": "evidence/fgi-emit-preparation-validation.json",
+        "sha256": "58737d922bb21275df2861b7482dd1c33ba30959e3d92276d34a6fc8b952f936"
+      }
+    },
+    "contract:fgi-emit-plot-instances:1.0.0": {
+      "type": "data_contract",
+      "data": {
+        "name": "FGI-EMIT plot-instance package with native spectral masks",
+        "version": "1.0.0",
+        "status": "validated",
+        "format": "Uncompressed NPZ chunks and task-package.json",
+        "observation_unit": "One acquired LAS plot; identities are scoped by record and relative plot path",
+        "fields": [
+          {
+            "name": "xyz",
+            "dtypes": [
+              "float64"
+            ],
+            "shape": [
+              "N",
+              3
+            ],
+            "meaning": "Unchanged decoded source coordinates",
+            "required": true
+          },
+          {
+            "name": "instance",
+            "dtypes": [
+              "int64"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "-1 unknown/excluded; 0 non-tree; positive IDs remain scene-local",
+            "required": true
+          },
+          {
+            "name": "instance_valid",
+            "dtypes": [
+              "bool"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "True for native class 1 with positive tree_index or known non-tree classes 2/3/4; classes 0/5 and unidentified tree points remain unknown",
+            "required": true
+          },
+          {
+            "name": "native_class",
+            "dtypes": [
+              "uint8"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "Unchanged source-specific class codes 0 through 5; class 2 means building",
+            "required": true
+          },
+          {
+            "name": "original_points",
+            "dtypes": [
+              "native_structured_record"
+            ],
+            "shape": [
+              "N"
+            ],
+            "meaning": "Retained native fields for traceability",
+            "required": true
+          },
+          {
+            "name": "published_split",
+            "dtypes": [
+              "string"
+            ],
+            "shape": [],
+            "meaning": "Official train or test membership; one Espoonlahti acquisition area",
+            "required": true
+          },
+          {
+            "name": "native_schema_ref",
+            "dtypes": [
+              "string"
+            ],
+            "shape": [],
+            "meaning": "Scene metadata key into native LAS dimension descriptors embedded in task-package.json",
+            "required": true
+          },
+          {
+            "name": "features",
+            "dtypes": [
+              "float32"
+            ],
+            "shape": [
+              "N",
+              "C"
+            ],
+            "meaning": "Native reflectance_1/2/3 columns at 1550/905/532 nm; C=3; unknown physical units and calibration, no rescaling or imputation",
+            "required": true
+          },
+          {
+            "name": "feature_valid",
+            "dtypes": [
+              "bool"
+            ],
+            "shape": [
+              "N",
+              "C"
+            ],
+            "meaning": "Per-channel isfinite(value) and value != -9999; source values remain unchanged",
+            "required": true
+          }
+        ],
+        "coordinate_ref": "coordinates:fgi-emit-source:1.0.0",
+        "partitioning": "Preserve official 13 train / 6 test plots; optional validation membership is not rewritten",
+        "annotation_codes": [],
+        "invariants": [
+          "Preserve all original point records, decoded XYZ and plot-local identities",
+          "Native class 0 and class 5 remain unknown; known non-tree classes are not relabeled terrain",
+          "Channel masks distinguish finite native values from source sentinels; no fabricated measurements",
+          "Neither channel calibration nor geographic independence is certified"
+        ],
+        "evidence_refs": [
+          "evidence:fgi-emit-official",
+          "evidence:fgi-emit-metadata",
+          "evidence:fgi-emit-full-audit-20261020",
+          "evidence:fgi-emit-preparation-validation-20261020"
+        ]
+      }
+    },
+    "transformation:fgi-emit-task-preparation:1.0.0": {
+      "type": "transformation",
+      "data": {
+        "name": "FGI-EMIT verified LAS decoding, conservative references and native reflectance masks",
+        "version": "1.0.0",
+        "status": "validated",
+        "execution_enabled": true,
+        "implementation": {
+          "path": "scripts/fgi_emit/prepare.py",
+          "sha256": "b92fa98d031677ad010831f192b7a9b364728b8e9b0f10e4230e3dda71fe0f6e",
+          "entrypoint": "prepare"
+        },
+        "rules": [
+          {
+            "id": "decode",
+            "expression": "xyz[:,i] = native_XYZ[:,i] * scales[i] + offsets[i]; retain float64 and all native structured records",
+            "status": "validated"
+          },
+          {
+            "id": "unknown",
+            "expression": "instance[:] = -1; retain unknown for classification in {0,5} and class-1 points without positive tree_index",
+            "status": "validated"
+          },
+          {
+            "id": "background",
+            "expression": "instance[classification in {2,3,4}] = 0; these are known building/vehicle/pole points, not terrain",
+            "status": "validated"
+          },
+          {
+            "id": "tree",
+            "expression": "require tree_index integer >= 0; reject positive tree_index outside class 1; instance[(classification == 1) & (tree_index > 0)] = tree_index; instance_valid = instance >= 0",
+            "status": "validated"
+          },
+          {
+            "id": "spectral",
+            "expression": "features = column_stack(native[reflectance_1], native[reflectance_2], native[reflectance_3]); feature_valid = isfinite(features) & (features != -9999); preserve float32 values including masked sentinels/nonfinite values",
+            "status": "validated"
+          },
+          {
+            "id": "partition",
+            "expression": "Preserve official train/test membership; keep edge/dead flags and all source rows; do not carve a new validation set",
+            "status": "validated"
+          }
+        ],
+        "preconditions": [
+          "Exact source release 19351234; all 19 LAS SHA256 and both provider archives verified",
+          "Native LAS 1.4 point format 7; class codes 0..5 and origin scanner IDs 1..3",
+          "Unknown units/calibration and provider nearest-neighbor association at 0.25 m remain explicit"
+        ],
+        "preserves": [
+          "All original records, native class codes, edge/dead flags and row order",
+          "Float64 native XYZ, positive plot-local identities, published train/test",
+          "Native reflectance columns and independent channel masks without imputation"
+        ],
+        "losses": [
+          "Conservative supervised reference excludes uncertain classes/points through masks without deleting rows",
+          "No article-specific scoring, radiometric calibration or geographic-transfer protocol is implemented"
+        ],
+        "blockers": [],
+        "evidence_refs": [
+          "evidence:fgi-emit-official",
+          "evidence:fgi-emit-metadata",
+          "evidence:fgi-emit-full-audit-20261020",
+          "evidence:fgi-emit-preparation-validation-20261020"
+        ],
+        "validation_ref": "evidence:fgi-emit-preparation-validation-20261020"
+      }
+    },
+    "pipeline:fgi-emit-plot-instances:1.0.0": {
+      "type": "pipeline_spec",
+      "data": {
+        "name": "FGI-EMIT to conservative tree instances and native multispectral channels",
+        "version": "1.0.0",
+        "status": "validated",
+        "execution_enabled": true,
+        "source_ref": "zenodo:19351234",
+        "task_ref": "task:instances",
+        "input_ref": "contract:fgi-emit-native:1.0.0",
+        "output_ref": "contract:fgi-emit-plot-instances:1.0.0",
+        "transformation_refs": [
+          "transformation:fgi-emit-task-preparation:1.0.0"
+        ],
+        "asset_name": "training.zip and test.zip",
+        "selection": "All 19 reviewed LAS files: 13 official train and six test; browser users may choose explicit complete plots",
+        "evidence_refs": [
+          "evidence:fgi-emit-official",
+          "evidence:fgi-emit-metadata",
+          "evidence:fgi-emit-full-audit-20261020",
+          "evidence:fgi-emit-preparation-validation-20261020"
+        ],
+        "validation_ref": "evidence:fgi-emit-preparation-validation-20261020",
+        "input_requirements": [
+          {
+            "field": "X",
+            "purpose": "geometry",
+            "unit": null,
+            "missing_policy": "preserve",
+            "calibration": "not_required",
+            "association": "not_required"
+          },
+          {
+            "field": "Y",
+            "purpose": "geometry",
+            "unit": null,
+            "missing_policy": "preserve",
+            "calibration": "not_required",
+            "association": "not_required"
+          },
+          {
+            "field": "Z",
+            "purpose": "geometry",
+            "unit": null,
+            "missing_policy": "preserve",
+            "calibration": "not_required",
+            "association": "not_required"
+          },
+          {
+            "field": "tree_index",
+            "purpose": "reference",
+            "unit": null,
+            "missing_policy": "preserve",
+            "calibration": "not_required",
+            "association": "not_required"
+          },
+          {
+            "field": "classification",
+            "purpose": "reference",
+            "unit": null,
+            "missing_policy": "preserve",
+            "calibration": "not_required",
+            "association": "not_required"
+          },
+          {
+            "field": "edge",
+            "purpose": "preserve",
+            "unit": null,
+            "missing_policy": "preserve",
+            "calibration": "not_required",
+            "association": "not_required"
+          },
+          {
+            "field": "dead",
+            "purpose": "preserve",
+            "unit": null,
+            "missing_policy": "preserve",
+            "calibration": "not_required",
+            "association": "not_required"
+          },
+          {
+            "field": "reflectance_1",
+            "purpose": "feature",
+            "unit": null,
+            "missing_policy": "mask",
+            "calibration": "not_required",
+            "association": "not_required"
+          },
+          {
+            "field": "reflectance_2",
+            "purpose": "feature",
+            "unit": null,
+            "missing_policy": "mask",
+            "calibration": "not_required",
+            "association": "not_required"
+          },
+          {
+            "field": "reflectance_3",
+            "purpose": "feature",
+            "unit": null,
+            "missing_policy": "mask",
+            "calibration": "not_required",
+            "association": "not_required"
+          }
+        ],
+        "variable_outputs": {
+          "xyz": [
+            "xyz"
+          ],
+          "instance_reference": [
+            "instance",
+            "instance_valid"
+          ],
+          "reflectance": [
+            "features",
+            "feature_valid"
+          ]
+        }
+      }
     }
   },
   "edges": {
@@ -3362,7 +3689,7 @@
       "target": "task:instances",
       "data": {
         "status": "partial",
-        "reason": "Native instance reference is described; plot coverage, boundary rules and adapter still require task review.",
+        "reason": "An independently validated conservative task adapter preserves all points, original IDs, official partitions and native spectral channels; article scoring and geographic transfer remain separate.",
         "listing_order": 0,
         "conditional_order": 0
       }
@@ -4285,6 +4612,24 @@
       "role": "describes",
       "source": "zenodo:19351234",
       "target": "contract:fgi-emit-native:1.0.0"
+    },
+    "flow:fgi-prepare-input": {
+      "type": "data_flow",
+      "role": "consumes",
+      "source": "transformation:fgi-emit-task-preparation:1.0.0",
+      "target": "contract:fgi-emit-native:1.0.0"
+    },
+    "flow:fgi-prepare-output": {
+      "type": "data_flow",
+      "role": "produces",
+      "source": "transformation:fgi-emit-task-preparation:1.0.0",
+      "target": "contract:fgi-emit-plot-instances:1.0.0"
+    },
+    "flow:fgi-task": {
+      "type": "data_flow",
+      "role": "designed_for",
+      "source": "contract:fgi-emit-plot-instances:1.0.0",
+      "target": "task:instances"
     }
   }
 }

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-20 — Plan import, larger selections and FGI-EMIT admission
+
+- Import strict saved plans, verify exact current dependencies, and restore selections only after validation.
+- Validate four complete FOR-instance plots from three collections: 5,541,993 points, 24 native-equivalent blocks.
+- Admit FGI-EMIT after both archive checksums, 19 LAS payload hashes and all 60,793,586 points passed audit and independent preparation validation.
+- Add conservative source-specific references and three unchanged native reflectance columns with per-channel masks. Preserve official train/test and all original records.
+- Retain explicit limits: no calibration/generalization certification, no interrupted-run resumption, and one source per browser plan.
+
 ## 2026-10-20 — Reviewable dataset execution plans
 
 - Zenodo preparation now requires a versioned plan reviewed before payload intake.

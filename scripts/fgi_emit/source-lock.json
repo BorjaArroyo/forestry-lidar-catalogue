@@ -1,0 +1,530 @@
+{
+  "record_id": 19351234,
+  "archives": [
+    {
+      "name": "training.zip",
+      "sha256": "838261e0ef996635e5b0ca650723fd7f2adc568dca7d9e0d383224ae91b75270",
+      "provider_checksum": "md5:b1c5ee7e9c166dd7ff377539944e5002"
+    },
+    {
+      "name": "test.zip",
+      "sha256": "b8ef7090ebd15603bee4d112dd48c9cab84f502a4f8e12ae63b816079004a2f2",
+      "provider_checksum": "md5:c67b80c1e7f8a2ea28f54ed364aceea2"
+    }
+  ],
+  "plots": [
+    {
+      "path": "sources/19351234/originals/training/training/plot_1001.las",
+      "sha256": "f9c35723cef4956a72cd0839c0d1c1ce75069d2d6ef0e40e5ba0f607cbdc7520",
+      "size_bytes": 253600611,
+      "points": 3092643,
+      "published_split": "train",
+      "class_counts": [
+        471365,
+        2475530,
+        0,
+        0,
+        0,
+        145748
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1003.las",
+      "sha256": "11e019007a07a7da343abdebeea2e2d42ab819bd9348bbe5cfb0b92c0483d1ba",
+      "size_bytes": 189321221,
+      "points": 2308748,
+      "published_split": "train",
+      "class_counts": [
+        276055,
+        1823573,
+        0,
+        0,
+        255,
+        208865
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1005.las",
+      "sha256": "cf452ee0638931e29a67a12cc1edf737fab12c641ad53d15543d3d5f00d8c968",
+      "size_bytes": 251583985,
+      "points": 3068050,
+      "published_split": "train",
+      "class_counts": [
+        1821257,
+        1135440,
+        0,
+        0,
+        0,
+        111353
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1009.las",
+      "sha256": "5ff095f92c5e4048bcf16aabe311e2016303158c4d4e1e0f60e3fd9ad0be98fd",
+      "size_bytes": 316482475,
+      "points": 3859495,
+      "published_split": "train",
+      "class_counts": [
+        1074349,
+        2641493,
+        0,
+        15387,
+        927,
+        127339
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1010.las",
+      "sha256": "156206ac40604b28db2b9116609bef750c48cff2426183dad21392101d72c30e",
+      "size_bytes": 297013707,
+      "points": 3622071,
+      "published_split": "train",
+      "class_counts": [
+        1662647,
+        1430899,
+        466779,
+        0,
+        0,
+        61746
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1013.las",
+      "sha256": "06931d04a92a3fb58b17ca7db3eecbacb2068b8ab95530157579462c371653b0",
+      "size_bytes": 296707929,
+      "points": 3618342,
+      "published_split": "train",
+      "class_counts": [
+        2043043,
+        1508971,
+        0,
+        0,
+        0,
+        66328
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1019.las",
+      "sha256": "5fbe516928d9eb78c325d47e0bf9cf606b308f484674002aaf909da86aac4b5b",
+      "size_bytes": 308716419,
+      "points": 3764787,
+      "published_split": "train",
+      "class_counts": [
+        3388599,
+        363049,
+        0,
+        2911,
+        4897,
+        5331
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1020.las",
+      "sha256": "38d3e0e2afada767bfa7428a283a326c51ef557aeb94da156d5e9dccbe7b7d7e",
+      "size_bytes": 288784351,
+      "points": 3521713,
+      "published_split": "train",
+      "class_counts": [
+        2014567,
+        1335959,
+        50842,
+        23674,
+        3687,
+        92984
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1022.las",
+      "sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e",
+      "size_bytes": 136718713,
+      "points": 1667254,
+      "published_split": "train",
+      "class_counts": [
+        670401,
+        966992,
+        0,
+        0,
+        0,
+        29861
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1023.las",
+      "sha256": "dc94bebcc53397aa927fbbf940f893a5cbdd44c844562491a9c80b8af7211faf",
+      "size_bytes": 451870789,
+      "points": 5510572,
+      "published_split": "train",
+      "class_counts": [
+        2087911,
+        3058736,
+        113827,
+        16301,
+        4176,
+        229621
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1024.las",
+      "sha256": "98ec8a4b5f2b1e294933181e9f1fd676c2887e61677c41a30fdabb9fa74797e2",
+      "size_bytes": 281473641,
+      "points": 3432558,
+      "published_split": "train",
+      "class_counts": [
+        535972,
+        2782845,
+        0,
+        0,
+        0,
+        113741
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1027.las",
+      "sha256": "26e78e87e26e36b932631cc52f78797a611ca55162f07a70aef06ec0db45e41c",
+      "size_bytes": 332607611,
+      "points": 4056143,
+      "published_split": "train",
+      "class_counts": [
+        1917284,
+        1996143,
+        0,
+        58902,
+        3598,
+        80216
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1031.las",
+      "sha256": "1bd2b5d1997d05ef87c99708b90aab0071d7f6f9240934855f35ed674e8a5cb0",
+      "size_bytes": 259035571,
+      "points": 3158923,
+      "published_split": "train",
+      "class_counts": [
+        1020878,
+        1804815,
+        309971,
+        0,
+        2189,
+        21070
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "training.zip"
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1002.las",
+      "sha256": "f0a99e41cb8e69b7b0ea956e50a3b8cf63266f8872714f7102f98d92699a7154",
+      "size_bytes": 155148869,
+      "points": 1892012,
+      "published_split": "test",
+      "class_counts": [
+        529433,
+        1271597,
+        0,
+        0,
+        0,
+        90982
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "test.zip"
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1004.las",
+      "sha256": "55e8b671a1c4492a4c28b303c12dd1ddee98597838de7a25c1a87279ade1b0a1",
+      "size_bytes": 192476335,
+      "points": 2347225,
+      "published_split": "test",
+      "class_counts": [
+        350569,
+        1828192,
+        0,
+        0,
+        331,
+        168133
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "test.zip"
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1008.las",
+      "sha256": "a1f6aa1414c98dd4ae4bb0e9b907a5ffb29a798cdc01f977e2dd2269859fe95c",
+      "size_bytes": 163729021,
+      "points": 1996648,
+      "published_split": "test",
+      "class_counts": [
+        769870,
+        1187101,
+        0,
+        3881,
+        2958,
+        32838
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "test.zip"
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1012.las",
+      "sha256": "9f18287c8d10e5674c816a2486d2f26f8028d02b9ef00a732bb15b0e0bf2cbd3",
+      "size_bytes": 257832139,
+      "points": 3144247,
+      "published_split": "test",
+      "class_counts": [
+        1946442,
+        1134964,
+        0,
+        0,
+        0,
+        62841
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "test.zip"
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1018.las",
+      "sha256": "99973c1ce5466cef1b2cbe569d65007ae500a5040f92f6670bdbe06aadbde48a",
+      "size_bytes": 236517387,
+      "points": 2884311,
+      "published_split": "test",
+      "class_counts": [
+        589401,
+        2220589,
+        0,
+        0,
+        1230,
+        73091
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "test.zip"
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1028.las",
+      "sha256": "d17d3820989ac9d3e0cbe3fac10b5e0ec3746cdf1ec0f786bb3738f9dfb36261",
+      "size_bytes": 315527093,
+      "points": 3847844,
+      "published_split": "test",
+      "class_counts": [
+        1268001,
+        1195304,
+        1291793,
+        24575,
+        3006,
+        65165
+      ],
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null,
+      "archive": "test.zip"
+    }
+  ]
+}

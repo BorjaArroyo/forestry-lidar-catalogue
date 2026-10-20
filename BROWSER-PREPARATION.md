@@ -1,4 +1,4 @@
-# Browser preparation: FOR-instance dataset selections
+# Browser preparation: audited dataset selections
 
 The Workbench view runs a fixed, bounded Python adapter in a module
 Web Worker using Pyodide 314.0.7, Python 3.14.2, NumPy 2.4.6 and laspy 2.7.0.
@@ -99,7 +99,7 @@ It is no longer loaded by the workbench.
 ## Selective ZIP intake
 
 The source selector supports a local LAS, a downloaded ZIP, and a selective Zenodo
-download. The 32 reviewed plots remain the only accepted sources. The original
+download. That first increment accepted only the 32 reviewed FOR-instance plots; FGI-EMIT is now a separately audited profile. The original
 acquisition adds the archive basename as an extraction directory, so source path
 `.../originals/FORinstance_dataset/RMIT/test.las` maps to ZIP member
 `RMIT/test.las`. Selection is exact; unrelated entries are never extracted.
@@ -168,8 +168,7 @@ See TASK-REQUIREMENTS.md for the executable contract and evidence scope.
 
 The preparation panel lists every reviewed source from the catalog. Its task
 assessment enables execution only when the graph admits the requested output and
-a browser implementation exists. FGI-EMIT and the other unadmitted adapters remain
-visible with their review gaps; selecting them does not download or prepare data.
+a browser implementation exists. FOR-instance and FGI-EMIT have admitted implementations; the other sources remain visible with their review gaps and cannot run.
 `profiles.js` dispatches only known implementation modules. FOR-instance-specific
 membership paths and setup are isolated in `profiles/for-instance.js`. The worker
 independently checks the selected source and admitted pipeline before source intake.
@@ -201,3 +200,23 @@ New exports use the [task dataset folder contract](TASK-DATASET.md). Each select
 partition contains independently validated source packages and unchanged NPZ
 blocks. The worker validates the final layout with `TaskDataset` before ZIP
 completion. Historical ZIPs retain their original layout and captured reports.
+
+
+## Current additional acceptance (2026-10-20)
+
+Saved plans can be imported through the file chooser. The pinned Python resolver
+checks strict JSON, schema, exact task/source dependencies and runtime fingerprints
+before restoring the selection. Invalid imports retain the previous draft. Import
+is metadata-only; preparation starts with a separate explicit action. Runtime pins
+also cover the orchestration worker.
+
+The larger FOR-instance selection covers four complete plots, three collections,
+5,541,993 points and 24 blocks, all byte-equivalent to the native reference. See
+[evidence](evidence/browser-bulk-validation.json). Full-release browser scalability
+and interrupted-run resumption remain unimplemented/unvalidated.
+
+FGI-EMIT has its own closed source profile and pinned training/test archive routing.
+Its full native audit and independent prepared-array validation cover all 19 plots
+and 60,793,586 points. The adapter preserves source class semantics, unknown points,
+original records and three reflectance channels with separate masks. This does not
+certify calibration, annotation completeness, article scoring or geographic transfer.

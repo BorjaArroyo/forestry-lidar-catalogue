@@ -63,10 +63,12 @@ class SceneChunk:
     instance_valid: np.ndarray
     native_class: np.ndarray
     original_points: np.ndarray
+    features: np.ndarray | None = None
+    feature_valid: np.ndarray | None = None
 
 
 class TaskPackage:
-    """Read the reviewed FOR-instance 1.0 profile; unknown profiles fail closed.
+    """Read closed, reviewed source profiles; unknown pipelines fail closed.
 
     Metadata and trusted local profile pins are checked at construction. Every
     yielded chunk is verified; whole-scene counters are checked on exhaustion.
@@ -81,6 +83,14 @@ class TaskPackage:
         self.manifest = decode_json(content)
         self.schema_path = Path(schema)
         Draft202012Validator(read_json(self.schema_path)).validate(self.manifest)
+        pipeline = self.manifest['pipeline']
+        if pipeline not in {'for-instance-plot-instances:1.0.0', 'fgi-emit-plot-instances:1.0.0'}:
+            raise ValueError('Unknown reviewed preparation pipeline')
+        self.fgi = pipeline == 'fgi-emit-plot-instances:1.0.0'
+        self.record = 19351234 if self.fgi else 8287792
+        self.class_count = 6 if self.fgi else 7
+        self.fields = FIELDS | {'features', 'feature_valid'} if self.fgi else FIELDS
+        if self.fgi and Path(profile) == PROFILE: profile = REPO / 'scripts/fgi_emit'
         self.profile = Path(profile).resolve()
         pins = read_json(self.profile / 'package-lock.json')['files']
         if not {'prepare.py', 'source-lock.json', 'policy.json', 'requirements.txt'} <= set(pins):
@@ -92,11 +102,12 @@ class TaskPackage:
         if self.manifest['package_sha256'] != fingerprint:
             raise ValueError('Producer package fingerprint mismatch')
         lock = read_json(self.profile / 'source-lock.json')
-        if self.manifest['source'] != dict(record_id=8287792, archive_sha256=lock['download_sha256'], provider_checksum=lock['provider_checksum']):
+        expected_source = dict(record_id=19351234, archives=lock['archives']) if self.fgi else dict(record_id=8287792, archive_sha256=lock['download_sha256'], provider_checksum=lock['provider_checksum'])
+        if self.manifest['source'] != expected_source:
             raise ValueError('Source release differs from the reviewed profile')
         if self.manifest['policy'] != read_json(self.profile / 'policy.json'):
             raise ValueError('Reference policy differs from the reviewed profile')
-        if self.manifest['unmatched_split_rows'] != lock['unmatched_split_rows']:
+        if self.manifest['unmatched_split_rows'] != lock.get('unmatched_split_rows', []):
             raise ValueError('Unmatched published partitions changed')
         expected = {p['path']: p for p in lock['plots']}
         selection = self.manifest.get('selection')
@@ -117,7 +128,7 @@ class TaskPackage:
             for key in ['sha256', 'points', 'published_split', 'scales', 'offsets', 'crs', 'class_counts']:
                 if scene[key] != original[key]:
                     raise ValueError('Scene provenance differs: ' + key)
-            wanted_id = '8287792-' + hashlib.sha256(scene['path'].encode()).hexdigest()[:20]
+            wanted_id = str(self.record) + '-' + hashlib.sha256(scene['path'].encode()).hexdigest()[:20]
             if scene['id'] != wanted_id or scene['id'] in self.scenes:
                 raise ValueError('Invalid or duplicate scene identity')
             if not np.isfinite(scene['scales'] + scene['offsets']).all():
@@ -152,9 +163,9 @@ class TaskPackage:
         if sha_file(path) != chunk['sha256']:
             raise ValueError('Chunk checksum mismatch: ' + chunk['path'])
         with np.load(path, allow_pickle=False) as stored:
-            if set(stored.files) != FIELDS or len(stored.files) != len(FIELDS):
+            if set(stored.files) != self.fields or len(stored.files) != len(self.fields):
                 raise ValueError('Unexpected chunk arrays')
-            arrays = {name: stored[name] for name in FIELDS}
+            arrays = {name: stored[name] for name in self.fields}
         n = chunk['points']
         for name, dtype, shape in [('xyz', 'float64', (n, 3)), ('instance', 'int64', (n,)),
                                    ('instance_valid', 'bool', (n,)), ('native_class', 'uint8', (n,))]:
@@ -166,13 +177,16 @@ class TaskPackage:
             raise ValueError('Original records differ from their native schema')
         names = raw.dtype.names or ()
         class_name = 'raw_classification' if native['point_format'] < 6 else 'classification'
-        if not {'X', 'Y', 'Z', 'treeID', class_name} <= set(names):
+        identity_field = 'tree_index' if self.fgi else 'treeID'
+        required = {'X', 'Y', 'Z', identity_field, class_name}
+        if self.fgi: required |= {'edge','dead','user_data','reflectance_1','reflectance_2','reflectance_3'}
+        if not required <= set(names):
             raise ValueError('Required native dimensions missing')
         classes = raw[class_name] & 31 if class_name == 'raw_classification' else raw[class_name]
-        tree_ids = raw['treeID']
+        tree_ids = raw[identity_field]
         if classes.shape != (n,) or tree_ids.shape != (n,) or tree_ids.dtype.kind not in 'iuf':
             raise ValueError('Invalid native reference arrays')
-        if not np.isin(classes, range(7)).all():
+        if not np.isin(classes, range(self.class_count)).all():
             raise ValueError('Unknown native class')
         if tree_ids.dtype.kind == 'f':
             valid_ids = (np.isfinite(tree_ids) & (tree_ids == np.floor(tree_ids)) & (tree_ids >= -(2**63)) & (tree_ids < 2**63)).all()
@@ -180,10 +194,11 @@ class TaskPackage:
             valid_ids = not n or (int(tree_ids.min()) >= -(2**63) and int(tree_ids.max()) < 2**63)
         if not valid_ids:
             raise ValueError('Native tree identities must be integral int64 values')
-        tree_class = (classes >= 4) & (classes <= 6)
+        tree_class = classes == 1 if self.fgi else (classes >= 4) & (classes <= 6)
         if ((tree_ids > 0) & ~tree_class).any():
             raise ValueError('Native class and positive identity conflict')
-        expected = np.where(classes == 2, 0, -1).astype(np.int64)
+        background = np.isin(classes, [2,3,4]) if self.fgi else classes == 2
+        expected = np.where(background, 0, -1).astype(np.int64)
         annotated = tree_class & (tree_ids > 0)
         expected[annotated] = tree_ids[annotated].astype(np.int64)
         xyz = np.column_stack([raw[axis] * scene['scales'][i] + scene['offsets'][i] for i, axis in enumerate(['X', 'Y', 'Z'])])
@@ -192,6 +207,14 @@ class TaskPackage:
         for name, values in [('native_class', classes), ('instance', expected), ('instance_valid', expected >= 0)]:
             if not np.array_equal(arrays[name], values):
                 raise ValueError('Reference differs from native policy: ' + name)
+        if self.fgi:
+            values = np.column_stack([raw[f'reflectance_{i}'] for i in [1,2,3]])
+            if arrays['features'].dtype != np.float32 or arrays['features'].shape != (n,3) or arrays['feature_valid'].dtype != np.bool_ or arrays['feature_valid'].shape != (n,3):
+                raise ValueError('Invalid spectral arrays')
+            if not np.array_equal(arrays['features'],values,equal_nan=True) or not np.array_equal(arrays['feature_valid'],np.isfinite(values)&(values!=-9999)):
+                raise ValueError('Spectral values or missingness mask differ from native source')
+            if not np.isin(raw['edge'],[0,1]).all() or not np.isin(raw['dead'],[0,1]).all() or not np.isin(raw['user_data'],[1,2,3]).all():
+                raise ValueError('Invalid native flags or origin scanner')
         for values in arrays.values():
             values.flags.writeable = False
         return SceneChunk(scene['id'], scene['published_split'], chunk['offset'], **arrays)
@@ -199,11 +222,11 @@ class TaskPackage:
     def iter_scene(self, scene_id):
         """Yield verified, read-only storage blocks in original row order."""
         scene = self.scenes[scene_id]
-        classes = np.zeros(7, dtype=np.int64)
+        classes = np.zeros(self.class_count, dtype=np.int64)
         counts = np.zeros(3, dtype=np.int64)
         for chunk in scene['chunks']:
             result = self._read_chunk(scene, chunk)
-            classes += np.bincount(result.native_class, minlength=7)
+            classes += np.bincount(result.native_class, minlength=self.class_count)
             counts += [np.count_nonzero(result.instance < 0), np.count_nonzero(result.instance == 0), np.count_nonzero(result.instance > 0)]
             yield result
         if classes.tolist() != scene['class_counts'] or counts.tolist() != [scene[k] for k in ['unknown_points', 'background_points', 'tree_points']]:

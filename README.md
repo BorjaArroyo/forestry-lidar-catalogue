@@ -24,7 +24,7 @@ Quick paths:
 - **Browse the catalog**: open the published site above. No setup required.
 - **Prepare a dataset selection in the browser**: choose a preparation source and a
   data use in Workbench, then select collections and partitions. Only admitted implementations can run; current
-  execution is limited to FOR-instance. Other source review gaps remain visible.
+  FOR-instance and FGI-EMIT are executable. Other source review gaps remain visible.
 - **Get FOR-instance locally**: run the download service (below) and select
   "Prepare instance data after download".
 - **Add a source or transformation**: read [CONTRIBUTING.md](CONTRIBUTING.md)
@@ -34,7 +34,7 @@ Quick paths:
 
 - Ten pinned source records, search, filters, comparison and metadata export.
 - Source labels and task preparation are reported separately. FOR-instance has a validated local preparation for all 32 LAS plots present
-  in its pinned archive. Other source adapters remain TBD.
+  in its pinned archive. FGI-EMIT has an independently validated 19-plot adapter, including native spectral masks. Other adapters remain TBD.
 - The local service downloads all assets of a reviewed record into a chosen
   directory, checks provider checksums, verifies ZIP extraction, preserves
   originals and supports checkpoint-based resume.
@@ -42,10 +42,10 @@ Quick paths:
   The adapter preserves native data and published dev/test assignments. Those
   assignments do not establish geographic independence.
 
-**The narrow instance-segmentation path is available for FOR-instance v1.**
+**The instance-segmentation path supports FOR-instance v1 and FGI-EMIT.**
 Download its pinned archive and prepare the 32 available plots, or reuse an
 existing verified acquisition. The 50 NIBIO2 entries missing from this archive
-remain explicitly reported. Other sources and independent-zone evaluation are
+remain explicitly reported. Other unadmitted sources and independent-zone evaluation are
 still work in progress. Do not interpret a successful download as semantic validation,
 scientific admission or a new independent evaluation zone.
 
@@ -168,12 +168,12 @@ The publication builder uses an explicit allowlist and records file SHA256 in
 `publication-manifest.json`. It excludes archives, previews, local logs,
 credentials, machine paths and unrelated research work.
 
-The [FGI-EMIT measurement review](FGI-EMIT.md) documents native multispectral channels, source-specific missingness and unresolved calibration. Preparation remains TBD.
+The [FGI-EMIT review and adapter](FGI-EMIT.md) document full-source validation, conservative references, native multispectral masks and unresolved calibration.
 
 
-## Prepare a plot in the browser
+## Prepare reviewed plots in the browser
 
-The Download & prepare view now prepares one complete reviewed FOR-instance LAS
+Workbench prepares complete reviewed FOR-instance or FGI-EMIT LAS selections
 without a processing backend, using a local LAS, a local ZIP, or a selected member
 retrieved directly from the pinned Zenodo ZIP. It checks the LAS SHA256, processes bounded
 blocks using Pyodide/laspy/NumPy, independently validates all outputs and offers a
@@ -184,7 +184,7 @@ are byte-identical to the native reference. Selective ZIP intake also passed in 
 Chromium run prepared all 1,816,672 CULS plot points, preserving treeSP and
 producing eight NPZ files identical to the audited native reference. The full
 provider-archive checksum remains explicitly unchecked. Whole-release
-browser preparation, LAZ, other native schemas and larger browser runs remain pending. See
+browser preparation and LAZ remain unvalidated. A larger four-plot run now covers 5,541,993 points and 24 native-equivalent blocks. See
 [BROWSER-PREPARATION.md](BROWSER-PREPARATION.md) for the exact contract, evidence,
 storage behavior and limitations. The existing native service remains available
 for whole-archive acquisition and preparation into a chosen directory.
@@ -195,13 +195,13 @@ for whole-archive acquisition and preparation into a chosen directory.
 Select training, evaluation or inference data and mark extra variables required,
 optional or off. Optional multispectral measurements retain FOR-instance as a
 candidate and are explicitly omitted from its output. Required reflectance blocks
-that route; FGI-EMIT remains a native-channel candidate with preparation TBD.
+that route; FGI-EMIT exposes three native reflectance columns and their validity masks. Physical units, calibration and channel association accuracy remain unresolved.
 
-Open FOR-instance and choose **Prepare data for this request**. The browser
+Choose an admitted source, add subsets, then review the frozen dataset plan. Import a saved plan to repeat its exact current versions. The browser
 restricts the reviewed plots to the published partitions for that use, downloads
 and verifies the selected source, runs the admitted transformation and independent
 validator, and exports a ZIP with `task-plan.json` and `task-validation.json`.
-The local service enforces the same request for whole-archive preparation.
+The optional local service retains FOR-instance whole-archive preparation. FGI-EMIT also has a per-LAS native entrypoint; the browser executes one source per plan.
 See [Task requirements and consumption](TASK-REQUIREMENTS.md).
 
 ## Load prepared dataset folders

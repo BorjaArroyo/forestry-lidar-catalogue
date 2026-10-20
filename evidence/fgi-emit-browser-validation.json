@@ -1,0 +1,375 @@
+{
+  "status": "succeeded",
+  "source_ref": "zenodo:19351234",
+  "coverage": "One complete training plot, required native reflectance channels",
+  "saved_plan_import": {
+    "status": "verified-and-imported",
+    "selection_cleared_before_import": true,
+    "executed_imported_plan": true
+  },
+  "browser_run": {
+    "status": "validated",
+    "prepared_scenes": [
+      {
+        "path": "sources/19351234/originals/training/training/plot_1022.las",
+        "sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e",
+        "points": 1667254,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0,
+          0,
+          0
+        ],
+        "id": "19351234-b577a0868e743465e81f",
+        "chunks": [
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "ea990cd5309bb0347ade67c1ee65f97632b2e00864946e93083bf0663708e78e"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "3f8621683102c279f0cc974c67bf42104bb650840a611578cf9b8419b9f52d6d"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "1d0ea84cf7769ac050463bab2491ae916a55372d80206899176237714b203986"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "a21df2d1c4c4f9a56bc86bd4d41380902e9a6618645295f6043971187d8422cb"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "04ff619e87799882eb6ec020f8a7cce826532a404a9ceacc3ac470046bc64a40"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "b89b353b225437d0ecf633dca946221e064ab09a3e41003dcd5e9f523fd3c2ea"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00006.npz",
+            "points": 167254,
+            "offset": 1500000,
+            "sha256": "01a38fa6847893a386dc638fa08b2889b60a77b8b68b3a170fb76884fcd6edd4"
+          }
+        ],
+        "class_counts": [
+          670401,
+          966992,
+          0,
+          0,
+          0,
+          29861
+        ],
+        "unknown_points": 700262,
+        "background_points": 0,
+        "tree_points": 966992,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 136718713,
+            "stream_sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e",
+            "snapshot_sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e"
+          }
+        ]
+      }
+    ],
+    "dataset": {
+      "status": "validated",
+      "dataset_sha256": "d6302a89dbfd3c6c5c0cb062a58d4e71542054649adbe5675095a18b9357b811",
+      "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+      "validator_sha256": "58c28450e052f6db6a6b750a55ffc4ce73cdfa3a0416fd10aae0b5583c71ee80",
+      "packages": 1,
+      "scenes": 1,
+      "points": 1667254,
+      "partitions": [
+        "train"
+      ]
+    },
+    "task_plan": {
+      "schema_version": "1.1.0",
+      "task_ref": "task:instances",
+      "source_ref": "zenodo:19351234",
+      "use": "training",
+      "variables": {
+        "xyz": "required",
+        "instance_reference": "required",
+        "reflectance": "required"
+      },
+      "allowed_partitions": [
+        "dev",
+        "train"
+      ],
+      "pipeline_ref": "pipeline:fgi-emit-plot-instances:1.0.0",
+      "output_ref": "contract:fgi-emit-plot-instances:1.0.0",
+      "status": "ready",
+      "included": {
+        "xyz": [
+          "xyz"
+        ],
+        "instance_reference": [
+          "instance",
+          "instance_valid"
+        ],
+        "reflectance": [
+          "features",
+          "feature_valid"
+        ]
+      },
+      "omitted": {},
+      "blockers": [],
+      "dependencies_sha256": "11beec4cab4918149f5d297a3dfa8e6d09495218f221d174782684570e339ee5",
+      "fingerprint_scope": "task-source-dependency-closure-v1",
+      "scope": "Preparation and consumption requirements; no training run or benchmark evaluator is certified"
+    },
+    "task_validation": {
+      "status": "validated",
+      "task_plan_sha256": "a5a283a409b9309ff62042225006714b8a9c2ae518b0290d0337eb03d8943b13",
+      "plan_validator_sha256": "f8383a43964f2da2996c2f25aa314a325350e9df047d80a6db34c79e6a4c7020",
+      "use": "training",
+      "included": {
+        "xyz": [
+          "xyz"
+        ],
+        "instance_reference": [
+          "instance",
+          "instance_valid"
+        ],
+        "reflectance": [
+          "features",
+          "feature_valid"
+        ]
+      },
+      "omitted": {},
+      "package": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 1667254,
+        "chunks": 7,
+        "manifest_sha256": "cfec8952b323debaf1992a60f92ecb5e47158f1c59998560b7e2e60428051c71",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      },
+      "eligible_scenes": [
+        "19351234-b577a0868e743465e81f"
+      ],
+      "eligible_points": 1667254,
+      "limitations": [
+        "Use instance_valid for supervised loss and reference comparisons",
+        "Official partitions are preserved; geographic independence is not established",
+        "Evaluation preparation is not an audited article scoring protocol"
+      ]
+    },
+    "consumer_sample": {
+      "scene_id": "19351234-b577a0868e743465e81f",
+      "published_split": "train",
+      "row_offset": 0,
+      "arrays": {
+        "xyz": {
+          "shape": [
+            250000,
+            3
+          ],
+          "dtype": "float64"
+        },
+        "instance": {
+          "shape": [
+            250000
+          ],
+          "dtype": "int64"
+        },
+        "instance_valid": {
+          "shape": [
+            250000
+          ],
+          "dtype": "bool"
+        },
+        "features": {
+          "shape": [
+            250000,
+            3
+          ],
+          "dtype": "float32"
+        },
+        "feature_valid": {
+          "shape": [
+            250000,
+            3
+          ],
+          "dtype": "bool"
+        }
+      }
+    },
+    "coverage": "one-complete-selected-plot",
+    "selection": {
+      "kind": "explicit-plots",
+      "paths": [
+        "sources/19351234/originals/training/training/plot_1022.las"
+      ],
+      "available_plots": 19,
+      "archive_verification": "Not performed by this selection; each selected LAS is SHA256 verified against the reviewed release"
+    },
+    "report": {
+      "status": "validated",
+      "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+      "coverage": "explicit-selection",
+      "pipeline": "fgi-emit-plot-instances:1.0.0",
+      "plots": 1,
+      "points": 1667254,
+      "chunks": 7,
+      "manifest_sha256": "cfec8952b323debaf1992a60f92ecb5e47158f1c59998560b7e2e60428051c71",
+      "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+      "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+      "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+    },
+    "runtime": {
+      "pyodide": "314.0.7",
+      "python": "3.14.2",
+      "numpy": "2.4.6",
+      "laspy": "2.7.0",
+      "zip_js": "2.20.0"
+    },
+    "runtime_lock_sha256": "f04ef2e4ed15ac14a382b84423c0287c23f43e4edd52f1087b2b537f614ff907",
+    "dataset_plan": {
+      "schema_version": "1.0.0",
+      "task_plan": {
+        "schema_version": "1.1.0",
+        "task_ref": "task:instances",
+        "source_ref": "zenodo:19351234",
+        "use": "training",
+        "variables": {
+          "xyz": "required",
+          "instance_reference": "required",
+          "reflectance": "required"
+        },
+        "allowed_partitions": [
+          "dev",
+          "train"
+        ],
+        "pipeline_ref": "pipeline:fgi-emit-plot-instances:1.0.0",
+        "output_ref": "contract:fgi-emit-plot-instances:1.0.0",
+        "status": "ready",
+        "included": {
+          "xyz": [
+            "xyz"
+          ],
+          "instance_reference": [
+            "instance",
+            "instance_valid"
+          ],
+          "reflectance": [
+            "features",
+            "feature_valid"
+          ]
+        },
+        "omitted": {},
+        "blockers": [],
+        "dependencies_sha256": "11beec4cab4918149f5d297a3dfa8e6d09495218f221d174782684570e339ee5",
+        "fingerprint_scope": "task-source-dependency-closure-v1",
+        "scope": "Preparation and consumption requirements; no training run or benchmark evaluator is certified"
+      },
+      "intake": {
+        "kind": "zenodo-ranges",
+        "source_lock_path": "scripts/fgi_emit/source-lock.json",
+        "source_lock_sha256": "29833c3a00b032e2c16c9317921c4ba222ddd31e8454dcbbd65508a1f998265e",
+        "runtime_lock_sha256": "f04ef2e4ed15ac14a382b84423c0287c23f43e4edd52f1087b2b537f614ff907"
+      },
+      "subsets": [
+        [
+          "sources/19351234/originals/training/training/plot_1022.las"
+        ]
+      ],
+      "plots": [
+        {
+          "path": "sources/19351234/originals/training/training/plot_1022.las",
+          "sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e",
+          "points": 1667254,
+          "size_bytes": 136718713,
+          "published_split": "train"
+        }
+      ],
+      "totals": {
+        "plots": 1,
+        "points": 1667254,
+        "source_las_bytes": 136718713,
+        "overlapping_selections": 0,
+        "estimated_browser_storage_bytes": 641573399
+      },
+      "output": {
+        "schema": "task-dataset:1.0.0",
+        "partitions": [
+          "train"
+        ],
+        "identity_scope": "source-release-and-scene",
+        "partition_policy": "preserve-published"
+      },
+      "limitations": [
+        "Source LAS bytes are not compressed network download bytes",
+        "Browser storage is an estimate including prepared blocks, ZIP export and one staged LAS",
+        "Selected LAS checksums are verified; the whole provider archive is not verified",
+        "Published partitions are preserved; geographic independence is not established",
+        "No claim of annotation correctness or an audited article scoring protocol"
+      ],
+      "plan_sha256": "598306cba08677349bd8d90f3fb48164c14bff83df034874d96fe061292ab38c"
+    },
+    "dataset_plan_validation": {
+      "status": "matched",
+      "plan_sha256": "598306cba08677349bd8d90f3fb48164c14bff83df034874d96fe061292ab38c",
+      "manifest_sha256": "01ebbe920dc0fa7ccc014aab15baa2f78909669aea100befffe7ca6730b4d5b6",
+      "validator_sha256": "f3ed697831143940305ad015af1f6e3dd134ba9dcfd2935f671859097857a632"
+    },
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "source_sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e",
+    "intake": {
+      "path": "sources/19351234/originals/training/training/plot_1022.las",
+      "kind": "zenodo-ranges",
+      "archive_member": "training/plot_1022.las",
+      "compression_method": 8,
+      "extracted_size_bytes": 136718713,
+      "archive_entries": 14,
+      "crc32_checked": true,
+      "archive_verification": "Selected LAS only; whole-archive checksum not checked",
+      "requests": 68,
+      "bytes_received": 67147415
+    },
+    "limitations": [
+      "Selected LAS verified; whole-provider-archive checksum not checked in this run",
+      "No claim of annotation correctness or geographic independence",
+      "OPFS is temporary browser storage; export the ZIP before clearing it"
+    ]
+  },
+  "native_comparison": {
+    "reference": "evidence/fgi-emit-preparation-validation.json",
+    "matching_chunk_sha256": 7,
+    "native_schema_ref_matches": true
+  },
+  "limitations": [
+    "All 19 plots were validated natively; this browser run covers one complete plot",
+    "No full-release browser scalability claim",
+    "The selected LAS checksum and ZIP member CRC were verified; the whole archive checksum was not checked in this browser run",
+    "The browser ZIP was created; it was not downloaded in this acceptance run",
+    "No claim of radiometric calibration, annotation correctness or geographic independence"
+  ]
+}

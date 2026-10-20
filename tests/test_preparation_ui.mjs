@@ -1,4 +1,4 @@
-import {sameRequest} from '../browser-prepare/dataset-draft.js';
+import {emptyDraft, readDraft, sameRequest} from '../browser-prepare/dataset-draft.js';
 import {DraftPanel} from '../browser-prepare/draft-panel.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -26,7 +26,7 @@ async function panel({savedStorage} = {}) {
     terminate() {this.terminated = true;}
   }
   const directory = {async getDirectoryHandle() {return this;}, async removeEntry(id) {removed.push(id);}};
-  const context = vm.createContext({URL, Blob, profileForPipeline, datasetPlots, DraftPanel, sameRequest,
+  const context = vm.createContext({URL, Blob, profileForPipeline, datasetPlots, DraftPanel, emptyDraft, readDraft, sameRequest,
     RunSession: class extends RunSession {
       constructor(options) {super({...options, schedule: callback => {timers.set(++serial, callback); return serial;}, unschedule: id => timers.delete(id)});}
     }, Worker, CustomEvent: class {constructor(type, options) {this.type = type; this.detail = options.detail;}},
@@ -35,7 +35,7 @@ async function panel({savedStorage} = {}) {
       addEventListener(type, fn) {listeners.set(type, fn);}, dispatchEvent() {}},
     navigator: {storage: {getDirectory: async () => directory}, locks: {request: async (name, options, fn) => fn({})}},
     sessionStorage: {getItem: key => storage.get(key), setItem: (key,value) => storage.set(key,value), removeItem: key => storage.delete(key)},
-    fetch: async url => ({ok: true, json: async () => JSON.parse(fs.readFileSync(new URL('../scripts/for_instance/source-lock.json', import.meta.url), 'utf8'))}),
+    fetch: async url => ({ok: true, json: async () => JSON.parse(fs.readFileSync(new URL(String(url).includes('/fgi_emit/') ? '../scripts/fgi_emit/source-lock.json' : '../scripts/for_instance/source-lock.json', import.meta.url), 'utf8'))}),
   });
   vm.runInContext(fs.readFileSync(new URL('../catalog.js',import.meta.url),'utf8'),context);
   vm.runInContext(fs.readFileSync(new URL('../task-selection.js',import.meta.url),'utf8'),context);
@@ -61,11 +61,11 @@ async function panel({savedStorage} = {}) {
   return {review, removed, element, workers, timers, listeners, settle, savedStorage:localValues, setRequest(value) {request = context.window.CanopyTaskSelection.normalize(value.use, value.variables);}};
 }
 
-test('all catalog sources remain selectable; unadmitted FGI cannot execute', async () => {
+test('all catalog sources remain selectable; an unadmitted source cannot execute', async () => {
   const p = await panel();
   assert.equal(p.element('prepare-source').options.length, 10);
-  p.element('prepare-source').value = '19351234'; await p.element('prepare-source').onchange();
-  assert.match(p.element('prepare-source-status').textContent, /FGI-EMIT: tbd/);
+  p.element('prepare-source').value = '16742708'; await p.element('prepare-source').onchange();
+  assert.match(p.element('prepare-source-status').textContent, /FOR-instance/);
   assert.match(p.element('prepare-status').textContent, /No admitted/);
   assert.equal(p.element('prepare-run').disabled, true); assert.equal(p.workers.length, 0);
 });
@@ -182,4 +182,37 @@ test('cancelling a metadata review preserves an existing completed dataset ZIP',
   p.element('prepare-review').onclick();await p.element('prepare-cancel').onclick();
   assert.equal(p.removed.length,0);assert.equal(p.element('prepare-download').hidden,false);
   assert.match(p.element('prepare-status').textContent,/previous prepared output retained/);
+});
+
+test('plan import validates before replacing saved subsets and sends the verified plan to execution', async () => {
+  const p=await panel();p.element('prepare-add').onclick();
+  const source=JSON.parse(fs.readFileSync(new URL('../scripts/for_instance/source-lock.json',import.meta.url),'utf8'));
+  const plot=source.plots.find(plot=>plot.path.includes('/RMIT/')&&plot.published_split==='dev');
+  const request={use:'training',variables:{xyz:'required',instance_reference:'required',reflectance:'optional'}};
+  const plan={task_plan:{...request,source_ref:'zenodo:8287792',pipeline_ref:'pipeline:for-instance-plot-instances:1.0.0',included:{xyz:['xyz'],instance_reference:['instance','instance_valid']},omitted:{reflectance:'unavailable'}},
+    subsets:[[plot.path]],plots:[plot],totals:{plots:1,points:plot.points,overlapping_selections:0,source_las_bytes:plot.size_bytes,estimated_browser_storage_bytes:100000},output:{partitions:['dev']},limitations:[],plan_sha256:'a'.repeat(64)};
+  const text=JSON.stringify(plan);p.element('dataset-plan-file').files=[{size:text.length,text:async()=>text}];
+  await p.element('dataset-plan-file').onchange();
+  assert.equal(p.workers[0].request.operation,'import');assert.equal(p.element('dataset-draft-list').options.length,1);
+  p.workers[0].onmessage({data:{type:'result',operation:'import',plan,source_plots:source.plots}});
+  assert.match(p.element('dataset-draft-list').options[0].options[0].textContent,/RMIT/);
+  assert.equal(p.element('prepare-run').disabled,false);
+  await p.element('prepare-run').onclick();assert.deepEqual(p.workers[1].request.execution_plan,plan);
+});
+test('invalid or oversized imports preserve the existing dataset selection', async () => {
+  const p=await panel();p.element('prepare-add').onclick();const before=new Map(p.savedStorage);
+  p.element('dataset-plan-file').files=[{size:1048577,text:async()=>''}];await p.element('dataset-plan-file').onchange();
+  assert.equal(p.workers.length,0);assert.deepEqual(p.savedStorage,before);
+  const text=JSON.stringify({task_plan:{source_ref:'zenodo:8287792'}});
+  p.element('dataset-plan-file').files=[{size:text.length,text:async()=>text}];await p.element('dataset-plan-file').onchange();
+  p.workers[0].onmessage({data:{type:'error',error:'Stale or tampered plan'}});
+  assert.deepEqual(p.savedStorage,before);assert.equal(p.element('dataset-draft-list').options.length,1);
+});
+
+test('admitted FGI source supports required spectral channels and official training membership', async () => {
+  const p=await panel();p.element('prepare-source').value='19351234';await p.element('prepare-source').onchange();
+  p.setRequest({use:'training',variables:{reflectance:'required'}});p.listeners.get('canopy-task-request')();
+  assert.equal(p.element('prepare-review').disabled,false);
+  assert.equal(p.element('prepare-plot').options.length,13);
+  assert.ok(p.element('prepare-plot').options.every(o=>o.textContent.includes(' · train · ')));
 });

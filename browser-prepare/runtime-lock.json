@@ -117,13 +117,13 @@
     },
     "scripts/task_package.py": {
       "url": "scripts/task_package.py",
-      "sha256": "043837a31e22ee28f013fc4992b0c6cdc0954060db3063e0a1889a2c2bd3bdd0",
-      "size_bytes": 14087
+      "sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+      "size_bytes": 16041
     },
     "task-package.schema.json": {
       "url": "task-package.schema.json",
-      "sha256": "968cd630588543869f3611d8c09798b0b1385aadf991a466a8af48e14799406e",
-      "size_bytes": 11424
+      "sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+      "size_bytes": 16589
     },
     "browser-prepare/kernel.py": {
       "url": "browser-prepare/kernel.py",
@@ -137,8 +137,8 @@
     },
     "browser-prepare/intake.js": {
       "url": "browser-prepare/intake.js",
-      "sha256": "03f6e2c83bbd07cb962c7717e58f0b2b7dc0efefb7ad53cc7521d1fbba28b755",
-      "size_bytes": 5227
+      "sha256": "adc6767fedbd428347acdee38aa63171fb9f8e693d99e232dab462ee3667b7d3",
+      "size_bytes": 5451
     },
     "scripts/task_plan.py": {
       "url": "scripts/task_plan.py",
@@ -152,8 +152,8 @@
     },
     "knowledge-model.json": {
       "url": "knowledge-model.json",
-      "sha256": "2daf4dcd8497bbd061555cf188ca5e16e3f5e78e9e26dc981750d53801def5a2",
-      "size_bytes": 171519
+      "sha256": "3390b57d089588af2cd08edb6772bc321c73cf121dabfa5ba359f6439c15d7b9",
+      "size_bytes": 184126
     },
     "knowledge-model.schema.json": {
       "url": "knowledge-model.schema.json",
@@ -182,8 +182,8 @@
     },
     "browser-prepare/profiles.js": {
       "url": "browser-prepare/profiles.js",
-      "sha256": "48f3663e26374477917b50235e8bfe6032db0506dc32ecfbfc916accde8aa279",
-      "size_bytes": 369
+      "sha256": "72d3cbe2732fcf64de223b0bc3d0b622439583a8d86b5ba1e54e5b286a52a69c",
+      "size_bytes": 426
     },
     "browser-prepare/profiles/for-instance.js": {
       "url": "browser-prepare/profiles/for-instance.js",
@@ -212,13 +212,48 @@
     },
     "scripts/dataset_plan.py": {
       "url": "scripts/dataset_plan.py",
-      "size_bytes": 5432,
-      "sha256": "1c9d0b9d01e166f21a5ae78c304c52656675fd6c013e9748b8a4cca6c3746856"
+      "size_bytes": 5580,
+      "sha256": "f3ed697831143940305ad015af1f6e3dd134ba9dcfd2935f671859097857a632"
     },
     "dataset-plan.schema.json": {
       "url": "dataset-plan.schema.json",
       "size_bytes": 2884,
       "sha256": "b066ddb8c91783d91876a2a5715d78c9acc4b8b11bdf10f756630e72396bb43e"
+    },
+    "scripts/fgi_emit/prepare.py": {
+      "url": "scripts/fgi_emit/prepare.py",
+      "size_bytes": 8209,
+      "sha256": "b92fa98d031677ad010831f192b7a9b364728b8e9b0f10e4230e3dda71fe0f6e"
+    },
+    "scripts/fgi_emit/policy.json": {
+      "url": "scripts/fgi_emit/policy.json",
+      "size_bytes": 1376,
+      "sha256": "9bed7b358f11d9b506cf7b94006d053b0a9f99f57c040f05ad3a54b6ca183f4c"
+    },
+    "scripts/fgi_emit/requirements.txt": {
+      "url": "scripts/fgi_emit/requirements.txt",
+      "size_bytes": 26,
+      "sha256": "abc796d248535b406c2288ddeca78eaa47c414d844c0090326aa3b28c94d3d68"
+    },
+    "scripts/fgi_emit/source-lock.json": {
+      "url": "scripts/fgi_emit/source-lock.json",
+      "size_bytes": 11181,
+      "sha256": "29833c3a00b032e2c16c9317921c4ba222ddd31e8454dcbbd65508a1f998265e"
+    },
+    "scripts/fgi_emit/package-lock.json": {
+      "url": "scripts/fgi_emit/package-lock.json",
+      "size_bytes": 377,
+      "sha256": "a911857328e31dbca597100685188420a487b5653e620daecf9cd48f0e55ecce"
+    },
+    "browser-prepare/profiles/fgi-emit.js": {
+      "url": "browser-prepare/profiles/fgi-emit.js",
+      "size_bytes": 1185,
+      "sha256": "0d127e18b5a4f4b114597fb411c9cf23b29e5070de975fe8493d1aa46b58854b"
+    },
+    "browser-prepare/worker.js": {
+      "url": "browser-prepare/worker.js",
+      "size_bytes": 23374,
+      "sha256": "0b60098fab7b3c6adc124a421d6a01a79810ec80fcbcaa4c150872257a79f956"
     }
   },
   "zip_js": "2.20.0",
@@ -229,5 +264,23 @@
     "provider_checksum": "md5:01fd03ba4068648e21fb4591fbff34c4",
     "download_url": "https://zenodo.org/api/records/8287792/files/FORinstance_dataset.zip/content"
   },
-  "schema_version": "1.5.0"
+  "schema_version": "1.5.0",
+  "provider_archives": {
+    "19351234": {
+      "training.zip": {
+        "record_id": 19351234,
+        "name": "training.zip",
+        "size_bytes": 1796142742,
+        "provider_checksum": "md5:b1c5ee7e9c166dd7ff377539944e5002",
+        "download_url": "https://zenodo.org/api/records/19351234/files/training.zip/content"
+      },
+      "test.zip": {
+        "record_id": 19351234,
+        "name": "test.zip",
+        "size_bytes": 648739416,
+        "provider_checksum": "md5:c67b80c1e7f8a2ea28f54ed364aceea2",
+        "download_url": "https://zenodo.org/api/records/19351234/files/test.zip/content"
+      }
+    }
+  }
 }

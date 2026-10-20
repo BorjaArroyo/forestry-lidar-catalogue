@@ -1,0 +1,2594 @@
+{
+  "status": "succeeded",
+  "source_ref": "zenodo:19351234",
+  "pipeline": "fgi-emit-plot-instances:1.0.0",
+  "implementation_sha256": "b92fa98d031677ad010831f192b7a9b364728b8e9b0f10e4230e3dda71fe0f6e",
+  "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca",
+  "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+  "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+  "plots": 19,
+  "points": 60793586,
+  "chunks": 254,
+  "runtime": {
+    "python": "3.11.11",
+    "numpy": "2.2.6",
+    "laspy": "2.7.0",
+    "ray": "2.55.1"
+  },
+  "coverage": "Every point in all 19 fully verified original LAS files; one complete source selection validated at a time",
+  "results": [
+    {
+      "path": "sources/19351234/originals/test/test/plot_1002.las",
+      "scene": {
+        "path": "sources/19351234/originals/test/test/plot_1002.las",
+        "sha256": "f0a99e41cb8e69b7b0ea956e50a3b8cf63266f8872714f7102f98d92699a7154",
+        "points": 1892012,
+        "published_split": "test",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-9b84c47ef87229543014",
+        "chunks": [
+          {
+            "path": "plots/19351234-9b84c47ef87229543014/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "f9153312bb5e3c978104695f356106cd6f16b1550b19c1269196579565f300bd"
+          },
+          {
+            "path": "plots/19351234-9b84c47ef87229543014/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "8860968f422dd25b96f1b0c317106eaba5a153906f64da0d36c2228380d3b7b8"
+          },
+          {
+            "path": "plots/19351234-9b84c47ef87229543014/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "1f6b66ad07bba47ca46ca84b89eed6916068f8d5403cd1af0688b14ed61b1469"
+          },
+          {
+            "path": "plots/19351234-9b84c47ef87229543014/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "365d301ec121fb66b9cd68b6ee60ce9ecf7ee5b806b7b293d6e66c378bb03880"
+          },
+          {
+            "path": "plots/19351234-9b84c47ef87229543014/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "08423d470139e413b40faba0f87a7b59d3334232af9683b587bf0c416ea2e4e0"
+          },
+          {
+            "path": "plots/19351234-9b84c47ef87229543014/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "558806043b3e2b2f44d7dd0f982a4764f62d509464b0c5669ad1ddac8cdd2bad"
+          },
+          {
+            "path": "plots/19351234-9b84c47ef87229543014/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "ac63619c696de832201aa71a8f987ccda605a5d14b33ef5b27bb5c4fc56536b3"
+          },
+          {
+            "path": "plots/19351234-9b84c47ef87229543014/00007.npz",
+            "points": 142012,
+            "offset": 1750000,
+            "sha256": "2836ea0ab8f787cdaec31a3bfa9e3bdd7e36d5d754918b3d1ed70a12a337ad2f"
+          }
+        ],
+        "class_counts": [
+          529433,
+          1271597,
+          0,
+          0,
+          0,
+          90982
+        ],
+        "unknown_points": 620415,
+        "background_points": 0,
+        "tree_points": 1271597,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 155148869,
+            "stream_sha256": "f0a99e41cb8e69b7b0ea956e50a3b8cf63266f8872714f7102f98d92699a7154",
+            "snapshot_sha256": "f0a99e41cb8e69b7b0ea956e50a3b8cf63266f8872714f7102f98d92699a7154"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 1892012,
+        "chunks": 8,
+        "manifest_sha256": "387b0e07beb9ba7baa70b6a33afb09c103f915c0bc59abf503f6a89917cbee0d",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1004.las",
+      "scene": {
+        "path": "sources/19351234/originals/test/test/plot_1004.las",
+        "sha256": "55e8b671a1c4492a4c28b303c12dd1ddee98597838de7a25c1a87279ade1b0a1",
+        "points": 2347225,
+        "published_split": "test",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-eac9e04273f02dcaf500",
+        "chunks": [
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "d5f4d5deb3455d41e964ad49eb5407982aa600d5c5a7e041f2ade2050d2b42ec"
+          },
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "8e7e2e6102b0d1dcd18fafe5f92aa26a25aed0c89b7a3e7c78f090da0c88cf5a"
+          },
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "d8119a6f621d61497f16622c23cc857f6899b99347e7da77e401844c27a9969e"
+          },
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "c78898f3cca7d76696c07430c79d7fa117b0e946cf89bfc2964a052f2611c97f"
+          },
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "16fd0acc5edcf1120d5afc6ac2507c185469118c980707cb2030788d605171bd"
+          },
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "1114b8959990ed396197be7f185588d3aac0eec101dcd303bad289616742380d"
+          },
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "9fab78172713689d30563b14d7be4434eb2ec9d3936a003dd3a49303b9ce7794"
+          },
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "fc1dd114a828e7c615f91132d092f5be7b9b66bb4db83c4caf338a29ffb8ed92"
+          },
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "4c5fbd63f83fc418317f882003dcf5e16b688aa47260d3d09069739270d8a9ba"
+          },
+          {
+            "path": "plots/19351234-eac9e04273f02dcaf500/00009.npz",
+            "points": 97225,
+            "offset": 2250000,
+            "sha256": "869abcdb6809b6d77caa74dc703f1035448c8201b8c4b897e0b7014f434bb426"
+          }
+        ],
+        "class_counts": [
+          350569,
+          1828192,
+          0,
+          0,
+          331,
+          168133
+        ],
+        "unknown_points": 518702,
+        "background_points": 331,
+        "tree_points": 1828192,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 192476335,
+            "stream_sha256": "55e8b671a1c4492a4c28b303c12dd1ddee98597838de7a25c1a87279ade1b0a1",
+            "snapshot_sha256": "55e8b671a1c4492a4c28b303c12dd1ddee98597838de7a25c1a87279ade1b0a1"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 2347225,
+        "chunks": 10,
+        "manifest_sha256": "ccf896cb7d993127f8c21c1f114a191892b7da9ef298bf02f3a923357daa3e52",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1008.las",
+      "scene": {
+        "path": "sources/19351234/originals/test/test/plot_1008.las",
+        "sha256": "a1f6aa1414c98dd4ae4bb0e9b907a5ffb29a798cdc01f977e2dd2269859fe95c",
+        "points": 1996648,
+        "published_split": "test",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-5d570ea77a4af8eb1eb1",
+        "chunks": [
+          {
+            "path": "plots/19351234-5d570ea77a4af8eb1eb1/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "3d0f06fae3b742c9ce50dc9aa2ea6dc47d5b8ba3998430463f0842996c087b69"
+          },
+          {
+            "path": "plots/19351234-5d570ea77a4af8eb1eb1/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "2413c64658025e745b08df04aff98e3a5d988552c01fc9f201e570984c78493c"
+          },
+          {
+            "path": "plots/19351234-5d570ea77a4af8eb1eb1/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "c4b60bc7a1386f15881daf66d795ddcd32b6d7367e46f8f2f0c002c3ba8d85e4"
+          },
+          {
+            "path": "plots/19351234-5d570ea77a4af8eb1eb1/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "063941456b1eaa91247411022c4b1a325b77dc66a2e464e6b639723a3d84ce5b"
+          },
+          {
+            "path": "plots/19351234-5d570ea77a4af8eb1eb1/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "085b4b18f1af4e244c02417d96d2c89a445f9483c1efd4d0c53017210b8adb90"
+          },
+          {
+            "path": "plots/19351234-5d570ea77a4af8eb1eb1/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "f5dbd52a27f659ccc8833d5522e1ad83bdfa43e9ddce7b6e497cc5e1b6a1aab3"
+          },
+          {
+            "path": "plots/19351234-5d570ea77a4af8eb1eb1/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "df0076cdbaa7e7b22e3f9b33cfefbeacc14bc522f83ed98b6c369a188bd54d2c"
+          },
+          {
+            "path": "plots/19351234-5d570ea77a4af8eb1eb1/00007.npz",
+            "points": 246648,
+            "offset": 1750000,
+            "sha256": "6f541113e28e6a311c84f9c9753846f0334ecc157272a3d9c7af2b54e0912a87"
+          }
+        ],
+        "class_counts": [
+          769870,
+          1187101,
+          0,
+          3881,
+          2958,
+          32838
+        ],
+        "unknown_points": 802708,
+        "background_points": 6839,
+        "tree_points": 1187101,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 163729021,
+            "stream_sha256": "a1f6aa1414c98dd4ae4bb0e9b907a5ffb29a798cdc01f977e2dd2269859fe95c",
+            "snapshot_sha256": "a1f6aa1414c98dd4ae4bb0e9b907a5ffb29a798cdc01f977e2dd2269859fe95c"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 1996648,
+        "chunks": 8,
+        "manifest_sha256": "33181756154ece218239a8594b475579c6fea66ac159d40285eff5ce7001a83e",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1012.las",
+      "scene": {
+        "path": "sources/19351234/originals/test/test/plot_1012.las",
+        "sha256": "9f18287c8d10e5674c816a2486d2f26f8028d02b9ef00a732bb15b0e0bf2cbd3",
+        "points": 3144247,
+        "published_split": "test",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-c8edba5c1d6230df9244",
+        "chunks": [
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "473cb70699f47ca0fc780ff995743b08e1b7d9c68f49682b9d8164e94cf9676e"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "b126f41b072f33be424ded882dcf031990fb8e5cda5146301e6c448217a97056"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "5fe1027449dc4ae6d968af64dc4e2b170b4d8bee0fb0bd170916b78b20558a94"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "e6f41f8731b10bb3a4f3ead103ce56acabdd945471ae96fa6c22f6ca0a863c7f"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "10a8c10f14894544419067bae56ea3619fa08fe6ccedf2a128692b83cd940b92"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "60a1ddb93694894a8b872544e88672e6268156ba273dd5cc5a57a1f307019a27"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "9168330ac246bda8fdecd25f3ba7a802e1e4ec604289f956264dd44a16e85f4e"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "70150360d79a83dae4024a8ff89063561428b846866d12a23d44b35966724807"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "7a483df3b92333d71ad7299d645ef5d4230fe8293ea7b43d9fb9e913e84cec85"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "9503706b578074d5a4b6045658b1857f523358f578077ea9eeaa3384f342a0a7"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "7d42fdc7ae73f1d55b4cab3dd46fbfbf7c55ced1782a6733b9e72d5ef391782f"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "4a9626d58b109b65d7207b976e7b38d717900cc31eb130fcc004d54b96f4e1f0"
+          },
+          {
+            "path": "plots/19351234-c8edba5c1d6230df9244/00012.npz",
+            "points": 144247,
+            "offset": 3000000,
+            "sha256": "c98f2c2a4f3eebf563736ef731536f34e096db60e90d17f2c6bd5c060e89ffaa"
+          }
+        ],
+        "class_counts": [
+          1946442,
+          1134964,
+          0,
+          0,
+          0,
+          62841
+        ],
+        "unknown_points": 2009283,
+        "background_points": 0,
+        "tree_points": 1134964,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 257832139,
+            "stream_sha256": "9f18287c8d10e5674c816a2486d2f26f8028d02b9ef00a732bb15b0e0bf2cbd3",
+            "snapshot_sha256": "9f18287c8d10e5674c816a2486d2f26f8028d02b9ef00a732bb15b0e0bf2cbd3"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3144247,
+        "chunks": 13,
+        "manifest_sha256": "fd30bed690e21cdcf85bd7c65b5c7915f17060655bcf7d5723093d5e4f7d5eb1",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1018.las",
+      "scene": {
+        "path": "sources/19351234/originals/test/test/plot_1018.las",
+        "sha256": "99973c1ce5466cef1b2cbe569d65007ae500a5040f92f6670bdbe06aadbde48a",
+        "points": 2884311,
+        "published_split": "test",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-6bd6408ebede1f70b6a0",
+        "chunks": [
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "702560fcaa878f27ecacdd94ebda1388aa7ab6afdccffd862fe7cbb046cc5223"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "be651ef2cb3173eeac602c27431997e360fb79da7daed60d66f7496cc474b006"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "a029e60b23f331001981027df23c37fba907b05d7c37fd66c43d8baa32fc0883"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "ec2c22d6d5845d97c5e0064c40edc8fbd419099fedd710f03435864001484ab5"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "b6f08aa24739ad44de1618ea17c281679edd9d12685298461f9dae02bac64fc2"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "0dd23d46a68cbf570ad62c5bdce21d2b9b829b5928dd3f6184cf8333ad674d1d"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "f6aaaff071f87adb8a674fa396a0ca59832f0aed40a2c339655d14bb5e5e6c19"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "c940424b1370e23f9187987a3ccbfecdf335ef804dee7409304f65e1f5d80964"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "978f4dd3a0dd21ad14a417d8139a997c8ca915362bf2dacafcda4f8906c1a24f"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "4ac72150b0af90cd1c5d421d372c196a33cda2a2bece548fae5e0ea2da157b98"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "fae4a3c8ad1fc469bdcc29084eeea296dfb23a2ab796f7c2c865e8e875328f26"
+          },
+          {
+            "path": "plots/19351234-6bd6408ebede1f70b6a0/00011.npz",
+            "points": 134311,
+            "offset": 2750000,
+            "sha256": "1a3e2f5e25722f83ff59dac69476c169f3f9c647e62f8747667d2d233c2b024a"
+          }
+        ],
+        "class_counts": [
+          589401,
+          2220589,
+          0,
+          0,
+          1230,
+          73091
+        ],
+        "unknown_points": 662492,
+        "background_points": 1230,
+        "tree_points": 2220589,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 236517387,
+            "stream_sha256": "99973c1ce5466cef1b2cbe569d65007ae500a5040f92f6670bdbe06aadbde48a",
+            "snapshot_sha256": "99973c1ce5466cef1b2cbe569d65007ae500a5040f92f6670bdbe06aadbde48a"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 2884311,
+        "chunks": 12,
+        "manifest_sha256": "1be222c483457d1c5f872f3802b9210d6a1f0d74c5f61c8d48c8c7429c9fea3a",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1028.las",
+      "scene": {
+        "path": "sources/19351234/originals/test/test/plot_1028.las",
+        "sha256": "d17d3820989ac9d3e0cbe3fac10b5e0ec3746cdf1ec0f786bb3738f9dfb36261",
+        "points": 3847844,
+        "published_split": "test",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-2a3dd4aa3a6277f4e3e2",
+        "chunks": [
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "39afd579a64e0991936cf8dbb2ccb57af3db600cbdd976643227b901b133c853"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "a68f6b094e77dd9e74efba67b28dd8f0b0596d16e5bd566a8edb4ae99e536081"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "5065d1e0e27429fe3681a08dd29823a5e0f037a90df95c47a29a308e42d2afbd"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "d9f15519547dfcc71927403471d05885ba269efccf70fdfb35abc2fa88aebcef"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "b2760dda1dba81c51869b79c459cf8cdcc73fe3b715f13901e65466be00b2e2e"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "e8a78184459b33b8dfe07da375e767db83296dfa19b0d5fc349757add35157f3"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "78d81abb0780390e95feef7071345ded7221f8bffc2d89330d272e2ec63d6c43"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "1cb0f865d3b065188a3ad603ffc01b8d9913778f8a7a225c85e6f64c8417c8d0"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "9e1b8b80211962ee0d8afa952272c483006244891ddd4ef1139dfabcd2052fa7"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "1fe95663c0a70b10338be910adfd42145526ee405a5297801852dc03c04ab578"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "90c45ea917bc00b1c98d01159889b12ee9d8c954c034a1edf0590cb1be30db17"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "07762e7b6e21206bfd590e41ca99f919244f5803ca9b40233648dd3548b380ae"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00012.npz",
+            "points": 250000,
+            "offset": 3000000,
+            "sha256": "191496e5caa3189b1dacba3957bb86e462f1c55bd92e312ea536df9987a3d88c"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00013.npz",
+            "points": 250000,
+            "offset": 3250000,
+            "sha256": "551094161ca9376480e568077d167ac20c607a517fe2d23b63c9cbd80149a413"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00014.npz",
+            "points": 250000,
+            "offset": 3500000,
+            "sha256": "df7bf50dcebd240212701c38cd8f52d21dc58793f6a313f31b4b1b34637b1e7b"
+          },
+          {
+            "path": "plots/19351234-2a3dd4aa3a6277f4e3e2/00015.npz",
+            "points": 97844,
+            "offset": 3750000,
+            "sha256": "24da15dff5d4093bbb51ecf2cf7e581d9d6d72f0752549bcd23511b6492b0a4d"
+          }
+        ],
+        "class_counts": [
+          1268001,
+          1195304,
+          1291793,
+          24575,
+          3006,
+          65165
+        ],
+        "unknown_points": 1333166,
+        "background_points": 1319374,
+        "tree_points": 1195304,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 315527093,
+            "stream_sha256": "d17d3820989ac9d3e0cbe3fac10b5e0ec3746cdf1ec0f786bb3738f9dfb36261",
+            "snapshot_sha256": "d17d3820989ac9d3e0cbe3fac10b5e0ec3746cdf1ec0f786bb3738f9dfb36261"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3847844,
+        "chunks": 16,
+        "manifest_sha256": "7c91a07f5be0573017875c6e177c6177efbe37580540db7e2923afbe7ec260b1",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1001.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1001.las",
+        "sha256": "f9c35723cef4956a72cd0839c0d1c1ce75069d2d6ef0e40e5ba0f607cbdc7520",
+        "points": 3092643,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-aad5ae566918826b40b1",
+        "chunks": [
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "41bd526a235c63dffad8d96c6e796df29f3b995c29d1d791af72bdd6dd7a3388"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "a1f6b8d772b002b43c5668eb8fcfecbe3fdd1aa3ac057970feb8809a36b6f44c"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "2d60782247fc9a00ffcaf49e5af893023c37abc25e0baacd1cfeb7be5f4d2fb1"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "60c640977ade191727ba05ec0671dd9ae9eabde3699c01b6db859c5f7db7c2ee"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "1bf1037dd18574c3c744b1a8647dc2f131928c4dea1077f89ae6d2d20916ccd0"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "cea687c0eebfb1af1f7079e47b5097559af187e6cb29f91d4e924dfb9ca2f8c6"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "e66f7bc0a557b55e508e21a3077565f811673f317307135f5015984c26613e1d"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "bd5943c4c42b1ffd02cff91905d135cc5dd1eb0640f6f4a4ad1743ec939a29e4"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "c9f17b0c8d452666601865172fd6f093ed02567081a8505501ee93ed0b250ff2"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "aa693c679a9ea7d92d6a1ae6de2a421a4d4fcd429e8d22e8d4fac3f0ab3649af"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "9ac600b73b4550dff683349d113a8260e587ba50ce1c27c34a736602b27dd72c"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "17fa7dc3b9c841c5c618715375679f29ce44aa569d3e22be2b2776dfc86f51c8"
+          },
+          {
+            "path": "plots/19351234-aad5ae566918826b40b1/00012.npz",
+            "points": 92643,
+            "offset": 3000000,
+            "sha256": "f5d2218ebb2335dff452bf1490c39b96a721720e5ab5d30b528ee4460841c5a3"
+          }
+        ],
+        "class_counts": [
+          471365,
+          2475530,
+          0,
+          0,
+          0,
+          145748
+        ],
+        "unknown_points": 617113,
+        "background_points": 0,
+        "tree_points": 2475530,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 253600611,
+            "stream_sha256": "f9c35723cef4956a72cd0839c0d1c1ce75069d2d6ef0e40e5ba0f607cbdc7520",
+            "snapshot_sha256": "f9c35723cef4956a72cd0839c0d1c1ce75069d2d6ef0e40e5ba0f607cbdc7520"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3092643,
+        "chunks": 13,
+        "manifest_sha256": "638caa9c0d349f6a08fd1bd133db69f3a57d4a4b55c177a10da2e32332267cc8",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1003.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1003.las",
+        "sha256": "11e019007a07a7da343abdebeea2e2d42ab819bd9348bbe5cfb0b92c0483d1ba",
+        "points": 2308748,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-bda6ec7b6e2d48afaae3",
+        "chunks": [
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "99be422eec721381eddc7607d8ff36bf66eb2239f5b70acb67f9689b3d5fbc0f"
+          },
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "0d89c1b172abc0b5bd52ee52da9704cb860a77d51e68c8523649a6a232686567"
+          },
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "2a268dd399724080db21d15f0e86d4bb87cfefd80e6a01a525d856596e55e942"
+          },
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "c3faf67fdd9564aeed73bdcbc37f881d1c3d1c78567af0f20f9b6c23afc96a89"
+          },
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "5782444f258d33cb4602162315923d8b083664202b9b133804d3ba4b778fb87a"
+          },
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "475515b978ef072f8bcdf216ad08d8a4c5f07cb37d6548946cdf134db4033f9f"
+          },
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "c7c1479da451bed08d5e3b7d6109f64a01f077ea4bf88458e0035d60845049a1"
+          },
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "f134fb014585ed7d69bca60ed53d165551468671d39b8d36a2a1b939279f2465"
+          },
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "d289a1634b2159aa30bb35a998d2fb2f2866d15cb237fa63dd801d9b8ed44677"
+          },
+          {
+            "path": "plots/19351234-bda6ec7b6e2d48afaae3/00009.npz",
+            "points": 58748,
+            "offset": 2250000,
+            "sha256": "3357f2979010d7fd4410b196f25693264753eea7982c9dafccebab7b24d9b194"
+          }
+        ],
+        "class_counts": [
+          276055,
+          1823573,
+          0,
+          0,
+          255,
+          208865
+        ],
+        "unknown_points": 484920,
+        "background_points": 255,
+        "tree_points": 1823573,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 189321221,
+            "stream_sha256": "11e019007a07a7da343abdebeea2e2d42ab819bd9348bbe5cfb0b92c0483d1ba",
+            "snapshot_sha256": "11e019007a07a7da343abdebeea2e2d42ab819bd9348bbe5cfb0b92c0483d1ba"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 2308748,
+        "chunks": 10,
+        "manifest_sha256": "41c1e79e69a619c85f400dbb6aa18cc889b5a1f76ca3925d7f391406b4d477ca",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1005.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1005.las",
+        "sha256": "cf452ee0638931e29a67a12cc1edf737fab12c641ad53d15543d3d5f00d8c968",
+        "points": 3068050,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-8ab88c6f687ef97aa5a9",
+        "chunks": [
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "a1d4a481bc2ce170c9515aba1f4f86ea131a899940ddd7d3f7375034503b1a39"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "6ba54918ed60f319c10a0db921622faa7901b490f69e06039a7c2a73c7cafced"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "b314084ab47c563946f2d5268915074ab9299f6022ca5743a9e9144c4fac27d3"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "f54590829490822b1318e6007a4cac583ad83d7c38c455be9f2f96784980b3d8"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "02cc6cba9b545dc270a28138a1aebdc876fb8bc6d1b13118993fe1e12face2a8"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "40edec5390608c6c51835b98fd1bf031a800333ac7208940020f0ab8cc719695"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "a1ce0be958206bd99a6f82200be80bd65fb7de45065cd49395d559820d315ec2"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "5a77223dada03f327ecec9ba9134df3c956a3fcd3be080de062456b53efcb401"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "f69e7c89096f1e00eeb0bf72daa1e582f56f3009871c31bc65d8412771174a1b"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "6509676b2d277d64944335a159cd610c98f8e9163909728eca53bf282629137e"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "5906871514c3372793751c462f1eebac8a60b7af0dfa35d83315790847f5710d"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "0523baa73bd8af5469808e3048e9ad1baaf273f2cf9a968d3138445c8e1cf6ec"
+          },
+          {
+            "path": "plots/19351234-8ab88c6f687ef97aa5a9/00012.npz",
+            "points": 68050,
+            "offset": 3000000,
+            "sha256": "ea7e82024ce4f6bef8f884cbb6be6cfaa15344803df9aa945c349df73a1331e1"
+          }
+        ],
+        "class_counts": [
+          1821257,
+          1135440,
+          0,
+          0,
+          0,
+          111353
+        ],
+        "unknown_points": 1932610,
+        "background_points": 0,
+        "tree_points": 1135440,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 251583985,
+            "stream_sha256": "cf452ee0638931e29a67a12cc1edf737fab12c641ad53d15543d3d5f00d8c968",
+            "snapshot_sha256": "cf452ee0638931e29a67a12cc1edf737fab12c641ad53d15543d3d5f00d8c968"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3068050,
+        "chunks": 13,
+        "manifest_sha256": "be114a2b56dc24dd62a982d0ac3b052651ba38f307f048871975c71d6613b7ce",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1009.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1009.las",
+        "sha256": "5ff095f92c5e4048bcf16aabe311e2016303158c4d4e1e0f60e3fd9ad0be98fd",
+        "points": 3859495,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-2e97405fbf5a514c422c",
+        "chunks": [
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "55272f029ae9c6b0dfc64101a0d96003818000681a64a0652231f6a465a14995"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "854a33243fc7bc2a4837862f714bee2baa67520e156db714cd03a707a776b3d8"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "a561f812983a52aabc4154c014cea4a0e7d0d667bef2a6fed94db1b0f5e0bd67"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "e16d34fef33c7992ccb9088863e2f07c53c174c4a33c571f5ecf27d961e7cc6a"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "4d5b289b1444fae68014a202022a41b6f965fba18d512a175132c50f1ebddaf3"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "d842dc7bf3aebc349e2136825d2a2085a6fc47c7b8e501f785ea0c51fe8cb14d"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "3d2e027ab6f98f13838bbe3b9ef948aecd46e3da59ca96fd9ec3cdbbccc3d8e4"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "ba51f96c3abf51a9b92ce054073aeba0131db7cc5cf25104f0fb290e41544615"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "ec204358a37593186bc8bbe2a8cf1e1023844d041bfff95cab8496f31cdfa64c"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "a85d6bdef4ec26f96137514163e9f3bb783656cdc2b4601f7917baf0adcfce66"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "09dbfa726d0e65796717c7968fd95eb7a8b40dbf91071a8c6c923f535ce03f29"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "b42ca48a4e31c814b238dcbea2244e1dfcab216c8efab64d44e3307daf2d0a10"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00012.npz",
+            "points": 250000,
+            "offset": 3000000,
+            "sha256": "d34c7ce2d83b2d688f71fda7e5745f326f38a1322053b900616bec62dbd33d77"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00013.npz",
+            "points": 250000,
+            "offset": 3250000,
+            "sha256": "8d9803e8ac4590cec7a00825e0653bceef7a515c5f97c80b2753b8872e312cdd"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00014.npz",
+            "points": 250000,
+            "offset": 3500000,
+            "sha256": "6d26acc944625a0e090203c1c798c5d6527ec4862e2d6fa036b29faa69af1913"
+          },
+          {
+            "path": "plots/19351234-2e97405fbf5a514c422c/00015.npz",
+            "points": 109495,
+            "offset": 3750000,
+            "sha256": "b554d54bd759b39962719208969b54451d70ac2b5a704f28225b8b42523ba4bc"
+          }
+        ],
+        "class_counts": [
+          1074349,
+          2641493,
+          0,
+          15387,
+          927,
+          127339
+        ],
+        "unknown_points": 1201688,
+        "background_points": 16314,
+        "tree_points": 2641493,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 316482475,
+            "stream_sha256": "5ff095f92c5e4048bcf16aabe311e2016303158c4d4e1e0f60e3fd9ad0be98fd",
+            "snapshot_sha256": "5ff095f92c5e4048bcf16aabe311e2016303158c4d4e1e0f60e3fd9ad0be98fd"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3859495,
+        "chunks": 16,
+        "manifest_sha256": "6752a81aa07ef7fcb0d9c9efa44611f4a76c1191cc5fabde4c78f8dfb6f6dd63",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1010.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1010.las",
+        "sha256": "156206ac40604b28db2b9116609bef750c48cff2426183dad21392101d72c30e",
+        "points": 3622071,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-efc568b45338f62279f1",
+        "chunks": [
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "73545933572381c54040dab4facd7bbe35553cd6cbe0ee75bb76d05ae387a579"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "754e04f7c2330be2b528abd820c46062e3d6fdb571b595e9ccb341320d846a6d"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "bf2a110e63b5157cd936a8e91714d55a92ad747e7a6a4ed647f9a6bab3526b2d"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "404cf1a503f8351ff0069030a2e093695a90943931e279c2eb77d1e2070a9a76"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "d08653732348cc037b24eb0a087c3db9df15110e989ebe79c97f245a13fdd01c"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "7cf870570044257a45ad4d1c9d68d0bbd5335b2d1545cd6d52738f34a03704e2"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "3d632242bda623a946a6aa691c8f0ced2f4cf78648423836876004c326c02711"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "9a03c31c66d7edd719e1351069e5280c8c1a0c8b46ae806894f267c6298b5dbb"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "74fd202580c24ad6e40adea7574022eb05727ecdf23626e7d1f90554281ba24d"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "8df7ba5fd3823d2f815daa7d0c76702874b322dda8731f0a50f2f6d3ea68fae8"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "d53d23fabcbf351008a8ff9bb02cbef2267270446fa2eadfa8f842a3099a2ee6"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "642246fa55628b92123242ec137c701457201b4564e154875662933f04d9415a"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00012.npz",
+            "points": 250000,
+            "offset": 3000000,
+            "sha256": "ca661265d1d0018ec8d57b28e7ae0eef5c43d20e9126af323dcf5bd430d5add9"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00013.npz",
+            "points": 250000,
+            "offset": 3250000,
+            "sha256": "d96908192c02daa57cb3c50a3c6caae356ed77fed33cbabd627aa53bb2617120"
+          },
+          {
+            "path": "plots/19351234-efc568b45338f62279f1/00014.npz",
+            "points": 122071,
+            "offset": 3500000,
+            "sha256": "b8cb6022e02bae2ff4cb2803f63a6955f88db3a3fcf24e9c4ae2d74ae901842a"
+          }
+        ],
+        "class_counts": [
+          1662647,
+          1430899,
+          466779,
+          0,
+          0,
+          61746
+        ],
+        "unknown_points": 1724393,
+        "background_points": 466779,
+        "tree_points": 1430899,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 297013707,
+            "stream_sha256": "156206ac40604b28db2b9116609bef750c48cff2426183dad21392101d72c30e",
+            "snapshot_sha256": "156206ac40604b28db2b9116609bef750c48cff2426183dad21392101d72c30e"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3622071,
+        "chunks": 15,
+        "manifest_sha256": "aad23700e5509d7543311d9b07aeb4a6276ff27f5ccdf6a578bf2cbffae43b7f",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1013.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1013.las",
+        "sha256": "06931d04a92a3fb58b17ca7db3eecbacb2068b8ab95530157579462c371653b0",
+        "points": 3618342,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-4037192704cc4223af8d",
+        "chunks": [
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "4e4be59f759d64f6604fa594f0b24ee5a498625c4f2be0117ea9615cee4203ec"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "88184f77b755d5d455aec3d0ed409139974a15fcd3871b21ae79c225cb984fe6"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "2743571162f4c41febeb9cdbb66af15fe706fa2bfbb18c6bbbcb9a9e5fb5212b"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "73e88c950ddd944d6471aa9f6b35115a0ec249fa15bdebe15629da47d6183432"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "f4836331c738ca0a9f221d75b8fd9ac6eb967a0a6285436c48d881de514fbfe8"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "306ceaa19c20c3abd0850f071ae2b0d7e0a6fe363f5ded8cc36483d1ad861e9c"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "df29c7bbb9a027de7c49eda23d78c4a54bd4200aa3ee45cd19b91801027b31b6"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "3f5e190399907db06c6d48d20fed98a17cdc357625c50b2d045c8d5617f2279a"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "39cb3c45be4bfaccc85979472c333c32765b67d6c328f0ccd46fed8ef04ef2fb"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "407ccbda9b95141c08b0aa80e2c0a7e846ffa217c74178f9a018f4416507fa7a"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "02abe33243d26ce22937f8abc0de6f945000a38d8906a1610e96d46cd8df0629"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "59c95cf682268d0ee62a4e7055b178cfcb22cdbb81f6fb888a907ae6dcc0df32"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00012.npz",
+            "points": 250000,
+            "offset": 3000000,
+            "sha256": "29047814ec13c3eb53ed75bb82e92e396ed6efd3650e53116bb04f606f63b191"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00013.npz",
+            "points": 250000,
+            "offset": 3250000,
+            "sha256": "17932062e75023d38b138c82d9edd407d02f72e2426a306668a9a01f8bce03ea"
+          },
+          {
+            "path": "plots/19351234-4037192704cc4223af8d/00014.npz",
+            "points": 118342,
+            "offset": 3500000,
+            "sha256": "98567c596b3d7dca7551fe081e8da9aaff715fdfffbd7fe6898197691a292b04"
+          }
+        ],
+        "class_counts": [
+          2043043,
+          1508971,
+          0,
+          0,
+          0,
+          66328
+        ],
+        "unknown_points": 2109371,
+        "background_points": 0,
+        "tree_points": 1508971,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 296707929,
+            "stream_sha256": "06931d04a92a3fb58b17ca7db3eecbacb2068b8ab95530157579462c371653b0",
+            "snapshot_sha256": "06931d04a92a3fb58b17ca7db3eecbacb2068b8ab95530157579462c371653b0"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3618342,
+        "chunks": 15,
+        "manifest_sha256": "5fc86ff45608592c01c6072893e4921bf46c36ed07b7ac2037e4758ca592c951",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1019.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1019.las",
+        "sha256": "5fbe516928d9eb78c325d47e0bf9cf606b308f484674002aaf909da86aac4b5b",
+        "points": 3764787,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-8b9fb00e3648d90f11c1",
+        "chunks": [
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "989161853f49ae98ca658160e55b606b2729236f95d352950e7a06f93dfc8231"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "cb63d66839f44ec3d4fd2635db47479c7047c4b99e9669985e1ace12c9f3eba0"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "ea7572f9970226d636b4b142939a464db51ab3e495c9f797670044aa1f0c29b7"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "76205030dc5d587104fc2c477a429a377112906c86484830eaa3ecccb3da4755"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "820143042aadf20bc63a0377de2f6de7b647b061e0592f61f9401cb924c58302"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "02c1edbb15747adc6428a597cd4575b7211bb4e7027f19c5bfc705d0c95db658"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "d7e36694ae4618869262f39f7812c905815e7ddc18d61ba30df219733fe23304"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "0279aa892edd389c86d4cf2cf448b0657d57b10888974e8df0499fadd11e022d"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "2501f0968c9191f1c032473e2734bbb0fbdc2a040f860445d3ab59025f52aa70"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "b79e08d2008424bcb3db93c7b87097a7f5ac4c73874a977c3d05f3183232a324"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "9e8f8e32ad187ec3531bd3463eff7d65ebdb9d8fc38928fddfde7125eb6c9a6e"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "963e795bb5ea74fb5631097d83b6c3a6e9488be7917beaf0a4fe9a6f3f1d095b"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00012.npz",
+            "points": 250000,
+            "offset": 3000000,
+            "sha256": "054f28149ded2405fc8a309bd11db09d7e96498068d2241c0e301178a6be734d"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00013.npz",
+            "points": 250000,
+            "offset": 3250000,
+            "sha256": "2f7acab09b4d581822c247bde72af3fa05be7bcc3f711ba4d37f93bbb0176f62"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00014.npz",
+            "points": 250000,
+            "offset": 3500000,
+            "sha256": "fc88575effb2976985565482b8cd6fc10289cbce85c97d42f2c3bc82dc0efbb7"
+          },
+          {
+            "path": "plots/19351234-8b9fb00e3648d90f11c1/00015.npz",
+            "points": 14787,
+            "offset": 3750000,
+            "sha256": "d573e16c3dced9831046228fa32b0fd543be9b817da01a32261093a5b1ea8ef5"
+          }
+        ],
+        "class_counts": [
+          3388599,
+          363049,
+          0,
+          2911,
+          4897,
+          5331
+        ],
+        "unknown_points": 3393930,
+        "background_points": 7808,
+        "tree_points": 363049,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 308716419,
+            "stream_sha256": "5fbe516928d9eb78c325d47e0bf9cf606b308f484674002aaf909da86aac4b5b",
+            "snapshot_sha256": "5fbe516928d9eb78c325d47e0bf9cf606b308f484674002aaf909da86aac4b5b"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3764787,
+        "chunks": 16,
+        "manifest_sha256": "212bc6d49715c034c6eee66b3e50b9c0ba2542b66971546558cb23ac9cdb1ef2",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1020.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1020.las",
+        "sha256": "38d3e0e2afada767bfa7428a283a326c51ef557aeb94da156d5e9dccbe7b7d7e",
+        "points": 3521713,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-42fa91a808193a2e6603",
+        "chunks": [
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "e0ed725e12fb60804919d258dfd6bfe5fff9c2686189055db585ecca543a9d18"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "cd686da09e355558bece83374d380ed177f9f100a1f4cac821c9923e5c89b87c"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "b42869fd851e64ad04ebd5e739d4b35f09b3b79c19db6700ad52b370bf7f7cda"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "d642542817b3e6aa6df65c0cd065e3f105ec9ba3afa1099fbc8d811cab7bd462"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "160e93be33fbc65701b1804e619208ffc80891f06593d4734befd26e6130ffb4"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "86925ac7eb377387e6bd8fd4f0e5c75a4df071d961bf88d1f76ea3104a869964"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "4d94ae0c2b276c06b68cce87b3b8907c99594b7a7e0173b1153251b72659abd5"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "098e41c480d5e03d4e7f00643b1f46e8167022c61fad2bfd81f2b79ae1a4ae87"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "08cd4f4fd3590db0b6c35c3a2b01369e536286ebb2bf22746d1439dc97e20591"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "f775e7a2fd451692079c8a127679a9317ed5efc23572c7d38861eadec5b258a2"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "2f5c2e98bdf1ca4000e653b17d21a6bd7fcbf84e7616e635fc12baa863079b24"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "c9cc8d8d21b1ee4c2278027536cf4783d2f27733e18301e7621c1a20f82c94fb"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00012.npz",
+            "points": 250000,
+            "offset": 3000000,
+            "sha256": "7e16db1b7b4a25ed321869bcbf00e181e63e9cc20754b2cf09a76516e36c1de0"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00013.npz",
+            "points": 250000,
+            "offset": 3250000,
+            "sha256": "b737e67d512c6393984a062622a64e542a23e799c227b9d3af39addcb524030d"
+          },
+          {
+            "path": "plots/19351234-42fa91a808193a2e6603/00014.npz",
+            "points": 21713,
+            "offset": 3500000,
+            "sha256": "7bd6f593438da9941b4ba9465bbd7cb37b912ee7868636b1981a77223ce24893"
+          }
+        ],
+        "class_counts": [
+          2014567,
+          1335959,
+          50842,
+          23674,
+          3687,
+          92984
+        ],
+        "unknown_points": 2107551,
+        "background_points": 78203,
+        "tree_points": 1335959,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 288784351,
+            "stream_sha256": "38d3e0e2afada767bfa7428a283a326c51ef557aeb94da156d5e9dccbe7b7d7e",
+            "snapshot_sha256": "38d3e0e2afada767bfa7428a283a326c51ef557aeb94da156d5e9dccbe7b7d7e"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3521713,
+        "chunks": 15,
+        "manifest_sha256": "3d5092aea4382b78795dff68b6c6c382bdb4c76d9925d8857acf1a790ee2d096",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1022.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1022.las",
+        "sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e",
+        "points": 1667254,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-b577a0868e743465e81f",
+        "chunks": [
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "ea990cd5309bb0347ade67c1ee65f97632b2e00864946e93083bf0663708e78e"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "3f8621683102c279f0cc974c67bf42104bb650840a611578cf9b8419b9f52d6d"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "1d0ea84cf7769ac050463bab2491ae916a55372d80206899176237714b203986"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "a21df2d1c4c4f9a56bc86bd4d41380902e9a6618645295f6043971187d8422cb"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "04ff619e87799882eb6ec020f8a7cce826532a404a9ceacc3ac470046bc64a40"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "b89b353b225437d0ecf633dca946221e064ab09a3e41003dcd5e9f523fd3c2ea"
+          },
+          {
+            "path": "plots/19351234-b577a0868e743465e81f/00006.npz",
+            "points": 167254,
+            "offset": 1500000,
+            "sha256": "01a38fa6847893a386dc638fa08b2889b60a77b8b68b3a170fb76884fcd6edd4"
+          }
+        ],
+        "class_counts": [
+          670401,
+          966992,
+          0,
+          0,
+          0,
+          29861
+        ],
+        "unknown_points": 700262,
+        "background_points": 0,
+        "tree_points": 966992,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 136718713,
+            "stream_sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e",
+            "snapshot_sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 1667254,
+        "chunks": 7,
+        "manifest_sha256": "cfec8952b323debaf1992a60f92ecb5e47158f1c59998560b7e2e60428051c71",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1023.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1023.las",
+        "sha256": "dc94bebcc53397aa927fbbf940f893a5cbdd44c844562491a9c80b8af7211faf",
+        "points": 5510572,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-6b682b4f7cb210b7222e",
+        "chunks": [
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "542806ae77c469ffd6ead074230e291e9966d5c335be3658e008526df016abd1"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "284789fbb39f6b6b6cf4ab0ed9b67b0e3ae12c95fdb5ba94bb2c5462a78dc03d"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "e47426cdbee938ebe0561c52cefcc1789a51f06b3c94a36c988fafe046ca9bec"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "deb25206f707a45c986f4554b04c9d6a26d24b54e2b40340585774b5f9dc57f6"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "586ac4dc9ccc57c2ae3dd55750f150efe8c8c4408cc9aae40243ecaad9ad2c19"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "dab3c04df81c63fafa90a04d716a3a631d82a596abd8768fcf43a0702c4f16a4"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "dbf19873f8df11cde93252603d019ee7f0792e8b5ae94d8309428cb79112b313"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "caf37b50c10c8cacc6395d7b176fc7ea02c8c3081d7f3d227ecfcbed6f4ef393"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "92628ed9485b6862f02a17023afdf5d72b68c27a64e74b20b1020767911671e2"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "0d84f0890de8e85ddf7ab5826d122a4e566edd1fec021be1f1b1d9a3440db96f"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "63c3df4f8d8e7521ac62aadd66a561df69fbe786b24a6b3f38f032142312b3c8"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "2c670897aa95448dadabf5b6e6e36607f23c903db0fe802d5fd4bf6204a713ef"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00012.npz",
+            "points": 250000,
+            "offset": 3000000,
+            "sha256": "9345f76f98588875eff50e8d4055874feaf4b3dc86b7963b2fd83657a4058678"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00013.npz",
+            "points": 250000,
+            "offset": 3250000,
+            "sha256": "2f61d1694f73d17054bdcc1169a4da4647d7f172e661a40918750f49ebb1f19c"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00014.npz",
+            "points": 250000,
+            "offset": 3500000,
+            "sha256": "5e7462fdf71b042ce8a3bc51d548c44d7f8f6764da50e82e9e48b8200de3aa78"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00015.npz",
+            "points": 250000,
+            "offset": 3750000,
+            "sha256": "d30d5988c9ec6a84acd0cc25a3894fd45b0cedd7440908c52313cba53ff573b2"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00016.npz",
+            "points": 250000,
+            "offset": 4000000,
+            "sha256": "db36213ee31ebc42295e3e58c6a63b196f8de2e09cce95e33ff688255b192b1a"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00017.npz",
+            "points": 250000,
+            "offset": 4250000,
+            "sha256": "95d4f5defe39a26285d13edf489689bbff8185cdc5d9a0259dbce93e86e02566"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00018.npz",
+            "points": 250000,
+            "offset": 4500000,
+            "sha256": "81dddde125c783ce9a9bd2331049bc3554ac6561731938d42fa806dc01c7a888"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00019.npz",
+            "points": 250000,
+            "offset": 4750000,
+            "sha256": "3b24fa6424e4a7fade5b32e3a639b75b6efe76478387af68a05ed097985f3477"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00020.npz",
+            "points": 250000,
+            "offset": 5000000,
+            "sha256": "ce3c6dab66f509bbdd4688ba2e802ba33ea0370e5e931b5e8cbfabe7f8396459"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00021.npz",
+            "points": 250000,
+            "offset": 5250000,
+            "sha256": "74a5535e20dfa93058c5d7a897e3c8ca8797d78841193e6701ef87f01e8f6383"
+          },
+          {
+            "path": "plots/19351234-6b682b4f7cb210b7222e/00022.npz",
+            "points": 10572,
+            "offset": 5500000,
+            "sha256": "f66c39f0709d7c1c3e1275b4ae47df79588bca78892b7948542184f439f6be82"
+          }
+        ],
+        "class_counts": [
+          2087911,
+          3058736,
+          113827,
+          16301,
+          4176,
+          229621
+        ],
+        "unknown_points": 2317532,
+        "background_points": 134304,
+        "tree_points": 3058736,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 451870789,
+            "stream_sha256": "dc94bebcc53397aa927fbbf940f893a5cbdd44c844562491a9c80b8af7211faf",
+            "snapshot_sha256": "dc94bebcc53397aa927fbbf940f893a5cbdd44c844562491a9c80b8af7211faf"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 5510572,
+        "chunks": 23,
+        "manifest_sha256": "03696d5136dc72d58b0115088cc345db73dbd11e34bb7ecbfca068e50aa751b9",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1024.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1024.las",
+        "sha256": "98ec8a4b5f2b1e294933181e9f1fd676c2887e61677c41a30fdabb9fa74797e2",
+        "points": 3432558,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-f3afc9251fb3eb8b87d2",
+        "chunks": [
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "a0ef676d14c6dd4e9a3d2214dcbe89ce2e042e88c09dfe47a0fe2de67450cc16"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "b5e10a5d36d62f160c591639798deecdd3a04111b479ab635aaa0053204ed7f3"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "b476df36c77f46a615174903fb36a9c2bb6b5cc2d30dfeedf7ef3b2ea715a6b5"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "727f9b59d38569246b2c5e94d9666ace64b49a5ffb693275bff6ad96142b32a5"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "d21349702579c4b447327b29032acedf53aa7bcae697bbd11b3cea662aec044a"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "f9e452dc5dc7443638ec2cc03d3b89dd543ef813251e194ab99b7e750af880c4"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "421d435eb7a66f27f62c62c228fc154bcd1a278304170e5b9ee131e5badb84a1"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "88e6e0e94c7d92fb43c3677a1821fda632bba3e85c2fec85ce525ff3e2d2ea73"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "697840ee07fa4505c20ee37160070124f79419f6f4c1c56acf78b40c75d7d6e2"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "854890b13fcbd0e9a8700d83c54f4d0a077546f6d333881ce5e842e0625dd98e"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "126076b7af3305f94efe7c26be0022c57a4ae3ebbf54c6f6f3b31fd8d58ba727"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "adab23f5ea70d8789955646f533064ce32b25dc9312f7da1c7cef20f981c8e08"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00012.npz",
+            "points": 250000,
+            "offset": 3000000,
+            "sha256": "9e0356594851a72eb7baabc8d9548e0a16d4110aeaefe2ce9dfa6e9d481a40b4"
+          },
+          {
+            "path": "plots/19351234-f3afc9251fb3eb8b87d2/00013.npz",
+            "points": 182558,
+            "offset": 3250000,
+            "sha256": "e0d741bcf93f377bbc6bc470a6a57c39bcb638d563bfa159914bffe6952d3578"
+          }
+        ],
+        "class_counts": [
+          535972,
+          2782845,
+          0,
+          0,
+          0,
+          113741
+        ],
+        "unknown_points": 649713,
+        "background_points": 0,
+        "tree_points": 2782845,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 281473641,
+            "stream_sha256": "98ec8a4b5f2b1e294933181e9f1fd676c2887e61677c41a30fdabb9fa74797e2",
+            "snapshot_sha256": "98ec8a4b5f2b1e294933181e9f1fd676c2887e61677c41a30fdabb9fa74797e2"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3432558,
+        "chunks": 14,
+        "manifest_sha256": "d0cc69137ba6da8203412e5c8b369401549d68ac7eff632f7c6465a2481bf4d1",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1027.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1027.las",
+        "sha256": "26e78e87e26e36b932631cc52f78797a611ca55162f07a70aef06ec0db45e41c",
+        "points": 4056143,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-44a1d4122e70982d842a",
+        "chunks": [
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "1f87b179b136350297210d1420f5876c47bcd53aaf5c964812502cd14c077a20"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "20e5b7ef52ac30651781a07031bf5ef06eb482ccfc49506a8e10874495657456"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "15a984cea6b644bcc60f7e6e10cb9ae522aa24df65b497cf4ae508ada859ac67"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "8675c147587251c08c79f21d37e93972057cce930d014aa769b1edde6dc65ba5"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "444bcb8d0cacd424cdf2531b6fdf47369ea81cc072a54428295358f73b323b9a"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "40ded9c530e70c003e690b458c57ed5080756260b6c21db816e59d419aaef738"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "9b9b01994607bfec34b2f84b608bec1529f2198f9045ba72eaf6d5b0d35582be"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "1d635c9b8f6f8c24c7f77a78bae40358cb16dc42f0e2dc66eb71fd4bb07fc6fd"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "d54175b4d6dd05f5229dd438d89018b5791bd22e4a5a6c3e70e71f725e10adf4"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "10382b9770486a2c7e02d3d5b4fd9802eaebd2ced9f71ba715a017bb09f5f8cc"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "903b03aa90f2458a0f55fae1390b24e12421436511361136661b6c5b982723e0"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "3cb10cbf1be13322ba477853d6eb70e5cd569229acc207bad7bfd43535f63d37"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00012.npz",
+            "points": 250000,
+            "offset": 3000000,
+            "sha256": "b713cf55ea6fcc79f59460743e8b9c4ad3109f709e3b2680fd21dfa5c0821366"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00013.npz",
+            "points": 250000,
+            "offset": 3250000,
+            "sha256": "6d04047f7679be2c1b9e4f1ed26066b210f89b1295f1f34341587124437f4870"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00014.npz",
+            "points": 250000,
+            "offset": 3500000,
+            "sha256": "b60ed7f72f4ddb4efbbabb5137bc594893833a83094d6e451a76bf3ddeb7cab2"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00015.npz",
+            "points": 250000,
+            "offset": 3750000,
+            "sha256": "f305a2a6e2fee5302e8df513eb1104b549ac437cca916cdcd2740a4075091d1c"
+          },
+          {
+            "path": "plots/19351234-44a1d4122e70982d842a/00016.npz",
+            "points": 56143,
+            "offset": 4000000,
+            "sha256": "362ebc2dee67aab0734e22d062dd5baad7dd7a62ff557e1f43217c8b84b7bb47"
+          }
+        ],
+        "class_counts": [
+          1917284,
+          1996143,
+          0,
+          58902,
+          3598,
+          80216
+        ],
+        "unknown_points": 1997500,
+        "background_points": 62500,
+        "tree_points": 1996143,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 332607611,
+            "stream_sha256": "26e78e87e26e36b932631cc52f78797a611ca55162f07a70aef06ec0db45e41c",
+            "snapshot_sha256": "26e78e87e26e36b932631cc52f78797a611ca55162f07a70aef06ec0db45e41c"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 4056143,
+        "chunks": 17,
+        "manifest_sha256": "715b4e970e7203838a8885278848082d87d9b61fd59190d5f1c7f2559683d768",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1031.las",
+      "scene": {
+        "path": "sources/19351234/originals/training/training/plot_1031.las",
+        "sha256": "1bd2b5d1997d05ef87c99708b90aab0071d7f6f9240934855f35ed674e8a5cb0",
+        "points": 3158923,
+        "published_split": "train",
+        "crs": null,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "id": "19351234-2e164efb0773bd9f27c6",
+        "chunks": [
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00000.npz",
+            "points": 250000,
+            "offset": 0,
+            "sha256": "b9615dc9c8feae3145f6f50675471035f90ca6eac554f25377d0a7d10703efb3"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00001.npz",
+            "points": 250000,
+            "offset": 250000,
+            "sha256": "6efd1627df4c818eca28a7589430a34a2135fb661958d7a05ba2236eeec95477"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00002.npz",
+            "points": 250000,
+            "offset": 500000,
+            "sha256": "83edaaf509bb9adae39735b924a9779938907a1dae987c4c2d9669b18951304f"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00003.npz",
+            "points": 250000,
+            "offset": 750000,
+            "sha256": "a91d8114a17b126b1492c3d0443055460899f633f82f6c178a69f48bac940d53"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00004.npz",
+            "points": 250000,
+            "offset": 1000000,
+            "sha256": "90df0e6f4b1f506016de834f7dfc69555d08afe682fb8409bd57bdd7833c6819"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00005.npz",
+            "points": 250000,
+            "offset": 1250000,
+            "sha256": "a61ff8e8d7fae58bf378348189d873138020ca3ca8df048a682541c86cbd26c3"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00006.npz",
+            "points": 250000,
+            "offset": 1500000,
+            "sha256": "3e5278476fcfc5122d82a9090095ae8643853535ec01c0814a17668652f995c2"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00007.npz",
+            "points": 250000,
+            "offset": 1750000,
+            "sha256": "d69b75f5c552098a07cb56780a1cba5a840927045cbff837d3c464969f180404"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00008.npz",
+            "points": 250000,
+            "offset": 2000000,
+            "sha256": "ff412279b45d4488fdd8bafe5fc7cd56e88789d8680bf1a1ca633556e4f4f556"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00009.npz",
+            "points": 250000,
+            "offset": 2250000,
+            "sha256": "1c8e0620e36e3f42688b2aaf9d1c45d3e85641ae3249ef771833b0f06c25c667"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00010.npz",
+            "points": 250000,
+            "offset": 2500000,
+            "sha256": "9a8c0efe0ae6c09007b5ead307abdf6af628e644c6c20bf7eed1e79a0a9828d8"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00011.npz",
+            "points": 250000,
+            "offset": 2750000,
+            "sha256": "4133dcad628413c0b7e20b6ba6dd6de0c8ab81c3c8abb172ec1f981023bb1890"
+          },
+          {
+            "path": "plots/19351234-2e164efb0773bd9f27c6/00012.npz",
+            "points": 158923,
+            "offset": 3000000,
+            "sha256": "b75ab5424c861c76c823388adb4e5e574501b91e13545ee1345d6eb37d6253ed"
+          }
+        ],
+        "class_counts": [
+          1020878,
+          1804815,
+          309971,
+          0,
+          2189,
+          21070
+        ],
+        "unknown_points": 1041948,
+        "background_points": 312160,
+        "tree_points": 1804815,
+        "native_schema_ref": "7da64b6b28eb1f5f625a",
+        "input_snapshot_attempts": [
+          {
+            "size_bytes": 259035571,
+            "stream_sha256": "1bd2b5d1997d05ef87c99708b90aab0071d7f6f9240934855f35ed674e8a5cb0",
+            "snapshot_sha256": "1bd2b5d1997d05ef87c99708b90aab0071d7f6f9240934855f35ed674e8a5cb0"
+          }
+        ]
+      },
+      "validation": {
+        "status": "validated",
+        "scope": "All prepared chunks; not a new raw-source audit or annotation certification",
+        "coverage": "explicit-selection",
+        "pipeline": "fgi-emit-plot-instances:1.0.0",
+        "plots": 1,
+        "points": 3158923,
+        "chunks": 13,
+        "manifest_sha256": "f6b4ceb2942459dafd9663bd32b7f741855f13c0c629a319e962bb35ba3d6b2d",
+        "schema_sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
+        "validator_sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
+        "package_sha256": "a3e777ff48ce24bddaa4bd2a295b527d57add6b62f6c2fddd74835677ef922ca"
+      }
+    }
+  ],
+  "limitations": [
+    "Temporary native NPZ outputs are removed after independent full validation; chunk fingerprints remain recorded",
+    "No calibration, geographic independence, annotation-completeness or article-score certification"
+  ]
+}

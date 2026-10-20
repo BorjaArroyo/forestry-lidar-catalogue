@@ -38,6 +38,7 @@ jobs:
           python3 tests/test_pinned_sources.py
           python3 scripts/for_instance/test_pipeline.py
           python3 tests/test_task_package.py
+          python3 tests/test_fgi_preparation.py
           python3 tests/test_task_plan.py
           python3 tests/test_task_dataset.py
           python3 tests/test_dataset_plan.py

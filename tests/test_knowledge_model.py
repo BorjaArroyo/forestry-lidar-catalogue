@@ -110,6 +110,7 @@ class KnowledgeModel(unittest.TestCase):
             (folder / 'scripts').mkdir()
             shutil.copyfile(ROOT / 'scripts/harmonize_lidar.py', folder / 'scripts/harmonize_lidar.py')
             shutil.copytree(ROOT / 'scripts/for_instance', folder / 'scripts/for_instance', ignore=shutil.ignore_patterns('__pycache__'))
+            shutil.copytree(ROOT / 'scripts/fgi_emit', folder / 'scripts/fgi_emit', ignore=shutil.ignore_patterns('__pycache__'))
             for source in (WEB / 'evidence').glob('*.json'):
                 shutil.copyfile(source, folder / 'evidence' / source.name)
             before = model.read_json(folder / 'catalog.json')
@@ -192,7 +193,7 @@ class KnowledgeModel(unittest.TestCase):
         projected = profiles['19351234']['native_measurement_contracts'][0]
         self.assertEqual(projected['fields'], contract['fields'])
         self.assertEqual([c['wavelength_nm'] for c in projected['channels']], [1550, 905, 532])
-        self.assertEqual(profiles['19351234']['discovery']['preparation']['status'], 'tbd')
+        self.assertEqual(profiles['19351234']['discovery']['preparation']['status'], 'ready')
 
     def test_measurement_channels_are_typed_evidenced_and_source_scoped(self):
         channel = 'channel:fgi-emit-scanner-1:1.0.0'

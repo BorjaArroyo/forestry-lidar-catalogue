@@ -134,3 +134,18 @@ scenes, unknown paths or false release counts are rejected. Validation reports
 include `coverage` so selections cannot be mistaken for complete-release checks.
 See BROWSER-PREPARATION.md and its dated evidence for the browser environment.
 Earlier evidence files retain the implementation hashes captured on their dates.
+
+
+## Additional closed profile: FGI-EMIT
+
+The same independent reader now also accepts `fgi-emit-plot-instances:1.0.0`.
+Its trusted package is `scripts/fgi_emit/`; the manifest chooses between the two
+closed profiles, never arbitrary executable code. FGI source archives, native
+class semantics and policy remain separate from FOR-instance. See
+[FGI-EMIT.md](FGI-EMIT.md) for full-source evidence and exact reference/channel rules.
+
+FGI chunks additionally expose float32 `features[N,3]` and boolean
+`feature_valid[N,3]` in scanner order 1550/905/532 nm. Native unknown/sentinel
+values remain unchanged, with explicit masks. Original records, native class
+codes and official train/test partitions remain preserved. The reader rejects
+altered feature values, mask semantics, source/policy pins and unsupported profiles.

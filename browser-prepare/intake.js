@@ -1,11 +1,14 @@
 /* Select one reviewed LAS; never unpack an archive's arbitrary filesystem paths. */
-const PREFIX = 'sources/8287792/originals/FORinstance_dataset/';
+const PREFIXES = ['sources/8287792/originals/FORinstance_dataset/', 'sources/19351234/originals/training/', 'sources/19351234/originals/test/'];
 export const MAX_RANGE_BYTES = 2 * 1024 ** 2;
 export const MAX_ENTRIES = 1024;
 
 export function memberName(plot) {
-  if (!plot.path.startsWith(PREFIX)) throw Error('Unsupported source profile');
-  return plot.path.slice(PREFIX.length);
+  const prefix = PREFIXES.find(prefix => plot.path.startsWith(prefix));
+  if (!prefix) throw Error('Unsupported source profile');
+  const member = plot.path.slice(prefix.length);
+  if (!safeName(member)) throw Error('Unsafe reviewed member path');
+  return member;
 }
 
 function safeName(name) {

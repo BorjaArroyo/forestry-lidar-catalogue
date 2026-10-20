@@ -1,0 +1,30 @@
+{
+  "status": "validated",
+  "date": "2026-10-20",
+  "scope": "Four complete selected FOR-instance plots; full-release browser scalability remains unvalidated",
+  "plots": 4,
+  "collections": [
+    "RMIT",
+    "CULS",
+    "SCION"
+  ],
+  "points": 5541993,
+  "chunks": 24,
+  "partitions": [
+    "dev",
+    "test"
+  ],
+  "use": "inference",
+  "plan_sha256": "50a7b59f8ea5ca10ffff3c0e12bc752da938a1e8b4a3648f4a2682dc2de4259f",
+  "runtime_lock_sha256": "1375d8d30450897bfaec0c2a9b914ee0ffe214595cd0749d300617d26f1c516b",
+  "checks": [
+    "Browser completed selective Zenodo intake, audited preparation and ZIP export",
+    "Current independent folder reader validated every array",
+    "All 24 NPZ SHA256 match the audited native reference"
+  ],
+  "limitations": [
+    "This is not a full-release load test",
+    "Published partitions do not establish geographic independence",
+    "No interrupted-run resumption is implemented"
+  ]
+}

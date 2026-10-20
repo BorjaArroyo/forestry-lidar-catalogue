@@ -35,8 +35,8 @@ produces the declared typed arrays. Display RGB cannot satisfy this requirement.
 - Off: do not expose the variable through this consumer. Source records remain
   losslessly preserved in the underlying task package.
 
-FGI-EMIT is a documented three-channel candidate. Its adapter remains TBD; it
-cannot execute this request. FOR-instance has an admitted geometry/reference
+FGI-EMIT now has an audited three-channel adapter with native reflectance masks. It
+supports geometry, conservative references and native uncalibrated channels. FOR-instance has an admitted geometry/reference
 pipeline, so optional reflectance is omitted and required reflectance blocks it.
 Unreviewed sources are not certified as lacking a measurement.
 
@@ -114,7 +114,7 @@ permitted partition. An HTTP fixture covers download, extraction, preparation,
 request validation, and resume. Required reflectance is rejected before acquisition.
 
 See `evidence/task-driven-preparation-validation.json` for fingerprints and limits.
-This does not admit FGI-EMIT preparation, multiple-source execution, quantitative
+The original increment did not admit FGI-EMIT; its separately validated adapter is now available. Browser plans remain single-source. This does not certify quantitative
 spectral conversion, or a model-specific training recipe. Those require their own
 source policies, executable adapters, and complete validation.
 

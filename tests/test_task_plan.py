@@ -25,11 +25,17 @@ class TaskPlans(unittest.TestCase):
         self.assertEqual(set(plan['omitted']), {'reflectance'})
         self.assertEqual(plan['allowed_partitions'], ['dev', 'train'])
 
-    def test_required_multispectral_channels_and_unadmitted_fgi_cannot_run(self):
-        for record, choices in [('8287792', {'reflectance':'required'}), ('19351234', {})]:
+    def test_required_missing_channels_and_unadmitted_sources_cannot_run(self):
+        for record, choices in [('8287792', {'reflectance':'required'}), ('16742708', {})]:
             plan = plan_request(self.graph, record, variables=choices)
             self.assertEqual(plan['status'], 'blocked')
             with self.assertRaises(ValueError): check_plan(self.graph, plan)
+
+    def test_fgi_exposes_native_spectral_masks_without_claiming_calibration(self):
+        plan = plan_request(self.graph,'19351234',variables={'reflectance':'required'})
+        self.assertEqual(check_plan(self.graph,plan),plan)
+        self.assertEqual(plan['included']['reflectance'],['features','feature_valid'])
+        self.assertFalse(plan['omitted'])
 
     def test_inference_does_not_require_labels_or_reinterpret_them_as_features(self):
         plan = plan_request(self.graph, '8287792', 'inference')

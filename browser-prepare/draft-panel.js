@@ -44,6 +44,11 @@ export class DraftPanel {
       this.storageError = '';
     } catch { this.storageError = 'Could not save in this browser; keep the page open to retain this selection.'; }
   }
+  replace(draft) {
+    const checked = readDraft(JSON.stringify(draft), this.normalize);
+    this.draft = checked; this.loadError = ''; this.notice = 'Verified plan imported; its saved subsets replace the previous selection.';
+    this.save(); this.onChange();
+  }
   add(subset) {
     if (this.isRunning() || this.loadError) return;
     try {

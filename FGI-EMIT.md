@@ -1,9 +1,7 @@
-# FGI-EMIT: measurement metadata review
+# FGI-EMIT: audited native task preparation
 
 Record [19351234](https://zenodo.org/records/19351234) is the next source candidate
-for the existing instance-preparation workflow. Its preparation remains **TBD**.
-This increment describes measurements and requirements; it does not prepare data
-or validate a multispectral segmentation model.
+for the instance-preparation workflow. Its source-specific adapter is now admitted after complete-source integrity and independent payload validation. No multispectral segmentation model or article evaluator is certified.
 
 ## Observed scope
 
@@ -15,8 +13,7 @@ local to plots; the old research converter's projected-coordinate description
 must not be reused as evidence of a CRS or datum.
 
 The small provider `metadata.yaml` asset passed its published MD5 and saved SHA256.
-Original plot sizes match saved manifests. **Full LAS payload hashes were not
-recomputed.** Prefix samples are not representative coverage estimates, and this
+Original plot sizes match saved manifests. **That initial 2026-10-19 audit did not recompute full LAS payload hashes. The complete 2026-10-20 audit below supersedes that integrity limitation.** Prefix samples are not representative coverage estimates, and this
 audit does not assess full annotation completeness, instance consistency or
 spatial association accuracy.
 
@@ -55,7 +52,7 @@ rule remain explicit. YAML `NULL` does not establish that zero is missing.
 `tree_index`, `classification`, `edge` and `dead` remain reference fields.
 Instance zero means no assigned tree instance; it is not interpreted through the
 measurement-sentinel machinery. FGI class 2 means building, not FOR-instance ground.
-No new instance-validity or evaluator policy is admitted by these descriptors.
+These descriptors alone do not define reference validity. The admitted conservative policy is specified below; no article evaluator is implemented.
 
 ## Pipeline declarations
 
@@ -78,11 +75,34 @@ in the research checkout. The audit is bounded and runs locally:
 python scripts/audit_fgi_measurements.py --input /absolute/acquisition --output /absolute/new-evidence.json
 ```
 
-Complete full integrity, reference-policy and all-plot adapter validation before
-enabling preparation. Retain 13 official training plots and six test plots;
+Complete-source integrity, reference-policy and all-plot adapter validation have now passed; retain their versioned evidence. Retain 13 official training plots and six test plots;
 recommended validation membership is optional. Review capture ancestry and model
 exposure before claiming independent geographic transfer.
 
 Source data and derived source-metadata evidence retain the provider's declared
 CC BY-NC-SA 4.0 terms and attribution to Ruoppa et al., 2026. Code licensing does
 not replace those terms. No raw point clouds are published by this change.
+
+
+## Complete admission (2026-10-20)
+
+- [Full audit](evidence/fgi-emit-full-audit.json): both provider archive checksums,
+  all 19 LAS SHA256 and every point reverified; 60,793,586 points and 1,561 instances.
+- [Preparation validation](evidence/fgi-emit-preparation-validation.json): every
+  point processed into 254 bounded blocks and read by the independent validator.
+  Temporary native blocks were removed after validation; scene/block fingerprints
+  remain in the report. The pinned producer package is `scripts/fgi_emit/`.
+- Native class 1 with positive `tree_index` retains that ID. Classes 2/3/4 are
+  known non-tree background. Class 0 (including understory), class 5 and class-1
+  points without positive identity stay unknown. `instance_valid = instance >= 0`.
+  Positive IDs outside class 1 fail closed. No point or native class is removed.
+- `features = column_stack(reflectance_1, reflectance_2, reflectance_3)` retains
+  float32 native values. `feature_valid = isfinite(features) & (features != -9999)`.
+  Missing values are never imputed. All original fields, edge/dead flags and
+  float64 decoded XYZ remain available. The precise rules also live in the
+  canonical graph and `scripts/fgi_emit/policy.json`.
+
+This preparation policy differs from an article scoring protocol. Units, calibration,
+co-registration accuracy, full annotation completeness and independent geographic
+transfer remain unresolved. The browser executes one admitted source per plan;
+existing prepared packages can be composed with the common task-folder exporter.

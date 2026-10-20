@@ -1,0 +1,1972 @@
+{
+  "status": "verified",
+  "audited_at": "2026-10-20T13:31:20.235038+00:00",
+  "record_id": 19351234,
+  "scope": "Full provider archive checksums, all original LAS payload SHA256 and every point; no calibration or annotation-completeness certification",
+  "environment": {
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "laspy": "2.7.0",
+    "ray": "2.55.1"
+  },
+  "archives": [
+    {
+      "name": "training.zip",
+      "sha256": "838261e0ef996635e5b0ca650723fd7f2adc568dca7d9e0d383224ae91b75270",
+      "provider_checksum": "md5:b1c5ee7e9c166dd7ff377539944e5002"
+    },
+    {
+      "name": "test.zip",
+      "sha256": "b8ef7090ebd15603bee4d112dd48c9cab84f502a4f8e12ae63b816079004a2f2",
+      "provider_checksum": "md5:c67b80c1e7f8a2ea28f54ed364aceea2"
+    }
+  ],
+  "plots": [
+    {
+      "path": "sources/19351234/originals/training/training/plot_1001.las",
+      "size_bytes": 253600611,
+      "sha256": "f9c35723cef4956a72cd0839c0d1c1ce75069d2d6ef0e40e5ba0f607cbdc7520",
+      "points": 3092643,
+      "published_split": "train",
+      "class_counts": [
+        471365,
+        2475530,
+        0,
+        0,
+        0,
+        145748
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 133,
+      "origin_scanner_counts": [
+        0,
+        1160103,
+        429021,
+        1503519
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        36673,
+        238052,
+        2817918
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3057769,
+          "sentinel": 34874,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 2851152,
+          "sentinel": 241491,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3057610,
+          "sentinel": 35033,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3057769,
+          "sentinel": 34874,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 2851152,
+          "sentinel": 241491,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3057610,
+          "sentinel": 35033,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3057769,
+          "sentinel": 34874,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 2851152,
+          "sentinel": 241491,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3057610,
+          "sentinel": 35033,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3057529,
+          "sentinel": 35114,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 2851135,
+          "sentinel": 241508,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3054166,
+          "sentinel": 38477,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1003.las",
+      "size_bytes": 189321221,
+      "sha256": "11e019007a07a7da343abdebeea2e2d42ab819bd9348bbe5cfb0b92c0483d1ba",
+      "points": 2308748,
+      "published_split": "train",
+      "class_counts": [
+        276055,
+        1823573,
+        0,
+        0,
+        255,
+        208865
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 54,
+      "origin_scanner_counts": [
+        0,
+        1088409,
+        285841,
+        934498
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        51332,
+        292439,
+        1964977
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 2287472,
+          "sentinel": 21276,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 1999284,
+          "sentinel": 309464,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 2244385,
+          "sentinel": 64363,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 2287472,
+          "sentinel": 21276,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 1999284,
+          "sentinel": 309464,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 2244385,
+          "sentinel": 64363,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 2287472,
+          "sentinel": 21276,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 1999284,
+          "sentinel": 309464,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 2244385,
+          "sentinel": 64363,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 2287056,
+          "sentinel": 21692,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 1999245,
+          "sentinel": 309503,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 2241184,
+          "sentinel": 67564,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1005.las",
+      "size_bytes": 251583985,
+      "sha256": "cf452ee0638931e29a67a12cc1edf737fab12c641ad53d15543d3d5f00d8c968",
+      "points": 3068050,
+      "published_split": "train",
+      "class_counts": [
+        1821257,
+        1135440,
+        0,
+        0,
+        0,
+        111353
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 87,
+      "origin_scanner_counts": [
+        0,
+        1557235,
+        421572,
+        1089243
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        15158,
+        146268,
+        2906624
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3060481,
+          "sentinel": 7569,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 2925583,
+          "sentinel": 142467,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3041502,
+          "sentinel": 26548,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3060481,
+          "sentinel": 7569,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 2925583,
+          "sentinel": 142467,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3041502,
+          "sentinel": 26548,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3060481,
+          "sentinel": 7569,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 2925583,
+          "sentinel": 142467,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3041502,
+          "sentinel": 26548,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3059617,
+          "sentinel": 8433,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 2925573,
+          "sentinel": 142477,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3038940,
+          "sentinel": 29110,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1009.las",
+      "size_bytes": 316482475,
+      "sha256": "5ff095f92c5e4048bcf16aabe311e2016303158c4d4e1e0f60e3fd9ad0be98fd",
+      "points": 3859495,
+      "published_split": "train",
+      "class_counts": [
+        1074349,
+        2641493,
+        0,
+        15387,
+        927,
+        127339
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 103,
+      "origin_scanner_counts": [
+        0,
+        1551918,
+        484053,
+        1823524
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        57901,
+        327312,
+        3474282
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3828383,
+          "sentinel": 31112,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 3514772,
+          "sentinel": 344723,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3792216,
+          "sentinel": 67279,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3828383,
+          "sentinel": 31112,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 3514772,
+          "sentinel": 344723,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3792216,
+          "sentinel": 67279,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3828383,
+          "sentinel": 31112,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 3514772,
+          "sentinel": 344723,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3792216,
+          "sentinel": 67279,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3827675,
+          "sentinel": 31820,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 3514772,
+          "sentinel": 344723,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3787480,
+          "sentinel": 72015,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1010.las",
+      "size_bytes": 297013707,
+      "sha256": "156206ac40604b28db2b9116609bef750c48cff2426183dad21392101d72c30e",
+      "points": 3622071,
+      "published_split": "train",
+      "class_counts": [
+        1662647,
+        1430899,
+        466779,
+        0,
+        0,
+        61746
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 155,
+      "origin_scanner_counts": [
+        0,
+        1542353,
+        513894,
+        1565824
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        27373,
+        182560,
+        3412138
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3604295,
+          "sentinel": 17776,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 3445659,
+          "sentinel": 176412,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3578953,
+          "sentinel": 43118,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3604295,
+          "sentinel": 17776,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 3445659,
+          "sentinel": 176412,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3578953,
+          "sentinel": 43118,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3604295,
+          "sentinel": 17776,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 3445659,
+          "sentinel": 176412,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3578953,
+          "sentinel": 43118,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3603728,
+          "sentinel": 18343,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 3445659,
+          "sentinel": 176412,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3576023,
+          "sentinel": 46048,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1013.las",
+      "size_bytes": 296707929,
+      "sha256": "06931d04a92a3fb58b17ca7db3eecbacb2068b8ab95530157579462c371653b0",
+      "points": 3618342,
+      "published_split": "train",
+      "class_counts": [
+        2043043,
+        1508971,
+        0,
+        0,
+        0,
+        66328
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 28,
+      "origin_scanner_counts": [
+        0,
+        1337173,
+        526625,
+        1754544
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        81254,
+        288529,
+        3248559
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3538464,
+          "sentinel": 79878,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 3267209,
+          "sentinel": 351133,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3598316,
+          "sentinel": 20026,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3538464,
+          "sentinel": 79878,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 3267209,
+          "sentinel": 351133,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3598316,
+          "sentinel": 20026,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3538464,
+          "sentinel": 79878,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 3267209,
+          "sentinel": 351133,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3598316,
+          "sentinel": 20026,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3536994,
+          "sentinel": 81348,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 3267209,
+          "sentinel": 351133,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3592902,
+          "sentinel": 25440,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1019.las",
+      "size_bytes": 308716419,
+      "sha256": "5fbe516928d9eb78c325d47e0bf9cf606b308f484674002aaf909da86aac4b5b",
+      "points": 3764787,
+      "published_split": "train",
+      "class_counts": [
+        3388599,
+        363049,
+        0,
+        2911,
+        4897,
+        5331
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 8,
+      "origin_scanner_counts": [
+        0,
+        1898083,
+        535215,
+        1331489
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        10629,
+        34158,
+        3720000
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3760451,
+          "sentinel": 4336,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 3724473,
+          "sentinel": 40314,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3754021,
+          "sentinel": 10766,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3760451,
+          "sentinel": 4336,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 3724473,
+          "sentinel": 40314,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3754021,
+          "sentinel": 10766,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3760451,
+          "sentinel": 4336,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 3724473,
+          "sentinel": 40314,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3754021,
+          "sentinel": 10766,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3760305,
+          "sentinel": 4482,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 3724473,
+          "sentinel": 40314,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3752880,
+          "sentinel": 11907,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1020.las",
+      "size_bytes": 288784351,
+      "sha256": "38d3e0e2afada767bfa7428a283a326c51ef557aeb94da156d5e9dccbe7b7d7e",
+      "points": 3521713,
+      "published_split": "train",
+      "class_counts": [
+        2014567,
+        1335959,
+        50842,
+        23674,
+        3687,
+        92984
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 62,
+      "origin_scanner_counts": [
+        0,
+        1530506,
+        528187,
+        1463020
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        48385,
+        205560,
+        3267768
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3488663,
+          "sentinel": 33050,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 3301102,
+          "sentinel": 220611,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3473044,
+          "sentinel": 48669,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3488663,
+          "sentinel": 33050,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 3301102,
+          "sentinel": 220611,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3473044,
+          "sentinel": 48669,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3488663,
+          "sentinel": 33050,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 3301102,
+          "sentinel": 220611,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3473044,
+          "sentinel": 48669,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3488345,
+          "sentinel": 33368,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 3301102,
+          "sentinel": 220611,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3471015,
+          "sentinel": 50698,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1022.las",
+      "size_bytes": 136718713,
+      "sha256": "44368ffa6205d698a8ef6fedeb7f2b3f497d55ce100b77e62713e71162df413e",
+      "points": 1667254,
+      "published_split": "train",
+      "class_counts": [
+        670401,
+        966992,
+        0,
+        0,
+        0,
+        29861
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 213,
+      "origin_scanner_counts": [
+        0,
+        668785,
+        242105,
+        756364
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        47743,
+        231419,
+        1388092
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 1640563,
+          "sentinel": 26691,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 1430874,
+          "sentinel": 236380,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 1603420,
+          "sentinel": 63834,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 1640563,
+          "sentinel": 26691,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 1430874,
+          "sentinel": 236380,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 1603420,
+          "sentinel": 63834,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 1640563,
+          "sentinel": 26691,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 1430874,
+          "sentinel": 236380,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 1603420,
+          "sentinel": 63834,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 1640121,
+          "sentinel": 27133,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 1430864,
+          "sentinel": 236390,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 1601437,
+          "sentinel": 65817,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1023.las",
+      "size_bytes": 451870789,
+      "sha256": "dc94bebcc53397aa927fbbf940f893a5cbdd44c844562491a9c80b8af7211faf",
+      "points": 5510572,
+      "published_split": "train",
+      "class_counts": [
+        2087911,
+        3058736,
+        113827,
+        16301,
+        4176,
+        229621
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 48,
+      "origin_scanner_counts": [
+        0,
+        2484969,
+        708559,
+        2317044
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        73521,
+        359130,
+        5077921
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 5474471,
+          "sentinel": 36101,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 5124698,
+          "sentinel": 385874,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 5426375,
+          "sentinel": 84197,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 5474471,
+          "sentinel": 36101,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 5124698,
+          "sentinel": 385874,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 5426375,
+          "sentinel": 84197,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 5474471,
+          "sentinel": 36101,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 5124698,
+          "sentinel": 385874,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 5426375,
+          "sentinel": 84197,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 5473861,
+          "sentinel": 36711,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 5124673,
+          "sentinel": 385899,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 5420062,
+          "sentinel": 90510,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1024.las",
+      "size_bytes": 281473641,
+      "sha256": "98ec8a4b5f2b1e294933181e9f1fd676c2887e61677c41a30fdabb9fa74797e2",
+      "points": 3432558,
+      "published_split": "train",
+      "class_counts": [
+        535972,
+        2782845,
+        0,
+        0,
+        0,
+        113741
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 62,
+      "origin_scanner_counts": [
+        0,
+        1445330,
+        412743,
+        1574485
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        82459,
+        470513,
+        2879586
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3397683,
+          "sentinel": 34875,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 2939311,
+          "sentinel": 493247,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3325249,
+          "sentinel": 107309,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3397683,
+          "sentinel": 34875,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 2939311,
+          "sentinel": 493247,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3325249,
+          "sentinel": 107309,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3397683,
+          "sentinel": 34875,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 2939311,
+          "sentinel": 493247,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3325249,
+          "sentinel": 107309,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3396814,
+          "sentinel": 35744,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 2939311,
+          "sentinel": 493247,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3321422,
+          "sentinel": 111136,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1027.las",
+      "size_bytes": 332607611,
+      "sha256": "26e78e87e26e36b932631cc52f78797a611ca55162f07a70aef06ec0db45e41c",
+      "points": 4056143,
+      "published_split": "train",
+      "class_counts": [
+        1917284,
+        1996143,
+        0,
+        58902,
+        3598,
+        80216
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 96,
+      "origin_scanner_counts": [
+        0,
+        1835121,
+        597833,
+        1623189
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        57377,
+        272707,
+        3726059
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 4038858,
+          "sentinel": 17285,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 3767003,
+          "sentinel": 289140,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3975107,
+          "sentinel": 81036,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 4038858,
+          "sentinel": 17285,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 3767003,
+          "sentinel": 289140,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3975107,
+          "sentinel": 81036,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 4038858,
+          "sentinel": 17285,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 3767003,
+          "sentinel": 289140,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3975107,
+          "sentinel": 81036,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 4038461,
+          "sentinel": 17682,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 3767002,
+          "sentinel": 289141,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3970740,
+          "sentinel": 85403,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/training/training/plot_1031.las",
+      "size_bytes": 259035571,
+      "sha256": "1bd2b5d1997d05ef87c99708b90aab0071d7f6f9240934855f35ed674e8a5cb0",
+      "points": 3158923,
+      "published_split": "train",
+      "class_counts": [
+        1020878,
+        1804815,
+        309971,
+        0,
+        2189,
+        21070
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 49,
+      "origin_scanner_counts": [
+        0,
+        1123410,
+        490716,
+        1544797
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        53438,
+        196011,
+        2909474
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3118236,
+          "sentinel": 40687,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 2951124,
+          "sentinel": 207799,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3104522,
+          "sentinel": 54401,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3118236,
+          "sentinel": 40687,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 2951124,
+          "sentinel": 207799,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3104522,
+          "sentinel": 54401,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3118236,
+          "sentinel": 40687,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 2951124,
+          "sentinel": 207799,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3104522,
+          "sentinel": 54401,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3117489,
+          "sentinel": 41434,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 2951113,
+          "sentinel": 207810,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3101555,
+          "sentinel": 57368,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1002.las",
+      "size_bytes": 155148869,
+      "sha256": "f0a99e41cb8e69b7b0ea956e50a3b8cf63266f8872714f7102f98d92699a7154",
+      "points": 1892012,
+      "published_split": "test",
+      "class_counts": [
+        529433,
+        1271597,
+        0,
+        0,
+        0,
+        90982
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 93,
+      "origin_scanner_counts": [
+        0,
+        956272,
+        270962,
+        664778
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        64313,
+        260086,
+        1567613
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 1872412,
+          "sentinel": 19600,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 1641581,
+          "sentinel": 250431,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 1773331,
+          "sentinel": 118681,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 1872412,
+          "sentinel": 19600,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 1641581,
+          "sentinel": 250431,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 1773331,
+          "sentinel": 118681,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 1872412,
+          "sentinel": 19600,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 1641581,
+          "sentinel": 250431,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 1773331,
+          "sentinel": 118681,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 1872183,
+          "sentinel": 19829,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 1641573,
+          "sentinel": 250439,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 1771365,
+          "sentinel": 120647,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1004.las",
+      "size_bytes": 192476335,
+      "sha256": "55e8b671a1c4492a4c28b303c12dd1ddee98597838de7a25c1a87279ade1b0a1",
+      "points": 2347225,
+      "published_split": "test",
+      "class_counts": [
+        350569,
+        1828192,
+        0,
+        0,
+        331,
+        168133
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 58,
+      "origin_scanner_counts": [
+        0,
+        1023281,
+        282748,
+        1041196
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        63360,
+        313208,
+        1970657
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 2323020,
+          "sentinel": 24205,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 2007324,
+          "sentinel": 339901,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 2271403,
+          "sentinel": 75822,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 2323020,
+          "sentinel": 24205,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 2007324,
+          "sentinel": 339901,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 2271403,
+          "sentinel": 75822,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 2323020,
+          "sentinel": 24205,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 2007324,
+          "sentinel": 339901,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 2271403,
+          "sentinel": 75822,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 2322652,
+          "sentinel": 24573,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 2007312,
+          "sentinel": 339913,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 2268394,
+          "sentinel": 78831,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1008.las",
+      "size_bytes": 163729021,
+      "sha256": "a1f6aa1414c98dd4ae4bb0e9b907a5ffb29a798cdc01f977e2dd2269859fe95c",
+      "points": 1996648,
+      "published_split": "test",
+      "class_counts": [
+        769870,
+        1187101,
+        0,
+        3881,
+        2958,
+        32838
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 34,
+      "origin_scanner_counts": [
+        0,
+        955345,
+        249382,
+        791921
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        48948,
+        175278,
+        1772422
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 1982037,
+          "sentinel": 14611,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 1795097,
+          "sentinel": 201551,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 1939636,
+          "sentinel": 57012,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 1982037,
+          "sentinel": 14611,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 1795097,
+          "sentinel": 201551,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 1939636,
+          "sentinel": 57012,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 1982037,
+          "sentinel": 14611,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 1795097,
+          "sentinel": 201551,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 1939636,
+          "sentinel": 57012,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 1981787,
+          "sentinel": 14861,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 1795097,
+          "sentinel": 201551,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 1937990,
+          "sentinel": 58658,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1012.las",
+      "size_bytes": 257832139,
+      "sha256": "9f18287c8d10e5674c816a2486d2f26f8028d02b9ef00a732bb15b0e0bf2cbd3",
+      "points": 3144247,
+      "published_split": "test",
+      "class_counts": [
+        1946442,
+        1134964,
+        0,
+        0,
+        0,
+        62841
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 31,
+      "origin_scanner_counts": [
+        0,
+        1360481,
+        435767,
+        1347999
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        35029,
+        187602,
+        2921616
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3121648,
+          "sentinel": 22599,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 2942651,
+          "sentinel": 201596,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3110782,
+          "sentinel": 33465,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3121648,
+          "sentinel": 22599,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 2942651,
+          "sentinel": 201596,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3110782,
+          "sentinel": 33465,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3121648,
+          "sentinel": 22599,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 2942651,
+          "sentinel": 201596,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3110782,
+          "sentinel": 33465,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3120955,
+          "sentinel": 23292,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 2942651,
+          "sentinel": 201596,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3105923,
+          "sentinel": 38324,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1018.las",
+      "size_bytes": 236517387,
+      "sha256": "99973c1ce5466cef1b2cbe569d65007ae500a5040f92f6670bdbe06aadbde48a",
+      "points": 2884311,
+      "published_split": "test",
+      "class_counts": [
+        589401,
+        2220589,
+        0,
+        0,
+        1230,
+        73091
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 216,
+      "origin_scanner_counts": [
+        0,
+        1235723,
+        357003,
+        1291585
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        73869,
+        436731,
+        2373711
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 2832459,
+          "sentinel": 51852,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 2417949,
+          "sentinel": 466362,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 2818056,
+          "sentinel": 66255,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 2832459,
+          "sentinel": 51852,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 2417949,
+          "sentinel": 466362,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 2818056,
+          "sentinel": 66255,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 2832459,
+          "sentinel": 51852,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 2417949,
+          "sentinel": 466362,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 2818056,
+          "sentinel": 66255,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 2832125,
+          "sentinel": 52186,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 2417947,
+          "sentinel": 466364,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 2815434,
+          "sentinel": 68877,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    },
+    {
+      "path": "sources/19351234/originals/test/test/plot_1028.las",
+      "size_bytes": 315527093,
+      "sha256": "d17d3820989ac9d3e0cbe3fac10b5e0ec3746cdf1ec0f786bb3738f9dfb36261",
+      "points": 3847844,
+      "published_split": "test",
+      "class_counts": [
+        1268001,
+        1195304,
+        1291793,
+        24575,
+        3006,
+        65165
+      ],
+      "positive_id_class_conflicts": 0,
+      "instances": 31,
+      "origin_scanner_counts": [
+        0,
+        2069835,
+        501666,
+        1276343
+      ],
+      "reflectance_valid_channel_counts": [
+        0,
+        63451,
+        260728,
+        3523665
+      ],
+      "measurements": {
+        "reflectance_1": {
+          "valid": 3839732,
+          "sentinel": 8112,
+          "nonfinite": 0
+        },
+        "reflectance_2": {
+          "valid": 3597362,
+          "sentinel": 250482,
+          "nonfinite": 0
+        },
+        "reflectance_3": {
+          "valid": 3718808,
+          "sentinel": 129036,
+          "nonfinite": 0
+        },
+        "amplitude_1": {
+          "valid": 3839732,
+          "sentinel": 8112,
+          "nonfinite": 0
+        },
+        "amplitude_2": {
+          "valid": 3597362,
+          "sentinel": 250482,
+          "nonfinite": 0
+        },
+        "amplitude_3": {
+          "valid": 3718808,
+          "sentinel": 129036,
+          "nonfinite": 0
+        },
+        "intensity_1": {
+          "valid": 3839732,
+          "sentinel": 8112,
+          "nonfinite": 0
+        },
+        "intensity_2": {
+          "valid": 3597362,
+          "sentinel": 250482,
+          "nonfinite": 0
+        },
+        "intensity_3": {
+          "valid": 3718808,
+          "sentinel": 129036,
+          "nonfinite": 0
+        },
+        "deviation_1": {
+          "valid": 3839375,
+          "sentinel": 8469,
+          "nonfinite": 0
+        },
+        "deviation_2": {
+          "valid": 3597362,
+          "sentinel": 250482,
+          "nonfinite": 0
+        },
+        "deviation_3": {
+          "valid": 3714885,
+          "sentinel": 132959,
+          "nonfinite": 0
+        }
+      },
+      "scales": [
+        1e-06,
+        1e-06,
+        1e-06
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": null
+    }
+  ],
+  "points": 60793586,
+  "instances": 1561,
+  "limitations": [
+    "Class 0 includes understory and is not assumed reliable non-tree background",
+    "Class 5 out remains unknown",
+    "Native spectral units/calibration and association accuracy remain unresolved",
+    "One Espoonlahti acquisition area; geographic independence is not established"
+  ]
+}

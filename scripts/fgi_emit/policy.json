@@ -1,0 +1,22 @@
+{
+  "id": "fgi-emit-conservative-reference:1.0.0",
+  "unknown": -1,
+  "background": 0,
+  "tree": "Positive native plot-local tree_index, unchanged",
+  "rules": {
+    "0,5": "Unknown, including broad other/understory and out-of-plot points",
+    "2,3,4": "Known non-tree building/vehicle/pole background, not terrain labels",
+    "1": "Positive tree_index is retained; zero remains unknown"
+  },
+  "instance_valid": "instance >= 0",
+  "features": {
+    "fields": ["reflectance_1", "reflectance_2", "reflectance_3"],
+    "wavelengths_nm": [1550, 905, 532],
+    "valid": "isfinite(native_value) and native_value != -9999",
+    "units": "Unknown; no cross-source calibration, rescaling or imputation",
+    "association": "Provider nearest neighbor within 0.25 m; accuracy not certified"
+  },
+  "preserved": "All rows, float64 decoded XYZ, original structured records, native classes, IDs, edge/dead flags and official train/test membership",
+  "limitations": ["Class 0 is not assumed reliable background", "No article-specific evaluator is implemented", "One acquisition area does not establish geographic transfer", "Use both reference and channel masks; unavailable values remain native"],
+  "evidence": ["https://zenodo.org/records/19351234", "https://github.com/ruoppa/fgi_emit", "metadata.yaml with SHA256 e8891b43eb0d6ca3b649a61ff79ce50a3e0bc0c6b93e14a1e5c1de09d55a482b"]
+}

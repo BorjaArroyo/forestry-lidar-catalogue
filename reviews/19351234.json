@@ -1,12 +1,12 @@
 {
   "dataset_id": "19351234",
-  "dataset_sha256": "2b41335683df9c4ec08014711bf1f27dc0278d3cb51334a1bd8af7253285ed79",
+  "dataset_sha256": "428f974fd482e9fc5ea59492cd4ec3a0be14aab2e891310858464c84324b97e8",
   "decision": "admitted",
   "reviewed_by": "Codex automated metadata analysis; no independent human scientific review is claimed",
-  "reviewed_at": "2026-10-19",
+  "reviewed_at": "2026-10-20",
   "proposal_url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/blob/main/FGI-EMIT.md",
-  "scope": "Existing-source metadata publication only, authorized by the user. This admits typed descriptors and bounded observation evidence; task preparation remains TBD.",
-  "limitations": "No full-payload verification, task adapter, radiometric calibration, spatial association accuracy, model readiness or independent geographic accuracy is admitted.",
+  "scope": "Existing-source preparation admission authorized by the user: full-source audit, conservative instance preparation, native spectral masks and independent prepared-array validation. Browser execution covers one complete training plot.",
+  "limitations": "No independent human scientific review, annotation-correctness certification, radiometric calibration, spatial association accuracy, article scoring protocol or geographic generalization is claimed. Source licensing restrictions remain applicable.",
   "analysis": {
     "provenance": {
       "finding": "Previously catalogued pinned record. Source metadata passed its provider MD5 and saved SHA256; source-scoped sensors and native headers are documented.",
@@ -18,7 +18,7 @@
       ]
     },
     "rights": {
-      "finding": "Provider-declared CC BY-NC-SA 4.0 and attribution remain explicit. This change publishes metadata evidence and code, not source clouds or a task-use admission.",
+      "finding": "Provider-declared CC BY-NC-SA 4.0 and attribution remain explicit. This publishes metadata, evidence and preparation code; users obtain source data from the provider subject to its licensing restrictions.",
       "evidence": [
         "FGI-EMIT.md",
         "evidence/fgi-emit-measurements.json",
@@ -27,30 +27,30 @@
       ]
     },
     "integrity": {
-      "finding": "Metadata integrity, original file sizes and all 19 headers inspected. Full LAS payload hashes were not recomputed; saved checksums are labelled historical.",
+      "finding": "Both provider archives matched pinned MD5 and SHA256; all 19 original LAS SHA256 were recomputed. Every prepared block passed the independent reader.",
       "evidence": [
         "FGI-EMIT.md",
-        "evidence/fgi-emit-measurements.json",
-        "https://zenodo.org/records/19351234",
-        "https://github.com/ruoppa/fgi_emit"
+        "evidence/fgi-emit-full-audit.json",
+        "evidence/fgi-emit-preparation-validation.json",
+        "evidence/fgi-emit-browser-validation.json"
       ]
     },
     "schema": {
-      "finding": "One 39-field native schema, three scanner channels, twelve quantitative suffix fields and three disputed pseudo-color display fields. Units/calibration remain unresolved.",
+      "finding": "Native point records, source XYZ, class codes, plot-local identities and official partitions are preserved. Derived references retain unknown masks; three native reflectance channels retain explicit missingness masks. Units, calibration and association accuracy remain unresolved.",
       "evidence": [
         "FGI-EMIT.md",
-        "evidence/fgi-emit-measurements.json",
-        "https://zenodo.org/records/19351234",
-        "https://github.com/ruoppa/fgi_emit"
+        "evidence/fgi-emit-full-audit.json",
+        "evidence/fgi-emit-preparation-validation.json",
+        "evidence/fgi-emit-browser-validation.json"
       ]
     },
     "coverage": {
-      "finding": "19 headers and 190000 stored-order prefix points. Header counts sum to 60793586. Samples do not establish whole-source channel availability or complete reference.",
+      "finding": "All 60793586 points and 1561 plot-local native tree instances across 13 training and 6 test plots were audited. All 254 prepared blocks were independently validated. The browser acceptance covers 1667254 points in 7 blocks and all NPZ hashes match the native run.",
       "evidence": [
         "FGI-EMIT.md",
-        "evidence/fgi-emit-measurements.json",
-        "https://zenodo.org/records/19351234",
-        "https://github.com/ruoppa/fgi_emit"
+        "evidence/fgi-emit-full-audit.json",
+        "evidence/fgi-emit-preparation-validation.json",
+        "evidence/fgi-emit-browser-validation.json"
       ]
     },
     "duplicates": {
@@ -66,12 +66,12 @@
   "tasks": {
     "instances": {
       "status": "conditional",
-      "rationale": "Native tree-instance reference is documented, but complete source/adapter validation remains pending.",
+      "rationale": "Conservative source-specific preparation is fully validated. Consume instance_valid and preserve native partitions; benchmark scoring, annotation completeness and geographic independence require separate review.",
       "evidence": [
         "FGI-EMIT.md",
-        "evidence/fgi-emit-measurements.json",
-        "https://zenodo.org/records/19351234",
-        "https://github.com/ruoppa/fgi_emit"
+        "evidence/fgi-emit-full-audit.json",
+        "evidence/fgi-emit-preparation-validation.json",
+        "evidence/fgi-emit-browser-validation.json"
       ]
     },
     "components": {
@@ -95,23 +95,23 @@
       ]
     },
     "geometry": {
-      "status": "unknown",
-      "rationale": "Outside this metadata review; no task-specific preparation is admitted.",
+      "status": "supported",
+      "rationale": "Native decoded XYZ and point order are preserved, independently verified against native records. No CRS is inferred.",
       "evidence": [
         "FGI-EMIT.md",
-        "evidence/fgi-emit-measurements.json",
-        "https://zenodo.org/records/19351234",
-        "https://github.com/ruoppa/fgi_emit"
+        "evidence/fgi-emit-full-audit.json",
+        "evidence/fgi-emit-preparation-validation.json",
+        "evidence/fgi-emit-browser-validation.json"
       ]
     },
     "spectral": {
-      "status": "unknown",
-      "rationale": "Outside this metadata review; no task-specific preparation is admitted.",
+      "status": "conditional",
+      "rationale": "Three native reflectance channels and validity masks are independently validated; calibration, units and cross-source comparability remain unresolved.",
       "evidence": [
         "FGI-EMIT.md",
-        "evidence/fgi-emit-measurements.json",
-        "https://zenodo.org/records/19351234",
-        "https://github.com/ruoppa/fgi_emit"
+        "evidence/fgi-emit-full-audit.json",
+        "evidence/fgi-emit-preparation-validation.json",
+        "evidence/fgi-emit-browser-validation.json"
       ]
     },
     "biomass": {

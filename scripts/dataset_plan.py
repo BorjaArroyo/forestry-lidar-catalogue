@@ -47,7 +47,8 @@ def resolve(model, source, *, source_lock_path, source_lock_sha256,
     if any(p['published_split'] not in task['allowed_partitions'] for p in plots):
         raise ValueError('Selection contains a partition excluded for this task use')
     # Match the bounded browser producer: native records + derived arrays + NPZ overhead.
-    prepared = sum(p['size_bytes'] + p['points'] * 34 + ((p['points'] + 249999) // 250000) * 65536 for p in plots)
+    derived_bytes = {'pipeline:for-instance-plot-instances:1.0.0':34, 'pipeline:fgi-emit-plot-instances:1.0.0':49}[task['pipeline_ref']]
+    prepared = sum(p['size_bytes'] + p['points'] * derived_bytes + ((p['points'] + 249999) // 250000) * 65536 for p in plots)
     plan = dict(schema_version='1.0.0', task_plan=task,
                 intake=dict(kind='zenodo-ranges', source_lock_path=source_lock_path,
                             source_lock_sha256=source_lock_sha256, runtime_lock_sha256=runtime_lock_sha256),
