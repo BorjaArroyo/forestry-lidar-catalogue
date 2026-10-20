@@ -209,6 +209,16 @@
       "url": "task-dataset.schema.json",
       "size_bytes": 2810,
       "sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7"
+    },
+    "scripts/dataset_plan.py": {
+      "url": "scripts/dataset_plan.py",
+      "size_bytes": 5432,
+      "sha256": "1c9d0b9d01e166f21a5ae78c304c52656675fd6c013e9748b8a4cca6c3746856"
+    },
+    "dataset-plan.schema.json": {
+      "url": "dataset-plan.schema.json",
+      "size_bytes": 2884,
+      "sha256": "b066ddb8c91783d91876a2a5715d78c9acc4b8b11bdf10f756630e72396bb43e"
     }
   },
   "zip_js": "2.20.0",

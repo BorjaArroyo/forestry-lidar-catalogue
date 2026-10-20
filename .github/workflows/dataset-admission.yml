@@ -40,6 +40,7 @@ jobs:
           python3 tests/test_task_package.py
           python3 tests/test_task_plan.py
           python3 tests/test_task_dataset.py
+          python3 tests/test_dataset_plan.py
           python3 tests/test_browser_preparation.py
           python3 tests/test_browser_container.py
           node --test tests/test_*.mjs

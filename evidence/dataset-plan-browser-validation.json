@@ -1,0 +1,35 @@
+{
+  "status": "validated",
+  "date": "2026-10-20",
+  "source_ref": "zenodo:8287792",
+  "use": "inference",
+  "subsets": 2,
+  "unique_plots": 2,
+  "points": 1840643,
+  "chunks": 8,
+  "overlapping_selections": 1,
+  "partitions": [
+    "dev",
+    "test"
+  ],
+  "plan_sha256": "36fd1481729c47b3a4b53f6859cafff8e6c6d617f900072ebeea0acd01129af5",
+  "runtime_lock_sha256": "db7f65a5d431b28ebb2e790ce1d28bb5ff44cd48811915b15b211abdc49a5c5a",
+  "source_lock_sha256": "ba4c66fe29f31772352d73768e3f979e9a291060a408652ebef675e253ac1a0e",
+  "coverage": {
+    "status": "matched",
+    "plan_sha256": "36fd1481729c47b3a4b53f6859cafff8e6c6d617f900072ebeea0acd01129af5",
+    "manifest_sha256": "217d4d1d04d525d821cec202cd2b2bff93aeaaa09b46a0612a23e96aa18f78df",
+    "validator_sha256": "1c9d0b9d01e166f21a5ae78c304c52656675fd6c013e9748b8a4cca6c3746856"
+  },
+  "checks": [
+    "Changed runtime rejected the previous plan before source intake",
+    "Downloaded preview equals the plan in the final ZIP",
+    "Native planner accepts the frozen browser plan",
+    "Independent folder reader validated every block",
+    "All eight NPZ SHA256 match the audited native reference"
+  ],
+  "limitations": [
+    "Two RMIT scenes; full-release browser execution remains unvalidated",
+    "Inference request; no model training or geographic independence claim"
+  ]
+}

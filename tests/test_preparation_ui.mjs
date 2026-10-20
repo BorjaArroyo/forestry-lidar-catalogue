@@ -11,6 +11,7 @@ import {profileForPipeline} from '../browser-prepare/profiles.js';
 async function panel({savedStorage} = {}) {
   const elements = new Map(), listeners = new Map(), workers = [], timers = new Map(), storage = new Map();
   let serial = 0;
+  const removed = [];
   const localValues = savedStorage || new Map();
   const localStorage = {getItem:key=>localValues.get(key),setItem:(key,value)=>localValues.set(key,value),removeItem:key=>localValues.delete(key)};
   const node = id => ({id, value:id==='prepare-mode'?'las':'',files:[],options:[],
@@ -24,8 +25,8 @@ async function panel({savedStorage} = {}) {
     postMessage(request) {this.request = request;}
     terminate() {this.terminated = true;}
   }
-  const directory = {async getDirectoryHandle() {return this;}, async removeEntry() {}};
-  const context = vm.createContext({URL, profileForPipeline, datasetPlots, DraftPanel, sameRequest,
+  const directory = {async getDirectoryHandle() {return this;}, async removeEntry(id) {removed.push(id);}};
+  const context = vm.createContext({URL, Blob, profileForPipeline, datasetPlots, DraftPanel, sameRequest,
     RunSession: class extends RunSession {
       constructor(options) {super({...options, schedule: callback => {timers.set(++serial, callback); return serial;}, unschedule: id => timers.delete(id)});}
     }, Worker, CustomEvent: class {constructor(type, options) {this.type = type; this.detail = options.detail;}},
@@ -45,7 +46,19 @@ async function panel({savedStorage} = {}) {
   vm.runInContext(code,context);
   const settle = async () => {for (let i=0;i<40;i++) await Promise.resolve();};
   await settle();
-  return {element, workers, timers, listeners, settle, savedStorage:localValues, setRequest(value) {request = context.window.CanopyTaskSelection.normalize(value.use, value.variables);}};
+  const review = async () => {
+    element('prepare-review').onclick();
+    const worker = workers.at(-1), intent = worker.request;
+    assert.equal(intent.operation, 'review');
+    const paths = [...new Set(intent.subset_paths.flat())];
+    worker.onmessage({data:{type:'result',operation:'review',plan:{schema_version:'1.0.0',
+      task_plan:{use:intent.task_request.use,source_ref:'zenodo:'+intent.record_id,pipeline_ref:'pipeline:fixture',included:{xyz:['xyz']},omitted:{reflectance:'unavailable'}},
+      plots:paths.map(path=>({path})),totals:{plots:paths.length,points:100,overlapping_selections:0,source_las_bytes:1000,estimated_browser_storage_bytes:10000},
+      output:{partitions:['dev']},limitations:['No geographic independence claim'],plan_sha256:'a'.repeat(64)}}});
+    await settle();
+    return worker;
+  };
+  return {review, removed, element, workers, timers, listeners, settle, savedStorage:localValues, setRequest(value) {request = context.window.CanopyTaskSelection.normalize(value.use, value.variables);}};
 }
 
 test('all catalog sources remain selectable; unadmitted FGI cannot execute', async () => {
@@ -58,7 +71,7 @@ test('all catalog sources remain selectable; unadmitted FGI cannot execute', asy
 });
 test('requirements and selected source are sent to the worker; old failures cannot stop a retry', async () => {
   const p = await panel(); p.element('prepare-file').files = [{name: 'fixture.las'}];
-  p.element('prepare-mode').value = 'las';
+  p.element('prepare-mode').value = 'las'; p.element('prepare-mode').onchange();
   await p.element('prepare-run').onclick();
   assert.equal(p.workers[0].request.record_id, '8287792');
   assert.equal(p.workers[0].request.task_request.use, 'training');
@@ -83,9 +96,10 @@ test('collections and partitions select a dataset; plots remain an advanced subs
   p.element('prepare-collections').onchange();
   assert.equal(p.element('prepare-plot').options.length, 1);
   assert.match(p.element('prepare-selection-summary').textContent, /1 complete plots/);
-  await p.element('prepare-run').onclick();
-  assert.equal(p.workers[0].request.selected_paths.length, 1);
-  assert.match(p.workers[0].request.selected_paths[0], /RMIT\/train.las/);
+  assert.equal(p.element('prepare-run').disabled,true);
+  await p.review(); await p.element('prepare-run').onclick();
+  assert.equal(p.workers[1].request.execution_plan.plots.length, 1);
+  assert.match(p.workers[1].request.execution_plan.plots[0].path, /RMIT\/train.las/);
   await p.element('prepare-cancel').onclick();
 });
 
@@ -99,8 +113,8 @@ test('subsets persist on reload and execute the saved union rather than the curr
   p = await panel({savedStorage:p.savedStorage});
   assert.equal(p.element('dataset-draft-list').options.length,2);
   assert.equal(p.element('prepare-run').textContent,'Prepare my dataset');
-  await p.element('prepare-run').onclick();
-  const paths=p.workers[0].request.selected_paths;
+  await p.review(); await p.element('prepare-run').onclick();
+  const paths=p.workers[1].request.execution_plan.plots.map(plot=>plot.path);
   assert.ok(paths.some(path=>path.includes('/RMIT/')));assert.ok(paths.some(path=>path.includes('/CULS/')));
   assert.ok(paths.every(path=>path.includes('/RMIT/')||path.includes('/CULS/')));
   assert.equal(p.element('dataset-draft-clear').disabled,true);
@@ -112,7 +126,8 @@ test('changed requirements block the saved dataset until explicitly restored', a
   assert.equal(p.element('prepare-run').disabled,true);
   assert.equal(p.element('dataset-draft-restore').hidden,false);
   p.element('dataset-draft-restore').onclick();
-  assert.equal(p.element('prepare-run').disabled,false);
+  assert.equal(p.element('prepare-review').disabled,false);
+  assert.equal(p.element('prepare-run').disabled,true);
   p.element('dataset-draft-clear').onclick();
   assert.equal(p.element('dataset-draft-list').options.length,0);
 });
@@ -122,5 +137,49 @@ test('malformed saved data is visible and requires clearing before preparation',
   assert.match(p.element('dataset-draft-status').textContent,/could not be read/);
   assert.equal(p.element('prepare-run').disabled,true);
   p.element('dataset-draft-clear').onclick();
+  assert.equal(p.element('prepare-review').disabled,false);
+});
+
+test('editing saved selection invalidates the plan; changing only the selector does not', async () => {
+  const p=await panel();
+  for(const o of p.element('prepare-collections').options)o.selected=o.value==='RMIT';
+  p.element('prepare-collections').onchange();p.element('prepare-add').onclick();
+  const review=await p.review();
+  assert.equal(review.terminated,true);assert.equal(p.element('prepare-run').disabled,false);
+  assert.equal(p.element('dataset-plan').hidden,false);
+  for(const o of p.element('prepare-collections').options)o.selected=o.value==='CULS';
+  p.element('prepare-collections').onchange();
   assert.equal(p.element('prepare-run').disabled,false);
+  p.element('prepare-add').onclick();
+  assert.equal(p.element('prepare-run').disabled,true);assert.equal(p.element('dataset-plan').hidden,true);
+  await p.review();p.setRequest({use:'inference'});p.listeners.get('canopy-task-request')();
+  assert.equal(p.element('prepare-run').disabled,true);assert.equal(p.element('dataset-plan').hidden,true);
+});
+test('failed or cancelled reviews cannot leave an executable plan', async () => {
+  const p=await panel();p.element('prepare-review').onclick();
+  assert.equal(p.element('prepare-run').disabled,true);assert.equal(p.element('prepare-add').disabled,true);
+  p.workers[0].onmessage({data:{type:'error',error:'Stale source pin'}});
+  assert.equal(p.element('prepare-run').disabled,true);assert.equal(p.element('prepare-review').disabled,false);
+  p.element('prepare-review').onclick();const stale=p.workers.at(-1);
+  await p.element('prepare-cancel').onclick();
+  stale.onmessage({data:{type:'result',operation:'review',plan:{}}});
+  assert.equal(p.element('prepare-run').disabled,true);
+});
+
+test('a stale runtime or source rejection requires a fresh plan before retry', async () => {
+  const p=await panel();await p.review();await p.element('prepare-run').onclick();
+  p.workers.at(-1).onmessage({data:{type:'error',code:'DATASET_PLAN_STALE',error:'Dataset plan changed; review again'}});
+  assert.equal(p.element('prepare-run').disabled,true);assert.equal(p.element('dataset-plan').hidden,true);
+  assert.equal(p.element('prepare-review').disabled,false);
+});
+
+test('cancelling a metadata review preserves an existing completed dataset ZIP', async () => {
+  const p=await panel();p.element('prepare-mode').value='las';p.element('prepare-file').files=[{}];p.element('prepare-mode').onchange();
+  await p.element('prepare-run').onclick();const worker=p.workers.at(-1);
+  worker.onmessage({data:{type:'job',id:'previous-output'}});
+  worker.onmessage({data:{type:'result',file:new Blob(['fixture']),evidence:{report:{plots:1,points:3,chunks:1},task_plan:{use:'training',omitted:{}}}}});
+  p.element('prepare-mode').value='zenodo';p.element('prepare-mode').onchange();
+  p.element('prepare-review').onclick();await p.element('prepare-cancel').onclick();
+  assert.equal(p.removed.length,0);assert.equal(p.element('prepare-download').hidden,false);
+  assert.match(p.element('prepare-status').textContent,/previous prepared output retained/);
 });

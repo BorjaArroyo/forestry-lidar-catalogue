@@ -55,12 +55,12 @@ async function boot(lock) {
       py.runPython(`import sys; sys.path.insert(0, '/${name}')`);
     }
     for (const [name, entry] of Object.entries(lock.files)) {
-      if (!name.startsWith('scripts/') && !['task-package.schema.json', 'task-dataset.schema.json', 'knowledge-model.json', 'knowledge-model.schema.json', 'browser-prepare/kernel.py', 'browser-prepare/batch.py'].includes(name)) continue;
+      if (!name.startsWith('scripts/') && !['task-package.schema.json', 'task-dataset.schema.json', 'dataset-plan.schema.json', 'knowledge-model.json', 'knowledge-model.schema.json', 'browser-prepare/kernel.py', 'browser-prepare/batch.py'].includes(name)) continue;
       const path = '/app/' + name;
       py.FS.mkdirTree(path.slice(0, path.lastIndexOf('/')));
       py.FS.writeFile(path, await checked(entry));
     }
-    py.runPython("import sys; sys.path[:0] = ['/app/browser-prepare', '/app/scripts']; from kernel import Preparation; from batch import combine_manifests; from task_package import TaskPackage; from task_dataset import compose_layout, encoded, TaskDataset; from task_plan import plan_request, check_plan, validate_prepared, iter_task_blocks; from knowledge_model import load as load_model; import json, numpy, laspy, platform");
+    py.runPython("import sys; sys.path[:0] = ['/app/browser-prepare', '/app/scripts']; from kernel import Preparation; from batch import combine_manifests; from task_package import TaskPackage; from task_dataset import compose_layout, encoded, TaskDataset; from task_plan import plan_request, check_plan, validate_prepared, iter_task_blocks; from knowledge_model import load as load_model; import dataset_plan; import json, numpy, laspy, platform");
     const versions = JSON.parse(py.runPython("json.dumps(dict(python=platform.python_version(), numpy=numpy.__version__, laspy=laspy.__version__))"));
     for (const name of ['python', 'numpy', 'laspy']) if (versions[name] !== lock[name]) throw Error(`Runtime version mismatch: ${name}`);
     cache.clear();
@@ -68,6 +68,45 @@ async function boot(lock) {
   } finally {
     for (const url of [bootstrapURL, moduleURL, stdlibURL]) URL.revokeObjectURL(url);
   }
+}
+
+async function loadContext(profile) {
+  const response = await nativeFetch(new URL('browser-prepare/runtime-lock.json', base), {cache: 'no-store'});
+  if (!response.ok) throw Error('Runtime lock unavailable');
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  const lock = JSON.parse(new TextDecoder().decode(bytes));
+  const sourceBytes = await checked(lock.files[profile.sourceLock]);
+  const source = JSON.parse(new TextDecoder().decode(sourceBytes));
+  if (String(source.record_id) !== profile.recordId) throw Error('Reviewed source membership belongs to another release');
+  for (const path of ['browser-prepare/intake.js', 'browser-prepare/selection.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js']) await checked(lock.files[path]);
+  phase('Checking task requirements and exact versions; no source LAS is downloaded yet…');
+  const py = await boot(lock);
+  py.globals.set('source_json', JSON.stringify(source));
+  py.globals.set('source_lock_path', profile.sourceLock);
+  py.globals.set('source_lock_sha256', await digest(sourceBytes));
+  const runtimeHash = await digest(bytes);
+  py.globals.set('runtime_lock_sha256', runtimeHash);
+  py.runPython("task_model = load_model('/app/knowledge-model.json'); source_lock = json.loads(source_json); dataset_pins = dict(source_lock_path=source_lock_path, source_lock_sha256=source_lock_sha256, runtime_lock_sha256=runtime_lock_sha256)");
+  return {lock, source, py, runtimeHash};
+}
+
+function taskForRequest(py, profile, request) {
+  py.globals.set('source_record_id', profile.recordId);
+  py.globals.set('request_json', JSON.stringify(request.task_request || {}));
+  const plan = JSON.parse(py.runPython("task_request = json.loads(request_json); task_plan = plan_request(task_model, source_record_id, task_request.get('use', 'training'), task_request.get('variables')); check_plan(task_model, task_plan); json.dumps(task_plan)"));
+  if (plan.pipeline_ref !== profile.pipelineRef) throw Error('Source implementation differs from the admitted pipeline');
+  return plan;
+}
+
+async function review(request) {
+  if (request.mode !== 'zenodo') throw Error('Dataset plan review currently supports Zenodo selections');
+  const profile = profileForSource(request.record_id);
+  if (!profile) throw Error('No browser implementation for this reviewed source');
+  const {py} = await loadContext(profile);
+  taskForRequest(py, profile, request);
+  py.globals.set('subsets_json', JSON.stringify(request.subset_paths));
+  const plan = JSON.parse(py.runPython("execution_plan = dataset_plan.resolve(task_model, source_lock, **dataset_pins, use=task_plan['use'], variables=task_plan['variables'], subsets=json.loads(subsets_json)); json.dumps(execution_plan)"));
+  self.postMessage({type: 'result', operation: 'review', plan});
 }
 
 async function directory(root, path) {
@@ -169,28 +208,30 @@ async function run(request) {
   return navigator.locks.request('canopy-preparation:' + job, async () => {
     let py;
     try {
-      const lockResponse = await nativeFetch(new URL('browser-prepare/runtime-lock.json', base), {cache: 'no-store'});
-      if (!lockResponse.ok) throw Error('Runtime lock unavailable');
-      const lockBytes = new Uint8Array(await lockResponse.arrayBuffer());
-      const lock = JSON.parse(new TextDecoder().decode(lockBytes));
-      const source = JSON.parse(new TextDecoder().decode(await checked(lock.files[profile.sourceLock])));
+      const context = await loadContext(profile);
+      const {lock, source, runtimeHash} = context;
+      py = context.py;
+      const taskPlan = taskForRequest(py, profile, request);
+      let executionPlan = null;
+      if (mode === 'zenodo') {
+        if (!request.execution_plan) throw Error('Review the dataset plan before downloading');
+        py.globals.set('execution_plan_json', JSON.stringify(request.execution_plan));
+        try {
+          executionPlan = JSON.parse(py.runPython("execution_plan = dataset_plan.check(task_model, source_lock, json.loads(execution_plan_json), **dataset_pins); json.dumps(execution_plan)"));
+          if (JSON.stringify(executionPlan.task_plan) !== JSON.stringify(taskPlan)) throw Error('The reviewed plan belongs to different task requirements');
+        } catch (error) { error.code = 'DATASET_PLAN_STALE'; throw error; }
+      }
       const candidates = mode === 'las' ? source.plots.filter(p => p.size_bytes === request.file.size) :
-        selectPlots(source.plots, request.selected_paths || (request.selected_path ? [request.selected_path] : []));
+        selectPlots(source.plots, executionPlan ? executionPlan.plots.map(p => p.path) : request.selected_paths || (request.selected_path ? [request.selected_path] : []));
       if (!candidates.length) throw Error('Input does not identify complete reviewed plots');
+      if (mode !== 'las' && candidates.some(p => !taskPlan.allowed_partitions.includes(p.published_split))) throw Error('Selected dataset contains a published partition excluded from this task use');
       const outputEstimate = p => p.size_bytes + p.points * 34 + Math.ceil(p.points / 250000) * 65536;
       const preparedBytes = mode === 'las' ? Math.max(...candidates.map(outputEstimate)) : candidates.reduce((n,p) => n + outputEstimate(p), 0);
-      const required = 2 * preparedBytes + (mode === 'las' ? 0 : Math.max(...candidates.map(p => p.size_bytes))) + 64 * 1024 ** 2;
+      const required = executionPlan?.totals.estimated_browser_storage_bytes ??
+        (2 * preparedBytes + (mode === 'las' ? 0 : Math.max(...candidates.map(p => p.size_bytes))) + 64 * 1024 ** 2);
       const estimate = await navigator.storage.estimate();
       if (!Number.isFinite(estimate.quota) || estimate.quota - (estimate.usage || 0) < required)
         throw Error(`Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for the selected dataset and ZIP export`);
-      for (const path of ['browser-prepare/intake.js', 'browser-prepare/selection.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js']) await checked(lock.files[path]);
-      phase('Checking task requirements against the pinned audited pipeline…');
-      py = await boot(lock);
-      py.globals.set('source_record_id', profile.recordId);
-      py.globals.set('request_json', JSON.stringify(request.task_request || {}));
-      const taskPlan = JSON.parse(py.runPython("task_model = load_model('/app/knowledge-model.json'); task_request = json.loads(request_json); task_plan = plan_request(task_model, source_record_id, task_request.get('use', 'training'), task_request.get('variables')); check_plan(task_model, task_plan); json.dumps(task_plan)"));
-      if (taskPlan.pipeline_ref !== profile.pipelineRef) throw Error('Source implementation differs from the admitted pipeline');
-      if (mode !== 'las' && candidates.some(p => !taskPlan.allowed_partitions.includes(p.published_split))) throw Error('Selected dataset contains a published partition excluded from this task use');
       const files = [], manifests = [], intakes = [];
       py.FS.mkdir('/input');
       const queue = mode === 'las' ? [null] : candidates;
@@ -208,6 +249,13 @@ async function run(request) {
       py.globals.set('manifests_json', JSON.stringify(manifests));
       const manifestText = py.runPython('json.dumps(combine_manifests(json.loads(manifests_json)), indent=2)') + '\n';
       const manifest = JSON.parse(manifestText);
+      let planValidation = null;
+      if (executionPlan) {
+        py.globals.set('prepared_manifest_json', manifestText);
+        planValidation = JSON.parse(py.runPython('json.dumps(dataset_plan.check_manifest(execution_plan, json.loads(prepared_manifest_json)))'));
+        for (const [path, value] of [['dataset-plan.json', executionPlan], ['dataset-plan-validation.json', planValidation]])
+          files.push({path, handle: await write(root, path, new TextEncoder().encode(JSON.stringify(value, null, 2) + '\n'))});
+      }
       files.push({path: 'task-package.json', handle: await write(root, 'task-package.json', new TextEncoder().encode(manifestText))});
       py.FS.writeFile('/output/task-package.json', manifestText);
       phase(`Independently validating every exported array across ${manifests.length} complete plots…`);
@@ -245,7 +293,7 @@ async function run(request) {
       exportFiles.push({path: 'dataset-validation.json', handle: await write(root, 'folder-export/dataset-validation.json', new TextEncoder().encode(datasetText))});
       const evidence = {status: 'validated', dataset: datasetReport, task_plan: taskPlan, task_validation: taskValidation, consumer_sample: consumerSample, coverage: manifests.length === 1 ? 'one-complete-selected-plot' : 'complete-selected-plots', selection: manifest.selection, report,
         runtime: {pyodide: lock.pyodide, python: lock.python, numpy: lock.numpy, laspy: lock.laspy, zip_js: lock.zip_js},
-        runtime_lock_sha256: await digest(lockBytes),
+        runtime_lock_sha256: runtimeHash, dataset_plan: executionPlan, dataset_plan_validation: planValidation,
         user_agent: navigator.userAgent, source_sha256: manifests.length === 1 ? manifests[0].scenes[0].sha256 : null, intake,
         limitations: ['Selected LAS verified; whole-provider-archive checksum not checked in this run',
           'No claim of annotation correctness or geographic independence', 'OPFS is temporary browser storage; export the ZIP before clearing it']};
@@ -286,6 +334,6 @@ async function run(request) {
 self.onmessage = async ({data}) => {
   if (active) return;
   active = true;
-  try { await run(data); }
-  catch (error) { self.postMessage({type: 'error', error: String(error.message || error)}); }
+  try { if (data.operation === 'review') await review(data); else await run(data); }
+  catch (error) { self.postMessage({type: 'error', code: error.code, error: String(error.message || error)}); }
 };

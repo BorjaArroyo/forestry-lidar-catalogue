@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-20 — Reviewable dataset execution plans
+
+- Zenodo preparation now requires a versioned plan reviewed before payload intake.
+- Bind exact subset/scene membership, overlaps, task requirements, source/pipeline
+  versions and source/runtime pins; download the plan before execution.
+- Reject stale or modified plans, invalidate changed selections and compare final
+  coverage with the frozen plan alongside independent payload/folder validation.
+- Keep source-byte, unknown network-volume and browser-space estimates distinct.
+  Plan import/replay and resumable multi-source execution remain work in progress.
+
 ## 2026-10-20 — Increment 1: saved dataset subsets
 
 - Added My dataset: append/remove reviewed subsets and retain selections and requirements in browser storage.

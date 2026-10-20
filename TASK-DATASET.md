@@ -7,6 +7,8 @@ Extract the Workbench ZIP into a dedicated directory:
 dataset/
   dataset.json
   dataset-validation.json
+  dataset-plan.json                 # Zenodo runs
+  dataset-plan-validation.json      # Exact selected-scene coverage
   dev/zenodo-8287792/task-package.json
   dev/zenodo-8287792/plots/<scene-id>/00000.npz
   test/zenodo-8287792/task-package.json
@@ -72,3 +74,38 @@ prepared subsets. Saved drafts are selections, not scientific admission certific
 
 Common field shapes alone do not admit
 cross-source semantic compatibility. Historical ZIPs keep their original layout.
+
+## Review a public-source preparation plan
+
+For Zenodo input, choose **Review dataset plan**, inspect the summary, then prepare.
+With saved subsets, the plan covers their union; otherwise it covers the current
+selection. No source LAS is downloaded during review. The pinned Python runtime
+and reviewed metadata may be downloaded to resolve the plan.
+
+`dataset-plan.schema.json` defines version 1.0.0. `scripts/dataset_plan.py` resolves
+and checks the plan using the same canonical task planner as preparation. It records:
+
+- Exact source release, pipeline version, task use, required/optional variables,
+  audited outputs and explicit omissions.
+- Per-subset membership and unique selected paths, SHA256, points, source sizes
+  and original published partitions.
+- Reviewed source-lock and complete runtime-lock SHA256, plus a canonical plan
+  fingerprint. The runtime lock pins the actual code, schemas and dependencies.
+- Point/source-byte totals, overlapping selections retrieved once, estimated
+  browser working space and the common output-folder contract.
+
+The preview and downloadable JSON describe planned work, not completed validation.
+Changing the task request or effective selection invalidates the preview. Before
+any source intake, the worker re-resolves the plan against current pinned metadata
+and code. A changed or modified plan requires another review. After preparation,
+selected scene identity, checksum, points, partition, source and pipeline must
+match the plan exactly; independent array validation and folder validation also
+run. The ZIP includes the plan and its coverage report, bound to the prepared
+manifest fingerprint. Scientific producer policies are unchanged.
+
+Source LAS sizes are not compressed transfer sizes. Browser storage is an
+estimate, checked again against available quota before intake. Published split
+preservation does not establish geographic independence. The plan is downloadable
+before execution; importing/replaying external plan files and resumable multi-source
+execution remain work in progress. Local LAS/ZIP preparation keeps its existing
+request and payload validation and does not yet produce this public-source plan.

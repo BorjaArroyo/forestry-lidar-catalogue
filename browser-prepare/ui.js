@@ -16,8 +16,8 @@ const status = text => { $('prepare-status').textContent = text; };
 const storageKey = 'canopy-preparation-job';
 const supported = Boolean(window.Worker && window.isSecureContext && navigator.storage?.getDirectory && navigator.locks);
 const sourceMembership = new Map();
-let draftPanel;
-let initialized = false, busy = false, plots = [], job = null, resultURL = null, sourceRevision = 0;
+let draftPanel, reviewedPlan = null, reviewedKey = null, pendingReviewKey = null, planURL = null;
+let initialized = false, busy = false, reviewing = false, plots = [], job = null, resultURL = null, sourceRevision = 0;
 
 function remember(id) {
   job = id;
@@ -27,6 +27,35 @@ function hideExport() {
   if (resultURL) URL.revokeObjectURL(resultURL);
   resultURL = null;
   $('prepare-download').hidden = true;
+}
+function planIntent() {
+  if ($('prepare-mode').value !== 'zenodo') return null;
+  const saved = draftPanel?.hasSubsets ? draftPanel.review() : null;
+  const record = saved?.record_id || selectedSource(), request = saved?.request || getRequest();
+  const result = selection.assess(record, request);
+  if (draftPanel?.blockedStorage || (saved && saved.status !== 'ready') ||
+      result.status !== 'ready' || !profileForPipeline(result.pipeline_ref)) return null;
+  const subsets = saved ? draftPanel.draft.subsets.map(s => [...s.paths].sort()) : [selectedValues('prepare-plot').sort()];
+  if (subsets.some(paths => !paths.length)) return null;
+  return {record_id: record, mode: 'zenodo', task_request: request, subset_paths: subsets};
+}
+function clearPlan() {
+  reviewedPlan = null; reviewedKey = null;
+  if (planURL) URL.revokeObjectURL(planURL);
+  planURL = null; $('dataset-plan').hidden = true;
+}
+function showPlan(plan) {
+  clearPlan(); reviewedPlan = plan; reviewedKey = pendingReviewKey;
+  const {totals, task_plan: task, output} = plan;
+  $('dataset-plan-summary').textContent = `${totals.plots} unique plots · ${totals.points.toLocaleString()} points · ${totals.overlapping_selections} overlapping selections retrieved once. Source LAS: ${(totals.source_las_bytes / 1048576).toFixed(1)} MiB; estimated browser space: ${Math.ceil(totals.estimated_browser_storage_bytes / 1048576)} MiB. Compressed network volume is not known.`;
+  $('dataset-plan-requirements').textContent = `Use: ${task.use}. Included variables: ${Object.keys(task.included).join(', ')}. Optional omissions: ${Object.keys(task.omitted).join(', ') || 'none'}. Output folders: ${output.partitions.join(', ')} / ${task.source_ref}.`;
+  $('dataset-plan-version').textContent = `Source release: ${task.source_ref}. Pipeline: ${task.pipeline_ref}. Plan: ${plan.plan_sha256}.`;
+  $('dataset-plan-evidence').textContent = JSON.stringify(plan, null, 2);
+  const limitations = $('dataset-plan-limitations'); limitations.replaceChildren();
+  for (const text of plan.limitations) { const row = document.createElement('li'); row.textContent = text; limitations.append(row); }
+  planURL = URL.createObjectURL(new Blob([JSON.stringify(plan, null, 2) + '\n'], {type: 'application/json'}));
+  $('dataset-plan-download').href = planURL;
+  $('dataset-plan').hidden = false;
 }
 function controls() {
   const running = busy || session.running;
@@ -55,6 +84,10 @@ function controls() {
     (hasDraft ? mode !== 'zenodo' || draft?.status !== 'ready' :
       assessment().status !== 'ready' || locked || (local && !$('prepare-file').files.length) ||
       (mode !== 'las' && !selectedValues('prepare-plot').length));
+  const intent = planIntent(), key = intent ? JSON.stringify(intent) : null;
+  if (reviewedPlan && key !== reviewedKey) clearPlan();
+  $('prepare-review').disabled = !supported || running || !intent;
+  if (mode === 'zenodo' && !reviewedPlan) $('prepare-run').disabled = true;
   $('prepare-cancel').disabled = !session.running;
   $('prepare-clear').disabled = running || !job;
 }
@@ -135,11 +168,16 @@ const session = new RunSession({
   event(data) {
     if (data.type === 'job') remember(data.id);
     else if (data.type === 'phase') status(data.text);
-    else if (data.type === 'result') {
+    else if (data.type === 'result' && data.operation === 'review') {
+      reviewing = false; showPlan(data.plan);
+      status('Plan checked. Review the summary, then prepare this exact dataset. No source LAS has been downloaded.');
+    } else if (data.type === 'result') {
       showExport(data.file, data.evidence, selectedProfile()?.downloadName);
       const {report, task_plan: plan} = data.evidence;
       status(`Validated for ${plan.use}: ${report.plots} plots, ${report.points.toLocaleString()} points in ${report.chunks} blocks. Optional omissions: ${Object.keys(plan.omitted).join(', ') || 'none'}. Download the ZIP to keep it.`);
     } else if (data.type === 'error') {
+      reviewing = false;
+      if (data.code === 'DATASET_PLAN_STALE') clearPlan();
       status('Preparation failed: ' + data.error.trim().split('\n').at(-1));
       $('prepare-result').textContent = data.error;
       // The worker attempts cleanup; retain the identity if cleanup was interrupted.
@@ -147,7 +185,7 @@ const session = new RunSession({
     }
     controls();
   },
-  failure(text) { status(text); $('prepare-clear').disabled = !job; controls(); },
+  failure(text) { reviewing = false; status(text); $('prepare-clear').disabled = !job; controls(); },
 });
 draftPanel = new DraftPanel({document, storage: () => window.localStorage,
   normalize: selection.normalize, getRequest, setRequest: request => window.CanopyHub.setTaskRequest(request),
@@ -167,27 +205,43 @@ $('prepare-mode').onchange = controls;
 $('prepare-collections').onchange = $('prepare-partitions').onchange = () => { refreshPlots(false); controls(); };
 $('prepare-plot').onchange = controls;
 $('prepare-source').onchange = sourceChanged;
+$('prepare-review').onclick = () => {
+  if (busy || session.running || $('prepare-review').disabled) return;
+  const intent = planIntent();
+  if (!intent) return;
+  clearPlan(); pendingReviewKey = JSON.stringify(intent); reviewing = true;
+  try {
+    session.start(() => new Worker(new URL('./worker.js?v=dataset-plan-v1', import.meta.url), {type: 'module'}), {operation: 'review', ...intent});
+    status('Resolving the plan against pinned source metadata and audited task requirements…');
+  } catch (error) { reviewing = false; status(error.message); }
+  controls();
+};
 $('prepare-run').onclick = async () => {
-  if (busy || session.running) return;
+  if (busy || session.running || $('prepare-run').disabled) return;
   const saved = draftPanel.hasSubsets ? draftPanel.review() : null;
   if (draftPanel.blockedStorage || (saved && (saved.status !== 'ready' || $('prepare-mode').value !== 'zenodo'))) { status(saved?.error || 'Saved subsets use Zenodo intake. Restore requirements or clear the dataset selection.'); return; }
   const record = saved?.record_id || selectedSource();
   const request = saved?.request || getRequest();
   const result = selection.assess(record, request), profile = profileForPipeline(result.pipeline_ref);
   if (!profile || result.status !== 'ready') { status('This request has no admitted browser preparation.'); return; }
+  const intent = planIntent();
+  if ($('prepare-mode').value === 'zenodo' && (!reviewedPlan || JSON.stringify(intent) !== reviewedKey)) { clearPlan(); controls(); status('Review the dataset plan before downloading.'); return; }
   busy = true; controls(); hideExport(); $('prepare-clear').disabled = true; $('prepare-result').textContent = '';
   try {
     await removeJob(job); remember(null);
-    session.start(() => new Worker(new URL('./worker.js?v=source-session-v2', import.meta.url), {type: 'module'}), {
+    session.start(() => new Worker(new URL('./worker.js?v=dataset-plan-v1', import.meta.url), {type: 'module'}), {
       record_id: record, mode: $('prepare-mode').value, selected_paths: saved?.paths || selectedValues('prepare-plot'),
-      file: $('prepare-file').files[0], task_request: request,
+      file: $('prepare-file').files[0], task_request: request, execution_plan: reviewedPlan,
     });
-    status('Checking source membership and available browser storage…');
+    status('Rechecking the frozen plan and available browser storage…');
   } catch (error) { console.error(error); status(error.message); $('prepare-clear').disabled = !job; }
   finally { busy = false; controls(); }
 };
 $('prepare-cancel').onclick = async () => {
-  session.stop(); busy = true; controls();
+  const reviewOnly = reviewing;
+  session.stop(); reviewing = false;
+  if (reviewOnly) { status('Review cancelled; previous prepared output retained.'); controls(); return; }
+  busy = true; controls();
   try { await removeJob(job); remember(null); status('Cancelled; temporary output removed.'); }
   catch { status('Cancelled. Use Clear temporary output to release remaining browser storage.'); $('prepare-clear').disabled = false; }
   finally { busy = false; controls(); }
