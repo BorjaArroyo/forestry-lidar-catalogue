@@ -1,3 +1,5 @@
+import {sameRequest} from './dataset-draft.js';
+import {DraftPanel} from './draft-panel.js';
 import {datasetPlots} from './selection.js';
 import {RunSession} from './run-session.js?v=2';
 import {profileForPipeline} from './profiles.js';
@@ -13,6 +15,8 @@ const selectedProfile = () => profileForPipeline(assessment().pipeline_ref);
 const status = text => { $('prepare-status').textContent = text; };
 const storageKey = 'canopy-preparation-job';
 const supported = Boolean(window.Worker && window.isSecureContext && navigator.storage?.getDirectory && navigator.locks);
+const sourceMembership = new Map();
+let draftPanel;
 let initialized = false, busy = false, plots = [], job = null, resultURL = null, sourceRevision = 0;
 
 function remember(id) {
@@ -29,6 +33,9 @@ function controls() {
   document.dispatchEvent(new CustomEvent('canopy-preparation-state', {detail: {running}}));
   const profile = selectedProfile();
   const mode = $('prepare-mode').value, local = mode !== 'zenodo';
+  const draft = draftPanel?.render(running);
+  const hasDraft = draftPanel?.hasSubsets;
+  if (hasDraft && mode !== 'zenodo') $('dataset-draft-status').textContent = 'Saved subsets currently use Zenodo downloads. Choose Zenodo input or clear the dataset selection to use a local file.';
   const locked = running || !initialized || !profile;
   $('prepare-source').disabled = running;
   $('prepare-mode').disabled = locked;
@@ -40,8 +47,14 @@ function controls() {
   for (const id of ['prepare-collections', 'prepare-partitions']) $(id).disabled = locked || mode === 'las';
   $('prepare-selection-summary').textContent = selectionSummary(mode);
   $('prepare-plot').disabled = locked || !$('prepare-plot').options.length;
-  $('prepare-run').disabled = assessment().status !== 'ready' || !supported || locked ||
-    (local && !$('prepare-file').files.length) || (mode !== 'las' && !selectedValues('prepare-plot').length);
+  const compatibleDraft = !hasDraft || sameRequest(getRequest(), draftPanel.draft.request);
+  $('prepare-add').disabled = locked || mode !== 'zenodo' || assessment().status !== 'ready' ||
+    !selectedValues('prepare-plot').length || !compatibleDraft || draftPanel?.blockedStorage;
+  $('prepare-run').textContent = hasDraft ? 'Prepare my dataset' : 'Prepare current selection';
+  $('prepare-run').disabled = !supported || running || draftPanel?.blockedStorage ||
+    (hasDraft ? mode !== 'zenodo' || draft?.status !== 'ready' :
+      assessment().status !== 'ready' || locked || (local && !$('prepare-file').files.length) ||
+      (mode !== 'las' && !selectedValues('prepare-plot').length));
   $('prepare-cancel').disabled = !session.running;
   $('prepare-clear').disabled = running || !job;
 }
@@ -94,6 +107,7 @@ async function sourceChanged() {
     const sourceLock = await response.json();
     if (revision !== sourceRevision) return;
     plots = sourceLock.plots.map(p => ({...p, collection: profile.collectionOf(p)})).sort((a, b) => a.size_bytes - b.size_bytes);
+    sourceMembership.set(selectedSource(), plots);
     refreshPlots();
     status(result.status === 'ready' ? 'Ready. Review collections and partitions, then prepare the selected dataset.' : result.blockers.join('. '));
   } catch (error) { if (revision === sourceRevision) status(error.message); }
@@ -135,6 +149,19 @@ const session = new RunSession({
   },
   failure(text) { status(text); $('prepare-clear').disabled = !job; controls(); },
 });
+draftPanel = new DraftPanel({document, storage: () => window.localStorage,
+  normalize: selection.normalize, getRequest, setRequest: request => window.CanopyHub.setTaskRequest(request),
+  context: () => ({assess: selection.assess, sourcePlots: record => sourceMembership.get(record), hasProfile: id => Boolean(profileForPipeline(id))}),
+  sourceName: record => catalog.datasets.find(source => source.id === record)?.name || `Record ${record}`,
+  onChange: () => { hideExport(); controls(); }, isRunning: () => busy || session.running,
+});
+$('prepare-add').onclick = () => {
+  if (busy || session.running || $('prepare-add').disabled) return;
+  const paths = new Set(selectedValues('prepare-plot'));
+  const chosen = plots.filter(plot => paths.has(plot.path));
+  draftPanel.add({record_id: selectedSource(), pipeline_ref: assessment().pipeline_ref, paths: [...paths],
+    collections: [...new Set(chosen.map(plot => plot.collection))], partitions: [...new Set(chosen.map(plot => plot.published_split))]});
+};
 $('prepare-file').onchange = controls;
 $('prepare-mode').onchange = controls;
 $('prepare-collections').onchange = $('prepare-partitions').onchange = () => { refreshPlots(false); controls(); };
@@ -142,13 +169,17 @@ $('prepare-plot').onchange = controls;
 $('prepare-source').onchange = sourceChanged;
 $('prepare-run').onclick = async () => {
   if (busy || session.running) return;
-  const profile = selectedProfile(), request = getRequest(), record = selectedSource();
-  if (!profile || assessment().status !== 'ready') { status('This request has no admitted browser preparation.'); return; }
+  const saved = draftPanel.hasSubsets ? draftPanel.review() : null;
+  if (draftPanel.blockedStorage || (saved && (saved.status !== 'ready' || $('prepare-mode').value !== 'zenodo'))) { status(saved?.error || 'Saved subsets use Zenodo intake. Restore requirements or clear the dataset selection.'); return; }
+  const record = saved?.record_id || selectedSource();
+  const request = saved?.request || getRequest();
+  const result = selection.assess(record, request), profile = profileForPipeline(result.pipeline_ref);
+  if (!profile || result.status !== 'ready') { status('This request has no admitted browser preparation.'); return; }
   busy = true; controls(); hideExport(); $('prepare-clear').disabled = true; $('prepare-result').textContent = '';
   try {
     await removeJob(job); remember(null);
     session.start(() => new Worker(new URL('./worker.js?v=source-session-v2', import.meta.url), {type: 'module'}), {
-      record_id: record, mode: $('prepare-mode').value, selected_paths: selectedValues('prepare-plot'),
+      record_id: record, mode: $('prepare-mode').value, selected_paths: saved?.paths || selectedValues('prepare-plot'),
       file: $('prepare-file').files[0], task_request: request,
     });
     status('Checking source membership and available browser storage…');
@@ -207,5 +238,6 @@ for (const source of catalog.datasets) {
 }
 $('prepare-mode').value = 'zenodo';
 $('prepare-source').value = catalog.datasets.find(d => selection.assess(d.id, getRequest()).status === 'ready')?.id || catalog.datasets[0].id;
+try { draftPanel.restoreRequest(); } catch (error) { draftPanel.loadError = 'Saved requirements could not be restored: ' + error.message; }
 sourceChanged().then(() => supported ? recover() : status('Browser storage is unavailable. Use a current browser over HTTPS or localhost.'));
 window.addEventListener('pagehide', () => session.stop());

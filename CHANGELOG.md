@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-20 — Increment 1: saved dataset subsets
+
+- Added My dataset: append/remove reviewed subsets and retain selections and requirements in browser storage.
+- Preparation uses the saved union, deduplicates overlapping scene selections and rechecks current source membership/pipeline availability.
+- Changed requirements require explicit restoration or clearing; malformed saved drafts fail closed.
+- Kept the existing audited producer, folder export and independent payload validation unchanged.
+
 ## 2026-10-20 — Loadable task dataset folders
 
 - Added a versioned folder index binding canonical task variables and source plans.

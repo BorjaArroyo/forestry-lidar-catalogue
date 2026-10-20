@@ -166,5 +166,5 @@
   $('#dataset-count').textContent=data.datasets.length;
   $('#snapshot-date').textContent=`Snapshot · ${new Date(data.generated_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}`;
   render();
-  window.CanopyHub={catalog:data,activeTasks:tasks,getTaskRequest:taskRequest,getState:()=>({...state,compare:[...state.compare]})};
+  window.CanopyHub={catalog:data,activeTasks:tasks,getTaskRequest:taskRequest,setTaskRequest:request=>{if(state.taskRunning)throw Error('Finish the active preparation before changing requirements');const normalized=selection.normalize(request.use,request.variables);state.taskUse=normalized.use;state.taskVariables={...normalized.variables};taskChanged();},getState:()=>({...state,compare:[...state.compare]})};
 })();

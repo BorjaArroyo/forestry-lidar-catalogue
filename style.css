@@ -263,3 +263,11 @@ dialog{padding:18px}
 #task-variables { flex: 3; }
 .request-fit { border-top: 1px solid var(--line, #dce3dc); padding-top: .7rem; font-size: .88rem; }
 .request-fit p { margin: .3rem 0; }
+
+.dataset-draft{margin:20px 0;padding:18px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.dataset-draft h4{margin:0 0 10px}
+.dataset-draft ol{padding-left:22px}
+.dataset-draft li{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0}
+.dataset-draft li span{min-width:0;overflow-wrap:anywhere}
+.dataset-draft li button{flex-shrink:0}
+@media(max-width:700px){.dataset-draft li{flex-wrap:wrap}}

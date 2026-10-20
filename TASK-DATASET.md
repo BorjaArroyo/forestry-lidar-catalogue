@@ -60,7 +60,15 @@ plans fail closed. The destination must be new. Interrupted native exports retai
 an `.incomplete.json` marker; existing outputs are never overwritten. Validation
 binds the dataset index, schema and reader hashes.
 
-FOR-instance remains the only executable source profile. A persistent web list
-for accumulating subsets is the next increment; the repeated native `--input`
-option already composes prepared subsets. Common field shapes alone do not admit
+FOR-instance remains the only executable source profile.
+
+Workbench now saves public-source subsets in **My dataset**. Add collections or
+partitions, remove individual subsets and reload without losing the draft. This
+increment executes one admitted source at a time using Zenodo intake; local-file
+preparation remains available when the saved list is empty. Matching overlaps are
+retrieved once. Changed requirements block execution until explicitly restored or
+the saved list is cleared. The repeated native `--input` option also composes
+prepared subsets. Saved drafts are selections, not scientific admission certificates.
+
+Common field shapes alone do not admit
 cross-source semantic compatibility. Historical ZIPs keep their original layout.
