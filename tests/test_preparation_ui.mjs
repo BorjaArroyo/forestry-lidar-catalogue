@@ -1,3 +1,4 @@
+import {sameRequest} from '../browser-prepare/dataset-draft.js';
 import {DraftPanel} from '../browser-prepare/draft-panel.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -24,7 +25,7 @@ async function panel({savedStorage} = {}) {
     terminate() {this.terminated = true;}
   }
   const directory = {async getDirectoryHandle() {return this;}, async removeEntry() {}};
-  const context = vm.createContext({URL, profileForPipeline, datasetPlots, DraftPanel,
+  const context = vm.createContext({URL, profileForPipeline, datasetPlots, DraftPanel, sameRequest,
     RunSession: class extends RunSession {
       constructor(options) {super({...options, schedule: callback => {timers.set(++serial, callback); return serial;}, unschedule: id => timers.delete(id)});}
     }, Worker, CustomEvent: class {constructor(type, options) {this.type = type; this.detail = options.detail;}},

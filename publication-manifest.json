@@ -119,7 +119,7 @@
     "tests/test_knowledge_hub_service.py": "5bc476255388197159709425845adc9336fc5976bf0c43e96f12e2b7e105c8ab",
     "tests/test_knowledge_model.py": "cde9795c5f9962a91fae44a1dec568e8761894accd4c30d308c145cfbd464aff",
     "tests/test_pinned_sources.py": "4fe17b88db7d0bf0a4ec7caf00a101809709508e8029cba2a92ba7cf5990611c",
-    "tests/test_preparation_ui.mjs": "342514d60deb4129dddb904ccceeaec332a7cf7c60b27b71885407fc4fcb59b3",
+    "tests/test_preparation_ui.mjs": "253470343fb4a0bdc77b61ad98d5a711af2a3200b00a4c352930d7cd39276401",
     "tests/test_run_session.mjs": "3efebc2efd8066d98eed4275754a48cb5914fc9cb4510d13d5cc4d9136339656",
     "tests/test_task_dataset.py": "7f9a037db3033ad624dce630743aa1717e28d5b4fcf907c5b07a52c8b515603f",
     "tests/test_task_package.py": "5ebde01650db923077540e6a83b84d34dbfa0d21c8f382e09fa4ba64b5081119",
