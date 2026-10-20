@@ -1,6 +1,6 @@
-# Browser preparation: FOR-instance plot selection
+# Browser preparation: FOR-instance dataset selections
 
-The Download & prepare view runs a fixed, bounded Python adapter in a module
+The Workbench view runs a fixed, bounded Python adapter in a module
 Web Worker using Pyodide 314.0.7, Python 3.14.2, NumPy 2.4.6 and laspy 2.7.0.
 It reuses the unchanged audited producer's reference policy and native schema
 functions. The browser environment is distinct from the pinned native environment;
@@ -8,10 +8,10 @@ its evidence does not admit all datasets or all plot schemas automatically.
 
 ## Workflow and data contract
 
-1. Select a complete LAS, a local ZIP, or a reviewed plot to retrieve from the
-   pinned Zenodo ZIP using byte ranges. Archive modes extract only the selected
-   member. Size and streamed LAS SHA256 must match exactly one reviewed plot
-   in source-lock.json.
+1. Choose collections and published partitions from the reviewed source. Individual
+   plots are an advanced subset. ZIP/Zenodo inputs process those scenes sequentially;
+   each streamed LAS must match its reviewed size and SHA256. A single local LAS
+   remains available as a quick test.
 2. WORKERFS exposes the File read-only without copying the entire input into RAM.
    laspy reads at most 250,000 points per block. The adapter writes one NPZ in
    MEMFS, waits for its OPFS write, then removes it before producing the next block.
@@ -26,7 +26,9 @@ its evidence does not admit all datasets or all plot schemas automatically.
 
 The manifest uses schema version 1.1.0 with an explicit selected-path list, the
 number of available release plots, and the fact that this run did not verify the
-provider ZIP. It is complete for the selected plot, not for all 32 release plots.
+provider ZIP. It is complete for the selected scenes; unselected release plots are
+not included. Scene identities, native schemas and published partitions are
+assembled into one manifest without changing any point arrays.
 The normal complete-release validator rejects a selection by default. To validate
 an extracted browser ZIP explicitly:
 
@@ -52,9 +54,9 @@ and Web Lock. Cleanup refuses an output currently in use by another page.
 
 Keep the tab open while preparing. Cancellation terminates the worker and removes
 that run's temporary data. Failed runs attempt the same cleanup. Completed exports
-can be recovered in the same tab after reload; interrupted plots restart rather
+can be recovered in the same tab after reload; interrupted datasets restart rather
 than pretending to resume partway. Browser eviction/clearing can remove OPFS, so
-it is not a permanent dataset destination. Starting another plot replaces the
+it is not a permanent dataset destination. Starting another dataset replaces the
 panel's prior temporary output. The runtime fetch has a two-minute timeout and
 the UI stops a worker after three minutes without progress.
 
@@ -177,3 +179,18 @@ exit terminate that run and clear its timer; callbacks from an old worker cannot
 change its successor. Temporary output identities remain recoverable or clearable
 after an interrupted worker. Recovery labels the saved source/use rather than
 presenting the previous ZIP as a result of newly selected requirements.
+
+## Dataset batch acceptance
+
+The collection/partition workflow was exercised with both complete RMIT scenes:
+1,840,643 points, eight blocks, one independently validated task package and one
+ZIP export. The request used inference so both published dev/test partitions were
+permitted. Training selection excludes test scenes before source intake. Offline
+native fixtures verify byte-identical NPZ blocks after multi-scene assembly and
+reject duplicate scenes and incompatible producer/reference policies.
+
+See [batch validation evidence](evidence/browser-batch-preparation-validation.json).
+This bounded case does not establish full-release browser scalability. Browser
+storage must hold the prepared selection and ZIP; interrupted batches restart.
+The optional local service retains its audited full-release execution. Combining
+sources with unadmitted adapters or unequal feature contracts remains unavailable.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-20 — Workbench prepares dataset selections
+
+- Renamed the preparation workspace to Workbench.
+- Collections and task-permitted partitions select the dataset; individual plots remain an advanced subset.
+- Sequential browser intake produces one multi-scene manifest, complete independent validation and one ZIP.
+- Preserved producer arrays, scene-local identities, native schema provenance and published splits.
+- Verified the two complete RMIT scenes: 1,840,643 points and eight blocks. Full-release browser scalability and additional source adapters remain unvalidated.
+
 ## 2026-10-20 — Separate catalog selection from preparation implementations
 
 - The preparation panel lists all reviewed sources and gates execution by task requirements, graph admission and the available implementation.

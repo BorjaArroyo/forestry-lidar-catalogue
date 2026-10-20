@@ -102,6 +102,37 @@ class BrowserPreparationTests(unittest.TestCase):
             self.open().validate()
 
 
+class BrowserBatchTests(unittest.TestCase):
+    setUp = BrowserPreparationTests.setUp
+    prepare = BrowserPreparationTests.prepare
+    open = BrowserPreparationTests.open
+    def test_selected_scenes_form_one_independently_validated_package(self):
+        from batch import combine_manifests
+        lock = json.loads((self.fixture.package / 'source-lock.json').read_text())
+        manifests = []
+        for plot in lock['plots']:
+            self.input = self.fixture.source / plot['path']
+            manifests.append(self.prepare())
+        merged = combine_manifests(manifests)
+        (self.output / 'task-package.json').write_text(json.dumps(merged))
+        report = self.open().validate()
+        self.assertEqual(report['plots'], len(lock['plots']))
+        self.assertEqual(report['points'], sum(p['points'] for p in lock['plots']))
+        with contextlib.redirect_stdout(io.StringIO()):
+            native = fixtures.pipeline.prepare(self.fixture.source, self.fixture.output, self.fixture.package)
+        for scene in merged['scenes']:
+            expected = next(s for s in native['scenes'] if s['id'] == scene['id'])
+            self.assertEqual(scene['chunks'], expected['chunks'])
+            for chunk in scene['chunks']:
+                self.assertEqual((self.output / chunk['path']).read_bytes(), (self.fixture.output / chunk['path']).read_bytes())
+        with self.assertRaisesRegex(ValueError, 'Duplicate scene'):
+            combine_manifests([manifests[0], manifests[0]])
+        changed = json.loads(json.dumps(manifests[1])); changed['policy']['version'] = 'different'
+        with self.assertRaisesRegex(ValueError, 'different source'):
+            combine_manifests([manifests[0], changed])
+        with self.assertRaises(ValueError): combine_manifests([])
+
+
 class BrowserDeploymentTests(unittest.TestCase):
     def test_provider_archive_pin_agrees_with_reviewed_inventory(self):
         runtime = json.loads((REPO / 'browser-prepare/runtime-lock.json').read_text())

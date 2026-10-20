@@ -187,8 +187,18 @@
     },
     "browser-prepare/profiles/for-instance.js": {
       "url": "browser-prepare/profiles/for-instance.js",
-      "sha256": "b5c3d0e46d3447d895fa3c987e396b26690b0b5ac71ad6ced901b420bce59d66",
-      "size_bytes": 795
+      "sha256": "af26ef0eda92ba27b4636fa3a82b449fa204b5a12730a6050c1e10f8b289aa8d",
+      "size_bytes": 880
+    },
+    "browser-prepare/batch.py": {
+      "url": "browser-prepare/batch.py",
+      "sha256": "63e5c4c46dabe575304fb450dce6a7f9f6c4fa737e84d780010b725fc4879638",
+      "size_bytes": 1883
+    },
+    "browser-prepare/selection.js": {
+      "url": "browser-prepare/selection.js",
+      "sha256": "c7708583b5291295a3803a2bca606128af87e8a32028dec1a30c0597c55a1a2e",
+      "size_bytes": 731
     }
   },
   "zip_js": "2.20.0",
@@ -199,5 +209,5 @@
     "provider_checksum": "md5:01fd03ba4068648e21fb4591fbff34c4",
     "download_url": "https://zenodo.org/api/records/8287792/files/FORinstance_dataset.zip/content"
   },
-  "schema_version": "1.3.0"
+  "schema_version": "1.4.0"
 }

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {RunSession} from '../browser-prepare/run-session.js';
+import {datasetPlots} from '../browser-prepare/selection.js';
 import {profileForPipeline} from '../browser-prepare/profiles.js';
 
 async function panel() {
@@ -20,7 +21,7 @@ async function panel() {
     terminate() {this.terminated = true;}
   }
   const directory = {async getDirectoryHandle() {return this;}, async removeEntry() {}};
-  const context = vm.createContext({URL, profileForPipeline,
+  const context = vm.createContext({URL, profileForPipeline, datasetPlots,
     RunSession: class extends RunSession {
       constructor(options) {super({...options, schedule: callback => {timers.set(++serial, callback); return serial;}, unschedule: id => timers.delete(id)});}
     }, Worker, CustomEvent: class {constructor(type, options) {this.type = type; this.detail = options.detail;}},
@@ -53,6 +54,7 @@ test('all catalog sources remain selectable; unadmitted FGI cannot execute', asy
 });
 test('requirements and selected source are sent to the worker; old failures cannot stop a retry', async () => {
   const p = await panel(); p.element('prepare-file').files = [{name: 'fixture.las'}];
+  p.element('prepare-mode').value = 'las';
   await p.element('prepare-run').onclick();
   assert.equal(p.workers[0].request.record_id, '8287792');
   assert.equal(p.workers[0].request.task_request.use, 'training');
@@ -69,4 +71,16 @@ test('partition choices track use; required missing measurements disable prepara
   p.element('prepare-file').files = [{name: 'fixture.las'}];
   p.setRequest({use: 'inference', variables: {reflectance: 'required'}}); p.listeners.get('canopy-task-request')();
   assert.equal(p.element('prepare-run').disabled, true); assert.match(p.element('prepare-status').textContent, /reflectance/);
+});
+
+test('collections and partitions select a dataset; plots remain an advanced subset', async () => {
+  const p = await panel();
+  for (const option of p.element('prepare-collections').options) option.selected = option.value === 'RMIT';
+  p.element('prepare-collections').onchange();
+  assert.equal(p.element('prepare-plot').options.length, 1);
+  assert.match(p.element('prepare-selection-summary').textContent, /1 complete plots/);
+  await p.element('prepare-run').onclick();
+  assert.equal(p.workers[0].request.selected_paths.length, 1);
+  assert.match(p.workers[0].request.selected_paths[0], /RMIT\/train.las/);
+  await p.element('prepare-cancel').onclick();
 });

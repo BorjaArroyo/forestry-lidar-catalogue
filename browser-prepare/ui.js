@@ -1,3 +1,4 @@
+import {datasetPlots} from './selection.js';
 import {RunSession} from './run-session.js?v=2';
 import {profileForPipeline} from './profiles.js';
 
@@ -6,6 +7,7 @@ const selection = window.CanopyTaskSelection;
 const catalog = window.CanopyHub.catalog;
 const getRequest = () => window.CanopyHub.getTaskRequest();
 const selectedSource = () => $('prepare-source').value;
+const selectedValues = id => [...$(id).options].filter(o => o.selected).map(o => o.value);
 const assessment = () => selection.assess(selectedSource(), getRequest());
 const selectedProfile = () => profileForPipeline(assessment().pipeline_ref);
 const status = text => { $('prepare-status').textContent = text; };
@@ -35,24 +37,43 @@ function controls() {
   $('prepare-file').accept = mode === 'zip' ? '.zip' : '.las';
   $('prepare-file').disabled = locked || !local;
   $('prepare-plot-label').hidden = mode === 'las';
+  for (const id of ['prepare-collections', 'prepare-partitions']) $(id).disabled = locked || mode === 'las';
+  $('prepare-selection-summary').textContent = selectionSummary(mode);
   $('prepare-plot').disabled = locked || !$('prepare-plot').options.length;
   $('prepare-run').disabled = assessment().status !== 'ready' || !supported || locked ||
-    (local && !$('prepare-file').files.length) || (mode !== 'las' && !$('prepare-plot').value);
+    (local && !$('prepare-file').files.length) || (mode !== 'las' && !selectedValues('prepare-plot').length);
   $('prepare-cancel').disabled = !session.running;
   $('prepare-clear').disabled = running || !job;
 }
-function refreshPlots() {
-  const selected = $('prepare-plot').value;
-  const allowed = assessment().allowed_partitions;
-  const profile = selectedProfile();
-  $('prepare-plot').replaceChildren();
-  for (const plot of plots.filter(p => allowed.includes(p.published_split))) {
+function options(id, values) {
+  $(id).replaceChildren();
+  for (const value of values) {
     const option = document.createElement('option');
-    option.value = plot.path;
+    option.value = value; option.textContent = value; option.selected = true;
+    $(id).append(option);
+  }
+}
+function selectionSummary(mode) {
+  if (mode === 'las') return 'Quick test: one complete local LAS. Dataset selection applies to ZIP and Zenodo inputs.';
+  const paths = new Set(selectedValues('prepare-plot'));
+  const chosen = plots.filter(p => paths.has(p.path));
+  const points = chosen.reduce((n,p) => n + p.points, 0), bytes = chosen.reduce((n,p) => n + p.size_bytes, 0);
+  return `${chosen.length} complete plots · ${points.toLocaleString()} points · ${(bytes / 1048576).toFixed(1)} MiB of source LAS. Prepared output and ZIP require additional browser storage. Published partitions and scene identities are preserved; geographic independence is not established.`;
+}
+function refreshPlots(resetFilters = true) {
+  const allowed = assessment().allowed_partitions, profile = selectedProfile();
+  if (resetFilters) {
+    options('prepare-collections', [...new Set(plots.map(p => p.collection))].sort());
+    options('prepare-partitions', [...new Set(plots.map(p => p.published_split))].filter(p => allowed.includes(p)).sort());
+  }
+  $('prepare-plot').replaceChildren();
+  const chosen = datasetPlots(plots, allowed, selectedValues('prepare-collections'), selectedValues('prepare-partitions'));
+  for (const plot of chosen) {
+    const option = document.createElement('option');
+    option.value = plot.path; option.selected = true;
     option.textContent = `${profile.plotLabel(plot.path)} · ${plot.published_split} · ${(plot.size_bytes / 1048576).toFixed(1)} MiB`;
     $('prepare-plot').append(option);
   }
-  if ([...$('prepare-plot').options].some(o => o.value === selected)) $('prepare-plot').value = selected;
 }
 async function sourceChanged() {
   const revision = ++sourceRevision;
@@ -72,9 +93,9 @@ async function sourceChanged() {
     if (!response.ok) throw Error('Reviewed plot list unavailable');
     const sourceLock = await response.json();
     if (revision !== sourceRevision) return;
-    plots = [...sourceLock.plots].sort((a, b) => a.size_bytes - b.size_bytes);
+    plots = sourceLock.plots.map(p => ({...p, collection: profile.collectionOf(p)})).sort((a, b) => a.size_bytes - b.size_bytes);
     refreshPlots();
-    status(result.status === 'ready' ? 'Ready. Select an input and prepare data for this request.' : result.blockers.join('. '));
+    status(result.status === 'ready' ? 'Ready. Review collections and partitions, then prepare the selected dataset.' : result.blockers.join('. '));
   } catch (error) { if (revision === sourceRevision) status(error.message); }
   finally { if (revision === sourceRevision) { initialized = true; controls(); } }
 }
@@ -103,7 +124,7 @@ const session = new RunSession({
     else if (data.type === 'result') {
       showExport(data.file, data.evidence, selectedProfile()?.downloadName);
       const {report, task_plan: plan} = data.evidence;
-      status(`Validated for ${plan.use}: ${report.points.toLocaleString()} points in ${report.chunks} blocks. Optional omissions: ${Object.keys(plan.omitted).join(', ') || 'none'}. Download the ZIP to keep it.`);
+      status(`Validated for ${plan.use}: ${report.plots} plots, ${report.points.toLocaleString()} points in ${report.chunks} blocks. Optional omissions: ${Object.keys(plan.omitted).join(', ') || 'none'}. Download the ZIP to keep it.`);
     } else if (data.type === 'error') {
       status('Preparation failed: ' + data.error.trim().split('\n').at(-1));
       $('prepare-result').textContent = data.error;
@@ -116,6 +137,8 @@ const session = new RunSession({
 });
 $('prepare-file').onchange = controls;
 $('prepare-mode').onchange = controls;
+$('prepare-collections').onchange = $('prepare-partitions').onchange = () => { refreshPlots(false); controls(); };
+$('prepare-plot').onchange = controls;
 $('prepare-source').onchange = sourceChanged;
 $('prepare-run').onclick = async () => {
   if (busy || session.running) return;
@@ -125,7 +148,7 @@ $('prepare-run').onclick = async () => {
   try {
     await removeJob(job); remember(null);
     session.start(() => new Worker(new URL('./worker.js?v=source-session-v2', import.meta.url), {type: 'module'}), {
-      record_id: record, mode: $('prepare-mode').value, selected_path: $('prepare-plot').value,
+      record_id: record, mode: $('prepare-mode').value, selected_paths: selectedValues('prepare-plot'),
       file: $('prepare-file').files[0], task_request: request,
     });
     status('Checking source membership and available browser storage…');
@@ -182,6 +205,7 @@ for (const source of catalog.datasets) {
   const option = document.createElement('option');
   option.value = source.id; option.textContent = source.name; $('prepare-source').append(option);
 }
+$('prepare-mode').value = 'zenodo';
 $('prepare-source').value = catalog.datasets.find(d => selection.assess(d.id, getRequest()).status === 'ready')?.id || catalog.datasets[0].id;
 sourceChanged().then(() => supported ? recover() : status('Browser storage is unavailable. Use a current browser over HTTPS or localhost.'));
 window.addEventListener('pagehide', () => session.stop());

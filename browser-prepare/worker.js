@@ -1,3 +1,4 @@
+import {selectPlots} from './selection.js';
 import {profileForSource} from './profiles.js';
 import {extractPlot, localReader, providerReader} from './intake.js';
 /* Fixed preparation only. User files never leave this worker or this origin. */
@@ -54,12 +55,12 @@ async function boot(lock) {
       py.runPython(`import sys; sys.path.insert(0, '/${name}')`);
     }
     for (const [name, entry] of Object.entries(lock.files)) {
-      if (!name.startsWith('scripts/') && !['task-package.schema.json', 'knowledge-model.json', 'knowledge-model.schema.json', 'browser-prepare/kernel.py'].includes(name)) continue;
+      if (!name.startsWith('scripts/') && !['task-package.schema.json', 'knowledge-model.json', 'knowledge-model.schema.json', 'browser-prepare/kernel.py', 'browser-prepare/batch.py'].includes(name)) continue;
       const path = '/app/' + name;
       py.FS.mkdirTree(path.slice(0, path.lastIndexOf('/')));
       py.FS.writeFile(path, await checked(entry));
     }
-    py.runPython("import sys; sys.path[:0] = ['/app/browser-prepare', '/app/scripts']; from kernel import Preparation; from task_package import TaskPackage; from task_plan import plan_request, check_plan, validate_prepared, iter_task_blocks; from knowledge_model import load as load_model; import json, numpy, laspy, platform");
+    py.runPython("import sys; sys.path[:0] = ['/app/browser-prepare', '/app/scripts']; from kernel import Preparation; from batch import combine_manifests; from task_package import TaskPackage; from task_plan import plan_request, check_plan, validate_prepared, iter_task_blocks; from knowledge_model import load as load_model; import json, numpy, laspy, platform");
     const versions = JSON.parse(py.runPython("json.dumps(dict(python=platform.python_version(), numpy=numpy.__version__, laspy=laspy.__version__))"));
     for (const name of ['python', 'numpy', 'laspy']) if (versions[name] !== lock[name]) throw Error(`Runtime version mismatch: ${name}`);
     cache.clear();
@@ -125,13 +126,41 @@ async function stagePlot(root, request, plot, lock) {
     ...intake, ...(remote ? remote.stats : {})}};
 }
 
+async function preparePlot(py, root, file, profile, taskPlan, expectedPath, files) {
+  py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: [{name: 'source.las', data: file}]}, '/input');
+  try {
+    phase('Verifying the complete source LAS against the reviewed SHA256…');
+    profile.start(py);
+    const scene = JSON.parse(py.runPython('json.dumps(prep.scene)'));
+    if (!taskPlan.allowed_partitions.includes(scene.published_split)) throw Error('Source belongs to a published partition excluded from this task use');
+    if (expectedPath && scene.path !== expectedPath) throw Error('Extracted LAS belongs to a different reviewed plot');
+    const sceneFiles = [];
+    for (;;) {
+      const chunk = JSON.parse(py.runPython("json.dumps(prep.next_block('/chunk.npz'))"));
+      if (!chunk) break;
+      // One source and one output block at a time, regardless of dataset size.
+      const handle = await write(root, chunk.path, py.FS.readFile('/chunk.npz'));
+      py.FS.unlink('/chunk.npz');
+      sceneFiles.push({path: chunk.path, handle});
+      phase(`Prepared ${(chunk.offset + chunk.points).toLocaleString()} of ${scene.points.toLocaleString()} points in ${profile.plotLabel(scene.path)}…`);
+    }
+    files.push(...sceneFiles);
+    py.FS.mkdirTree('/output/plots/' + scene.id);
+    const mounted = await Promise.all(sceneFiles.map(async f => ({name: f.path.split('/').at(-1), data: await f.handle.getFile()})));
+    py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: mounted}, '/output/plots/' + scene.id);
+    return JSON.parse(py.runPython('json.dumps(prep.manifest)'));
+  } finally {
+    py.runPython("prep.reader.close() if 'prep' in globals() else None");
+    py.FS.unmount('/input');
+  }
+}
+
 async function run(request) {
   const profile = profileForSource(request.record_id);
   if (!profile) throw Error('No browser implementation for this reviewed source');
-  let {file} = request;
   const mode = request.mode || 'las';
   if (!['las', 'zip', 'zenodo'].includes(mode)) throw Error('Unsupported source input mode');
-  if (mode !== 'zenodo' && (!(file instanceof File) || !file.size)) throw Error('Choose a complete reviewed LAS or ZIP file');
+  if (mode !== 'zenodo' && (!(request.file instanceof File) || !request.file.size)) throw Error('Choose a complete reviewed LAS or ZIP file');
   const origin = await navigator.storage.getDirectory();
   const jobs = await origin.getDirectoryHandle('canopy-preparation', {create: true});
   const job = crypto.randomUUID();
@@ -145,61 +174,53 @@ async function run(request) {
       const lockBytes = new Uint8Array(await lockResponse.arrayBuffer());
       const lock = JSON.parse(new TextDecoder().decode(lockBytes));
       const source = JSON.parse(new TextDecoder().decode(await checked(lock.files[profile.sourceLock])));
-      const candidates = source.plots.filter(plot => mode === 'las' ? plot.size_bytes === file.size : plot.path === request.selected_path);
-      if (!candidates.length) throw Error('Input does not identify a complete reviewed LAS plot');
-      const required = Math.max(...candidates.map(p => (mode === 'las' ? 0 : p.size_bytes) + 2 * (p.size_bytes + p.points * 34 + Math.ceil(p.points / 250000) * 65536))) + 64 * 1024 ** 2;
+      const candidates = mode === 'las' ? source.plots.filter(p => p.size_bytes === request.file.size) :
+        selectPlots(source.plots, request.selected_paths || (request.selected_path ? [request.selected_path] : []));
+      if (!candidates.length) throw Error('Input does not identify complete reviewed plots');
+      const outputEstimate = p => p.size_bytes + p.points * 34 + Math.ceil(p.points / 250000) * 65536;
+      const preparedBytes = mode === 'las' ? Math.max(...candidates.map(outputEstimate)) : candidates.reduce((n,p) => n + outputEstimate(p), 0);
+      const required = 2 * preparedBytes + (mode === 'las' ? 0 : Math.max(...candidates.map(p => p.size_bytes))) + 64 * 1024 ** 2;
       const estimate = await navigator.storage.estimate();
       if (!Number.isFinite(estimate.quota) || estimate.quota - (estimate.usage || 0) < required)
-        throw Error(`Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for chunks and ZIP export`);
-      for (const path of ['browser-prepare/intake.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js']) await checked(lock.files[path]);
+        throw Error(`Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for the selected dataset and ZIP export`);
+      for (const path of ['browser-prepare/intake.js', 'browser-prepare/selection.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js']) await checked(lock.files[path]);
       phase('Checking task requirements against the pinned audited pipeline…');
       py = await boot(lock);
       py.globals.set('source_record_id', profile.recordId);
       py.globals.set('request_json', JSON.stringify(request.task_request || {}));
       const taskPlan = JSON.parse(py.runPython("task_model = load_model('/app/knowledge-model.json'); task_request = json.loads(request_json); task_plan = plan_request(task_model, source_record_id, task_request.get('use', 'training'), task_request.get('variables')); check_plan(task_model, task_plan); json.dumps(task_plan)"));
       if (taskPlan.pipeline_ref !== profile.pipelineRef) throw Error('Source implementation differs from the admitted pipeline');
-      if (mode !== 'las' && !taskPlan.allowed_partitions.includes(candidates[0].published_split)) throw Error('Selected plot belongs to a published partition excluded from this task use');
-      let intake = {kind: 'local-las', archive_verification: 'Provider ZIP not checked; selected LAS SHA256 is verified below'};
-      if (mode !== 'las') {
-        phase(mode === 'zenodo' ? 'Retrieving the selected plot from Zenodo using bounded byte ranges…' : 'Reading the selected plot from the local ZIP…');
-        ({file, intake} = await stagePlot(root, {...request, mode}, candidates[0], lock));
-      }
+      if (mode !== 'las' && candidates.some(p => !taskPlan.allowed_partitions.includes(p.published_split))) throw Error('Selected dataset contains a published partition excluded from this task use');
+      const files = [], manifests = [], intakes = [];
       py.FS.mkdir('/input');
-      py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: [{name: 'source.las', data: file}]}, '/input');
-      phase('Verifying the complete source LAS against the reviewed SHA256…');
-      profile.start(py);
-      const scene = JSON.parse(py.runPython('json.dumps(prep.scene)'));
-      if (!taskPlan.allowed_partitions.includes(scene.published_split)) throw Error('Source belongs to a published partition excluded from this task use');
-      if (mode !== 'las' && scene.path !== candidates[0].path) throw Error('Extracted LAS belongs to a different reviewed plot');
-      const files = [];
-      for (;;) {
-        const chunk = JSON.parse(py.runPython("json.dumps(prep.next_block('/chunk.npz'))"));
-        if (!chunk) break;
-        // Await each OPFS write before producing another block: bounded backpressure.
-        const handle = await write(root, chunk.path, py.FS.readFile('/chunk.npz'));
-        py.FS.unlink('/chunk.npz');
-        files.push({path: chunk.path, handle});
-        phase(`Prepared ${(chunk.offset + chunk.points).toLocaleString()} of ${scene.points.toLocaleString()} points…`);
+      const queue = mode === 'las' ? [null] : candidates;
+      for (const [index, plot] of queue.entries()) {
+        let file = request.file;
+        let intake = {kind: 'local-las', archive_verification: 'Provider ZIP not checked; selected LAS SHA256 is verified below'};
+        if (plot) {
+          phase(`Reading plot ${index + 1} of ${queue.length}: ${profile.plotLabel(plot.path)}…`);
+          ({file, intake} = await stagePlot(root, {...request, mode}, plot, lock));
+        }
+        const manifest = await preparePlot(py, root, file, profile, taskPlan, plot?.path, files);
+        manifests.push(manifest); intakes.push({path: manifest.scenes[0].path, ...intake});
+        if (plot) await root.removeEntry('source.las');
       }
-      py.FS.unmount('/input');
-      if (mode !== 'las') await root.removeEntry('source.las');
-      const manifestText = py.runPython('json.dumps(prep.manifest, indent=2)') + '\n';
+      py.globals.set('manifests_json', JSON.stringify(manifests));
+      const manifestText = py.runPython('json.dumps(combine_manifests(json.loads(manifests_json)), indent=2)') + '\n';
       const manifest = JSON.parse(manifestText);
       files.push({path: 'task-package.json', handle: await write(root, 'task-package.json', new TextEncoder().encode(manifestText))});
-      py.FS.mkdirTree('/output/plots/' + scene.id);
-      const mounted = await Promise.all(files.filter(f => f.path.endsWith('.npz')).map(async f => ({name: f.path.split('/').at(-1), data: await f.handle.getFile()})));
-      py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: mounted}, '/output/plots/' + scene.id);
       py.FS.writeFile('/output/task-package.json', manifestText);
-      phase('Independently validating every exported array and whole-plot count…');
+      phase(`Independently validating every exported array across ${manifests.length} complete plots…`);
       const taskValidation = profile.validate(py);
       const report = taskValidation.package;
       const consumerSample = JSON.parse(py.runPython("sample = next(iter_task_blocks(task_model, task_plan, task_package)); json.dumps(dict(scene_id=sample['scene_id'], published_split=sample['published_split'], row_offset=sample['row_offset'], arrays={k:dict(shape=list(v.shape), dtype=str(v.dtype)) for k,v in sample['arrays'].items()}))"));
+      const intake = intakes.length === 1 ? intakes[0] : {kind: 'selected-dataset', plots: intakes};
       for (const [path, value] of [['task-plan.json', taskPlan], ['task-validation.json', taskValidation]])
         files.push({path, handle: await write(root, path, new TextEncoder().encode(JSON.stringify(value, null, 2) + '\n'))});
-      const evidence = {status: 'validated', task_plan: taskPlan, task_validation: taskValidation, consumer_sample: consumerSample, coverage: 'one-complete-selected-plot', report,
+      const evidence = {status: 'validated', task_plan: taskPlan, task_validation: taskValidation, consumer_sample: consumerSample, coverage: manifests.length === 1 ? 'one-complete-selected-plot' : 'complete-selected-plots', selection: manifest.selection, report,
         runtime: {pyodide: lock.pyodide, python: lock.python, numpy: lock.numpy, laspy: lock.laspy, zip_js: lock.zip_js},
         runtime_lock_sha256: await digest(lockBytes),
-        user_agent: navigator.userAgent, source_sha256: scene.sha256, intake,
+        user_agent: navigator.userAgent, source_sha256: manifests.length === 1 ? manifests[0].scenes[0].sha256 : null, intake,
         limitations: ['Selected LAS verified; whole-provider-archive checksum not checked in this run',
           'No claim of annotation correctness or geographic independence', 'OPFS is temporary browser storage; export the ZIP before clearing it']};
       files.push({path: 'browser-run.json', handle: await write(root, 'browser-run.json', new TextEncoder().encode(JSON.stringify(evidence, null, 2) + '\n'))});

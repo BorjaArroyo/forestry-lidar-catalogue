@@ -128,8 +128,8 @@
     $('#compare-open').hidden=state.view!=='datasets';
     $('.toolbar').hidden=state.view!=='datasets';
     const downloading=state.view==='workbench';
-    $('#breadcrumb-view').textContent=downloading?'Download & prepare':'Sources';
-    $('.page-heading h1').textContent=downloading?'Download and prepare instance data.':'Find a source for tree segmentation.';
+    $('#breadcrumb-view').textContent=downloading?'Workbench':'Sources';
+    $('.page-heading h1').textContent=downloading?'Prepare a dataset for your model.':'Find a source for tree segmentation.';
     $('.page-heading p').textContent=downloading?'Choose a source, inspect its audited pipeline and prepare data for your task requirements.':'Compare reference coverage and limitations. FOR-instance archive preparation is validated; other adapters remain work in progress.';
     $$('.nav-item').forEach(b=>{b.classList.toggle('active',b.dataset.view===state.view);b.setAttribute('aria-current',b.dataset.view===state.view?'page':'false');});
     $$('.view').forEach(el=>el.hidden=el.id!==`view-${state.view}`);

@@ -43,8 +43,8 @@ Unreviewed sources are not certified as lacking a measurement.
 ## Executable route
 
 Choose a use and variables in Sources, inspect a matching source, and select
-**Prepare data for this request**. The reviewed plot selector restricts official
-partitions for that use. Start preparation from the pinned Zenodo ZIP, a local ZIP,
+**Prepare data for this request**. The collection/partition selection restricts official
+partitions for that use; individual plots are an advanced subset. Start preparation from the pinned Zenodo ZIP, a local ZIP,
 or a complete local LAS.
 
 The worker checks the pinned graph/schema and resolves the request before fetching

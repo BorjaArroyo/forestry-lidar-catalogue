@@ -5,7 +5,8 @@ export const forInstance = Object.freeze({
   sourceLock: 'scripts/for_instance/source-lock.json',
   archiveLabel: 'Downloaded FOR-instance ZIP',
   fileLabel: 'Complete FOR-instance LAS',
-  downloadName: 'for-instance-selected-plot.zip',
+  downloadName: 'for-instance-selection.zip',
+  collectionOf: plot => plot.path.replace(/^.*FORinstance_dataset\//, '').split('/')[0],
   plotLabel: path => path.replace(/^.*FORinstance_dataset\//, ''),
   start(py) { py.runPython("prep = Preparation('/input/source.las', '/app/scripts/for_instance')"); },
   validate(py) {

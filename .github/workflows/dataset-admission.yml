@@ -41,7 +41,6 @@ jobs:
           python3 tests/test_task_plan.py
           python3 tests/test_browser_preparation.py
           python3 tests/test_browser_container.py
-          node tests/test_container_lab_js.mjs
           node --test tests/test_*.mjs
           node --check browser-prepare/intake.js
           node --check browser-prepare/worker.js
