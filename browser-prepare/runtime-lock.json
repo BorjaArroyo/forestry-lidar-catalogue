@@ -142,13 +142,13 @@
     },
     "scripts/task_plan.py": {
       "url": "scripts/task_plan.py",
-      "sha256": "b2143d1ea16d549b5ceb894569e9e7227f48a0de9bfe27ceb27973537e0ab94f",
-      "size_bytes": 8742
+      "sha256": "f8383a43964f2da2996c2f25aa314a325350e9df047d80a6db34c79e6a4c7020",
+      "size_bytes": 10664
     },
     "scripts/knowledge_model.py": {
       "url": "scripts/knowledge_model.py",
-      "sha256": "09d9d5386dbc969e17c77aa1e291e38de9dae3b2ff9e4c88b8cb75ef1817eedd",
-      "size_bytes": 29536
+      "sha256": "1fa63bb8ec68af517efea26ce5c533461a6902285ef8c5899acca8dc2d5c2f64",
+      "size_bytes": 1077
     },
     "knowledge-model.json": {
       "url": "knowledge-model.json",
@@ -159,6 +159,36 @@
       "url": "knowledge-model.schema.json",
       "sha256": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2",
       "size_bytes": 46687
+    },
+    "scripts/model_io.py": {
+      "url": "scripts/model_io.py",
+      "sha256": "d9f336c15e9ccf770fc2f99158249ed66c48aa3b43ba07f2c3f450fce18048ad",
+      "size_bytes": 1650
+    },
+    "scripts/model_validation.py": {
+      "url": "scripts/model_validation.py",
+      "sha256": "11c5bb2685cddcbf5725ffecafdf600db48680b1dec82649548a0562fd52dd50",
+      "size_bytes": 17756
+    },
+    "scripts/model_projection.py": {
+      "url": "scripts/model_projection.py",
+      "sha256": "10b53986b7685d35ef23f6b845747bf9506bf57dd2ce8a2bc62f5ec585a7993c",
+      "size_bytes": 4563
+    },
+    "scripts/model_publication.py": {
+      "url": "scripts/model_publication.py",
+      "sha256": "70deb06cb9982747f8ff7cffd58b09943865c4af49552f5ea90cd804d7ec7685",
+      "size_bytes": 5390
+    },
+    "browser-prepare/profiles.js": {
+      "url": "browser-prepare/profiles.js",
+      "sha256": "48f3663e26374477917b50235e8bfe6032db0506dc32ecfbfc916accde8aa279",
+      "size_bytes": 369
+    },
+    "browser-prepare/profiles/for-instance.js": {
+      "url": "browser-prepare/profiles/for-instance.js",
+      "sha256": "b5c3d0e46d3447d895fa3c987e396b26690b0b5ac71ad6ced901b420bce59d66",
+      "size_bytes": 795
     }
   },
   "zip_js": "2.20.0",
@@ -168,5 +198,6 @@
     "size_bytes": 1643251814,
     "provider_checksum": "md5:01fd03ba4068648e21fb4591fbff34c4",
     "download_url": "https://zenodo.org/api/records/8287792/files/FORinstance_dataset.zip/content"
-  }
+  },
+  "schema_version": "1.3.0"
 }

@@ -47,6 +47,36 @@ class TaskPlans(unittest.TestCase):
         plan = plan_request(self.graph,'8287792'); self.graph['schema_version']='changed'
         with self.assertRaises(ValueError): check_plan(self.graph,plan)
 
+    def test_scoped_plans_survive_unrelated_catalog_edits(self):
+        plan = plan_request(self.graph, '8287792')
+        changed = copy.deepcopy(self.graph)
+        changed['nodes']['task:biomass']['data']['description'] += ' Editorial clarification.'
+        self.assertEqual(check_plan(changed, plan), plan)
+        self.assertEqual(plan['schema_version'], '1.1.0')
+        self.assertNotIn('model_sha256', plan)
+
+    def test_selected_execution_dependencies_invalidate_the_plan(self):
+        plan = plan_request(self.graph, '8287792')
+        for key in ['pipeline:for-instance-plot-instances:1.0.0',
+                    'contract:for-instance-plot-instances:1.0.0', 'task:instances', 'zenodo:8287792']:
+            changed = copy.deepcopy(self.graph)
+            changed['nodes'][key]['data']['refactor_test'] = True
+            with self.subTest(key=key), self.assertRaises(ValueError):
+                check_plan(changed, plan)
+        pipeline = self.graph['nodes']['pipeline:for-instance-plot-instances:1.0.0']['data']
+        changed = copy.deepcopy(self.graph)
+        changed['nodes'][pipeline['validation_ref']]['data']['sha256'] = '0'*64
+        with self.assertRaises(ValueError): check_plan(changed, plan)
+
+    def test_legacy_plans_keep_their_original_full_graph_binding(self):
+        plan = plan_request(self.graph, '8287792', schema_version='1.0.0')
+        self.assertEqual(check_plan(self.graph, plan), plan)
+        changed = copy.deepcopy(self.graph)
+        changed['nodes']['task:biomass']['data']['description'] += ' Editorial clarification.'
+        with self.assertRaises(ValueError): check_plan(changed, plan)
+        plan['schema_version'] = '9.0.0'
+        with self.assertRaises(ValueError): check_plan(self.graph, plan)
+
     def test_bindings_cannot_invent_fields_shapes_or_channels(self):
         key='pipeline:for-instance-plot-instances:1.0.0'
         for mutate in [lambda g:g['nodes'][key]['data']['variable_outputs'].update(xyz=['instance']),

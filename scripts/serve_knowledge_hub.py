@@ -80,18 +80,8 @@ def inspect_record(value):
 
 
 def preparation_status():
-    from for_instance.prepare import package_fingerprint, read
-    from knowledge_model import load
-    model = load(WEB / 'knowledge-model.json')
-    if not model['nodes']['pipeline:for-instance-plot-instances:1.0.0']['data']['execution_enabled']:
-        raise ValueError('FOR-instance preparation is not enabled by the reviewed model')
-    validation = read(WEB / 'evidence/for-instance-preparation-validation.json')
-    fingerprint = package_fingerprint(INSTANCE_PACKAGE)
-    if validation.get('status') != 'succeeded' or validation.get('package_sha256') != fingerprint or validation.get('plots') != 32 or validation.get('points') != 151478959:
-        raise ValueError('FOR-instance preparation has not passed complete-source validation')
-    return {'record_id':8287792, 'pipeline':'for-instance-plot-instances:1.0.0',
-            'package_sha256':fingerprint, 'scope':'32 archive plots; 50 NIBIO2 split rows absent',
-            'available':True}
+    from preparation_profile import status
+    return status(INSTANCE_PACKAGE, WEB)
 
 
 def preparation_destination(root, output, fingerprint):
@@ -105,11 +95,8 @@ def preparation_destination(root, output, fingerprint):
 
 
 def preparation_input(root, output):
-    from for_instance.prepare import source_selection, read
-    status = preparation_status()
-    preparation_destination(root, output, status['package_sha256'])
-    source_selection(root, read(INSTANCE_PACKAGE / 'source-lock.json'))
-    return status
+    from preparation_profile import validate_input
+    return validate_input(root, output, INSTANCE_PACKAGE, preparation_status(), preparation_destination)
 
 
 def jobs():
@@ -165,15 +152,14 @@ def submit(body):
         folder = STATE / 'jobs' / job_id
         job = {'id':job_id,'kind':kind,'root':str(root),'status':'queued','created_at':now()}
         rid = int(body['record_id'])
-        if rid != 8287792 and (kind == 'prepare-instances' or body.get('prepare_output')):
-            raise ValueError('Only the reviewed FOR-instance release has an admitted instance adapter')
+        if kind == 'prepare-instances' or body.get('prepare_output'):
+            from preparation_profile import require_record
+            require_record(rid)
         job['record_id'] = rid
         if task_plan is not None:
             job['task_plan'] = task_plan
             job['task_plan_validator_sha256'] = sha(REPO / 'scripts/task_plan.py')
         if kind == 'prepare-instances':
-            if rid != 8287792:
-                raise ValueError('Only the reviewed FOR-instance release has an admitted instance adapter')
             output = directory(body.get('output',''), exists=False)
             ready = preparation_input(root, output)
             job.update(output=str(output), package_sha256=ready['package_sha256'])
@@ -198,8 +184,6 @@ def submit(body):
             job['record_id'] = rid
             save(folder / 'inventory.json', inv)
             if body.get('prepare_output'):
-                if rid != 8287792:
-                    raise ValueError('Only FOR-instance supports download followed by audited preparation')
                 output = directory(body['prepare_output'], exists=False)
                 ready = preparation_status()
                 preparation_destination(root, output, ready['package_sha256'])
@@ -272,15 +256,15 @@ def worker(folder):
             status = preparation_status()
             if status['package_sha256'] != job['package_sha256']:
                 raise ValueError('Pipeline changed after submission; inspect before resuming')
-            command = [sys.executable,str(INSTANCE_PACKAGE/'prepare.py'),'--input',str(root),'--output',job['output']]
+            from preparation_profile import command as preparation_command, open_package
+            command = preparation_command(sys.executable, INSTANCE_PACKAGE, root, job['output'])
             job['phase'] = 'preparing'
             job['preparation_command'] = command
             save(folder/'job.json',job)
             subprocess.run(command,check=True)
             job['phase'] = 'validating'
             save(folder/'job.json',job)
-            from task_package import TaskPackage
-            prepared = TaskPackage(Path(job['output']), profile=INSTANCE_PACKAGE)
+            prepared = open_package(job['output'], INSTANCE_PACKAGE)
             if task_model is not None:
                 from task_plan import validate_prepared
                 task_report = validate_prepared(task_model, job['task_plan'], prepared)

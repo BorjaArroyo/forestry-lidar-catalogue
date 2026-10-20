@@ -165,3 +165,19 @@ source-specific FOR-instance producer and reference policy are unchanged.
 See [Task requirements](TASK-REQUIREMENTS.md). The schema now requires model 1.4;
 older versions need explicit migration. No source membership or scientific
 preparation-readiness claim is promoted by this increment.
+
+## Implementation boundaries
+
+The canonical graph and generated catalog bytes are unchanged by the code split.
+`scripts/knowledge_model.py` retains its public imports and CLI as a compatibility
+facade. Its implementation is separated into:
+
+- `model_io.py`: duplicate-key rejection and reproducible snapshot provenance.
+- `model_validation.py`: schema, typed graph and scientific admission invariants.
+- `model_projection.py`: lossless source/task/relationship views.
+- `model_publication.py`: pinned-artifact checks and deterministic view export.
+
+Browser imports of these modules are all listed in the runtime integrity lock.
+The independent package reader does not import producer reference semantics.
+UI source choices come from the generated catalog; the closed implementation
+allowlists select adapters and cannot confer graph admission.

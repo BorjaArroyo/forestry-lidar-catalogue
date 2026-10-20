@@ -1,3 +1,4 @@
+import {profileForSource} from './profiles.js';
 import {extractPlot, localReader, providerReader} from './intake.js';
 /* Fixed preparation only. User files never leave this worker or this origin. */
 const base = new URL('../', self.location.href);
@@ -125,10 +126,12 @@ async function stagePlot(root, request, plot, lock) {
 }
 
 async function run(request) {
+  const profile = profileForSource(request.record_id);
+  if (!profile) throw Error('No browser implementation for this reviewed source');
   let {file} = request;
   const mode = request.mode || 'las';
   if (!['las', 'zip', 'zenodo'].includes(mode)) throw Error('Unsupported source input mode');
-  if (mode !== 'zenodo' && (!(file instanceof File) || !file.size)) throw Error('Choose a complete FOR-instance LAS or ZIP file');
+  if (mode !== 'zenodo' && (!(file instanceof File) || !file.size)) throw Error('Choose a complete reviewed LAS or ZIP file');
   const origin = await navigator.storage.getDirectory();
   const jobs = await origin.getDirectoryHandle('canopy-preparation', {create: true});
   const job = crypto.randomUUID();
@@ -141,18 +144,20 @@ async function run(request) {
       if (!lockResponse.ok) throw Error('Runtime lock unavailable');
       const lockBytes = new Uint8Array(await lockResponse.arrayBuffer());
       const lock = JSON.parse(new TextDecoder().decode(lockBytes));
-      const source = JSON.parse(new TextDecoder().decode(await checked(lock.files['scripts/for_instance/source-lock.json'])));
+      const source = JSON.parse(new TextDecoder().decode(await checked(lock.files[profile.sourceLock])));
       const candidates = source.plots.filter(plot => mode === 'las' ? plot.size_bytes === file.size : plot.path === request.selected_path);
       if (!candidates.length) throw Error('Input does not identify a complete reviewed LAS plot');
       const required = Math.max(...candidates.map(p => (mode === 'las' ? 0 : p.size_bytes) + 2 * (p.size_bytes + p.points * 34 + Math.ceil(p.points / 250000) * 65536))) + 64 * 1024 ** 2;
       const estimate = await navigator.storage.estimate();
       if (!Number.isFinite(estimate.quota) || estimate.quota - (estimate.usage || 0) < required)
         throw Error(`Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for chunks and ZIP export`);
-      await checked(lock.files['browser-prepare/intake.js']);
+      for (const path of ['browser-prepare/intake.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js']) await checked(lock.files[path]);
       phase('Checking task requirements against the pinned audited pipeline…');
       py = await boot(lock);
+      py.globals.set('source_record_id', profile.recordId);
       py.globals.set('request_json', JSON.stringify(request.task_request || {}));
-      const taskPlan = JSON.parse(py.runPython("task_model = load_model('/app/knowledge-model.json'); task_request = json.loads(request_json); task_plan = plan_request(task_model, '8287792', task_request.get('use', 'training'), task_request.get('variables')); check_plan(task_model, task_plan); json.dumps(task_plan)"));
+      const taskPlan = JSON.parse(py.runPython("task_model = load_model('/app/knowledge-model.json'); task_request = json.loads(request_json); task_plan = plan_request(task_model, source_record_id, task_request.get('use', 'training'), task_request.get('variables')); check_plan(task_model, task_plan); json.dumps(task_plan)"));
+      if (taskPlan.pipeline_ref !== profile.pipelineRef) throw Error('Source implementation differs from the admitted pipeline');
       if (mode !== 'las' && !taskPlan.allowed_partitions.includes(candidates[0].published_split)) throw Error('Selected plot belongs to a published partition excluded from this task use');
       let intake = {kind: 'local-las', archive_verification: 'Provider ZIP not checked; selected LAS SHA256 is verified below'};
       if (mode !== 'las') {
@@ -162,7 +167,7 @@ async function run(request) {
       py.FS.mkdir('/input');
       py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: [{name: 'source.las', data: file}]}, '/input');
       phase('Verifying the complete source LAS against the reviewed SHA256…');
-      py.runPython("prep = Preparation('/input/source.las', '/app/scripts/for_instance')");
+      profile.start(py);
       const scene = JSON.parse(py.runPython('json.dumps(prep.scene)'));
       if (!taskPlan.allowed_partitions.includes(scene.published_split)) throw Error('Source belongs to a published partition excluded from this task use');
       if (mode !== 'las' && scene.path !== candidates[0].path) throw Error('Extracted LAS belongs to a different reviewed plot');
@@ -186,7 +191,7 @@ async function run(request) {
       py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: mounted}, '/output/plots/' + scene.id);
       py.FS.writeFile('/output/task-package.json', manifestText);
       phase('Independently validating every exported array and whole-plot count…');
-      const taskValidation = JSON.parse(py.runPython("task_package = TaskPackage('/output', allow_selection=True); task_validation = validate_prepared(task_model, task_plan, task_package); json.dumps(task_validation)"));
+      const taskValidation = profile.validate(py);
       const report = taskValidation.package;
       const consumerSample = JSON.parse(py.runPython("sample = next(iter_task_blocks(task_model, task_plan, task_package)); json.dumps(dict(scene_id=sample['scene_id'], published_split=sample['published_split'], row_offset=sample['row_offset'], arrays={k:dict(shape=list(v.shape), dtype=str(v.dtype)) for k,v in sample['arrays'].items()}))"));
       for (const [path, value] of [['task-plan.json', taskPlan], ['task-validation.json', taskValidation]])

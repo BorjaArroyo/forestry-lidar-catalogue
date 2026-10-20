@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-10-20 — Separate catalog selection from preparation implementations
+
+- The preparation panel lists all reviewed sources and gates execution by task requirements, graph admission and the available implementation.
+- Isolated FOR-instance implementation details from browser and local-service orchestration.
+- Each browser run owns its worker and watchdog; failed or cancelled runs cannot terminate a later run.
+- Split knowledge model IO, admission validation, projection and publication behind the existing CLI/import facade.
+- Plan 1.1 binds the reviewed source/task dependency closure; legacy 1.0 keeps its original full-graph check.
+- Producer code, independent reference validation and canonical catalog metadata remain unchanged.
+
 ## 2026-10-20 — Task requirements reach audited preparation
 
 - Model 1.4 separates data use, minimum required variables and optional measurements.

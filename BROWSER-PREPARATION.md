@@ -161,3 +161,19 @@ Only reviewed partitions permitted for the chosen use appear in the selector.
 The ZIP includes the saved plan, task validation and consumer-block evidence.
 A source-native spectral candidate does not enable an unadmitted adapter.
 See TASK-REQUIREMENTS.md for the executable contract and evidence scope.
+
+## Source selection and run ownership
+
+The preparation panel lists every reviewed source from the catalog. Its task
+assessment enables execution only when the graph admits the requested output and
+a browser implementation exists. FGI-EMIT and the other unadmitted adapters remain
+visible with their review gaps; selecting them does not download or prepare data.
+`profiles.js` dispatches only known implementation modules. FOR-instance-specific
+membership paths and setup are isolated in `profiles/for-instance.js`. The worker
+independently checks the selected source and admitted pipeline before source intake.
+
+`RunSession` owns each worker and watchdog. Success, failure, cancellation and page
+exit terminate that run and clear its timer; callbacks from an old worker cannot
+change its successor. Temporary output identities remain recoverable or clearable
+after an interrupted worker. Recovery labels the saved source/use rather than
+presenting the previous ZIP as a result of newly selected requirements.

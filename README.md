@@ -22,6 +22,9 @@ record (pinned Zenodo release)          read-only curation
 Quick paths:
 
 - **Browse the catalog**: open the published site above. No setup required.
+- **Prepare a reviewed plot in the browser**: choose a preparation source and a
+  data use in Download & prepare. Only admitted implementations can run; current
+  execution is limited to FOR-instance. Other source review gaps remain visible.
 - **Get FOR-instance locally**: run the download service (below) and select
   "Prepare instance data after download".
 - **Add a source or transformation**: read [CONTRIBUTING.md](CONTRIBUTING.md)

@@ -13,7 +13,43 @@ def fingerprint(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
 
 
-def plan_request(model, record_id, use='training', variables=None):
+def dependency_fingerprint(model, source_ref, task_ref):
+    """Bind complete reviewed dependencies, excluding unrelated catalog entries.
+
+    Referenced nodes, native contracts, candidate pipelines and task support
+    belong to the closure. Cross-dataset comparison edges do not.
+    """
+    nodes = model['nodes']
+    roots = {source_ref, task_ref}
+    roots.update(key for key, node in nodes.items() if node['type'] == 'pipeline_spec'
+                 and node['data']['source_ref'] == source_ref and node['data']['task_ref'] == task_ref)
+    edges = {key: edge for key, edge in model['edges'].items()
+             if edge['source'] == source_ref and
+             ((edge['type'] == 'task_support' and edge['target'] == task_ref) or
+              (edge['type'] == 'data_flow' and edge['role'] == 'describes'))}
+    roots.update(edge['target'] for edge in edges.values())
+    closure = {}
+
+    def visit(value):
+        if isinstance(value, str) and value in nodes and value not in closure:
+            closure[value] = nodes[value]
+            visit(nodes[value])
+        elif isinstance(value, dict):
+            for item in value.values():
+                visit(item)
+        elif isinstance(value, list):
+            for item in value:
+                visit(item)
+
+    for key in sorted(roots):
+        visit(key)
+    return fingerprint(dict(scope='task-source-dependency-closure-v1',
+                            model_schema_version=model['schema_version'], nodes=closure, edges=edges))
+
+
+def plan_request(model, record_id, use='training', variables=None, *, schema_version='1.1.0'):
+    if schema_version not in {'1.0.0', '1.1.0'}:
+        raise ValueError('Unsupported task plan schema version')
     nodes = model['nodes']
     task = nodes['task:instances']['data']['requirements']
     if not isinstance(use, str) or use not in task['uses']:
@@ -53,16 +89,19 @@ def plan_request(model, record_id, use='training', variables=None):
                 blockers.append(key + ': ' + reason)
     if not pipeline:
         blockers.insert(0, 'No admitted source-specific preparation pipeline')
-    return dict(schema_version='1.0.0', task_ref='task:instances', source_ref=source,
+    binding = ({'model_sha256': fingerprint(model)} if schema_version == '1.0.0' else
+               {'dependencies_sha256': dependency_fingerprint(model, source, 'task:instances'),
+                'fingerprint_scope': 'task-source-dependency-closure-v1'})
+    return dict(schema_version=schema_version, task_ref='task:instances', source_ref=source,
                 use=use, variables=choices, allowed_partitions=task['uses'][use]['allowed_partitions'], pipeline_ref=pipeline_id,
                 output_ref=pipeline['output_ref'] if pipeline else None,
                 status='blocked' if blockers else 'ready', included=included, omitted=omitted,
-                blockers=blockers, model_sha256=fingerprint(model),
+                blockers=blockers, **binding,
                 scope='Preparation and consumption requirements; no training run or benchmark evaluator is certified')
 
 
 def check_plan(model, plan):
-    expected = plan_request(model, plan['source_ref'].removeprefix('zenodo:'), plan['use'], plan['variables'])
+    expected = plan_request(model, plan['source_ref'].removeprefix('zenodo:'), plan['use'], plan['variables'], schema_version=plan.get('schema_version'))
     if expected != plan:
         raise ValueError('Task plan differs from current reviewed requirements or pipeline')
     if plan['status'] != 'ready':

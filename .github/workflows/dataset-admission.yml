@@ -42,7 +42,7 @@ jobs:
           python3 tests/test_browser_preparation.py
           python3 tests/test_browser_container.py
           node tests/test_container_lab_js.mjs
-          node --test tests/test_browser_intake.mjs
+          node --test tests/test_*.mjs
           node --check browser-prepare/intake.js
           node --check browser-prepare/worker.js
           node --check browser-prepare/ui.js

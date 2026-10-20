@@ -53,7 +53,7 @@ validates every prepared block, and reads a real consumer block. Completion requ
 both package validation and request validation. The ZIP adds:
 
 - `task-plan.json`: exact use, required/optional choices, admitted output bindings,
-  explicit omissions, permitted partitions, and canonical-model fingerprint.
+  explicit omissions, permitted partitions, and reviewed-dependency fingerprint.
 - `task-validation.json`: complete payload validation, eligible scenes/points,
   request fingerprint, and validator fingerprint.
 - `browser-run.json`: runtime/intake evidence and consumer array types and shapes.
@@ -117,3 +117,19 @@ See `evidence/task-driven-preparation-validation.json` for fingerprints and limi
 This does not admit FGI-EMIT preparation, multiple-source execution, quantitative
 spectral conversion, or a model-specific training recipe. Those require their own
 source policies, executable adapters, and complete validation.
+
+## Plan version compatibility
+
+New plans use schema `1.1.0` and `dependencies_sha256`. The
+`task-source-dependency-closure-v1` binding includes the selected source and task,
+all candidate pipelines for that pair, native source contracts, their recursively
+referenced contracts/transformations/evidence, the source-task assessment, and the
+model schema version. Complete dependency nodes are retained conservatively;
+review and implementation changes invalidate the plan. Cross-source comparison
+edges and unrelated tasks/sources do not belong to this execution binding.
+
+Legacy `1.0.0` plans keep their original `model_sha256` check against the entire
+graph. They are never silently upgraded. Unknown versions fail closed. A legacy
+plan made stale by an unrelated edit still requires its matching checkout or an
+explicitly regenerated plan. Runtime and validator fingerprints remain separate
+provenance; scoped metadata binding does not grant permission to run arbitrary code.
