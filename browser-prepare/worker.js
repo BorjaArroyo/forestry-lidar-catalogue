@@ -70,25 +70,31 @@ async function boot(lock) {
   }
 }
 
-async function loadContext(profile) {
-  const response = await nativeFetch(new URL('browser-prepare/runtime-lock.json', base), {cache: 'no-store'});
+async function loadContext(records) {
+  const response = await nativeFetch(new URL('browser-prepare/runtime-lock.json', base), {cache:'no-store'});
   if (!response.ok) throw Error('Runtime lock unavailable');
   const bytes = new Uint8Array(await response.arrayBuffer());
-  const lock = JSON.parse(new TextDecoder().decode(bytes));
-  const sourceBytes = await checked(lock.files[profile.sourceLock]);
-  const source = JSON.parse(new TextDecoder().decode(sourceBytes));
-  if (String(source.record_id) !== profile.recordId) throw Error('Reviewed source membership belongs to another release');
+  const lock = JSON.parse(new TextDecoder().decode(bytes)), sources = new Map(), contexts = {};
+  for (const record of [...new Set(records)].sort()) {
+    const profile = profileForSource(record);
+    if (!profile) throw Error(`zenodo:${record}: no browser implementation for this reviewed source`);
+    const sourceBytes = await checked(lock.files[profile.sourceLock]);
+    const source = JSON.parse(new TextDecoder().decode(sourceBytes));
+    if (String(source.record_id) !== record) throw Error('Reviewed source membership belongs to another release');
+    sources.set(record, {source, profile});
+    contexts[record] = {source, source_lock_path:profile.sourceLock, source_lock_sha256:await digest(sourceBytes)};
+  }
   for (const path of ['browser-prepare/worker.js', 'browser-prepare/intake.js', 'browser-prepare/selection.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js', 'browser-prepare/profiles/fgi-emit.js']) await checked(lock.files[path]);
-  phase('Checking task requirements and exact versions; no source LAS is downloaded yet…');
-  const py = await boot(lock);
-  py.globals.set('source_json', JSON.stringify(source));
-  py.globals.set('source_lock_path', profile.sourceLock);
-  py.globals.set('source_lock_sha256', await digest(sourceBytes));
-  const runtimeHash = await digest(bytes);
+  phase('Checking task requirements and exact versions for every source; no source LAS is downloaded yet…');
+  const py = await boot(lock), runtimeHash = await digest(bytes);
+  py.globals.set('source_contexts_json', JSON.stringify(contexts));
   py.globals.set('runtime_lock_sha256', runtimeHash);
-  py.runPython("task_model = load_model('/app/knowledge-model.json'); source_lock = json.loads(source_json); dataset_pins = dict(source_lock_path=source_lock_path, source_lock_sha256=source_lock_sha256, runtime_lock_sha256=runtime_lock_sha256)");
-  return {lock, source, py, runtimeHash};
+  py.runPython("task_model = load_model('/app/knowledge-model.json'); source_contexts = json.loads(source_contexts_json)");
+  return {lock, sources, py, runtimeHash};
 }
+
+function planSources(plan) { return plan.schema_version === '1.0.0' ? [plan] : plan.source_plans; }
+function recordsForPlan(plan) { return planSources(plan).map(p => p.task_plan.source_ref.replace(/^zenodo:/, '')); }
 
 function taskForRequest(py, profile, request) {
   py.globals.set('source_record_id', profile.recordId);
@@ -100,21 +106,20 @@ function taskForRequest(py, profile, request) {
 
 async function review(request) {
   if (request.mode !== 'zenodo') throw Error('Dataset plan review currently supports Zenodo selections');
-  const profile = profileForSource(request.record_id);
-  if (!profile) throw Error('No browser implementation for this reviewed source');
-  const {py, source} = await loadContext(profile);
+  const records = request.operation === 'import' ? request.records : request.subsets.map(s => s.record_id);
+  const {py, sources} = await loadContext(records);
   let plan;
   if (request.operation === 'import') {
     if (typeof request.plan_text !== 'string' || request.plan_text.length > 1048576) throw Error('Plan files must be JSON up to 1 MiB');
     py.globals.set('imported_plan_text', request.plan_text);
-    plan = JSON.parse(py.runPython("from task_package import decode_json; execution_plan = dataset_plan.check(task_model, source_lock, decode_json(imported_plan_text), **dataset_pins); json.dumps(execution_plan)"));
-    if (plan.task_plan.source_ref !== 'zenodo:' + profile.recordId || plan.task_plan.pipeline_ref !== profile.pipelineRef) throw Error('Imported plan belongs to another implementation');
+    plan = JSON.parse(py.runPython("from task_package import decode_json; execution_plan = dataset_plan.check_dataset(task_model, source_contexts, decode_json(imported_plan_text), runtime_lock_sha256=runtime_lock_sha256); json.dumps(execution_plan)"));
   } else {
-    taskForRequest(py, profile, request);
-    py.globals.set('subsets_json', JSON.stringify(request.subset_paths));
-    plan = JSON.parse(py.runPython("execution_plan = dataset_plan.resolve(task_model, source_lock, **dataset_pins, use=task_plan['use'], variables=task_plan['variables'], subsets=json.loads(subsets_json)); json.dumps(execution_plan)"));
+    py.globals.set('request_json', JSON.stringify(request.task_request));
+    py.globals.set('subsets_json', JSON.stringify(request.subsets));
+    plan = JSON.parse(py.runPython("task_request = json.loads(request_json); execution_plan = dataset_plan.resolve_dataset(task_model, source_contexts, use=task_request['use'], variables=task_request['variables'], subsets=json.loads(subsets_json), runtime_lock_sha256=runtime_lock_sha256); json.dumps(execution_plan)"));
   }
-  self.postMessage({type: 'result', operation: request.operation, plan, source_plots: request.operation === 'import' ? source.plots : undefined});
+  self.postMessage({type:'result', operation:request.operation, plan,
+    source_plots:request.operation === 'import' ? Object.fromEntries([...sources].map(([record, {source}]) => [record, source.plots])) : undefined});
 }
 
 async function directory(root, path) {
@@ -175,7 +180,7 @@ async function stagePlot(root, request, plot, lock) {
     ...intake, ...(remote ? remote.stats : {})}};
 }
 
-async function preparePlot(py, root, file, profile, taskPlan, expectedPath, files) {
+async function preparePlot(py, root, file, profile, taskPlan, expectedPath, files, outputRoot) {
   py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: [{name: 'source.las', data: file}]}, '/input');
   try {
     phase('Verifying the complete source LAS against the reviewed SHA256…');
@@ -194,9 +199,9 @@ async function preparePlot(py, root, file, profile, taskPlan, expectedPath, file
       phase(`Prepared ${(chunk.offset + chunk.points).toLocaleString()} of ${scene.points.toLocaleString()} points in ${profile.plotLabel(scene.path)}…`);
     }
     files.push(...sceneFiles);
-    py.FS.mkdirTree('/output/plots/' + scene.id);
+    py.FS.mkdirTree(outputRoot + '/plots/' + scene.id);
     const mounted = await Promise.all(sceneFiles.map(async f => ({name: f.path.split('/').at(-1), data: await f.handle.getFile()})));
-    py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: mounted}, '/output/plots/' + scene.id);
+    py.FS.mount(py.FS.filesystems.WORKERFS, {blobs: mounted}, outputRoot + '/plots/' + scene.id);
     // Keep the authoritative JSON text: JavaScript otherwise turns 1.0 into 1 in native schema descriptors.
     const manifestText = py.runPython('json.dumps(prep.manifest)');
     return {manifest: JSON.parse(manifestText), manifestText};
@@ -207,139 +212,146 @@ async function preparePlot(py, root, file, profile, taskPlan, expectedPath, file
 }
 
 async function run(request) {
-  const profile = profileForSource(request.record_id);
-  if (!profile) throw Error('No browser implementation for this reviewed source');
   const mode = request.mode || 'las';
   if (!['las', 'zip', 'zenodo'].includes(mode)) throw Error('Unsupported source input mode');
   if (mode !== 'zenodo' && (!(request.file instanceof File) || !request.file.size)) throw Error('Choose a complete reviewed LAS or ZIP file');
+  if (mode === 'zenodo' && !request.execution_plan) throw Error('Review the dataset plan before downloading');
+  const records = mode === 'zenodo' ? recordsForPlan(request.execution_plan) : [request.record_id];
   const origin = await navigator.storage.getDirectory();
-  const jobs = await origin.getDirectoryHandle('canopy-preparation', {create: true});
-  const job = crypto.randomUUID();
-  const root = await jobs.getDirectoryHandle(job, {create: true});
-  self.postMessage({type: 'job', id: job});
+  const jobs = await origin.getDirectoryHandle('canopy-preparation', {create:true});
+  const job = crypto.randomUUID(), root = await jobs.getDirectoryHandle(job, {create:true});
+  self.postMessage({type:'job', id:job});
   return navigator.locks.request('canopy-preparation:' + job, async () => {
     let py;
     try {
-      const context = await loadContext(profile);
-      const {lock, source, runtimeHash} = context;
-      py = context.py;
-      const taskPlan = taskForRequest(py, profile, request);
+      const context = await loadContext(records);
+      const {lock, sources, runtimeHash} = context; py = context.py;
       let executionPlan = null;
       if (mode === 'zenodo') {
-        if (!request.execution_plan) throw Error('Review the dataset plan before downloading');
-        py.globals.set('execution_plan_json', JSON.stringify(request.execution_plan));
         try {
-          executionPlan = JSON.parse(py.runPython("execution_plan = dataset_plan.check(task_model, source_lock, json.loads(execution_plan_json), **dataset_pins); json.dumps(execution_plan)"));
-          if (JSON.stringify(executionPlan.task_plan) !== JSON.stringify(taskPlan)) throw Error('The reviewed plan belongs to different task requirements');
+          py.globals.set('execution_plan_json', JSON.stringify(request.execution_plan));
+          executionPlan = JSON.parse(py.runPython("execution_plan = dataset_plan.check_dataset(task_model, source_contexts, json.loads(execution_plan_json), runtime_lock_sha256=runtime_lock_sha256); json.dumps(execution_plan)"));
+          const firstTask = planSources(executionPlan)[0].task_plan;
+          if (JSON.stringify({use:firstTask.use, variables:firstTask.variables}) !== JSON.stringify(request.task_request)) throw Error('The reviewed plan belongs to different task requirements');
         } catch (error) { error.code = 'DATASET_PLAN_STALE'; throw error; }
       }
-      const candidates = mode === 'las' ? source.plots.filter(p => p.size_bytes === request.file.size) :
-        selectPlots(source.plots, executionPlan ? executionPlan.plots.map(p => p.path) : request.selected_paths || (request.selected_path ? [request.selected_path] : []));
-      if (!candidates.length) throw Error('Input does not identify complete reviewed plots');
-      if (mode !== 'las' && candidates.some(p => !taskPlan.allowed_partitions.includes(p.published_split))) throw Error('Selected dataset contains a published partition excluded from this task use');
-      const outputEstimate = p => p.size_bytes + p.points * (profile.derivedBytesPerPoint || 34) + Math.ceil(p.points / 250000) * 65536;
-      const preparedBytes = mode === 'las' ? Math.max(...candidates.map(outputEstimate)) : candidates.reduce((n,p) => n + outputEstimate(p), 0);
-      const required = executionPlan?.totals.estimated_browser_storage_bytes ??
-        (2 * preparedBytes + (mode === 'las' ? 0 : Math.max(...candidates.map(p => p.size_bytes))) + 64 * 1024 ** 2);
+      const groups = [];
+      for (const [record, {source, profile}] of sources) {
+        const sourcePlan = executionPlan && planSources(executionPlan).find(p => p.task_plan.source_ref === 'zenodo:' + record);
+        if (executionPlan && !sourcePlan) throw Error('Unplanned source in this run');
+        const taskPlan = taskForRequest(py, profile, request);
+        const candidates = mode === 'las' ? source.plots.filter(p => p.size_bytes === request.file.size) :
+          selectPlots(source.plots, sourcePlan ? sourcePlan.plots.map(p => p.path) : request.selected_paths || []);
+        if (!candidates.length) throw Error(`zenodo:${record}: input does not identify complete reviewed plots`);
+        if (mode !== 'las' && candidates.some(p => !taskPlan.allowed_partitions.includes(p.published_split))) throw Error(`zenodo:${record}: selected partition is excluded for this task use`);
+        groups.push({record, profile, sourcePlan, taskPlan, candidates});
+      }
       const estimate = await navigator.storage.estimate();
+      const candidateBytes = groups.flatMap(g => g.candidates.map(p => p.size_bytes + p.points * (g.profile.derivedBytesPerPoint || 34) + Math.ceil(p.points / 250000) * 65536));
+      const preparedBytes = mode === 'las' ? Math.max(...candidateBytes) : candidateBytes.reduce((a,b) => a+b, 0);
+      const required = executionPlan?.totals.estimated_browser_storage_bytes ?? (2 * preparedBytes + (mode === 'las' ? 0 : Math.max(...groups.flatMap(g => g.candidates.map(p => p.size_bytes)))) + 64 * 1024 ** 2);
       if (!Number.isFinite(estimate.quota) || estimate.quota - (estimate.usage || 0) < required)
         throw Error(`Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for the selected dataset and ZIP export`);
-      const files = [], manifests = [], manifestTexts = [], intakes = [];
       py.FS.mkdir('/input');
-      const queue = mode === 'las' ? [null] : candidates;
-      for (const [index, plot] of queue.entries()) {
-        let file = request.file;
-        let intake = {kind: 'local-las', archive_verification: 'Provider ZIP not checked; selected LAS SHA256 is verified below'};
-        if (plot) {
-          phase(`Reading plot ${index + 1} of ${queue.length}: ${profile.plotLabel(plot.path)}…`);
-          ({file, intake} = await stagePlot(root, {...request, mode}, plot, lock));
-        }
-        const {manifest, manifestText} = await preparePlot(py, root, file, profile, taskPlan, plot?.path, files);
-        manifests.push(manifest); manifestTexts.push(manifestText); intakes.push({path: manifest.scenes[0].path, ...intake});
-        if (plot) await root.removeEntry('source.las');
+      const prepared = [], provenance = [], allManifests = [];
+      let completedPlots = 0;
+      const totalPlots = groups.reduce((n,g) => n + (mode === 'las' ? 1 : g.candidates.length), 0);
+      for (const group of groups) {
+        const {record, profile, sourcePlan, taskPlan, candidates} = group;
+        const sourceRoot = await directory(root, 'sources/zenodo-' + record), outputRoot = '/output/zenodo-' + record;
+        const files = [], manifestTexts = [], intakes = [];
+        py.FS.mkdirTree(outputRoot);
+        try {
+          py.globals.set('current_task_plan_json', JSON.stringify(taskPlan));
+          py.runPython('task_plan = json.loads(current_task_plan_json)');
+          for (const plot of mode === 'las' ? [null] : candidates) {
+            phase(`zenodo:${record}: reading plot ${completedPlots + 1} of ${totalPlots}${plot ? ': ' + profile.plotLabel(plot.path) : ''}…`);
+            let file = request.file, intake = {kind:'local-las', archive_verification:'Selected LAS SHA256 verified; provider ZIP not checked'};
+            if (plot) ({file, intake} = await stagePlot(sourceRoot, {...request, record_id:record, mode}, plot, lock));
+            const result = await preparePlot(py, sourceRoot, file, profile, taskPlan, plot?.path, files, outputRoot);
+            manifestTexts.push(result.manifestText); intakes.push({path:result.manifest.scenes[0].path, ...intake});
+            if (plot) await sourceRoot.removeEntry('source.las');
+            completedPlots++;
+          }
+          py.globals.set('manifests_json', JSON.stringify(manifestTexts));
+          const manifestText = py.runPython('json.dumps(combine_manifests([json.loads(text) for text in json.loads(manifests_json)]), indent=2)') + '\n';
+          const manifest = JSON.parse(manifestText); allManifests.push(manifestText);
+          py.FS.writeFile(outputRoot + '/task-package.json', manifestText);
+          phase(`zenodo:${record}: independently validating every prepared array…`);
+          const taskValidation = profile.validate(py, outputRoot);
+          const sourceEvidence = {task_plan:taskPlan, task_validation:taskValidation, prepared_scenes:manifest.scenes,
+            selection:manifest.selection, intake:intakes.length === 1 ? intakes[0] : {kind:'selected-dataset', plots:intakes}};
+          prepared.push({record, manifestText, taskPlan, files, evidence:sourceEvidence});
+          const documents = {'selection-task-package.json':manifestText, 'task-plan.json':JSON.stringify(taskPlan, null, 2), 'task-validation.json':JSON.stringify(taskValidation, null, 2)};
+          if (sourcePlan) {
+            py.globals.set('source_plan_json', JSON.stringify(sourcePlan));
+            py.globals.set('source_manifest_json', manifestText);
+            sourceEvidence.plan_validation = JSON.parse(py.runPython('json.dumps(dataset_plan.check_manifest(json.loads(source_plan_json), json.loads(source_manifest_json)))'));
+            documents['dataset-plan.json'] = JSON.stringify(sourcePlan, null, 2);
+            documents['dataset-plan-validation.json'] = JSON.stringify(sourceEvidence.plan_validation, null, 2);
+          }
+          for (const [name, text] of Object.entries(documents)) provenance.push({path:`provenance/zenodo-${record}/${name}`, handle:await write(sourceRoot, name, new TextEncoder().encode(text))});
+        } catch (error) { error.message = `zenodo:${record}: ${error.message}`; throw error; }
       }
-      py.globals.set('manifests_json', JSON.stringify(manifestTexts));
-      const manifestText = py.runPython('json.dumps(combine_manifests([json.loads(text) for text in json.loads(manifests_json)]), indent=2)') + '\n';
-      const manifest = JSON.parse(manifestText);
-      let planValidation = null;
-      if (executionPlan) {
-        py.globals.set('prepared_manifest_json', manifestText);
-        planValidation = JSON.parse(py.runPython('json.dumps(dataset_plan.check_manifest(execution_plan, json.loads(prepared_manifest_json)))'));
-        for (const [path, value] of [['dataset-plan.json', executionPlan], ['dataset-plan-validation.json', planValidation]])
-          files.push({path, handle: await write(root, path, new TextEncoder().encode(JSON.stringify(value, null, 2) + '\n'))});
-      }
-      files.push({path: 'task-package.json', handle: await write(root, 'task-package.json', new TextEncoder().encode(manifestText))});
-      py.FS.writeFile('/output/task-package.json', manifestText);
-      phase(`Independently validating every exported array across ${manifests.length} complete plots…`);
-      const taskValidation = profile.validate(py);
-      const report = taskValidation.package;
-      const consumerSample = JSON.parse(py.runPython("sample = next(iter_task_blocks(task_model, task_plan, task_package)); json.dumps(dict(scene_id=sample['scene_id'], published_split=sample['published_split'], row_offset=sample['row_offset'], arrays={k:dict(shape=list(v.shape), dtype=str(v.dtype)) for k,v in sample['arrays'].items()}))"));
-      const intake = intakes.length === 1 ? intakes[0] : {kind: 'selected-dataset', plots: intakes};
-      for (const [path, value] of [['task-plan.json', taskPlan], ['task-validation.json', taskValidation]])
-        files.push({path, handle: await write(root, path, new TextEncoder().encode(JSON.stringify(value, null, 2) + '\n'))});
-      phase('Organizing the dataset into published-partition folders…');
-      py.globals.set('dataset_manifest_json', manifestText);
-      const layout = JSON.parse(py.runPython("folder_layout = compose_layout(task_model, [dict(plan=task_plan, manifest=json.loads(dataset_manifest_json))]); json.dumps(dict(copies=folder_layout['copies'], documents={k:encoded(v).decode() for k,v in folder_layout['documents'].items()}))"));
-      const blocks = new Map(files.filter(f => f.path.endsWith('.npz')).map(f => [f.path, f]));
-      const exportFiles = [], mounts = new Map();
+      py.globals.set('all_manifests_json', JSON.stringify(allManifests));
+      py.globals.set('all_plans_json', JSON.stringify(prepared.map(p => p.taskPlan)));
+      py.runPython('source_manifests = [json.loads(text) for text in json.loads(all_manifests_json)]; source_task_plans = json.loads(all_plans_json)');
+      const planValidation = executionPlan ? JSON.parse(py.runPython('json.dumps(dataset_plan.check_manifests(execution_plan, source_manifests))')) : null;
+      phase('Organizing all sources into preserved partition folders…');
+      const layout = JSON.parse(py.runPython("folder_layout = compose_layout(task_model, [dict(plan=plan, manifest=manifest) for plan, manifest in zip(source_task_plans, source_manifests)]); json.dumps(dict(copies=folder_layout['copies'], documents={k:encoded(v).decode() for k,v in folder_layout['documents'].items()}))"));
+      const blocks = prepared.map(p => new Map(p.files.map(f => [f.path, f]))), exportFiles = [], mounts = new Map();
       for (const [path, source] of Object.entries(layout.copies)) {
-        const block = blocks.get(source.path);
+        const block = blocks[source.input]?.get(source.path);
         if (!block) throw Error('Dataset layout refers to an absent prepared block');
-        exportFiles.push({path, handle: block.handle});
+        exportFiles.push({path, handle:block.handle});
         const parent = path.slice(0, path.lastIndexOf('/'));
         if (!mounts.has(parent)) mounts.set(parent, []);
-        mounts.get(parent).push({name: path.split('/').at(-1), data: await block.handle.getFile()});
+        mounts.get(parent).push({name:path.split('/').at(-1), data:await block.handle.getFile()});
       }
       for (const [parent, blobs] of mounts) {
-        py.FS.mkdirTree('/dataset/' + parent);
-        py.FS.mount(py.FS.filesystems.WORKERFS, {blobs}, '/dataset/' + parent);
+        py.FS.mkdirTree('/dataset/' + parent); py.FS.mount(py.FS.filesystems.WORKERFS, {blobs}, '/dataset/' + parent);
       }
       for (const [path, text] of Object.entries(layout.documents)) {
-        const target = '/dataset/' + path;
-        py.FS.mkdirTree(target.slice(0, target.lastIndexOf('/'))); py.FS.writeFile(target, text);
-        exportFiles.push({path, handle: await write(root, 'folder-export/' + path, new TextEncoder().encode(text))});
+        const target = '/dataset/' + path; py.FS.mkdirTree(target.slice(0, target.lastIndexOf('/'))); py.FS.writeFile(target, text);
+        exportFiles.push({path, handle:await write(root, 'folder-export/' + path, new TextEncoder().encode(text))});
       }
-      phase('Validating the complete dataset through the common folder reader…');
+      phase('Validating the complete combined dataset through the independent folder reader…');
       const datasetReport = JSON.parse(py.runPython("folder_dataset = TaskDataset('/dataset', task_model); folder_report = folder_dataset.validate(); json.dumps(folder_report)"));
-      const datasetText = JSON.stringify(datasetReport, null, 2) + '\n';
-      exportFiles.push({path: 'dataset-validation.json', handle: await write(root, 'folder-export/dataset-validation.json', new TextEncoder().encode(datasetText))});
-      const evidence = {status: 'validated', prepared_scenes: manifest.scenes, dataset: datasetReport, task_plan: taskPlan, task_validation: taskValidation, consumer_sample: consumerSample, coverage: manifests.length === 1 ? 'one-complete-selected-plot' : 'complete-selected-plots', selection: manifest.selection, report,
-        runtime: {pyodide: lock.pyodide, python: lock.python, numpy: lock.numpy, laspy: lock.laspy, zip_js: lock.zip_js},
-        runtime_lock_sha256: runtimeHash, dataset_plan: executionPlan, dataset_plan_validation: planValidation,
-        user_agent: navigator.userAgent, source_sha256: manifests.length === 1 ? manifests[0].scenes[0].sha256 : null, intake,
-        limitations: ['Selected LAS verified; whole-provider-archive checksum not checked in this run',
-          'No claim of annotation correctness or geographic independence', 'OPFS is temporary browser storage; export the ZIP before clearing it']};
-      files.push({path: 'browser-run.json', handle: await write(root, 'browser-run.json', new TextEncoder().encode(JSON.stringify(evidence, null, 2) + '\n'))});
+      const requestSummary = {use:prepared[0].taskPlan.use, variables:prepared[0].taskPlan.variables};
+      const report = {status:'validated', plots:datasetReport.scenes, points:datasetReport.points, chunks:prepared.reduce((n,p) => n + p.evidence.task_validation.package.chunks, 0)};
+      const evidence = {status:'validated', request:requestSummary, sources:prepared.map(p => p.evidence), report,
+        dataset:datasetReport, prepared_scenes:prepared.flatMap(p => p.evidence.prepared_scenes),
+        runtime:{pyodide:lock.pyodide, python:lock.python, numpy:lock.numpy, laspy:lock.laspy, zip_js:lock.zip_js},
+        runtime_lock_sha256:runtimeHash, dataset_plan:executionPlan, dataset_plan_validation:planValidation, user_agent:navigator.userAgent,
+        limitations:['Selected LAS SHA256 verified; whole-provider-archive checksums not checked in this run',
+          'Optional missing variables are omitted; no values fabricated', 'Published partitions do not establish geographic independence', 'OPFS is temporary storage; export the ZIP before clearing it']};
+      const documents = {'dataset-validation.json':datasetReport, 'browser-run.json':evidence};
+      if (executionPlan) Object.assign(documents, {'dataset-plan.json':executionPlan, 'dataset-plan-validation.json':planValidation});
+      for (const [path, value] of Object.entries(documents)) exportFiles.push({path, handle:await write(root, 'folder-export/' + path, new TextEncoder().encode(JSON.stringify(value, null, 2) + '\n'))});
       phase('Writing the downloadable ZIP from browser storage…');
-      const zip = await loadZip(lock);
-      const archive = await root.getFileHandle('prepared.zip', {create: true});
-      const access = await archive.createSyncAccessHandle();
-      let position = 0;
+      const zip = await loadZip(lock), archive = await root.getFileHandle('prepared.zip', {create:true});
+      const access = await archive.createSyncAccessHandle(); let position = 0;
       try {
         access.truncate(0);
         const output = new WritableStream({write(bytes) {
           let offset = 0;
           while (offset < bytes.length) {
-            const count = access.write(bytes.subarray(offset), {at: position});
+            const count = access.write(bytes.subarray(offset), {at:position});
             if (!count) throw Error('ZIP write stopped');
             offset += count; position += count;
           }
         }});
-        const writer = new zip.ZipWriter(output, {level: 0, zip64: true});
-        const provenance = files.filter(f => !f.path.endsWith('.npz')).map(f => ({...f, path: f.path === 'task-package.json' ? 'provenance/selection-task-package.json' : f.path}));
+        const writer = new zip.ZipWriter(output, {level:0, zip64:true});
         for (const entry of [...exportFiles, ...provenance]) await writer.add(entry.path, new zip.BlobReader(await entry.handle.getFile()));
         await writer.close(); access.flush();
       } finally { access.close(); }
       const outputFile = await archive.getFile();
-      await write(root, 'complete.json', new TextEncoder().encode(JSON.stringify({size_bytes: outputFile.size, evidence})));
-      self.postMessage({type: 'result', job, file: outputFile, evidence});
+      await write(root, 'complete.json', new TextEncoder().encode(JSON.stringify({size_bytes:outputFile.size, evidence})));
+      self.postMessage({type:'result', job, file:outputFile, evidence});
     } catch (error) {
-      // Only this run's uniquely named staging data is removed.
-      await jobs.removeEntry(job, {recursive: true}).catch(() => {});
+      await jobs.removeEntry(job, {recursive:true}).catch(() => {});
       throw error;
-    } finally {
-      py?.runPython("prep.reader.close() if 'prep' in globals() else None");
-    }
+    } finally { py?.runPython("prep.reader.close() if 'prep' in globals() else None"); }
   });
 }
 

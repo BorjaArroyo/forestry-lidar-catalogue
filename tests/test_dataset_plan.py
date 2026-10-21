@@ -91,4 +91,75 @@ class DatasetPlans(unittest.TestCase):
             with self.assertRaises(ValueError): dataset_plan.check_manifest(plan, changed)
 
 
+class CombinedDatasetPlans(unittest.TestCase):
+    def setUp(self):
+        DatasetPlans.setUp(self)
+        path = ROOT / 'scripts/fgi_emit/source-lock.json'
+        self.fgi = json.loads(path.read_text())
+        self.fgi_plot = next(p for p in self.fgi['plots'] if p['path'].endswith('plot_1022.las'))
+        self.contexts = {'8287792':dict(source=self.source, **{k:v for k,v in self.pins.items() if k != 'runtime_lock_sha256'}),
+            '19351234':dict(source=self.fgi, source_lock_path='scripts/fgi_emit/source-lock.json', source_lock_sha256=hashlib.sha256(path.read_bytes()).hexdigest())}
+        self.subsets = [dict(record_id='8287792', paths=[self.dev['path']]), dict(record_id='19351234', paths=[self.fgi_plot['path']])]
+
+    def combined(self, **overrides):
+        args = dict(use='training', variables={'reflectance':'optional'}, subsets=self.subsets, runtime_lock_sha256='a'*64)
+        args.update(overrides)
+        return dataset_plan.resolve_dataset(self.model, self.contexts, **args)
+
+    def check_combined(self, plan):
+        return dataset_plan.check_dataset(self.model, self.contexts, plan, runtime_lock_sha256='a'*64)
+
+    def test_combined_plan_has_source_semantics_and_exact_totals(self):
+        plan = self.combined()
+        self.assertEqual(plan, self.combined(subsets=list(reversed(self.subsets))))
+        self.assertEqual(self.check_combined(plan), plan)
+        self.assertEqual(plan['schema_version'],'2.0.0')
+        self.assertEqual(plan['totals']['points'],3150462)
+        self.assertEqual(plan['totals']['sources'],2)
+        sources = {p['task_plan']['source_ref']:p for p in plan['source_plans']}
+        self.assertIn('reflectance',sources['zenodo:8287792']['task_plan']['omitted'])
+        self.assertEqual(sources['zenodo:19351234']['task_plan']['included']['reflectance'],['features','feature_valid'])
+        expected = 2*sum(dataset_plan.prepared_bytes(p['task_plan'],p['plots']) for p in sources.values()) + self.fgi_plot['size_bytes'] + 64*1024**2
+        self.assertEqual(plan['totals']['estimated_browser_storage_bytes'],expected)
+        self.assertEqual(plan['output']['partitions'],['dev','train'])
+
+    def test_combined_overlap_is_only_within_source(self):
+        plan = self.combined(subsets=self.subsets+[self.subsets[0]])
+        self.assertEqual(plan['totals']['overlapping_selections'],1)
+        self.assertEqual(plan['totals']['plots'],2)
+
+    def test_combined_incompatibility_and_unknown_source_fail_before_execution(self):
+        with self.assertRaisesRegex(ValueError,'8287792'):self.combined(variables={'reflectance':'required'})
+        with self.assertRaises(ValueError):self.combined(subsets=[dict(record_id='unknown',paths=['x'])])
+        with self.assertRaises(ValueError):self.combined(subsets=[dict(record_id='8287792',paths=[self.test['path']])])
+        with self.assertRaises(ValueError):self.combined(subsets=self.subsets*26)
+
+    def test_combined_tampering_duplicates_and_stale_source_are_rejected(self):
+        original=self.combined()
+        for edit in [lambda p:p['totals'].update(points=1),lambda p:p['request']['variables'].update(reflectance='required'),
+                     lambda p:p['source_plans'][0]['intake'].update(source_lock_sha256='b'*64),
+                     lambda p:p['source_plans'].append(copy.deepcopy(p['source_plans'][0])),
+                     lambda p:p['source_plans'].pop(),lambda p:p.update(runtime_lock_sha256='b'*64)]:
+            changed=copy.deepcopy(original);edit(changed)
+            changed['plan_sha256']=fingerprint({k:v for k,v in changed.items() if k!='plan_sha256'})
+            with self.assertRaises((ValueError,jsonschema.ValidationError)):self.check_combined(changed)
+        self.contexts['19351234']['source_lock_sha256']='b'*64
+        with self.assertRaises(ValueError):self.check_combined(original)
+
+    def test_legacy_plan_keeps_exact_validation(self):
+        plan=DatasetPlans.resolve(self)
+        self.assertEqual(self.check_combined(plan),plan)
+        plan['intake']['runtime_lock_sha256']='b'*64
+        with self.assertRaises(ValueError):self.check_combined(plan)
+
+    def test_every_planned_source_requires_exact_prepared_coverage(self):
+        plan=self.combined()
+        manifests=[dict(source={'record_id':int(p['task_plan']['source_ref'].split(':')[1])},
+                        pipeline=p['task_plan']['pipeline_ref'].removeprefix('pipeline:'),
+                        scenes=[{k:row[k] for k in dataset_plan.PLOT_FIELDS if k!='size_bytes'} for row in p['plots']]) for p in plan['source_plans']]
+        self.assertEqual(dataset_plan.check_manifests(plan,manifests)['status'],'matched')
+        for changed in [manifests[:1],manifests+[manifests[0]]]:
+            with self.assertRaises(ValueError):dataset_plan.check_manifests(plan,changed)
+
+
 if __name__ == '__main__': unittest.main()

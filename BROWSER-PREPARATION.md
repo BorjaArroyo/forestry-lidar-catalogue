@@ -202,7 +202,7 @@ blocks. The worker validates the final layout with `TaskDataset` before ZIP
 completion. Historical ZIPs retain their original layout and captured reports.
 
 
-## Current additional acceptance (2026-10-20)
+## Historical additional acceptance (2026-10-20)
 
 Saved plans can be imported through the file chooser. The pinned Python resolver
 checks strict JSON, schema, exact task/source dependencies and runtime fingerprints
@@ -220,3 +220,41 @@ Its full native audit and independent prepared-array validation cover all 19 plo
 and 60,793,586 points. The adapter preserves source class semantics, unknown points,
 original records and three reflectance channels with separate masks. This does not
 certify calibration, annotation completeness, article scoring or geographic transfer.
+
+
+## Combined-source preparation (2026-10-21)
+
+My dataset accepts subsets from both admitted profiles under one task request.
+Review, JSON import and execution use combined plans 2.0.0 with independently
+checked source plans 1.0.0. Import remains metadata-only and validates every source
+before replacing the saved draft. Stale plans require another review.
+
+A single runtime processes sources sequentially in isolated staging directories.
+Native manifests travel as authoritative JSON text, preserving Python numeric
+representations used by schema fingerprints. Coverage and final folder validation
+must succeed for every source before ZIP completion. Quota is checked globally
+for all prepared blocks, the ZIP and one staged LAS. No backend or container is
+required; interrupted jobs restart.
+
+Optional spectral variables retain FGI native channels and masks and omit absent
+FOR channels explicitly. Required spectral variables block a mixed selection.
+The interface reports requirements, omissions, plots and points per source.
+Provider partitions and byte-identical blocks are preserved; calibration,
+annotation completeness and independent-zone evaluation remain unresolved.
+
+
+Combined-source browser evidence includes the [downloaded Chromium ZIP](evidence/combined-chromium-validation.json)
+and [downloaded Firefox ZIP](evidence/combined-firefox-validation.json), each
+with 3,150,462 points and 13 native-equivalent blocks, plus the
+[expanded run](evidence/combined-browser-expanded-validation.json) with 9,160,560
+points and 39 native-equivalent blocks. The expanded ZIP was created in browser
+storage; it was not downloaded for that acceptance case. These are bounded
+selections, not full-release browser validation.
+
+On the macOS acceptance system, Firefox 157 stalled before displaying the save
+dialog, even for an isolated 19-byte Blob outside Canopy. Saving directly to the
+configured Downloads folder succeeded for the completed 319,414,648-byte ZIP;
+CRC, independent folder validation and all 13 native block hashes passed. The
+completed archive was reopened through a read-only diagnostic page using the
+same File object-URL mechanism as application recovery. The interface documents
+this workaround; no in-memory ZIP copy or scientific-adapter change is needed.

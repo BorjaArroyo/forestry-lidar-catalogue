@@ -44,25 +44,39 @@ export function addSubset(draft, request, subset) {
 }
 export function reviewDraft(draft, {request, assess, sourcePlots, hasProfile}) {
   if (!draft.subsets.length) return {status: 'empty', paths: [], points: 0, bytes: 0, overlaps: 0};
-  if (!sameRequest(draft.request, request)) throw Error('Requirements changed. Restore the saved requirements or clear this dataset');
-  const records = new Set(draft.subsets.map(s => s.record_id));
-  if (records.size !== 1) throw Error('This increment executes subsets from one admitted source at a time');
-  const record = [...records][0], assessment = assess(record, draft.request);
-  if (assessment.status !== 'ready' || !hasProfile(assessment.pipeline_ref)) throw Error('The saved source has no available audited preparation for these requirements');
-  const plots = sourcePlots(record);
-  if (!plots) throw Error('Loading the saved source membership…');
-  const byPath = new Map(plots.map(plot => [plot.path, plot])), selected = new Map();
-  let count = 0;
-  for (const subset of draft.subsets) {
-    if (subset.pipeline_ref !== assessment.pipeline_ref) throw Error('The saved pipeline changed. Clear and select the source again');
-    for (const path of subset.paths) {
-      const plot = byPath.get(path);
-      if (!plot || !assessment.allowed_partitions.includes(plot.published_split)) throw Error('A saved plot is absent or excluded by the current task requirements');
-      if (!subset.collections.includes(plot.collection) || !subset.partitions.includes(plot.published_split)) throw Error('Saved subset metadata differs from reviewed source membership');
-      selected.set(path, plot); count++;
-    }
+  if (!sameRequest(draft.request, request)) {
+    const blocked = [...new Set(draft.subsets.map(s => s.record_id))].map(record => {
+      const result = assess(record, request);
+      return result.status !== 'ready' ? `zenodo:${record}: ${result.blockers?.join('; ') || 'incompatible requirements'}` : '';
+    }).filter(Boolean).join('. ');
+    throw Error(`Requirements changed. ${blocked ? blocked + '. ' : ''}Restore the saved requirements or clear this dataset`);
   }
-  return {status: 'ready', record_id: record, pipeline_ref: assessment.pipeline_ref, paths: [...selected.keys()],
-    overlaps: count - selected.size, points: [...selected.values()].reduce((n,p) => n + p.points, 0),
-    bytes: [...selected.values()].reduce((n,p) => n + p.size_bytes, 0), request: structuredClone(draft.request)};
+  const records = [...new Set(draft.subsets.map(s => s.record_id))].sort();
+  const sources = [];
+  for (const record of records) {
+    const assessment = assess(record, draft.request);
+    if (assessment.status !== 'ready' || !hasProfile(assessment.pipeline_ref))
+      throw Error(`zenodo:${record}: ${assessment.blockers?.join('; ') || 'No available audited preparation for these requirements'}`);
+    const plots = sourcePlots(record);
+    if (!plots) throw Error(`Loading the saved source membership for zenodo:${record}…`);
+    const byPath = new Map(plots.map(plot => [plot.path, plot])), selected = new Map();
+    const subsets = draft.subsets.filter(subset => subset.record_id === record);
+    let count = 0;
+    for (const subset of subsets) {
+      if (subset.pipeline_ref !== assessment.pipeline_ref) throw Error('The saved pipeline changed. Clear and select the source again');
+      for (const path of subset.paths) {
+        const plot = byPath.get(path);
+        if (!plot || !assessment.allowed_partitions.includes(plot.published_split)) throw Error('A saved plot is absent or excluded by the current task requirements');
+        if (!subset.collections.includes(plot.collection) || !subset.partitions.includes(plot.published_split)) throw Error('Saved subset metadata differs from reviewed source membership');
+        selected.set(path, plot); count++;
+      }
+    }
+    sources.push({record_id: record, pipeline_ref: assessment.pipeline_ref, paths: [...selected.keys()],
+      overlaps: count - selected.size, points: [...selected.values()].reduce((n,p) => n + p.points, 0),
+      bytes: [...selected.values()].reduce((n,p) => n + p.size_bytes, 0)});
+  }
+  return {...(sources.length === 1 ? sources[0] : {}), status: 'ready', sources,
+    paths: sources.flatMap(source => source.paths), overlaps: sources.reduce((n,s) => n + s.overlaps, 0),
+    points: sources.reduce((n,s) => n + s.points, 0), bytes: sources.reduce((n,s) => n + s.bytes, 0),
+    request: structuredClone(draft.request)};
 }

@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-21
+
+- Combine admitted FOR-instance and FGI-EMIT subsets in one browser preparation
+  and one partition-preserving ZIP, using existing audited source adapters.
+- Document the Firefox macOS save-dialog workaround next to ZIP export; verify
+  the downloaded Firefox archive against the independent reader and native blocks.
+- Review and import version 2.0 combined plans with exact per-source plans,
+  global storage estimates, explicit optional omissions and independent coverage checks.
+- Validate mixed native packages, global preflight and second-source failures;
+  preserve version 1.0 source-plan checks and existing single-source preparation.
+
+
 ## 2026-10-20 — Plan import, larger selections and FGI-EMIT admission
 
 - Import strict saved plans, verify exact current dependencies, and restore selections only after validation.

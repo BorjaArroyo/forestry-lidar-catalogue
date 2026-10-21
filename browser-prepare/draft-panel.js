@@ -77,7 +77,7 @@ export class DraftPanel {
       row.append(label, button); list.append(row);
     }
     this.element('dataset-draft-summary').textContent = review.status === 'ready' ?
-      `${this.draft.subsets.length} subsets · ${review.paths.length} unique plots · ${review.points.toLocaleString()} points · ${(review.bytes / 1048576).toFixed(1)} MiB source LAS. ${review.overlaps} overlapping plot selections will be retrieved once.` :
+      `${review.sources.length} sources · ${this.draft.subsets.length} subsets · ${review.paths.length} unique plots · ${review.points.toLocaleString()} points · ${(review.bytes / 1048576).toFixed(1)} MiB source LAS. ${review.overlaps} overlapping plot selections will be retrieved once.` :
       this.hasSubsets ? `${this.draft.subsets.length} saved subsets · ${review.error}` :
       'No saved subsets yet. Add a selection above, then choose another collection or partition.';
     this.element('dataset-draft-status').textContent = [this.loadError || this.notice, this.storageError].filter(Boolean).join(' ');

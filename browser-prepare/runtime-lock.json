@@ -187,8 +187,8 @@
     },
     "browser-prepare/profiles/for-instance.js": {
       "url": "browser-prepare/profiles/for-instance.js",
-      "sha256": "402641a3ec5c72e4bc941266cbae992fb30c36cf1f5ccfd4f63d0d8b40392fd3",
-      "size_bytes": 879
+      "sha256": "127a16cc984b3d1064046eeccd78afd1f8959e6cc829cd6309023bcd1ea74d52",
+      "size_bytes": 930
     },
     "browser-prepare/batch.py": {
       "url": "browser-prepare/batch.py",
@@ -212,13 +212,13 @@
     },
     "scripts/dataset_plan.py": {
       "url": "scripts/dataset_plan.py",
-      "size_bytes": 5580,
-      "sha256": "f3ed697831143940305ad015af1f6e3dd134ba9dcfd2935f671859097857a632"
+      "size_bytes": 10402,
+      "sha256": "eaa9b278ef4f151384b252f54df49a3c6d5bcc854ac25898b92fec8e81621b01"
     },
     "dataset-plan.schema.json": {
       "url": "dataset-plan.schema.json",
-      "size_bytes": 2884,
-      "sha256": "b066ddb8c91783d91876a2a5715d78c9acc4b8b11bdf10f756630e72396bb43e"
+      "size_bytes": 7934,
+      "sha256": "126a934a3e2ebafc789b9ace6c98c62dc567d0b81cebae0f350e53fabb8d71e1"
     },
     "scripts/fgi_emit/prepare.py": {
       "url": "scripts/fgi_emit/prepare.py",
@@ -247,13 +247,13 @@
     },
     "browser-prepare/profiles/fgi-emit.js": {
       "url": "browser-prepare/profiles/fgi-emit.js",
-      "size_bytes": 1185,
-      "sha256": "0d127e18b5a4f4b114597fb411c9cf23b29e5070de975fe8493d1aa46b58854b"
+      "size_bytes": 1236,
+      "sha256": "751e7b00e78597775d746623b0853575eb5a6b5b68cf0834504737b528edece4"
     },
     "browser-prepare/worker.js": {
       "url": "browser-prepare/worker.js",
-      "size_bytes": 23374,
-      "sha256": "0b60098fab7b3c6adc124a421d6a01a79810ec80fcbcaa4c150872257a79f956"
+      "size_bytes": 25262,
+      "sha256": "e4a6a5785b1e6e4f2eebfed16dad2be5fbf1c6d49d6710d5c2ba6ca6ef730772"
     }
   },
   "zip_js": "2.20.0",

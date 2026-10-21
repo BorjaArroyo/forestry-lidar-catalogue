@@ -50,11 +50,20 @@ async function panel({savedStorage} = {}) {
     element('prepare-review').onclick();
     const worker = workers.at(-1), intent = worker.request;
     assert.equal(intent.operation, 'review');
-    const paths = [...new Set(intent.subset_paths.flat())];
-    worker.onmessage({data:{type:'result',operation:'review',plan:{schema_version:'1.0.0',
-      task_plan:{use:intent.task_request.use,source_ref:'zenodo:'+intent.record_id,pipeline_ref:'pipeline:fixture',included:{xyz:['xyz']},omitted:{reflectance:'unavailable'}},
-      plots:paths.map(path=>({path})),totals:{plots:paths.length,points:100,overlapping_selections:0,source_las_bytes:1000,estimated_browser_storage_bytes:10000},
-      output:{partitions:['dev']},limitations:['No geographic independence claim'],plan_sha256:'a'.repeat(64)}}});
+    const records=[...new Set(intent.subsets.map(s=>s.record_id))].sort();
+    const sourcePlans=records.map(record=>{
+      const subsets=intent.subsets.filter(s=>s.record_id===record).map(s=>s.paths);
+      const paths=[...new Set(subsets.flat())];
+      const membership=JSON.parse(fs.readFileSync(new URL(record==='19351234'?'../scripts/fgi_emit/source-lock.json':'../scripts/for_instance/source-lock.json',import.meta.url),'utf8')).plots;
+      const result=context.window.CanopyTaskSelection.assess(record,intent.task_request);
+      return {schema_version:'1.0.0',task_plan:{...intent.task_request,source_ref:'zenodo:'+record,pipeline_ref:result.pipeline_ref,included:result.included,omitted:result.omitted},
+        subsets,plots:paths.map(path=>membership.find(p=>p.path===path)),
+        totals:{plots:paths.length,points:100,overlapping_selections:0,source_las_bytes:1000,estimated_browser_storage_bytes:10000},
+        output:{partitions:[...new Set(paths.map(path=>membership.find(p=>p.path===path).published_split))]},limitations:[],plan_sha256:'a'.repeat(64)};
+    });
+    worker.onmessage({data:{type:'result',operation:'review',plan:{schema_version:'2.0.0',request:intent.task_request,source_plans:sourcePlans,
+      totals:{plots:sourcePlans.reduce((n,p)=>n+p.plots.length,0),points:100,overlapping_selections:0,source_las_bytes:1000,estimated_browser_storage_bytes:10000},
+      output:{partitions:sourcePlans.flatMap(p=>p.output.partitions)},limitations:['No geographic independence claim'],plan_sha256:'a'.repeat(64)}}});
     await settle();
     return worker;
   };
@@ -98,8 +107,8 @@ test('collections and partitions select a dataset; plots remain an advanced subs
   assert.match(p.element('prepare-selection-summary').textContent, /1 complete plots/);
   assert.equal(p.element('prepare-run').disabled,true);
   await p.review(); await p.element('prepare-run').onclick();
-  assert.equal(p.workers[1].request.execution_plan.plots.length, 1);
-  assert.match(p.workers[1].request.execution_plan.plots[0].path, /RMIT\/train.las/);
+  assert.equal(p.workers[1].request.execution_plan.source_plans.flatMap(p=>p.plots).length, 1);
+  assert.match(p.workers[1].request.execution_plan.source_plans.flatMap(p=>p.plots)[0].path, /RMIT\/train.las/);
   await p.element('prepare-cancel').onclick();
 });
 
@@ -114,7 +123,7 @@ test('subsets persist on reload and execute the saved union rather than the curr
   assert.equal(p.element('dataset-draft-list').options.length,2);
   assert.equal(p.element('prepare-run').textContent,'Prepare my dataset');
   await p.review(); await p.element('prepare-run').onclick();
-  const paths=p.workers[1].request.execution_plan.plots.map(plot=>plot.path);
+  const paths=p.workers[1].request.execution_plan.source_plans.flatMap(p=>p.plots).map(plot=>plot.path);
   assert.ok(paths.some(path=>path.includes('/RMIT/')));assert.ok(paths.some(path=>path.includes('/CULS/')));
   assert.ok(paths.every(path=>path.includes('/RMIT/')||path.includes('/CULS/')));
   assert.equal(p.element('dataset-draft-clear').disabled,true);
@@ -177,7 +186,7 @@ test('cancelling a metadata review preserves an existing completed dataset ZIP',
   const p=await panel();p.element('prepare-mode').value='las';p.element('prepare-file').files=[{}];p.element('prepare-mode').onchange();
   await p.element('prepare-run').onclick();const worker=p.workers.at(-1);
   worker.onmessage({data:{type:'job',id:'previous-output'}});
-  worker.onmessage({data:{type:'result',file:new Blob(['fixture']),evidence:{report:{plots:1,points:3,chunks:1},task_plan:{use:'training',omitted:{}}}}});
+  worker.onmessage({data:{type:'result',file:new Blob(['fixture']),evidence:{report:{plots:1,points:3,chunks:1},request:{use:'training'},sources:[{task_plan:{source_ref:'zenodo:8287792',omitted:{}}}]}}});
   p.element('prepare-mode').value='zenodo';p.element('prepare-mode').onchange();
   p.element('prepare-review').onclick();await p.element('prepare-cancel').onclick();
   assert.equal(p.removed.length,0);assert.equal(p.element('prepare-download').hidden,false);
@@ -189,7 +198,7 @@ test('plan import validates before replacing saved subsets and sends the verifie
   const source=JSON.parse(fs.readFileSync(new URL('../scripts/for_instance/source-lock.json',import.meta.url),'utf8'));
   const plot=source.plots.find(plot=>plot.path.includes('/RMIT/')&&plot.published_split==='dev');
   const request={use:'training',variables:{xyz:'required',instance_reference:'required',reflectance:'optional'}};
-  const plan={task_plan:{...request,source_ref:'zenodo:8287792',pipeline_ref:'pipeline:for-instance-plot-instances:1.0.0',included:{xyz:['xyz'],instance_reference:['instance','instance_valid']},omitted:{reflectance:'unavailable'}},
+  const plan={schema_version:'1.0.0',task_plan:{...request,source_ref:'zenodo:8287792',pipeline_ref:'pipeline:for-instance-plot-instances:1.0.0',included:{xyz:['xyz'],instance_reference:['instance','instance_valid']},omitted:{reflectance:'unavailable'}},
     subsets:[[plot.path]],plots:[plot],totals:{plots:1,points:plot.points,overlapping_selections:0,source_las_bytes:plot.size_bytes,estimated_browser_storage_bytes:100000},output:{partitions:['dev']},limitations:[],plan_sha256:'a'.repeat(64)};
   const text=JSON.stringify(plan);p.element('dataset-plan-file').files=[{size:text.length,text:async()=>text}];
   await p.element('dataset-plan-file').onchange();
@@ -203,7 +212,7 @@ test('invalid or oversized imports preserve the existing dataset selection', asy
   const p=await panel();p.element('prepare-add').onclick();const before=new Map(p.savedStorage);
   p.element('dataset-plan-file').files=[{size:1048577,text:async()=>''}];await p.element('dataset-plan-file').onchange();
   assert.equal(p.workers.length,0);assert.deepEqual(p.savedStorage,before);
-  const text=JSON.stringify({task_plan:{source_ref:'zenodo:8287792'}});
+  const text=JSON.stringify({schema_version:'1.0.0',task_plan:{source_ref:'zenodo:8287792'}});
   p.element('dataset-plan-file').files=[{size:text.length,text:async()=>text}];await p.element('dataset-plan-file').onchange();
   p.workers[0].onmessage({data:{type:'error',error:'Stale or tampered plan'}});
   assert.deepEqual(p.savedStorage,before);assert.equal(p.element('dataset-draft-list').options.length,1);
@@ -215,4 +224,57 @@ test('admitted FGI source supports required spectral channels and official train
   assert.equal(p.element('prepare-review').disabled,false);
   assert.equal(p.element('prepare-plot').options.length,13);
   assert.ok(p.element('prepare-plot').options.every(o=>o.textContent.includes(' · train · ')));
+});
+
+
+test('both saved sources survive reload and execute independently of the current selector', async () => {
+  let p=await panel();
+  for(const option of p.element('prepare-collections').options)option.selected=option.value==='RMIT';
+  p.element('prepare-collections').onchange();p.element('prepare-add').onclick();
+  p.element('prepare-source').value='19351234';await p.element('prepare-source').onchange();
+  for(const option of p.element('prepare-plot').options)option.selected=option.value.endsWith('plot_1022.las');
+  p.element('prepare-plot').onchange();p.element('prepare-add').onclick();
+  p=await panel({savedStorage:p.savedStorage});
+  assert.match(p.element('dataset-draft-summary').textContent,/2 sources/);
+  p.element('prepare-source').value='16742708';await p.element('prepare-source').onchange();
+  await p.review();assert.equal(p.element('prepare-run').disabled,false);
+  await p.element('prepare-run').onclick();
+  const run=p.workers.at(-1).request;
+  assert.deepEqual([...run.execution_plan.source_plans.map(p=>p.task_plan.source_ref)].sort(),['zenodo:19351234','zenodo:8287792']);
+  assert.equal(run.subsets.length,2);
+});
+
+test('required reflectance blocks a mixed saved selection without deleting it', async () => {
+  const p=await panel();p.element('prepare-add').onclick();
+  p.element('prepare-source').value='19351234';await p.element('prepare-source').onchange();p.element('prepare-add').onclick();
+  const before=new Map(p.savedStorage);
+  p.setRequest({use:'training',variables:{reflectance:'required'}});p.listeners.get('canopy-task-request')();
+  assert.equal(p.element('prepare-review').disabled,true);assert.equal(p.element('prepare-run').disabled,true);
+  assert.deepEqual(p.savedStorage,before);assert.equal(p.element('dataset-draft-list').options.length,2);
+});
+
+
+test('combined plan import restores every source atomically and executes the imported plan', async () => {
+  const p=await panel();p.element('prepare-add').onclick();
+  const request={use:'training',variables:{xyz:'required',instance_reference:'required',reflectance:'optional'}};
+  const memberships={},sourcePlans=[];
+  for(const [record,folder] of [['8287792','for_instance'],['19351234','fgi_emit']]) {
+    const source=JSON.parse(fs.readFileSync(new URL(`../scripts/${folder}/source-lock.json`,import.meta.url),'utf8'));
+    memberships[record]=source.plots;
+    const plot=source.plots.find(row=>record==='8287792'?row.path.endsWith('RMIT/train.las'):row.path.endsWith('plot_1022.las'));
+    sourcePlans.push({schema_version:'1.0.0',task_plan:{...request,source_ref:'zenodo:'+record,
+      pipeline_ref:record==='8287792'?'pipeline:for-instance-plot-instances:1.0.0':'pipeline:fgi-emit-plot-instances:1.0.0',
+      included:{xyz:['xyz']},omitted:record==='8287792'?{reflectance:'unavailable'}:{}},subsets:[[plot.path]],plots:[plot],
+      totals:{plots:1,points:plot.points},output:{partitions:[plot.published_split]}});
+  }
+  const plan={schema_version:'2.0.0',request,source_plans:sourcePlans,totals:{plots:2,points:3150462,overlapping_selections:0,source_las_bytes:187148258,estimated_browser_storage_bytes:1000000000},
+    output:{partitions:['dev','train']},limitations:[],plan_sha256:'a'.repeat(64)};
+  const text=JSON.stringify(plan);p.element('dataset-plan-file').files=[{size:text.length,text:async()=>text}];
+  await p.element('dataset-plan-file').onchange();
+  p.workers[0].onmessage({data:{type:'result',operation:'import',plan,source_plots:memberships}});
+  assert.equal(p.element('dataset-draft-list').options.length,2);
+  assert.match(p.element('dataset-plan-requirements').textContent,/FGI-EMIT/);
+  assert.match(p.element('dataset-plan-requirements').textContent,/FOR-instance/);
+  assert.equal(p.element('prepare-run').disabled,false);
+  await p.element('prepare-run').onclick();assert.deepEqual(p.workers[1].request.execution_plan,plan);
 });

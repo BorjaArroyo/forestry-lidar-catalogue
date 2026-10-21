@@ -65,8 +65,8 @@ binds the dataset index, schema and reader hashes.
 FOR-instance and FGI-EMIT have executable, independently validated source profiles.
 
 Workbench now saves public-source subsets in **My dataset**. Add collections or
-partitions, remove individual subsets and reload without losing the draft. This
-increment executes one admitted source at a time using Zenodo intake; local-file
+partitions, remove individual subsets and reload without losing the draft. The browser
+executes selected admitted sources sequentially in one run using Zenodo intake; local-file
 preparation remains available when the saved list is empty. Matching overlaps are
 retrieved once. Changed requirements block execution until explicitly restored or
 the saved list is cleared. The repeated native `--input` option also composes
@@ -82,7 +82,9 @@ With saved subsets, the plan covers their union; otherwise it covers the current
 selection. No source LAS is downloaded during review. The pinned Python runtime
 and reviewed metadata may be downloaded to resolve the plan.
 
-`dataset-plan.schema.json` defines version 1.0.0. `scripts/dataset_plan.py` resolves
+`dataset-plan.schema.json` defines combined version 2.0.0 and retains the exact
+version 1.0.0 source-plan contract. Each combined plan contains one common request,
+source plans with their own provenance, global totals and a global fingerprint. `scripts/dataset_plan.py` resolves
 and checks the plan using the same canonical task planner as preparation. It records:
 
 - Exact source release, pipeline version, task use, required/optional variables,
@@ -130,9 +132,47 @@ The common export command can compose already prepared FOR-instance and FGI-EMIT
 packages if both satisfy the requested task variables. Original source identities,
 partition folders and optional omissions stay explicit. A consumer must handle
 missing optional variables; the loader never fabricates shared spectral columns
-or certifies cross-source calibration. Browser plans still contain one source.
+or certifies cross-source calibration. Browser plans can contain both admitted sources. Required reflectance blocks a
+selection containing FOR-instance before any payload download; optional reflectance
+keeps its absence explicit while FGI retains native channels and masks.
 
 [Browser scale evidence](evidence/browser-bulk-validation.json) covers four complete
 FOR-instance plots from three collections, 5,541,993 points and 24 blocks. Every
 block matches the audited native reference. This is a bounded larger-selection
 test, not full-release browser scalability or interrupted-job resumption.
+
+
+## Combined browser export
+
+The browser uses one pinned runtime and stages one complete LAS at a time. Every
+source package passes its unchanged independent reader before composition; then
+all source coverage is checked against the frozen plan and `TaskDataset` validates
+the final folders. A failed source, insufficient quota or failed validation cannot
+publish a completed ZIP. Starting again restarts the entire selection.
+
+The ZIP contains `dataset.json`, `dataset-validation.json`, combined
+`dataset-plan.json`, its coverage report and `browser-run.json`. Under
+`provenance/zenodo-<record>/`, each source retains its selection manifest, task
+plan, independent validation and individual execution plan. Data blocks remain
+under their original partition and source, for example:
+
+```text
+dev/zenodo-8287792/task-package.json
+dev/zenodo-8287792/plots/<scene>/<block>.npz
+train/zenodo-19351234/task-package.json
+train/zenodo-19351234/plots/<scene>/<block>.npz
+```
+
+Published `dev` and `train` are not renamed or merged into a new scientific split.
+Source and scene identities remain separate; neither point deduplication nor
+cross-source feature calibration is applied. The task-dataset 1.0 folder contract
+and both scientific producer packages are unchanged.
+
+
+Combined-source browser evidence includes the [downloaded Chromium ZIP](evidence/combined-chromium-validation.json)
+and [downloaded Firefox ZIP](evidence/combined-firefox-validation.json), each
+with 3,150,462 points and 13 native-equivalent blocks, plus the
+[expanded run](evidence/combined-browser-expanded-validation.json) with 9,160,560
+points and 39 native-equivalent blocks. The expanded ZIP was created in browser
+storage; it was not downloaded for that acceptance case. These are bounded
+selections, not full-release browser validation.

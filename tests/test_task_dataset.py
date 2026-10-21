@@ -69,4 +69,39 @@ class DatasetFolders(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'index changed'): next(dataset.iter_partition('dev'))
 
 
+class MixedDatasetFolders(unittest.TestCase):
+    def setUp(self):
+        from unittest.mock import patch
+        import test_fgi_preparation
+        self.native=fixtures.ContractTests();self.native.setUp();self.addCleanup(self.native.doCleanups)
+        self.fgi=test_fgi_preparation.FgiPreparation();self.fgi.setUp();self.addCleanup(self.fgi.doCleanups)
+        self.model=knowledge_model.load();self.output=self.native.root.parent/'mixed'
+        from task_package import TaskPackage
+        profiles={8287792:self.native.profile,19351234:self.fgi.profile}
+        def package(root, **kwargs):
+            record=json.loads((Path(root)/'task-package.json').read_text())['source']['record_id']
+            return TaskPackage(root,profile=profiles[record],**kwargs)
+        self.patch=patch('task_dataset.TaskPackage',side_effect=package);self.patch.start();self.addCleanup(self.patch.stop)
+
+    def test_two_native_profiles_compose_without_changing_blocks(self):
+        report=export_dataset(self.model,[self.native.root,self.fgi.output],self.output,variables={'reflectance':'optional'})
+        self.assertEqual(report['partitions'],['dev','train'])
+        dataset=TaskDataset(self.output,self.model);dataset.validate()
+        mono=next(dataset.iter_partition('dev'));multi=next(dataset.iter_partition('train'))
+        self.assertEqual(mono['source_ref'],'zenodo:8287792');self.assertNotIn('features',mono['arrays'])
+        self.assertEqual(multi['source_ref'],'zenodo:19351234')
+        self.assertEqual(set(multi['arrays']),{'xyz','instance','instance_valid','features','feature_valid'})
+        for entry in dataset.manifest['packages']:
+            original=self.native.root if entry['source_ref']=='zenodo:8287792' else self.fgi.output
+            for block in (self.output/entry['path']).rglob('*.npz'):
+                self.assertEqual(block.read_bytes(),(original/block.relative_to(self.output/entry['path'])).read_bytes())
+
+    def test_required_missing_measurements_and_corrupt_second_source_publish_nothing(self):
+        with self.assertRaises(ValueError):export_dataset(self.model,[self.native.root,self.fgi.output],self.output,variables={'reflectance':'required'})
+        self.assertFalse(self.output.exists())
+        next(self.fgi.output.rglob('*.npz')).write_bytes(b'corrupt')
+        with self.assertRaises(ValueError):export_dataset(self.model,[self.native.root,self.fgi.output],self.output)
+        self.assertFalse(self.output.exists())
+
+
 if __name__ == '__main__': unittest.main()

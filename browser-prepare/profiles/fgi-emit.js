@@ -15,7 +15,8 @@ export const fgiEmit = Object.freeze({
     return asset;
   },
   start(py) { py.runPython("from fgi_emit.prepare import Preparation as FgiPreparation; prep = FgiPreparation('/input/source.las', '/app/scripts/fgi_emit')"); },
-  validate(py) {
-    return JSON.parse(py.runPython("task_package = TaskPackage('/output', allow_selection=True); task_validation = validate_prepared(task_model, task_plan, task_package); json.dumps(task_validation)"));
+  validate(py, root) {
+    py.globals.set('package_root', root);
+    return JSON.parse(py.runPython("task_package = TaskPackage(package_root, allow_selection=True); task_validation = validate_prepared(task_model, task_plan, task_package); json.dumps(task_validation)"));
   },
 });

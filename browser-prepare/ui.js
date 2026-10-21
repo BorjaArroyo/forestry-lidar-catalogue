@@ -28,16 +28,19 @@ function hideExport() {
   resultURL = null;
   $('prepare-download').hidden = true;
 }
+function planSources(plan) { return plan.schema_version === '1.0.0' ? [plan] : plan.source_plans; }
+function planRequest(plan) { return plan.schema_version === '1.0.0' ? {use:plan.task_plan.use, variables:plan.task_plan.variables} : plan.request; }
 function planIntent() {
-  if ($('prepare-mode').value !== 'zenodo') return null;
-  const saved = draftPanel?.hasSubsets ? draftPanel.review() : null;
-  const record = saved?.record_id || selectedSource(), request = saved?.request || getRequest();
-  const result = selection.assess(record, request);
-  if (draftPanel?.blockedStorage || (saved && saved.status !== 'ready') ||
-      result.status !== 'ready' || !profileForPipeline(result.pipeline_ref)) return null;
-  const subsets = saved ? draftPanel.draft.subsets.map(s => [...s.paths].sort()) : [selectedValues('prepare-plot').sort()];
-  if (subsets.some(paths => !paths.length)) return null;
-  return {record_id: record, mode: 'zenodo', task_request: request, subset_paths: subsets};
+  if ($('prepare-mode').value !== 'zenodo' || draftPanel?.blockedStorage) return null;
+  if (draftPanel?.hasSubsets) {
+    const saved = draftPanel.review();
+    if (saved.status !== 'ready') return null;
+    return {mode:'zenodo', task_request:saved.request,
+      subsets:draftPanel.draft.subsets.map(s => ({record_id:s.record_id, paths:[...s.paths].sort()}))};
+  }
+  const result = assessment(), paths = selectedValues('prepare-plot').sort();
+  if (result.status !== 'ready' || !profileForPipeline(result.pipeline_ref) || !paths.length) return null;
+  return {mode:'zenodo', task_request:getRequest(), subsets:[{record_id:selectedSource(), paths}]};
 }
 function clearPlan() {
   reviewedPlan = null; reviewedKey = null;
@@ -45,38 +48,46 @@ function clearPlan() {
   planURL = null; $('dataset-plan').hidden = true;
 }
 function applyImportedPlan(data) {
-  const {plan, source_plots: sourcePlots} = data;
-  const task = plan.task_plan, record = task.source_ref.replace(/^zenodo:/, '');
-  const profile = profileForPipeline(task.pipeline_ref);
-  if (!profile || profile.recordId !== record) throw Error('Imported source has no available browser implementation');
-  const request = selection.normalize(task.use, task.variables), result = selection.assess(record, request);
-  if (!sameRequest(request, {use:task.use, variables:task.variables}) || result.status !== 'ready' || result.pipeline_ref !== task.pipeline_ref)
-    throw Error('Imported task requirements differ from this page. Reload the page and try again.');
-  const membership = sourcePlots.map(plot => ({...plot, collection:profile.collectionOf(plot)}));
-  const byPath = new Map(membership.map(plot => [plot.path, plot]));
-  const draft = emptyDraft(request);
-  draft.subsets = plan.subsets.map(paths => ({record_id:record, pipeline_ref:task.pipeline_ref, paths,
-    collections:[...new Set(paths.map(path => byPath.get(path).collection))],
-    partitions:[...new Set(paths.map(path => byPath.get(path).published_split))]}));
+  const {plan} = data, request = planRequest(plan), sources = planSources(plan);
+  const normalized = selection.normalize(request.use, request.variables);
+  if (!sameRequest(request, normalized)) throw Error('Imported task requirements differ from this page. Reload and try again.');
+  const draft = emptyDraft(request), memberships = new Map();
+  for (const source of sources) {
+    const task = source.task_plan, record = task.source_ref.replace(/^zenodo:/, '');
+    const profile = profileForPipeline(task.pipeline_ref), result = selection.assess(record, request);
+    if (!profile || profile.recordId !== record || result.status !== 'ready' || result.pipeline_ref !== task.pipeline_ref)
+      throw Error(`zenodo:${record}: imported source has no current browser implementation`);
+    const nativePlots = Array.isArray(data.source_plots) ? data.source_plots : data.source_plots[record];
+    const membership = nativePlots.map(plot => ({...plot, collection:profile.collectionOf(plot)}));
+    memberships.set(record, membership.sort((a,b) => a.size_bytes-b.size_bytes));
+    const byPath = new Map(membership.map(plot => [plot.path, plot]));
+    draft.subsets.push(...source.subsets.map(paths => ({record_id:record, pipeline_ref:task.pipeline_ref, paths,
+      collections:[...new Set(paths.map(path => byPath.get(path).collection))],
+      partitions:[...new Set(paths.map(path => byPath.get(path).published_split))]})));
+  }
   readDraft(JSON.stringify(draft), selection.normalize);
-  // The worker is finished; allow the normal task setter before locking UI changes.
   controls(); busy = true;
   try {
     window.CanopyHub.setTaskRequest(request);
+    for (const [record, membership] of memberships) sourceMembership.set(record, membership);
+    const record = draft.subsets[0].record_id;
     $('prepare-source').value = record; $('prepare-mode').value = 'zenodo';
-    plots = membership.sort((a,b) => a.size_bytes-b.size_bytes); sourceMembership.set(record, plots); initialized = true;
+    plots = sourceMembership.get(record); initialized = true;
     draftPanel.replace(draft); refreshPlots(); hideExport();
-    $('prepare-source-status').textContent = `${catalog.datasets.find(s => s.id === record).name}: imported source and pipeline verified.`;
+    $('prepare-source-status').textContent = `${sources.length} imported sources and pipelines verified.`;
     pendingReviewKey = JSON.stringify(planIntent()); showPlan(plan);
     status('Saved plan verified and imported. Review its summary, then prepare the exact selection.');
   } finally { busy = false; }
 }
 function showPlan(plan) {
   clearPlan(); reviewedPlan = plan; reviewedKey = pendingReviewKey;
-  const {totals, task_plan: task, output} = plan;
+  const {totals, output} = plan, request = planRequest(plan), sources = planSources(plan);
   $('dataset-plan-summary').textContent = `${totals.plots} unique plots · ${totals.points.toLocaleString()} points · ${totals.overlapping_selections} overlapping selections retrieved once. Source LAS: ${(totals.source_las_bytes / 1048576).toFixed(1)} MiB; estimated browser space: ${Math.ceil(totals.estimated_browser_storage_bytes / 1048576)} MiB. Compressed network volume is not known.`;
-  $('dataset-plan-requirements').textContent = `Use: ${task.use}. Included variables: ${Object.keys(task.included).join(', ')}. Optional omissions: ${Object.keys(task.omitted).join(', ') || 'none'}. Output folders: ${output.partitions.join(', ')} / ${task.source_ref}.`;
-  $('dataset-plan-version').textContent = `Source release: ${task.source_ref}. Pipeline: ${task.pipeline_ref}. Plan: ${plan.plan_sha256}.`;
+  $('dataset-plan-requirements').textContent = `Use: ${request.use}. ` + sources.map(source => {
+    const task = source.task_plan;
+    return `${catalog.datasets.find(d => 'zenodo:' + d.id === task.source_ref)?.name || task.source_ref}: ${source.totals.plots} plots, ${source.totals.points.toLocaleString()} points; included ${Object.keys(task.included).join(', ')}; optional omissions ${Object.keys(task.omitted).join(', ') || 'none'}; folders ${source.output.partitions.join(', ')} / ${task.source_ref}.`;
+  }).join(' ');
+  $('dataset-plan-version').textContent = sources.map(source => `${source.task_plan.source_ref}: ${source.task_plan.pipeline_ref}`).join('; ') + `. Plan: ${plan.plan_sha256}.`;
   $('dataset-plan-evidence').textContent = JSON.stringify(plan, null, 2);
   const limitations = $('dataset-plan-limitations'); limitations.replaceChildren();
   for (const text of plan.limitations) { const row = document.createElement('li'); row.textContent = text; limitations.append(row); }
@@ -180,7 +191,7 @@ async function removeJob(id) {
   const jobs = await origin.getDirectoryHandle('canopy-preparation');
   await navigator.locks.request('canopy-preparation:' + id, {ifAvailable: true}, async lock => {
     if (!lock) throw Error('This output is in use by another page');
-    await jobs.removeEntry(id, {recursive: true});
+    await jobs.removeEntry(id, {recursive: true}).catch(error => { if (error.name !== 'NotFoundError') throw error; });
   });
 }
 function showExport(file, evidence, name) {
@@ -203,9 +214,10 @@ const session = new RunSession({
       reviewing = false; showPlan(data.plan);
       status('Plan checked. Review the summary, then prepare this exact dataset. No source LAS has been downloaded.');
     } else if (data.type === 'result') {
-      showExport(data.file, data.evidence, selectedProfile()?.downloadName);
-      const {report, task_plan: plan} = data.evidence;
-      status(`Validated for ${plan.use}: ${report.plots} plots, ${report.points.toLocaleString()} points in ${report.chunks} blocks. Optional omissions: ${Object.keys(plan.omitted).join(', ') || 'none'}. Download the ZIP to keep it.`);
+      showExport(data.file, data.evidence, 'tree-instance-dataset.zip');
+      const {report, request} = data.evidence;
+      const omissions = data.evidence.sources.map(source => `${source.task_plan.source_ref}: ${Object.keys(source.task_plan.omitted).join(', ') || 'none'}`).join('; ');
+      status(`Validated for ${request.use}: ${report.plots} plots, ${report.points.toLocaleString()} points in ${report.chunks} blocks. Optional omissions: ${omissions}. Download the ZIP to keep it.`);
     } else if (data.type === 'error') {
       reviewing = false;
       if (data.code === 'DATASET_PLAN_STALE') clearPlan();
@@ -244,11 +256,11 @@ $('dataset-plan-file').onchange = async () => {
   try {
     if (file.size > 1048576) throw Error('Plan files must be JSON up to 1 MiB');
     const text = await file.text(), candidate = JSON.parse(text);
-    const source = candidate?.task_plan?.source_ref;
-    if (typeof source !== 'string' || !/^zenodo:[1-9][0-9]*$/.test(source)) throw Error('Choose a dataset-plan.json with a reviewed Zenodo source');
+    const sources = planSources(candidate).map(p => p?.task_plan?.source_ref);
+    if (!sources.length || sources.some(source => typeof source !== 'string' || !/^zenodo:[1-9][0-9]*$/.test(source))) throw Error('Choose a dataset-plan.json with reviewed Zenodo sources');
     reviewing = true;
-    session.start(() => new Worker(new URL('./worker.js?v=two-sources-v1', import.meta.url), {type:'module'}),
-      {operation:'import', mode:'zenodo', record_id:source.slice(7), plan_text:text});
+    session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type:'module'}),
+      {operation:'import', mode:'zenodo', records:sources.map(source => source.slice(7)), plan_text:text});
     status('Checking the imported plan against current source, pipeline and runtime pins…');
   } catch (error) { reviewing = false; status('Plan import failed: ' + error.message); }
   finally { busy = false; $('dataset-plan-file').value = ''; controls(); }
@@ -259,7 +271,7 @@ $('prepare-review').onclick = () => {
   if (!intent) return;
   clearPlan(); pendingReviewKey = JSON.stringify(intent); reviewing = true;
   try {
-    session.start(() => new Worker(new URL('./worker.js?v=two-sources-v1', import.meta.url), {type: 'module'}), {operation: 'review', ...intent});
+    session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type: 'module'}), {operation: 'review', ...intent});
     status('Resolving the plan against pinned source metadata and audited task requirements…');
   } catch (error) { reviewing = false; status(error.message); }
   controls();
@@ -268,17 +280,17 @@ $('prepare-run').onclick = async () => {
   if (busy || session.running || $('prepare-run').disabled) return;
   const saved = draftPanel.hasSubsets ? draftPanel.review() : null;
   if (draftPanel.blockedStorage || (saved && (saved.status !== 'ready' || $('prepare-mode').value !== 'zenodo'))) { status(saved?.error || 'Saved subsets use Zenodo intake. Restore requirements or clear the dataset selection.'); return; }
-  const record = saved?.record_id || selectedSource();
+  const record = selectedSource();
   const request = saved?.request || getRequest();
   const result = selection.assess(record, request), profile = profileForPipeline(result.pipeline_ref);
-  if (!profile || result.status !== 'ready') { status('This request has no admitted browser preparation.'); return; }
+  if (!saved && (!profile || result.status !== 'ready')) { status('This request has no admitted browser preparation.'); return; }
   const intent = planIntent();
   if ($('prepare-mode').value === 'zenodo' && (!reviewedPlan || JSON.stringify(intent) !== reviewedKey)) { clearPlan(); controls(); status('Review the dataset plan before downloading.'); return; }
   busy = true; controls(); hideExport(); $('prepare-clear').disabled = true; $('prepare-result').textContent = '';
   try {
     await removeJob(job); remember(null);
-    session.start(() => new Worker(new URL('./worker.js?v=two-sources-v1', import.meta.url), {type: 'module'}), {
-      record_id: record, mode: $('prepare-mode').value, selected_paths: saved?.paths || selectedValues('prepare-plot'),
+    session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type: 'module'}), {
+      ...(intent || {record_id:record, mode:$('prepare-mode').value}), selected_paths: saved?.paths || selectedValues('prepare-plot'),
       file: $('prepare-file').files[0], task_request: request, execution_plan: reviewedPlan,
     });
     status('Rechecking the frozen plan and available browser storage…');
@@ -317,7 +329,8 @@ async function recover() {
         const file = await (await root.getFileHandle('prepared.zip')).getFile();
         if (file.size !== complete.size_bytes) throw Error('Saved ZIP size changed');
         showExport(file, complete.evidence);
-        status(`Recovered the previous ZIP for ${complete.evidence.task_plan?.source_ref || 'historical preparation'} / ${complete.evidence.task_plan?.use || 'unspecified use'}. Its saved plan describes that run. Prepare again to apply the current request.`);
+        const sources = complete.evidence.sources?.map(source => source.task_plan.source_ref).join(', ') || complete.evidence.task_plan?.source_ref || 'historical preparation';
+        status(`Recovered the previous ZIP for ${sources} / ${complete.evidence.request?.use || complete.evidence.task_plan?.use || 'unspecified use'}. Its saved plan describes that run. Prepare again to apply the current request.`);
       } catch { status('Previous run was interrupted. Clear it or select the original input to restart.'); }
     });
   } catch (error) { if (error.name === 'NotFoundError') remember(null); else status(error.message); }
@@ -341,5 +354,19 @@ for (const source of catalog.datasets) {
 $('prepare-mode').value = 'zenodo';
 $('prepare-source').value = catalog.datasets.find(d => selection.assess(d.id, getRequest()).status === 'ready')?.id || catalog.datasets[0].id;
 try { draftPanel.restoreRequest(); } catch (error) { draftPanel.loadError = 'Saved requirements could not be restored: ' + error.message; }
-sourceChanged().then(() => supported ? recover() : status('Browser storage is unavailable. Use a current browser over HTTPS or localhost.'));
+sourceChanged().then(async () => {
+  for (const record of new Set(draftPanel.draft.subsets.map(s => s.record_id))) {
+    if (sourceMembership.has(record)) continue;
+    const profile = profileForPipeline(selection.assess(record, draftPanel.draft.request).pipeline_ref);
+    if (!profile) continue;
+    try {
+      const response = await fetch(new URL('../' + profile.sourceLock, import.meta.url));
+      if (!response.ok) throw Error('Reviewed source membership unavailable');
+      const lock = await response.json();
+      sourceMembership.set(record, lock.plots.map(p => ({...p, collection:profile.collectionOf(p)})));
+    } catch (error) { status(`zenodo:${record}: ${error.message}`); }
+  }
+  controls();
+  return supported ? recover() : status('Browser storage is unavailable. Use a current browser over HTTPS or localhost.');
+});
 window.addEventListener('pagehide', () => session.stop());

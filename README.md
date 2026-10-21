@@ -22,8 +22,9 @@ record (pinned Zenodo release)          read-only curation
 Quick paths:
 
 - **Browse the catalog**: open the published site above. No setup required.
-- **Prepare a dataset selection in the browser**: choose a preparation source and a
-  data use in Workbench, then select collections and partitions. Only admitted implementations can run; current
+- **Prepare a dataset selection in the browser**: choose a data use in Workbench,
+  add collections and partitions from FOR-instance and FGI-EMIT to My dataset,
+  review one combined plan and export a single verified ZIP. Only admitted implementations can run; current
   FOR-instance and FGI-EMIT are executable. Other source review gaps remain visible.
 - **Get FOR-instance locally**: run the download service (below) and select
   "Prepare instance data after download".

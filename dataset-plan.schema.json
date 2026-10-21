@@ -2,58 +2,320 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://borjaarroyo.github.io/forestry-lidar-catalogue/dataset-plan.schema.json",
   "title": "Frozen public-source dataset preparation plan",
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["schema_version", "task_plan", "intake", "subsets", "plots", "totals", "output", "limitations", "plan_sha256"],
-  "properties": {
-    "schema_version": {"const": "1.0.0"},
-    "task_plan": {"type": "object"},
-    "intake": {
-      "type": "object", "additionalProperties": false,
-      "required": ["kind", "source_lock_path", "source_lock_sha256", "runtime_lock_sha256"],
+  "oneOf": [
+    {
+      "$ref": "#/$defs/sourcePlan"
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "task_ref",
+        "request",
+        "runtime_lock_sha256",
+        "source_plans",
+        "totals",
+        "output",
+        "limitations",
+        "plan_sha256"
+      ],
       "properties": {
-        "kind": {"const": "zenodo-ranges"},
-        "source_lock_path": {"type": "string", "minLength": 1},
-        "source_lock_sha256": {"$ref": "#/$defs/sha256"},
-        "runtime_lock_sha256": {"$ref": "#/$defs/sha256"}
-      }
-    },
-    "subsets": {
-      "type": "array", "minItems": 1, "maxItems": 50,
-      "items": {"type": "array", "minItems": 1, "maxItems": 10000, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 2048}}
-    },
-    "plots": {
-      "type": "array", "minItems": 1, "uniqueItems": true,
-      "items": {
-        "type": "object", "additionalProperties": false,
-        "required": ["path", "sha256", "points", "size_bytes", "published_split"],
-        "properties": {
-          "path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"},
-          "points": {"type": "integer", "minimum": 1}, "size_bytes": {"type": "integer", "minimum": 1},
-          "published_split": {"type": "string", "minLength": 1}
+        "schema_version": {
+          "const": "2.0.0"
+        },
+        "task_ref": {
+          "const": "task:instances"
+        },
+        "request": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "use",
+            "variables"
+          ],
+          "properties": {
+            "use": {
+              "enum": [
+                "training",
+                "evaluation",
+                "inference"
+              ]
+            },
+            "variables": {
+              "type": "object"
+            }
+          }
+        },
+        "runtime_lock_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "source_plans": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 50,
+          "items": {
+            "$ref": "#/$defs/sourcePlan"
+          }
+        },
+        "output": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "partitions",
+            "identity_scope",
+            "partition_policy"
+          ],
+          "properties": {
+            "schema": {
+              "const": "task-dataset:1.0.0"
+            },
+            "partitions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "identity_scope": {
+              "const": "source-release-and-scene"
+            },
+            "partition_policy": {
+              "const": "preserve-published"
+            }
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "plan_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "totals": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "plots",
+            "points",
+            "source_las_bytes",
+            "overlapping_selections",
+            "estimated_browser_storage_bytes",
+            "sources"
+          ],
+          "properties": {
+            "plots": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "points": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "source_las_bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "overlapping_selections": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "estimated_browser_storage_bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "sources": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50
+            }
+          }
         }
       }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
     },
-    "totals": {
-      "type": "object", "additionalProperties": false,
-      "required": ["plots", "points", "source_las_bytes", "overlapping_selections", "estimated_browser_storage_bytes"],
+    "sourcePlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "task_plan",
+        "intake",
+        "subsets",
+        "plots",
+        "totals",
+        "output",
+        "limitations",
+        "plan_sha256"
+      ],
       "properties": {
-        "plots": {"type": "integer", "minimum": 1}, "points": {"type": "integer", "minimum": 1},
-        "source_las_bytes": {"type": "integer", "minimum": 1}, "overlapping_selections": {"type": "integer", "minimum": 0},
-        "estimated_browser_storage_bytes": {"type": "integer", "minimum": 1}
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "task_plan": {
+          "type": "object"
+        },
+        "intake": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "source_lock_path",
+            "source_lock_sha256",
+            "runtime_lock_sha256"
+          ],
+          "properties": {
+            "kind": {
+              "const": "zenodo-ranges"
+            },
+            "source_lock_path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "source_lock_sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "runtime_lock_sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          }
+        },
+        "subsets": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 50,
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 10000,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2048
+            }
+          }
+        },
+        "plots": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256",
+              "points",
+              "size_bytes",
+              "published_split"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "points": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "size_bytes": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "published_split": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "totals": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "plots",
+            "points",
+            "source_las_bytes",
+            "overlapping_selections",
+            "estimated_browser_storage_bytes"
+          ],
+          "properties": {
+            "plots": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "points": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "source_las_bytes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "overlapping_selections": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "estimated_browser_storage_bytes": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "output": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "schema",
+            "partitions",
+            "identity_scope",
+            "partition_policy"
+          ],
+          "properties": {
+            "schema": {
+              "const": "task-dataset:1.0.0"
+            },
+            "partitions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "identity_scope": {
+              "const": "source-release-and-scene"
+            },
+            "partition_policy": {
+              "const": "preserve-published"
+            }
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "plan_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
       }
-    },
-    "output": {
-      "type": "object", "additionalProperties": false,
-      "required": ["schema", "partitions", "identity_scope", "partition_policy"],
-      "properties": {
-        "schema": {"const": "task-dataset:1.0.0"},
-        "partitions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
-        "identity_scope": {"const": "source-release-and-scene"}, "partition_policy": {"const": "preserve-published"}
-      }
-    },
-    "limitations": {"type": "array", "items": {"type": "string"}},
-    "plan_sha256": {"$ref": "#/$defs/sha256"}
-  },
-  "$defs": {"sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}
+    }
+  }
 }
