@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-10-21 — Resumable Zenodo preparations
+
+- Persist exact execution plans and independently validated plot checkpoints in
+  browser storage; discover runs after reopening Workbench without tab state.
+- Recheck versions and every saved payload before reuse; restart incomplete or
+  corrupt plots and rebuild interrupted ZIPs after complete dataset validation.
+- Separate Stop from Delete, retain checkpoints on failures and protect saved
+  runs with exclusive locks. Keep local-input and historical output compatibility.
+- Verify reopened-tab recovery in Chromium 155 and Firefox 158; both downloaded
+  five-plot ZIPs pass native validation and match all 39 audited blocks.
+- Recalculate remaining storage and preserve scientific producers and public
+  plan/dataset contracts. Update the roadmap to reflect both admitted sources.
+
 ## 2026-10-21
 
 - Combine admitted FOR-instance and FGI-EMIT subsets in one browser preparation

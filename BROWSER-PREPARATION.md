@@ -258,3 +258,64 @@ CRC, independent folder validation and all 13 native block hashes passed. The
 completed archive was reopened through a read-only diagnostic page using the
 same File object-URL mechanism as application recovery. The interface documents
 this workaround; no in-memory ZIP copy or scientific-adapter change is needed.
+
+
+## Resumable Zenodo runs
+
+The current worker retains one checkpoint per complete, independently validated
+Zenodo plot. Earlier restart-only descriptions above document historical runs.
+Saved preparations are discovered from OPFS directories when Workbench opens;
+they do not depend on the original tab or sessionStorage. The list shows source
+identities, task use, committed checkpoint count and occupied storage. Counts are
+checkpoint markers until Resume revalidates their payloads.
+
+Resume is explicit and uses the saved plan, irrespective of the current form.
+A changed runtime or source/task dependency blocks reuse before payload intake.
+Every saved block is reread by the independent package validator. Invalid or
+incomplete plots restart; validated plots keep their exact native arrays and
+intake evidence. The final combined coverage and TaskDataset checks still run.
+An interrupted ZIP is regenerated instead of being offered as a completed result.
+
+Stop, page exit, timeout and source failures preserve committed Zenodo plots.
+Delete is separate and releases the run's storage under the same exclusive Web
+Lock used by execution; another tab cannot mutate an active run. Starting a new
+preparation preserves older runs. Local LAS/ZIP inputs and historical interrupted
+runs without checkpoints must restart; completed historical ZIPs remain discoverable.
+Browser eviction or clearing site data can remove every saved run. Download the
+ZIP to retain the output outside browser storage.
+
+The remaining-space check includes pending prepared outputs, the complete ZIP,
+one staged pending LAS and a reserve. Scientific adapters, reference masks,
+partitions and public plan/dataset contracts are unchanged.
+
+
+[Recovery and downloaded-ZIP acceptance](evidence/browser-resume-validation.json)
+covers Chromium 155 and Firefox 158: interrupt after one validated FGI plot, close
+the tab, discover the saved run in a fresh Workbench tab, explicitly resume and
+download all five plots (9,160,560 points, 39 blocks). Both ZIPs passed CRC and
+native dataset/array validation; all block hashes match the previously audited
+native equivalents. This acceptance does not include a full browser-process or
+operating-system restart.
+
+
+## Reproduce browser acceptance and publication checks
+
+The [versioned manual acceptance](tests/browser_acceptance/README.md) provides
+the exact five-plot selection, a loopback-only server, interruption after the first
+committed checkpoint and downloaded-ZIP verification through the unchanged native
+reader. It requires no browser automation dependency and is separate from offline
+CI. Record a full process exit/relaunch separately from tab recovery.
+
+`python scripts/check_publication.py` verifies all existing local runtime and
+publication fingerprints. Use `--write` explicitly after reviewed edits; it does
+not add files or update remote/source pins. CI runs this check and the offline
+acceptance-tool tests before the existing regression suites.
+
+
+[Release acceptance](evidence/browser-release-validation.json) additionally
+restarts the entire usual Firefox process through its built-in normal restart,
+as requested by the user, preserving existing tabs and startup preferences.
+Workbench discovers the one committed plot, resumes the five-plot mixed dataset
+and exports a downloaded ZIP that passes the versioned native validator and all
+39 native-equivalent block hashes. Chromium retains the earlier downloaded-ZIP
+and tab-recovery evidence; its full-process restart was not exercised.

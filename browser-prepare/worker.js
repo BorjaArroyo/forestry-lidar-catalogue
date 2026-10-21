@@ -1,3 +1,4 @@
+import {RUN_VERSION, validJob, lockName, readJSON, removeEntry, inspectRuns} from './run-store.js';
 import {selectPlots} from './selection.js';
 import {profileForSource} from './profiles.js';
 import {extractPlot, localReader, providerReader} from './intake.js';
@@ -84,7 +85,7 @@ async function loadContext(records) {
     sources.set(record, {source, profile});
     contexts[record] = {source, source_lock_path:profile.sourceLock, source_lock_sha256:await digest(sourceBytes)};
   }
-  for (const path of ['browser-prepare/worker.js', 'browser-prepare/intake.js', 'browser-prepare/selection.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js', 'browser-prepare/profiles/fgi-emit.js']) await checked(lock.files[path]);
+  for (const path of ['browser-prepare/worker.js', 'browser-prepare/run-store.js', 'browser-prepare/intake.js', 'browser-prepare/selection.js', 'browser-prepare/profiles.js', 'browser-prepare/profiles/for-instance.js', 'browser-prepare/profiles/fgi-emit.js']) await checked(lock.files[path]);
   phase('Checking task requirements and exact versions for every source; no source LAS is downloaded yet…');
   const py = await boot(lock), runtimeHash = await digest(bytes);
   py.globals.set('source_contexts_json', JSON.stringify(contexts));
@@ -211,6 +212,39 @@ async function preparePlot(py, root, file, profile, taskPlan, expectedPath, file
   }
 }
 
+async function checkpointFiles(root, manifest) {
+  const files = [];
+  for (const scene of manifest.scenes) for (const chunk of scene.chunks) {
+    if (!/^plots\/[a-zA-Z0-9_-]+\/[0-9]+\.npz$/.test(chunk.path)) throw Error('Invalid checkpoint block path');
+    const parts = chunk.path.split('/');
+    let parent = root;
+    for (const part of parts.slice(0, -1)) parent = await parent.getDirectoryHandle(part);
+    files.push({path:chunk.path, handle:await parent.getFileHandle(parts.at(-1))});
+  }
+  return files;
+}
+
+async function mountBlocks(py, files, outputRoot) {
+  const mounts = new Map();
+  for (const file of files) {
+    const parent = file.path.slice(0, file.path.lastIndexOf('/'));
+    if (!mounts.has(parent)) mounts.set(parent, []);
+    mounts.get(parent).push({name:file.path.split('/').at(-1), data:await file.handle.getFile()});
+  }
+  for (const [parent, blobs] of mounts) {
+    py.FS.mkdirTree(outputRoot + '/' + parent);
+    py.FS.mount(py.FS.filesystems.WORKERFS, {blobs}, outputRoot + '/' + parent);
+  }
+}
+
+function validateCheckpoint(py, profile, outputRoot, manifestText, plot) {
+  py.globals.set('checkpoint_manifest_text', manifestText);
+  py.globals.set('checkpoint_plot_json', JSON.stringify(plot));
+  py.runPython("checkpoint_manifest = json.loads(checkpoint_manifest_text); checkpoint_plot = json.loads(checkpoint_plot_json)\nif len(checkpoint_manifest['scenes']) != 1: raise ValueError('Checkpoint must contain exactly one plot')\ncheckpoint_scene = checkpoint_manifest['scenes'][0]\nif any(checkpoint_scene[k] != checkpoint_plot[k] for k in ['path', 'sha256', 'points', 'published_split']): raise ValueError('Checkpoint differs from reviewed plot')");
+  py.FS.writeFile(outputRoot + '/task-package.json', manifestText);
+  return profile.validate(py, outputRoot);
+}
+
 async function run(request) {
   const mode = request.mode || 'las';
   if (!['las', 'zip', 'zenodo'].includes(mode)) throw Error('Unsupported source input mode');
@@ -219,9 +253,12 @@ async function run(request) {
   const records = mode === 'zenodo' ? recordsForPlan(request.execution_plan) : [request.record_id];
   const origin = await navigator.storage.getDirectory();
   const jobs = await origin.getDirectoryHandle('canopy-preparation', {create:true});
-  const job = crypto.randomUUID(), root = await jobs.getDirectoryHandle(job, {create:true});
+  const job = request.job || crypto.randomUUID();
+  if (!validJob(job)) throw Error('Invalid saved run identity');
+  const root = await jobs.getDirectoryHandle(job, {create:!request.job});
   self.postMessage({type:'job', id:job});
-  return navigator.locks.request('canopy-preparation:' + job, async () => {
+  return navigator.locks.request(lockName(job), {ifAvailable:true}, async held => {
+    if (!held) throw Error('This run is in use by another page');
     let py;
     try {
       const context = await loadContext(records);
@@ -246,13 +283,64 @@ async function run(request) {
         if (mode !== 'las' && candidates.some(p => !taskPlan.allowed_partitions.includes(p.published_split))) throw Error(`zenodo:${record}: selected partition is excluded for this task use`);
         groups.push({record, profile, sourcePlan, taskPlan, candidates});
       }
+      if (mode === 'zenodo') {
+        const saved = {schema_version:RUN_VERSION, mode, execution_plan:executionPlan, task_request:request.task_request, runtime_lock_sha256:runtimeHash};
+        if (request.job) {
+          const previous = await readJSON(root, 'run.json');
+          if (JSON.stringify(previous) !== JSON.stringify(saved)) throw Error('Saved run dependencies changed; review a new plan');
+        } else await write(root, 'run.json', new TextEncoder().encode(JSON.stringify(saved)));
+      }
+      // An interrupted export is rebuilt only after all checkpoints validate again.
+      await removeEntry(root, 'complete.json');
+      await removeEntry(root, 'prepared.zip');
+      await removeEntry(root, 'folder-export');
+      py.FS.mkdir('/input');
+      const reusable = new Map();
+      if (mode === 'zenodo') for (const group of groups) {
+        const sourceRoot = await directory(root, 'sources/zenodo-' + group.record);
+        await removeEntry(sourceRoot, 'source.las');
+        const checkpoints = await directory(sourceRoot, 'checkpoints');
+        py.globals.set('current_task_plan_json', JSON.stringify(group.taskPlan));
+        py.runPython('task_plan = json.loads(current_task_plan_json)');
+        for (const plot of group.candidates) {
+          const key = await digest(new TextEncoder().encode(plot.path));
+          const outputRoot = '/checkpoints/' + group.record + '/' + key;
+          let checkpointRoot;
+          try {
+            checkpointRoot = await checkpoints.getDirectoryHandle(key);
+            const saved = await readJSON(checkpointRoot, 'checkpoint.json');
+            if (saved.schema_version !== RUN_VERSION || saved.runtime_lock_sha256 !== runtimeHash || saved.plan_sha256 !== executionPlan.plan_sha256)
+              throw Error('Checkpoint dependency mismatch');
+            const files = await checkpointFiles(checkpointRoot, JSON.parse(saved.manifestText));
+            await mountBlocks(py, files, outputRoot);
+            phase('Revalidating saved plot: ' + group.profile.plotLabel(plot.path));
+            validateCheckpoint(py, group.profile, outputRoot, saved.manifestText, plot);
+            reusable.set(group.record + ':' + plot.path, {...saved, files});
+          } catch (error) {
+            // Unmount invalid files before replacing their storage; never reuse partial arrays.
+            try {
+              const manifest = await readJSON(checkpointRoot, 'checkpoint.json');
+              for (const scene of JSON.parse(manifest.manifestText).scenes) {
+                if (/^[a-zA-Z0-9_-]+$/.test(scene.id)) {
+                  try { py.FS.unmount(outputRoot + '/plots/' + scene.id); } catch { /* Not mounted. */ }
+                }
+              }
+            } catch { /* A partial checkpoint has no valid manifest. */ }
+            await removeEntry(checkpoints, key);
+            if (error.name !== 'NotFoundError') phase('Discarding incomplete or invalid checkpoint: ' + group.profile.plotLabel(plot.path));
+          }
+        }
+      }
       const estimate = await navigator.storage.estimate();
       const candidateBytes = groups.flatMap(g => g.candidates.map(p => p.size_bytes + p.points * (g.profile.derivedBytesPerPoint || 34) + Math.ceil(p.points / 250000) * 65536));
       const preparedBytes = mode === 'las' ? Math.max(...candidateBytes) : candidateBytes.reduce((a,b) => a+b, 0);
-      const required = executionPlan?.totals.estimated_browser_storage_bytes ?? (2 * preparedBytes + (mode === 'las' ? 0 : Math.max(...groups.flatMap(g => g.candidates.map(p => p.size_bytes)))) + 64 * 1024 ** 2);
+      const pendingBytes = groups.flatMap(g => g.candidates.filter(p => !reusable.has(g.record + ':' + p.path)).map(p =>
+        p.size_bytes + p.points * (g.profile.derivedBytesPerPoint || 34) + Math.ceil(p.points / 250000) * 65536)).reduce((a,b) => a+b, 0);
+      const stagingBytes = Math.max(0, ...groups.flatMap(g => g.candidates.filter(p => !reusable.has(g.record + ':' + p.path)).map(p => p.size_bytes)));
+      const required = mode === 'zenodo' && request.job ? preparedBytes + pendingBytes + stagingBytes + 64 * 1024 ** 2 :
+        executionPlan?.totals.estimated_browser_storage_bytes ?? (2 * preparedBytes + (mode === 'las' ? 0 : stagingBytes) + 64 * 1024 ** 2);
       if (!Number.isFinite(estimate.quota) || estimate.quota - (estimate.usage || 0) < required)
         throw Error(`Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for the selected dataset and ZIP export`);
-      py.FS.mkdir('/input');
       const prepared = [], provenance = [], allManifests = [];
       let completedPlots = 0;
       const totalPlots = groups.reduce((n,g) => n + (mode === 'las' ? 1 : g.candidates.length), 0);
@@ -266,11 +354,37 @@ async function run(request) {
           py.runPython('task_plan = json.loads(current_task_plan_json)');
           for (const plot of mode === 'las' ? [null] : candidates) {
             phase(`zenodo:${record}: reading plot ${completedPlots + 1} of ${totalPlots}${plot ? ': ' + profile.plotLabel(plot.path) : ''}…`);
-            let file = request.file, intake = {kind:'local-las', archive_verification:'Selected LAS SHA256 verified; provider ZIP not checked'};
-            if (plot) ({file, intake} = await stagePlot(sourceRoot, {...request, record_id:record, mode}, plot, lock));
-            const result = await preparePlot(py, sourceRoot, file, profile, taskPlan, plot?.path, files, outputRoot);
+            let result, intake, sceneFiles = [];
+            const cached = plot && reusable.get(record + ':' + plot.path);
+            if (cached) {
+              result = {manifest:JSON.parse(cached.manifestText), manifestText:cached.manifestText};
+              intake = cached.intake; sceneFiles = cached.files;
+              phase('Reusing independently validated plot: ' + profile.plotLabel(plot.path));
+            } else {
+              let file = request.file;
+              intake = {kind:'local-las', archive_verification:'Selected LAS SHA256 verified; provider ZIP not checked'};
+              let plotRoot = sourceRoot, plotOutput = outputRoot;
+              if (mode === 'zenodo') {
+                const key = await digest(new TextEncoder().encode(plot.path));
+                plotRoot = await directory(sourceRoot, 'checkpoints/' + key);
+                plotOutput = '/new-checkpoints/' + record + '/' + key;
+              }
+              if (plot) ({file, intake} = await stagePlot(sourceRoot, {...request, record_id:record, mode}, plot, lock));
+              result = await preparePlot(py, plotRoot, file, profile, taskPlan, plot?.path, sceneFiles, plotOutput);
+              if (mode === 'zenodo') {
+                phase('Independently validating plot before saving its checkpoint…');
+                const validation = validateCheckpoint(py, profile, plotOutput, result.manifestText, plot);
+                await write(plotRoot, 'checkpoint.json', new TextEncoder().encode(JSON.stringify({
+                  schema_version:RUN_VERSION, runtime_lock_sha256:runtimeHash, plan_sha256:executionPlan.plan_sha256,
+                  manifestText:result.manifestText, intake, validation,
+                })));
+                self.postMessage({type:'checkpoint', job, record, path:plot.path});
+              }
+              if (plot) await sourceRoot.removeEntry('source.las');
+            }
+            if (mode === 'zenodo') await mountBlocks(py, sceneFiles, outputRoot);
+            files.push(...sceneFiles);
             manifestTexts.push(result.manifestText); intakes.push({path:result.manifest.scenes[0].path, ...intake});
-            if (plot) await sourceRoot.removeEntry('source.las');
             completedPlots++;
           }
           py.globals.set('manifests_json', JSON.stringify(manifestTexts));
@@ -349,15 +463,30 @@ async function run(request) {
       await write(root, 'complete.json', new TextEncoder().encode(JSON.stringify({size_bytes:outputFile.size, evidence})));
       self.postMessage({type:'result', job, file:outputFile, evidence});
     } catch (error) {
-      await jobs.removeEntry(job, {recursive:true}).catch(() => {});
+      if (mode !== 'zenodo') await jobs.removeEntry(job, {recursive:true}).catch(() => {});
       throw error;
     } finally { py?.runPython("prep.reader.close() if 'prep' in globals() else None"); }
   });
 }
 
+async function resume(id) {
+  if (!validJob(id)) throw Error('Invalid saved run identity');
+  const origin = await navigator.storage.getDirectory();
+  const jobs = await origin.getDirectoryHandle('canopy-preparation');
+  const root = await jobs.getDirectoryHandle(id);
+  const saved = await readJSON(root, 'run.json');
+  if (saved.schema_version !== RUN_VERSION || saved.mode !== 'zenodo') throw Error('This historical run cannot be resumed');
+  await run({...saved, job:id});
+}
+
 self.onmessage = async ({data}) => {
   if (active) return;
   active = true;
-  try { if (['review', 'import'].includes(data.operation)) await review(data); else await run(data); }
+  try {
+    if (data.operation === 'inspect') self.postMessage({type:'result', operation:'inspect', runs:await inspectRuns()});
+    else if (data.operation === 'resume') await resume(data.job);
+    else if (['review', 'import'].includes(data.operation)) await review(data);
+    else await run(data);
+  }
   catch (error) { self.postMessage({type: 'error', code: error.code, error: String(error.message || error)}); }
 };

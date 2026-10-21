@@ -108,7 +108,7 @@ manifest fingerprint. Scientific producer policies are unchanged.
 Source LAS sizes are not compressed transfer sizes. Browser storage is an
 estimate, checked again against available quota before intake. Published split
 preservation does not establish geographic independence. The plan is downloadable
-before execution. Use **Import a saved dataset plan** to validate and restore its exact selection and requirements. Import never starts a download and rejects changed versions or pins before replacing the current draft. Interrupted runs still restart; reusing partial output is outside this increment. Local LAS/ZIP preparation keeps its existing
+before execution. Use **Import a saved dataset plan** to validate and restore its exact selection and requirements. Import never starts a download and rejects changed versions or pins before replacing the current draft. Zenodo runs now resume from complete independently validated plots; incomplete plots restart. Local LAS/ZIP preparation keeps its existing
 request and payload validation and does not yet produce this public-source plan.
 
 
@@ -148,7 +148,7 @@ The browser uses one pinned runtime and stages one complete LAS at a time. Every
 source package passes its unchanged independent reader before composition; then
 all source coverage is checked against the frozen plan and `TaskDataset` validates
 the final folders. A failed source, insufficient quota or failed validation cannot
-publish a completed ZIP. Starting again restarts the entire selection.
+publish a completed ZIP. Resume revalidates and reuses complete plot checkpoints; incomplete plots restart.
 
 The ZIP contains `dataset.json`, `dataset-validation.json`, combined
 `dataset-plan.json`, its coverage report and `browser-run.json`. Under
@@ -176,3 +176,38 @@ with 3,150,462 points and 13 native-equivalent blocks, plus the
 points and 39 native-equivalent blocks. The expanded ZIP was created in browser
 storage; it was not downloaded for that acceptance case. These are bounded
 selections, not full-release browser validation.
+
+
+## Durable browser execution state
+
+The internal run/checkpoint format is version 1.0.0, separate from public dataset
+and plan contracts. Each Zenodo run stores its exact checked execution plan,
+task request and runtime-lock SHA256 in `run.json`. Per-source checkpoint folders
+contain closed NPZ blocks and a final `checkpoint.json` with authoritative native
+manifest JSON text, intake evidence and independent validation. The marker is
+written last; a missing or malformed marker never admits partial output.
+
+Resume first rechecks the saved plan and runtime, then independently validates
+all committed plots against their exact reviewed path, source SHA256, point count
+and partition. Missing/corrupt plots are discarded and prepared again. Remaining
+space covers pending outputs, a complete rebuilt ZIP and the largest pending LAS.
+Coverage, source-package and final folder checks still gate export completion.
+No internal recovery files are added to the public dataset format.
+
+
+[Recovery and downloaded-ZIP acceptance](evidence/browser-resume-validation.json)
+covers Chromium 155 and Firefox 158: interrupt after one validated FGI plot, close
+the tab, discover the saved run in a fresh Workbench tab, explicitly resume and
+download all five plots (9,160,560 points, 39 blocks). Both ZIPs passed CRC and
+native dataset/array validation; all block hashes match the previously audited
+native equivalents. This acceptance does not include a full browser-process or
+operating-system restart.
+
+
+[Release acceptance](evidence/browser-release-validation.json) additionally
+restarts the entire usual Firefox process through its built-in normal restart,
+as requested by the user, preserving existing tabs and startup preferences.
+Workbench discovers the one committed plot, resumes the five-plot mixed dataset
+and exports a downloaded ZIP that passes the versioned native validator and all
+39 native-equivalent block hashes. Chromium retains the earlier downloaded-ZIP
+and tab-recovery evidence; its full-process restart was not exercised.
