@@ -310,3 +310,12 @@ CI. Record a full process exit/relaunch separately from tab recovery.
 publication fingerprints. Use `--write` explicitly after reviewed edits; it does
 not add files or update remote/source pins. CI runs this check and the offline
 acceptance-tool tests before the existing regression suites.
+
+
+[Release acceptance](evidence/browser-release-validation.json) additionally
+restarts the entire usual Firefox process through its built-in normal restart,
+as requested by the user, preserving existing tabs and startup preferences.
+Workbench discovers the one committed plot, resumes the five-plot mixed dataset
+and exports a downloaded ZIP that passes the versioned native validator and all
+39 native-equivalent block hashes. Chromium retains the earlier downloaded-ZIP
+and tab-recovery evidence; its full-process restart was not exercised.

@@ -202,3 +202,12 @@ download all five plots (9,160,560 points, 39 blocks). Both ZIPs passed CRC and
 native dataset/array validation; all block hashes match the previously audited
 native equivalents. This acceptance does not include a full browser-process or
 operating-system restart.
+
+
+[Release acceptance](evidence/browser-release-validation.json) additionally
+restarts the entire usual Firefox process through its built-in normal restart,
+as requested by the user, preserving existing tabs and startup preferences.
+Workbench discovers the one committed plot, resumes the five-plot mixed dataset
+and exports a downloaded ZIP that passes the versioned native validator and all
+39 native-equivalent block hashes. Chromium retains the earlier downloaded-ZIP
+and tab-recovery evidence; its full-process restart was not exercised.

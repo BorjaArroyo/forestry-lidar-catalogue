@@ -1,0 +1,63 @@
+{
+  "status": "succeeded",
+  "captured_on": "2026-10-21",
+  "implementation_commit": "745a62bb34122140559b256b463690fae5cc00db",
+  "runtime_lock_sha256": "d8a1415710cf3b8db123e3914d024d72e92a74db5c5e0f11f3170386b1c48fa7",
+  "worker_sha256": "0e0408b98242a1a608a9ebbb66001d602b48c11c30bb03a27a29390710289972",
+  "ui_sha256": "40462c6e57a3d21f79605d0dd85cde6166aa41438ac657a0044f14bc1bf7dcfc",
+  "harness_sha256": "df69884c9b4ac57d0c64e3e995609c2f128809f2f48405d4ad38f479ac305484",
+  "native_acceptance_tool_sha256": "f805ba323cc39d121423f7f65dbcef06f0d3d5d319d61521f81bd3bcada6ecdb",
+  "browser": "Firefox 158 / usual profile explicitly requested by the user",
+  "recovery": {
+    "job": "5180e251-4c98-4b1b-9032-93f125ba1837",
+    "checkpoint_plot": "sources/19351234/originals/training/training/plot_1003.las",
+    "committed_plots_before_restart": 1,
+    "restart_action": "Firefox about:profiles > Restart normally; startup preferences unchanged",
+    "process_id_before": 1565,
+    "process_id_after": 5118,
+    "existing_tabs_retained": true,
+    "discovery": "Workbench displayed the interrupted mixed-source run with one saved plot after the full process restart",
+    "resume": "Explicit Resume in the shipped Workbench completed all five plots"
+  },
+  "download": {
+    "status": "succeeded",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:158.0) Gecko/20100101 Firefox/158.0",
+    "runtime_lock_sha256": "d8a1415710cf3b8db123e3914d024d72e92a74db5c5e0f11f3170386b1c48fa7",
+    "archive_sha256": "d576a4aec4a7d4706adebd3b007f72fde4e0baaa8be2ddc1fb3092701cb7fe11",
+    "size_bytes": 873662605,
+    "zip_crc": "passed",
+    "report": {
+      "status": "validated",
+      "dataset_sha256": "640af3372d6dd31ec0d8759c0ba751f5040c264fdb617df26ef12d9beab6bb33",
+      "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+      "validator_sha256": "58c28450e052f6db6a6b750a55ffc4ce73cdfa3a0416fd10aae0b5583c71ee80",
+      "packages": 2,
+      "scenes": 5,
+      "points": 9160560,
+      "partitions": [
+        "dev",
+        "train"
+      ]
+    },
+    "matching_native_chunks": 39,
+    "plan_sha256": "e7fa0698629d2ac77ec21399a14f892087561ad018fdfa9b2826a314202abd76",
+    "native_validation": "Unchanged TaskDataset and TaskPackage checks; complete NPZ files materialized one at a time",
+    "plot_paths": [
+      "sources/19351234/originals/training/training/plot_1003.las",
+      "sources/19351234/originals/training/training/plot_1022.las",
+      "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+      "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+      "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+    ]
+  },
+  "previous_cross_browser_acceptance": "evidence/browser-resume-validation.json",
+  "regression_checks": {
+    "python_tests": 125,
+    "javascript_tests": 61
+  },
+  "limitations": [
+    "The release restart and deployed-site checks use the usual Firefox at the user's request; Chromium retains the earlier five-plot downloaded-ZIP and tab-recovery acceptance, without a full process restart",
+    "Five selected plots do not establish whole-release browser scalability or whole-provider-archive verification",
+    "Native scientific policies, source partitions, calibration limitations and geographic-independence caveats remain unchanged"
+  ]
+}

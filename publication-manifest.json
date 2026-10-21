@@ -8,7 +8,7 @@
     ".gitignore": "1ce26d6c65759992eda2b4c1a0c7beabbeb37cddedcfbee5039f628f83c4c7fe",
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "BROWSER-CONTAINERS.md": "c5213d56ca387342ab0d7da8148644b61869dc9de00d7e676ac07678bab0f055",
-    "BROWSER-PREPARATION.md": "1582fb24c631a595e96115d03a380498c387cca16da457d54951dc085cfa0124",
+    "BROWSER-PREPARATION.md": "2faf193ff07ccb7abc39721849e1c066664a89ef09ffcf7e725f3f6c53195a7c",
     "CHANGELOG.md": "9453c31461e15918914383002747679446a0c4865422ca199776d8636cc25c89",
     "CONTENT-REVIEW.md": "8c04cebf217363c7a1966fff92ad567e030636a1473386f4732b2ea4cddf294b",
     "CONTRIBUTING.md": "099aabef50b3529301699dd5df35a6ed65bd954abc136a2e25c4c9ea26eac0be",
@@ -18,7 +18,7 @@
     "PIPELINES.md": "13ed0d3ed028f48ae95d3509eebbe5667daae3e6f612a3c7989bb3af1f9177c3",
     "README.md": "850942ff77d2e8665ccc006bcd055a37ba9dee294cccf33104c2ef700f98267d",
     "ROADMAP.md": "b8fb574c437fdc3c53f78c72206907062a06e25f809922f06f594d653e51c7a6",
-    "TASK-DATASET.md": "58d905e24490f1960d2a80e1bbb4a29053e66161222d8de4b073d18928cb176e",
+    "TASK-DATASET.md": "1a5309134f82a86dea4c957a7867e43e07f30368c6e1d3a8a3ef6266430e476b",
     "TASK-PACKAGE.md": "50e62289c693b1b976b44f440bd00f96bebfa75e9ece6e60f3393c802dd7f326",
     "TASK-REQUIREMENTS.md": "94c42b592f80be02e65279f0ce0b55edacbcddbb24ae0cd9511d66c9c150f8da",
     "app.js": "c2922155b133529a8f93dafc881fc0e28721d23dcedb9c67996fa61d60182b3f",
@@ -154,7 +154,8 @@
     "tests/browser_acceptance/selection.json": "59486403b700e23b53676eaf7d2520bd4091f0ff58685e6092cf35cb9ef55ed2",
     "tests/browser_acceptance/server.py": "f74c15d477e7f901e15498733668ce7e3f9c96987183fe7b9a6e7b8fbed6016c",
     "tests/browser_acceptance/validate_download.py": "f805ba323cc39d121423f7f65dbcef06f0d3d5d319d61521f81bd3bcada6ecdb",
-    "tests/test_publication_tools.py": "dac428419236b4349043e48d9a79fa1f4269d22473218564e7092b2e808dc725"
+    "tests/test_publication_tools.py": "dac428419236b4349043e48d9a79fa1f4269d22473218564e7092b2e808dc725",
+    "evidence/browser-release-validation.json": "f50f37c7ea84b273375e90648bbe3ac0a2c80e9473020140df7c5c5347f2296b"
   },
   "target": "https://borjaarroyo.github.io/forestry-lidar-catalogue/"
 }
