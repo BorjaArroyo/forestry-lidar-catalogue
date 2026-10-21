@@ -147,3 +147,14 @@ Execution admission is scoped to the exact 32-plot pinned archive and is bound
 to complete output verification evidence. It does not recover absent NIBIO2
 files, certify annotations, reproduce an evaluator or establish geographic
 independence. Other source adapters and experimental product areas stay deferred.
+
+
+## Current execution status · 21 October 2026
+
+The dated sections above retain the scope of their original reviews. Current
+execution admission includes FOR-instance v1's 32 available plots and all 19
+FGI-EMIT plots. Workbench combines both admitted sources and validates their final
+dataset folders. Zenodo preparation now retains independently checked plot
+checkpoints for explicit recovery. These changes do not resolve annotation
+completeness, capture independence, spectral calibration or intended-use rights.
+See the current [roadmap](ROADMAP.md) and [browser scope](BROWSER-PREPARATION.md).

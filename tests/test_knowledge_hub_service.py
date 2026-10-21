@@ -11,6 +11,7 @@ import sys
 import threading
 import time
 import unittest
+from types import SimpleNamespace
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 import zipfile
@@ -204,6 +205,8 @@ class WorkbenchTests(unittest.TestCase):
         self.addCleanup(close_provider)
         url=f'http://127.0.0.1:{provider.server_port}/FORinstance_dataset.zip'
         record=dict(record_id=8287792,title='Offline native fixture',files=[dict(name=archive.name,size_bytes=len(payload),provider_checksum=checksum,download_url=url)])
+        # Give the tiny offline fixture deterministic capacity for the staging reserve.
+        self.enterContext(patch.object(acquisition.shutil, 'disk_usage', return_value=SimpleNamespace(free=10 * 1024**3)))
         real_run=subprocess.run
         def run(command,**kwargs):
             if command[1]==str(REPO/'scripts/acquire_lidar.py'):

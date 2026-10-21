@@ -32,6 +32,8 @@ jobs:
         run: |
           python3 -m pip install -r requirements.txt
           python3 scripts/knowledge_model.py
+          python3 scripts/check_publication.py
+          python3 tests/test_publication_tools.py
           python3 tests/test_knowledge_model.py
           python3 tests/test_catalog_content.py
           python3 tests/test_knowledge_hub_service.py

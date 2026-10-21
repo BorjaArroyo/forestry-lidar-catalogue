@@ -1,0 +1,97 @@
+{
+  "status": "succeeded",
+  "captured_on": "2026-10-21",
+  "coverage": "Five complete plots from FOR-instance and FGI-EMIT; 9,160,560 points and 39 native-equivalent blocks in each downloaded ZIP",
+  "runtime_lock_sha256": "d8a1415710cf3b8db123e3914d024d72e92a74db5c5e0f11f3170386b1c48fa7",
+  "worker_sha256": "0e0408b98242a1a608a9ebbb66001d602b48c11c30bb03a27a29390710289972",
+  "run_store_sha256": "199b0b7c024dbc8737e0383bfce54e9d4ff0d29c1ab4425c50a64bf0a135c590",
+  "recovery": {
+    "interruption": "A local acceptance harness terminated the shipped worker after its first checkpoint message",
+    "checkpoint_plot": "sources/19351234/originals/training/training/plot_1003.las",
+    "checkpoint_points": 2308748,
+    "reopen": "Closed the acceptance tab; opened a fresh Workbench tab without its sessionStorage",
+    "discovery": "Both browsers displayed the saved mixed-source run with one committed checkpoint",
+    "resume": "Clicked Resume in the shipped Workbench; its saved five-plot plan was rechecked and completed",
+    "chromium_job": "7a9e1910-a3d2-42ae-8fc2-b6cbb987afb2",
+    "firefox_job": "9c551b73-062b-43d3-99c1-c54f5a51a8a7",
+    "race_regression": "Fixed and tested discovery racing with worker lock acquisition; no scan runs during execution or its startup"
+  },
+  "downloads": {
+    "chromium": {
+      "status": "succeeded",
+      "browser": "chromium",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+      "runtime_lock_sha256": "d8a1415710cf3b8db123e3914d024d72e92a74db5c5e0f11f3170386b1c48fa7",
+      "archive_sha256": "1c3fb040f64be58e17442cfb46081d3e18aa7ba764e9928486083ce5d4e9512c",
+      "size_bytes": 873662638,
+      "zip_crc": "passed",
+      "report": {
+        "status": "validated",
+        "dataset_sha256": "640af3372d6dd31ec0d8759c0ba751f5040c264fdb617df26ef12d9beab6bb33",
+        "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+        "validator_sha256": "58c28450e052f6db6a6b750a55ffc4ce73cdfa3a0416fd10aae0b5583c71ee80",
+        "packages": 2,
+        "scenes": 5,
+        "points": 9160560,
+        "partitions": [
+          "dev",
+          "train"
+        ]
+      },
+      "matching_native_chunks": 39,
+      "plan_sha256": "e7fa0698629d2ac77ec21399a14f892087561ad018fdfa9b2826a314202abd76",
+      "plot_paths": [
+        "sources/19351234/originals/training/training/plot_1003.las",
+        "sources/19351234/originals/training/training/plot_1022.las",
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+        "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+      ]
+    },
+    "firefox": {
+      "status": "succeeded",
+      "browser": "firefox",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:158.0) Gecko/20100101 Firefox/158.0",
+      "runtime_lock_sha256": "d8a1415710cf3b8db123e3914d024d72e92a74db5c5e0f11f3170386b1c48fa7",
+      "archive_sha256": "8399a8bbfe44a95f6791e1c80dae9bad19edf3264d82320f6ca37f2059cb3ab1",
+      "size_bytes": 873662605,
+      "zip_crc": "passed",
+      "report": {
+        "status": "validated",
+        "dataset_sha256": "640af3372d6dd31ec0d8759c0ba751f5040c264fdb617df26ef12d9beab6bb33",
+        "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+        "validator_sha256": "58c28450e052f6db6a6b750a55ffc4ce73cdfa3a0416fd10aae0b5583c71ee80",
+        "packages": 2,
+        "scenes": 5,
+        "points": 9160560,
+        "partitions": [
+          "dev",
+          "train"
+        ]
+      },
+      "native_reader_storage": "Metadata extracted; ZIP-backed np.load and sha_file I/O; native validation and array checks unchanged",
+      "matching_native_chunks": 39,
+      "plan_sha256": "e7fa0698629d2ac77ec21399a14f892087561ad018fdfa9b2826a314202abd76",
+      "plot_paths": [
+        "sources/19351234/originals/training/training/plot_1003.las",
+        "sources/19351234/originals/training/training/plot_1022.las",
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+        "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+      ]
+    }
+  },
+  "comparison_evidence": "evidence/combined-browser-expanded-validation.json",
+  "native_validation": "Chromium: standard extracted TaskDataset validation. Firefox: same native TaskDataset/TaskPackage validators with ZIP-backed np.load and sha_file I/O to bound temporary disk use; no array or provenance checks changed.",
+  "limitations": [
+    "Real acceptance closes and reopens tabs; a full browser process or operating-system restart was not exercised",
+    "Browser storage eviction removes checkpoints and completed browser ZIPs",
+    "Whole-release browser scalability and provider archive checksums remain outside this bounded acceptance",
+    "Original partitions, masks and native spectral values are preserved; annotation completeness, calibration and geographic independence remain unresolved"
+  ],
+  "ui_sha256": "4e1452810ee3de787abf206646b33a69872143e63bb4b3c874e8163ddff68855",
+  "regression_checks": {
+    "javascript_tests": 60,
+    "python_tests": 122
+  }
+}

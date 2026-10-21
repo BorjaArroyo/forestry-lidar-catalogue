@@ -202,7 +202,7 @@ Choose an admitted source, add subsets, then review the frozen dataset plan. Imp
 restricts the reviewed plots to the published partitions for that use, downloads
 and verifies the selected source, runs the admitted transformation and independent
 validator, and exports a ZIP with `task-plan.json` and `task-validation.json`.
-The optional local service retains FOR-instance whole-archive preparation. FGI-EMIT also has a per-LAS native entrypoint; the browser executes one source per plan.
+The optional local service retains FOR-instance whole-archive preparation. FGI-EMIT also has a per-LAS native entrypoint; the browser can execute both admitted sources in one combined plan.
 See [Task requirements and consumption](TASK-REQUIREMENTS.md).
 
 ## Load prepared dataset folders
@@ -210,3 +210,19 @@ See [Task requirements and consumption](TASK-REQUIREMENTS.md).
 Workbench exports `dataset.json` and preserved partition/source folders in a ZIP.
 Extract it and use `TaskDataset`. See [TASK-DATASET.md](TASK-DATASET.md) for the
 layout, bounded loader and composition of existing prepared subsets.
+
+
+## Resume interrupted Zenodo preparation
+
+Workbench lists **Saved preparations** from this website's browser storage, even
+when the original tab is gone. **Resume** uses that run's saved plan and request,
+checks current dependencies and independently validates every saved plot before
+reusing its blocks. Plots without a valid checkpoint restart from source intake.
+A stale plan requires its matching checkout or a newly reviewed run.
+
+**Stop** retains complete validated plots. **Delete** removes a saved run and its
+storage; starting another preparation does not delete earlier runs. Completed ZIPs
+can be downloaded again from the saved list. An interrupted export is rebuilt
+only after all source and dataset checks pass. Recovery covers Zenodo selections;
+local LAS/ZIP inputs restart. Browser storage may be cleared or evicted, so download
+the completed ZIP to retain your dataset. See [the recovery contract](BROWSER-PREPARATION.md#resumable-zenodo-runs).

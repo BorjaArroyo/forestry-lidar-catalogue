@@ -1,0 +1,28 @@
+{
+  "use": "training",
+  "variables": {
+    "xyz": "required",
+    "instance_reference": "required",
+    "reflectance": "optional"
+  },
+  "subsets": [
+    {
+      "record_id": "19351234",
+      "paths": [
+        "sources/19351234/originals/training/training/plot_1003.las",
+        "sources/19351234/originals/training/training/plot_1022.las"
+      ]
+    },
+    {
+      "record_id": "8287792",
+      "paths": [
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+        "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+      ]
+    }
+  ],
+  "expected_points": 9160560,
+  "expected_blocks": 39,
+  "reference_evidence": "evidence/combined-browser-expanded-validation.json"
+}

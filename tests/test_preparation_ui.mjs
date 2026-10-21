@@ -1,3 +1,4 @@
+import {validJob, lockName} from '../browser-prepare/run-store.js';
 import {emptyDraft, readDraft, sameRequest} from '../browser-prepare/dataset-draft.js';
 import {DraftPanel} from '../browser-prepare/draft-panel.js';
 import test from 'node:test';
@@ -8,13 +9,13 @@ import {RunSession} from '../browser-prepare/run-session.js';
 import {datasetPlots} from '../browser-prepare/selection.js';
 import {profileForPipeline} from '../browser-prepare/profiles.js';
 
-async function panel({savedStorage} = {}) {
+async function panel({savedStorage, savedRuns = [], missingRun = false} = {}) {
   const elements = new Map(), listeners = new Map(), workers = [], timers = new Map(), storage = new Map();
-  let serial = 0;
+  let serial = 0, inspections = 0;
   const removed = [];
   const localValues = savedStorage || new Map();
   const localStorage = {getItem:key=>localValues.get(key),setItem:(key,value)=>localValues.set(key,value),removeItem:key=>localValues.delete(key)};
-  const node = id => ({id, value:id==='prepare-mode'?'las':'',files:[],options:[],
+  const node = id => ({id, dataset:{}, value:id==='prepare-mode'?'las':'',files:[],options:[],
     replaceChildren(){this.options=[];this.value='';},append(...options){for(const option of options){this.options.push(option);if(!this.value)this.value=option.value;}}});
   const element = id => {
     if (!elements.has(id)) elements.set(id, node(id));
@@ -26,7 +27,7 @@ async function panel({savedStorage} = {}) {
     terminate() {this.terminated = true;}
   }
   const directory = {async getDirectoryHandle() {return this;}, async removeEntry(id) {removed.push(id);}};
-  const context = vm.createContext({URL, Blob, profileForPipeline, datasetPlots, DraftPanel, emptyDraft, readDraft, sameRequest,
+  const context = vm.createContext({URL, Blob, validJob, lockName, openRun:async()=>{if(missingRun)throw Object.assign(Error('Missing run'),{name:'NotFoundError'});return {jobs:directory};}, inspectRuns:async()=>{inspections++; return savedRuns;}, profileForPipeline, datasetPlots, DraftPanel, emptyDraft, readDraft, sameRequest,
     RunSession: class extends RunSession {
       constructor(options) {super({...options, schedule: callback => {timers.set(++serial, callback); return serial;}, unschedule: id => timers.delete(id)});}
     }, Worker, CustomEvent: class {constructor(type, options) {this.type = type; this.detail = options.detail;}},
@@ -67,7 +68,7 @@ async function panel({savedStorage} = {}) {
     await settle();
     return worker;
   };
-  return {review, removed, element, workers, timers, listeners, settle, savedStorage:localValues, setRequest(value) {request = context.window.CanopyTaskSelection.normalize(value.use, value.variables);}};
+  return {inspections:()=>inspections, review, removed, element, workers, timers, listeners, settle, savedStorage:localValues, setRequest(value) {request = context.window.CanopyTaskSelection.normalize(value.use, value.variables);}};
 }
 
 test('all catalog sources remain selectable; an unadmitted source cannot execute', async () => {
@@ -84,7 +85,7 @@ test('requirements and selected source are sent to the worker; old failures cann
   await p.element('prepare-run').onclick();
   assert.equal(p.workers[0].request.record_id, '8287792');
   assert.equal(p.workers[0].request.task_request.use, 'training');
-  const stale = [...p.timers.values()][0]; p.workers[0].onerror({message: 'fixture'});
+  const stale = [...p.timers.values()][0]; p.workers[0].onerror({message: 'fixture'}); await p.settle();
   await p.element('prepare-run').onclick(); stale();
   assert.equal(p.workers[1].terminated, undefined); assert.equal(p.timers.size, 1);
   await p.element('prepare-cancel').onclick(); assert.equal(p.timers.size, 0);
@@ -167,7 +168,7 @@ test('editing saved selection invalidates the plan; changing only the selector d
 test('failed or cancelled reviews cannot leave an executable plan', async () => {
   const p=await panel();p.element('prepare-review').onclick();
   assert.equal(p.element('prepare-run').disabled,true);assert.equal(p.element('prepare-add').disabled,true);
-  p.workers[0].onmessage({data:{type:'error',error:'Stale source pin'}});
+  p.workers[0].onmessage({data:{type:'error',error:'Stale source pin'}}); await p.settle();
   assert.equal(p.element('prepare-run').disabled,true);assert.equal(p.element('prepare-review').disabled,false);
   p.element('prepare-review').onclick();const stale=p.workers.at(-1);
   await p.element('prepare-cancel').onclick();
@@ -177,7 +178,7 @@ test('failed or cancelled reviews cannot leave an executable plan', async () => 
 
 test('a stale runtime or source rejection requires a fresh plan before retry', async () => {
   const p=await panel();await p.review();await p.element('prepare-run').onclick();
-  p.workers.at(-1).onmessage({data:{type:'error',code:'DATASET_PLAN_STALE',error:'Dataset plan changed; review again'}});
+  p.workers.at(-1).onmessage({data:{type:'error',code:'DATASET_PLAN_STALE',error:'Dataset plan changed; review again'}}); await p.settle();
   assert.equal(p.element('prepare-run').disabled,true);assert.equal(p.element('dataset-plan').hidden,true);
   assert.equal(p.element('prepare-review').disabled,false);
 });
@@ -186,7 +187,7 @@ test('cancelling a metadata review preserves an existing completed dataset ZIP',
   const p=await panel();p.element('prepare-mode').value='las';p.element('prepare-file').files=[{}];p.element('prepare-mode').onchange();
   await p.element('prepare-run').onclick();const worker=p.workers.at(-1);
   worker.onmessage({data:{type:'job',id:'previous-output'}});
-  worker.onmessage({data:{type:'result',file:new Blob(['fixture']),evidence:{report:{plots:1,points:3,chunks:1},request:{use:'training'},sources:[{task_plan:{source_ref:'zenodo:8287792',omitted:{}}}]}}});
+  worker.onmessage({data:{type:'result',file:new Blob(['fixture']),evidence:{report:{plots:1,points:3,chunks:1},request:{use:'training'},sources:[{task_plan:{source_ref:'zenodo:8287792',omitted:{}}}]}}}); await p.settle();
   p.element('prepare-mode').value='zenodo';p.element('prepare-mode').onchange();
   p.element('prepare-review').onclick();await p.element('prepare-cancel').onclick();
   assert.equal(p.removed.length,0);assert.equal(p.element('prepare-download').hidden,false);
@@ -277,4 +278,61 @@ test('combined plan import restores every source atomically and executes the imp
   assert.match(p.element('dataset-plan-requirements').textContent,/FOR-instance/);
   assert.equal(p.element('prepare-run').disabled,false);
   await p.element('prepare-run').onclick();assert.deepEqual(p.workers[1].request.execution_plan,plan);
+});
+
+
+test('saved Zenodo runs are discovered without session storage and resume their own identity', async()=>{
+  const id = '12345678-1234-1234-1234-123456789abc';
+  const p = await panel({savedRuns:[{id, status:'interrupted', resumable:true, completed:1, bytes:400,
+    saved:{task_request:{use:'inference'}, execution_plan:{schema_version:'2.0.0',totals:{plots:2},source_plans:[{task_plan:{source_ref:'zenodo:19351234'}}]}}}]});
+  const row = p.element('saved-runs').options[0];
+  assert.match(row.options[0].textContent, /inference.*1 saved plots/);
+  const resume = row.options.find(element=>element.textContent==='Resume');
+  const scans = p.inspections();
+  resume.onclick();
+  assert.equal(p.inspections(), scans, 'Discovery must not compete for the worker lock during startup');
+  assert.equal(p.workers.at(-1).request.operation, 'resume');
+  assert.equal(p.workers.at(-1).request.job, id);
+  await p.element('prepare-cancel').onclick();
+  assert.equal(p.workers.at(-1).terminated, true);
+  assert.equal(p.removed.length, 0);
+});
+test('starting another preparation keeps previous output; only explicit deletion removes it', async()=>{
+  const p = await panel();
+  p.element('prepare-mode').value = 'las'; p.element('prepare-file').files = [{name:'fixture.las'}]; p.element('prepare-mode').onchange();
+  await p.element('prepare-run').onclick();
+  const id = '12345678-1234-1234-1234-123456789abc';
+  p.workers.at(-1).onmessage({data:{type:'job', id}});
+  await p.element('prepare-cancel').onclick();
+  assert.equal(p.removed.length, 0);
+  await p.element('prepare-clear').onclick();
+  assert.deepEqual(p.removed, [id]);
+});
+test('busy saved runs cannot be resumed or deleted', async()=>{
+  const p = await panel({savedRuns:[{id:'12345678-1234-1234-1234-123456789abc',status:'busy'}]});
+  const row = p.element('saved-runs').options[0];
+  assert.equal(row.options.find(element=>element.textContent==='Resume'), undefined);
+  assert.equal(row.options.find(element=>element.textContent==='Delete').disabled, true);
+});
+
+
+test('a saved-list refresh prevents resuming until its read lock is released', async()=>{
+  const p = await panel({savedRuns:[{id:'12345678-1234-1234-1234-123456789abc',status:'interrupted',resumable:true}]});
+  const resume = p.element('saved-runs').options[0].options.find(element=>element.textContent==='Resume');
+  const refresh = p.element('saved-runs-refresh').onclick();
+  resume.onclick();
+  assert.equal(p.workers.length, 0);
+  await refresh;
+  p.element('saved-runs').options[0].options.find(element=>element.textContent==='Resume').onclick();
+  assert.equal(p.workers.at(-1).request.operation, 'resume');
+});
+
+
+test('deleting an already-removed saved run clears its stale current identity', async()=>{
+  const id = '12345678-1234-1234-1234-123456789abc';
+  const p = await panel({missingRun:true,savedRuns:[{id,status:'complete',file:new Blob(['result']),evidence:{request:{use:'training'}}}]});
+  p.element('saved-runs').options[0].options.find(e=>e.textContent==='Download result').onclick();
+  await p.element('prepare-clear').onclick();
+  assert.equal(p.element('prepare-clear').disabled, true);
+  assert.match(p.element('prepare-status').textContent, /deleted/);
 });

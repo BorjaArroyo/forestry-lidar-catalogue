@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.3.0",
   "pyodide": "314.0.7",
   "python": "3.14.2",
   "numpy": "2.4.6",
@@ -252,8 +252,13 @@
     },
     "browser-prepare/worker.js": {
       "url": "browser-prepare/worker.js",
-      "size_bytes": 25262,
-      "sha256": "e4a6a5785b1e6e4f2eebfed16dad2be5fbf1c6d49d6710d5c2ba6ca6ef730772"
+      "size_bytes": 33095,
+      "sha256": "0e0408b98242a1a608a9ebbb66001d602b48c11c30bb03a27a29390710289972"
+    },
+    "browser-prepare/run-store.js": {
+      "url": "browser-prepare/run-store.js",
+      "sha256": "199b0b7c024dbc8737e0383bfce54e9d4ff0d29c1ab4425c50a64bf0a135c590",
+      "size_bytes": 3313
     }
   },
   "zip_js": "2.20.0",

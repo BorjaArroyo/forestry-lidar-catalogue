@@ -1,3 +1,4 @@
+import {inspectRuns, validJob, lockName, openRun} from './run-store.js';
 import {emptyDraft, readDraft, sameRequest} from './dataset-draft.js';
 import {DraftPanel} from './draft-panel.js';
 import {datasetPlots} from './selection.js';
@@ -17,11 +18,12 @@ const storageKey = 'canopy-preparation-job';
 const supported = Boolean(window.Worker && window.isSecureContext && navigator.storage?.getDirectory && navigator.locks);
 const sourceMembership = new Map();
 let draftPanel, reviewedPlan = null, reviewedKey = null, pendingReviewKey = null, planURL = null;
+let inspecting = false;
 let initialized = false, busy = false, reviewing = false, plots = [], job = null, resultURL = null, sourceRevision = 0;
 
 function remember(id) {
   job = id;
-  if (id) sessionStorage.setItem(storageKey, id); else sessionStorage.removeItem(storageKey);
+  try { if (id) sessionStorage.setItem(storageKey, id); else sessionStorage.removeItem(storageKey); } catch { /* OPFS discovery does not depend on session storage. */ }
 }
 function hideExport() {
   if (resultURL) URL.revokeObjectURL(resultURL);
@@ -96,7 +98,7 @@ function showPlan(plan) {
   $('dataset-plan').hidden = false;
 }
 function controls() {
-  const running = busy || session.running;
+  const running = busy || session.running || inspecting;
   document.dispatchEvent(new CustomEvent('canopy-preparation-state', {detail: {running}}));
   const profile = selectedProfile();
   const mode = $('prepare-mode').value, local = mode !== 'zenodo';
@@ -128,7 +130,9 @@ function controls() {
   $('dataset-plan-file').disabled = !supported || running;
   if (mode === 'zenodo' && !reviewedPlan) $('prepare-run').disabled = true;
   $('prepare-cancel').disabled = !session.running;
+  $('saved-runs-refresh').disabled = running;
   $('prepare-clear').disabled = running || !job;
+  for (const button of $('saved-runs').querySelectorAll?.('button') || []) button.disabled = running || button.dataset?.busy === 'true';
 }
 function options(id, values) {
   $(id).replaceChildren();
@@ -187,11 +191,13 @@ async function sourceChanged() {
 }
 async function removeJob(id) {
   if (!id) return;
-  const origin = await navigator.storage.getDirectory();
-  const jobs = await origin.getDirectoryHandle('canopy-preparation');
-  await navigator.locks.request('canopy-preparation:' + id, {ifAvailable: true}, async lock => {
+  if (!validJob(id)) throw Error('Invalid saved run identity');
+  await navigator.locks.request(lockName(id), {ifAvailable: true}, async lock => {
     if (!lock) throw Error('This output is in use by another page');
-    await jobs.removeEntry(id, {recursive: true}).catch(error => { if (error.name !== 'NotFoundError') throw error; });
+    try {
+      const {jobs} = await openRun(id);
+      await jobs.removeEntry(id, {recursive: true});
+    } catch (error) { if (error.name !== 'NotFoundError') throw error; }
   });
 }
 function showExport(file, evidence, name) {
@@ -217,18 +223,20 @@ const session = new RunSession({
       showExport(data.file, data.evidence, 'tree-instance-dataset.zip');
       const {report, request} = data.evidence;
       const omissions = data.evidence.sources.map(source => `${source.task_plan.source_ref}: ${Object.keys(source.task_plan.omitted).join(', ') || 'none'}`).join('; ');
+      void refreshSaved();
       status(`Validated for ${request.use}: ${report.plots} plots, ${report.points.toLocaleString()} points in ${report.chunks} blocks. Optional omissions: ${omissions}. Download the ZIP to keep it.`);
     } else if (data.type === 'error') {
       reviewing = false;
       if (data.code === 'DATASET_PLAN_STALE') clearPlan();
       status('Preparation failed: ' + data.error.trim().split('\n').at(-1));
       $('prepare-result').textContent = data.error;
-      // The worker attempts cleanup; retain the identity if cleanup was interrupted.
+      // Zenodo checkpoints survive failures; local preparations retain their cleanup behavior.
+      void refreshSaved();
       $('prepare-clear').disabled = !job;
     }
     controls();
   },
-  failure(text) { reviewing = false; status(text); $('prepare-clear').disabled = !job; controls(); },
+  failure(text) { reviewing = false; status(text); void refreshSaved(); $('prepare-clear').disabled = !job; controls(); },
 });
 draftPanel = new DraftPanel({document, storage: () => window.localStorage,
   normalize: selection.normalize, getRequest, setRequest: request => window.CanopyHub.setTaskRequest(request),
@@ -249,7 +257,7 @@ $('prepare-collections').onchange = $('prepare-partitions').onchange = () => { r
 $('prepare-plot').onchange = controls;
 $('prepare-source').onchange = sourceChanged;
 $('dataset-plan-file').onchange = async () => {
-  if (busy || session.running) return;
+  if (busy || session.running || inspecting) return;
   const file = $('dataset-plan-file').files[0];
   if (!file) return;
   busy = true; controls();
@@ -259,25 +267,25 @@ $('dataset-plan-file').onchange = async () => {
     const sources = planSources(candidate).map(p => p?.task_plan?.source_ref);
     if (!sources.length || sources.some(source => typeof source !== 'string' || !/^zenodo:[1-9][0-9]*$/.test(source))) throw Error('Choose a dataset-plan.json with reviewed Zenodo sources');
     reviewing = true;
-    session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type:'module'}),
+    session.start(() => new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), {type:'module'}),
       {operation:'import', mode:'zenodo', records:sources.map(source => source.slice(7)), plan_text:text});
     status('Checking the imported plan against current source, pipeline and runtime pins…');
   } catch (error) { reviewing = false; status('Plan import failed: ' + error.message); }
   finally { busy = false; $('dataset-plan-file').value = ''; controls(); }
 };
 $('prepare-review').onclick = () => {
-  if (busy || session.running || $('prepare-review').disabled) return;
+  if (busy || session.running || inspecting || $('prepare-review').disabled) return;
   const intent = planIntent();
   if (!intent) return;
   clearPlan(); pendingReviewKey = JSON.stringify(intent); reviewing = true;
   try {
-    session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type: 'module'}), {operation: 'review', ...intent});
+    session.start(() => new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), {type: 'module'}), {operation: 'review', ...intent});
     status('Resolving the plan against pinned source metadata and audited task requirements…');
   } catch (error) { reviewing = false; status(error.message); }
   controls();
 };
 $('prepare-run').onclick = async () => {
-  if (busy || session.running || $('prepare-run').disabled) return;
+  if (busy || session.running || inspecting || $('prepare-run').disabled) return;
   const saved = draftPanel.hasSubsets ? draftPanel.review() : null;
   if (draftPanel.blockedStorage || (saved && (saved.status !== 'ready' || $('prepare-mode').value !== 'zenodo'))) { status(saved?.error || 'Saved subsets use Zenodo intake. Restore requirements or clear the dataset selection.'); return; }
   const record = selectedSource();
@@ -288,12 +296,12 @@ $('prepare-run').onclick = async () => {
   if ($('prepare-mode').value === 'zenodo' && (!reviewedPlan || JSON.stringify(intent) !== reviewedKey)) { clearPlan(); controls(); status('Review the dataset plan before downloading.'); return; }
   busy = true; controls(); hideExport(); $('prepare-clear').disabled = true; $('prepare-result').textContent = '';
   try {
-    await removeJob(job); remember(null);
-    session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type: 'module'}), {
+    remember(null);
+    session.start(() => new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), {type: 'module'}), {
       ...(intent || {record_id:record, mode:$('prepare-mode').value}), selected_paths: saved?.paths || selectedValues('prepare-plot'),
       file: $('prepare-file').files[0], task_request: request, execution_plan: reviewedPlan,
     });
-    status('Rechecking the frozen plan and available browser storage…');
+    status('Rechecking the frozen plan and available browser storage…'); void refreshSaved();
   } catch (error) { console.error(error); status(error.message); $('prepare-clear').disabled = !job; }
   finally { busy = false; controls(); }
 };
@@ -301,43 +309,86 @@ $('prepare-cancel').onclick = async () => {
   const reviewOnly = reviewing;
   session.stop(); reviewing = false;
   if (reviewOnly) { status('Review cancelled; previous prepared output retained.'); controls(); return; }
-  busy = true; controls();
-  try { await removeJob(job); remember(null); status('Cancelled; temporary output removed.'); }
-  catch { status('Cancelled. Use Clear temporary output to release remaining browser storage.'); $('prepare-clear').disabled = false; }
-  finally { busy = false; controls(); }
+  status('Stopped. Validated Zenodo plots are retained; use Resume in Saved preparations. Local inputs must restart.');
+  await refreshSaved(); controls();
 };
 $('prepare-clear').onclick = async () => {
   busy = true; controls();
-  try { await removeJob(job); remember(null); hideExport(); $('prepare-clear').disabled = true; status('Temporary output cleared.'); }
+  try { await removeJob(job); remember(null); hideExport(); $('prepare-clear').disabled = true; await refreshSaved(); status('Temporary output deleted.'); }
   catch (error) { status('Could not clear temporary output: ' + error.message); }
   finally { busy = false; controls(); }
 };
-async function recover() {
-  busy = true; controls();
+async function refreshSaved() {
+  if (!supported || session.running || inspecting) return;
+  inspecting = true; controls();
+  const list = $('saved-runs');
   try {
-    job = sessionStorage.getItem(storageKey);
-    if (!job) return;
-    if (!/^[0-9a-f-]{36}$/.test(job)) throw Error('Invalid saved run identity');
-    await navigator.locks.request('canopy-preparation:' + job, {ifAvailable: true}, async lock => {
-      if (!lock) throw Error('Saved output is still in use by another page');
-      const origin = await navigator.storage.getDirectory();
-      const jobs = await origin.getDirectoryHandle('canopy-preparation');
-      const root = await jobs.getDirectoryHandle(job);
-      $('prepare-clear').disabled = false;
-      try {
-        const complete = JSON.parse(await (await (await root.getFileHandle('complete.json')).getFile()).text());
-        const file = await (await root.getFileHandle('prepared.zip')).getFile();
-        if (file.size !== complete.size_bytes) throw Error('Saved ZIP size changed');
-        showExport(file, complete.evidence);
-        const sources = complete.evidence.sources?.map(source => source.task_plan.source_ref).join(', ') || complete.evidence.task_plan?.source_ref || 'historical preparation';
-        status(`Recovered the previous ZIP for ${sources} / ${complete.evidence.request?.use || complete.evidence.task_plan?.use || 'unspecified use'}. Its saved plan describes that run. Prepare again to apply the current request.`);
-      } catch { status('Previous run was interrupted. Clear it or select the original input to restart.'); }
-    });
-  } catch (error) { if (error.name === 'NotFoundError') remember(null); else status(error.message); }
-  finally { busy = false; controls(); }
+    const runs = await inspectRuns();
+    list.replaceChildren();
+    for (const run of runs) {
+      const row = document.createElement('li'), description = document.createElement('p');
+      const savedPlan = run.saved?.execution_plan;
+      const plan = savedPlan && (savedPlan.schema_version === '1.0.0' ? savedPlan.task_plan?.source_ref : Array.isArray(savedPlan.source_plans)) ? savedPlan : null;
+      const sources = plan ? planSources(plan).map(p => p?.task_plan?.source_ref || 'Invalid saved source').join(', ') :
+        run.evidence?.sources?.map(s => s.task_plan.source_ref).join(', ') || run.evidence?.task_plan?.source_ref || 'Historical preparation';
+      const use = run.saved?.task_request?.use || run.evidence?.request?.use || run.evidence?.task_plan?.use || 'unspecified use';
+      description.textContent = `${sources} / ${use} · ${run.status} · ${run.completed || 0} saved plots (checked again on resume)${plan ? ' / ' + (plan.totals?.plots ?? '?') + ' plots' : ''} · ${run.bytes === undefined ? 'storage in use' : (run.bytes / 1048576).toFixed(1) + ' MiB'}. ${run.detail || ''}`;
+      row.dataset.run = run.id;
+      row.append(description);
+      const button = (label, action) => {
+        const element = document.createElement('button'); element.className = 'button small'; element.textContent = label;
+        element.dataset.busy = String(run.status === 'busy');
+        element.disabled = busy || session.running || run.status === 'busy';
+        element.onclick = action; row.append(element);
+      };
+      if (run.status === 'complete') button('Download result', () => {
+        if (busy || session.running || inspecting) return;
+        remember(run.id); showExport(run.file, run.evidence, 'tree-instance-dataset.zip');
+        status(`Recovered ZIP for ${sources} / ${use}. Its saved plan describes that run.`); controls();
+      });
+      else if (run.resumable) button('Resume', () => {
+        if (busy || session.running || inspecting) return;
+        hideExport(); remember(run.id);
+        try {
+          session.start(() => new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), {type:'module'}), {operation:'resume', job:run.id});
+          status(`Rechecking saved plan and every completed plot for ${sources} / ${use}…`);
+        } catch (error) { status('Could not resume preparation: ' + error.message); }
+        controls();
+      });
+      button('Delete', async () => {
+        if (busy || session.running || inspecting) return;
+        busy = true; controls();
+        try {
+          await removeJob(run.id);
+          if (job === run.id) { remember(null); hideExport(); }
+          status('Saved preparation deleted.');
+        } catch (error) { status('Could not delete preparation: ' + error.message); }
+        finally { busy = false; controls(); await refreshSaved(); }
+      });
+      list.append(row);
+    }
+    $('saved-runs-status').textContent = runs.length ? 'Resume rechecks exact versions and every saved block. Browser storage can be cleared by the browser; download completed ZIPs to keep them.' : 'No saved preparations in this browser.';
+    return runs;
+  } catch (error) { $('saved-runs-status').textContent = 'Could not inspect saved preparations: ' + error.message; }
+  finally { inspecting = false; controls(); }
+}
+$('saved-runs-refresh').onclick = () => refreshSaved();
+async function recover() {
+  const runs = await refreshSaved();
+  // Older local-input results have no run.json; retain their tab recovery as well.
+  try {
+    const previous = sessionStorage.getItem(storageKey);
+    if (!validJob(previous)) return;
+    const run = runs?.find(run => run.id === previous);
+    if (run?.status === 'complete') {
+      remember(previous); showExport(run.file, run.evidence);
+      status('Recovered a completed ZIP. Its saved plan describes the previous run.');
+    }
+  } catch { /* All discoverable runs remain available in the saved preparations list. */ }
+  controls();
 }
 document.addEventListener('canopy-task-request', () => {
-  if (busy || session.running) return;
+  if (busy || session.running || inspecting) return;
   refreshPlots(); hideExport();
   const result = assessment();
   status(result.status === 'ready' ? 'Request updated. Prepare again to bind the ZIP to these requirements.' : result.blockers.join('. '));

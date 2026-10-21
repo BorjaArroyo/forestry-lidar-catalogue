@@ -48,7 +48,7 @@ partitions for that use; individual plots are an advanced subset. Start preparat
 or a complete local LAS.
 
 The worker checks the pinned graph/schema and resolves the request before fetching
-source data. It uses the unchanged audited FOR-instance producer, independently
+source data. It uses the unchanged audited source-specific producers, independently
 validates every prepared block, and reads a real consumer block. Completion requires
 both package validation and request validation. The ZIP adds:
 
@@ -114,7 +114,7 @@ permitted partition. An HTTP fixture covers download, extraction, preparation,
 request validation, and resume. Required reflectance is rejected before acquisition.
 
 See `evidence/task-driven-preparation-validation.json` for fingerprints and limits.
-The original increment did not admit FGI-EMIT; its separately validated adapter is now available. Browser plans remain single-source. This does not certify quantitative
+The original increment did not admit FGI-EMIT; its separately validated adapter is now available. Browser plans can combine both admitted sources. This does not certify quantitative
 spectral conversion, or a model-specific training recipe. Those require their own
 source policies, executable adapters, and complete validation.
 

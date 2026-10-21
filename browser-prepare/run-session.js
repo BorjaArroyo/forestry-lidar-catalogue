@@ -19,7 +19,7 @@ export class RunSession {
     const arm = () => {
       this.unschedule(run.timer);
       run.timer = this.schedule(() => {
-        if (finish()) this.failure('Stopped after 180 seconds without progress. Temporary output can be cleared.');
+        if (finish()) this.failure('Stopped after 180 seconds without progress. Validated Zenodo plots are retained in Saved preparations.');
       }, this.timeout);
     };
     run.worker.onmessage = ({data}) => {
