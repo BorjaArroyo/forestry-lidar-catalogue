@@ -1159,6 +1159,11 @@ td:first-child {
   font-size: 11px;
   color: #627466;
 }
+.source-card .source-location {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .source-card .card-top {
   justify-content: space-between;
   gap: 10px;
@@ -1209,36 +1214,27 @@ td:first-child {
   background: #f7e8e1;
   color: #8a5542;
 }
-.source-card .source-coverage {
-  font-size: 13px;
-  line-height: 1.65;
-  color: #506a59;
+.card-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
   margin: 0 0 16px;
 }
-.source-caveat {
-  border-left: 2px solid #d4bb80;
-  padding-left: 12px;
-  margin: 0 0 17px;
-}
-.source-caveat strong {
-  font-size: 11px;
-  color: #8a723d;
-}
-.source-caveat p {
+.fit-line {
   font-size: 12px;
-  line-height: 1.65;
-  margin: 5px 0 0;
-  color: #5f7062;
+  margin: 0 0 8px;
+  font-weight: 500;
 }
-.source-card .source-record-size {
+.fit-line.ok {
+  color: var(--success-text);
+}
+.fit-line.no {
+  color: var(--warning-text);
+}
+.card-meta {
   font-size: 12px;
-  line-height: 1.7;
-  color: #526d5a;
-  margin: auto 0 18px;
-}
-.source-record-size small {
-  font-size: 11px;
-  color: #7b8777;
+  color: var(--muted);
+  margin: auto 0 16px;
 }
 .source-card .card-bottom {
   padding-top: 15px;
@@ -1326,9 +1322,6 @@ td:first-child {
   .source-readiness {
     grid-template-columns: 1fr;
     gap: 12px;
-  }
-  .source-card .source-readiness {
-    grid-template-columns: 1fr 1fr;
   }
   .source-status {
     font-size: 11px;
@@ -1482,4 +1475,40 @@ td:first-child {
 }
 .empty p {
   margin: 6px 0 0;
+}
+
+/* Upcoming (not yet integrated) source cards */
+.dataset-card.upcoming {
+  background: #f6f7f5;
+  border-color: var(--line-soft);
+  filter: saturate(0.3);
+}
+.dataset-card.upcoming h3 {
+  color: var(--ink-soft);
+}
+.dataset-card.upcoming:hover {
+  transform: none;
+  box-shadow: var(--shadow-xs);
+}
+.grid-divider {
+  grid-column: 1/-1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-2) 0 var(--space-1);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--line);
+}
+.grid-divider h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  margin: 0 0 4px;
+}
+.grid-divider p {
+  margin: 0;
+  font-size: var(--text-md);
+  color: var(--muted);
+  line-height: var(--leading-normal);
 }

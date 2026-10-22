@@ -194,18 +194,48 @@ export function mountCatalog({
     toast.timer = setTimeout(() => ($('#toast').hidden = true), 3200);
   }
 
+  /* Cards communicate uniform state; the audited per-source detail stays in the dialog. */
+  const REFERENCE_STATUS_LABELS = {
+    plots: 'Tree IDs per plot',
+    trees: 'Tree IDs in tree exports',
+    none: 'No instance labels',
+    unknown: 'Reference not reviewed',
+  };
+  const PREPARATION_STATUS_LABELS = {
+    ready: 'Validated preparation',
+    tbd: 'Pipeline TBD',
+    blocked: 'Rights review required',
+  };
+  function cardStatuses(d) {
+    const s = discovery(d);
+    return `<div class="card-status"><span class="source-status reference-${esc(s.instance_reference.status)}">${esc(REFERENCE_STATUS_LABELS[s.instance_reference.status] || 'Reference not reviewed')}</span><span class="source-status preparation-${esc(s.preparation.status)}">${esc(PREPARATION_STATUS_LABELS[s.preparation.status] || 'Pipeline TBD')}</span></div>`;
+  }
+  function cardHtml(d) {
+    const s = discovery(d);
+    const upcoming = s.preparation.status !== 'ready';
+    const fit = upcoming ? null : selection.assess(d.id, taskRequest());
+    const fitLine = !fit
+      ? ''
+      : `<p class="fit-line ${fit.status === 'ready' ? 'ok' : 'no'}">${fit.status === 'ready' ? 'Audited pipeline covers this request.' : 'Admitted pipeline does not cover the current request.'}</p>`;
+    return `<article class="dataset-card source-card${upcoming ? ' upcoming' : ''}" data-source="${d.id}"><div class="card-top">${upcoming ? badge('Upcoming', 'neutral') : ''}${badge(d.modalities.join(' · '))}<span class="source-unit">${esc(s.unit_label)}</span></div><h3>${esc(d.name)}</h3><p class="source-location" title="${esc(d.geography)}">${esc(d.geography)}</p>${cardStatuses(d)}${fitLine}<p class="card-meta">${recordSize(d)} · ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} in the pinned record</p><div class="card-bottom"><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" ${state.compare.has(d.id) ? 'checked' : ''}>Compare</label>${fit?.status === 'ready' ? `<button class="button small" data-task-prepare="${d.id}">Prepare</button>` : ''}<button data-detail="${d.id}">View source & preparation ↗</button></div></article>`;
+  }
   function renderDatasets() {
     const rows = visibleDatasets();
     $('#catalog-count').textContent =
       `${rows.length} of ${data.datasets.length} source records · ${rows.filter((d) => selection.assess(d.id, taskRequest()).status === 'ready').length} with an audited pipeline for this request`;
+    if (!rows.length) {
+      $('#dataset-grid').innerHTML =
+        '<div class="empty">No source matches all these conditions.<button class="button small" data-clear-filters>Clear all filters</button><p>This catalog does not cover every public source.</p></div>';
+      return;
+    }
+    const ready = rows.filter((d) => discovery(d).preparation.status === 'ready');
+    const upcoming = rows.filter((d) => discovery(d).preparation.status !== 'ready');
+    const divider =
+      ready.length && upcoming.length
+        ? `<div class="grid-divider"><div><h3>Upcoming sources</h3><p>Reviewed records listed for discovery; no audited preparation is admitted for this task yet.</p></div><span class="muted">${upcoming.length} ${upcoming.length === 1 ? 'source' : 'sources'}</span></div>`
+        : '';
     $('#dataset-grid').innerHTML =
-      rows
-        .map((d) => {
-          const s = discovery(d);
-          return `<article class="dataset-card source-card" data-source="${d.id}"><div class="card-top">${badge(d.modalities.join(' · '))}<span class="source-unit">${esc(s.unit_label)}</span></div><h3>${esc(d.name)}</h3><p class="source-location">${esc(d.geography)}</p>${readinessHtml(d)}${requestFit(d, true)}<p class="source-coverage">${esc(s.coverage)}</p><div class="source-caveat"><strong>Before choosing</strong><p>${esc(s.limitation)}</p></div><p class="source-record-size">${recordSize(d)} · ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} in the pinned record<br><small>${selection.assess(d.id, taskRequest()).status === 'ready' ? 'Whole record size; a reviewed plot can be retrieved in the browser.' : 'Whole record; selected-plot preparation remains TBD.'}</small></p><div class="card-bottom"><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" ${state.compare.has(d.id) ? 'checked' : ''}>Compare</label><button data-detail="${d.id}">View source & preparation ↗</button></div></article>`;
-        })
-        .join('') ||
-      `<div class="empty">No source matches all these conditions.<button class="button small" data-clear-filters>Clear all filters</button><p>This catalog does not cover every public source.</p></div>`;
+      ready.map(cardHtml).join('') + divider + upcoming.map(cardHtml).join('');
   }
   function detail(id) {
     const d = byId[id];
