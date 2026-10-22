@@ -13,6 +13,10 @@
   from source today would contradict the all-wheels installation policy.
 - Track uv.lock and AGENTS.md in git so the resolved environment and the shared
   agent instructions are reviewable.
+- Add a real-browser kernel test that boots the pinned Pyodide 314.0.7 runtime
+  and drives the audited FOR-instance preparation kernel end to end against a
+  deterministic synthetic fixture package, independently validating every array
+  without downloading the 1.6 GB provider archive.
 
 ## 2026-10-21 — Resumable Zenodo preparations
 
