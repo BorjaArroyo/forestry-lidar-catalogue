@@ -1,0 +1,75 @@
+{
+  "validation_date": "2026-10-22",
+  "purpose": "Final-code five-plot browser process restart acceptance after repository reorganization",
+  "process_restart": "Each browser process was closed after the first committed checkpoint and relaunched with the same isolated profile before resume.",
+  "results": {
+    "chromium": {
+      "browser_user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+      "job_id": "09278639-3292-45cc-a655-c3c84e0bbeeb",
+      "checkpoint_before_restart": "sources/19351234/originals/training/training/plot_1003.las",
+      "completed_plots_after_resume": 5,
+      "archive_sha256": "ff21385d2fa3257873731152aa878a3ba862fb9cb2e7cd4a936af4b7f137d9c0",
+      "archive_size_bytes": 873662649,
+      "zip_crc": "passed",
+      "native_validation": {
+        "status": "validated",
+        "dataset_sha256": "640af3372d6dd31ec0d8759c0ba751f5040c264fdb617df26ef12d9beab6bb33",
+        "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+        "validator_sha256": "2034de4b7041aacf5da7fe1e1155a082b0d416f9fb724bb9ccc3dac0df1a6d6c",
+        "packages": 2,
+        "scenes": 5,
+        "points": 9160560,
+        "partitions": [
+          "dev",
+          "train"
+        ]
+      },
+      "matching_native_chunks": 39,
+      "plan_sha256": "263511b859aae9777e64a40a1389b1f2477d77a9ade7da27edba9b51e05e0c1a",
+      "plot_paths": [
+        "sources/19351234/originals/training/training/plot_1003.las",
+        "sources/19351234/originals/training/training/plot_1022.las",
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+        "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+      ],
+      "event_log": "evidence/reorganization-chromium-events.jsonl",
+      "native_report": "temp/reorganization-acceptance-current-lock/chromium/native-validation.json"
+    },
+    "firefox": {
+      "browser_user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:157.0) Gecko/20100101 Firefox/157.0",
+      "job_id": "6d8b113e-933c-4338-96de-335094ede425",
+      "checkpoint_before_restart": "sources/19351234/originals/training/training/plot_1003.las",
+      "completed_plots_after_resume": 5,
+      "archive_sha256": "b503e376ce73f0f26b772b63c3e4e571d6d16b4eeafe150cfd4035e377241d5e",
+      "archive_size_bytes": 873662605,
+      "zip_crc": "passed",
+      "native_validation": {
+        "status": "validated",
+        "dataset_sha256": "640af3372d6dd31ec0d8759c0ba751f5040c264fdb617df26ef12d9beab6bb33",
+        "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+        "validator_sha256": "2034de4b7041aacf5da7fe1e1155a082b0d416f9fb724bb9ccc3dac0df1a6d6c",
+        "packages": 2,
+        "scenes": 5,
+        "points": 9160560,
+        "partitions": [
+          "dev",
+          "train"
+        ]
+      },
+      "matching_native_chunks": 39,
+      "plan_sha256": "263511b859aae9777e64a40a1389b1f2477d77a9ade7da27edba9b51e05e0c1a",
+      "plot_paths": [
+        "sources/19351234/originals/training/training/plot_1003.las",
+        "sources/19351234/originals/training/training/plot_1022.las",
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+        "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+      ],
+      "event_log": "evidence/reorganization-firefox-events.jsonl",
+      "native_report": "temp/reorganization-acceptance-current-lock/firefox/native-validation.json"
+    }
+  },
+  "runtime_lock_sha256": "d1b1b75a7ff4aa071d73186d060bae56c7a16e2f55aee63758b78f36b65c3ac5",
+  "provider_rate_limits": "The source provider returned transient HTTP 429/500 responses during intake; bounded retries resumed the saved run and retained validated checkpoints."
+}

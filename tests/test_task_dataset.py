@@ -1,107 +1,172 @@
 """Dataset folders retain independently validated native source semantics."""
+
 import json
 from pathlib import Path
-import sys
 import unittest
+from canopy import knowledge_model
+from canopy.task_dataset import TaskDataset, export_dataset
+import test_task_package as fixtures
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'scripts'))
-import knowledge_model
-from task_dataset import TaskDataset, export_dataset
-import test_task_package as fixtures
 
 
 class DatasetFolders(unittest.TestCase):
     def setUp(self):
-        self.fixture = fixtures.ContractTests(); self.fixture.setUp()
+        self.fixture = fixtures.ContractTests()
+        self.fixture.setUp()
         self.addCleanup(self.fixture.doCleanups)
         self.model = knowledge_model.load()
-        self.output = self.fixture.root.parent / 'dataset'
+        self.output = self.fixture.root.parent / "dataset"
 
     def test_multiple_subsets_deduplicate_and_generate_partition_folders(self):
-        report = export_dataset(self.model, [self.fixture.root, self.fixture.root], self.output,
-                                use='inference', profile=self.fixture.profile)
-        self.assertEqual(report['scenes'], 2); self.assertEqual(report['points'], 18)
-        self.assertEqual(report['partitions'], ['dev','test'])
-        self.assertTrue((self.output / 'dev/zenodo-8287792/task-package.json').is_file())
-        self.assertTrue((self.output / 'test/zenodo-8287792/task-package.json').is_file())
+        report = export_dataset(
+            self.model,
+            [self.fixture.root, self.fixture.root],
+            self.output,
+            use="inference",
+            profile=self.fixture.profile,
+        )
+        self.assertEqual(report["scenes"], 2)
+        self.assertEqual(report["points"], 18)
+        self.assertEqual(report["partitions"], ["dev", "test"])
+        self.assertTrue((self.output / "dev/zenodo-8287792/task-package.json").is_file())
+        self.assertTrue((self.output / "test/zenodo-8287792/task-package.json").is_file())
         dataset = TaskDataset(self.output, self.model, profile=self.fixture.profile)
-        with self.assertRaises(ValueError): next(dataset.iter_partition('dev'))
+        with self.assertRaises(ValueError):
+            next(dataset.iter_partition("dev"))
         dataset.validate()
-        for partition in ['dev', 'test']:
+        for partition in ["dev", "test"]:
             blocks = list(dataset.iter_partition(partition))
             self.assertTrue(blocks)
-            self.assertTrue(all(b['published_split'] == partition for b in blocks))
-            self.assertTrue(all(set(b['arrays']) == {'xyz'} for b in blocks))
-        for path in self.output.rglob('*.npz'):
-            original = self.fixture.root / '/'.join(path.relative_to(self.output).parts[2:])
+            self.assertTrue(all(b["published_split"] == partition for b in blocks))
+            self.assertTrue(all(set(b["arrays"]) == {"xyz"} for b in blocks))
+        for path in self.output.rglob("*.npz"):
+            original = self.fixture.root / "/".join(path.relative_to(self.output).parts[2:])
             self.assertEqual(path.read_bytes(), original.read_bytes())
 
     def test_training_export_excludes_test_without_renaming_dev(self):
-        report = export_dataset(self.model, [self.fixture.root], self.output, profile=self.fixture.profile)
-        self.assertEqual(report['partitions'], ['dev'])
-        self.assertFalse((self.output / 'test').exists()); self.assertFalse((self.output / 'train').exists())
-        dataset = TaskDataset(self.output, self.model, profile=self.fixture.profile); dataset.validate()
-        self.assertEqual(set(next(dataset.iter_partition('dev'))['arrays']), {'xyz','instance','instance_valid'})
+        report = export_dataset(
+            self.model, [self.fixture.root], self.output, profile=self.fixture.profile
+        )
+        self.assertEqual(report["partitions"], ["dev"])
+        self.assertFalse((self.output / "test").exists())
+        self.assertFalse((self.output / "train").exists())
+        dataset = TaskDataset(self.output, self.model, profile=self.fixture.profile)
+        dataset.validate()
+        self.assertEqual(
+            set(next(dataset.iter_partition("dev"))["arrays"]),
+            {"xyz", "instance", "instance_valid"},
+        )
         with self.assertRaises(ValueError):
-            export_dataset(self.model, [self.fixture.root], self.output, profile=self.fixture.profile)
+            export_dataset(
+                self.model, [self.fixture.root], self.output, profile=self.fixture.profile
+            )
 
     def test_changed_contract_index_or_partition_is_rejected(self):
         export_dataset(self.model, [self.fixture.root], self.output, profile=self.fixture.profile)
-        path = self.output / 'dataset.json'; original = path.read_text()
-        for mutate in [lambda d:d.update(task_requirements_sha256='0'*64),
-                       lambda d:d['packages'][0].update(path='../escape'),
-                       lambda d:d['packages'][0].update(partition='test'),
-                       lambda d:d['packages'].append(d['packages'][0])]:
-            value = json.loads(original); mutate(value); path.write_text(json.dumps(value))
-            with self.assertRaises(ValueError): TaskDataset(self.output, self.model, profile=self.fixture.profile)
+        path = self.output / "dataset.json"
+        original = path.read_text()
+        for mutate in [
+            lambda d: d.update(task_requirements_sha256="0" * 64),
+            lambda d: d["packages"][0].update(path="../escape"),
+            lambda d: d["packages"][0].update(partition="test"),
+            lambda d: d["packages"].append(d["packages"][0]),
+        ]:
+            value = json.loads(original)
+            mutate(value)
+            path.write_text(json.dumps(value))
+            with self.assertRaises(ValueError):
+                TaskDataset(self.output, self.model, profile=self.fixture.profile)
         path.write_text(original)
-        chunk = next(self.output.rglob('*.npz')); chunk.write_bytes(chunk.read_bytes()+b'changed')
-        with self.assertRaises(ValueError): TaskDataset(self.output, self.model, profile=self.fixture.profile).validate()
+        chunk = next(self.output.rglob("*.npz"))
+        chunk.write_bytes(chunk.read_bytes() + b"changed")
+        with self.assertRaises(ValueError):
+            TaskDataset(self.output, self.model, profile=self.fixture.profile).validate()
 
     def test_opened_or_validated_index_cannot_change_silently(self):
         export_dataset(self.model, [self.fixture.root], self.output, profile=self.fixture.profile)
         dataset = TaskDataset(self.output, self.model, profile=self.fixture.profile)
-        path = self.output / 'dataset.json'; original = path.read_bytes()
-        path.write_bytes(original + b' ')
-        with self.assertRaisesRegex(ValueError, 'index changed'): dataset.validate()
-        path.write_bytes(original); dataset.validate(); path.write_bytes(original + b' ')
-        with self.assertRaisesRegex(ValueError, 'index changed'): next(dataset.iter_partition('dev'))
+        path = self.output / "dataset.json"
+        original = path.read_bytes()
+        path.write_bytes(original + b" ")
+        with self.assertRaisesRegex(ValueError, "index changed"):
+            dataset.validate()
+        path.write_bytes(original)
+        dataset.validate()
+        path.write_bytes(original + b" ")
+        with self.assertRaisesRegex(ValueError, "index changed"):
+            next(dataset.iter_partition("dev"))
 
 
 class MixedDatasetFolders(unittest.TestCase):
     def setUp(self):
         from unittest.mock import patch
         import test_fgi_preparation
-        self.native=fixtures.ContractTests();self.native.setUp();self.addCleanup(self.native.doCleanups)
-        self.fgi=test_fgi_preparation.FgiPreparation();self.fgi.setUp();self.addCleanup(self.fgi.doCleanups)
-        self.model=knowledge_model.load();self.output=self.native.root.parent/'mixed'
-        from task_package import TaskPackage
-        profiles={8287792:self.native.profile,19351234:self.fgi.profile}
+
+        self.native = fixtures.ContractTests()
+        self.native.setUp()
+        self.addCleanup(self.native.doCleanups)
+        self.fgi = test_fgi_preparation.FgiPreparation()
+        self.fgi.setUp()
+        self.addCleanup(self.fgi.doCleanups)
+        self.model = knowledge_model.load()
+        self.output = self.native.root.parent / "mixed"
+        from canopy.task_package import TaskPackage
+
+        profiles = {8287792: self.native.profile, 19351234: self.fgi.profile}
+
         def package(root, **kwargs):
-            record=json.loads((Path(root)/'task-package.json').read_text())['source']['record_id']
-            return TaskPackage(root,profile=profiles[record],**kwargs)
-        self.patch=patch('task_dataset.TaskPackage',side_effect=package);self.patch.start();self.addCleanup(self.patch.stop)
+            record = json.loads((Path(root) / "task-package.json").read_text())["source"][
+                "record_id"
+            ]
+            return TaskPackage(root, profile=profiles[record], **kwargs)
+
+        self.patch = patch("canopy.task_dataset.TaskPackage", side_effect=package)
+        self.patch.start()
+        self.addCleanup(self.patch.stop)
 
     def test_two_native_profiles_compose_without_changing_blocks(self):
-        report=export_dataset(self.model,[self.native.root,self.fgi.output],self.output,variables={'reflectance':'optional'})
-        self.assertEqual(report['partitions'],['dev','train'])
-        dataset=TaskDataset(self.output,self.model);dataset.validate()
-        mono=next(dataset.iter_partition('dev'));multi=next(dataset.iter_partition('train'))
-        self.assertEqual(mono['source_ref'],'zenodo:8287792');self.assertNotIn('features',mono['arrays'])
-        self.assertEqual(multi['source_ref'],'zenodo:19351234')
-        self.assertEqual(set(multi['arrays']),{'xyz','instance','instance_valid','features','feature_valid'})
-        for entry in dataset.manifest['packages']:
-            original=self.native.root if entry['source_ref']=='zenodo:8287792' else self.fgi.output
-            for block in (self.output/entry['path']).rglob('*.npz'):
-                self.assertEqual(block.read_bytes(),(original/block.relative_to(self.output/entry['path'])).read_bytes())
+        report = export_dataset(
+            self.model,
+            [self.native.root, self.fgi.output],
+            self.output,
+            variables={"reflectance": "optional"},
+        )
+        self.assertEqual(report["partitions"], ["dev", "train"])
+        dataset = TaskDataset(self.output, self.model)
+        dataset.validate()
+        mono = next(dataset.iter_partition("dev"))
+        multi = next(dataset.iter_partition("train"))
+        self.assertEqual(mono["source_ref"], "zenodo:8287792")
+        self.assertNotIn("features", mono["arrays"])
+        self.assertEqual(multi["source_ref"], "zenodo:19351234")
+        self.assertEqual(
+            set(multi["arrays"]), {"xyz", "instance", "instance_valid", "features", "feature_valid"}
+        )
+        for entry in dataset.manifest["packages"]:
+            original = (
+                self.native.root if entry["source_ref"] == "zenodo:8287792" else self.fgi.output
+            )
+            for block in (self.output / entry["path"]).rglob("*.npz"):
+                self.assertEqual(
+                    block.read_bytes(),
+                    (original / block.relative_to(self.output / entry["path"])).read_bytes(),
+                )
 
     def test_required_missing_measurements_and_corrupt_second_source_publish_nothing(self):
-        with self.assertRaises(ValueError):export_dataset(self.model,[self.native.root,self.fgi.output],self.output,variables={'reflectance':'required'})
+        with self.assertRaises(ValueError):
+            export_dataset(
+                self.model,
+                [self.native.root, self.fgi.output],
+                self.output,
+                variables={"reflectance": "required"},
+            )
         self.assertFalse(self.output.exists())
-        next(self.fgi.output.rglob('*.npz')).write_bytes(b'corrupt')
-        with self.assertRaises(ValueError):export_dataset(self.model,[self.native.root,self.fgi.output],self.output)
+        next(self.fgi.output.rglob("*.npz")).write_bytes(b"corrupt")
+        with self.assertRaises(ValueError):
+            export_dataset(self.model, [self.native.root, self.fgi.output], self.output)
         self.assertFalse(self.output.exists())
 
 
-if __name__ == '__main__': unittest.main()
+if __name__ == "__main__":
+    unittest.main()

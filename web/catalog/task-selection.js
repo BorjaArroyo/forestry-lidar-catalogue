@@ -1,20 +1,21 @@
 /* Presentation only: the worker independently resolves and validates every request. */
-(() => {
-  'use strict';
-  const task = window.LIDAR_CATALOG.tasks.find(t => t.id === 'instances');
+export function createTaskSelection(catalog) {
+  const task = catalog.tasks.find((t) => t.id === 'instances');
   const requirements = task.requirements;
   function normalize(use = 'training', variables = {}) {
     if (!Object.hasOwn(requirements.uses, use)) throw Error('Unknown task use');
-    const choices = Object.fromEntries(requirements.variables.map(v => [v.key, v.default]));
+    const choices = Object.fromEntries(requirements.variables.map((v) => [v.key, v.default]));
     for (const [key, value] of Object.entries(variables)) {
-      if (!Object.hasOwn(choices, key) || !['required', 'optional', 'off'].includes(value)) throw Error('Unknown variable or requirement level');
+      if (!Object.hasOwn(choices, key) || !['required', 'optional', 'off'].includes(value))
+        throw Error('Unknown variable or requirement level');
       choices[key] = value;
     }
     for (const key of requirements.uses[use].required_variables) {
-      if (Object.hasOwn(variables, key) && variables[key] !== 'required') throw Error('Task minimum cannot be relaxed: ' + key);
+      if (Object.hasOwn(variables, key) && variables[key] !== 'required')
+        throw Error('Task minimum cannot be relaxed: ' + key);
       choices[key] = 'required';
     }
-    return {use, variables: choices};
+    return { use, variables: choices };
   }
   function assess(record, request) {
     request = normalize(request.use, request.variables);
@@ -23,7 +24,9 @@
     if (context.pipelines.length > 1) throw Error('Ambiguous admitted task pipeline');
     const pipeline = context.pipelines[0];
     const outputs = pipeline?.variable_outputs || {};
-    const included = {}, omitted = {}, blockers = [];
+    const included = {},
+      omitted = {},
+      blockers = [];
     for (const [key, choice] of Object.entries(request.variables)) {
       if (choice === 'off') continue;
       if (Object.hasOwn(outputs, key)) included[key] = outputs[key];
@@ -34,20 +37,36 @@
       }
     }
     if (!pipeline) blockers.unshift('No admitted source-specific preparation pipeline');
-    return {...request, status: blockers.length ? 'blocked' : 'ready', included, omitted, blockers,
-      pipeline_ref: pipeline?.id || null, allowed_partitions: requirements.uses[request.use].allowed_partitions};
+    return {
+      ...request,
+      status: blockers.length ? 'blocked' : 'ready',
+      included,
+      omitted,
+      blockers,
+      pipeline_ref: pipeline?.id || null,
+      allowed_partitions: requirements.uses[request.use].allowed_partitions,
+    };
   }
   function matches(record, request) {
     const result = assess(record, request);
     const context = task.preparation_sources[String(record)];
-    const source = window.LIDAR_CATALOG.datasets.find(d => d.id === String(record));
-    if (request.variables.instance_reference === 'required' && source.source_task_support.instances.status === 'unsupported') return false;
-    return requirements.variables.every(variable => {
-      if (request.variables[variable.key] !== 'required' || variable.purpose !== 'measurement') return true;
+    const source = catalog.datasets.find((d) => d.id === String(record));
+    if (
+      request.variables.instance_reference === 'required' &&
+      source.source_task_support.instances.status === 'unsupported'
+    )
+      return false;
+    return requirements.variables.every((variable) => {
+      if (request.variables[variable.key] !== 'required' || variable.purpose !== 'measurement')
+        return true;
       if (Object.hasOwn(result.included, variable.key)) return true;
       // Native channels identify a candidate, not an executable preparation.
-      return variable.quantity === 'reflectance' && new Set(context.native_reflectance.map(c => c.wavelength_nm)).size >= variable.minimum_channels;
+      return (
+        variable.quantity === 'reflectance' &&
+        new Set(context.native_reflectance.map((c) => c.wavelength_nm)).size >=
+          variable.minimum_channels
+      );
     });
   }
-  window.CanopyTaskSelection = {task, normalize, assess, matches};
-})();
+  return { task, normalize, assess, matches };
+}

@@ -4,11 +4,11 @@ Individual-tree segmentation now declares its requirements in the canonical
 knowledge graph (model 1.4). A request selects a use and marks additional variables
 as required, optional, or off. It does not introduce a new point transformation.
 
-| Use | Required arrays | Published partitions consumed |
-| --- | --- | --- |
-| Training data | `xyz`, `instance`, `instance_valid` | `dev` or `train` |
-| Evaluation data | `xyz`, `instance`, `instance_valid` | `test` |
-| Inference data | `xyz` | `dev`, `train`, or `test` |
+| Use             | Required arrays                     | Published partitions consumed |
+| --------------- | ----------------------------------- | ----------------------------- |
+| Training data   | `xyz`, `instance`, `instance_valid` | `dev` or `train`              |
+| Evaluation data | `xyz`, `instance`, `instance_valid` | `test`                        |
+| Inference data  | `xyz`                               | `dev`, `train`, or `test`     |
 
 Sources explicitly reviewed as lacking suitable plot-instance reference are excluded when reference is required. They can remain inference candidates.
 
@@ -89,14 +89,14 @@ from task_package import TaskPackage, read_json
 from task_plan import validate_prepared, iter_task_blocks
 
 model = load()
-plan = read_json(Path('/absolute/prepared-selection/task-plan.json'))
-package = TaskPackage('/absolute/prepared-selection', allow_selection=True)
+plan = read_json(Path("/absolute/prepared-selection/task-plan.json"))
+package = TaskPackage("/absolute/prepared-selection", allow_selection=True)
 validate_prepared(model, plan, package)
 for block in iter_task_blocks(model, plan, package):
-    xyz = block['arrays']['xyz']
+    xyz = block["arrays"]["xyz"]
     # Training requests also expose instance and instance_valid.
     # Use the validity mask in the supervised loss; blocks are not spatial tiles.
-    print(block['scene_id'], block['published_split'], len(xyz))
+    print(block["scene_id"], block["published_split"], len(xyz))
 ```
 
 Add the repository's `scripts` directory to `PYTHONPATH` for these imports.

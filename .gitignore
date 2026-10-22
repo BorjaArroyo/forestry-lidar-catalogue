@@ -3,3 +3,10 @@ temp/
 __pycache__/
 *.pyc
 .DS_Store
+node_modules/
+*.egg-info/
+.ruff_cache/
+.pytest_cache/
+.coverage
+playwright-report/
+test-results/
