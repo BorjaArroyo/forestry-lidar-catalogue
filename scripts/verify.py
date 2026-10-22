@@ -43,6 +43,7 @@ def steps():
 def main():
     """Run every check without refreshing artifacts or rewriting source files."""
     environment = os.environ.copy()
+    environment["CANOPY_PYTHON"] = sys.executable
     source_root = str(ROOT / "src")
     environment["PYTHONPATH"] = os.pathsep.join(
         part for part in (source_root, environment.get("PYTHONPATH", "")) if part

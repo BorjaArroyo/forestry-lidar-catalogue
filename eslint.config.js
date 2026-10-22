@@ -121,4 +121,12 @@ export default [
       globals: { ...browserGlobals, importScripts: 'readonly', postMessage: 'readonly' },
     },
   },
+  {
+    files: ['tests/e2e/**/*.js'],
+    languageOptions: { globals: {...nodeGlobals, ...browserGlobals} },
+  },
+  {
+    files: ['browser-prepare/{worker,controller,runner,runtime,staging,review,prepare,checkpoints,storage,export}.js'],
+    languageOptions: {globals: {window: 'off', document: 'off', localStorage: 'off', sessionStorage: 'off'}},
+  },
 ];

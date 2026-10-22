@@ -66,7 +66,7 @@ separate and preserve their existing native execution behavior.
 
 ## Acceptance and boundaries
 
-[evidence/browser-preparation-validation.json](evidence/browser-preparation-validation.json)
+[evidence/browser-preparation-validation.json](../../evidence/browser-preparation-validation.json)
 records Firefox 157 on macOS preparing the complete RMIT/test.las (12,153,263 bytes,
 357,435 points) into two NPZ blocks. The browser wrote and independently validated
 both blocks, then produced a 24,324,161-byte ZIP. A test-only loopback capture
@@ -125,7 +125,7 @@ compression, extracted size and provider request/byte counters. The original loc
 ZIP remains unchanged. The ZIP reader is the previously pinned zip.js 2.20.0,
 now vendored with its license so intake regressions run offline.
 
-[evidence/browser-archive-intake-validation.json](evidence/browser-archive-intake-validation.json)
+[evidence/browser-archive-intake-validation.json](../../evidence/browser-archive-intake-validation.json)
 records the actual Chromium-browser Zenodo acceptance: the complete RMIT test
 plot was retrieved in 8 requests totaling 3,659,162 bytes from the 1,643,251,814-byte
 archive. All 357,435 points passed independent native validation and both NPZ
@@ -136,7 +136,7 @@ Firefox. The earlier Firefox complete-LAS result remains separate historical evi
 
 ## Expanded acceptance
 
-[evidence/browser-expanded-acceptance.json](evidence/browser-expanded-acceptance.json)
+[evidence/browser-expanded-acceptance.json](../../evidence/browser-expanded-acceptance.json)
 adds native Firefox UI acceptance of direct Zenodo retrieval, source verification,
 independent browser validation and ZIP generation for the complete RMIT test plot.
 A new saved-ZIP native check was not repeated in that Firefox run.
@@ -187,7 +187,7 @@ permitted. Training selection excludes test scenes before source intake. Offline
 native fixtures verify byte-identical NPZ blocks after multi-scene assembly and
 reject duplicate scenes and incompatible producer/reference policies.
 
-See [batch validation evidence](evidence/browser-batch-preparation-validation.json).
+See [batch validation evidence](../../evidence/browser-batch-preparation-validation.json).
 This bounded case does not establish full-release browser scalability. Browser
 storage must hold the prepared selection and ZIP; interrupted batches restart.
 The optional local service retains its audited full-release execution. Combining
@@ -210,7 +210,7 @@ also cover the orchestration worker.
 
 The larger FOR-instance selection covers four complete plots, three collections,
 5,541,993 points and 24 blocks, all byte-equivalent to the native reference. See
-[evidence](evidence/browser-bulk-validation.json). Full-release browser scalability
+[evidence](../../evidence/browser-bulk-validation.json). Full-release browser scalability
 and interrupted-run resumption remain unimplemented/unvalidated.
 
 FGI-EMIT has its own closed source profile and pinned training/test archive routing.
@@ -239,10 +239,10 @@ The interface reports requirements, omissions, plots and points per source.
 Provider partitions and byte-identical blocks are preserved; calibration,
 annotation completeness and independent-zone evaluation remain unresolved.
 
-Combined-source browser evidence includes the [downloaded Chromium ZIP](evidence/combined-chromium-validation.json)
-and [downloaded Firefox ZIP](evidence/combined-firefox-validation.json), each
+Combined-source browser evidence includes the [downloaded Chromium ZIP](../../evidence/combined-chromium-validation.json)
+and [downloaded Firefox ZIP](../../evidence/combined-firefox-validation.json), each
 with 3,150,462 points and 13 native-equivalent blocks, plus the
-[expanded run](evidence/combined-browser-expanded-validation.json) with 9,160,560
+[expanded run](../../evidence/combined-browser-expanded-validation.json) with 9,160,560
 points and 39 native-equivalent blocks. The expanded ZIP was created in browser
 storage; it was not downloaded for that acceptance case. These are bounded
 selections, not full-release browser validation.
@@ -283,7 +283,7 @@ The remaining-space check includes pending prepared outputs, the complete ZIP,
 one staged pending LAS and a reserve. Scientific adapters, reference masks,
 partitions and public plan/dataset contracts are unchanged.
 
-[Recovery and downloaded-ZIP acceptance](evidence/browser-resume-validation.json)
+[Recovery and downloaded-ZIP acceptance](../../evidence/browser-resume-validation.json)
 covers Chromium 155 and Firefox 158: interrupt after one validated FGI plot, close
 the tab, discover the saved run in a fresh Workbench tab, explicitly resume and
 download all five plots (9,160,560 points, 39 blocks). Both ZIPs passed CRC and
@@ -304,7 +304,7 @@ publication fingerprints. Use `--write` explicitly after reviewed edits; it does
 not add files or update remote/source pins. CI runs this check and the offline
 acceptance-tool tests before the existing regression suites.
 
-[Release acceptance](evidence/browser-release-validation.json) additionally
+[Release acceptance](../../evidence/browser-release-validation.json) additionally
 restarts the entire usual Firefox process through its built-in normal restart,
 as requested by the user, preserving existing tabs and startup preferences.
 Workbench discovers the one committed plot, resumes the five-plot mixed dataset

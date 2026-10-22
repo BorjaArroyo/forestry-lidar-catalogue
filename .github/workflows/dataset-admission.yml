@@ -35,8 +35,10 @@ jobs:
         run: |
           test -n "$BASE_SHA"
           test "$BASE_SHA" != "0000000000000000000000000000000000000000"
-          git cat-file -e "$BASE_SHA:catalog.json"
-          git show "$BASE_SHA:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
+          BASE_COMMIT=$(git rev-parse "$BASE_SHA^{commit}")
+          test "$BASE_COMMIT" != "$(git rev-parse HEAD)"
+          git cat-file -e "$BASE_COMMIT:catalog.json"
+          git show "$BASE_COMMIT:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
           python scripts/validate_catalog_reviews.py --base "$RUNNER_TEMP/base-catalog.json"
       - name: Install browser engines
         run: npx playwright install --with-deps chromium firefox

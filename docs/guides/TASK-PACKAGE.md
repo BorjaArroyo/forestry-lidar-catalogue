@@ -95,7 +95,7 @@ No framework, training split rewrite, resampling or normalization is introduced.
 
 ## Recorded acceptance
 
-[evidence/task-package-reader-validation.json](evidence/task-package-reader-validation.json)
+[evidence/task-package-reader-validation.json](../../evidence/task-package-reader-validation.json)
 binds this implementation to complete metadata checks on the existing 32-scene
 package and a real 250,000-point block. Sixteen contract regressions include
 complete small native-fixture packages and an instance spanning storage blocks.
@@ -117,7 +117,7 @@ without another download or rewriting completed blocks. A second check changes
 a reference mask and its checksum after producer success and confirms completion
 is blocked. These fixture checks do not claim a new full Zenodo acquisition.
 
-[evidence/for-instance-e2e-validation.json](evidence/for-instance-e2e-validation.json)
+[evidence/for-instance-e2e-validation.json](../../evidence/for-instance-e2e-validation.json)
 records the HTTP fixture acceptance, validation gate, unchanged resume and its
 explicit test boundaries, bound to the implementation hashes captured in that report.
 The same HTTP acceptance verifies that the published container LAS/Python

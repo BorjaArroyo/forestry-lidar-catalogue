@@ -23,11 +23,11 @@ retain their independently reviewed native reference policies.
 
 ## Load a partition
 
-Install repository requirements and add `scripts` to `PYTHONPATH`:
+Install the internal package with `python -m pip install -e .`:
 
 ```python
-from knowledge_model import load
-from task_dataset import TaskDataset
+from canopy.knowledge_model import load
+from canopy.task_dataset import TaskDataset
 
 dataset = TaskDataset("/absolute/path/to/dataset", load())
 dataset.validate()
@@ -135,7 +135,7 @@ or certifies cross-source calibration. Browser plans can contain both admitted s
 selection containing FOR-instance before any payload download; optional reflectance
 keeps its absence explicit while FGI retains native channels and masks.
 
-[Browser scale evidence](evidence/browser-bulk-validation.json) covers four complete
+[Browser scale evidence](../../evidence/browser-bulk-validation.json) covers four complete
 FOR-instance plots from three collections, 5,541,993 points and 24 blocks. Every
 block matches the audited native reference. This is a bounded larger-selection
 test, not full-release browser scalability or interrupted-job resumption.
@@ -166,10 +166,10 @@ Source and scene identities remain separate; neither point deduplication nor
 cross-source feature calibration is applied. The task-dataset 1.0 folder contract
 and both scientific producer packages are unchanged.
 
-Combined-source browser evidence includes the [downloaded Chromium ZIP](evidence/combined-chromium-validation.json)
-and [downloaded Firefox ZIP](evidence/combined-firefox-validation.json), each
+Combined-source browser evidence includes the [downloaded Chromium ZIP](../../evidence/combined-chromium-validation.json)
+and [downloaded Firefox ZIP](../../evidence/combined-firefox-validation.json), each
 with 3,150,462 points and 13 native-equivalent blocks, plus the
-[expanded run](evidence/combined-browser-expanded-validation.json) with 9,160,560
+[expanded run](../../evidence/combined-browser-expanded-validation.json) with 9,160,560
 points and 39 native-equivalent blocks. The expanded ZIP was created in browser
 storage; it was not downloaded for that acceptance case. These are bounded
 selections, not full-release browser validation.
@@ -190,7 +190,7 @@ space covers pending outputs, a complete rebuilt ZIP and the largest pending LAS
 Coverage, source-package and final folder checks still gate export completion.
 No internal recovery files are added to the public dataset format.
 
-[Recovery and downloaded-ZIP acceptance](evidence/browser-resume-validation.json)
+[Recovery and downloaded-ZIP acceptance](../../evidence/browser-resume-validation.json)
 covers Chromium 155 and Firefox 158: interrupt after one validated FGI plot, close
 the tab, discover the saved run in a fresh Workbench tab, explicitly resume and
 download all five plots (9,160,560 points, 39 blocks). Both ZIPs passed CRC and
@@ -198,7 +198,7 @@ native dataset/array validation; all block hashes match the previously audited
 native equivalents. This acceptance does not include a full browser-process or
 operating-system restart.
 
-[Release acceptance](evidence/browser-release-validation.json) additionally
+[Release acceptance](../../evidence/browser-release-validation.json) additionally
 restarts the entire usual Firefox process through its built-in normal restart,
 as requested by the user, preserving existing tabs and startup preferences.
 Workbench discovers the one committed plot, resumes the five-plot mixed dataset
