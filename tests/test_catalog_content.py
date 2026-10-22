@@ -76,7 +76,7 @@ class CatalogContent(unittest.TestCase):
         self.assertEqual(sources["16875688"]["preparation"]["status"], "tbd")
         self.assertEqual(
             {rid for rid, d in sources.items() if d["preparation"]["status"] == "ready"},
-            {"8287792", "19351234"},
+            {"8287792", "19351234", "13255198", "grodata-128035-1.0"},
         )
 
 

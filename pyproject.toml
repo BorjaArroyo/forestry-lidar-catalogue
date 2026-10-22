@@ -14,6 +14,8 @@ canopy = "canopy.cli:main"
 
 [project.optional-dependencies]
 dev = ["ruff==0.17.1"]
+browser-audit = ["playwright==1.58.0"]
+classification = ["lazrs==0.8.2", "zstandard==0.25.0"]
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}

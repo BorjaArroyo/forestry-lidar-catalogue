@@ -1,5 +1,11 @@
 # Changelog
 
+## Tree classification integration
+
+- Integrate FOR-species20K and BioDiv-3DTrees with the common task catalogue, workbench, graph and installed CLI.
+- Preserve native records, rank-specific references, published partitions and spatial audit findings; compress large audit inventories losslessly.
+- Adapt and validate the contribution from PR #10 on top of PR #11 and PR #12.
+
 ## 2026-10-22 — Python 3.14 runtime
 
 - Require Python 3.14 across the project, CI and the documented uv setup; every

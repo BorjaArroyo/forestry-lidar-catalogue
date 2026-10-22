@@ -95,10 +95,14 @@ def export_views(content=CONTENT):
     """Refresh presentation metadata while retaining the observed acquisition snapshot."""
     profiles, relationships, tasks = project(load(content / "data/knowledge-model.json"))
     catalog = read_json(content / "data/catalog.json")
-    if {d["id"] for d in catalog["datasets"]} != set(profiles):
-        raise ValueError(
-            "Changed source membership requires rebuilding from the acquisition inventory"
+    missing = set(profiles) - {d["id"] for d in catalog["datasets"]}
+    if missing:
+        from .classification.catalog import source_datasets
+
+        catalog["datasets"].extend(
+            source_datasets(graph=load(content / "data/knowledge-model.json"), identifiers=missing)
         )
+        catalog["summary"]["datasets"] = len(catalog["datasets"])
 
     if catalog["tasks"] != tasks:
         catalog["tasks"] = tasks

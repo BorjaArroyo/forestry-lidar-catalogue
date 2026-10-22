@@ -249,6 +249,9 @@ export function mountModelView({ document: doc = document, fetch: doFetch = fetc
     const button = event.target.closest('[data-model-task]');
     if (button) {
       state.task = button.dataset.modelTask;
+      document.dispatchEvent(
+        new CustomEvent('canopy-select-task', { detail: { task_ref: state.task } }),
+      );
       render();
     }
   });
@@ -266,7 +269,7 @@ export function mountModelView({ document: doc = document, fetch: doFetch = fetc
         const model = await state.loading;
         if (!visibleTasks(model).length) throw Error('No visible task model is available');
         state.model = model;
-        state.task = visibleTasks(model)[0][0];
+        state.task = $('#preparation-task')?.value || visibleTasks(model)[0][0];
       }
       $('#model-status').textContent = 'Reviewed knowledge model';
       $('#model-status').className = 'badge';
@@ -286,6 +289,12 @@ export function mountModelView({ document: doc = document, fetch: doFetch = fetc
       inspector.textContent = error.message;
     }
   }
+  document.addEventListener('canopy-task-change', (e) => {
+    if (state.model) {
+      state.task = e.detail.task_ref;
+      render();
+    }
+  });
   $('#model-retry').addEventListener('click', open);
   return { open };
 }

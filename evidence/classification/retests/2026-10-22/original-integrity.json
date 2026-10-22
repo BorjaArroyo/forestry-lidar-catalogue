@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-22",
+  "status": "passed",
+  "scope": "Fresh full-byte MD5/SHA256 of all four local original archives against pinned provider and complete native-audit references",
+  "total_bytes": 47792581756,
+  "archives": [
+    {
+      "archive": "TLS.tar.zst",
+      "source_ref": "grodata:128035:1.0",
+      "size_bytes": 19941204645,
+      "md5": "9dc1f3dee89239c7ed5e10daa6fe4364",
+      "sha256": "c1a1b551df273b6333ef563ab84f8beb92ce5747ebb417272c9a60c50a6cef5b",
+      "status": "passed",
+      "elapsed_seconds": 61.14
+    },
+    {
+      "archive": "ULS.tar.zst",
+      "source_ref": "grodata:128035:1.0",
+      "size_bytes": 652222562,
+      "md5": "4dc25e7b151e8ce596cca866b2e53ee6",
+      "sha256": "84b11ea99f57b9ce8154de86450a962b6b796b40ea8dd5bb799777a33dbed0a9",
+      "status": "passed",
+      "elapsed_seconds": 3.46
+    },
+    {
+      "archive": "test.zip",
+      "source_ref": "zenodo:13255198",
+      "size_bytes": 1844174259,
+      "md5": "087eaed01d45bf83643b4d7edcef33f8",
+      "sha256": "894388773062f1227f2086847fbfe80ba295e9b14099eaecb4a50be675116f40",
+      "status": "passed",
+      "elapsed_seconds": 9.6
+    },
+    {
+      "archive": "dev.zip",
+      "source_ref": "zenodo:13255198",
+      "size_bytes": 25354980290,
+      "md5": "ecb6196d9d630b095e6f6249b46efdd7",
+      "sha256": "0180c8ba5636033a9e39080ad2c3dd2f34358ff5b1c9e5cc7303d63bc661d3d9",
+      "status": "passed",
+      "elapsed_seconds": 90.16
+    }
+  ],
+  "native_audit": "2026-10-21; point decoding not repeated"
+}

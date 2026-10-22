@@ -1,0 +1,756 @@
+{
+  "schema_version": "1.0.0",
+  "vocabulary_id": "canopy:tree-taxonomy:1.0.0",
+  "ranks": [
+    "genus",
+    "species"
+  ],
+  "unknown_code": -1,
+  "scope": "Exact documented labels and binomial genus tokens; no synonym resolution or inferred higher ranks",
+  "taxa": [
+    {
+      "id": "taxon:genus:Abies",
+      "code": 0,
+      "rank": "genus",
+      "name": "Abies",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Acer",
+      "code": 1,
+      "rank": "genus",
+      "name": "Acer",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Betula",
+      "code": 2,
+      "rank": "genus",
+      "name": "Betula",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Carpinus",
+      "code": 3,
+      "rank": "genus",
+      "name": "Carpinus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Corylus",
+      "code": 4,
+      "rank": "genus",
+      "name": "Corylus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Crataegus",
+      "code": 5,
+      "rank": "genus",
+      "name": "Crataegus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Eucalyptus",
+      "code": 6,
+      "rank": "genus",
+      "name": "Eucalyptus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Euonymus",
+      "code": 7,
+      "rank": "genus",
+      "name": "Euonymus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Fagus",
+      "code": 8,
+      "rank": "genus",
+      "name": "Fagus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Fraxinus",
+      "code": 9,
+      "rank": "genus",
+      "name": "Fraxinus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Larix",
+      "code": 10,
+      "rank": "genus",
+      "name": "Larix",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Picea",
+      "code": 11,
+      "rank": "genus",
+      "name": "Picea",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Pinus",
+      "code": 12,
+      "rank": "genus",
+      "name": "Pinus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Populus",
+      "code": 13,
+      "rank": "genus",
+      "name": "Populus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Prunus",
+      "code": 14,
+      "rank": "genus",
+      "name": "Prunus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Pseudotsuga",
+      "code": 15,
+      "rank": "genus",
+      "name": "Pseudotsuga",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Quercus",
+      "code": 16,
+      "rank": "genus",
+      "name": "Quercus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Tilia",
+      "code": 17,
+      "rank": "genus",
+      "name": "Tilia",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:genus:Ulmus",
+      "code": 18,
+      "rank": "genus",
+      "name": "Ulmus",
+      "parent_id": null
+    },
+    {
+      "id": "taxon:species:Abies_alba",
+      "code": 19,
+      "rank": "species",
+      "name": "Abies_alba",
+      "parent_id": "taxon:genus:Abies"
+    },
+    {
+      "id": "taxon:species:Acer_campestre",
+      "code": 20,
+      "rank": "species",
+      "name": "Acer_campestre",
+      "parent_id": "taxon:genus:Acer"
+    },
+    {
+      "id": "taxon:species:Acer_platanoides",
+      "code": 21,
+      "rank": "species",
+      "name": "Acer_platanoides",
+      "parent_id": "taxon:genus:Acer"
+    },
+    {
+      "id": "taxon:species:Acer_pseudoplatanus",
+      "code": 22,
+      "rank": "species",
+      "name": "Acer_pseudoplatanus",
+      "parent_id": "taxon:genus:Acer"
+    },
+    {
+      "id": "taxon:species:Acer_saccharum",
+      "code": 23,
+      "rank": "species",
+      "name": "Acer_saccharum",
+      "parent_id": "taxon:genus:Acer"
+    },
+    {
+      "id": "taxon:species:Betula_pendula",
+      "code": 24,
+      "rank": "species",
+      "name": "Betula_pendula",
+      "parent_id": "taxon:genus:Betula"
+    },
+    {
+      "id": "taxon:species:Carpinus_betulus",
+      "code": 25,
+      "rank": "species",
+      "name": "Carpinus_betulus",
+      "parent_id": "taxon:genus:Carpinus"
+    },
+    {
+      "id": "taxon:species:Corylus_avellana",
+      "code": 26,
+      "rank": "species",
+      "name": "Corylus_avellana",
+      "parent_id": "taxon:genus:Corylus"
+    },
+    {
+      "id": "taxon:species:Crataegus_monogyna",
+      "code": 27,
+      "rank": "species",
+      "name": "Crataegus_monogyna",
+      "parent_id": "taxon:genus:Crataegus"
+    },
+    {
+      "id": "taxon:species:Eucalyptus_miniata",
+      "code": 28,
+      "rank": "species",
+      "name": "Eucalyptus_miniata",
+      "parent_id": "taxon:genus:Eucalyptus"
+    },
+    {
+      "id": "taxon:species:Euonymus_europaeus",
+      "code": 29,
+      "rank": "species",
+      "name": "Euonymus_europaeus",
+      "parent_id": "taxon:genus:Euonymus"
+    },
+    {
+      "id": "taxon:species:Fagus_sylvatica",
+      "code": 30,
+      "rank": "species",
+      "name": "Fagus_sylvatica",
+      "parent_id": "taxon:genus:Fagus"
+    },
+    {
+      "id": "taxon:species:Fraxinus_angustifolia",
+      "code": 31,
+      "rank": "species",
+      "name": "Fraxinus_angustifolia",
+      "parent_id": "taxon:genus:Fraxinus"
+    },
+    {
+      "id": "taxon:species:Fraxinus_excelsior",
+      "code": 32,
+      "rank": "species",
+      "name": "Fraxinus_excelsior",
+      "parent_id": "taxon:genus:Fraxinus"
+    },
+    {
+      "id": "taxon:species:Larix_decidua",
+      "code": 33,
+      "rank": "species",
+      "name": "Larix_decidua",
+      "parent_id": "taxon:genus:Larix"
+    },
+    {
+      "id": "taxon:species:Picea_abies",
+      "code": 34,
+      "rank": "species",
+      "name": "Picea_abies",
+      "parent_id": "taxon:genus:Picea"
+    },
+    {
+      "id": "taxon:species:Picea_glauca",
+      "code": 35,
+      "rank": "species",
+      "name": "Picea_glauca",
+      "parent_id": "taxon:genus:Picea"
+    },
+    {
+      "id": "taxon:species:Pinus_contorta",
+      "code": 36,
+      "rank": "species",
+      "name": "Pinus_contorta",
+      "parent_id": "taxon:genus:Pinus"
+    },
+    {
+      "id": "taxon:species:Pinus_nigra",
+      "code": 37,
+      "rank": "species",
+      "name": "Pinus_nigra",
+      "parent_id": "taxon:genus:Pinus"
+    },
+    {
+      "id": "taxon:species:Pinus_pinaster",
+      "code": 38,
+      "rank": "species",
+      "name": "Pinus_pinaster",
+      "parent_id": "taxon:genus:Pinus"
+    },
+    {
+      "id": "taxon:species:Pinus_radiata",
+      "code": 39,
+      "rank": "species",
+      "name": "Pinus_radiata",
+      "parent_id": "taxon:genus:Pinus"
+    },
+    {
+      "id": "taxon:species:Pinus_resinosa",
+      "code": 40,
+      "rank": "species",
+      "name": "Pinus_resinosa",
+      "parent_id": "taxon:genus:Pinus"
+    },
+    {
+      "id": "taxon:species:Pinus_sylvestris",
+      "code": 41,
+      "rank": "species",
+      "name": "Pinus_sylvestris",
+      "parent_id": "taxon:genus:Pinus"
+    },
+    {
+      "id": "taxon:species:Populus_deltoides",
+      "code": 42,
+      "rank": "species",
+      "name": "Populus_deltoides",
+      "parent_id": "taxon:genus:Populus"
+    },
+    {
+      "id": "taxon:species:Populus_tremuloides",
+      "code": 43,
+      "rank": "species",
+      "name": "Populus_tremuloides",
+      "parent_id": "taxon:genus:Populus"
+    },
+    {
+      "id": "taxon:species:Prunus_avium",
+      "code": 44,
+      "rank": "species",
+      "name": "Prunus_avium",
+      "parent_id": "taxon:genus:Prunus"
+    },
+    {
+      "id": "taxon:species:Prunus_serotina",
+      "code": 45,
+      "rank": "species",
+      "name": "Prunus_serotina",
+      "parent_id": "taxon:genus:Prunus"
+    },
+    {
+      "id": "taxon:species:Pseudotsuga_menziesii",
+      "code": 46,
+      "rank": "species",
+      "name": "Pseudotsuga_menziesii",
+      "parent_id": "taxon:genus:Pseudotsuga"
+    },
+    {
+      "id": "taxon:species:Quercus_faginea",
+      "code": 47,
+      "rank": "species",
+      "name": "Quercus_faginea",
+      "parent_id": "taxon:genus:Quercus"
+    },
+    {
+      "id": "taxon:species:Quercus_ilex",
+      "code": 48,
+      "rank": "species",
+      "name": "Quercus_ilex",
+      "parent_id": "taxon:genus:Quercus"
+    },
+    {
+      "id": "taxon:species:Quercus_petraea",
+      "code": 49,
+      "rank": "species",
+      "name": "Quercus_petraea",
+      "parent_id": "taxon:genus:Quercus"
+    },
+    {
+      "id": "taxon:species:Quercus_robur",
+      "code": 50,
+      "rank": "species",
+      "name": "Quercus_robur",
+      "parent_id": "taxon:genus:Quercus"
+    },
+    {
+      "id": "taxon:species:Quercus_rubra",
+      "code": 51,
+      "rank": "species",
+      "name": "Quercus_rubra",
+      "parent_id": "taxon:genus:Quercus"
+    },
+    {
+      "id": "taxon:species:Tilia_cordata",
+      "code": 52,
+      "rank": "species",
+      "name": "Tilia_cordata",
+      "parent_id": "taxon:genus:Tilia"
+    },
+    {
+      "id": "taxon:species:Ulmus_laevis",
+      "code": 53,
+      "rank": "species",
+      "name": "Ulmus_laevis",
+      "parent_id": "taxon:genus:Ulmus"
+    }
+  ],
+  "mappings": [
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Abies_alba",
+      "genus": "taxon:genus:Abies",
+      "species": "taxon:species:Abies_alba",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Acer_campestre",
+      "genus": "taxon:genus:Acer",
+      "species": "taxon:species:Acer_campestre",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Acer_platanoides",
+      "genus": "taxon:genus:Acer",
+      "species": "taxon:species:Acer_platanoides",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Acer_pseudoplatanus",
+      "genus": "taxon:genus:Acer",
+      "species": "taxon:species:Acer_pseudoplatanus",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Betula_spec",
+      "genus": "taxon:genus:Betula",
+      "species": null,
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Carpinus_betulus",
+      "genus": "taxon:genus:Carpinus",
+      "species": "taxon:species:Carpinus_betulus",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Fagus_sylvatica",
+      "genus": "taxon:genus:Fagus",
+      "species": "taxon:species:Fagus_sylvatica",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Fraxinus_excelsior",
+      "genus": "taxon:genus:Fraxinus",
+      "species": "taxon:species:Fraxinus_excelsior",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Larix_decidua",
+      "genus": "taxon:genus:Larix",
+      "species": "taxon:species:Larix_decidua",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Picea_abies",
+      "genus": "taxon:genus:Picea",
+      "species": "taxon:species:Picea_abies",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Pinus_sylvestris",
+      "genus": "taxon:genus:Pinus",
+      "species": "taxon:species:Pinus_sylvestris",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Prunus_avium",
+      "genus": "taxon:genus:Prunus",
+      "species": "taxon:species:Prunus_avium",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Prunus_serotina",
+      "genus": "taxon:genus:Prunus",
+      "species": "taxon:species:Prunus_serotina",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Pseudotsuga_menziesii",
+      "genus": "taxon:genus:Pseudotsuga",
+      "species": "taxon:species:Pseudotsuga_menziesii",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Quercus_rubra",
+      "genus": "taxon:genus:Quercus",
+      "species": "taxon:species:Quercus_rubra",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Quercus_spec",
+      "genus": "taxon:genus:Quercus",
+      "species": null,
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Tilia_cordata",
+      "genus": "taxon:genus:Tilia",
+      "species": "taxon:species:Tilia_cordata",
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Tilia_spec",
+      "genus": "taxon:genus:Tilia",
+      "species": null,
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "native_label": "Ulmus_spec",
+      "genus": "taxon:genus:Ulmus",
+      "species": null,
+      "evidence": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Abies_alba",
+      "genus": "taxon:genus:Abies",
+      "species": "taxon:species:Abies_alba",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Acer_campestre",
+      "genus": "taxon:genus:Acer",
+      "species": "taxon:species:Acer_campestre",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Acer_pseudoplatanus",
+      "genus": "taxon:genus:Acer",
+      "species": "taxon:species:Acer_pseudoplatanus",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Acer_saccharum",
+      "genus": "taxon:genus:Acer",
+      "species": "taxon:species:Acer_saccharum",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Betula_pendula",
+      "genus": "taxon:genus:Betula",
+      "species": "taxon:species:Betula_pendula",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Carpinus_betulus",
+      "genus": "taxon:genus:Carpinus",
+      "species": "taxon:species:Carpinus_betulus",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Corylus_avellana",
+      "genus": "taxon:genus:Corylus",
+      "species": "taxon:species:Corylus_avellana",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Crataegus_monogyna",
+      "genus": "taxon:genus:Crataegus",
+      "species": "taxon:species:Crataegus_monogyna",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Eucalyptus_miniata",
+      "genus": "taxon:genus:Eucalyptus",
+      "species": "taxon:species:Eucalyptus_miniata",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Euonymus_europaeus",
+      "genus": "taxon:genus:Euonymus",
+      "species": "taxon:species:Euonymus_europaeus",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Fagus_sylvatica",
+      "genus": "taxon:genus:Fagus",
+      "species": "taxon:species:Fagus_sylvatica",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Fraxinus_angustifolia",
+      "genus": "taxon:genus:Fraxinus",
+      "species": "taxon:species:Fraxinus_angustifolia",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Fraxinus_excelsior",
+      "genus": "taxon:genus:Fraxinus",
+      "species": "taxon:species:Fraxinus_excelsior",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Larix_decidua",
+      "genus": "taxon:genus:Larix",
+      "species": "taxon:species:Larix_decidua",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Picea_abies",
+      "genus": "taxon:genus:Picea",
+      "species": "taxon:species:Picea_abies",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Picea_glauca",
+      "genus": "taxon:genus:Picea",
+      "species": "taxon:species:Picea_glauca",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Pinus_contorta",
+      "genus": "taxon:genus:Pinus",
+      "species": "taxon:species:Pinus_contorta",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Pinus_nigra",
+      "genus": "taxon:genus:Pinus",
+      "species": "taxon:species:Pinus_nigra",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Pinus_pinaster",
+      "genus": "taxon:genus:Pinus",
+      "species": "taxon:species:Pinus_pinaster",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Pinus_radiata",
+      "genus": "taxon:genus:Pinus",
+      "species": "taxon:species:Pinus_radiata",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Pinus_resinosa",
+      "genus": "taxon:genus:Pinus",
+      "species": "taxon:species:Pinus_resinosa",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Pinus_sylvestris",
+      "genus": "taxon:genus:Pinus",
+      "species": "taxon:species:Pinus_sylvestris",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Populus_deltoides",
+      "genus": "taxon:genus:Populus",
+      "species": "taxon:species:Populus_deltoides",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Populus_tremuloides",
+      "genus": "taxon:genus:Populus",
+      "species": "taxon:species:Populus_tremuloides",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Prunus_avium",
+      "genus": "taxon:genus:Prunus",
+      "species": "taxon:species:Prunus_avium",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Pseudotsuga_menziesii",
+      "genus": "taxon:genus:Pseudotsuga",
+      "species": "taxon:species:Pseudotsuga_menziesii",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Quercus_faginea",
+      "genus": "taxon:genus:Quercus",
+      "species": "taxon:species:Quercus_faginea",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Quercus_ilex",
+      "genus": "taxon:genus:Quercus",
+      "species": "taxon:species:Quercus_ilex",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Quercus_petraea",
+      "genus": "taxon:genus:Quercus",
+      "species": "taxon:species:Quercus_petraea",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Quercus_robur",
+      "genus": "taxon:genus:Quercus",
+      "species": "taxon:species:Quercus_robur",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Quercus_rubra",
+      "genus": "taxon:genus:Quercus",
+      "species": "taxon:species:Quercus_rubra",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Tilia_cordata",
+      "genus": "taxon:genus:Tilia",
+      "species": "taxon:species:Tilia_cordata",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "native_label": "Ulmus_laevis",
+      "genus": "taxon:genus:Ulmus",
+      "species": "taxon:species:Ulmus_laevis",
+      "evidence": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    }
+  ]
+}

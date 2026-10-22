@@ -3,7 +3,7 @@
 import copy
 
 
-def source_task_context(model, source_ref):
+def source_task_context(model, source_ref, task_ref="task:instances"):
     """Project reviewed outputs separately from native spectral descriptions."""
     nodes = model["nodes"]
     native = [
@@ -38,7 +38,7 @@ def source_task_context(model, source_ref):
         for key, n in nodes.items()
         if n["type"] == "pipeline_spec"
         and n["data"]["source_ref"] == source_ref
-        and n["data"]["task_ref"] == "task:instances"
+        and n["data"]["task_ref"] == task_ref
         and n["data"]["execution_enabled"]
     ]
     return dict(
@@ -111,7 +111,7 @@ def project(model):
             )
         if contracts:
             profile["native_measurement_contracts"] = contracts
-        profiles[node["data"]["record_id"]] = profile
+        profiles[key.removeprefix("zenodo:").replace(":", "-")] = profile
     relationships = []
     for key, edge in sorted(model["edges"].items(), key=lambda item: item[1].get("order", -1)):
         if edge["type"] != "dataset_relationship":
@@ -128,7 +128,9 @@ def project(model):
     for task in tasks:
         if "requirements" in task:
             task["preparation_sources"] = {
-                key.removeprefix("zenodo:"): source_task_context(model, key)
+                key.removeprefix("zenodo:").replace(":", "-"): source_task_context(
+                    model, key, "task:" + task["id"]
+                )
                 for key, node in nodes.items()
                 if node["type"] == "source_release"
             }

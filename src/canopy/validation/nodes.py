@@ -28,7 +28,7 @@ def validate_nodes(nodes):
     for key, node in nodes.items():
         data = node["data"]
         if node["type"] == "source_release":
-            if key != "zenodo:" + data["record_id"]:
+            if key != data.get("source_ref", "zenodo:" + data["record_id"]):
                 raise ValueError("Source identity must match its version-specific Zenodo record")
             sources.add(key)
             semantics = data["profile"].get("class_semantics")
@@ -147,14 +147,21 @@ def validate_nodes(nodes):
                 for n in nodes.values()
                 if n["type"] == "pipeline_spec"
                 and n["data"]["source_ref"] == source
-                and n["data"]["task_ref"] == "task:instances"
+                and n["data"]["task_ref"]
+                == (
+                    "task:species"
+                    if nodes[source]["data"]["profile"].get("classification")
+                    else "task:instances"
+                )
                 and n["data"]["execution_enabled"]
             ]
             if len(admitted) != 1:
                 raise ValueError(
                     "A ready source requires exactly one enabled instance pipeline for its pinned release"
                 )
-            if not nodes[source]["data"]["profile"].get("class_semantics"):
+            if not nodes[source]["data"]["profile"].get("classification") and not nodes[source][
+                "data"
+            ]["profile"].get("class_semantics"):
                 raise ValueError(
                     "A ready preparation must declare its native class semantics as source-scoped data"
                 )

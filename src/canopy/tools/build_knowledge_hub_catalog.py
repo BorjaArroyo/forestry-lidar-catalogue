@@ -16,7 +16,7 @@ CONTENT = ROOT
 
 def build(inventory, status, outputs):
     profiles, relationships, tasks = project(load_model())
-    profiles = {int(key): value for key, value in profiles.items()}
+    profiles = {str(key): value for key, value in profiles.items()}
     scenes = [x for x in status["harmonized"] if x["status"] == "verified"]
     datasets = []
     for record in inventory["records"]:
@@ -24,7 +24,7 @@ def build(inventory, status, outputs):
         rows = [x for x in scenes if x["record_id"] == sid]
         fields = collections.Counter(tuple(x["source_fields"]) for x in rows)
         ds = dict(
-            copy.deepcopy(profiles[sid]),
+            copy.deepcopy(profiles[str(sid)]),
             id=str(sid),
             title=record["title"],
             url=record["url"],
@@ -51,6 +51,12 @@ def build(inventory, status, outputs):
         )
         ds["deferred_clouds"] = 3 if sid == 15193973 else 0
         datasets.append(ds)
+    from ..classification.catalog import source_datasets
+
+    for row in source_datasets(
+        graph=load_model(), identifiers=set(profiles) - {d["id"] for d in datasets}
+    ):
+        datasets.append({**copy.deepcopy(profiles[row["id"]]), **row})
     groups = collections.defaultdict(list)
     for s in scenes:
         groups[tuple(c["sha256"] for c in s["chunks"])].append(s)

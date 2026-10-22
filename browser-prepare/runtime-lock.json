@@ -132,18 +132,18 @@
     },
     "browser-prepare/intake.js": {
       "url": "browser-prepare/intake.js",
-      "sha256": "a09858e0983540898fd41fe2e0df7c746e22982a4c58808f7426b6add1651f03",
-      "size_bytes": 5742
+      "sha256": "2c483c9c5016132d7bc32389e98141b22d07ec8c4eb02cd9413eacc4c258cc02",
+      "size_bytes": 6079
     },
     "data/knowledge-model.json": {
       "url": "data/knowledge-model.json",
-      "sha256": "91c193fc1337dba92cf59c6b02b8b7df40a5d4134b628790b687b95076f87239",
-      "size_bytes": 183976
+      "sha256": "e5dc15d52c7c96218f0e9963e612c434d245bfefb780883180d5087a4c0d6ef2",
+      "size_bytes": 214289
     },
     "schemas/knowledge-model.schema.json": {
       "url": "schemas/knowledge-model.schema.json",
-      "sha256": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2",
-      "size_bytes": 46687
+      "sha256": "10b3e58b4fe2690c3c1a3e7336e2bfe00a3c9af58c060beeee56e757357b3307",
+      "size_bytes": 49186
     },
     "browser-prepare/profiles.js": {
       "url": "browser-prepare/profiles.js",
@@ -237,13 +237,13 @@
     },
     "src/canopy/model_projection.py": {
       "url": "src/canopy/model_projection.py",
-      "sha256": "7de070c19689423d88b19d73f998665bc5a2a99dd58d986724c439e863b8b6a5",
-      "size_bytes": 5281
+      "sha256": "27ddcff21982f0b8853517b2b79a1a0490e1d9da0a6a1d4b7a35ce3ed2b1330d",
+      "size_bytes": 5398
     },
     "src/canopy/model_publication.py": {
       "url": "src/canopy/model_publication.py",
-      "sha256": "4817d9d8a7ce6cd3f136753e6871e7a417e0f0c3f85abd23a6812130257117db",
-      "size_bytes": 5789
+      "sha256": "e4bfd0c7b577d6f3b5fe1503103584621d1dd9cdf242af1d7e34883794054211",
+      "size_bytes": 5956
     },
     "src/canopy/model_validation.py": {
       "url": "src/canopy/model_validation.py",
@@ -307,8 +307,8 @@
     },
     "src/canopy/tools/validate_catalog_reviews.py": {
       "url": "src/canopy/tools/validate_catalog_reviews.py",
-      "sha256": "22f7898bce9ee95d1835c46c7386b4c3096998fdfc12207a25a2f784d19928f1",
-      "size_bytes": 3374
+      "sha256": "6875b71885c7e089811fbacca0aa0a176fac732a2822c6e189ae9df44bdb7ccd",
+      "size_bytes": 3478
     },
     "src/canopy/validation/__init__.py": {
       "url": "src/canopy/validation/__init__.py",
@@ -322,8 +322,8 @@
     },
     "src/canopy/service/jobs.py": {
       "url": "src/canopy/service/jobs.py",
-      "sha256": "2f78a28374cf94ed3af015d1e11491de195c3f57bbcadc4f0948f5f39137e124",
-      "size_bytes": 12214
+      "sha256": "62809f63ee1aef3531d5eba534e20694fa6079eb184e7f222009cf6f07a8ea11",
+      "size_bytes": 12586
     },
     "src/canopy/service/storage.py": {
       "url": "src/canopy/service/storage.py",
@@ -347,8 +347,8 @@
     },
     "src/canopy/validation/nodes.py": {
       "url": "src/canopy/validation/nodes.py",
-      "sha256": "d356b1f5dba79944487a77453d155a615022d931944d4722a37c31951c4fd9c3",
-      "size_bytes": 8207
+      "sha256": "e21fac3ec08ec7133284962208d94635ff999e66e152717802e95ba87808c516",
+      "size_bytes": 8498
     },
     "src/canopy/validation/pipelines.py": {
       "url": "src/canopy/validation/pipelines.py",
@@ -387,8 +387,8 @@
     },
     "browser-prepare/ui.js": {
       "url": "browser-prepare/ui.js",
-      "sha256": "714cbf24e8fd820ae9269692bc3a3be02d5ed15ce45ee2ffad852eb3d6d8809a",
-      "size_bytes": 19079
+      "sha256": "6b3d4cfff80712dab074cbade065b0ff9665efb70f124b18fc067a9d523c797f",
+      "size_bytes": 19232
     },
     "browser-prepare/run-session.js": {
       "url": "browser-prepare/run-session.js",
@@ -412,23 +412,23 @@
     },
     "src/canopy/tools/build_knowledge_hub_catalog.py": {
       "url": "src/canopy/tools/build_knowledge_hub_catalog.py",
-      "sha256": "ca0be93f02fb1a42d9643561266d19200e3ed944209a5047f3bafc50b17882ec",
-      "size_bytes": 12570
+      "sha256": "b9ddebc261bb9ba744197d0d12bdd2923850d3797a6b845e2d37deb5d208647e",
+      "size_bytes": 12827
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "34eac8682d09ad49a818ebf4db52503311440fef0aa358bbaf5bea46f3b87b15",
-      "size_bytes": 1326
+      "sha256": "7905663b3ac525a08bc7a94be61828cf0255ce13de7a3c29044ffcc69e7d4ddf",
+      "size_bytes": 1771
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
-      "sha256": "d2f554569be0800ebb1041604b1fc487e5f09cbcee33b8b256918db3ec3cfece",
-      "size_bytes": 3172
+      "sha256": "6bfbd2371421a9bc837c8a7615332153420ee07b1ad83f1499a88704b9bad9e9",
+      "size_bytes": 4322
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "1445634c3ec39a99573429d90c9149fa6c3c7bdba849067555ea073663b32461",
-      "size_bytes": 29516
+      "sha256": "5e313db2d3e0aa89b1dff45b66598b4838bb640cba70e266b9d707374c9d87f9",
+      "size_bytes": 32302
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
@@ -487,8 +487,8 @@
     },
     "src/canopy/cli.py": {
       "url": "src/canopy/cli.py",
-      "sha256": "0b389dec188da5bcc9fcfae037a2e9bab86b94c1bce88b66d6b3c1c42f385172",
-      "size_bytes": 979
+      "sha256": "9125e73fb5e84e5b19f8a0320fe58c4619b4846ebfec6f53df3c6c25160cfd85",
+      "size_bytes": 1030
     },
     "src/canopy/__main__.py": {
       "url": "src/canopy/__main__.py",
@@ -502,8 +502,128 @@
     },
     "src/canopy/tools/verify.py": {
       "url": "src/canopy/tools/verify.py",
-      "sha256": "fe36965bf990bbee4fd7da56debfaa0cf68bbcce06af6b9f5038f7fbf3ac4d42",
-      "size_bytes": 2561
+      "sha256": "d50dcb96dff69af306333a3dc12de4e6a636602736d098ac7f35b228cdb62a84",
+      "size_bytes": 2657
+    },
+    "src/canopy/classification/catalog.py": {
+      "url": "src/canopy/classification/catalog.py",
+      "sha256": "b1e1a5da44a98add2b8be5354824ec3c9bc66b6a7f29f082084b243c5fa6093a",
+      "size_bytes": 1648
+    },
+    "src/canopy/classification/package.py": {
+      "url": "src/canopy/classification/package.py",
+      "sha256": "2963343af341eb6d774daba0e33885706a85d94009ea13b11a64bc2c2cc8be72",
+      "size_bytes": 8572
+    },
+    "src/canopy/classification/freeze_acceptance.py": {
+      "url": "src/canopy/classification/freeze_acceptance.py",
+      "sha256": "2b9e34d9d09c0399c1c0a13cbef5aa0f85e93c737b28d5fe8f07187a7d9a9464",
+      "size_bytes": 4709
+    },
+    "src/canopy/classification/prefetch_tls.py": {
+      "url": "src/canopy/classification/prefetch_tls.py",
+      "sha256": "9be1e75e3aabe7ad9f74fca0ea67889e033c9e2bb8fc18bb2af82b87e60dd269",
+      "size_bytes": 5578
+    },
+    "src/canopy/classification/dataio.py": {
+      "url": "src/canopy/classification/dataio.py",
+      "sha256": "b0477b07d83d812bf112528ce9fecc77b5b743bfb5957957ec3fd3d348896b52",
+      "size_bytes": 450
+    },
+    "src/canopy/classification/audit.py": {
+      "url": "src/canopy/classification/audit.py",
+      "sha256": "a7f08c4f6cca70112dc194c3fc927efd511b510e7de7de32f39ba5259d4a4f03",
+      "size_bytes": 16188
+    },
+    "src/canopy/classification/acquire.py": {
+      "url": "src/canopy/classification/acquire.py",
+      "sha256": "8f823e9339ef458f042334178e5927c64905ac343e87dc741ff1c28f98f4e33e",
+      "size_bytes": 12836
+    },
+    "src/canopy/classification/refresh_locks.py": {
+      "url": "src/canopy/classification/refresh_locks.py",
+      "sha256": "6ffe57326e19a59cbb7ac42e81f61b2df6812db42609ab86c922786300f3ca0b",
+      "size_bytes": 1567
+    },
+    "src/canopy/classification/source_identity.py": {
+      "url": "src/canopy/classification/source_identity.py",
+      "sha256": "2719bfb23b765bc0a3a13748a5f06263200a1a42222796bcbd439edd6669ee6c",
+      "size_bytes": 479
+    },
+    "src/canopy/classification/prefetch_dev.py": {
+      "url": "src/canopy/classification/prefetch_dev.py",
+      "sha256": "1a7b37839d26e05a543506b122700a9a0a216c38e41848d0c3c586b2e2efdd5e",
+      "size_bytes": 8970
+    },
+    "src/canopy/classification/sample_inventory.py": {
+      "url": "src/canopy/classification/sample_inventory.py",
+      "sha256": "721967961b841c76fe54474a8ddc2cc4bd436a8c16f807688b6c47406e54e27e",
+      "size_bytes": 7888
+    },
+    "src/canopy/classification/__init__.py": {
+      "url": "src/canopy/classification/__init__.py",
+      "sha256": "b35344b5d368037b494f69fad7da6a713289de7207444d2f772022a6c035e3de",
+      "size_bytes": 83
+    },
+    "src/canopy/classification/model.py": {
+      "url": "src/canopy/classification/model.py",
+      "sha256": "7837b7ca3032c49b119a70579ab5bfaa20945c4172c723948e2cd1cd91326d79",
+      "size_bytes": 16606
+    },
+    "src/canopy/classification/cli.py": {
+      "url": "src/canopy/classification/cli.py",
+      "sha256": "f7818674ed992a9f14ca7bb6ccba67c0be10624db962bb70fbec7c55ddc72dd0",
+      "size_bytes": 4143
+    },
+    "src/canopy/classification/canonical.py": {
+      "url": "src/canopy/classification/canonical.py",
+      "sha256": "7b5e1db19f3871f907ea41b408756258b5a3de1138d7625be67a557e46a55841",
+      "size_bytes": 673
+    },
+    "src/canopy/classification/audit_local.py": {
+      "url": "src/canopy/classification/audit_local.py",
+      "sha256": "55ea2f42e54a2f7d134ed44a033231fd493a4efd777a81ec12ff8098a6c7d127",
+      "size_bytes": 1860
+    },
+    "src/canopy/classification/complete_audit.py": {
+      "url": "src/canopy/classification/complete_audit.py",
+      "sha256": "b33dd3de3678ee157a83d188a76cb73802e40c50820c479fbc1c24fb1a2cff7b",
+      "size_bytes": 10457
+    },
+    "src/canopy/classification/snapshot.py": {
+      "url": "src/canopy/classification/snapshot.py",
+      "sha256": "b6b2baec85422a21837a8db91b292ca0055c1cebf747ff73fb84955ec923f89c",
+      "size_bytes": 14342
+    },
+    "browser-prepare/classification-ui.js": {
+      "url": "browser-prepare/classification-ui.js",
+      "sha256": "f72055bdb57690671a5a4ec35537512f66f7309de699f64f420dc166ad9a7649",
+      "size_bytes": 14433
+    },
+    "browser-prepare/classification-las.js": {
+      "url": "browser-prepare/classification-las.js",
+      "sha256": "f1c1b0b9540528d09acc5ca68b65c2dd1d11b172a8cfdffd1a37fdf4af81e1be",
+      "size_bytes": 3940
+    },
+    "browser-prepare/classification-worker.js": {
+      "url": "browser-prepare/classification-worker.js",
+      "sha256": "61aa4c64452172fa815787473a5c88d49dcd5838c8ede59a3b09b8373ef4f725",
+      "size_bytes": 12511
+    },
+    "browser-prepare/classification-intake.js": {
+      "url": "browser-prepare/classification-intake.js",
+      "sha256": "147376d266806ff142df992d699e238ab492d612474271a3c8fa576af4f825e8",
+      "size_bytes": 10174
+    },
+    "browser-prepare/classification-runtime.js": {
+      "url": "browser-prepare/classification-runtime.js",
+      "sha256": "f30e88c5ccc4d7b619f1ebc9b180170d934d8f0e6a0404489eb750b7fc1c72ab",
+      "size_bytes": 4719
+    },
+    "browser-prepare/classification-model.js": {
+      "url": "browser-prepare/classification-model.js",
+      "sha256": "d9ef3d3b444be05621ea19223bd490b4258e9e926bef2c411c5c366f64973796",
+      "size_bytes": 13210
     }
   },
   "zip_js": "2.20.0",

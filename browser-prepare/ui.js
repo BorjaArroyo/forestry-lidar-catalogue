@@ -490,6 +490,7 @@ export function mountPreparation({
     }
   };
   document.addEventListener('canopy-task-request', (event) => {
+    if (event.detail.task_ref === 'task:species') return;
     currentRequest = selection.normalize(event.detail.use, event.detail.variables);
     if (locked()) return;
     refreshPlots();
@@ -503,13 +504,14 @@ export function mountPreparation({
     controls();
   });
   document.addEventListener('canopy-prepare-task', ({ detail }) => {
+    if (detail.task_ref === 'task:species') return;
     if (busy || session.running || !catalog.datasets.some((d) => d.id === String(detail.record_id)))
       return;
     $('prepare-source').value = String(detail.record_id);
     $('prepare-mode').value = 'zenodo';
     sourceChanged();
   });
-  for (const source of catalog.datasets) {
+  for (const source of catalog.datasets.filter((source) => !source.classification)) {
     const option = document.createElement('option');
     option.value = source.id;
     option.textContent = source.name;

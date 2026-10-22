@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0.0",
+  "status": "production-readiness-gate-validated",
+  "scope": "Actual shipped production registry; no isolated admission override",
+  "runtime_lock_sha256": "dce384080aa9fafacc63efc714e1b3526fc5d4080ec0e41b09dbcf6885aac1d3",
+  "source_lock_sha256": "1d00fa4cac2a87a032fada55eb13110e49f4568295049da3d5953b429b844488",
+  "implementation": "import functools,hashlib,json,threading\nfrom pathlib import Path\nfrom http.server import SimpleHTTPRequestHandler,ThreadingHTTPServer\nfrom playwright.sync_api import sync_playwright\nROOT=Path.cwd()\nclass Handler(SimpleHTTPRequestHandler):\n def log_message(self,*args):pass\nserver=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Handler,directory=str(ROOT)))\nthreading.Thread(target=server.serve_forever,daemon=True).start();runs=[]\ntry:\n with sync_playwright() as p:\n  for name in ['chromium','firefox']:\n   b=getattr(p,name).launch(headless=True,args=['--no-sandbox'] if name=='chromium' else [])\n   try:\n    page=b.new_page();page.goto(f'http://127.0.0.1:{server.server_port}/index.html',wait_until='networkidle')\n    page.select_option('#preparation-task','task:species')\n    page.wait_for_function(\"document.querySelector('#classification-source').options.length===2\")\n    findings=[]\n    for ref,total in [('zenodo:13255198',19962),('grodata:128035:1.0',4952)]:\n     page.select_option('#classification-source',ref)\n     assert page.locator('#classification-trees option').count()==total\n     text=page.locator('#classification-status').inner_text()\n     assert text=='WIP: selection can be saved. Maintainer source admission required by CONTRIBUTING.md',text\n     assert page.locator('#classification-review').is_disabled() and page.locator('#classification-run').is_disabled()\n     page.click('#classification-add')\n     findings.append(dict(source_ref=ref,tree_id_options=total,status=text,summary=page.locator('#classification-summary').inner_text()))\n    assert page.locator('#classification-draft-list li').count()==2\n    page.select_option('#preparation-task','task:instances');page.select_option('#preparation-task','task:species')\n    assert page.locator('#classification-draft-list li').count()==2\n    runs.append(dict(browser=name,version=b.version,status='passed',sources=findings,drafts_preserved=True,preparation_blocked_pending_human_admission=True))\n   finally:b.close()\nfinally:server.shutdown();server.server_close()\nreport=dict(schema_version='1.0.0',status='production-readiness-gate-validated',scope='Actual shipped production registry; no isolated admission override',\n runtime_lock_sha256=hashlib.sha256((ROOT/'browser-prepare/classification-runtime-lock.json').read_bytes()).hexdigest(),\n source_lock_sha256=hashlib.sha256((ROOT/'scripts/classification/source-lock.json').read_bytes()).hexdigest(),\n implementation=(ROOT/'temp/classification/check_production_readiness.py').read_text(),runs=runs)\n(ROOT/'evidence/classification/production-readiness.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\\n')\nprint(json.dumps(dict(status=report['status'],browsers=[r['browser'] for r in runs])),flush=True)\n",
+  "runs": [
+    {
+      "browser": "chromium",
+      "version": "145.0.7632.6",
+      "status": "passed",
+      "sources": [
+        {
+          "source_ref": "zenodo:13255198",
+          "tree_id_options": 19962,
+          "status": "WIP: selection can be saved. Maintainer source admission required by CONTRIBUTING.md",
+          "summary": "19962 physical tree identities in the source metadata; 17707 meet the use/rank requirements. 17707 audited observations / 5,598,324,981 verified points in the native inventory. Reference: genus 17707, species 17707. 2255 exclusions (including unaudited or missing views). BioDiv sequential traversal: 0.00 GB. Selecting fewer trees does not reduce this traversal. FOR test has no public labels; validation is available only for the published BioDiv validate partition."
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "tree_id_options": 4952,
+          "status": "WIP: selection can be saved. Maintainer source admission required by CONTRIBUTING.md",
+          "summary": "24914 physical tree identities in the source metadata; 21494 meet the use/rank requirements. 25281 audited observations / 8,428,751,019 verified points in the native inventory. Reference: genus 22659, species 22446. 3420 exclusions (including unaudited or missing views). BioDiv sequential traversal: 20.59 GB. Selecting fewer trees does not reduce this traversal. FOR test has no public labels; validation is available only for the published BioDiv validate partition."
+        }
+      ],
+      "drafts_preserved": true,
+      "preparation_blocked_pending_human_admission": true
+    },
+    {
+      "browser": "firefox",
+      "version": "146.0.1",
+      "status": "passed",
+      "sources": [
+        {
+          "source_ref": "zenodo:13255198",
+          "tree_id_options": 19962,
+          "status": "WIP: selection can be saved. Maintainer source admission required by CONTRIBUTING.md",
+          "summary": "19962 physical tree identities in the source metadata; 17707 meet the use/rank requirements. 17707 audited observations / 5,598,324,981 verified points in the native inventory. Reference: genus 17707, species 17707. 2255 exclusions (including unaudited or missing views). BioDiv sequential traversal: 0.00 GB. Selecting fewer trees does not reduce this traversal. FOR test has no public labels; validation is available only for the published BioDiv validate partition."
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "tree_id_options": 4952,
+          "status": "WIP: selection can be saved. Maintainer source admission required by CONTRIBUTING.md",
+          "summary": "24914 physical tree identities in the source metadata; 21494 meet the use/rank requirements. 25281 audited observations / 8,428,751,019 verified points in the native inventory. Reference: genus 22659, species 22446. 3420 exclusions (including unaudited or missing views). BioDiv sequential traversal: 20.59 GB. Selecting fewer trees does not reduce this traversal. FOR test has no public labels; validation is available only for the published BioDiv validate partition."
+        }
+      ],
+      "drafts_preserved": true,
+      "preparation_blocked_pending_human_admission": true
+    }
+  ]
+}

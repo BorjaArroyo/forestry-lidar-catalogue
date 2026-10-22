@@ -1,0 +1,22 @@
+{
+  "status": "succeeded",
+  "scope": "Integrated bounded fixture export and independent native validation; full originals retain upstream audit scope.",
+  "upstream_commit": "d1cbec3bc8495c4be0fa3d394e951a97e37a53b2",
+  "implementation_sha256": "61aa4c64452172fa815787473a5c88d49dcd5838c8ede59a3b09b8373ef4f725",
+  "package_sha256": "9ae3023793e05fb205034f313e0300494f675702be03aaa55b6cb390a56ca0d6",
+  "admission_authorization": "Maintainer explicitly authorized the same evidence and validation procedure used for segmentation; no additional independent human scientific approval required.",
+  "limitations": [
+    "Original-archive audits and real-browser evidence are reused from the fixed upstream contribution.",
+    "Published partitions do not establish geographic independence.",
+    "FOR test labels remain unavailable; BioDiv genus-only labels retain invalid species reference."
+  ],
+  "storage": "Large JSON inventories are losslessly gzip-compressed; original decoded evidence hashes are retained.",
+  "validation": {
+    "python_tests": 154,
+    "pipeline_tests": 7,
+    "javascript_passed": 78,
+    "javascript_skipped": 1,
+    "focused_chromium_firefox_tests": 44,
+    "scope": "All four classification uses, independent exported-ZIP validation, corruption rejection, source details and graph regression. Source-card and Pyodide-kernel checks also passed in the preceding full run."
+  }
+}

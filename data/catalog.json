@@ -4,7 +4,7 @@
   "title": "Canopy / LiDAR Knowledge Hub",
   "scope": "Acquired sources; compatibility is task-specific and does not authorize training or redistribution.",
   "summary": {
-    "datasets": 10,
+    "datasets": 12,
     "assets": 96,
     "clouds": 5626,
     "points": 22146246558,
@@ -245,6 +245,16 @@
           "pipelines": [],
           "native_reflectance": [],
           "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "13255198": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "grodata-128035-1.0": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
         }
       }
     },
@@ -259,10 +269,216 @@
     {
       "name": "Tree species",
       "title": "Species classification",
-      "description": "Requires documented species labels linked to tree identities.",
-      "visible": false,
-      "status": "tbd",
-      "id": "species"
+      "description": "Classify isolated tree observations at documented genus or species rank; native sensor views and published partitions remain separate.",
+      "visible": true,
+      "status": "work_in_progress",
+      "requirements": {
+        "variables": [
+          {
+            "key": "xyz",
+            "label": "Geometry",
+            "purpose": "geometry",
+            "default": "required",
+            "detail": "Native scaled XYZ, without centering, normalization or sensor-view fusion.",
+            "output_fields": [
+              {
+                "name": "xyz",
+                "dtypes": [
+                  "float64"
+                ],
+                "shape": [
+                  "N",
+                  3
+                ]
+              }
+            ],
+            "quantity": null,
+            "minimum_channels": 0
+          },
+          {
+            "key": "taxonomy",
+            "label": "Taxonomic reference",
+            "purpose": "reference",
+            "default": "off",
+            "detail": "Scalar genus/species reference per physical tree; validity is separate for each rank.",
+            "output_fields": [
+              {
+                "name": "taxonomy",
+                "dtypes": [
+                  "json"
+                ],
+                "shape": []
+              },
+              {
+                "name": "reference_valid",
+                "dtypes": [
+                  "json"
+                ],
+                "shape": []
+              }
+            ],
+            "quantity": null,
+            "minimum_channels": 0
+          }
+        ],
+        "uses": {
+          "training": {
+            "label": "Training data",
+            "detail": "Preserve published partitions. Supervised uses require reference valid at the selected rank; geographic independence is not demonstrated.",
+            "required_variables": [
+              "xyz",
+              "taxonomy"
+            ],
+            "allowed_partitions": [
+              "dev",
+              "train"
+            ]
+          },
+          "validation": {
+            "label": "Validation data",
+            "detail": "Preserve published partitions. Supervised uses require reference valid at the selected rank; geographic independence is not demonstrated.",
+            "required_variables": [
+              "xyz",
+              "taxonomy"
+            ],
+            "allowed_partitions": [
+              "validate"
+            ]
+          },
+          "evaluation": {
+            "label": "Evaluation data",
+            "detail": "Preserve published partitions. Supervised uses require reference valid at the selected rank; geographic independence is not demonstrated.",
+            "required_variables": [
+              "xyz",
+              "taxonomy"
+            ],
+            "allowed_partitions": [
+              "test"
+            ]
+          },
+          "inference": {
+            "label": "Inference data",
+            "detail": "Preserve published partitions. Supervised uses require reference valid at the selected rank; geographic independence is not demonstrated.",
+            "required_variables": [
+              "xyz"
+            ],
+            "allowed_partitions": [
+              "dev",
+              "train",
+              "validate",
+              "test",
+              "unassigned"
+            ]
+          }
+        }
+      },
+      "id": "species",
+      "preparation_sources": {
+        "8287792": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "16742708": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "15193973": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "17172162": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "19351234": {
+          "pipelines": [],
+          "native_reflectance": [
+            {
+              "field": "reflectance_1",
+              "channel_ref": "channel:fgi-emit-scanner-1:1.0.0",
+              "wavelength_nm": 1550
+            },
+            {
+              "field": "reflectance_2",
+              "channel_ref": "channel:fgi-emit-scanner-2:1.0.0",
+              "wavelength_nm": 905
+            },
+            {
+              "field": "reflectance_3",
+              "channel_ref": "channel:fgi-emit-scanner-3:1.0.0",
+              "wavelength_nm": 532
+            }
+          ],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "15913427": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "19127709": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "16875688": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "16910335": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "7307956": {
+          "pipelines": [],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "13255198": {
+          "pipelines": [
+            {
+              "id": "pipeline:for-species20k-classification:1.0.0",
+              "output_ref": "contract:for-species20k-taxonomy:1.0.0",
+              "variable_outputs": {
+                "xyz": [
+                  "xyz"
+                ],
+                "taxonomy": [
+                  "taxonomy",
+                  "reference_valid"
+                ]
+              }
+            }
+          ],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        },
+        "grodata-128035-1.0": {
+          "pipelines": [
+            {
+              "id": "pipeline:biodiv-3dtrees-classification:1.0.0",
+              "output_ref": "contract:biodiv-3dtrees-taxonomy:1.0.0",
+              "variable_outputs": {
+                "xyz": [
+                  "xyz"
+                ],
+                "taxonomy": [
+                  "taxonomy",
+                  "reference_valid"
+                ]
+              }
+            }
+          ],
+          "native_reflectance": [],
+          "note": "Native availability does not admit feature extraction, calibration or a preparation pipeline."
+        }
+      }
     },
     {
       "name": "Geometry & robustness",
@@ -3716,6 +3932,262 @@
         }
       },
       "download_bytes": 42804917584
+    },
+    {
+      "id": "13255198",
+      "source_ref": "zenodo:13255198",
+      "title": "FOR-species20K",
+      "url": "https://zenodo.org/records/13255198",
+      "doi": null,
+      "version": "v1",
+      "license": "gpl-3.0-or-later",
+      "cloud_count": 0,
+      "points": 0,
+      "chunks": 0,
+      "assets": 3,
+      "source_fields": [],
+      "schemas": [],
+      "example_paths": [],
+      "source_metadata_sha256": "5704e9e1860789de80a2a18eabcd44444a65f56412b40f97a982cba2977357e8",
+      "download_bytes": 27200371363,
+      "coordinate_references": [],
+      "coordinate_policy": "Native sensor views; shared coordinates and geographic independence not established",
+      "deferred_clouds": 0,
+      "name": "FOR-species20K",
+      "short": "FOR-species20K",
+      "modalities": [
+        "Terrestrial",
+        "Mobile",
+        "Airborne",
+        "Unknown"
+      ],
+      "domain": "Tree taxonomic classification",
+      "geography": "Source-specific collections; geographic independence not demonstrated",
+      "scanner": "Native TLS, MLS, ULS, unknown observations",
+      "spectral": false,
+      "kind": "Isolated tree observations",
+      "labels": "Genus/species reference with explicit rank validity",
+      "role": "Classification source",
+      "readiness": "Audited native observations and validated browser preparation",
+      "note": "Source conditions and native metadata stay separate. Only XYZ is a default model input.",
+      "correction": "Published partitions are preserved; no labels are inferred from duplicate cloud bytes.",
+      "provenance": "https://zenodo.org/records/13255198",
+      "review": {
+        "reviewed_at": "2026-10-22",
+        "scope": "Imported upstream native audit; integration and human admission reviewed separately.",
+        "observation_unit": "One physical tree with separate native sensor observations",
+        "source_facts": [
+          {
+            "text": "Complete native audit covers 19962 tree identities and 19962 sensor observations.",
+            "label": "Pinned provider release",
+            "url": "https://zenodo.org/records/13255198"
+          }
+        ],
+        "local_observations": [
+          "32 normalized plots retain classification in original_points; the coarse semantic view has no mapping for it. Some plots lack treeSP."
+        ],
+        "open_questions": [
+          "Geographic independence is not established.",
+          "Views retain native coordinate frames; no cross-source calibration is inferred."
+        ],
+        "published_protocol": "Official partitions retained; duplicate clouds and overlapping plots are audited, not repaired.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2",
+          "cloud_count": 0,
+          "points": 0,
+          "schemas": []
+        },
+        "observations_current": false
+      },
+      "study_context": "Tree identities and sensor observations have separate scopes.",
+      "discovery": {
+        "unit": "trees",
+        "unit_label": "Isolated-tree observations",
+        "instance_reference": {
+          "status": "trees",
+          "label": "Taxonomic reference per tree"
+        },
+        "coverage": "19,962 tree identities · 19,962 native sensor observations",
+        "limitation": "Published splits share plots or duplicate clouds; independent geographic evaluation is not established.",
+        "preparation": {
+          "status": "ready",
+          "label": "Validated classification preparation",
+          "detail": "Lossless native observations, explicit reference validity, preserved partitions and independent exported-dataset validation.",
+          "limited_reference_copy": false
+        }
+      },
+      "classification": {
+        "source_ref": "zenodo:13255198",
+        "trees": 19962,
+        "observations": 19962,
+        "genus_only": 0,
+        "partitions": {
+          "dev": 17707,
+          "test": 2255
+        },
+        "duplicate_cloud_groups_crossing_partitions": 4,
+        "metadata_path": "data/classification/source-lock.json"
+      },
+      "tasks": [
+        "species"
+      ],
+      "conditional": [
+        "species"
+      ],
+      "source_task_support": {
+        "instances": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        },
+        "components": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        },
+        "species": {
+          "status": "partial",
+          "reason": "Documented rank-specific labels and audited native observations; admission pending."
+        },
+        "geometry": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        },
+        "spectral": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        }
+      }
+    },
+    {
+      "id": "grodata-128035-1.0",
+      "source_ref": "grodata:128035:1.0",
+      "title": "BioDiv-3DTrees",
+      "url": "https://doi.org/10.25625/8PB1IF",
+      "doi": null,
+      "version": "1.0",
+      "license": "CC BY 4.0",
+      "cloud_count": 0,
+      "points": 0,
+      "chunks": 0,
+      "assets": 6,
+      "source_fields": [],
+      "schemas": [],
+      "example_paths": [],
+      "source_metadata_sha256": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b",
+      "download_bytes": 130395095357,
+      "coordinate_references": [],
+      "coordinate_policy": "Native sensor views; shared coordinates and geographic independence not established",
+      "deferred_clouds": 0,
+      "name": "BioDiv-3DTrees",
+      "short": "BioDiv-3DTrees",
+      "modalities": [
+        "Terrestrial",
+        "Airborne"
+      ],
+      "domain": "Tree taxonomic classification",
+      "geography": "Source-specific collections; geographic independence not demonstrated",
+      "scanner": "Native TLS, ULS observations",
+      "spectral": false,
+      "kind": "Isolated tree observations",
+      "labels": "Genus/species reference with explicit rank validity",
+      "role": "Classification source",
+      "readiness": "Audited native observations and validated browser preparation",
+      "note": "Source conditions and native metadata stay separate. Only XYZ is a default model input.",
+      "correction": "Published partitions are preserved; no labels are inferred from duplicate cloud bytes.",
+      "provenance": "https://doi.org/10.25625/8PB1IF",
+      "review": {
+        "reviewed_at": "2026-10-22",
+        "scope": "Imported upstream native audit; integration and human admission reviewed separately.",
+        "observation_unit": "One physical tree with separate native sensor observations",
+        "source_facts": [
+          {
+            "text": "Complete native audit covers 4952 tree identities and 9904 sensor observations.",
+            "label": "Pinned provider release",
+            "url": "https://doi.org/10.25625/8PB1IF"
+          }
+        ],
+        "local_observations": [
+          "32 normalized plots retain classification in original_points; the coarse semantic view has no mapping for it. Some plots lack treeSP."
+        ],
+        "open_questions": [
+          "Geographic independence is not established.",
+          "Views retain native coordinate frames; no cross-source calibration is inferred."
+        ],
+        "published_protocol": "Official partitions retained; duplicate clouds and overlapping plots are audited, not repaired.",
+        "observations_snapshot": {
+          "source_metadata_sha256": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b",
+          "cloud_count": 0,
+          "points": 0,
+          "schemas": []
+        },
+        "observations_current": true
+      },
+      "study_context": "Tree identities and sensor observations have separate scopes.",
+      "discovery": {
+        "unit": "trees",
+        "unit_label": "Isolated-tree observations",
+        "instance_reference": {
+          "status": "trees",
+          "label": "Taxonomic reference per tree"
+        },
+        "coverage": "4,952 tree identities · 9,904 native sensor observations",
+        "limitation": "Published splits share plots or duplicate clouds; independent geographic evaluation is not established.",
+        "preparation": {
+          "status": "ready",
+          "label": "Validated classification preparation",
+          "detail": "Lossless native observations, explicit reference validity, preserved partitions and independent exported-dataset validation.",
+          "limited_reference_copy": false
+        }
+      },
+      "classification": {
+        "source_ref": "grodata:128035:1.0",
+        "trees": 4952,
+        "observations": 9904,
+        "genus_only": 213,
+        "partitions": {
+          "train": 3957,
+          "test": 495,
+          "validate": 495,
+          "unassigned": 5
+        },
+        "duplicate_cloud_groups_crossing_partitions": 0,
+        "metadata_path": "data/classification/source-lock.json"
+      },
+      "tasks": [
+        "species"
+      ],
+      "conditional": [
+        "species"
+      ],
+      "source_task_support": {
+        "instances": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        },
+        "components": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        },
+        "species": {
+          "status": "partial",
+          "reason": "Documented rank-specific labels and audited native observations; admission pending."
+        },
+        "geometry": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        },
+        "spectral": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        },
+        "biomass": {
+          "status": "not_documented",
+          "reason": "Not reviewed for this task."
+        }
+      }
     }
   ],
   "mappings": [
@@ -9145,8 +9617,8 @@
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "model_sha256": "91c193fc1337dba92cf59c6b02b8b7df40a5d4134b628790b687b95076f87239",
-    "model_schema_sha256": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2"
+    "model_sha256": "e5dc15d52c7c96218f0e9963e612c434d245bfefb780883180d5087a4c0d6ef2",
+    "model_schema_sha256": "10b3e58b4fe2690c3c1a3e7336e2bfe00a3c9af58c060beeee56e757357b3307"
   },
   "evidence": [
     {

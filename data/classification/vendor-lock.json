@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0.0",
+  "files": {
+    "laz-perf.js": {
+      "package": "laz-perf",
+      "version": "0.0.7",
+      "upstream": "https://registry.npmjs.org/laz-perf/-/laz-perf-0.0.7.tgz",
+      "sha256": "d9a91a08979dd9f717884e33c9f61997e79122da2c02be8414a5d7e99061985e",
+      "size_bytes": 87228
+    },
+    "laz-perf.wasm": {
+      "package": "laz-perf",
+      "version": "0.0.7",
+      "upstream": "https://registry.npmjs.org/laz-perf/-/laz-perf-0.0.7.tgz",
+      "sha256": "9c1802bc31b567dd4aa1ce9ab010e7e51e095dc42af8379b474ae6f221a9327f",
+      "size_bytes": 214351
+    },
+    "laz-perf.d.ts": {
+      "package": "laz-perf",
+      "version": "0.0.7",
+      "upstream": "https://registry.npmjs.org/laz-perf/-/laz-perf-0.0.7.tgz",
+      "sha256": "50b5131ca856dd52ddaf4e476e5d1d5f9801382f8533f7e81a6d95edb856e611",
+      "size_bytes": 659
+    },
+    "laz-perf-node.cjs": {
+      "package": "laz-perf",
+      "version": "0.0.7",
+      "upstream": "https://registry.npmjs.org/laz-perf/-/laz-perf-0.0.7.tgz",
+      "sha256": "76712726788a65f0da0fb4476d9c46409a3b63af505e7d606c6eafdbb89a8372",
+      "size_bytes": 89055
+    },
+    "laz-perf-node.wasm": {
+      "package": "laz-perf",
+      "version": "0.0.7",
+      "upstream": "https://registry.npmjs.org/laz-perf/-/laz-perf-0.0.7.tgz",
+      "sha256": "9c1802bc31b567dd4aa1ce9ab010e7e51e095dc42af8379b474ae6f221a9327f",
+      "size_bytes": 214351
+    },
+    "fzstd.mjs": {
+      "package": "fzstd",
+      "version": "0.1.1",
+      "upstream": "https://registry.npmjs.org/fzstd/-/fzstd-0.1.1.tgz",
+      "sha256": "1a901fc5a58c349bbdb4f2aa1e688637ef56891ec58243a9f0cd863166b0d2a4",
+      "size_bytes": 24407
+    },
+    "fzstd-LICENSE": {
+      "package": "fzstd",
+      "version": "0.1.1",
+      "upstream": "https://registry.npmjs.org/fzstd/-/fzstd-0.1.1.tgz",
+      "sha256": "62249119bb7df6e54300f37a37145c26a6d4420410aac8881a119c5b427cf751",
+      "size_bytes": 1069
+    },
+    "md5.umd.js": {
+      "package": "hash-wasm",
+      "version": "4.12.0",
+      "upstream": "https://registry.npmjs.org/hash-wasm/-/hash-wasm-4.12.0.tgz",
+      "size_bytes": 10369,
+      "sha256": "bfcbd4f2c1ee2da27209102844468b053a18297d59fc27cc3e30e0fceb767117"
+    },
+    "sha256.umd.js": {
+      "package": "hash-wasm",
+      "version": "4.12.0",
+      "upstream": "https://registry.npmjs.org/hash-wasm/-/hash-wasm-4.12.0.tgz",
+      "size_bytes": 18616,
+      "sha256": "ed7f5896b41aba98909ab143264c5b2ae5c81abf2e47f08dd2d1c0d02ce623de"
+    },
+    "hash-wasm-LICENSE": {
+      "package": "hash-wasm",
+      "version": "4.12.0",
+      "upstream": "https://registry.npmjs.org/hash-wasm/-/hash-wasm-4.12.0.tgz",
+      "size_bytes": 1630,
+      "sha256": "c14dea172f72f2714284a0ac2ab1b00b5352a01409d58255a46227ffc541debd"
+    },
+    "laz-perf-LICENSE": {
+      "package": "laz-perf",
+      "version": "0.0.7",
+      "upstream": "https://github.com/hobuinc/laz-perf/blob/master/COPYING",
+      "size_bytes": 11347,
+      "sha256": "959f77033ba56a3b146faf5c02f9162071f2d0bff4b8b6f1c2193a4b41127d39"
+    }
+  }
+}
