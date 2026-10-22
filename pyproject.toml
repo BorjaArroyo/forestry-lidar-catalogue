@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "canopy-forestry-lidar-catalogue"
 version = "0.1.0"
 description = "Curated forestry LiDAR catalogue and reviewed task data tools"
-requires-python = ">=3.11"
+requires-python = ">=3.14"
 dynamic = ["dependencies"]
 
 [project.scripts]
@@ -23,7 +23,7 @@ where = ["src"]
 
 [tool.ruff]
 cache-dir = "temp/cache/ruff"
-target-version = "py311"
+target-version = "py314"
 line-length = 100
 force-exclude = true
 extend-exclude = [

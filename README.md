@@ -57,9 +57,9 @@ GitHub Pages serves the catalog. Writing verified source files to a selected
 host directory requires the Python download service:
 
 ```bash
-python3.11 -m venv .venv
+uv venv --python 3.14 .venv
 source .venv/bin/activate
-python -m pip install -e '.[dev]'
+uv pip install -e '.[dev]'
 npm ci
 npx playwright install chromium firefox
 canopy service --port 8765

@@ -1,0 +1,35 @@
+{
+  "record_id": 8287792,
+  "download_sha256": "055ab7c320340de5834be202022d70969a7f54b04a5ae69dd1f736810f4ffd64",
+  "provider_checksum": "md5:cc9420454a94301734a46b38623a61f2",
+  "plots": [
+    {
+      "path": "sources/8287792/originals/FORinstance_dataset/synthetic/plot_synthetic.las",
+      "sha256": "c332dd768315c954a367e3a675e85885754d8abc5acc1d7d9c7b898586acb130",
+      "size_bytes": 114621,
+      "points": 3000,
+      "class_counts": [
+        300,
+        300,
+        1000,
+        300,
+        367,
+        367,
+        366
+      ],
+      "published_split": "dev",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "crs": "EPSG:25833"
+    }
+  ],
+  "unmatched_split_rows": []
+}

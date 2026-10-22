@@ -30,7 +30,7 @@ def snapshot_timestamp(root=ROOT):
         )
         if head.returncode == 0 and head.stdout.strip():
             return head.stdout.strip()
-    except (OSError, subprocess.SubprocessError):
+    except OSError, subprocess.SubprocessError:
         pass
     return datetime.now(timezone.utc).isoformat()
 

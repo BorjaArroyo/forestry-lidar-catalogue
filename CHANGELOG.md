@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-10-22 — Python 3.14 runtime
+
+- Require Python 3.14 across the project, CI and the documented uv setup; every
+  dependency then installs from wheels on Linux and macOS, matching the pinned
+  Pyodide 314.0.7 browser kernel that already runs CPython 3.14.2.
+- Raise numpy to 2.4.6 for cp314 wheels and exact version parity with the browser
+  kernel; 2.2.6 publishes no cp314 wheels and would build from source.
+- Move ruff to the py314 target, apply the PEP 758 unparenthesized except
+  reformat, and refresh publication and runtime fingerprints for the touched files.
+- Defer Python 3.15 until PyYAML and inflate64 publish cp315 wheels; building those
+  from source today would contradict the all-wheels installation policy.
+- Track uv.lock and AGENTS.md in git so the resolved environment and the shared
+  agent instructions are reviewable.
+- Add a real-browser kernel test that boots the pinned Pyodide 314.0.7 runtime
+  and drives the audited FOR-instance preparation kernel end to end against a
+  deterministic synthetic fixture package, independently validating every array
+  without downloading the 1.6 GB provider archive.
+
 ## 2026-10-21 — Resumable Zenodo preparations
 
 - Persist exact execution plans and independently validated plot checkpoints in
