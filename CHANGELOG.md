@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-22 — Python 3.14 runtime
+
+- Require Python 3.14 across the project, CI and the documented uv setup; keep the
+  pinned dependency set unchanged because every dependency ships 3.14 wheels.
+- Move ruff to the py314 target, apply the PEP 758 unparenthesized except
+  reformat, and refresh publication and runtime fingerprints for the touched files.
+- Defer Python 3.15 until PyYAML and inflate64 publish cp315 wheels; building those
+  from source today would contradict the all-wheels installation policy.
+- Track uv.lock and AGENTS.md in git so the resolved environment and the shared
+  agent instructions are reviewable.
+
 ## 2026-10-21 — Resumable Zenodo preparations
 
 - Persist exact execution plans and independently validated plot checkpoints in

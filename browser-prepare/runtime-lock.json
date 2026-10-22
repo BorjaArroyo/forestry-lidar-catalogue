@@ -232,8 +232,8 @@
     },
     "src/canopy/model_io.py": {
       "url": "src/canopy/model_io.py",
-      "sha256": "4d42e8149e9df4a56d200185043f0f6de75f3a265de1c04c3e999007039cd8db",
-      "size_bytes": 1633
+      "sha256": "abfae725a26e541bac91813e4c5773b9e761d31cb2d87e231f85dd627f9eab4d",
+      "size_bytes": 1631
     },
     "src/canopy/model_projection.py": {
       "url": "src/canopy/model_projection.py",
