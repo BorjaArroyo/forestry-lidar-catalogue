@@ -1512,3 +1512,201 @@ td:first-child {
   color: var(--muted);
   line-height: var(--leading-normal);
 }
+
+/* Data model graph */
+.graph-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 20px;
+  align-items: start;
+  margin: 20px 0 30px;
+}
+.graph-panel {
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  min-width: 0;
+}
+.panel-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.panel-top h2 {
+  font-size: 15px;
+  margin: 0 0 5px;
+}
+.panel-top p {
+  font-size: var(--text-md);
+  color: var(--muted);
+  margin: 0;
+}
+.graph-wrap {
+  position: relative;
+  padding: 12px;
+  overflow: auto;
+}
+.graph-wrap svg {
+  display: block;
+  width: 100%;
+  min-height: 480px;
+}
+.graph-caption {
+  font-size: var(--text-xs);
+  color: var(--faint);
+  line-height: var(--leading-relaxed);
+  padding: 0 12px 14px;
+}
+.graph-node {
+  cursor: pointer;
+}
+.graph-node rect {
+  fill: var(--surface-raised);
+  stroke: var(--line);
+  stroke-width: 1.5;
+  transition:
+    stroke var(--duration-fast) var(--ease-out),
+    filter var(--duration-fast) var(--ease-out);
+}
+.graph-node text {
+  font-family: var(--font-sans);
+  fill: var(--ink);
+  user-select: none;
+}
+.graph-node .node-mark {
+  font-size: 15px;
+  fill: var(--gold-500);
+}
+.graph-node .node-name {
+  font-size: 14px;
+  font-weight: 600;
+}
+.graph-node .node-sub {
+  font-size: 10px;
+  fill: var(--muted);
+}
+.graph-node .node-status {
+  font-size: 9px;
+  letter-spacing: 0.6px;
+  fill: var(--forest-400);
+  font-weight: 600;
+}
+.graph-node:hover rect {
+  stroke: var(--forest-300);
+  filter: drop-shadow(0 2px 8px #203c2718);
+}
+.graph-node.selected rect {
+  stroke: var(--gold-500);
+  stroke-width: 2;
+}
+.graph-node.dim rect {
+  fill: #f6f7f5;
+}
+.graph-node.dim .node-name {
+  fill: var(--muted);
+}
+.edge-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 14;
+  cursor: pointer;
+}
+.task-nav-model {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+.task-option-model {
+  border: 1px solid var(--line);
+  background: var(--surface-raised);
+  border-radius: var(--radius-full);
+  padding: 8px 14px;
+  font-size: var(--text-md);
+  color: var(--ink-soft);
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+.task-option-model:hover {
+  border-color: var(--forest-300);
+}
+.task-option-model.active {
+  border-color: var(--forest-500);
+  background: var(--forest-50);
+  color: var(--forest-600);
+}
+.task-state {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.task-state.yes {
+  color: var(--forest-500);
+}
+.inspector {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  padding: 22px;
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 110px);
+  overflow: auto;
+}
+.inspector h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 21px;
+  margin: 10px 0;
+}
+.inspector h4 {
+  font-size: 13px;
+  margin: 18px 0 6px;
+}
+.inspector p {
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  margin: 8px 0;
+}
+.inspector-top {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-weight: 600;
+}
+.record-number {
+  color: var(--gold-600);
+}
+.task-mini {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: var(--text-md);
+}
+.task-mini .task-state {
+  text-transform: none;
+  letter-spacing: 0;
+}
+@media (max-width: 1150px) {
+  .graph-layout {
+    grid-template-columns: 1fr;
+  }
+  .inspector {
+    position: static;
+    max-height: none;
+  }
+}

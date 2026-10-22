@@ -34,6 +34,7 @@
         <button class="nav-item active" data-view="datasets">
           <span>▦</span> Sources <b id="dataset-count">10</b>
         </button>
+        <button class="nav-item" data-view="model"><span>◈</span> Data model</button>
       </nav>
       <div class="nav-label">WORKSPACE</div>
       <nav aria-label="Preparation navigation">
@@ -149,6 +150,43 @@
           </p>
           <div id="dataset-grid" class="dataset-grid">
             <div class="empty">Loading reviewed sources…</div>
+          </div>
+        </section>
+        <section id="view-model" class="view" hidden>
+          <div class="section-heading">
+            <div>
+              <h2>Task data model</h2>
+              <p>
+                Navigate the reviewed knowledge graph: sources, preparation flows and the shared
+                data contract each task consumes.
+              </p>
+            </div>
+            <span id="model-status" class="badge neutral">Loading knowledge model…</span>
+          </div>
+          <div id="model-task-nav" class="task-nav-model" role="tablist" aria-label="Task"></div>
+          <div class="graph-layout">
+            <div class="graph-panel">
+              <div class="panel-top">
+                <div>
+                  <h2 id="model-graph-title">Dataset relationships</h2>
+                  <p>Choose a node or a connection to inspect its reviewed evidence.</p>
+                </div>
+                <span id="model-graph-count" class="muted" role="status" aria-live="polite"></span>
+              </div>
+              <div class="graph-wrap">
+                <svg
+                  id="model-graph"
+                  role="group"
+                  aria-label="Interactive graph of the task data model"
+                  viewBox="0 0 1380 900"
+                ></svg>
+                <div class="graph-caption">
+                  Directed links describe audited preparation flow toward the task contract.<br />
+                  Dashed links identify reported support, not an executable preparation.
+                </div>
+              </div>
+            </div>
+            <aside id="model-inspector" class="inspector" aria-label="Selected node detail"></aside>
           </div>
         </section>
         <section id="view-workbench" class="view" hidden>

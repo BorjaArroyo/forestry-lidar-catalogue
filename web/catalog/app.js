@@ -384,6 +384,25 @@ export function mountCatalog({
     }
   }
 
+  const VIEW_TITLES = {
+    datasets: 'Sources',
+    workbench: 'Workbench',
+    model: 'Data model',
+  };
+  const VIEW_HEADINGS = {
+    datasets: [
+      'Find a source for tree segmentation.',
+      'Compare reference coverage and limitations. FOR-instance archive preparation is validated; other adapters remain work in progress.',
+    ],
+    workbench: [
+      'Prepare a dataset for your model.',
+      'Choose a source, inspect its audited pipeline and prepare data for your task requirements.',
+    ],
+    model: [
+      'Navigate the shared data model for each task.',
+      'Sources, audited preparation flows and the data contract each task consumes. Reported support is not an admitted pipeline.',
+    ],
+  };
   function render() {
     renderDatasets();
     renderActiveFilters();
@@ -392,14 +411,11 @@ export function mountCatalog({
     $('#compare-open').disabled = state.compare.size < 2;
     $('#compare-open').hidden = state.view !== 'datasets';
     $('.toolbar').hidden = state.view !== 'datasets';
-    const downloading = state.view === 'workbench';
-    $('#breadcrumb-view').textContent = downloading ? 'Workbench' : 'Sources';
-    $('.page-heading h1').textContent = downloading
-      ? 'Prepare a dataset for your model.'
-      : 'Find a source for tree segmentation.';
-    $('.page-heading p').textContent = downloading
-      ? 'Choose a source, inspect its audited pipeline and prepare data for your task requirements.'
-      : 'Compare reference coverage and limitations. FOR-instance archive preparation is validated; other adapters remain work in progress.';
+    const view = state.view;
+    $('#breadcrumb-view').textContent = VIEW_TITLES[view] || 'Sources';
+    const [heading, subtitle] = VIEW_HEADINGS[view] || VIEW_HEADINGS.datasets;
+    $('.page-heading h1').textContent = heading;
+    $('.page-heading p').textContent = subtitle;
     $$('.nav-item').forEach((b) => {
       b.classList.toggle('active', b.dataset.view === state.view);
       b.setAttribute('aria-current', b.dataset.view === state.view ? 'page' : 'false');
@@ -410,6 +426,7 @@ export function mountCatalog({
     state.view = view;
     location.hash = view;
     render();
+    document.dispatchEvent(new CustomEvent('canopy-view', { detail: { view } }));
     window.scrollTo(0, 0);
   }
   document.addEventListener('click', (event) => {
@@ -500,9 +517,16 @@ export function mountCatalog({
   $('#reset').addEventListener('click', clearFilters);
   $('#compare-open').addEventListener('click', showCompare);
   $('#export').addEventListener('click', () => download(data, 'canopy-catalog.json'));
+  const viewFromHash = () =>
+    location.hash === '#workbench'
+      ? 'workbench'
+      : location.hash === '#model'
+        ? 'model'
+        : 'datasets';
   window.addEventListener('hashchange', () => {
-    state.view = location.hash === '#workbench' ? 'workbench' : 'datasets';
+    state.view = viewFromHash();
     render();
+    document.dispatchEvent(new CustomEvent('canopy-view', { detail: { view: state.view } }));
   });
   $$('dialog').forEach((d) =>
     d.addEventListener('click', (e) => {
@@ -522,7 +546,7 @@ export function mountCatalog({
     $$('[data-source-download]').forEach((b) => (b.disabled = !serviceConnected));
     $$('.source-service-note').forEach((p) => (p.textContent = sourceServiceNote()));
   });
-  state.view = location.hash === '#workbench' ? 'workbench' : 'datasets';
+  state.view = viewFromHash();
   initFromUrl();
   $('#dataset-count').textContent = data.datasets.length;
   $('#snapshot-date').textContent =
