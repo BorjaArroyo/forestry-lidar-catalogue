@@ -511,7 +511,6 @@ main {
 .muted {
   color: var(--muted);
   font-size: 10px;
-  white-space: nowrap;
 }
 .edge {
   fill: none;
@@ -1516,43 +1515,51 @@ td:first-child {
 /* Data model graph */
 .graph-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 1fr);
   gap: 20px;
   align-items: start;
   margin: 20px 0 30px;
 }
-.graph-panel {
+.graph-panel,
+.inspector {
+  min-width: 0;
   background: var(--surface-raised);
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
-  min-width: 0;
 }
 .panel-top {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 14px;
-  align-items: center;
-  padding: 20px 22px;
+  gap: 12px;
+  align-items: start;
+  padding: 18px 20px;
   border-bottom: 1px solid var(--line-soft);
 }
-.panel-top h2 {
-  font-size: 15px;
-  margin: 0 0 5px;
+.panel-top > div {
+  min-width: 0;
+  flex: 1 1 240px;
 }
-.panel-top p {
-  font-size: var(--text-md);
-  color: var(--muted);
+.panel-top h2 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+.panel-top p,
+.panel-top .muted {
+  font-size: 12px;
+  line-height: 1.6;
   margin: 0;
 }
 .graph-wrap {
   position: relative;
-  padding: 12px;
+  padding: 8px;
   overflow: hidden;
 }
 .graph-wrap svg {
   display: block;
   width: 100%;
-  height: 560px;
+  height: clamp(520px, 78vh, 820px);
+  font-family: var(--font-sans);
   cursor: grab;
   touch-action: none;
 }
@@ -1561,37 +1568,70 @@ td:first-child {
 }
 .graph-controls {
   position: absolute;
-  bottom: 52px;
-  left: 22px;
+  bottom: 20px;
+  left: 20px;
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 .graph-controls button {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-full);
   border: 1px solid var(--line);
   background: var(--surface-raised);
-  color: var(--ink-soft);
-  font-size: 15px;
-  line-height: 1;
+  color: var(--ink);
+  font-size: 18px;
   cursor: pointer;
-  display: grid;
-  place-items: center;
   box-shadow: var(--shadow-sm);
-  transition:
-    border-color var(--duration-fast) var(--ease-out),
-    color var(--duration-fast) var(--ease-out);
-}
-.graph-controls button:hover {
-  border-color: var(--forest-300);
-  color: var(--forest-600);
 }
 .graph-caption {
-  font-size: var(--text-xs);
-  color: var(--faint);
-  line-height: var(--leading-relaxed);
-  padding: 0 12px 14px;
+  padding: 0 20px 16px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.graph-caption p {
+  margin: 8px 0 0;
+}
+.graph-caption p:first-child {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+.model-legend::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  border-top: 2px solid var(--forest-500);
+  vertical-align: middle;
+  margin-right: 6px;
+}
+.model-legend.requires::before {
+  border-color: var(--gold-600);
+  border-top-style: dashed;
+}
+.model-legend.support::before {
+  border-color: var(--muted);
+  border-top-style: dotted;
+}
+.model-support-toggle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.model-support-toggle input {
+  accent-color: var(--forest-600);
+  width: 18px;
+  height: 18px;
+}
+.model-status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
 }
 .graph-node {
   cursor: pointer;
@@ -1600,18 +1640,17 @@ td:first-child {
   fill: var(--surface-raised);
   stroke: var(--line);
   stroke-width: 1.5;
-  transition:
-    stroke var(--duration-fast) var(--ease-out),
-    filter var(--duration-fast) var(--ease-out);
 }
 .graph-node text {
   font-family: var(--font-sans);
   fill: var(--ink);
   user-select: none;
+  pointer-events: none;
 }
-.graph-node .node-mark {
-  font-size: 15px;
-  fill: var(--gold-500);
+.graph-node .node-type {
+  font-size: 9px;
+  fill: var(--forest-500);
+  letter-spacing: 0.6px;
 }
 .graph-node .node-name {
   font-size: 14px;
@@ -1621,31 +1660,50 @@ td:first-child {
   font-size: 10px;
   fill: var(--muted);
 }
-.graph-node .node-status {
-  font-size: 9px;
-  letter-spacing: 0.6px;
-  fill: var(--forest-400);
-  font-weight: 600;
+.graph-node.reported rect {
+  fill: var(--neutral-bg);
+  stroke-dasharray: 4 3;
 }
-.graph-node:hover rect {
-  stroke: var(--forest-300);
-  filter: drop-shadow(0 2px 8px #203c2718);
+.graph-node:hover rect,
+.graph-node.selected rect,
+.graph-node:focus-visible rect {
+  stroke: var(--forest-500);
+  stroke-width: 2.5;
 }
-.graph-node.selected rect {
-  stroke: var(--gold-500);
-  stroke-width: 2;
-}
-.graph-node.dim rect {
-  fill: #f6f7f5;
-}
-.graph-node.dim .node-name {
-  fill: var(--muted);
+.graph-node:focus-visible,
+.model-edge:focus-visible {
+  outline: none;
 }
 .edge-hit {
   fill: none;
   stroke: transparent;
-  stroke-width: 14;
+  stroke-width: 16;
   cursor: pointer;
+}
+.model-edge .edge {
+  fill: none;
+  stroke: var(--forest-500);
+  stroke-width: 2;
+  opacity: 0.8;
+  pointer-events: none;
+}
+.model-edge.requires .edge {
+  stroke: var(--gold-600);
+  stroke-dasharray: 6 4;
+}
+.model-edge.support .edge {
+  stroke: var(--muted);
+  stroke-dasharray: 2 5;
+}
+.model-edge:hover .edge,
+.model-edge.selected .edge,
+.model-edge:focus-visible .edge {
+  stroke-width: 4;
+  opacity: 1;
+}
+.model-group-label {
+  font: 600 10px var(--font-sans);
+  fill: var(--muted);
 }
 .task-nav-model {
   display: flex;
@@ -1655,91 +1713,74 @@ td:first-child {
 }
 .task-option-model {
   border: 1px solid var(--line);
-  background: var(--surface-raised);
+  background: var(--surface);
   border-radius: var(--radius-full);
   padding: 8px 14px;
-  font-size: var(--text-md);
-  color: var(--ink-soft);
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
   cursor: pointer;
-  transition:
-    border-color var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out);
 }
-.task-option-model:hover {
-  border-color: var(--forest-300);
-}
-.task-option-model.active {
+.task-option-model[aria-pressed='true'] {
   border-color: var(--forest-500);
   background: var(--forest-50);
-  color: var(--forest-600);
-}
-.task-state {
-  font-size: var(--text-xs);
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.task-state.yes {
-  color: var(--forest-500);
 }
 .inspector {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-xl);
   padding: 22px;
-  position: sticky;
-  top: 16px;
-  max-height: calc(100vh - 110px);
-  overflow: auto;
+  overflow-wrap: anywhere;
 }
 .inspector h3 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 21px;
-  margin: 10px 0;
+  font-size: 24px;
+  margin: 12px 0;
 }
 .inspector h4 {
   font-size: 13px;
   margin: 18px 0 6px;
 }
 .inspector p {
-  font-size: var(--text-lg);
-  line-height: var(--leading-relaxed);
+  font-size: 13px;
+  line-height: 1.7;
   margin: 8px 0;
 }
 .inspector-top {
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
+  font-size: 10px;
+  letter-spacing: 1px;
   color: var(--muted);
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
   font-weight: 600;
+  text-transform: uppercase;
 }
-.record-number {
-  color: var(--gold-600);
+.model-state {
+  color: var(--forest-500);
 }
-.task-mini {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--line-soft);
-  font-size: var(--text-md);
+.inspector .scroll-table {
+  max-width: 100%;
 }
-.task-mini .task-state {
-  text-transform: none;
-  letter-spacing: 0;
+#view-model .section-heading {
+  flex-wrap: wrap;
 }
-@media (max-width: 1150px) {
+#view-model .section-heading > div {
+  min-width: 0;
+}
+@media (min-width: 1500px) {
   .graph-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) 320px;
   }
   .inspector {
-    position: static;
-    max-height: none;
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow: auto;
+  }
+}
+@media (max-width: 700px) {
+  .graph-caption,
+  .panel-top {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .model-support-toggle {
+    font-size: 12px;
+  }
+  .graph-wrap svg {
+    height: 520px;
   }
 }
