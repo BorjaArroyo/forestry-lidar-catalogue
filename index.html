@@ -134,6 +134,7 @@
           >
           <button id="reset" class="button text-button">Reset filters</button>
         </div>
+        <div id="active-filters" class="active-filters" hidden></div>
         <section id="view-datasets" class="view">
           <div class="section-heading">
             <div>
@@ -146,7 +147,9 @@
             Preparation availability is shown from the reviewed catalog records. Preparation does
             not establish geographic independence or annotation completeness.
           </p>
-          <div id="dataset-grid" class="dataset-grid"></div>
+          <div id="dataset-grid" class="dataset-grid">
+            <div class="empty">Loading reviewed sources…</div>
+          </div>
         </section>
         <section id="view-workbench" class="view" hidden>
           <div class="section-heading">

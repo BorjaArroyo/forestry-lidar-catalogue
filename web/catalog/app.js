@@ -202,10 +202,10 @@ export function mountCatalog({
       rows
         .map((d) => {
           const s = discovery(d);
-          return `<article class="dataset-card source-card" data-source="${d.id}"><div class="card-top">${badge(d.modalities.join(' · '))}<span class="source-unit">${esc(s.unit_label)}</span></div><h3>${esc(d.name)}</h3><p class="source-location">${esc(d.geography)}</p>${readinessHtml(d)}${requestFit(d)}<p class="source-coverage">${esc(s.coverage)}</p><div class="source-caveat"><strong>Before choosing</strong><p>${esc(s.limitation)}</p></div><p class="source-record-size">${recordSize(d)} · ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} in the pinned record<br><small>${selection.assess(d.id, taskRequest()).status === 'ready' ? 'Whole record size; a reviewed plot can be retrieved in the browser.' : 'Whole record; selected-plot preparation remains TBD.'}</small></p><div class="card-bottom"><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" ${state.compare.has(d.id) ? 'checked' : ''}>Compare</label><button data-detail="${d.id}">View source & preparation ↗</button></div></article>`;
+          return `<article class="dataset-card source-card" data-source="${d.id}"><div class="card-top">${badge(d.modalities.join(' · '))}<span class="source-unit">${esc(s.unit_label)}</span></div><h3>${esc(d.name)}</h3><p class="source-location">${esc(d.geography)}</p>${readinessHtml(d)}${requestFit(d, true)}<p class="source-coverage">${esc(s.coverage)}</p><div class="source-caveat"><strong>Before choosing</strong><p>${esc(s.limitation)}</p></div><p class="source-record-size">${recordSize(d)} · ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} in the pinned record<br><small>${selection.assess(d.id, taskRequest()).status === 'ready' ? 'Whole record size; a reviewed plot can be retrieved in the browser.' : 'Whole record; selected-plot preparation remains TBD.'}</small></p><div class="card-bottom"><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" ${state.compare.has(d.id) ? 'checked' : ''}>Compare</label><button data-detail="${d.id}">View source & preparation ↗</button></div></article>`;
         })
         .join('') ||
-      '<div class="empty">No source matches all these conditions. Try clearing a filter. This catalog does not cover every public source.</div>';
+      `<div class="empty">No source matches all these conditions.<button class="button small" data-clear-filters>Clear all filters</button><p>This catalog does not cover every public source.</p></div>`;
   }
   function detail(id) {
     const d = byId[id];
@@ -264,8 +264,100 @@ export function mountCatalog({
     downloadJSON(doc, value, name);
   }
 
+  const FILTER_LABELS = {
+    platform: 'Platform',
+    unit: 'Data unit',
+    reference: 'Instance reference',
+    preparation: 'Task preparation',
+  };
+  const FILTER_VALUES = {
+    unit: {
+      plots: 'Plot / scene clouds',
+      mixed: 'Plots + tree exports',
+      trees: 'Isolated-tree exports',
+      unknown: 'Unit not reviewed',
+    },
+    reference: {
+      plots: 'Plot-level IDs reported',
+      trees: 'Tree identities only',
+      none: 'No instance labels',
+      unknown: 'Not reviewed',
+    },
+    preparation: {
+      ready: 'Validated archive preparation',
+      tbd: 'Pipeline TBD',
+      blocked: 'Rights review required',
+    },
+  };
+  function clearFilters() {
+    state.search = '';
+    $('#search').value = '';
+    ['platform', 'unit', 'reference', 'preparation'].forEach((key) => {
+      state[key] = 'all';
+      $('#' + key).value = 'all';
+    });
+    render();
+  }
+  function renderActiveFilters() {
+    const box = $('#active-filters');
+    if (!box) return;
+    const chips = [];
+    if (state.search) chips.push({ key: 'search', label: `Search: “${state.search}”` });
+    for (const key of Object.keys(FILTER_LABELS))
+      if (state[key] !== 'all')
+        chips.push({
+          key,
+          label: `${FILTER_LABELS[key]}: ${FILTER_VALUES[key]?.[state[key]] || state[key]}`,
+        });
+    box.hidden = !chips.length;
+    box.innerHTML =
+      chips
+        .map(
+          (chip) =>
+            `<button class="filter-chip" data-clear-filter="${esc(chip.key)}">${esc(chip.label)}<span aria-hidden="true">×</span></button>`,
+        )
+        .join('') +
+      (chips.length > 1
+        ? '<button class="text-button" data-clear-filter="all">Clear all</button>'
+        : '');
+  }
+  let urlTimer;
+  function syncUrl() {
+    clearTimeout(urlTimer);
+    urlTimer = setTimeout(() => {
+      const params = new URLSearchParams();
+      if (state.search) params.set('q', state.search);
+      for (const key of ['platform', 'unit', 'reference', 'preparation'])
+        if (state[key] !== 'all') params.set(key, state[key]);
+      const query = params.toString();
+      try {
+        history.replaceState(
+          null,
+          '',
+          location.pathname + (query ? `?${query}` : '') + location.hash,
+        );
+      } catch {
+        /* Browser rate-limited replaceState; the visible UI state still applies. */
+      }
+    }, 300);
+  }
+  function initFromUrl() {
+    const params = new URLSearchParams(location.search);
+    state.search = params.get('q') || '';
+    $('#search').value = state.search;
+    for (const key of ['platform', 'unit', 'reference', 'preparation']) {
+      const value = params.get(key);
+      if (value) {
+        state[key] = value;
+        $('#' + key).value = value;
+      }
+    }
+  }
+
   function render() {
     renderDatasets();
+    renderActiveFilters();
+    syncUrl();
     $('#compare-count').textContent = state.compare.size;
     $('#compare-open').disabled = state.compare.size < 2;
     $('#compare-open').hidden = state.view !== 'datasets';
@@ -315,6 +407,21 @@ export function mountCatalog({
     if (target.dataset.view) selectView(target.dataset.view);
     if (target.dataset.detail) detail(target.dataset.detail);
     if (target.dataset.compare) toggleCompare(target.dataset.compare);
+    if (target.dataset.clearFilters) clearFilters();
+    if (target.dataset.clearFilter) {
+      const key = target.dataset.clearFilter;
+      if (key === 'all') clearFilters();
+      else {
+        if (key === 'search') {
+          state.search = '';
+          $('#search').value = '';
+        } else {
+          state[key] = 'all';
+          $('#' + key).value = 'all';
+        }
+        render();
+      }
+    }
     if (target.classList.contains('close-dialog')) target.closest('dialog').close();
   });
   document.addEventListener('keydown', (e) => {
@@ -360,15 +467,7 @@ export function mountCatalog({
   document.addEventListener('change', (e) => {
     if (e.target.dataset.compareCheck) toggleCompare(e.target.dataset.compareCheck);
   });
-  $('#reset').addEventListener('click', () => {
-    state.search = '';
-    $('#search').value = '';
-    ['platform', 'unit', 'reference', 'preparation'].forEach((key) => {
-      state[key] = 'all';
-      $('#' + key).value = 'all';
-    });
-    render();
-  });
+  $('#reset').addEventListener('click', clearFilters);
   $('#compare-open').addEventListener('click', showCompare);
   $('#export').addEventListener('click', () => download(data, 'canopy-catalog.json'));
   window.addEventListener('hashchange', () => {
@@ -394,6 +493,7 @@ export function mountCatalog({
     $$('.source-service-note').forEach((p) => (p.textContent = sourceServiceNote()));
   });
   state.view = location.hash === '#workbench' ? 'workbench' : 'datasets';
+  initFromUrl();
   $('#dataset-count').textContent = data.datasets.length;
   $('#snapshot-date').textContent =
     `Snapshot · ${new Date(data.generated_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`;

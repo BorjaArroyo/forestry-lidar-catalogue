@@ -427,8 +427,8 @@
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "87d0053d2ba8b0377e1337f2710b13db16736ebcf7fcdc42fa04a93bde088293",
-      "size_bytes": 22643
+      "sha256": "bacb5f60209fbca47ff76c90d549e888a455031258a4396357fd4a692564b3f3",
+      "size_bytes": 25735
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
