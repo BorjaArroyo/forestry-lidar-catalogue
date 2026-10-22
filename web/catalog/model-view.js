@@ -105,52 +105,58 @@ export function mountModelView({
         }
       }
     }
-    const COLUMN_X = { source: 40, native: 300, pipeline: 560, package: 820, task: 1120 };
+    /* Top-down hierarchy: task on top, request variables below it, then the
+       audited preparation flow descending in one vertical column per source
+       track. Reported-support sources flank the flow so their links never
+       cross the audited chain. */
+    const ROW_Y = {
+      task: 30,
+      variable: 200,
+      package: 360,
+      pipeline: 500,
+      native: 640,
+      source: 780,
+    };
+    const trackCount = Math.max(1, chain.sources.size);
+    const trackCenter = (track) => 700 + (track - (trackCount - 1) / 2) * 280;
     const nodes = [];
-    const edges = chainEdges.map((edge) => ({
-      kind: 'flow',
-      from: edge.source,
-      to: edge.target,
-    }));
-    const trackY = (track) => 110 + track * 250;
-    for (const [column, group] of [
-      ['source', chain.sources],
-      ['native', chain.natives],
-      ['pipeline', chain.pipelines],
-      ['package', chain.packages],
-    ]) {
-      for (const id of group) {
-        const data = model.nodes[id].data;
-        const track = trackOf.get(id) ?? 0;
-        nodes.push({
-          id,
-          type: model.nodes[id].type,
-          x: COLUMN_X[column],
-          y: trackY(track),
-          w: model.nodes[id].type === 'transformation' ? 230 : 210,
-          h: 92,
-          name: data.name || id.split(':').slice(0, -1).join(':'),
-          sub:
-            model.nodes[id].type === 'source_release'
-              ? `Record ${id.split(':')[1]}`
-              : `Version ${data.version}`,
-          status: data.status,
-          data,
-        });
-      }
-    }
+    const edges = chainEdges.map((edge) => ({ kind: 'flow', from: edge.source, to: edge.target }));
+    const flowNode = (id, row, width) => {
+      const data = model.nodes[id].data;
+      nodes.push({
+        id,
+        type: model.nodes[id].type,
+        x: trackCenter(trackOf.get(id) ?? 0) - width / 2,
+        y: ROW_Y[row],
+        w: width,
+        h: 92,
+        name: data.name || id.split(':').slice(0, -1).join(':'),
+        sub:
+          model.nodes[id].type === 'source_release'
+            ? `Record ${id.split(':')[1]}`
+            : `Version ${data.version}`,
+        status: data.status,
+        data,
+      });
+    };
+    for (const id of chain.sources) flowNode(id, 'source', 210);
+    for (const id of chain.natives) flowNode(id, 'native', 210);
+    for (const id of chain.pipelines) flowNode(id, 'pipeline', 230);
+    for (const id of chain.packages) flowNode(id, 'package', 210);
     /* Every reviewed source keeps its reported support for this task. */
     supports
       .filter((edge) => !chain.sources.has(edge.source))
       .forEach((edge, index) => {
         const id = edge.source;
+        const left = index % 2 === 0;
+        const row = Math.floor(index / 2);
         nodes.push({
           id,
           type: 'source_release',
-          x: COLUMN_X.source,
-          y: 560 + index * 66,
-          w: 210,
-          h: 52,
+          x: left ? 40 : 1160,
+          y: ROW_Y.variable + row * 105,
+          w: 200,
+          h: 76,
           name: model.nodes[id].data.name || id.split(':').slice(0, -1).join(':'),
           sub: `Record ${id.split(':')[1]}`,
           status: edge.data.status,
@@ -162,22 +168,28 @@ export function mountModelView({
     nodes.push({
       id: taskId,
       type: 'task',
-      x: COLUMN_X.task,
-      y: 180,
+      x: 700 - 115,
+      y: ROW_Y.task,
       w: 230,
-      h: 108,
+      h: 104,
       name: taskNode.data.name,
       sub: taskNode.data.status.replaceAll('_', ' '),
       status: taskNode.data.status,
       data: taskNode.data,
     });
-    (taskNode.data.requirements?.variables || []).forEach((variable, index) => {
+    const variables = taskNode.data.requirements?.variables || [];
+    const variableWidth = 210,
+      variableGap = 40;
+    variables.forEach((variable, index) => {
       nodes.push({
         id: `variable:${variable.key}`,
         type: 'variable',
-        x: COLUMN_X.task,
-        y: 400 + index * 100,
-        w: 230,
+        x:
+          700 -
+          (variables.length * variableWidth + (variables.length - 1) * variableGap) / 2 +
+          index * (variableWidth + variableGap),
+        y: ROW_Y.variable,
+        w: variableWidth,
         h: 78,
         name: variable.label,
         sub: `${variable.purpose}${variable.quantity ? ' · ' + variable.quantity : ''}`,
@@ -185,25 +197,28 @@ export function mountModelView({
       });
       edges.push({ kind: 'requires', from: taskId, to: `variable:${variable.key}` });
     });
-    const maxY = Math.max(...nodes.map((node) => node.y + node.h));
-    return {
-      nodes,
-      edges,
-      supports,
-      task: taskNode,
-      viewBox: `0 0 1380 ${Math.max(940, maxY + 60)}`,
-    };
+    return { nodes, edges, supports, task: taskNode };
   }
   const byId = (graph, id) => graph.nodes.find((node) => node.id === id);
+  /* Anchor each edge on the node side facing its counterpart; vertical flow
+     links render as straight segments, diagonal support links as soft elbows. */
+  function anchor(node, towards) {
+    const cx = node.x + node.w / 2,
+      cy = node.y + node.h / 2;
+    const tx = towards.x + towards.w / 2,
+      ty = towards.y + towards.h / 2;
+    if (Math.abs(ty - cy) >= Math.abs(tx - cx)) return [cx, ty > cy ? node.y + node.h : node.y];
+    return [tx > cx ? node.x + node.w : node.x, cy];
+  }
   function edgePath(graph, edge) {
     const from = byId(graph, edge.from),
       to = byId(graph, edge.to);
-    const start = [from.x + from.w, from.y + from.h / 2];
-    const end = [to.x, to.y + to.h / 2];
-    const control = [
-      (start[0] + end[0]) / 2,
-      (start[1] + end[1]) / 2 + (edge.kind === 'support' ? 30 : 0),
-    ];
+    const start = anchor(from, to),
+      end = anchor(to, from);
+    const mostlyHorizontal = Math.abs(end[0] - start[0]) > Math.abs(end[1] - start[1]);
+    const control = mostlyHorizontal
+      ? [end[0], start[1]]
+      : [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];
     return `M ${start.join(' ')} Q ${control.join(' ')} ${end.join(' ')}`;
   }
   function applyTransform() {

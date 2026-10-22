@@ -129,7 +129,7 @@
     "web/bootstrap.js": "34eac8682d09ad49a818ebf4db52503311440fef0aa358bbaf5bea46f3b87b15",
     "web/catalog/app.js": "a822168c08c0670bdbe20e328c5d9f5990ca2c7988296f27f04ae1d974d948de",
     "web/catalog/task-selection.js": "d2f554569be0800ebb1041604b1fc487e5f09cbcee33b8b256918db3ec3cfece",
-    "web/catalog/model-view.js": "92ee4b8580be4f13d28a49c5c0fa01ab1f1af4fa94dd247e731a9a9b363d16da",
+    "web/catalog/model-view.js": "fbe966d3b260ac7b61df020e558cc4b5c660a24688b619eda6d6ddc3cdf4918c",
     "web/styles.css": "12e8d8ab95706f5074caf9ad495a8010d7dce7619953310b533036341d103135",
     "web/workbench/workbench.js": "e78acb3fd7a452997bf68d130f6fda3c28118a0223990a5e0aa31e55e0086521",
     "docs/guides/BROWSER-PREPARATION.md": "34034c2a08af3e9fe37f63f3588fb824d9d5a45f15786d487d8f817a4d3a627d",
