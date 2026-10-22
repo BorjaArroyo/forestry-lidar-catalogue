@@ -113,12 +113,16 @@ export function mountCatalog({
     }
     $('#task-request-summary').textContent = use.detail;
   }
-  function requestFit(d, action = false) {
+  function omittedVariables(result) {
+    return Object.keys(result.omitted).map(
+      (key) => task.requirements.variables.find((v) => v.key === key).label,
+    );
+  }
+  function requestFit(d) {
     const result = selection.assess(d.id, taskRequest());
-    const labels = (key) => task.requirements.variables.find((v) => v.key === key).label;
-    const omitted = Object.keys(result.omitted).map(labels);
+    const omitted = omittedVariables(result);
     const channels = task.preparation_sources[d.id].native_reflectance;
-    return `<div class="request-fit"><strong>${result.status === 'ready' ? 'Audited pipeline matches this request' : 'Preparation for this request: TBD / blocked'}</strong>${omitted.length ? `<p>Not produced: ${esc(omitted.join(', '))}.</p>` : ''}${channels.length ? `<p>${channels.length} native reflectance channels documented (${esc(channels.map((c) => c.wavelength_nm + ' nm').join(', '))}); feature preparation remains TBD.</p>` : ''}${action && result.status === 'ready' ? `<button class="button" data-task-prepare="${esc(d.id)}">Prepare data for this request</button>` : ''}</div>`;
+    return `<div class="request-fit"><strong>${result.status === 'ready' ? 'Audited pipeline matches this request' : 'Preparation for this request is unavailable'}</strong>${omitted.length ? `<p>Not produced: ${esc(omitted.join(', '))}.</p>` : ''}${channels.length ? `<p>${channels.length} native reflectance channels documented (${esc(channels.map((c) => c.wavelength_nm + ' nm').join(', '))}). ${result.included.reflectance ? 'Audited output preserves native measurements and validity masks.' : 'Native availability does not provide an audited spectral output for this request.'} Units and calibration require source-specific review.</p>` : ''}</div>`;
   }
   function taskChanged() {
     renderTaskRequest();
@@ -135,7 +139,7 @@ export function mountCatalog({
   function sourceReview(d) {
     const r = d.review;
     if (!r) return '<p>Source review is pending.</p>';
-    return `<h4>Observation unit</h4><p>${esc(r.observation_unit)}</p><h4>Reported by the source</h4>${r.source_facts.map((f) => `<p>${esc(f.text)} ${link(f.label, f.url)}</p>`).join('')}<h4>Published protocol</h4><p>${esc(r.published_protocol)}</p><h4>Local study context</h4><p>${esc(d.study_context)}</p><h4>Saved local observations</h4><ul>${r.local_observations.map((f) => `<li>${esc(f)}</li>`).join('')}</ul><p class="evidence-tag">${r.observations_current ? 'Observation metadata matches the reviewed snapshot.' : 'Metadata changed; these historical observations need rechecking.'}</p><h4>Unresolved before scientific use</h4><ul>${r.open_questions.map((f) => `<li>${esc(f)}</li>`).join('')}</ul><p class="evidence-tag">Reviewed ${esc(r.reviewed_at)} · ${esc(r.scope)}</p>`;
+    return `<h4>Observation unit</h4><p>${esc(r.observation_unit)}</p><h4>Reported by the source</h4>${r.source_facts.map((f) => `<p>${esc(f.text)} ${link(f.label, f.url)}</p>`).join('')}<h4>Published protocol</h4><p>${esc(r.published_protocol)}</p><p class="evidence-tag">${r.observations_current ? 'Observation metadata matches the reviewed snapshot.' : 'Metadata changed; these historical observations need rechecking.'}</p><h4>Unresolved before scientific use</h4><ul>${r.open_questions.map((f) => `<li>${esc(f)}</li>`).join('')}</ul><p class="evidence-tag">Reviewed ${esc(r.reviewed_at)} · ${esc(r.scope)}</p>`;
   }
   function nativeMeasurements(d) {
     return (d.native_measurement_contracts || [])
@@ -194,30 +198,20 @@ export function mountCatalog({
     toast.timer = setTimeout(() => ($('#toast').hidden = true), 3200);
   }
 
-  /* Cards communicate uniform state; the audited per-source detail stays in the dialog. */
-  const REFERENCE_STATUS_LABELS = {
-    plots: 'Tree IDs per plot',
-    trees: 'Tree IDs in tree exports',
-    none: 'No instance labels',
-    unknown: 'Reference not reviewed',
-  };
-  const PREPARATION_STATUS_LABELS = {
-    ready: 'Validated preparation',
-    tbd: 'Pipeline TBD',
-    blocked: 'Rights review required',
-  };
-  function cardStatuses(d) {
-    const s = discovery(d);
-    return `<div class="card-status"><span class="source-status reference-${esc(s.instance_reference.status)}">${esc(REFERENCE_STATUS_LABELS[s.instance_reference.status] || 'Reference not reviewed')}</span><span class="source-status preparation-${esc(s.preparation.status)}">${esc(PREPARATION_STATUS_LABELS[s.preparation.status] || 'Pipeline TBD')}</span></div>`;
-  }
   function cardHtml(d) {
     const s = discovery(d);
     const upcoming = s.preparation.status !== 'ready';
-    const fit = upcoming ? null : selection.assess(d.id, taskRequest());
-    const fitLine = !fit
-      ? ''
-      : `<p class="fit-line ${fit.status === 'ready' ? 'ok' : 'no'}">${fit.status === 'ready' ? 'Audited pipeline covers this request.' : 'Admitted pipeline does not cover the current request.'}</p>`;
-    return `<article class="dataset-card source-card${upcoming ? ' upcoming' : ''}" data-source="${d.id}"><div class="card-top">${upcoming ? badge('Upcoming', 'neutral') : ''}${badge(d.modalities.join(' · '))}<span class="source-unit">${esc(s.unit_label)}</span></div><h3>${esc(d.name)}</h3><p class="source-location" title="${esc(d.geography)}">${esc(d.geography)}</p>${cardStatuses(d)}${fitLine}<p class="card-meta">${recordSize(d)} · ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} in the pinned record</p><div class="card-bottom"><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" ${state.compare.has(d.id) ? 'checked' : ''}>Compare</label>${fit?.status === 'ready' ? `<button class="button small" data-task-prepare="${d.id}">Prepare</button>` : ''}<button data-detail="${d.id}">View source & preparation ↗</button></div></article>`;
+    const fit = selection.assess(d.id, taskRequest());
+    const omitted = omittedVariables(fit);
+    return `<article class="dataset-card source-card${upcoming ? ' upcoming' : ''}" data-source="${d.id}" aria-labelledby="source-title-${d.id}">
+      <header class="source-card-heading"><div><p class="source-kicker">${esc(d.modalities.join(' · '))} <span>· ${esc(s.unit_label)}</span></p><h3 id="source-title-${d.id}">${esc(d.name)}</h3></div><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" aria-label="Compare ${esc(d.name)}" ${state.compare.has(d.id) ? 'checked' : ''}><span>Compare</span></label></header>
+      <p class="source-location">${esc(d.geography)}</p>
+      <p class="source-coverage">${esc(s.coverage)}</p>
+      ${readinessHtml(d)}
+      ${upcoming ? '' : `<div class="card-fit ${fit.status === 'ready' ? 'ok' : 'no'}"><strong>${fit.status === 'ready' ? 'Ready for your request' : 'Current requirements are not covered'}</strong>${omitted.length ? `<p>Not produced: ${esc(omitted.join(', '))}.</p>` : ''}</div>`}
+      <div class="source-limitation"><strong>Key limitation</strong><p>${esc(s.limitation)}</p></div>
+      <footer class="card-bottom"><p class="card-meta"><strong>${recordSize(d)}</strong><span>${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} · whole pinned record</span></p><div class="card-actions"><button class="button small ${fit.status === 'ready' ? '' : 'primary'}" data-detail="${d.id}">View details</button>${fit.status === 'ready' ? `<button class="button small primary" data-task-prepare="${d.id}">Prepare <span aria-hidden="true">→</span></button>` : ''}</div></footer>
+    </article>`;
   }
   function renderDatasets() {
     const rows = visibleDatasets();
@@ -241,12 +235,28 @@ export function mountCatalog({
     const d = byId[id];
     if (!d) return;
     const s = discovery(d);
-    $('#detail-dialog-title').textContent = d.name;
-    $('#dialog-detail').innerHTML =
-      `<div class="source-detail"><div class="badges">${badge(d.modalities.join(' · '))}${badge(s.unit_label)}${badge(`Pinned record ${d.id}`)}</div><p class="source-location">${esc(d.geography)}</p>${readinessHtml(d)}${requestFit(d, true)}<h3>What can I use?</h3><p>${esc(s.coverage)}</p><p class="notice">${esc(s.limitation)}</p><div class="source-actions">${link('Open provider record', d.url)}<button class="button" data-source-download="${d.id}" ${serviceConnected ? '' : 'disabled'}>Review original downloads</button><button class="button" data-compare="${d.id}">${state.compare.has(id) ? '✓ Remove from comparison' : '+ Add to comparison'}</button></div><p class="source-service-note">${esc(sourceServiceNote())}</p><details class="source-section" open><summary>Preparation for this task · ${s.preparation.status === 'ready' ? 'validated archive scope' : s.preparation.status === 'blocked' ? 'review required' : 'TBD'}</summary><p>${esc(s.preparation.detail)}</p><p>Whole pinned record: ${recordSize(d)} in ${d.assets} assets. This includes supporting files where present; extracted data needs additional space.</p></details><details class="source-section"><summary>Source evidence and unresolved questions</summary>${sourceReview(d)}</details><details class="source-section"><summary>Native fields, coordinates and declared terms</summary><h4>Source annotations</h4><p>${esc(d.labels)}</p>${classSemantics(d)}<h4>Coordinates</h4><p>${esc(d.coordinate_policy)}</p><p>${(d.coordinate_references || []).map((c) => `${esc(c.value)}: ${c.files} files`).join(' · ') || 'Conversion deferred; no normalized coordinate audit.'}</p><h4>Native field names</h4><p>Names from saved schemas; types, ranges and units are not uniformly audited.</p><div class="field-pills">${d.source_fields.map((f) => `<code>${esc(f)}</code>`).join('') || 'Conversion deferred; inspect source definitions.'}</div>${nativeMeasurements(d)}<h4>Record-declared terms</h4><p>${esc(d.license.toUpperCase())}. Intended-use and component terms still require review.</p><h4>Historical local representation</h4><p>${number(d.cloud_count)} normalized files · ${number(d.chunks)} chunks · ${compact(d.points)} stored points. File counts mix plots and derived trees where applicable; they do not count independent sites.</p><h4>Provider metadata SHA256</h4><code class="raw-path">${esc(d.source_metadata_sha256)}</code></details></div>`;
+    const fit = selection.assess(id, taskRequest());
     const dialog = $('#detail-dialog');
-    if (!dialog.open) dialog.showModal();
-    dialog.scrollTop = 0;
+    const wasOpen = dialog.open;
+    const scrollTop = dialog.scrollTop;
+    const expanded = $$('#dialog-detail details[open]').map((section) => section.dataset.section);
+    state.detailSource = id;
+    $('#detail-dialog-title').textContent = d.name;
+    $('#dialog-detail').innerHTML = `<div class="source-detail">
+      <section class="source-summary" aria-label="Source summary"><div class="badges">${badge(d.modalities.join(' · '))}${badge(s.unit_label)}${badge(`Pinned record ${d.id}`)}</div><p class="source-location">${esc(d.geography)}</p><p class="source-coverage">${esc(s.coverage)}</p><div class="source-limitation"><strong>Key limitation</strong><p>${esc(s.limitation)}</p></div>
+      <div class="source-actions">${fit.status === 'ready' ? `<button class="button primary" data-task-prepare="${d.id}">Prepare data for this request</button>` : ''}${link('Open provider record', d.url)}<button class="button small" data-compare="${d.id}">${state.compare.has(id) ? 'Remove from comparison' : 'Add to comparison'}</button><button class="button small" data-source-download="${d.id}" ${serviceConnected ? '' : 'disabled'}>Review original downloads</button></div><p class="source-service-note">${esc(sourceServiceNote())}</p></section>
+      <section class="source-section" aria-label="Request compatibility"><h3>Compatibility with your request</h3>${readinessHtml(d)}${requestFit(d)}</section>
+      <details class="source-section" data-section="preparation" open><summary>Preparation and validated scope</summary><p>${esc(s.preparation.detail)}</p><p>Whole pinned record: ${recordSize(d)} in ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'}. Supporting files are included where present; extracted data needs additional space.</p></details>
+      <details class="source-section" data-section="evidence"><summary>Source evidence and unresolved questions</summary>${sourceReview(d)}</details>
+      <details class="source-section" data-section="native"><summary>Native fields, coordinates and declared terms</summary><h4>Source annotations</h4><p>${esc(d.labels)}</p>${classSemantics(d)}<h4>Coordinates</h4><p>${esc(d.coordinate_policy)}</p><p>${(d.coordinate_references || []).map((c) => `${esc(c.value)}: ${c.files} files`).join(' · ') || 'Conversion deferred; no normalized coordinate audit.'}</p><h4>Native field names</h4><p>Names from saved schemas; types, ranges and units are not uniformly audited.</p><div class="field-pills">${d.source_fields.map((f) => `<code>${esc(f)}</code>`).join('') || 'Conversion deferred; inspect source definitions.'}</div>${nativeMeasurements(d)}<h4>Record-declared terms</h4><p>${esc(d.license.toUpperCase())}. Intended-use and component terms still require review.</p><h4>Provider metadata SHA256</h4><code class="raw-path">${esc(d.source_metadata_sha256)}</code></details>
+      <details class="source-section" data-section="history"><summary>Historical local observations</summary><p>${esc(d.study_context)}</p><p>${number(d.cloud_count)} normalized files · ${number(d.chunks)} chunks · ${compact(d.points)} stored points. File counts mix plots and derived trees where applicable; they do not count independent sites.</p><ul>${(d.review?.local_observations || []).map((fact) => `<li>${esc(fact)}</li>`).join('')}</ul><p class="evidence-tag">These saved observations describe a historical workspace. The preparation section states the admitted validation scope.</p></details>
+    </div>`;
+    if (wasOpen) {
+      $$('#dialog-detail details').forEach(
+        (section) => (section.open = expanded.includes(section.dataset.section)),
+      );
+    } else dialog.showModal();
+    dialog.scrollTop = wasOpen ? scrollTop : 0;
   }
   function toggleCompare(id) {
     if (state.compare.has(id)) state.compare.delete(id);
@@ -258,7 +268,10 @@ export function mountCatalog({
       state.compare.add(id);
     }
     render();
-    if ($('#detail-dialog').open) detail(id);
+    if ($('#detail-dialog').open) {
+      detail(id);
+      $('[data-compare]', $('#detail-dialog')).focus({ preventScroll: true });
+    } else $(`[data-compare-check="${id}"]`)?.focus({ preventScroll: true });
   }
   function showCompare() {
     const rows = [...state.compare].map((id) => byId[id]);
@@ -357,6 +370,7 @@ export function mountCatalog({
     urlTimer = setTimeout(() => {
       const params = new URLSearchParams();
       if (state.search) params.set('q', state.search);
+      if (state.compare.size) params.set('compare', [...state.compare].join(','));
       for (const key of ['platform', 'unit', 'reference', 'preparation'])
         if (state[key] !== 'all') params.set(key, state[key]);
       const query = params.toString();
@@ -373,6 +387,12 @@ export function mountCatalog({
   }
   function initFromUrl() {
     const params = new URLSearchParams(location.search);
+    state.compare = new Set(
+      (params.get('compare') || '')
+        .split(',')
+        .filter((id) => Object.hasOwn(byId, id))
+        .slice(0, 3),
+    );
     state.search = params.get('q') || '';
     $('#search').value = state.search;
     for (const key of ['platform', 'unit', 'reference', 'preparation']) {
@@ -392,7 +412,7 @@ export function mountCatalog({
   const VIEW_HEADINGS = {
     datasets: [
       'Find a source for tree segmentation.',
-      'Compare reference coverage and limitations. FOR-instance archive preparation is validated; other adapters remain work in progress.',
+      'Compare source coverage, limitations and audited preparation for your data requirements.',
     ],
     workbench: [
       'Prepare a dataset for your model.',
@@ -515,6 +535,10 @@ export function mountCatalog({
   );
   document.addEventListener('change', (e) => {
     if (e.target.dataset.compareCheck) toggleCompare(e.target.dataset.compareCheck);
+  });
+  $('#detail-dialog').addEventListener('close', () => {
+    if (state.view === 'datasets')
+      $(`[data-detail="${state.detailSource}"]`)?.focus({ preventScroll: true });
   });
   $('#reset').addEventListener('click', clearFilters);
   $('#compare-open').addEventListener('click', showCompare);
