@@ -1,14 +1,28 @@
-import { inspectRuns, validJob, lockName, openRun } from './run-store.js';
-import { emptyDraft, readDraft, sameRequest } from './dataset-draft.js';
+import { renderSavedRuns } from './saved-runs.js';
+import { updateControls } from './controls.js';
+import { decodeImportedPlan, renderPlan, planSources } from './plan-panel.js';
+import { inspectRuns as defaultInspectRuns, validJob, lockName, openRun as defaultOpenRun } from './run-store.js';
 import { DraftPanel } from './draft-panel.js';
-import { datasetPlots } from './selection.js';
-import { RunSession } from './run-session.js?v=2';
+import { renderPlotOptions } from './source-selection.js';
+import { RunSession as DefaultRunSession } from './run-session.js?v=2';
 import { profileForPipeline } from './profiles.js';
 import { createTaskSelection } from '../web/catalog/task-selection.js';
 
-export function mountPreparation(catalog = window.LIDAR_CATALOG) {
+export function mountPreparation({
+  catalog = globalThis.window?.LIDAR_CATALOG,
+  document = globalThis.document,
+  window = globalThis.window,
+  navigator = globalThis.navigator,
+  sessionStorage = globalThis.sessionStorage,
+  fetch = globalThis.fetch,
+  Worker = globalThis.Worker,
+  CustomEvent = globalThis.CustomEvent,
+  RunSession = DefaultRunSession,
+  inspectRuns = defaultInspectRuns,
+  openRun = defaultOpenRun,
+  selection = createTaskSelection(catalog),
+} = {}) {
   const $ = (id) => document.getElementById(id);
-  const selection = createTaskSelection(catalog);
   let currentRequest = selection.normalize();
   const getRequest = () => currentRequest;
   const setRequest = (request) => {
@@ -55,14 +69,6 @@ export function mountPreparation(catalog = window.LIDAR_CATALOG) {
     resultURL = null;
     $('prepare-download').hidden = true;
   }
-  function planSources(plan) {
-    return plan.schema_version === '1.0.0' ? [plan] : plan.source_plans;
-  }
-  function planRequest(plan) {
-    return plan.schema_version === '1.0.0'
-      ? { use: plan.task_plan.use, variables: plan.task_plan.variables }
-      : plan.request;
-  }
   function planIntent() {
     if ($('prepare-mode').value !== 'zenodo' || draftPanel?.blockedStorage) return null;
     if (draftPanel?.hasSubsets) {
@@ -95,49 +101,7 @@ export function mountPreparation(catalog = window.LIDAR_CATALOG) {
     $('dataset-plan').hidden = true;
   }
   function applyImportedPlan(data) {
-    const { plan } = data,
-      request = planRequest(plan),
-      sources = planSources(plan);
-    const normalized = selection.normalize(request.use, request.variables);
-    if (!sameRequest(request, normalized))
-      throw Error('Imported task requirements differ from this page. Reload and try again.');
-    const draft = emptyDraft(request),
-      memberships = new Map();
-    for (const source of sources) {
-      const task = source.task_plan,
-        record = task.source_ref.replace(/^zenodo:/, '');
-      const profile = profileForPipeline(task.pipeline_ref),
-        result = selection.assess(record, request);
-      if (
-        !profile ||
-        profile.recordId !== record ||
-        result.status !== 'ready' ||
-        result.pipeline_ref !== task.pipeline_ref
-      )
-        throw Error(`zenodo:${record}: imported source has no current browser implementation`);
-      const nativePlots = Array.isArray(data.source_plots)
-        ? data.source_plots
-        : data.source_plots[record];
-      const membership = nativePlots.map((plot) => ({
-        ...plot,
-        collection: profile.collectionOf(plot),
-      }));
-      memberships.set(
-        record,
-        membership.sort((a, b) => a.size_bytes - b.size_bytes),
-      );
-      const byPath = new Map(membership.map((plot) => [plot.path, plot]));
-      draft.subsets.push(
-        ...source.subsets.map((paths) => ({
-          record_id: record,
-          pipeline_ref: task.pipeline_ref,
-          paths,
-          collections: [...new Set(paths.map((path) => byPath.get(path).collection))],
-          partitions: [...new Set(paths.map((path) => byPath.get(path).published_split))],
-        })),
-      );
-    }
-    readDraft(JSON.stringify(draft), selection.normalize);
+    const {plan, request, sources, draft, memberships} = decodeImportedPlan(data, selection);
     controls();
     busy = true;
     try {
@@ -166,31 +130,7 @@ export function mountPreparation(catalog = window.LIDAR_CATALOG) {
     clearPlan();
     reviewedPlan = plan;
     reviewedKey = pendingReviewKey;
-    const { totals } = plan,
-      request = planRequest(plan),
-      sources = planSources(plan);
-    $('dataset-plan-summary').textContent =
-      `${totals.plots} unique plots · ${totals.points.toLocaleString()} points · ${totals.overlapping_selections} overlapping selections retrieved once. Source LAS: ${(totals.source_las_bytes / 1048576).toFixed(1)} MiB; estimated browser space: ${Math.ceil(totals.estimated_browser_storage_bytes / 1048576)} MiB. Compressed network volume is not known.`;
-    $('dataset-plan-requirements').textContent =
-      `Use: ${request.use}. ` +
-      sources
-        .map((source) => {
-          const task = source.task_plan;
-          return `${catalog.datasets.find((d) => 'zenodo:' + d.id === task.source_ref)?.name || task.source_ref}: ${source.totals.plots} plots, ${source.totals.points.toLocaleString()} points; included ${Object.keys(task.included).join(', ')}; optional omissions ${Object.keys(task.omitted).join(', ') || 'none'}; folders ${source.output.partitions.join(', ')} / ${task.source_ref}.`;
-        })
-        .join(' ');
-    $('dataset-plan-version').textContent =
-      sources
-        .map((source) => `${source.task_plan.source_ref}: ${source.task_plan.pipeline_ref}`)
-        .join('; ') + `. Plan: ${plan.plan_sha256}.`;
-    $('dataset-plan-evidence').textContent = JSON.stringify(plan, null, 2);
-    const limitations = $('dataset-plan-limitations');
-    limitations.replaceChildren();
-    for (const text of plan.limitations) {
-      const row = document.createElement('li');
-      row.textContent = text;
-      limitations.append(row);
-    }
+    renderPlan(document, catalog, plan);
     planURL = URL.createObjectURL(
       new Blob([JSON.stringify(plan, null, 2) + '\n'], { type: 'application/json' }),
     );
@@ -198,69 +138,9 @@ export function mountPreparation(catalog = window.LIDAR_CATALOG) {
     $('dataset-plan').hidden = false;
   }
   function controls() {
-    const running = busy || session.running || inspecting;
-    document.dispatchEvent(new CustomEvent('canopy-preparation-state', { detail: { running } }));
-    const profile = selectedProfile();
-    const mode = $('prepare-mode').value,
-      local = mode !== 'zenodo';
-    const draft = draftPanel?.render(running);
-    const hasDraft = draftPanel?.hasSubsets;
-    if (hasDraft && mode !== 'zenodo')
-      $('dataset-draft-status').textContent =
-        'Saved subsets currently use Zenodo downloads. Choose Zenodo input or clear the dataset selection to use a local file.';
-    const locked = running || !initialized || !profile;
-    $('prepare-source').disabled = running;
-    $('prepare-mode').disabled = locked;
-    $('prepare-file-label').hidden = !local;
-    $('prepare-file-title').textContent =
-      (mode === 'zip' ? profile?.archiveLabel : profile?.fileLabel) || 'Reviewed source file';
-    $('prepare-file').accept = mode === 'zip' ? '.zip' : '.las';
-    $('prepare-file').disabled = locked || !local;
-    $('prepare-plot-label').hidden = mode === 'las';
-    for (const id of ['prepare-collections', 'prepare-partitions'])
-      $(id).disabled = locked || mode === 'las';
-    $('prepare-selection-summary').textContent = selectionSummary(mode);
-    $('prepare-plot').disabled = locked || !$('prepare-plot').options.length;
-    const compatibleDraft = !hasDraft || sameRequest(getRequest(), draftPanel.draft.request);
-    $('prepare-add').disabled =
-      locked ||
-      mode !== 'zenodo' ||
-      assessment().status !== 'ready' ||
-      !selectedValues('prepare-plot').length ||
-      !compatibleDraft ||
-      draftPanel?.blockedStorage;
-    $('prepare-run').textContent = hasDraft ? 'Prepare my dataset' : 'Prepare current selection';
-    $('prepare-run').disabled =
-      !supported ||
-      running ||
-      draftPanel?.blockedStorage ||
-      (hasDraft
-        ? mode !== 'zenodo' || draft?.status !== 'ready'
-        : assessment().status !== 'ready' ||
-          locked ||
-          (local && !$('prepare-file').files.length) ||
-          (mode !== 'las' && !selectedValues('prepare-plot').length));
-    const intent = planIntent(),
-      key = intent ? JSON.stringify(intent) : null;
-    if (reviewedPlan && key !== reviewedKey) clearPlan();
-    $('prepare-review').disabled = !supported || running || !intent;
-    $('dataset-plan-file').disabled = !supported || running;
-    if (mode === 'zenodo' && !reviewedPlan) $('prepare-run').disabled = true;
-    $('prepare-cancel').disabled = !session.running;
-    $('saved-runs-refresh').disabled = running;
-    $('prepare-clear').disabled = running || !job;
-    for (const button of $('saved-runs').querySelectorAll?.('button') || [])
-      button.disabled = running || button.dataset?.busy === 'true';
-  }
-  function options(id, values) {
-    $(id).replaceChildren();
-    for (const value of values) {
-      const option = document.createElement('option');
-      option.value = value;
-      option.textContent = value;
-      option.selected = true;
-      $(id).append(option);
-    }
+    updateControls({document, CustomEvent, busy, session, inspecting, selectedProfile, draftPanel,
+      initialized, selectedValues, getRequest, assessment, supported, selectionSummary, planIntent,
+      reviewedPlan, reviewedKey, clearPlan, job});
   }
   function selectionSummary(mode) {
     if (mode === 'las')
@@ -272,29 +152,7 @@ export function mountPreparation(catalog = window.LIDAR_CATALOG) {
     return `${chosen.length} complete plots · ${points.toLocaleString()} points · ${(bytes / 1048576).toFixed(1)} MiB of source LAS. Prepared output and ZIP require additional browser storage. Published partitions and scene identities are preserved; geographic independence is not established.`;
   }
   function refreshPlots(resetFilters = true) {
-    const allowed = assessment().allowed_partitions,
-      profile = selectedProfile();
-    if (resetFilters) {
-      options('prepare-collections', [...new Set(plots.map((p) => p.collection))].sort());
-      options(
-        'prepare-partitions',
-        [...new Set(plots.map((p) => p.published_split))].filter((p) => allowed.includes(p)).sort(),
-      );
-    }
-    $('prepare-plot').replaceChildren();
-    const chosen = datasetPlots(
-      plots,
-      allowed,
-      selectedValues('prepare-collections'),
-      selectedValues('prepare-partitions'),
-    );
-    for (const plot of chosen) {
-      const option = document.createElement('option');
-      option.value = plot.path;
-      option.selected = true;
-      option.textContent = `${profile.plotLabel(plot.path)} · ${plot.published_split} · ${(plot.size_bytes / 1048576).toFixed(1)} MiB`;
-      $('prepare-plot').append(option);
-    }
+    renderPlotOptions({document, plots, allowed: assessment().allowed_partitions, profile: selectedProfile(), resetFilters});
   }
   async function sourceChanged() {
     const revision = ++sourceRevision;
@@ -603,55 +461,17 @@ export function mountPreparation(catalog = window.LIDAR_CATALOG) {
     if (!supported || session.running || inspecting) return;
     inspecting = true;
     controls();
-    const list = $('saved-runs');
     try {
       const runs = await inspectRuns();
-      list.replaceChildren();
-      for (const run of runs) {
-        const row = document.createElement('li'),
-          description = document.createElement('p');
-        const savedPlan = run.saved?.execution_plan;
-        const plan =
-          savedPlan &&
-          (savedPlan.schema_version === '1.0.0'
-            ? savedPlan.task_plan?.source_ref
-            : Array.isArray(savedPlan.source_plans))
-            ? savedPlan
-            : null;
-        const sources = plan
-          ? planSources(plan)
-              .map((p) => p?.task_plan?.source_ref || 'Invalid saved source')
-              .join(', ')
-          : run.evidence?.sources?.map((s) => s.task_plan.source_ref).join(', ') ||
-            run.evidence?.task_plan?.source_ref ||
-            'Historical preparation';
-        const use =
-          run.saved?.task_request?.use ||
-          run.evidence?.request?.use ||
-          run.evidence?.task_plan?.use ||
-          'unspecified use';
-        description.textContent = `${sources} / ${use} · ${run.status} · ${run.completed || 0} saved plots (checked again on resume)${plan ? ' / ' + (plan.totals?.plots ?? '?') + ' plots' : ''} · ${run.bytes === undefined ? 'storage in use' : (run.bytes / 1048576).toFixed(1) + ' MiB'}. ${run.detail || ''}`;
-        row.dataset.run = run.id;
-        row.append(description);
-        const button = (label, action) => {
-          const element = document.createElement('button');
-          element.className = 'button small';
-          element.textContent = label;
-          element.dataset.busy = String(run.status === 'busy');
-          element.disabled = busy || session.running || run.status === 'busy';
-          element.onclick = action;
-          row.append(element);
-        };
-        if (run.status === 'complete')
-          button('Download result', () => {
+      renderSavedRuns({document, runs, isRunning: () => busy || session.running,
+        onDownload(run, sources, use) {
             if (busy || session.running || inspecting) return;
             remember(run.id);
             showExport(run.file, run.evidence, 'tree-instance-dataset.zip');
             status(`Recovered ZIP for ${sources} / ${use}. Its saved plan describes that run.`);
             controls();
-          });
-        else if (run.resumable)
-          button('Resume', () => {
+        },
+        onResume(run, sources, use) {
             if (busy || session.running || inspecting) return;
             hideExport();
             remember(run.id);
@@ -668,8 +488,8 @@ export function mountPreparation(catalog = window.LIDAR_CATALOG) {
               status('Could not resume preparation: ' + error.message);
             }
             controls();
-          });
-        button('Delete', async () => {
+        },
+        async onDelete(run) {
           if (busy || session.running || inspecting) return;
           busy = true;
           controls();
@@ -687,9 +507,8 @@ export function mountPreparation(catalog = window.LIDAR_CATALOG) {
             controls();
             await refreshSaved();
           }
-        });
-        list.append(row);
-      }
+        },
+      });
       $('saved-runs-status').textContent = runs.length
         ? 'Resume rechecks exact versions and every saved block. Browser storage can be cleared by the browser; download completed ZIPs to keep them.'
         : 'No saved preparations in this browser.';

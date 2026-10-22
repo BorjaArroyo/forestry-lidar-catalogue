@@ -1,10 +1,10 @@
+import { mountPreparation } from '../browser-prepare/ui.js';
 import { validJob, lockName } from '../browser-prepare/run-store.js';
 import { emptyDraft, readDraft, sameRequest } from '../browser-prepare/dataset-draft.js';
 import { DraftPanel } from '../browser-prepare/draft-panel.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import vm from 'node:vm';
 import { RunSession } from '../browser-prepare/run-session.js';
 import { datasetPlots } from '../browser-prepare/selection.js';
 import { profileForPipeline } from '../browser-prepare/profiles.js';
@@ -72,7 +72,7 @@ async function panel({ savedStorage, savedRuns = [], missingRun = false } = {}) 
       removed.push(id);
     },
   };
-  const context = vm.createContext({
+  const context = {
     URL,
     Blob,
     validJob,
@@ -144,17 +144,12 @@ async function panel({ savedStorage, savedRuns = [], missingRun = false } = {}) 
           ),
         ),
     }),
-  });
+  };
   const catalog = JSON.parse(fs.readFileSync(new URL('../catalog.json', import.meta.url), 'utf8'));
   context.window.LIDAR_CATALOG = catalog;
   const selection = createTaskSelection(catalog);
   let request = selection.normalize();
-  const code = fs
-    .readFileSync(new URL('../browser-prepare/ui.js', import.meta.url), 'utf8')
-    .replace(/^import\s+\{[\s\S]*?\}\s+from\s+["'][^"']+["'];\s*/gm, '')
-    .replace('export function mountPreparation', 'function mountPreparation')
-    .replaceAll('import.meta.url', JSON.stringify('http://localhost/browser-prepare/ui.js'));
-  vm.runInContext(code + '\nmountPreparation();', context);
+  mountPreparation({ ...context, catalog });
   const settle = async () => {
     for (let i = 0; i < 40; i++) await Promise.resolve();
   };

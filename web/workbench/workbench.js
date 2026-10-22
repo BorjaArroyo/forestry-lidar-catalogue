@@ -1,13 +1,8 @@
+import { escapeHTML as esc, downloadJSON } from '../shared/dom.js';
+import { ServiceConnectionError } from './client.js';
 /* Pinned originals and admitted source preparation run on the service host. */
-export function mountWorkbench({ getTaskRequest, selection, catalog, document: doc = document }) {
+export function mountWorkbench({ getTaskRequest, selection, catalog, client, localService, document: doc = document }) {
   const $ = (s) => doc.querySelector(s);
-  const esc = (v) =>
-    String(v ?? '').replace(
-      /[&<>"']/g,
-      (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
-    );
-  const localService =
-    !window.CANOPY_PUBLIC && ['127.0.0.1', 'localhost'].includes(location.hostname);
   const selectedSource = () => document.getElementById('prepare-source')?.value;
   const localPreparationReady = (id) =>
     snapshot?.preparation?.available &&
@@ -23,44 +18,19 @@ export function mountWorkbench({ getTaskRequest, selection, catalog, document: d
     $('#workbench-message').textContent = text;
     $('#workbench-message').hidden = false;
   }
-  class ServiceConnectionError extends Error {}
   async function api(path, body) {
-    if (!localService)
-      throw new Error('Connect the local Canopy service to download into a chosen directory.');
-    let response;
     try {
-      response = await fetch(
-        path,
-        body
-          ? {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json', 'X-Canopy-Token': token },
-              body: JSON.stringify(body),
-            }
-          : {},
-      );
+      return await client.request(path, body, token);
     } catch (error) {
-      throw new ServiceConnectionError(`Cannot connect to the local service: ${error.message}`);
+      if (error instanceof ServiceConnectionError || error.status === undefined || error.status >= 500 || error.status < 400) {
+        token = null;
+        controls(false);
+      }
+      throw error;
     }
-    let result;
-    try {
-      result = await response.json();
-    } catch {
-      throw new Error(`The local service returned an invalid response (HTTP ${response.status}).`);
-    }
-    if (!response.ok)
-      throw new Error(result.error || `The local service returned HTTP ${response.status}.`);
-    return result;
   }
   function save(value, name) {
-    const url = URL.createObjectURL(
-      new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }),
-    );
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = name;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    downloadJSON(doc, value, name);
   }
   function jobLabel(job) {
     const phases = {

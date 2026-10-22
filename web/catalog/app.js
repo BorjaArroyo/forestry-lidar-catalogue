@@ -1,22 +1,17 @@
+import { escapeHTML as esc, downloadJSON } from '../shared/dom.js';
 /* A dependency-free, offline viewer. This application never modifies LiDAR files. */
 import { createTaskSelection } from './task-selection.js';
 
-export function mountCatalog({ catalog, document: doc = document }) {
+export function mountCatalog({ catalog, document: doc = document, selection = createTaskSelection(catalog) }) {
   const data = catalog;
   if (!data) {
     doc.querySelector('main').textContent =
       'Catalog unavailable. Rebuild catalog.js using the documented command.';
     return null;
   }
-  const selection = createTaskSelection(data);
   const task = selection.task;
   const $ = (selector, root = doc) => root.querySelector(selector);
   const $$ = (selector, root = doc) => [...root.querySelectorAll(selector)];
-  const esc = (value) =>
-    String(value ?? '').replace(
-      /[&<>"']/g,
-      (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char],
-    );
   const number = (n) => Number(n).toLocaleString('en-US');
   const compact = (n) =>
     n >= 1e9 ? `${(n / 1e9).toFixed(2)}B` : n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : number(n);
@@ -261,17 +256,8 @@ export function mountCatalog({ catalog, document: doc = document }) {
       `<div class="scroll-table"><table><thead><tr><th>Attribute</th>${rows.map((d) => `<th>${esc(d.name)}</th>`).join('')}</tr></thead><tbody>${fields.map(([name, fn]) => `<tr><td>${esc(name)}</td>${rows.map((d) => `<td>${name === 'Source' ? link('Published record', fn(d)) : esc(fn(d))}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="graph-help">Reported reference does not certify annotation coverage, geographic independence or an executable preparation pipeline.</p>`;
     $('#compare-dialog').showModal();
   }
-  function download(value, filename) {
-    const blob = new Blob([JSON.stringify(value, null, 2) + '\n'], { type: 'application/json' }),
-      url = URL.createObjectURL(blob),
-      a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.append(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    toast('Snapshot exported.');
+  function download(value, name) {
+    downloadJSON(doc, value, name);
   }
 
   function render() {
