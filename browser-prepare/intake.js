@@ -4,6 +4,10 @@ export const MAX_RANGE_BYTES = 2 * 1024 ** 2;
 export const MAX_ENTRIES = 1024;
 
 export function memberName(plot) {
+  if (plot.archive_member !== undefined) {
+    if (typeof plot.archive_member !== 'string' || !safeName(plot.archive_member)) throw Error('Unsafe reviewed member path');
+    return plot.archive_member;
+  }
   const prefix = PREFIXES.find(prefix => plot.path.startsWith(prefix));
   if (!prefix) throw Error('Unsupported source profile');
   const member = plot.path.slice(prefix.length);
@@ -82,14 +86,14 @@ export function providerReader(zip, asset, plot, fetcher, progress = () => {}) {
   return {reader: new PinnedRangeReader(), stats};
 }
 
-export async function extractPlot(zip, reader, plot, output, progress = () => {}) {
+export async function extractPlot(zip, reader, plot, output, progress = () => {}, {maxEntries = MAX_ENTRIES} = {}) {
   const archive = new zip.ZipReader(reader, {strictness: 'strict', checkCrc32: true});
   const wanted = memberName(plot);
   const seen = new Set();
   let selected, count = 0, received = 0;
   try {
     for await (const entry of archive.getEntriesGenerator()) {
-      if (++count > MAX_ENTRIES) throw Error('Archive entry count exceeds the reviewed intake bound');
+      if (++count > maxEntries) throw Error('Archive entry count exceeds the reviewed intake bound');
       if (!safeName(entry.filename) || seen.has(entry.filename)) throw Error('Unsafe or duplicate archive member');
       seen.add(entry.filename);
       if (entry.filename === wanted) {

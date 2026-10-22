@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-22",
+  "status": "passed",
+  "scope": "Fresh HTTPS registry and tarball reads; tarball SRI/SHA1 and exact pinned vendored bytes; no package install or update",
+  "packages": [
+    {
+      "package": "laz-perf",
+      "version": "0.0.7",
+      "status": "passed",
+      "metadata_url": "https://registry.npmjs.org/laz-perf/0.0.7",
+      "tarball_url": "https://registry.npmjs.org/laz-perf/-/laz-perf-0.0.7.tgz",
+      "tarball_sha256": "7585aa5e425443c639a2580548ebb8c3eed3124bacd7eebbf3ab0fbde2d8e0c4",
+      "registry_integrity": "sha512-2xRqm/f/2UqDS5qqkjOyDb6uVIjkVw6SGmQlMoTQliVWkZhPfIbUJTubUl3mTloaWqKcjlS/urmP1CYoxelsEg==",
+      "matched_files": {
+        "laz-perf-node.cjs": {
+          "member": "package/lib/laz-perf.js",
+          "sha256": "76712726788a65f0da0fb4476d9c46409a3b63af505e7d606c6eafdbb89a8372",
+          "size_bytes": 89055
+        },
+        "laz-perf.js": {
+          "member": "package/lib/web/laz-perf.js",
+          "sha256": "d9a91a08979dd9f717884e33c9f61997e79122da2c02be8414a5d7e99061985e",
+          "size_bytes": 87228
+        },
+        "laz-perf.d.ts": {
+          "member": "package/lib/worker/laz-perf.d.ts",
+          "sha256": "50b5131ca856dd52ddaf4e476e5d1d5f9801382f8533f7e81a6d95edb856e611",
+          "size_bytes": 659
+        },
+        "laz-perf.wasm": {
+          "member": "package/lib/worker/laz-perf.wasm",
+          "sha256": "9c1802bc31b567dd4aa1ce9ab010e7e51e095dc42af8379b474ae6f221a9327f",
+          "size_bytes": 214351
+        },
+        "laz-perf-node.wasm": {
+          "member": "package/lib/worker/laz-perf.wasm",
+          "sha256": "9c1802bc31b567dd4aa1ce9ab010e7e51e095dc42af8379b474ae6f221a9327f",
+          "size_bytes": 214351
+        }
+      }
+    },
+    {
+      "package": "fzstd",
+      "version": "0.1.1",
+      "status": "passed",
+      "metadata_url": "https://registry.npmjs.org/fzstd/0.1.1",
+      "tarball_url": "https://registry.npmjs.org/fzstd/-/fzstd-0.1.1.tgz",
+      "tarball_sha256": "5ed2ee2d3439067be211d0093292c708a831045372342c897437e5a4997c45c5",
+      "registry_integrity": "sha512-dkuVSOKKwh3eas5VkJy1AW1vFpet8TA/fGmVA5krThl8YcOVE/8ZIoEA1+U1vEn5ckxxhLirSdY837azmbaNHA==",
+      "matched_files": {
+        "fzstd-LICENSE": {
+          "member": "package/LICENSE",
+          "sha256": "62249119bb7df6e54300f37a37145c26a6d4420410aac8881a119c5b427cf751",
+          "size_bytes": 1069
+        },
+        "fzstd.mjs": {
+          "member": "package/esm/index.mjs",
+          "sha256": "1a901fc5a58c349bbdb4f2aa1e688637ef56891ec58243a9f0cd863166b0d2a4",
+          "size_bytes": 24407
+        }
+      }
+    },
+    {
+      "package": "hash-wasm",
+      "version": "4.12.0",
+      "status": "passed",
+      "metadata_url": "https://registry.npmjs.org/hash-wasm/4.12.0",
+      "tarball_url": "https://registry.npmjs.org/hash-wasm/-/hash-wasm-4.12.0.tgz",
+      "tarball_sha256": "1db32a125fb46177932ec8ac438d3cd8214ebdfaccb5d6611b657d88eb586f92",
+      "registry_integrity": "sha512-+/2B2rYLb48I/evdOIhP+K/DD2ca2fgBjp6O+GBEnCDk2e4rpeXIK8GvIyRPjTezgmWn9gmKwkQjjx6BtqDHVQ==",
+      "matched_files": {
+        "hash-wasm-LICENSE": {
+          "member": "package/LICENSE",
+          "sha256": "c14dea172f72f2714284a0ac2ab1b00b5352a01409d58255a46227ffc541debd",
+          "size_bytes": 1630
+        },
+        "md5.umd.js": {
+          "member": "package/dist/md5.umd.min.js",
+          "sha256": "bfcbd4f2c1ee2da27209102844468b053a18297d59fc27cc3e30e0fceb767117",
+          "size_bytes": 10369
+        },
+        "sha256.umd.js": {
+          "member": "package/dist/sha256.umd.min.js",
+          "sha256": "ed7f5896b41aba98909ab143264c5b2ae5c81abf2e47f08dd2d1c0d02ce623de",
+          "size_bytes": 18616
+        }
+      }
+    },
+    {
+      "package": "@zip.js/zip.js",
+      "version": "2.20.0",
+      "status": "passed",
+      "metadata_url": "https://registry.npmjs.org/@zip.js/zip.js/2.20.0",
+      "tarball_url": "https://registry.npmjs.org/@zip.js/zip.js/-/zip.js-2.20.0.tgz",
+      "tarball_sha256": "667adbcf3067aa2e798606e2b1a24476dbbc2d7867ef0be40c2b00412b284bc3",
+      "registry_integrity": "sha512-ws8m/tIfbt10L7E9PZj4h0vePKBodxpF13z9JzXdNw1e9ZMFdqnS7ppcK7vXPfN7vwSv2TuRTP7cO2OetdndvA==",
+      "matched_files": {
+        "zip-LICENSE": {
+          "member": "package/LICENSE",
+          "sha256": "1b7ebc8d7889ed25491484ab2b102370742ca6c0b26650a0c62cc2269b579b84",
+          "size_bytes": 1501
+        },
+        "zip.min.js": {
+          "member": "package/dist/zip.min.js",
+          "sha256": "932c4626c366ace05094d4648220621b9868d305256c1143a3f3e3a38dd974b0",
+          "size_bytes": 170001
+        }
+      }
+    }
+  ]
+}

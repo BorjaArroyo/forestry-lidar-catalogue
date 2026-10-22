@@ -1,7 +1,15 @@
-# Canopy · tree-instance data
+# Canopy · tree data
 
 Discover public LiDAR sources for individual-tree segmentation, compare their
 reference coverage and inspect source evidence and limitations.
+
+The task selector also opens the [tree classification workbench](TREE-CLASSIFICATION.md)
+for FOR-species20K and BioDiv-3DTrees. It includes rank-specific taxonomy,
+separate sensor observations, local or provider archive intake and one combined
+ZIP contract. Complete native auditing and bounded Chromium/Firefox acceptance
+have passed locally. Both classification sources remain WIP pending the human
+review required by the admission process. Browser acceptance is recorded separately
+from source admission; the existing segmentation preparations retain their contracts.
 
 Published at https://borjaarroyo.github.io/forestry-lidar-catalogue/.
 

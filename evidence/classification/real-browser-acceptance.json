@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "status": "bounded-native-samples-validated",
+  "scope": "Exact original cloud bytes in small repackaged archives",
+  "implementation_sha256": "f74d04dc966acff6879502ab0886aeeafcadf39a7994ae26cd9907dc5f257f3c",
+  "fixture_sha256": "454c0901f13f6d7d154e3e0069c7814086c2a1b7e2da4fa55ad3f32e720a38be",
+  "runs": [
+    {
+      "browser": "chromium",
+      "version": "145.0.7632.6",
+      "use": "inference",
+      "rank": "genus",
+      "zip_sha256": "b7425a788272edbc30fbe8b0219ded4eec942c3f0d470535e8504d11b7683494",
+      "zip_size": 22931361,
+      "plan_sha256": "18d6109c4fcc7ffaf8c8408c8563aa25fd23a1b50fc1d3ed151d31b96ca611c6",
+      "runtime_sha256": "1cb2cba39c9982af50f815e65fb5705edde4ebc3134a38ca86e938bb722dd074",
+      "code_sha256": "0f5cbad669003b3c4397e2baf174e85a3e28141fe9b751b7d6b9bde61d739456",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 8519680,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 8,
+      "observations": 8,
+      "points": 354972,
+      "blocks": 9,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission"
+    },
+    {
+      "browser": "firefox",
+      "version": "146.0.1",
+      "use": "inference",
+      "rank": "genus",
+      "zip_sha256": "92ea0cae744955df48145f94aaff2e71b83625a3efa31fc62c6c2dd93b8d5afb",
+      "zip_size": 22931319,
+      "plan_sha256": "18d6109c4fcc7ffaf8c8408c8563aa25fd23a1b50fc1d3ed151d31b96ca611c6",
+      "runtime_sha256": "1cb2cba39c9982af50f815e65fb5705edde4ebc3134a38ca86e938bb722dd074",
+      "code_sha256": "0f5cbad669003b3c4397e2baf174e85a3e28141fe9b751b7d6b9bde61d739456",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 8519680,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 8,
+      "observations": 8,
+      "points": 354972,
+      "blocks": 9,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission"
+    }
+  ],
+  "limitations": [
+    "These fixtures do not admit either production source",
+    "Real paired BioDiv TLS/ULS acceptance and full original archive traversal remain pending",
+    "Process-level peak memory was not measured"
+  ]
+}

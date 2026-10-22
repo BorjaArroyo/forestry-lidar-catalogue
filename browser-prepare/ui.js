@@ -260,7 +260,7 @@ $('dataset-plan-file').onchange = async () => {
     if (!sources.length || sources.some(source => typeof source !== 'string' || !/^zenodo:[1-9][0-9]*$/.test(source))) throw Error('Choose a dataset-plan.json with reviewed Zenodo sources');
     reviewing = true;
     session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type:'module'}),
-      {operation:'import', mode:'zenodo', records:sources.map(source => source.slice(7)), plan_text:text});
+      {operation:'import', task_ref:'task:instances', mode:'zenodo', records:sources.map(source => source.slice(7)), plan_text:text});
     status('Checking the imported plan against current source, pipeline and runtime pins…');
   } catch (error) { reviewing = false; status('Plan import failed: ' + error.message); }
   finally { busy = false; $('dataset-plan-file').value = ''; controls(); }
@@ -271,7 +271,7 @@ $('prepare-review').onclick = () => {
   if (!intent) return;
   clearPlan(); pendingReviewKey = JSON.stringify(intent); reviewing = true;
   try {
-    session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type: 'module'}), {operation: 'review', ...intent});
+    session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type: 'module'}), {operation: 'review', task_ref:'task:instances', ...intent});
     status('Resolving the plan against pinned source metadata and audited task requirements…');
   } catch (error) { reviewing = false; status(error.message); }
   controls();
@@ -290,6 +290,7 @@ $('prepare-run').onclick = async () => {
   try {
     await removeJob(job); remember(null);
     session.start(() => new Worker(new URL('./worker.js?v=combined-v2', import.meta.url), {type: 'module'}), {
+      task_ref:'task:instances',
       ...(intent || {record_id:record, mode:$('prepare-mode').value}), selected_paths: saved?.paths || selectedValues('prepare-plot'),
       file: $('prepare-file').files[0], task_request: request, execution_plan: reviewedPlan,
     });

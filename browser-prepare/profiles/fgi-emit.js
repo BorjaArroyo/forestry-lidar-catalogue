@@ -1,6 +1,8 @@
 /* Closed implementation of the source-specific, independently validated FGI-EMIT profile. */
 export const fgiEmit = Object.freeze({
   recordId: '19351234',
+  sourceRef: 'zenodo:19351234',
+  taskRef: 'task:instances',
   pipelineRef: 'pipeline:fgi-emit-plot-instances:1.0.0',
   sourceLock: 'scripts/fgi_emit/source-lock.json',
   derivedBytesPerPoint: 49,

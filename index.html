@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Public LiDAR sources for individual-tree segmentation. Discover datasets and inspect preparation evidence; other research tasks are TBD.">
+  <meta name="description" content="Public LiDAR sources for tree segmentation and taxonomic classification. Discover datasets and inspect task-specific preparation evidence.">
   <title>Canopy — LiDAR knowledge hub</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231b5047'/%3E%3Cpath d='M16 5 5 23h8v5h6v-5h8Z' fill='%23e7c477'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="style.css?v=two-sources-v1">
-  <script>window.CANOPY_PUBLIC = true;</script><script defer src="catalog.js"></script><script defer src="task-selection.js?v=two-sources-v1"></script><script defer src="app.js?v=two-sources-v1"></script><script defer src="workbench.js?v=two-sources-v1"></script><script type="module" src="browser-prepare/ui.js?v=combined-v2"></script><script type="module" src="browser-prepare/download-ui.js?v=browser-plots-v1"></script></head>
+  <script>window.CANOPY_PUBLIC = true;</script><script defer src="catalog.js"></script><script defer src="task-selection.js?v=two-sources-v1"></script><script defer src="app.js?v=two-sources-v1"></script><script defer src="workbench.js?v=two-sources-v1"></script><script type="module" src="browser-prepare/ui.js?v=combined-v2"></script><script type="module" src="browser-prepare/classification-ui.js?v=classification-v1"></script><script type="module" src="browser-prepare/download-ui.js?v=browser-plots-v1"></script></head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <aside class="sidebar">
@@ -17,7 +17,7 @@
     <div class="nav-label">WORKSPACE</div>
     <nav aria-label="Preparation navigation"><button class="nav-item" data-view="workbench"><span>↧</span> Workbench</button></nav>
     <div class="nav-label task-label">CURRENT FOCUS</div>
-    <p class="sidebar-note">Individual-tree segmentation</p><p class="sidebar-note">Other research tasks: TBD.</p>
+    <p class="sidebar-note">Tree segmentation and taxonomic classification</p>
     <div class="sidebar-bottom"><div><strong>Evidence before readiness</strong><small>Source reference ≠ audited preparation</small></div></div>
     <p class="sidebar-note">A shared format is a starting point.<br>Compatibility needs evidence.</p>
   </aside>
@@ -25,7 +25,26 @@
     <header class="topbar"><div class="breadcrumbs">Workspace <span>/</span> <strong id="breadcrumb-view">Sources</strong></div><div class="top-actions"><span class="snapshot"><i></i> Evidence snapshot</span><button id="export" class="button small">↓ Export catalog</button></div></header>
     <main id="main">
       <div class="page-heading"><div><div class="eyebrow">INDIVIDUAL-TREE SEGMENTATION</div><h1>Find a source for tree segmentation.</h1><p>Discover sources and inspect the evidence for preparing tree-instance data. The complete download-and-transform workflow is work in progress.</p></div><button id="compare-open" class="button compare-button" disabled>Compare datasets <span id="compare-count">0</span></button></div>
-      <section class="work-card task-request" aria-labelledby="task-request-title"><h2 id="task-request-title">Choose what your data must contain</h2><div class="task-options"><label>Data use<select id="task-use"></select></label><div id="task-variables" class="task-options"></div></div><p id="task-request-summary" class="muted" role="status" aria-live="polite"></p><p class="muted">Optional variables keep sources without those measurements eligible and are omitted explicitly. Required measurements restrict discovery to reviewed native channels; preparation still needs an audited pipeline. Nothing is filled with zero.</p></section>
+      <section class="work-card task-request" aria-labelledby="task-request-title"><label>Preparation task<select id="preparation-task"><option value="task:instances">Individual-tree segmentation</option><option value="task:species">Tree taxonomic classification</option></select></label><div id="instance-task-request"><h2 id="task-request-title">Choose what your data must contain</h2><div class="task-options"><label>Data use<select id="task-use"></select></label><div id="task-variables" class="task-options"></div></div><p id="task-request-summary" class="muted" role="status" aria-live="polite"></p><p class="muted">Optional variables keep sources without those measurements eligible and are omitted explicitly. Required measurements restrict discovery to reviewed native channels; preparation still needs an audited pipeline. Nothing is filled with zero.</p></div></section>
+<section id="classification-panel" class="work-card" hidden aria-labelledby="classification-title">
+<h2 id="classification-title">Tree observations and taxonomic reference</h2>
+<p>New sources are WIP until full native audit, browser acceptance and maintainer admission. Sensor views stay separate. Published partitions and original traits are preserved; physical trees and storage blocks are counted separately.</p>
+<div id="classification-sources" class="dataset-grid"></div>
+<div class="task-options"><label>Data use<select id="classification-use"><option value="training">Training</option><option value="validation">Published validation</option><option value="evaluation">Evaluation</option><option value="inference">Inference</option></select></label><label>Required reference rank<select id="classification-rank"><option value="species">Species</option><option value="genus">Genus</option></select></label></div>
+<label>Classification source<select id="classification-source"></select></label><p id="classification-source-detail" class="notice"></p>
+<div class="task-options"><label>Collections / plots<select id="classification-collections" multiple size="5"></select></label><label>Sensor views<select id="classification-modalities" multiple size="4"></select></label><label>Published partitions<select id="classification-partitions" multiple size="5"></select></label></div>
+<label>Taxa (select none for all; selecting a genus includes its documented descendants)<select id="classification-taxa" multiple size="6"></select></label>
+<details><summary>Advanced: select individual physical trees</summary><p>Leave this selection empty to include all matching trees.</p><label>Tree IDs<select id="classification-trees" multiple size="6"></select></label></details>
+<p id="classification-summary" class="notice" role="status"></p><details><summary>Selection exclusions</summary><pre id="classification-exclusions" class="evidence-log"></pre></details>
+<button id="classification-add" class="button" disabled>Add subset to my classification dataset</button>
+<section class="dataset-draft"><h3>My dataset · classification</h3><p>Saved separately from segmentation. Changing tasks preserves both selections.</p><ol id="classification-draft-list"></ol><button id="classification-clear" class="button small">Clear classification selection</button></section>
+<label>Import a classification plan<input id="classification-import" type="file" accept=".json,application/json"></label>
+<label>Optional original archives downloaded locally<input id="classification-files" type="file" multiple accept=".zip,.zst"></label><p>Files stay in this browser. Provide every planned archive or leave empty for direct provider downloads. BioDiv may require traversing 19.94 GB TLS and 0.65 GB ULS once each, even for a small selection.</p>
+<button id="classification-review" class="button" disabled>Review classification plan</button>
+<section id="classification-plan" class="dataset-draft" hidden><h3>Reviewed classification plan</h3><pre id="classification-plan-text" class="evidence-log"></pre><a id="classification-plan-download" class="button small" download="classification-plan.json">Download plan</a></section>
+<div class="lab-actions"><button id="classification-run" class="button" disabled>Prepare classification dataset</button><button id="classification-cancel" class="button" disabled>Cancel</button><a id="classification-download" class="button" download="tree-classification-dataset.zip" hidden>Download classification ZIP</a><button id="classification-release" class="button small">Clear temporary classification output</button></div>
+<p id="classification-status" class="notice" role="status">Loading pinned classification metadata…</p><p><a href="TREE-CLASSIFICATION.md">Classification contracts and audit scope</a></p>
+</section>
       <div class="toolbar source-filters"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search sources, locations or native attributes…" aria-label="Search sources"><kbd>/</kbd></label>
 <label class="select-label">Platform<select id="platform"><option value="all">All platforms</option><option>Airborne</option><option>Terrestrial</option><option>Mobile</option></select></label>
 <label class="select-label">Data unit<select id="unit"><option value="all">All data units</option><option value="plots">Plot / scene clouds</option><option value="mixed">Plots + tree exports</option><option value="trees">Isolated-tree exports</option><option value="unknown">Unit not reviewed</option></select></label>

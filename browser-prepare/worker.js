@@ -358,6 +358,9 @@ async function run(request) {
 self.onmessage = async ({data}) => {
   if (active) return;
   active = true;
-  try { if (['review', 'import'].includes(data.operation)) await review(data); else await run(data); }
+  try {
+    if (data.task_ref !== undefined && data.task_ref !== 'task:instances') throw Error('Task differs from this segmentation worker');
+    if (['review', 'import'].includes(data.operation)) await review(data); else await run(data);
+  }
   catch (error) { self.postMessage({type: 'error', code: error.code, error: String(error.message || error)}); }
 };

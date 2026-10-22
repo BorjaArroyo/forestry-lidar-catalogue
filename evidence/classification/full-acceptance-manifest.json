@@ -1,0 +1,1593 @@
+{
+  "schema_version": "1.0.0",
+  "status": "frozen-before-original-archive-acceptance",
+  "date": "2026-10-21",
+  "samples": [
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "AEW28_GD_218",
+      "observation_id": "AEW28_GD_218:TLS:TLS/AEW28_GD_218_TLS.laz",
+      "modality": "TLS",
+      "path": "TLS/AEW28_GD_218_TLS.laz",
+      "archive": "TLS.tar.zst",
+      "size_bytes": 26452,
+      "sha256": "8a4686327408f2509370580fc5f6ae0d6e2ba0edab95509847c23931032b76da",
+      "points": 4178,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "32cebee284fb31c03ab2fdb564dca3db8b95c2c86b5c963cd4e710a38c1ec3f5",
+      "xyz_sha256": "1d2165388ffa42d84bcd20cf6c790bb44800f43478fd831fe3f8107a3a894558",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 4178,
+          "native_records_sha256": "32cebee284fb31c03ab2fdb564dca3db8b95c2c86b5c963cd4e710a38c1ec3f5",
+          "xyz_sha256": "1d2165388ffa42d84bcd20cf6c790bb44800f43478fd831fe3f8107a3a894558"
+        }
+      ],
+      "published_split": "train",
+      "collection": "AEW28",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x1.9000000000000p+4",
+          "0x1.e000000000000p+4",
+          "0x1.0000000000000p+1"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "AEW28_GD_218",
+      "observation_id": "AEW28_GD_218:ULS:ULS/AEW28_GD_218_ULS.laz",
+      "modality": "ULS",
+      "path": "ULS/AEW28_GD_218_ULS.laz",
+      "archive": "ULS.tar.zst",
+      "size_bytes": 1331,
+      "sha256": "063cb43e4f263e29c37f42487cf55ec27698ff2ea0fcb6df37aa395665ffe494",
+      "points": 71,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "ba00e0346f9a98cdc8af252493f2ee408ed0b0bd6b534f4ec831fe40c6b40ff8",
+      "xyz_sha256": "7d250c478540bda9b06d478c52abc37727b6fba26ee67b52594cfcff623a7b6b",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 71,
+          "native_records_sha256": "ba00e0346f9a98cdc8af252493f2ee408ed0b0bd6b534f4ec831fe40c6b40ff8",
+          "xyz_sha256": "7d250c478540bda9b06d478c52abc37727b6fba26ee67b52594cfcff623a7b6b"
+        }
+      ],
+      "published_split": "train",
+      "collection": "AEW28",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x1.9000000000000p+4",
+          "0x1.e000000000000p+4",
+          "0x1.0000000000000p+1"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW03_G_160",
+      "observation_id": "SEW03_G_160:TLS:TLS/SEW03_G_160_TLS.laz",
+      "modality": "TLS",
+      "path": "TLS/SEW03_G_160_TLS.laz",
+      "archive": "TLS.tar.zst",
+      "size_bytes": 463256,
+      "sha256": "04c06731021267ecec3f210affe31ed1b6acf217e8af4948770fac2194dc5aac",
+      "points": 74672,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "9e61fc3ef9e1dae1d1e968b72459c347fa4f110d46e41f87d20142ee638056ff",
+      "xyz_sha256": "9cbcf16551e89462e773e92cc01613654926a56a4ab8b582219187023cd3cebd",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 74672,
+          "native_records_sha256": "9e61fc3ef9e1dae1d1e968b72459c347fa4f110d46e41f87d20142ee638056ff",
+          "xyz_sha256": "9cbcf16551e89462e773e92cc01613654926a56a4ab8b582219187023cd3cebd"
+        }
+      ],
+      "published_split": "unassigned",
+      "collection": "SEW03",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x1.b000000000000p+4",
+          "-0x1.1000000000000p+4",
+          "-0x1.0000000000000p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW03_G_160",
+      "observation_id": "SEW03_G_160:ULS:ULS/SEW03_G_160_ULS.laz",
+      "modality": "ULS",
+      "path": "ULS/SEW03_G_160_ULS.laz",
+      "archive": "ULS.tar.zst",
+      "size_bytes": 4155,
+      "sha256": "2c7d18234e1c26819f6b6bf2a1be5c0a5da7463ef4e4897ff7d3d96489ca541f",
+      "points": 301,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "d08e7b5023b5ec8513a32b48224fbd6319f2c8640530453b4fc41f4ee608bb53",
+      "xyz_sha256": "71449f4191d06c3ac62e68c1093b2727517c480636fc11d20c2495d904aaed80",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 301,
+          "native_records_sha256": "d08e7b5023b5ec8513a32b48224fbd6319f2c8640530453b4fc41f4ee608bb53",
+          "xyz_sha256": "71449f4191d06c3ac62e68c1093b2727517c480636fc11d20c2495d904aaed80"
+        }
+      ],
+      "published_split": "unassigned",
+      "collection": "SEW03",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x1.b000000000000p+4",
+          "-0x1.1000000000000p+4",
+          "-0x1.0000000000000p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW17_GD_212",
+      "observation_id": "SEW17_GD_212:TLS:TLS/SEW17_GD_212_TLS.laz",
+      "modality": "TLS",
+      "path": "TLS/SEW17_GD_212_TLS.laz",
+      "archive": "TLS.tar.zst",
+      "size_bytes": 53392,
+      "sha256": "fd64cc1ad0e9080cba0eb5f759d599084217a53ead81dc70cdc4f4aea1945676",
+      "points": 7989,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "26c24f7d94e1cc6b8134285c101bfe9f06bee14f2a5476c1066f0886827fa7b6",
+      "xyz_sha256": "7a4ceadf27fdd080cafe714baeb27a885124a6143bcf09e44deca29ea7ff4488",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 7989,
+          "native_records_sha256": "26c24f7d94e1cc6b8134285c101bfe9f06bee14f2a5476c1066f0886827fa7b6",
+          "xyz_sha256": "7a4ceadf27fdd080cafe714baeb27a885124a6143bcf09e44deca29ea7ff4488"
+        }
+      ],
+      "published_split": "test",
+      "collection": "SEW17",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x1.b000000000000p+4",
+          "-0x1.2000000000000p+4",
+          "0x0.0p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW17_GD_212",
+      "observation_id": "SEW17_GD_212:ULS:ULS/SEW17_GD_212_ULS.laz",
+      "modality": "ULS",
+      "path": "ULS/SEW17_GD_212_ULS.laz",
+      "archive": "ULS.tar.zst",
+      "size_bytes": 6252,
+      "sha256": "760bb95a221c627f9796765f698e6c80beb167de4c0a55a74cf6fa2cbb679350",
+      "points": 491,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "b588512b1618d587ff4e46670d6c4f19c8b0a5b3960408226c2bf62811dcba97",
+      "xyz_sha256": "b58e4149005ef277c022606e686b27099a7e4c12ff69e7f96b8bd86e0eb01bce",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 491,
+          "native_records_sha256": "b588512b1618d587ff4e46670d6c4f19c8b0a5b3960408226c2bf62811dcba97",
+          "xyz_sha256": "b58e4149005ef277c022606e686b27099a7e4c12ff69e7f96b8bd86e0eb01bce"
+        }
+      ],
+      "published_split": "test",
+      "collection": "SEW17",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x1.c000000000000p+4",
+          "-0x1.2000000000000p+4",
+          "0x0.0p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW17_GD_23",
+      "observation_id": "SEW17_GD_23:TLS:TLS/SEW17_GD_23_TLS.laz",
+      "modality": "TLS",
+      "path": "TLS/SEW17_GD_23_TLS.laz",
+      "archive": "TLS.tar.zst",
+      "size_bytes": 86451,
+      "sha256": "740c6a50a4262949a9a1a1ab9da4f31eadeae2735b94c8b7f7706199aad5dcbc",
+      "points": 13010,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "e13b9d0b5efd219499ee30e0a3cffc8a2136959183ab5bc1a437831977ca38c5",
+      "xyz_sha256": "d0a295beb0aae057a96098ede28f509de2111598bc36f3bad4151ea2ddbf91c7",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 13010,
+          "native_records_sha256": "e13b9d0b5efd219499ee30e0a3cffc8a2136959183ab5bc1a437831977ca38c5",
+          "xyz_sha256": "d0a295beb0aae057a96098ede28f509de2111598bc36f3bad4151ea2ddbf91c7"
+        }
+      ],
+      "published_split": "train",
+      "collection": "SEW17",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "-0x1.0800000000000p+5",
+          "-0x1.0000000000000p+2",
+          "-0x1.0000000000000p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW17_GD_23",
+      "observation_id": "SEW17_GD_23:ULS:ULS/SEW17_GD_23_ULS.laz",
+      "modality": "ULS",
+      "path": "ULS/SEW17_GD_23_ULS.laz",
+      "archive": "ULS.tar.zst",
+      "size_bytes": 3464,
+      "sha256": "e736395056d8d4405bb4786a11701a8941af682ca31f6a522ebd64b5d954a860",
+      "points": 258,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "ed6a3afef9e19a38fac95b0017e3f83c17c49483f1c6efd57af3013b88fede50",
+      "xyz_sha256": "0ca572e963696efdc49a5c2c48da79acc366fa70e50018fabaa7f2cc8bb8fe94",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 258,
+          "native_records_sha256": "ed6a3afef9e19a38fac95b0017e3f83c17c49483f1c6efd57af3013b88fede50",
+          "xyz_sha256": "0ca572e963696efdc49a5c2c48da79acc366fa70e50018fabaa7f2cc8bb8fe94"
+        }
+      ],
+      "published_split": "train",
+      "collection": "SEW17",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "-0x1.0000000000000p+5",
+          "-0x1.8000000000000p+1",
+          "-0x1.0000000000000p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW27_G_73",
+      "observation_id": "SEW27_G_73:TLS:TLS/SEW27_G_73_TLS.laz",
+      "modality": "TLS",
+      "path": "TLS/SEW27_G_73_TLS.laz",
+      "archive": "TLS.tar.zst",
+      "size_bytes": 48057,
+      "sha256": "1dc3eb6498308096bedcaf6f5cfe3094d81cbce6f1c27ef58a383618dd548797",
+      "points": 7671,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "392a18e830830842e61aa98404a11146aef3729e990d525bbe5bab93d086f969",
+      "xyz_sha256": "deb656456d063b2c84ec1ab25eb1a9cc1e6b37b1d502b3434d765ee4f919189e",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 7671,
+          "native_records_sha256": "392a18e830830842e61aa98404a11146aef3729e990d525bbe5bab93d086f969",
+          "xyz_sha256": "deb656456d063b2c84ec1ab25eb1a9cc1e6b37b1d502b3434d765ee4f919189e"
+        }
+      ],
+      "published_split": "validate",
+      "collection": "SEW27",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x1.c000000000000p+2",
+          "0x1.d000000000000p+4",
+          "0x1.0000000000000p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW27_G_73",
+      "observation_id": "SEW27_G_73:ULS:ULS/SEW27_G_73_ULS.laz",
+      "modality": "ULS",
+      "path": "ULS/SEW27_G_73_ULS.laz",
+      "archive": "ULS.tar.zst",
+      "size_bytes": 678,
+      "sha256": "234abfc6b8931b6b12cc68b751f3f2c88f89a11bdbe9f19512959c1ce58c67d2",
+      "points": 35,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "97031de7d81d833af9cea76f5f6b59a7073978cdce3ba67ad2e5cb4668b4fec3",
+      "xyz_sha256": "07237107b7ebe7e4bfa65ba28d93069064a2abf6c32b771e76ca028d1bbafe2e",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 35,
+          "native_records_sha256": "97031de7d81d833af9cea76f5f6b59a7073978cdce3ba67ad2e5cb4668b4fec3",
+          "xyz_sha256": "07237107b7ebe7e4bfa65ba28d93069064a2abf6c32b771e76ca028d1bbafe2e"
+        }
+      ],
+      "published_split": "validate",
+      "collection": "SEW27",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ],
+          [
+            "red",
+            "<u2"
+          ],
+          [
+            "green",
+            "<u2"
+          ],
+          [
+            "blue",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x1.4000000000000p+3",
+          "0x1.e000000000000p+4",
+          "0x1.0000000000000p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id",
+          "gps_time",
+          "red",
+          "green",
+          "blue"
+        ]
+      }
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "tree_id": "13171",
+      "observation_id": "13171:TLS:13171.laz",
+      "modality": "TLS",
+      "path": "13171.laz",
+      "archive": "dev.zip",
+      "size_bytes": 360969,
+      "sha256": "4b6e7975106d4b98fbb3ec4b3484d1a81a4b1e037c520e98bc4eeeaa56aadedc",
+      "points": 250522,
+      "point_record_length": 20,
+      "point_format": 0,
+      "native_records_sha256": "5cfac9d2c5a26e05f752f6235eec4ee9027d6f71132a0586851c60ded5b1e961",
+      "xyz_sha256": "60bb5bc26e7526be78577cf2dbdf6c42f41b2e3bec842dd4483751d908d3bfe6",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 250000,
+          "native_records_sha256": "7de5578bc6ee8c777cf4fa446de49468962d9d52621628c60be05a0f9d899f76",
+          "xyz_sha256": "b4e8047ea34ad0f282d1b041bb01bb8fd3e1ce9a869c6760a6079dddbedfa174"
+        },
+        {
+          "offset": 250000,
+          "points": 522,
+          "native_records_sha256": "512e8a4fa0515e3535db3c7d71f63a0351e8aeac61cae816264a2121ee6f2470",
+          "xyz_sha256": "d700114e4834e990cae0109afdb44c28117ff7170b1666522be4ff3f0ea8a930"
+        }
+      ],
+      "published_split": "dev",
+      "collection": "REMBIOFOR",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x0.0p+0",
+          "0x0.0p+0",
+          "0x0.0p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id"
+        ]
+      }
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "tree_id": "13245",
+      "observation_id": "13245:MLS:13245.laz",
+      "modality": "MLS",
+      "path": "13245.laz",
+      "archive": "dev.zip",
+      "size_bytes": 1275,
+      "sha256": "36e6235dc44d29b154edb28b89d57bd0fcc700f9d1063a0e00fabf8c4a74cbe6",
+      "points": 232,
+      "point_record_length": 20,
+      "point_format": 0,
+      "native_records_sha256": "2b6c5d99fca95bf3117913867c986eb224b93300db03cd1f60f8e3798ff90466",
+      "xyz_sha256": "9c429a335a951bbc2cbdf59ae09934c5efe998aeda623f429419925fed3bba18",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 232,
+          "native_records_sha256": "2b6c5d99fca95bf3117913867c986eb224b93300db03cd1f60f8e3798ff90466",
+          "xyz_sha256": "9c429a335a951bbc2cbdf59ae09934c5efe998aeda623f429419925fed3bba18"
+        }
+      ],
+      "published_split": "dev",
+      "collection": "Mokros_2022",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x0.0p+0",
+          "0x0.0p+0",
+          "0x0.0p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id"
+        ]
+      }
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "tree_id": "19933",
+      "observation_id": "19933:ULS:19933.laz",
+      "modality": "ULS",
+      "path": "19933.laz",
+      "archive": "dev.zip",
+      "size_bytes": 431,
+      "sha256": "df3e6b437b4deeced01351194346a31c65f5f483ad812453ae2a68426c549736",
+      "points": 13,
+      "point_record_length": 20,
+      "point_format": 0,
+      "native_records_sha256": "030e355e2600f8685120eda8bb8d2dd8b094e7b3ada5fddeef92c033628c5c69",
+      "xyz_sha256": "b4416e7e25c7ad4bb56379260339bef2be76e82363236b6d7f7fb3053833c256",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 13,
+          "native_records_sha256": "030e355e2600f8685120eda8bb8d2dd8b094e7b3ada5fddeef92c033628c5c69",
+          "xyz_sha256": "b4416e7e25c7ad4bb56379260339bef2be76e82363236b6d7f7fb3053833c256"
+        }
+      ],
+      "published_split": "dev",
+      "collection": "Puliti_b",
+      "native_schema": {
+        "las_version": "1.2",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x0.0p+0",
+          "0x0.0p+0",
+          "0x0.0p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "scan_angle_rank",
+          "user_data",
+          "point_source_id"
+        ]
+      }
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "tree_id": "2742",
+      "observation_id": "2742:unknown:02742.laz",
+      "modality": "unknown",
+      "path": "02742.laz",
+      "archive": "test.zip",
+      "size_bytes": 1435602,
+      "sha256": "b0eda371705fb67adfb4a71f4e6165ada2e5e60e4a29d9da401dad10205c4444",
+      "points": 759027,
+      "point_record_length": 30,
+      "point_format": 6,
+      "native_records_sha256": "b40a989ef7f621794307f594cd1ffcd59b745d1870428e828566fceb9e28084d",
+      "xyz_sha256": "eb9f3a9e1d1e94b9a5e0c55bd41401bf7b26dde27f8b4e1adcca831b10d1a82e",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 250000,
+          "native_records_sha256": "155df49c3b0473612749e8f3f19b9c481aee53a16686269715c3aa738a0bdc9f",
+          "xyz_sha256": "3d748417fbcc4da6e68fdbfcce8373628b226a22ee46e426a4010df29a4cd4b7"
+        },
+        {
+          "offset": 250000,
+          "points": 250000,
+          "native_records_sha256": "093ede889d38b93c1342c4f709dc8b17c3d238162c021a2dc895175d3cf87eec",
+          "xyz_sha256": "53ad701c2715eefa127e46f848df7f541b6b6d99a822de091c9c61ed8b2514d3"
+        },
+        {
+          "offset": 500000,
+          "points": 250000,
+          "native_records_sha256": "4d683cc0a0356d749d3fa65bc7829e9abb3e3be134a63730692926b982fb2aad",
+          "xyz_sha256": "2eede00d9075490a71d570cdaa22203a7bc8481148a3947fa4432240be97602e"
+        },
+        {
+          "offset": 750000,
+          "points": 9027,
+          "native_records_sha256": "3b899a78bc9b8f03bb3982058cd7a418be6ca00e163865efe28ed7830526e01b",
+          "xyz_sha256": "967108211d5ce76a37f36be65c84d789552926eb7d8ab8ff906fb1481493db90"
+        }
+      ],
+      "published_split": "test",
+      "collection": "unknown",
+      "native_schema": {
+        "las_version": "1.4",
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "classification_flags",
+            "|u1"
+          ],
+          [
+            "classification",
+            "|u1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "scan_angle",
+            "<i2"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "gps_time",
+            "<f8"
+          ]
+        ],
+        "scales_hex": [
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10",
+          "0x1.0624dd2f1a9fcp-10"
+        ],
+        "offsets_hex": [
+          "0x0.0p+0",
+          "0x0.0p+0",
+          "0x0.0p+0"
+        ],
+        "attributes": [
+          "X",
+          "Y",
+          "Z",
+          "intensity",
+          "return_number",
+          "number_of_returns",
+          "synthetic",
+          "key_point",
+          "withheld",
+          "overlap",
+          "scanner_channel",
+          "scan_direction_flag",
+          "edge_of_flight_line",
+          "classification",
+          "user_data",
+          "scan_angle",
+          "point_source_id",
+          "gps_time"
+        ]
+      }
+    }
+  ],
+  "totals": {
+    "trees": 9,
+    "observations": 14,
+    "points": 1118470,
+    "native_cloud_bytes": 2491765,
+    "blocks": 18
+  },
+  "coverage": {
+    "for_modalities": [
+      "TLS",
+      "MLS",
+      "ULS",
+      "unknown-test"
+    ],
+    "native_point_formats": [
+      0,
+      3,
+      6
+    ],
+    "biodiv_paired_trees": 5,
+    "biodiv_splits": [
+      "train",
+      "validate",
+      "test",
+      "unassigned"
+    ],
+    "partial_genus_reference": true,
+    "uses": [
+      "training",
+      "validation",
+      "evaluation",
+      "inference"
+    ]
+  },
+  "resource_policy": {
+    "block_points": 250000,
+    "zstd_window_limit_bytes": 67108864,
+    "browser_worker_estimate": "2 * largest selected compressed cloud + 2 * largest record/XYZ block + 128 MiB",
+    "process_memory": "Sample Linux process-tree RSS and PSS every 0.5 seconds; report observations, not allocation limits"
+  },
+  "limitations": [
+    "Final real selection was frozen after adapter prototyping; the original pre-adapter freeze requirement was not met",
+    "Full original archive traversal selects bounded clouds; complete native auditing covers all clouds",
+    "No source admission or deployment is implied"
+  ],
+  "full_native_audit": {
+    "path": "evidence/classification/full-native-audit.json",
+    "sha256": "0e8df75257ca79855af643dce497a5e1a41dc0c83f78e5fa5bf410cd7123d40a"
+  }
+}

@@ -1,6 +1,8 @@
 /* Implementation details for the already audited FOR-instance adapter. */
 export const forInstance = Object.freeze({
   recordId: '8287792',
+  sourceRef: 'zenodo:8287792',
+  taskRef: 'task:instances',
   pipelineRef: 'pipeline:for-instance-plot-instances:1.0.0',
   sourceLock: 'scripts/for_instance/source-lock.json',
   archiveLabel: 'Downloaded FOR-instance ZIP',

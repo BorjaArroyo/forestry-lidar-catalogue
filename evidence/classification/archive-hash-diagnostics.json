@@ -1,0 +1,522 @@
+{
+  "schema_version": "1.0.0",
+  "status": "diagnostic-controls-passed",
+  "browser": "Firefox 146.0.1",
+  "scope": "Local original TLS File streaming; diagnostics do not replace full UI/OPFS/ZIP acceptance",
+  "inspected_code_sha256": "e0306924f487af562b6d90e6dfa6faa8e1df2987a18eb62fed6c400cfe47d9b8",
+  "loaded_artifact_sha256": {
+    "browser-prepare/classification-las.js": "ca3ce83b4090147ab01a78445d68ca235d8e8af8d6d8096c3cf227811cb86da7",
+    "browser-prepare/classification-runtime.js": "18ef04f5edbb5b5282c7fabec43dd1734a1197948895cc9dcf403f904fc1660a",
+    "browser-prepare/vendor/md5.umd.js": "bfcbd4f2c1ee2da27209102844468b053a18297d59fc27cc3e30e0fceb767117",
+    "browser-prepare/vendor/sha256.umd.js": "ed7f5896b41aba98909ab143264c5b2ae5c81abf2e47f08dd2d1c0d02ce623de",
+    "browser-prepare/vendor/fzstd.mjs": "1a901fc5a58c349bbdb4f2aa1e688637ef56891ec58243a9f0cd863166b0d2a4",
+    "browser-prepare/classification-intake.js": "1ee084dab3a4aec1ada3d0b81a371275279c799adfc65b01bbaea68e80638522"
+  },
+  "hash_only_result": {
+    "done": true,
+    "bytes": 19941204645,
+    "sha256": "c1a1b551df273b6333ef563ab84f8beb92ce5747ebb417272c9a60c50a6cef5b",
+    "md5": "9dc1f3dee89239c7ed5e10daa6fe4364",
+    "seconds": 661.965
+  },
+  "intake_result": {
+    "entries": 4953,
+    "selected": 5,
+    "tar_complete": true,
+    "archive": "TLS.tar.zst",
+    "size_bytes": 19941204645,
+    "expanded_bytes": 19940761600,
+    "sha256": "c1a1b551df273b6333ef563ab84f8beb92ce5747ebb417272c9a60c50a6cef5b",
+    "provider_checksum_verified": true,
+    "traversals": 1,
+    "zstd_window_limit_bytes": 67108864
+  },
+  "hash_only_native_prefix_matches": 75,
+  "intake_native_prefixes": [
+    {
+      "bytes": 268488704,
+      "match": true,
+      "expected": "a175b2607502ffebd65852d25dd79835fbe030daa903c3da40fb3b137cfac11c"
+    },
+    {
+      "bytes": 536924160,
+      "match": true,
+      "expected": "eee8e85e7da8e6104c575a9d7089eabd9d752780e38675827919900327f5c6f5"
+    },
+    {
+      "bytes": 805359616,
+      "match": true,
+      "expected": "370cf01df9afc0ad872b0d25604f4fec74ce27d4be052fb60bb49c0cb6c32c1a"
+    },
+    {
+      "bytes": 1073795072,
+      "match": true,
+      "expected": "3c0c8fa7dc5c1e23081eab69c3677d966e8d6e8bdc49c13314d267e5b3ac25d1"
+    },
+    {
+      "bytes": 1342230528,
+      "match": true,
+      "expected": "d6fff4ac7de98804704800857aed758a97ddae22adcf77b11004763a83c1db48"
+    },
+    {
+      "bytes": 1610665984,
+      "match": true,
+      "expected": "c43f0323347ef596150a441fa71d5f6e7cfbf883e7b7d1ff02e1b35b1336a9ee"
+    },
+    {
+      "bytes": 1879101440,
+      "match": true,
+      "expected": "767984cda19332937da4a1100faa551d4c3bfb1f846bfb89d426984911b44d95"
+    },
+    {
+      "bytes": 2147536896,
+      "match": true,
+      "expected": "9c113e8e76ff510ce22c59ece37185f89eed7029107c0cb2fa7dee08a8995dea"
+    },
+    {
+      "bytes": 2415919104,
+      "match": true,
+      "expected": "08a4a27385b038ccf866951796c457bba3d58342ca201562b3fe34dc313f4b20"
+    },
+    {
+      "bytes": 2684354560,
+      "match": true,
+      "expected": "0a7a5372fd8af64060c33f7c536daab18f84917f48e0daee8f6b710507f64511"
+    },
+    {
+      "bytes": 2952790016,
+      "match": true,
+      "expected": "e369d80f3c391e443e36480d526e6aac5944530337ebfe913af680b0e8da551f"
+    },
+    {
+      "bytes": 3221225472,
+      "match": true,
+      "expected": "532e64d37cdb29b98c3aac3c8b94ebc75d936f5759051a62c0ad312ff6ed3c9d"
+    },
+    {
+      "bytes": 3489660928,
+      "match": true,
+      "expected": "c2b5a06fef97335da5d3a56fa2389ee6ee189933b5aaf31fb44e2022cb942542"
+    },
+    {
+      "bytes": 3758096384,
+      "match": true,
+      "expected": "b33bf51834de878767887f5a7d881d65a40f40dca095d2094de4afd60c69ee63"
+    },
+    {
+      "bytes": 4026531840,
+      "match": true,
+      "expected": "b4f4a5aae33f58004c341312cb6eaa7cf6b9549f6837d549a32532eea99af92a"
+    },
+    {
+      "bytes": 4294967296,
+      "match": true,
+      "expected": "04e31422120cadabce5a801127646d375565cc3b77b302b051d4c0b148277e4d"
+    },
+    {
+      "bytes": 4563402752,
+      "match": true,
+      "expected": "874d5fa8819075ba3d8e383216f61386405869287fa5c640605c593c75acb013"
+    },
+    {
+      "bytes": 4831838208,
+      "match": true,
+      "expected": "b08ebc15e7802c99337c5bcd6c35d0722570b8ccb2a8c197c13394232aed0822"
+    },
+    {
+      "bytes": 5100298240,
+      "match": true,
+      "expected": "cfe8663a82f816d2d739b4a29a897390a6d07a50c0cbc743565068bf491dd5ac"
+    },
+    {
+      "bytes": 5368733696,
+      "match": true,
+      "expected": "c0e58a176a4c928d134afc7a2bc8848ff5d2d3d2a94002fbee1da5c8eadaf9de"
+    },
+    {
+      "bytes": 5637169152,
+      "match": true,
+      "expected": "1a04b28f27213843a29b6c109c40a08eeca0e34de089be255438963058a677ae"
+    },
+    {
+      "bytes": 5905596416,
+      "match": true,
+      "expected": "acba2c5003311d372fb1c8be7fb764121a301fbd573c24b420e13907d2524950"
+    },
+    {
+      "bytes": 6174015488,
+      "match": true,
+      "expected": "b4ea4ffe3c0a0f3315dd85f920c4c860259c75af4f55834e4b9b1741e17e20bf"
+    },
+    {
+      "bytes": 6442467328,
+      "match": true,
+      "expected": "8e4f8eb566b7d2c83fb4a58c47b988e625c247bdf5ee0f6586d70624726ef2f1"
+    },
+    {
+      "bytes": 6710902784,
+      "match": true,
+      "expected": "9d941b68441c5675093217316904055ee188d2eff1a4f5268d94142da913e08a"
+    },
+    {
+      "bytes": 6979338240,
+      "match": true,
+      "expected": "b7619fefec4c1ad3929680aaf008f8952121eb623574364bdaa55dc190dec1d8"
+    },
+    {
+      "bytes": 7247773696,
+      "match": true,
+      "expected": "51059d10bb058888bc8686f42bcf2a61f9e3d5b0054841da2eea525748735725"
+    },
+    {
+      "bytes": 7516209152,
+      "match": true,
+      "expected": "cfbb00dd2c86377e1ce2012959275f0d11ea8c6574db2b62fed5822f623f2c76"
+    },
+    {
+      "bytes": 7784644608,
+      "match": true,
+      "expected": "dc1121f7cd0c11ae7c1ab66dafe69c0c3e5ef09827c8b5fcc3f8cf794af7c364"
+    },
+    {
+      "bytes": 8053080064,
+      "match": true,
+      "expected": "85498d925f36b70ea61bd3be7bee71c8ba0e97d93fb13fdeb373b743bbab8225"
+    },
+    {
+      "bytes": 8321515520,
+      "match": true,
+      "expected": "2262cd89b4c467ff89e898293a9e0ef0bb819c2b848c3ef84a06c48a78430eea"
+    },
+    {
+      "bytes": 8589950976,
+      "match": true,
+      "expected": "591549a15b98859487709e9cfc337b345cde422bfc82af5f6bb0a17efe8c559a"
+    },
+    {
+      "bytes": 8858386432,
+      "match": true,
+      "expected": "7dcbf71407678729bd89e7d9c67cfb00282d39c6959d01987c937b1f9b309128"
+    },
+    {
+      "bytes": 9126821888,
+      "match": true,
+      "expected": "12fbc19df0174f779db28a3cde66bb9917cdab7dfc94f2a17756e0f6bb30c601"
+    },
+    {
+      "bytes": 9395257344,
+      "match": true,
+      "expected": "8871fe8a879b4e1001604a50f78d6f0de6cdf92409b2cb6d870e29fa135f426b"
+    },
+    {
+      "bytes": 9663692800,
+      "match": true,
+      "expected": "5f38d4f02606b94b4442113519ac275ec64589ac20b37c8ff51b0295c52908ff"
+    },
+    {
+      "bytes": 9932128256,
+      "match": true,
+      "expected": "4914f594b2528f755891d177cdc658445e441475eede5f5be2804f0844847ccf"
+    },
+    {
+      "bytes": 10200547328,
+      "match": true,
+      "expected": "bf958a54f644092dac6b77eb1764de1c6c77ab992d0e984c17b8b62a0dc52ed7"
+    },
+    {
+      "bytes": 10468982784,
+      "match": true,
+      "expected": "4d2790986cd0213aad7253d836bd630442b8d23004324621459b74c5a02feeaa"
+    },
+    {
+      "bytes": 10737418240,
+      "match": true,
+      "expected": "0d16136fabb3ff345c93529219c70ab56aad39b9b2b2c4e01226d6877f21d20b"
+    },
+    {
+      "bytes": 11005853696,
+      "match": true,
+      "expected": "82deb7ddecc825fe3b1e22a8f01eb3c43fe231fa44393da913e4102f25e1a1f8"
+    },
+    {
+      "bytes": 11274289152,
+      "match": true,
+      "expected": "9c2b9e9d7238204db5f0a026ee7878c0647f7051d4f3b5111d8213df6bc82b9f"
+    },
+    {
+      "bytes": 11542724608,
+      "match": true,
+      "expected": "4a20728e09af2394870705379db679bfb939d7973df2159b4ada4d79b11269e0"
+    },
+    {
+      "bytes": 11811160064,
+      "match": true,
+      "expected": "0a08191908731d88c2c041fdbacc6270a09a9656e1dbd57d1bedec9910ddd0aa"
+    },
+    {
+      "bytes": 12079595520,
+      "match": true,
+      "expected": "162c866f66792c50d6dda8edd8abe09fa13f6175d377723ecc7112400314e887"
+    },
+    {
+      "bytes": 12348030976,
+      "match": true,
+      "expected": "109972b67509a37acb89e1093165f0660886550ed89a502b7ac50c8977185395"
+    },
+    {
+      "bytes": 12616466432,
+      "match": true,
+      "expected": "69f3f806abbed2d1f57dee2e7882f6e7cbec35758ca2e7e087e9c01ca71886fe"
+    },
+    {
+      "bytes": 12884901888,
+      "match": true,
+      "expected": "8bd348f8594ff127c9521b749244f67d9cd1d932367e1ccf7d178abb3af67d27"
+    },
+    {
+      "bytes": 13153337344,
+      "match": true,
+      "expected": "3ad141ab8c38d7ef76adf5ca67306f2e2a24443c868d20d3f75ac0ca0bbafa95"
+    },
+    {
+      "bytes": 13421772800,
+      "match": true,
+      "expected": "dc3ddfdbac7bacce2d7decc8b7f10d9dbaecdb228dd9ac6bd57570c114372e37"
+    },
+    {
+      "bytes": 13690208256,
+      "match": true,
+      "expected": "a754ecda74ea6824cb389d862d779b241f16edda30368ba9a017a6f8d28aaea7"
+    },
+    {
+      "bytes": 13958643712,
+      "match": true,
+      "expected": "ea6c2a9689e377d58b11a0f12e94d88ffd6d44ad9ca83341f92d4549ea424846"
+    },
+    {
+      "bytes": 14227079168,
+      "match": true,
+      "expected": "e6a1440d922bc5f479178eb81852af5870a8ce0a3cf340fdad1e96a215cdf298"
+    },
+    {
+      "bytes": 14495514624,
+      "match": true,
+      "expected": "2379b5ac8c0eed572328001713e97222f20480be79650d338e2d8647f6a89796"
+    },
+    {
+      "bytes": 14763950080,
+      "match": true,
+      "expected": "ff74c6f9880d8bb5415dcb96ec182ab3e2f8de59c26d7892303451a31d92ae86"
+    },
+    {
+      "bytes": 15032385536,
+      "match": true,
+      "expected": "2e120a118de514d2b77d6ec5e9c6a6ca35213bb8999bab406464ede5a8a99cbc"
+    },
+    {
+      "bytes": 15300820992,
+      "match": true,
+      "expected": "9e73969154cb0831e6f11328fd71074110b786a94b6810aeb1b1a59fc5568621"
+    },
+    {
+      "bytes": 15569256448,
+      "match": true,
+      "expected": "bd6a69d8f09ca172fff92e890ad23b489280a9bd1bfd503ae831d93c9f1466c8"
+    },
+    {
+      "bytes": 15837691904,
+      "match": true,
+      "expected": "2b2f9c41642b7018f3b1fc5ea064cb4589f67786a5e60069fa14a095ec297972"
+    },
+    {
+      "bytes": 16106127360,
+      "match": true,
+      "expected": "3712117161dc16ffeb44e4d054a35a94a011dfde4b99e18bf1a163faa66e8fed"
+    },
+    {
+      "bytes": 16374562816,
+      "match": true,
+      "expected": "227324c5e9cf8c63267be0f4f9154be04da94e818249159013b58745a333a4ba"
+    },
+    {
+      "bytes": 16642998272,
+      "match": true,
+      "expected": "ba1f9eef5e8ef82580d9e4b08bf4e566095019fe15b89f4c3980af6c41e27635"
+    },
+    {
+      "bytes": 16911433728,
+      "match": true,
+      "expected": "e3b4502f0d12ad0df224920a33d08c8ff5efc1a296be6d8f54ee7d3a75a4a0a5"
+    },
+    {
+      "bytes": 17179869184,
+      "match": true,
+      "expected": "8ec9b04f884de7a23c83c7e47ca158af876ff1e657fa4d7d0aed934f1583492d"
+    },
+    {
+      "bytes": 17448304640,
+      "match": true,
+      "expected": "d24edc80df11f48e4898216125b36194fa65c25980483f7e7c5abd7fb82e33cf"
+    },
+    {
+      "bytes": 17716740096,
+      "match": true,
+      "expected": "6f8dc2e39b6198a351c119b2d5ca803badd0ea75abe92278779d3c674a59dc0c"
+    },
+    {
+      "bytes": 17985175552,
+      "match": true,
+      "expected": "0e47473b78acfc9a772462860e65ed86a2c6b2def215721cda17c3a4b59c9d60"
+    },
+    {
+      "bytes": 18253611008,
+      "match": true,
+      "expected": "2ecd16f57460b36759348105dd9baebec89458bf89733f87d21df977fd371b4d"
+    },
+    {
+      "bytes": 18522046464,
+      "match": true,
+      "expected": "bc65ff6a71ea215aa4b166edde4808cd93d0cdc943d7d2439f19689338c3e97e"
+    },
+    {
+      "bytes": 18790481920,
+      "match": true,
+      "expected": "f6c9d88e5190bfdae8dd6a7534415ff97da45f994994028875377ce8a1758562"
+    },
+    {
+      "bytes": 19058917376,
+      "match": true,
+      "expected": "64c25d9826c30203b5b07599b412c62f66317e37ba6a19905fbc929a2f29e376"
+    },
+    {
+      "bytes": 19327352832,
+      "match": true,
+      "expected": "f6b6f813869922adff255712bc242574dc18a2680b70079b8b70ae00ce4fdd47"
+    },
+    {
+      "bytes": 19595788288,
+      "match": true,
+      "expected": "940f85e07aba763b007290bbde9d9022988e67ca0f409cd86a811730fe05f352"
+    },
+    {
+      "bytes": 19864223744,
+      "match": true,
+      "expected": "7b9dae9ccabf93e722cb42950725aa9eec77f805dcb8c80ff16a93c4864e397a"
+    }
+  ],
+  "prepared_cloud_state_checks": [
+    {
+      "cloud": "TLS/SEW17_GD_23_TLS.laz",
+      "archive_bytes": 4173201408,
+      "state_unchanged": true,
+      "report": {
+        "status": "validated",
+        "points": 13010,
+        "format": 3,
+        "scales": [
+          0.001,
+          0.001,
+          0.001
+        ],
+        "offsets": [
+          -33,
+          -4,
+          -1
+        ],
+        "native_records_sha256": "e13b9d0b5efd219499ee30e0a3cffc8a2136959183ab5bc1a437831977ca38c5"
+      }
+    },
+    {
+      "cloud": "TLS/SEW03_G_160_TLS.laz",
+      "archive_bytes": 11413225472,
+      "state_unchanged": true,
+      "report": {
+        "status": "validated",
+        "points": 74672,
+        "format": 3,
+        "scales": [
+          0.001,
+          0.001,
+          0.001
+        ],
+        "offsets": [
+          27,
+          -17,
+          -1
+        ],
+        "native_records_sha256": "9e61fc3ef9e1dae1d1e968b72459c347fa4f110d46e41f87d20142ee638056ff"
+      }
+    },
+    {
+      "cloud": "TLS/SEW17_GD_212_TLS.laz",
+      "archive_bytes": 16620191744,
+      "state_unchanged": true,
+      "report": {
+        "status": "validated",
+        "points": 7989,
+        "format": 3,
+        "scales": [
+          0.001,
+          0.001,
+          0.001
+        ],
+        "offsets": [
+          27,
+          -18,
+          0
+        ],
+        "native_records_sha256": "26c24f7d94e1cc6b8134285c101bfe9f06bee14f2a5476c1066f0886827fa7b6"
+      }
+    },
+    {
+      "cloud": "TLS/AEW28_GD_218_TLS.laz",
+      "archive_bytes": 19439353856,
+      "state_unchanged": true,
+      "report": {
+        "status": "validated",
+        "points": 4178,
+        "format": 3,
+        "scales": [
+          0.001,
+          0.001,
+          0.001
+        ],
+        "offsets": [
+          25,
+          30,
+          2
+        ],
+        "native_records_sha256": "32cebee284fb31c03ab2fdb564dca3db8b95c2c86b5c963cd4e710a38c1ec3f5"
+      }
+    },
+    {
+      "cloud": "TLS/SEW27_G_73_TLS.laz",
+      "archive_bytes": 19653394432,
+      "state_unchanged": true,
+      "report": {
+        "status": "validated",
+        "points": 7671,
+        "format": 3,
+        "scales": [
+          0.001,
+          0.001,
+          0.001
+        ],
+        "offsets": [
+          7,
+          29,
+          1
+        ],
+        "native_records_sha256": "392a18e830830842e61aa98404a11146aef3729e990d525bbe5bab93d086f969"
+      }
+    }
+  ],
+  "worker_implementations": {
+    "hash-probe-worker.js": "importScripts('../../browser-prepare/vendor/md5.umd.js','../../browser-prepare/vendor/sha256.umd.js');\nself.onmessage=async({data})=>{\n try {\n  const sha=await hashwasm.createSHA256(),md5=await hashwasm.createMD5();sha.init();md5.init();\n  const r=data.file.stream().getReader(),step=256*1024**2;let total=0,next=step;\n  const started=performance.now();\n  for(;;){\n   const {done,value}=await r.read();if(done)break;\n   for(let offset=0;offset<value.length;){\n    const count=Math.min(value.length-offset,next-total),part=value.subarray(offset,offset+count);\n    sha.update(part);md5.update(part);offset+=count;total+=count;\n    if(total===next){\n     const sc=await hashwasm.createSHA256(),mc=await hashwasm.createMD5();sc.load(sha.save());mc.load(md5.save());\n     self.postMessage({bytes:total,sha256:sc.digest(),md5:mc.digest(),seconds:(performance.now()-started)/1000});next+=step;\n    }\n   }\n  }\n  self.postMessage({done:true,bytes:total,sha256:sha.digest(),md5:md5.digest(),seconds:(performance.now()-started)/1000});\n }catch(e){self.postMessage({error:String(e),stack:e.stack});}\n};\n",
+    "intake-probe-worker.js": "import {loadTools,sha256} from '../../browser-prepare/classification-runtime.js';\nimport {traverseZstd} from '../../browser-prepare/classification-intake.js';\nimport {decodeObservation} from '../../browser-prepare/classification-las.js';\nself.onmessage=async({data})=>{\n try {\n  const read=async path=>new Uint8Array(await(await fetch('/'+path)).arrayBuffer());\n  const tools=await loadTools(read),plan=await(await fetch('/temp/classification/full-fixtures/firefox-inference-plan.json')).json();\n  const refs=new Map((await(await fetch('/temp/classification/tls-prefix-hashes.json')).json()).map(r=>[r.bytes,r]));\n  const original=tools.hashers.sha256;let archiveHash,clone,total=0,next=256*1024**2,calls=0,parts=[];\n  tools.hashers.sha256=async()=>{\n   const hash=await original();\n   if(calls++)return hash;\n   archiveHash=hash;clone=await original();\n   return {init:()=>hash.init(),update:bytes=>{\n    hash.update(bytes);total+=bytes.length;\n    if(total>=next){\n     clone.load(hash.save());const got=clone.digest(),reference=refs.get(total);\n     self.postMessage({bytes:total,chunk:bytes.length,sha256:got,match:reference?got===reference.sha256:null});next+=256*1024**2;\n     if(reference&&got!==reference.sha256)throw Error('PREFIX_MISMATCH');\n    }\n   },digest:()=>{const got=hash.digest();self.postMessage({archive_sha256:got});return got;}};\n  };\n  const asset=plan.archives.find(a=>a.name==='TLS.tar.zst'),observations=plan.observations.filter(o=>o.archive===asset.name);\n  const sink={start:async()=>{parts=[];},write:async bytes=>{parts.push(bytes.slice());},end:async observation=>{\n   const before=archiveHash.save();\n   const report=await decodeObservation(new Blob(parts),observation,tools.laz,async block=>{\n    const coords=new Uint8Array(block.points*24),view=new DataView(coords.buffer),raw=new DataView(block.bytes.buffer,block.bytes.byteOffset,block.bytes.length);\n    for(let i=0;i<block.points;i++)for(let a=0;a<3;a++)view.setFloat64(i*24+a*8,raw.getInt32(i*block.pointSize+a*4,true)*block.scales[a]+block.offsets[a],true);\n    await sha256(block.bytes);await sha256(coords);\n   },tools.hashers);\n   const after=archiveHash.save(),same=before.length===after.length&&before.every((v,i)=>v===after[i]);\n   self.postMessage({cloud:observation.path,archive_bytes:total,state_unchanged:same,report});\n   if(!same)throw Error('ARCHIVE_STATE_CHANGED_DURING_CLOUD');parts=[];\n  }};\n  const report=await traverseZstd(data.file.stream(),asset,observations,sink,tools.hashers);\n  self.postMessage({done:true,report});\n }catch(e){self.postMessage({error:String(e),stack:e.stack});}\n};\n"
+  },
+  "limitations": [
+    "The earlier SHA256 failure did not record its computed hash; its cause remains undetermined",
+    "Intake diagnostic uses bounded Blob staging rather than OPFS and does not write a dataset ZIP"
+  ]
+}

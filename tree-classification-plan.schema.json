@@ -1,0 +1,381 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tree-classification-plan.schema.json",
+  "title": "Tree classification plan 3.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_ref",
+    "request",
+    "filters",
+    "observations",
+    "trees",
+    "vocabulary",
+    "vocabulary_sha256",
+    "source_dependencies",
+    "runtime_sha256",
+    "code_sha256",
+    "archives",
+    "exclusions",
+    "totals",
+    "output",
+    "rights",
+    "spatial_audit",
+    "limitations",
+    "plan_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "3.0.0"
+    },
+    "task_ref": {
+      "const": "task:species"
+    },
+    "request": {
+      "type": "object",
+      "required": [
+        "use",
+        "rank"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "use": {
+          "enum": [
+            "training",
+            "validation",
+            "evaluation",
+            "inference"
+          ]
+        },
+        "rank": {
+          "enum": [
+            "genus",
+            "species"
+          ]
+        }
+      }
+    },
+    "filters": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_ref",
+          "collections",
+          "modalities",
+          "partitions",
+          "taxa",
+          "tree_ids"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "source_ref": {
+            "type": "string",
+            "pattern": "^(zenodo:[1-9][0-9]*|grodata:[1-9][0-9]*:[0-9]+\\.[0-9]+)$"
+          },
+          "collections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "modalities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "partitions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "taxa": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          },
+          "tree_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_ref",
+          "tree_id",
+          "observation_id",
+          "modality",
+          "path",
+          "archive",
+          "size_bytes",
+          "sha256",
+          "points",
+          "point_record_length",
+          "native_records_sha256",
+          "published_split",
+          "collection"
+        ],
+        "properties": {
+          "source_ref": {
+            "type": "string",
+            "pattern": "^(zenodo:[1-9][0-9]*|grodata:[1-9][0-9]*:[0-9]+\\.[0-9]+)$"
+          },
+          "tree_id": {
+            "type": "string"
+          },
+          "observation_id": {
+            "type": "string"
+          },
+          "modality": {
+            "enum": [
+              "TLS",
+              "MLS",
+              "ULS",
+              "unknown"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "archive": {
+            "type": "string"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "points": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "point_record_length": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 256
+          },
+          "native_records_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "published_split": {
+            "enum": [
+              "dev",
+              "train",
+              "validate",
+              "test",
+              "unassigned"
+            ]
+          },
+          "collection": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "trees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_ref",
+          "tree_id",
+          "native_label",
+          "taxonomy",
+          "reference_valid",
+          "collection",
+          "published_split",
+          "modalities",
+          "native_metadata"
+        ],
+        "properties": {
+          "source_ref": {
+            "type": "string",
+            "pattern": "^(zenodo:[1-9][0-9]*|grodata:[1-9][0-9]*:[0-9]+\\.[0-9]+)$"
+          },
+          "tree_id": {
+            "type": "string"
+          },
+          "native_label": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "taxonomy": {
+            "type": "object",
+            "required": [
+              "genus",
+              "species"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "genus": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "species": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "reference_valid": {
+            "type": "object",
+            "required": [
+              "genus",
+              "species"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "genus": {
+                "type": "boolean"
+              },
+              "species": {
+                "type": "boolean"
+              }
+            }
+          },
+          "collection": {
+            "type": "string"
+          },
+          "published_split": {
+            "enum": [
+              "dev",
+              "train",
+              "validate",
+              "test",
+              "unassigned"
+            ]
+          },
+          "modalities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "native_metadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "vocabulary": {
+      "type": "object"
+    },
+    "vocabulary_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_dependencies": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "runtime_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "code_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "archives": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "totals": {
+      "type": "object",
+      "required": [
+        "trees",
+        "observations",
+        "points",
+        "sequential_download_bytes",
+        "estimated_browser_storage_bytes",
+        "estimated_worker_memory_bytes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "trees": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "observations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "points": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sequential_download_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimated_browser_storage_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "estimated_worker_memory_bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "output": {
+      "type": "object"
+    },
+    "rights": {
+      "type": "object"
+    },
+    "spatial_audit": {
+      "type": "object"
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "plan_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  }
+}

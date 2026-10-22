@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased · tree taxonomic classification
+
+- Added a separate classification workbench, source identities, versioned exact
+  taxonomy, task-scoped drafts, v3 plans and an independently readable dataset ZIP.
+- Pinned FOR-species20K 13255198 and BioDiv-3DTrees GRO.data 128035 version 1.0;
+  retained original label tables, metadata, conditions and bounded evidence.
+- Implemented lossless laz-perf decoding, selective FOR ZIP intake and complete
+  sequential BioDiv Zstandard/TAR verification with separate TLS/ULS views.
+- Audited all 29,866 observations and 10,107,832,979 points locally. Validated
+  bounded paired real exports for all four uses in Chromium and Firefox, plus
+  complete original BioDiv archive traversal with selective original FOR ZIPs.
+  Recorded seven duplicate-cloud groups, four crossing FOR dev/test partitions.
+- Preserved segmentation readers and source adapters. Classification sources remain
+  WIP pending maintainer admission. Audits and acceptance run locally; no deployment
+  has been performed.
+
+
 ## 2026-10-21
 
 - Combine admitted FOR-instance and FGI-EMIT subsets in one browser preparation

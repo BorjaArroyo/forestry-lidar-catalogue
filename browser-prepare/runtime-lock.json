@@ -137,8 +137,8 @@
     },
     "browser-prepare/intake.js": {
       "url": "browser-prepare/intake.js",
-      "sha256": "adc6767fedbd428347acdee38aa63171fb9f8e693d99e232dab462ee3667b7d3",
-      "size_bytes": 5451
+      "sha256": "39a17c2b63391ee9b84f077d589209041304bf76534d74747bde9ade7a80b3b6",
+      "size_bytes": 5689
     },
     "scripts/task_plan.py": {
       "url": "scripts/task_plan.py",
@@ -182,13 +182,13 @@
     },
     "browser-prepare/profiles.js": {
       "url": "browser-prepare/profiles.js",
-      "sha256": "72d3cbe2732fcf64de223b0bc3d0b622439583a8d86b5ba1e54e5b286a52a69c",
-      "size_bytes": 426
+      "sha256": "ba1418c8349c3e5c29c13a248c278de3af0f6369453a8d4b9d92c412f851d9d1",
+      "size_bytes": 565
     },
     "browser-prepare/profiles/for-instance.js": {
       "url": "browser-prepare/profiles/for-instance.js",
-      "sha256": "127a16cc984b3d1064046eeccd78afd1f8959e6cc829cd6309023bcd1ea74d52",
-      "size_bytes": 930
+      "sha256": "6a088b494a252dc6a1087d3346c68914966f8564b5e0bb7efb84f7e2b1ac9a9c",
+      "size_bytes": 990
     },
     "browser-prepare/batch.py": {
       "url": "browser-prepare/batch.py",
@@ -247,13 +247,13 @@
     },
     "browser-prepare/profiles/fgi-emit.js": {
       "url": "browser-prepare/profiles/fgi-emit.js",
-      "size_bytes": 1236,
-      "sha256": "751e7b00e78597775d746623b0853575eb5a6b5b68cf0834504737b528edece4"
+      "size_bytes": 1297,
+      "sha256": "b778b5942266629810f14254def27685a9562e75041e4d594d4084b612619270"
     },
     "browser-prepare/worker.js": {
       "url": "browser-prepare/worker.js",
-      "size_bytes": 25262,
-      "sha256": "e4a6a5785b1e6e4f2eebfed16dad2be5fbf1c6d49d6710d5c2ba6ca6ef730772"
+      "size_bytes": 25402,
+      "sha256": "bda9161f0b8cdc1c38aa1557fcf5fb6cdcea4db2306c6d88d7eebe8fe9838fd8"
     }
   },
   "zip_js": "2.20.0",

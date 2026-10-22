@@ -1,0 +1,213 @@
+{
+  "schema_version": "1.0.0",
+  "status": "metadata-audited",
+  "audit_date": "2026-10-21",
+  "scope": "Complete original label tables and provider metadata; point archives not audited",
+  "originals": {
+    "biodiv-README.md": {
+      "path": "scripts/classification/sources/biodiv-README.md",
+      "size_bytes": 10838,
+      "sha256": "5a708aba8c075ca251b6add19762b4bc45e87f1a660acca1adee728b68c24664"
+    },
+    "biodiv-labels.csv": {
+      "path": "scripts/classification/sources/biodiv-labels.csv",
+      "size_bytes": 1109780,
+      "sha256": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b"
+    },
+    "biodiv-record.json": {
+      "path": "scripts/classification/sources/biodiv-record.json",
+      "size_bytes": 9416,
+      "sha256": "531feae0062c5deb8da42998d3f4fd1f1a6522fd8b31cd39245b3ac018087e2e"
+    },
+    "for-labels.csv": {
+      "path": "scripts/classification/sources/for-labels.csv",
+      "size_bytes": 1216814,
+      "sha256": "5286eb84454c8a6410fe1c15ea03568a0306e5da2aff94598f8bf808e478eeb2"
+    },
+    "for-record.json": {
+      "path": "scripts/classification/sources/for-record.json",
+      "size_bytes": 10649,
+      "sha256": "a414c8f47c7fe3ddfca32f894343a415e762e31b0e7fbe1fa1f560059e2d5dd2"
+    }
+  },
+  "sources": {
+    "zenodo:13255198": {
+      "label_rows": 17707,
+      "species_labels": 33,
+      "modalities": {
+        "TLS": 12485,
+        "MLS": 1464,
+        "ULS": 3758
+      },
+      "csv_filename_join": "Exact decimal treeID/member basename join: all 17,707 dev rows matched; original filename retained",
+      "test_reference": "No public test labels; inference only",
+      "test_members": 2255,
+      "inventory_sha256": "09dd364d81c92de433a463c77a190df231453c8ddddf8e2220756cec8b624889",
+      "extra_members": [
+        {
+          "archive": "dev.zip",
+          "path": "train.zip",
+          "issue": "non-cloud-member",
+          "size_bytes": 12677490056,
+          "compressed_size": 12677490056,
+          "crc32": "1e7bee85",
+          "header_offset": 12675718037
+        }
+      ]
+    },
+    "grodata:128035:1.0": {
+      "label_rows": 4952,
+      "genus_only": 213,
+      "published_partitions": {
+        "train": 3957,
+        "test": 495,
+        "validate": 495,
+        "unassigned": 5
+      },
+      "plots": 27,
+      "shared_partition_plots": {
+        "AEW03": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "AEW22": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "AEW28": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "AEW33": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "AEW34": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "AEW39": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "AEW42": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "AEW47": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "HEW05": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "HEW06": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "HEW19": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "HEW21": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "HEW29": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "HEW30": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "HEW32": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "HEW47": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "HEW48": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW03": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW04": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW17": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW18": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW24": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW27": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW31": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW33": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW35": [
+          "test",
+          "train",
+          "validate"
+        ],
+        "SEW49": [
+          "test",
+          "train",
+          "validate"
+        ]
+      },
+      "uls_coverage": "Unverified: labels and README are not a cloud inventory"
+    }
+  },
+  "spatial_audit": {
+    "status": "observed-plot-overlap",
+    "independence": "not-demonstrated",
+    "explanation": "All listed shared plots occur in multiple official partitions; no new spatial split is created"
+  }
+}

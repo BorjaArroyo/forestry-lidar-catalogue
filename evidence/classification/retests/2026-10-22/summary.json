@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0.0",
+  "date": "2026-10-22",
+  "task_ref": "task:species",
+  "status": "passed",
+  "scope": "Fresh local functional regression and browser preparation with original files, plus full-byte original integrity and fresh upstream dependency comparisons",
+  "environment": {
+    "date": "2026-10-22",
+    "python": "3.12.12",
+    "packages": {
+      "numpy": "2.2.6",
+      "laspy": "2.7.0",
+      "lazrs": "0.8.2",
+      "zstandard": "0.25.0",
+      "jsonschema": "4.26.0",
+      "playwright": "1.58.0",
+      "filelock": "4.0.12"
+    },
+    "node": "v18.19.1",
+    "python_unittest_interpreter": "Python 3.12.3"
+  },
+  "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+  "runtime_lock_sha256": "dce384080aa9fafacc63efc714e1b3526fc5d4080ec0e41b09dbcf6885aac1d3",
+  "source_lock_sha256": "1d00fa4cac2a87a032fada55eb13110e49f4568295049da3d5953b429b844488",
+  "tests": {
+    "python": {
+      "tests": 144,
+      "status": "passed",
+      "local_log_sha256": "5edc1a5c1e8f6a7bc54df126a061946b3261669a2443d17d9254af92bbf96c91"
+    },
+    "node": {
+      "tests": 54,
+      "status": "passed",
+      "local_log_sha256": "d06f640f4aae2dea810b64a2a3b3f3f543bf759cb2ebabca01bcf9383e26759d"
+    },
+    "for-instance": {
+      "tests": 7,
+      "status": "passed",
+      "local_log_sha256": "7651d43f3fd633b52e27122285da368e0502546ede58a5307d54821c727afa47"
+    }
+  },
+  "browser_runs": {
+    "synthetic": 8,
+    "real_paired": 8,
+    "original_archives": 2,
+    "production_readiness": 2
+  },
+  "original_archive_bytes_rehashed": 47792581756,
+  "upstream_npm_packages_checked": 4,
+  "remote_runtime_artifacts_checked": 17,
+  "full_original_browser_results": [
+    {
+      "browser": "chromium",
+      "version": "145.0.7632.6",
+      "status": "validated",
+      "points": 1118470,
+      "observations": 14,
+      "blocks": 18,
+      "plan_sha256": "10c8faa23497cdf13ea781ea0f2bca99c22787ac90558ec24f69bc96e5ff6425",
+      "zip_sha256": "218ee02e3f4479ceb169c37259ce999ac67dcad5027c0df0053cfa896338071b",
+      "elapsed_seconds": 172.57
+    },
+    {
+      "browser": "firefox",
+      "version": "146.0.1",
+      "status": "validated",
+      "points": 1118470,
+      "observations": 14,
+      "blocks": 18,
+      "plan_sha256": "10c8faa23497cdf13ea781ea0f2bca99c22787ac90558ec24f69bc96e5ff6425",
+      "zip_sha256": "042a6f2f2ccff9759ad381049c47d7a8eed21f0825d1127d36f115775fa63f2f",
+      "elapsed_seconds": 861.73
+    }
+  ],
+  "native_audit": {
+    "last_executed": "2026-10-21",
+    "reused_after_fresh_full_byte_integrity": "2026-10-22",
+    "point_decoding_not_repeated": true
+  },
+  "artifacts": {
+    "initial-integrity.json": {
+      "path": "evidence/classification/retests/2026-10-22/initial-integrity.json",
+      "sha256": "dfef52708147d62f44e6683f2bc75236e4cbc8157adf657b398b3da7f530e3f2"
+    },
+    "original-integrity.json": {
+      "path": "evidence/classification/retests/2026-10-22/original-integrity.json",
+      "sha256": "2965fbe5f8291c06233ba1f9da29053b8ff0b28e126d1981d291bfba65d98c20"
+    },
+    "upstream-integrity.json": {
+      "path": "evidence/classification/retests/2026-10-22/upstream-integrity.json",
+      "sha256": "2a02efb6592ad49d4e21d3e347ead2514dd89303ec5505d3f2379958edc24d3e"
+    },
+    "remote-runtime-integrity.json": {
+      "path": "evidence/classification/retests/2026-10-22/remote-runtime-integrity.json",
+      "sha256": "6e3c6aa3dede71b0c0b8d38f2d261ea0e2981971b17a0c3fb1926e3e71ed6b24"
+    },
+    "browser-acceptance.json": {
+      "path": "evidence/classification/retests/2026-10-22/browser-acceptance.json",
+      "sha256": "2c50f2bf2e87599ac1fecfaaa2aa2098e18c036c0cc46c22ee7672ee065f74f6"
+    },
+    "paired-browser-acceptance.json": {
+      "path": "evidence/classification/retests/2026-10-22/paired-browser-acceptance.json",
+      "sha256": "75f40648ea94babdbe85b748fc7d0a400c12a1f1dc6eaf814daeab0b3c7b75be"
+    },
+    "full-browser-acceptance-inference.json": {
+      "path": "evidence/classification/retests/2026-10-22/full-browser-acceptance-inference.json",
+      "sha256": "67eeb71211155e6f2f024e5e7c2644ba3f6b1e92ba88e4f7ab873467a200a16e"
+    },
+    "production-readiness.json": {
+      "path": "evidence/classification/retests/2026-10-22/production-readiness.json",
+      "sha256": "ee49c9e7d8226c975666805959b98c6f4cc64f38dbd203e90dd09d9e9d6b4021"
+    }
+  },
+  "commands": [
+    [
+      "python",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_*.py"
+    ],
+    [
+      "node",
+      "--experimental-default-type=module",
+      "--test",
+      "tests/test_*.mjs"
+    ],
+    [
+      "python",
+      "scripts/for_instance/test_pipeline.py"
+    ],
+    [
+      "python",
+      "tests/classification_browser_acceptance.py",
+      "--full",
+      "--use",
+      "inference"
+    ],
+    [
+      "python",
+      "tests/classification_browser_acceptance.py",
+      "--paired"
+    ],
+    [
+      "python",
+      "tests/classification_browser_acceptance.py"
+    ]
+  ],
+  "limits": [
+    "Sources remain WIP pending maintainer admission; no deployment",
+    "Original browser exports remain bounded to the frozen selection; complete native point decoding was not repeated",
+    "Synthetic LAS headers and repackaged ZIP timestamps can change fixture and plan hashes between dates; native paired cloud bytes and the full-original plan remain fixed",
+    "The unspecified external incident has not been identified or causally linked by these functional and byte-integrity checks"
+  ]
+}
