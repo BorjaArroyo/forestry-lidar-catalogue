@@ -11,6 +11,8 @@ import sys
 import time
 from datetime import datetime, timezone
 
+from .storage import RequestError
+
 
 def inspect_jobs(state, read):
     """Load job records and mark workers that disappeared without final state."""
@@ -45,6 +47,8 @@ def inspect_jobs(state, read):
 def submit(api, body):
     from filelock import FileLock
 
+    if not isinstance(body, dict) or not isinstance(body.get("kind"), str):
+        raise RequestError("Invalid job kind")
     kind = body.get("kind")
     allowed = (
         {"kind", "record_id", "root", "output", "task_request"}
@@ -52,9 +56,16 @@ def submit(api, body):
         else {"kind", "record_id", "root", "prepare_output", "task_request"}
     )
     if kind not in {"acquire", "prepare-instances"} or set(body) - allowed:
-        raise ValueError(
+        raise RequestError(
             "Only original-source acquisition and the audited FOR-instance preparation are available"
         )
+    if not isinstance(body, dict) or "record_id" not in body:
+        raise RequestError("A job requires a record_id")
+    if isinstance(body["record_id"], bool) or not re.fullmatch(r"[1-9][0-9]*", str(body["record_id"])):
+        raise RequestError("Invalid record_id")
+    for key in ("root", "output", "prepare_output"):
+        if key in body and not isinstance(body[key], str):
+            raise RequestError(f"{key} must be a directory string")
     task_plan = None
     if "task_request" in body:
         from ..knowledge_model import load
@@ -62,18 +73,23 @@ def submit(api, body):
 
         request = body["task_request"]
         if not isinstance(request, dict) or set(request) - {"use", "variables"}:
-            raise ValueError("Invalid task request")
+            raise RequestError("Invalid task request")
         if kind != "prepare-instances" and not body.get("prepare_output"):
-            raise ValueError("A task request requires audited preparation, not only acquisition")
+            raise RequestError("A task request requires audited preparation, not only acquisition")
+        if not isinstance(request.get("use", "training"), str) or not isinstance(request.get("variables", {}), dict):
+            raise RequestError("Invalid task request")
         model = load(api.WEB / "knowledge-model.json")
-        task_plan = plan_request(
-            model, body["record_id"], request.get("use", "training"), request.get("variables")
-        )
-        check_plan(model, task_plan)
+        try:
+            task_plan = plan_request(
+                model, body["record_id"], request.get("use", "training"), request.get("variables")
+            )
+            check_plan(model, task_plan)
+        except ValueError as error:
+            raise RequestError(str(error)) from error
     root = api.directory(body.get("root", ""), exists=kind == "prepare-instances")
     with api.GUARD, FileLock(str(api.STATE / "submission.lock"), timeout=0):
         if any(j["status"] in api.ACTIVE for j in api.jobs()):
-            raise ValueError("A Canopy job is already active. Wait for it to finish.")
+            raise RequestError("A Canopy job is already active. Wait for it to finish.")
         job_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S") + "-" + secrets.token_hex(4)
         folder = api.STATE / "jobs" / job_id
         job = {
@@ -87,14 +103,20 @@ def submit(api, body):
         if kind == "prepare-instances" or body.get("prepare_output"):
             from ..preparation_profile import require_record
 
-            require_record(rid)
+            try:
+                require_record(rid)
+            except ValueError as error:
+                raise RequestError(str(error)) from error
         job["record_id"] = rid
         if task_plan is not None:
             job["task_plan"] = task_plan
             job["task_plan_validator_sha256"] = api.sha(api.REPO / "src/canopy/task_plan.py")
         if kind == "prepare-instances":
             output = api.directory(body.get("output", ""), exists=False)
-            ready = api.preparation_input(root, output)
+            try:
+                ready = api.preparation_input(root, output)
+            except ValueError as error:
+                raise RequestError(str(error)) from error
             job.update(output=str(output), package_sha256=ready["package_sha256"])
         else:
             record = api.inspect_record(rid)
@@ -102,21 +124,21 @@ def submit(api, body):
             if (root / "inventory.json").exists():
                 inv = api.read(root / "inventory.json")
                 if [r["record_id"] for r in inv["records"]] != [rid]:
-                    raise ValueError(
+                    raise RequestError(
                         "Destination belongs to another inventory. Select a new record directory."
                     )
                 if inv["records"][0]["files"] != record["files"]:
-                    raise ValueError(
+                    raise RequestError(
                         "Pinned asset inventory differs from destination; inspect before resuming"
                     )
             elif root.exists() and any(root.iterdir()):
-                raise ValueError("Choose an empty destination or a matching acquisition directory")
+                raise RequestError("Choose an empty destination or a matching acquisition directory")
             parent = root
             while not parent.exists():
                 parent = parent.parent
             total = sum(f["size_bytes"] for f in record["files"])
             if shutil.disk_usage(parent).free < total:
-                raise ValueError("Insufficient destination space even for compressed assets")
+                raise RequestError("Insufficient destination space even for compressed assets")
             job["expected_bytes"] = total
             job["record_id"] = rid
             api.save(folder / "inventory.json", inv)
@@ -154,7 +176,7 @@ def launch_worker(api, folder):
                 return pid
             stopped, status = os.waitpid(pid, os.WNOHANG)
             if stopped:
-                raise ValueError(
+                raise RequestError(
                     f"Worker stopped during startup (exit {os.waitstatus_to_exitcode(status)}); inspect its log"
                 )
             time.sleep(0.02)
@@ -168,7 +190,7 @@ def launch_worker(api, folder):
 
 def job_path(api, jid):
     if not re.fullmatch(r"[0-9T]+-[a-f0-9]{8}", jid):
-        raise ValueError("Invalid job ID")
+        raise RequestError("Invalid job ID")
     return api.STATE / "jobs" / jid / "job.json"
 
 
@@ -184,11 +206,11 @@ def worker(api, folder):
             from ..task_plan import check_plan
 
             if api.sha(api.REPO / "src/canopy/task_plan.py") != job["task_plan_validator_sha256"]:
-                raise ValueError("Task request validator changed after submission")
+                raise RequestError("Task request validator changed after submission")
             task_model = load(api.WEB / "knowledge-model.json")
             check_plan(task_model, job["task_plan"])
         if job["kind"] not in {"acquire", "prepare-instances"}:
-            raise ValueError("Unsupported job type")
+            raise RequestError("Unsupported job type")
         if job["kind"] == "acquire":
             # Staging, locks and the acquisition index stay colocated with the
             # state root that owns this job (folder = ROOT/canopy-workbench/jobs/<id>),
@@ -215,7 +237,7 @@ def worker(api, folder):
         if "output" in job:
             status = api.preparation_status()
             if status["package_sha256"] != job["package_sha256"]:
-                raise ValueError("Pipeline changed after submission; inspect before resuming")
+                raise RequestError("Pipeline changed after submission; inspect before resuming")
             from ..preparation_profile import command as preparation_command, open_package
 
             command = preparation_command(sys.executable, api.INSTANCE_PACKAGE, root, job["output"])

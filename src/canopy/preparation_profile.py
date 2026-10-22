@@ -6,6 +6,8 @@ separate scientific policies; this module only selects their implementation.
 
 from pathlib import Path
 
+from .adapters import load_adapter
+
 RECORD_ID = 8287792
 
 
@@ -15,7 +17,8 @@ def require_record(record_id):
 
 
 def status(package, web):
-    from for_instance.prepare import package_fingerprint, read
+    adapter = load_adapter("for_instance")
+    package_fingerprint, read = adapter.package_fingerprint, adapter.read
     from .knowledge_model import load
 
     model = load(web / "knowledge-model.json")
@@ -42,7 +45,8 @@ def status(package, web):
 
 
 def validate_input(root, output, package, preparation, destination):
-    from for_instance.prepare import source_selection, read
+    adapter = load_adapter("for_instance")
+    source_selection, read = adapter.source_selection, adapter.read
 
     status = preparation
     destination(root, output, status["package_sha256"])

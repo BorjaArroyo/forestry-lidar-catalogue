@@ -12,8 +12,19 @@ def now():
     return datetime.now(timezone.utc).isoformat()
 
 
+class StateError(RuntimeError):
+    """Persisted service data is unreadable or corrupt."""
+
+
+class RequestError(ValueError):
+    """The caller supplied an unsupported or invalid request."""
+
+
 def read(path):
-    return json.loads(Path(path).read_text())
+    try:
+        return json.loads(Path(path).read_text())
+    except (OSError, ValueError) as error:
+        raise StateError(f"Cannot read service state {path}: {error}") from error
 
 
 def save(path, value):
@@ -36,10 +47,10 @@ def directory(value, exists=True, *, repo=None):
     repository = Path(repo) if repo is not None else repository_root()
     path = Path(value).expanduser()
     if not path.is_absolute() or "," in str(path) or "\n" in str(path):
-        raise ValueError("Choose an absolute directory without commas or newlines")
+        raise RequestError("Choose an absolute directory without commas or newlines")
     path = path.resolve()
     if exists and not path.is_dir():
-        raise ValueError("Directory does not exist")
+        raise RequestError("Directory does not exist")
     if path == Path("/") or path == Path.home() or path == repository or path in repository.parents:
-        raise ValueError("Choose a dedicated data directory")
+        raise RequestError("Choose a dedicated data directory")
     return path

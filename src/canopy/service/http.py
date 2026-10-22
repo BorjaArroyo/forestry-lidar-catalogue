@@ -2,11 +2,26 @@
 
 import json
 import secrets
-import subprocess
 import traceback
 from http.server import SimpleHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
+
+from .storage import RequestError
+
+
+def parse_request(headers, stream):
+    """Parse only the request; execution and persisted data errors remain internal."""
+    try:
+        size = int(headers.get("Content-Length", "0"))
+        if not 1 <= size <= 16384:
+            raise ValueError("Invalid request size")
+        body = json.loads(stream.read(size))
+        if not isinstance(body, dict):
+            raise ValueError("The request must be a JSON object")
+        return body
+    except (ValueError, UnicodeError) as error:
+        raise RequestError(str(error)) from error
 
 
 def create_handler(api):
@@ -89,7 +104,7 @@ def create_handler(api):
                     self.wfile.write(raw)
                     return
                 super().do_GET()
-            except (ValueError, KeyError, OSError, subprocess.TimeoutExpired) as e:
+            except RequestError as e:
                 self.send_json({"error": str(e)}, 400)
             except Exception:
                 traceback.print_exc()
@@ -109,16 +124,15 @@ def create_handler(api):
             ):
                 return self.send_json({"error": "Local session token required"}, 403)
             try:
-                size = int(self.headers.get("Content-Length", "0"))
-                if size < 1 or size > 16384:
-                    raise ValueError("Invalid request size")
-                body = json.loads(self.rfile.read(size))
+                body = parse_request(self.headers, self.rfile)
                 if self.path == "/api/inspect":
+                    if "record" not in body:
+                        raise RequestError("Missing record")
                     return self.send_json(api.inspect_record(body["record"]))
                 if self.path == "/api/jobs":
                     return self.send_json(api.submit(body), 202)
                 self.send_json({"error": "Unknown endpoint"}, 404)
-            except (ValueError, KeyError, json.JSONDecodeError) as e:
+            except RequestError as e:
                 self.send_json({"error": str(e)}, 400)
             except Exception:
                 traceback.print_exc()
