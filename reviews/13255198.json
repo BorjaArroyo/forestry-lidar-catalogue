@@ -1,0 +1,110 @@
+{
+  "dataset_id": "13255198",
+  "dataset_sha256": "0da51b2ba268b97e5945a790fda70aef83e29acb942627672000de47eaba1435",
+  "decision": "admitted",
+  "proposal_url": "https://github.com/BorjaArroyo/forestry-lidar-catalogue/pull/10",
+  "reviewed_by": "Codex evidence review under explicit maintainer authorization",
+  "reviewed_at": "2026-10-22",
+  "scope": "Version-pinned classification preparation using the segmentation evidence procedure",
+  "limitations": "Published splits are preserved without geographic-independence claims; labels, sensor views and source conditions stay separate.",
+  "analysis": {
+    "provenance": {
+      "finding": "Pinned provider metadata, complete native audit and bounded browser exports reviewed; see integrated evidence scope.",
+      "evidence": [
+        "evidence/classification/metadata-audit.json",
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "rights": {
+      "finding": "Pinned provider metadata, complete native audit and bounded browser exports reviewed; see integrated evidence scope.",
+      "evidence": [
+        "evidence/classification/metadata-audit.json",
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "integrity": {
+      "finding": "Pinned provider metadata, complete native audit and bounded browser exports reviewed; see integrated evidence scope.",
+      "evidence": [
+        "evidence/classification/metadata-audit.json",
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "schema": {
+      "finding": "Pinned provider metadata, complete native audit and bounded browser exports reviewed; see integrated evidence scope.",
+      "evidence": [
+        "evidence/classification/metadata-audit.json",
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "coverage": {
+      "finding": "Pinned provider metadata, complete native audit and bounded browser exports reviewed; see integrated evidence scope.",
+      "evidence": [
+        "evidence/classification/metadata-audit.json",
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "duplicates": {
+      "finding": "Published partitions are preserved; no labels are inferred from duplicate cloud bytes.",
+      "evidence": [
+        "evidence/classification/metadata-audit.json",
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    }
+  },
+  "tasks": {
+    "instances": {
+      "status": "unknown",
+      "rationale": "This integration does not assess this task.",
+      "evidence": [
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "components": {
+      "status": "unknown",
+      "rationale": "This integration does not assess this task.",
+      "evidence": [
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "species": {
+      "status": "conditional",
+      "rationale": "Rank-valid taxonomy and unchanged native XYZ; source-specific limitations remain explicit.",
+      "evidence": [
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "geometry": {
+      "status": "conditional",
+      "rationale": "Rank-valid taxonomy and unchanged native XYZ; source-specific limitations remain explicit.",
+      "evidence": [
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "spectral": {
+      "status": "unknown",
+      "rationale": "This integration does not assess this task.",
+      "evidence": [
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    },
+    "biomass": {
+      "status": "unknown",
+      "rationale": "This integration does not assess this task.",
+      "evidence": [
+        "evidence/classification/full-native-audit.json",
+        "evidence/classification/integration-validation.json"
+      ]
+    }
+  }
+}

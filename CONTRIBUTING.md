@@ -43,7 +43,9 @@ refresh and validate them. The storage model does not change admission rules.
 
 The admitted decision records a human judgment; CI checks completeness and the
 snapshot fingerprint, not the truth of evidence or reviewer identity. Require
-human evidence review before scientific admission. Contributors must not
+human evidence review before scientific admission, unless the maintainer explicitly
+authorizes the established evidence-based validation procedure. Record that
+authorization and its scope without claiming an independent human review. Contributors must not
 self-approve by filling in a name. The required `verify` job includes dataset
 admission checks; its success checks structure rather than scientific validity.
 The branch policy above is configured in GitHub, not enforced by templates alone.

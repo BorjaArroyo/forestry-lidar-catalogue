@@ -1,0 +1,332 @@
+{
+  "schema_version": "1.0.0",
+  "status": "native-validated",
+  "backend": "local",
+  "scope": "Every point cloud in all four complete pinned point archives; complete member and source checksum verification",
+  "archives": [
+    {
+      "source_ref": "zenodo:13255198",
+      "archive": "test.zip",
+      "size_bytes": 1844174259,
+      "sha256": "894388773062f1227f2086847fbfe80ba295e9b14099eaecb4a50be675116f40",
+      "observations": 2255,
+      "points": 776789977,
+      "nested_byte_identical_aliases": 0,
+      "implementation_sha256": "24721f63f3e90286c8705a088e6c7d18b0105ecaea793c6ed15219eb3ce8b4d1",
+      "peak_rss_bytes": 158736384,
+      "elapsed_seconds": 261.13,
+      "provider_checksum_verified": true
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "archive": "dev.zip",
+      "size_bytes": 25354980290,
+      "sha256": "0180c8ba5636033a9e39080ad2c3dd2f34358ff5b1c9e5cc7303d63bc661d3d9",
+      "observations": 17707,
+      "points": 5598324981,
+      "nested_byte_identical_aliases": 17707,
+      "implementation_sha256": "45de96c841f6c851fd68198cfeadb03e8f78f27f4192539fc3ec68f33303b6ab",
+      "peak_rss_bytes": 265424896,
+      "elapsed_seconds": 298.61,
+      "provider_checksum_verified": true,
+      "prefetch_resources": {
+        "parent_peak_rss_bytes": 128634880,
+        "worker_max_peak_rss_bytes": 238997504,
+        "workers": 4,
+        "scope": "Per-process native prefetch peaks; not a simultaneous process-tree total"
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "archive": "TLS.tar.zst",
+      "size_bytes": 19941204645,
+      "sha256": "c1a1b551df273b6333ef563ab84f8beb92ce5747ebb417272c9a60c50a6cef5b",
+      "observations": 4952,
+      "points": 3664017913,
+      "nested_byte_identical_aliases": 0,
+      "implementation_sha256": "45de96c841f6c851fd68198cfeadb03e8f78f27f4192539fc3ec68f33303b6ab",
+      "peak_rss_bytes": 136593408,
+      "elapsed_seconds": 287.36,
+      "provider_checksum_verified": true,
+      "prefetch_resources": {
+        "parent_peak_rss_bytes": 96948224,
+        "worker_max_peak_rss_bytes": 206278656,
+        "workers": 4,
+        "scope": "Per-process native prefetch peaks; not a simultaneous process-tree total"
+      }
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "archive": "ULS.tar.zst",
+      "size_bytes": 652222562,
+      "sha256": "84b11ea99f57b9ce8154de86450a962b6b796b40ea8dd5bb799777a33dbed0a9",
+      "observations": 4952,
+      "points": 68700108,
+      "nested_byte_identical_aliases": 0,
+      "implementation_sha256": "dc18c946a5a9d0c7f6a2e6d0f1161b53ff92cd7af8f8e75167d80090d98ac82c",
+      "peak_rss_bytes": 146567168,
+      "elapsed_seconds": 59.45,
+      "provider_checksum_verified": true
+    }
+  ],
+  "sources": {
+    "zenodo:13255198": {
+      "trees": 19962,
+      "observations": 19962,
+      "points": 6375114958,
+      "modalities": {
+        "unknown": 2255,
+        "TLS": 12485,
+        "MLS": 1464,
+        "ULS": 3758
+      },
+      "las_point_formats": {
+        "0": 19960,
+        "6": 2
+      },
+      "byte_identical_cloud_groups": [
+        {
+          "sha256": "235f2022c9a9e85219eeff1542e024f82a15015084fcff9c6714ba6124ff477f",
+          "observations": [
+            "9640:TLS:09640.laz",
+            "9834:TLS:09834.laz"
+          ],
+          "members": [
+            {
+              "tree_id": "9640",
+              "published_split": "dev",
+              "modality": "TLS"
+            },
+            {
+              "tree_id": "9834",
+              "published_split": "dev",
+              "modality": "TLS"
+            }
+          ],
+          "published_splits": [
+            "dev"
+          ],
+          "native_labels": [
+            "Pinus_contorta"
+          ]
+        },
+        {
+          "sha256": "2ff9fedff3656adf55b740ab185cb2ddcfcfde32102cf41217e8d418d44a345f",
+          "observations": [
+            "10397:unknown:10397.laz",
+            "10408:TLS:10408.laz"
+          ],
+          "members": [
+            {
+              "tree_id": "10397",
+              "published_split": "test",
+              "modality": "unknown"
+            },
+            {
+              "tree_id": "10408",
+              "published_split": "dev",
+              "modality": "TLS"
+            }
+          ],
+          "published_splits": [
+            "dev",
+            "test"
+          ],
+          "native_labels": [
+            "Pinus_resinosa",
+            "unknown"
+          ]
+        },
+        {
+          "sha256": "3c507d7eda179aea1ec663039836d3573bf3b88d1b7f777c1246c4105a5a4d8e",
+          "observations": [
+            "9545:TLS:09545.laz",
+            "9547:TLS:09547.laz"
+          ],
+          "members": [
+            {
+              "tree_id": "9545",
+              "published_split": "dev",
+              "modality": "TLS"
+            },
+            {
+              "tree_id": "9547",
+              "published_split": "dev",
+              "modality": "TLS"
+            }
+          ],
+          "published_splits": [
+            "dev"
+          ],
+          "native_labels": [
+            "Pinus_contorta"
+          ]
+        },
+        {
+          "sha256": "4ad1a4f172981218054b0e6a0575c7b63a0579f993ae0d6912e245190197ead2",
+          "observations": [
+            "20055:ULS:20055.laz",
+            "20056:ULS:20056.laz"
+          ],
+          "members": [
+            {
+              "tree_id": "20055",
+              "published_split": "dev",
+              "modality": "ULS"
+            },
+            {
+              "tree_id": "20056",
+              "published_split": "dev",
+              "modality": "ULS"
+            }
+          ],
+          "published_splits": [
+            "dev"
+          ],
+          "native_labels": [
+            "Pinus_sylvestris"
+          ]
+        },
+        {
+          "sha256": "6d62e7e9776feaff9ec27f81704e610ce08120f3f37afff901dcdc80cc323b02",
+          "observations": [
+            "14006:unknown:14006.laz",
+            "14005:TLS:14005.laz"
+          ],
+          "members": [
+            {
+              "tree_id": "14006",
+              "published_split": "test",
+              "modality": "unknown"
+            },
+            {
+              "tree_id": "14005",
+              "published_split": "dev",
+              "modality": "TLS"
+            }
+          ],
+          "published_splits": [
+            "dev",
+            "test"
+          ],
+          "native_labels": [
+            "Quercus_robur",
+            "unknown"
+          ]
+        },
+        {
+          "sha256": "afc3baa8aeeb2d66cc4e513e5e54fca26a4cca790f4b50123474cebc4cd1a88b",
+          "observations": [
+            "10236:unknown:10236.laz",
+            "10235:TLS:10235.laz"
+          ],
+          "members": [
+            {
+              "tree_id": "10236",
+              "published_split": "test",
+              "modality": "unknown"
+            },
+            {
+              "tree_id": "10235",
+              "published_split": "dev",
+              "modality": "TLS"
+            }
+          ],
+          "published_splits": [
+            "dev",
+            "test"
+          ],
+          "native_labels": [
+            "Acer_saccharum",
+            "unknown"
+          ]
+        },
+        {
+          "sha256": "ff725b01f92427eb19ab71bcb5159df26a4cd03be333dccf54cd2bc952b26bd3",
+          "observations": [
+            "9775:unknown:09775.laz",
+            "9772:TLS:09772.laz"
+          ],
+          "members": [
+            {
+              "tree_id": "9775",
+              "published_split": "test",
+              "modality": "unknown"
+            },
+            {
+              "tree_id": "9772",
+              "published_split": "dev",
+              "modality": "TLS"
+            }
+          ],
+          "published_splits": [
+            "dev",
+            "test"
+          ],
+          "native_labels": [
+            "Pinus_contorta",
+            "unknown"
+          ]
+        }
+      ],
+      "duplicate_cloud_groups_crossing_partitions": 4,
+      "partitions": {
+        "dev": 17707,
+        "test": 2255
+      },
+      "genus_only": 0,
+      "paired_tls_uls": 0,
+      "native_schema_signatures": [
+        "2dceb3b60a3c76a3dabf692ccc62d89452027f6f10bcf280b8f68c520402b603",
+        "721bab4b02dfc0c753fd9d061c8ba7327cc283b22c4be236287e582ba8a8dee0"
+      ]
+    },
+    "grodata:128035:1.0": {
+      "trees": 4952,
+      "observations": 9904,
+      "points": 3732718021,
+      "modalities": {
+        "TLS": 4952,
+        "ULS": 4952
+      },
+      "las_point_formats": {
+        "3": 9904
+      },
+      "byte_identical_cloud_groups": [],
+      "duplicate_cloud_groups_crossing_partitions": 0,
+      "partitions": {
+        "train": 3957,
+        "test": 495,
+        "validate": 495,
+        "unassigned": 5
+      },
+      "genus_only": 213,
+      "paired_tls_uls": 4952,
+      "native_schema_signatures": [
+        "aefafeccd7d31bf8fb28c672697d0b6c1799fc3a4bae9ac297ef1c241dbb5428"
+      ],
+      "paired_native_tree_types": {
+        "conifer": 1543,
+        "broadleaf": 3409
+      }
+    }
+  },
+  "totals": {
+    "trees": 24914,
+    "observations": 29866,
+    "points": 10107832979
+  },
+  "limitations": [
+    "FOR nested train.zip members are byte-identical storage aliases, not extra tree observations",
+    "FOR published count differences are not filled with invented observations",
+    "Published partitions and overlapping plots do not establish geographic independence",
+    "Native validation does not admit a source or deploy a website"
+  ],
+  "tools": {
+    "python": "3.12.12",
+    "numpy": "2.2.6",
+    "laspy": "2.7.0",
+    "lazrs": "0.8.2",
+    "zstandard": "0.25.0"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "schema_version": "1.0.0",
+  "status": "local-validated-maintainer-admission-pending",
+  "date": "2026-10-22",
+  "task_ref": "task:species",
+  "scope": "Complete native audit from 2026-10-21 retained after fresh full-byte original checks; all functional and browser checks rerun on 2026-10-22; no deployment",
+  "checks": {
+    "python_unittest": {
+      "tests": 144,
+      "status": "passed",
+      "python": "3.12.3",
+      "elapsed_seconds": 70.664,
+      "local_log_sha256": "5edc1a5c1e8f6a7bc54df126a061946b3261669a2443d17d9254af92bbf96c91",
+      "execution_date": "2026-10-22"
+    },
+    "native_for_instance_regression": {
+      "tests": 7,
+      "status": "passed",
+      "local_log_sha256": "7651d43f3fd633b52e27122285da368e0502546ede58a5307d54821c727afa47",
+      "execution_date": "2026-10-22",
+      "elapsed_seconds": 0.14
+    },
+    "node_tests": {
+      "tests": 54,
+      "status": "passed",
+      "node": "18.19.1",
+      "elapsed_seconds": 0.778487767,
+      "local_log_sha256": "d06f640f4aae2dea810b64a2a3b3f3f543bf759cb2ebabca01bcf9383e26759d",
+      "execution_date": "2026-10-22"
+    },
+    "native_all_archives": {
+      "status": "passed",
+      "trees": 24914,
+      "observations": 29866,
+      "points": 10107832979,
+      "last_executed": "2026-10-21",
+      "original_bytes_revalidated": "2026-10-22"
+    },
+    "synthetic_browser_runs": {
+      "runs": 8,
+      "status": "passed",
+      "execution_date": "2026-10-22"
+    },
+    "real_paired_browser_runs": {
+      "runs": 8,
+      "status": "passed",
+      "execution_date": "2026-10-22"
+    },
+    "original_archive_browser_runs": {
+      "status": "passed",
+      "runs": 2,
+      "chromium": "passed",
+      "firefox": "passed",
+      "evidence": "evidence/classification/full-browser-acceptance-inference.json",
+      "execution_date": "2026-10-22"
+    },
+    "knowledge_model_and_admission": "passed; zero admitted catalog entries changed",
+    "production_readiness_gate": {
+      "status": "passed",
+      "browsers": [
+        "chromium",
+        "firefox"
+      ],
+      "evidence": "evidence/classification/production-readiness.json",
+      "execution_date": "2026-10-22"
+    },
+    "fresh_dependency_integrity": {
+      "status": "passed",
+      "execution_date": "2026-10-22",
+      "npm_packages": 4,
+      "remote_runtime_artifacts": 17
+    }
+  },
+  "tools": {
+    "native": {
+      "python": "3.12.12",
+      "numpy": "2.2.6",
+      "laspy": "2.7.0",
+      "lazrs": "0.8.2",
+      "zstandard": "0.25.0"
+    },
+    "playwright": "1.58.0",
+    "playwright_driver_node": "v18.19.1"
+  },
+  "scientific_inspector_ast_sha256": "64240a088b6c596fab78ab16f1b541a2bff517741e2394054813e88f42e00b38",
+  "native_reference_engine_snapshots": [
+    "24721f63f3e90286c8705a088e6c7d18b0105ecaea793c6ed15219eb3ce8b4d1",
+    "45de96c841f6c851fd68198cfeadb03e8f78f27f4192539fc3ec68f33303b6ab",
+    "dc18c946a5a9d0c7f6a2e6d0f1161b53ff92cd7af8f8e75167d80090d98ac82c"
+  ],
+  "runtime_lock_sha256": "dce384080aa9fafacc63efc714e1b3526fc5d4080ec0e41b09dbcf6885aac1d3",
+  "source_lock_sha256": "1d00fa4cac2a87a032fada55eb13110e49f4568295049da3d5953b429b844488",
+  "pending": [
+    "Maintainer source admission required by CONTRIBUTING.md",
+    "Separately confirmed deployment"
+  ],
+  "limits": [
+    "Final sample manifest frozen after adapter prototypes, before successful original-archive acceptance",
+    "Browser exports use bounded selections; the native audit covers every original cloud",
+    "FOR selective ZIP intake does not verify the whole provider ZIP within the browser",
+    "Earlier Firefox attempts closed or failed SHA256 without a validated ZIP; cause remains undetermined. Final original-archive acceptance and both complete hash controls passed; see original-browser-attempts.json",
+    "Observed memory is sampled RSS/PSS, not a hard allocation limit",
+    "Original-archive browser acceptance used locally downloaded originals; live provider transport was not exercised",
+    "Neither production source is execution-enabled pending human admission"
+  ],
+  "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+  "previous_validation_date": "2026-10-21",
+  "retest_report": "evidence/classification/retests/2026-10-22/summary.json"
+}

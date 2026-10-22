@@ -1,0 +1,420 @@
+{
+  "schema_version": "1.0.0",
+  "status": "bounded-samples-fixed-paired-biodiv-pending",
+  "frozen_before_adapters": false,
+  "samples": [
+    {
+      "source_ref": "zenodo:13255198",
+      "path": "19902.laz",
+      "tree_id": "19902",
+      "archive": "test.zip",
+      "size_bytes": 871,
+      "compressed_size": 745,
+      "crc32": "b23ce19c",
+      "published_split": "test",
+      "modality": "unknown",
+      "collection": "unknown",
+      "header_offset": 1843575868,
+      "label_matched": false,
+      "points": 118,
+      "sha256": "6adbd503c16c795e50c790d407a97a3ee341338e7604c9520a3ceaa78006c0ae",
+      "point_format": 0,
+      "point_record_length": 20,
+      "native_records_sha256": "d05d80f6841e1ce12bcbf43ae427f2553a95032958bb173bc4ce937616d7907e",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "attributes": [
+        "X",
+        "Y",
+        "Z",
+        "intensity",
+        "return_number",
+        "number_of_returns",
+        "scan_direction_flag",
+        "edge_of_flight_line",
+        "classification",
+        "synthetic",
+        "key_point",
+        "withheld",
+        "scan_angle_rank",
+        "user_data",
+        "point_source_id"
+      ]
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "path": "16436.laz",
+      "tree_id": "16436",
+      "archive": "dev.zip",
+      "size_bytes": 605,
+      "compressed_size": 476,
+      "crc32": "57cdea63",
+      "published_split": "dev",
+      "modality": "TLS",
+      "collection": "BlueCat_a",
+      "header_offset": 9081911077,
+      "label_matched": true,
+      "points": 72,
+      "sha256": "e6e8c29bf97540bfddaf5a98ad3265b35ba071546a690bef428b80bedc1d4ce3",
+      "point_format": 0,
+      "point_record_length": 20,
+      "native_records_sha256": "f3506340dcd323dd5c566f172ded3bdcef51ad92ab85156ad2e17f80c5796247",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "attributes": [
+        "X",
+        "Y",
+        "Z",
+        "intensity",
+        "return_number",
+        "number_of_returns",
+        "scan_direction_flag",
+        "edge_of_flight_line",
+        "classification",
+        "synthetic",
+        "key_point",
+        "withheld",
+        "scan_angle_rank",
+        "user_data",
+        "point_source_id"
+      ]
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "path": "13245.laz",
+      "tree_id": "13245",
+      "archive": "dev.zip",
+      "size_bytes": 1275,
+      "compressed_size": 1154,
+      "crc32": "2408e164",
+      "published_split": "dev",
+      "modality": "MLS",
+      "collection": "Mokros_2022",
+      "header_offset": 7637740546,
+      "label_matched": true,
+      "points": 232,
+      "sha256": "36e6235dc44d29b154edb28b89d57bd0fcc700f9d1063a0e00fabf8c4a74cbe6",
+      "point_format": 0,
+      "point_record_length": 20,
+      "native_records_sha256": "2b6c5d99fca95bf3117913867c986eb224b93300db03cd1f60f8e3798ff90466",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "attributes": [
+        "X",
+        "Y",
+        "Z",
+        "intensity",
+        "return_number",
+        "number_of_returns",
+        "scan_direction_flag",
+        "edge_of_flight_line",
+        "classification",
+        "synthetic",
+        "key_point",
+        "withheld",
+        "scan_angle_rank",
+        "user_data",
+        "point_source_id"
+      ]
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "path": "19933.laz",
+      "tree_id": "19933",
+      "archive": "dev.zip",
+      "size_bytes": 431,
+      "compressed_size": 288,
+      "crc32": "360c8e15",
+      "published_split": "dev",
+      "modality": "ULS",
+      "collection": "Puliti_b",
+      "header_offset": 12668035346,
+      "label_matched": true,
+      "points": 13,
+      "sha256": "df3e6b437b4deeced01351194346a31c65f5f483ad812453ae2a68426c549736",
+      "point_format": 0,
+      "point_record_length": 20,
+      "native_records_sha256": "030e355e2600f8685120eda8bb8d2dd8b094e7b3ada5fddeef92c033628c5c69",
+      "scales": [
+        0.001,
+        0.001,
+        0.001
+      ],
+      "offsets": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "attributes": [
+        "X",
+        "Y",
+        "Z",
+        "intensity",
+        "return_number",
+        "number_of_returns",
+        "scan_direction_flag",
+        "edge_of_flight_line",
+        "classification",
+        "synthetic",
+        "key_point",
+        "withheld",
+        "scan_angle_rank",
+        "user_data",
+        "point_source_id"
+      ]
+    }
+  ],
+  "required_scenarios": [
+    "FOR TLS/MLS/ULS",
+    "BioDiv paired TLS/ULS with complete and genus-only reference",
+    "published validate and test",
+    "unassigned inference",
+    "mixed sources in Chromium and Firefox"
+  ],
+  "pending": [
+    "BioDiv native samples and all-source totals",
+    "Full audit on Ray deferred by user"
+  ],
+  "native_samples": [
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW24_G_31",
+      "observation_id": "SEW24_G_31:TLS:TLS/SEW24_G_31_TLS.laz",
+      "modality": "TLS",
+      "path": "TLS/SEW24_G_31_TLS.laz",
+      "archive": "TLS.tar.zst",
+      "size_bytes": 72132,
+      "sha256": "da0055923edefe6e1fcb6f2100a41d4daaa5fd30074e679d18a896e3b5d4a221",
+      "points": 12099,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "fcfee7f4ce4cbba1bd8f9a2240061c872166a284742127e1fb7d53ad864cd504",
+      "xyz_sha256": "51ab981e9b9c3d9478a316331dac223dceb69f5e83853843a93dc7ed905e3c78",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 12099,
+          "native_records_sha256": "fcfee7f4ce4cbba1bd8f9a2240061c872166a284742127e1fb7d53ad864cd504",
+          "xyz_sha256": "51ab981e9b9c3d9478a316331dac223dceb69f5e83853843a93dc7ed905e3c78"
+        }
+      ],
+      "published_split": "train",
+      "collection": "SEW24"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "SEW27_G_72",
+      "observation_id": "SEW27_G_72:TLS:TLS/SEW27_G_72_TLS.laz",
+      "modality": "TLS",
+      "path": "TLS/SEW27_G_72_TLS.laz",
+      "archive": "TLS.tar.zst",
+      "size_bytes": 1972298,
+      "sha256": "07251a936208900d5196d827d515ccb18d562410896584d05ed3e4384aba70ed",
+      "points": 324060,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "ce2988bf1b3bed791a27c4f09c374713180f886aa7087771a27d206305336135",
+      "xyz_sha256": "37f186e40c4c1b94273c453552190d70935499b14b630bebf276b86f43f08c6a",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 250000,
+          "native_records_sha256": "ccd630506218077182d9e0725fb7c20125922e8572a81dbf2846cb7433ca1721",
+          "xyz_sha256": "36eccbfbdf153cbe1242b5a671e77690fc32b331f240805b27843322e6394bfe"
+        },
+        {
+          "offset": 250000,
+          "points": 74060,
+          "native_records_sha256": "5b99c6ed3c5c85bb120aadf221132ca623104ed7f70958901539015be9910cf5",
+          "xyz_sha256": "7ae280a822f7cc37a754cc890fecd7ce61cb51b8845cea91735d13fdf33883b6"
+        }
+      ],
+      "published_split": "train",
+      "collection": "SEW27"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "AEW33_GD_482",
+      "observation_id": "AEW33_GD_482:ULS:ULS/AEW33_GD_482_ULS.laz",
+      "modality": "ULS",
+      "path": "ULS/AEW33_GD_482_ULS.laz",
+      "archive": "ULS.tar.zst",
+      "size_bytes": 71520,
+      "sha256": "93c86009ee79b85a81f3ddf95e098b072c5d994180c41528a8861e9697f1b613",
+      "points": 6446,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "69190914db6e996740e69041b4d5fa78b79c5c2478efdf298bd793080fcfc601",
+      "xyz_sha256": "cf3fb227558c9fe90576191708e48b22bcd25658d77c3bacdb8101ee4deeaeb0",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 6446,
+          "native_records_sha256": "69190914db6e996740e69041b4d5fa78b79c5c2478efdf298bd793080fcfc601",
+          "xyz_sha256": "cf3fb227558c9fe90576191708e48b22bcd25658d77c3bacdb8101ee4deeaeb0"
+        }
+      ],
+      "published_split": "train",
+      "collection": "AEW33"
+    },
+    {
+      "source_ref": "grodata:128035:1.0",
+      "tree_id": "AEW47_G_80",
+      "observation_id": "AEW47_G_80:ULS:ULS/AEW47_G_80_ULS.laz",
+      "modality": "ULS",
+      "path": "ULS/AEW47_G_80_ULS.laz",
+      "archive": "ULS.tar.zst",
+      "size_bytes": 128684,
+      "sha256": "c73312253ac5a6ddbff9da3622b4a8ce235ef71a78ed10afc12f5143c7882248",
+      "points": 11932,
+      "point_record_length": 34,
+      "point_format": 3,
+      "native_records_sha256": "5f594ec611528fe3e20cb19eb0974e1657eb605b42e4d8eb5f23efbd6dba07c8",
+      "xyz_sha256": "dba4f288c901bc62791c67977293c165b7ed7b65017b945bbbc024421442da99",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 11932,
+          "native_records_sha256": "5f594ec611528fe3e20cb19eb0974e1657eb605b42e4d8eb5f23efbd6dba07c8",
+          "xyz_sha256": "dba4f288c901bc62791c67977293c165b7ed7b65017b945bbbc024421442da99"
+        }
+      ],
+      "published_split": "train",
+      "collection": "AEW47"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "tree_id": "13245",
+      "observation_id": "13245:MLS:13245.laz",
+      "modality": "MLS",
+      "path": "13245.laz",
+      "archive": "dev.zip",
+      "size_bytes": 1275,
+      "sha256": "36e6235dc44d29b154edb28b89d57bd0fcc700f9d1063a0e00fabf8c4a74cbe6",
+      "points": 232,
+      "point_record_length": 20,
+      "point_format": 0,
+      "native_records_sha256": "2b6c5d99fca95bf3117913867c986eb224b93300db03cd1f60f8e3798ff90466",
+      "xyz_sha256": "9c429a335a951bbc2cbdf59ae09934c5efe998aeda623f429419925fed3bba18",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 232,
+          "native_records_sha256": "2b6c5d99fca95bf3117913867c986eb224b93300db03cd1f60f8e3798ff90466",
+          "xyz_sha256": "9c429a335a951bbc2cbdf59ae09934c5efe998aeda623f429419925fed3bba18"
+        }
+      ],
+      "published_split": "dev",
+      "collection": "Mokros_2022"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "tree_id": "16436",
+      "observation_id": "16436:TLS:16436.laz",
+      "modality": "TLS",
+      "path": "16436.laz",
+      "archive": "dev.zip",
+      "size_bytes": 605,
+      "sha256": "e6e8c29bf97540bfddaf5a98ad3265b35ba071546a690bef428b80bedc1d4ce3",
+      "points": 72,
+      "point_record_length": 20,
+      "point_format": 0,
+      "native_records_sha256": "f3506340dcd323dd5c566f172ded3bdcef51ad92ab85156ad2e17f80c5796247",
+      "xyz_sha256": "55e8ec8652762ac0f3c5f1bb4a5ffbd5fde876adf2c58f85e9f3539b70ea3910",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 72,
+          "native_records_sha256": "f3506340dcd323dd5c566f172ded3bdcef51ad92ab85156ad2e17f80c5796247",
+          "xyz_sha256": "55e8ec8652762ac0f3c5f1bb4a5ffbd5fde876adf2c58f85e9f3539b70ea3910"
+        }
+      ],
+      "published_split": "dev",
+      "collection": "BlueCat_a"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "tree_id": "19933",
+      "observation_id": "19933:ULS:19933.laz",
+      "modality": "ULS",
+      "path": "19933.laz",
+      "archive": "dev.zip",
+      "size_bytes": 431,
+      "sha256": "df3e6b437b4deeced01351194346a31c65f5f483ad812453ae2a68426c549736",
+      "points": 13,
+      "point_record_length": 20,
+      "point_format": 0,
+      "native_records_sha256": "030e355e2600f8685120eda8bb8d2dd8b094e7b3ada5fddeef92c033628c5c69",
+      "xyz_sha256": "b4416e7e25c7ad4bb56379260339bef2be76e82363236b6d7f7fb3053833c256",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 13,
+          "native_records_sha256": "030e355e2600f8685120eda8bb8d2dd8b094e7b3ada5fddeef92c033628c5c69",
+          "xyz_sha256": "b4416e7e25c7ad4bb56379260339bef2be76e82363236b6d7f7fb3053833c256"
+        }
+      ],
+      "published_split": "dev",
+      "collection": "Puliti_b"
+    },
+    {
+      "source_ref": "zenodo:13255198",
+      "tree_id": "19902",
+      "observation_id": "19902:unknown:19902.laz",
+      "modality": "unknown",
+      "path": "19902.laz",
+      "archive": "test.zip",
+      "size_bytes": 871,
+      "sha256": "6adbd503c16c795e50c790d407a97a3ee341338e7604c9520a3ceaa78006c0ae",
+      "points": 118,
+      "point_record_length": 20,
+      "point_format": 0,
+      "native_records_sha256": "d05d80f6841e1ce12bcbf43ae427f2553a95032958bb173bc4ce937616d7907e",
+      "xyz_sha256": "ba11421502a915105b8432004da76ce4d33b80fa438cd729a4feb34e82bd278a",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 118,
+          "native_records_sha256": "d05d80f6841e1ce12bcbf43ae427f2553a95032958bb173bc4ce937616d7907e",
+          "xyz_sha256": "ba11421502a915105b8432004da76ce4d33b80fa438cd729a4feb34e82bd278a"
+        }
+      ],
+      "published_split": "test",
+      "collection": "unknown"
+    }
+  ],
+  "limitations": [
+    "BioDiv samples are separate trees; paired-view acceptance is pending",
+    "Complete archive checksums not verified in these bounded samples",
+    "No full native audit or executable source admission"
+  ],
+  "freeze_scope": {
+    "for_initial_selection_before_adapters": true,
+    "biodiv_bounded_inventory_before_production_admission": true,
+    "complete_paired_biodiv_acceptance_fixed": false
+  }
+}

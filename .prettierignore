@@ -24,3 +24,7 @@ docs/sources/FGI-EMIT.md
 docs/sources/FOR-INSTANCE.md
 tests/browser_acceptance/README.md
 tests/e2e/fixtures/
+
+data/classification/
+browser-prepare/classification-runtime-lock.json
+schemas/tree-classification-*.schema.json

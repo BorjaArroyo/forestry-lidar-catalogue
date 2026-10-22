@@ -188,6 +188,12 @@ class KnowledgeModel(unittest.TestCase):
             )
             for source in (WEB / "evidence").glob("*.json"):
                 shutil.copyfile(source, folder / "evidence" / source.name)
+            shutil.copytree(
+                ROOT / "browser-prepare",
+                folder / "browser-prepare",
+                ignore=shutil.ignore_patterns("__pycache__"),
+            )
+            shutil.copytree(ROOT / "evidence/classification", folder / "evidence/classification")
             before = model.read_json(folder / "data/catalog.json")
             model.export_views(folder)
             after = model.read_json(folder / "data/catalog.json")

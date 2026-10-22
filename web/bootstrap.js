@@ -3,6 +3,7 @@ import { createTaskSelection } from './catalog/task-selection.js';
 import { mountModelView } from './catalog/model-view.js';
 import { mountWorkbench } from './workbench/workbench.js';
 import { createServiceClient } from './workbench/client.js';
+import { mountClassification } from '../browser-prepare/classification-ui.js';
 import { mountPreparation } from '../browser-prepare/ui.js';
 
 const catalog = window.LIDAR_CATALOG;
@@ -10,7 +11,11 @@ if (!catalog) {
   document.querySelector('main').textContent =
     'Catalog unavailable. Rebuild catalog.js using the documented command.';
 } else {
-  const selection = createTaskSelection(catalog);
+  const selection = createTaskSelection(
+    catalog,
+    new URLSearchParams(location.search).get('task') === 'species' ? 'species' : 'instances',
+  );
+  const instanceSelection = createTaskSelection(catalog);
   const localService =
     !window.CANOPY_PUBLIC && ['127.0.0.1', 'localhost'].includes(location.hostname);
   const client = createServiceClient({ fetch: window.fetch.bind(window), enabled: localService });
@@ -25,8 +30,12 @@ if (!catalog) {
     document,
     client,
     localService,
-    getTaskRequest: application.getTaskRequest,
-    selection,
+    getTaskRequest: () =>
+      application.getTaskRequest().task_ref === 'task:species'
+        ? instanceSelection.normalize()
+        : application.getTaskRequest(),
+    selection: instanceSelection,
   });
-  mountPreparation({ catalog, document, selection });
+  mountPreparation({ catalog, document, selection: instanceSelection });
+  mountClassification({ catalog, document });
 }

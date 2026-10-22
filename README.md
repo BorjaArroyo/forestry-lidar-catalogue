@@ -216,3 +216,7 @@ The supported commands are `canopy acquire`, `canopy model`, `canopy plan`,
 Use `python -m canopy` when selecting a specific Python environment. The generic
 normalizer, WASI prototype and experimental small-asset downloader have been removed.
 Their previous source remains in Git, rather than in the installed application.
+
+Tree taxonomic classification now shares Sources, Workbench and the task graph.
+See [classification contracts and validation](docs/guides/TREE-CLASSIFICATION.md)
+for rank-specific labels, native sensor views, source conditions and audited limitations.

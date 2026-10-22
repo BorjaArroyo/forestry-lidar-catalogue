@@ -39,9 +39,9 @@ test('admitted routes have unique typed nodes and preserve canonical flow roles'
 
 test('reported support expands discovery without granting execution or duplicating sources', () => {
   const graph = project({ includeReported: true });
-  assert.equal(graph.nodes.filter((node) => node.type === 'source_release').length, 10);
-  assert.equal(graph.reportedCount, 8);
-  assert.equal(graph.edges.filter((edge) => edge.kind === 'support').length, 8);
+  assert.equal(graph.nodes.filter((node) => node.type === 'source_release').length, 12);
+  assert.equal(graph.reportedCount, 10);
+  assert.equal(graph.edges.filter((edge) => edge.kind === 'support').length, 10);
   assert.equal(graph.pipelineCount, 2);
   assert.equal(graph.nodes.length, new Set(graph.nodes.map((node) => node.id)).size);
 });
@@ -49,16 +49,16 @@ test('reported support expands discovery without granting execution or duplicati
 test('task visibility and disabled preparation remain authoritative', () => {
   assert.deepEqual(
     visibleTasks(model).map(([id]) => id),
-    [taskId],
+    [taskId, 'task:species'],
   );
-  assert.throws(() => projectTaskGraph(model, 'task:species'), /unavailable/);
+  assert.throws(() => projectTaskGraph(model, 'task:components'), /unavailable/);
   const changed = structuredClone(model);
   for (const node of Object.values(changed.nodes))
     if (node.type === 'pipeline_spec') node.data.execution_enabled = false;
   const graph = projectTaskGraph(changed, taskId);
   assert.equal(graph.pipelineCount, 0);
   assert.equal(graph.nodes.filter((node) => node.type === 'source_release').length, 0);
-  assert.equal(projectTaskGraph(changed, taskId, { includeReported: true }).reportedCount, 10);
+  assert.equal(projectTaskGraph(changed, taskId, { includeReported: true }).reportedCount, 12);
   assert.ok(layoutTaskGraph(graph).bounds.height > 0);
 });
 

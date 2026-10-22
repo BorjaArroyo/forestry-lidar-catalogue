@@ -4,6 +4,7 @@ import argparse
 from importlib import import_module
 
 COMMANDS = {
+    "classification": "canopy.classification.cli",
     "plan": "canopy.task_plan",
     "acquire": "canopy.tools.acquire",
     "model": "canopy.knowledge_model",

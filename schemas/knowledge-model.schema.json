@@ -380,6 +380,41 @@
         },
         "discovery": {
           "$ref": "#/$defs/discovery"
+        },
+        "classification": {
+          "type": "object",
+          "properties": {
+            "source_ref": {
+              "type": "string"
+            },
+            "trees": {
+              "type": "integer"
+            },
+            "observations": {
+              "type": "integer"
+            },
+            "genus_only": {
+              "type": "integer"
+            },
+            "partitions": {
+              "type": "object"
+            },
+            "duplicate_cloud_groups_crossing_partitions": {
+              "type": "integer"
+            },
+            "metadata_path": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_ref",
+            "trees",
+            "observations",
+            "genus_only",
+            "partitions",
+            "metadata_path"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -420,6 +455,10 @@
             },
             "profile": {
               "$ref": "#/$defs/sourceProfile"
+            },
+            "source_ref": {
+              "type": "string",
+              "pattern": "^(zenodo:[1-9][0-9]*|grodata:[1-9][0-9]*:[0-9]+\\.[0-9]+)$"
             }
           },
           "required": [
@@ -651,6 +690,44 @@
                       "additionalProperties": false
                     },
                     "inference": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "required_variables": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1,
+                          "uniqueItems": true
+                        },
+                        "allowed_partitions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "minItems": 1,
+                          "uniqueItems": true
+                        },
+                        "detail": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "required_variables",
+                        "allowed_partitions",
+                        "detail"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "validation": {
                       "type": "object",
                       "properties": {
                         "label": {

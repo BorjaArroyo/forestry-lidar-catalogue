@@ -13,7 +13,8 @@ export function mountCatalog({
       'Catalog unavailable. Rebuild catalog.js using the documented command.';
     return null;
   }
-  const task = selection.task;
+  let task = selection.task;
+  const taskStates = new Map();
   const $ = (selector, root = doc) => root.querySelector(selector);
   const $$ = (selector, root = doc) => [...root.querySelectorAll(selector)];
   const number = (n) => Number(n).toLocaleString('en-US');
@@ -29,6 +30,7 @@ export function mountCatalog({
     preparation: 'all',
     taskUse: 'training',
     taskVariables: {},
+    rank: 'species',
     taskRunning: false,
     compare: new Set(),
   };
@@ -65,13 +67,15 @@ export function mountCatalog({
       : 'Size not reviewed';
   const readinessHtml = (d) => {
     const s = discovery(d);
-    return `<dl class="source-readiness"><div><dt>Instance reference</dt><dd><span class="source-status reference-${esc(s.instance_reference.status)}">${esc(s.instance_reference.label)}</span></dd></div><div><dt>Task preparation</dt><dd><span class="source-status preparation-${esc(s.preparation.status)}">${esc(s.preparation.label)}</span></dd></div></dl>`;
+    return `<dl class="source-readiness"><div><dt>${task.id === 'species' ? 'Taxonomic reference' : 'Instance reference'}</dt><dd><span class="source-status reference-${esc(s.instance_reference.status)}">${esc(s.instance_reference.label)}</span></dd></div><div><dt>Task preparation</dt><dd><span class="source-status preparation-${esc(s.preparation.status)}">${esc(s.preparation.label)}</span></dd></div></dl>`;
   };
-  const sourceServiceNote = () =>
-    (serviceConnected
-      ? 'The connected service can inspect the record before you start its download.'
-      : 'Connect the local service to download originals into a chosen directory. The provider record remains directly accessible.') +
-    ' This optional service retrieves whole records. Browser plot selection is available for admitted requests.';
+  const sourceServiceNote = (source) =>
+    source?.classification
+      ? 'Classification originals are read from the pinned provider or supplied locally in Workbench. The optional HTTP service does not prepare this task.'
+      : (serviceConnected
+          ? 'The connected service can inspect the record before you start its download.'
+          : 'Connect the local service to download originals into a chosen directory. The provider record remains directly accessible.') +
+        ' This optional service retrieves whole records. Browser plot selection is available for admitted requests.';
   const matches = (d) => {
     const text = [
       d.name,
@@ -99,12 +103,18 @@ export function mountCatalog({
     const variables = { ...state.taskVariables };
     for (const key of task.requirements.uses[state.taskUse].required_variables)
       delete variables[key];
-    return selection.normalize(state.taskUse, variables);
+    return {
+      ...selection.normalize(state.taskUse, variables),
+      ...(task.id === 'species' ? { rank: state.rank } : {}),
+    };
   }
   function renderTaskRequest() {
     const request = taskRequest(),
       use = task.requirements.uses[request.use];
     $('#task-use').value = request.use;
+    $('#task-rank-label').hidden = task.id !== 'species';
+    $('#task-rank').value = state.rank;
+    $('#task-variables').hidden = task.id === 'species';
     $('#task-use').disabled = state.taskRunning;
     for (const variable of task.requirements.variables) {
       const input = $('#variable-' + variable.key);
@@ -131,9 +141,10 @@ export function mountCatalog({
   }
   document.addEventListener('canopy-set-task-request', (event) => {
     if (state.taskRunning) return;
-    const normalized = selection.normalize(event.detail.use, event.detail.variables);
+    const normalized = selection.normalize(event.detail.use, event.detail.variables || {});
     state.taskUse = normalized.use;
     state.taskVariables = { ...normalized.variables };
+    if (['genus', 'species'].includes(event.detail.rank)) state.rank = event.detail.rank;
     taskChanged();
   });
   function sourceReview(d) {
@@ -244,7 +255,7 @@ export function mountCatalog({
     $('#detail-dialog-title').textContent = d.name;
     $('#dialog-detail').innerHTML = `<div class="source-detail">
       <section class="source-summary" aria-label="Source summary"><div class="badges">${badge(d.modalities.join(' · '))}${badge(s.unit_label)}${badge(`Pinned record ${d.id}`)}</div><p class="source-location">${esc(d.geography)}</p><p class="source-coverage">${esc(s.coverage)}</p><div class="source-limitation"><strong>Key limitation</strong><p>${esc(s.limitation)}</p></div>
-      <div class="source-actions">${fit.status === 'ready' ? `<button class="button primary" data-task-prepare="${d.id}">Prepare data for this request</button>` : ''}${link('Open provider record', d.url)}<button class="button small" data-compare="${d.id}">${state.compare.has(id) ? 'Remove from comparison' : 'Add to comparison'}</button><button class="button small" data-source-download="${d.id}" ${serviceConnected ? '' : 'disabled'}>Review original downloads</button></div><p class="source-service-note">${esc(sourceServiceNote())}</p></section>
+      <div class="source-actions">${fit.status === 'ready' ? `<button class="button primary" data-task-prepare="${d.id}">Prepare data for this request</button>` : ''}${link('Open provider record', d.url)}<button class="button small" data-compare="${d.id}">${state.compare.has(id) ? 'Remove from comparison' : 'Add to comparison'}</button><button class="button small" data-source-download="${d.id}" ${serviceConnected && !d.classification ? '' : 'disabled'}>Review original downloads</button></div><p class="source-service-note">${esc(sourceServiceNote())}</p></section>
       <section class="source-section" aria-label="Request compatibility"><h3>Compatibility with your request</h3>${readinessHtml(d)}${requestFit(d)}</section>
       <details class="source-section" data-section="preparation" open><summary>Preparation and validated scope</summary><p>${esc(s.preparation.detail)}</p><p>Whole pinned record: ${recordSize(d)} in ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'}. Supporting files are included where present; extracted data needs additional space.</p></details>
       <details class="source-section" data-section="evidence"><summary>Source evidence and unresolved questions</summary>${sourceReview(d)}</details>
@@ -369,6 +380,9 @@ export function mountCatalog({
     clearTimeout(urlTimer);
     urlTimer = setTimeout(() => {
       const params = new URLSearchParams();
+      if (task.id !== 'instances') params.set('task', task.id);
+      if (state.taskUse !== 'training') params.set('use', state.taskUse);
+      if (task.id === 'species' && state.rank !== 'species') params.set('rank', state.rank);
       if (state.search) params.set('q', state.search);
       if (state.compare.size) params.set('compare', [...state.compare].join(','));
       for (const key of ['platform', 'unit', 'reference', 'preparation'])
@@ -393,6 +407,8 @@ export function mountCatalog({
         .filter((id) => Object.hasOwn(byId, id))
         .slice(0, 3),
     );
+    if (Object.hasOwn(task.requirements.uses, params.get('use'))) state.taskUse = params.get('use');
+    if (params.get('rank') === 'genus') state.rank = 'genus';
     state.search = params.get('q') || '';
     $('#search').value = state.search;
     for (const key of ['platform', 'unit', 'reference', 'preparation']) {
@@ -432,6 +448,15 @@ export function mountCatalog({
     $('#compare-open').hidden = state.view !== 'datasets';
     $('.toolbar').hidden = state.view !== 'datasets';
     $('.task-request').hidden = state.view === 'model';
+    if (task.id === 'species' && state.view !== 'model') {
+      $('.page-heading h1').textContent =
+        state.view === 'workbench'
+          ? 'Build a tree classification dataset.'
+          : 'Find tree classification data.';
+      $('.page-heading .eyebrow').textContent = 'TREE TAXONOMIC CLASSIFICATION';
+      $('.page-heading p').textContent =
+        'Native sensor observations, explicit reference by rank and audited source limitations.';
+    }
     $('#active-filters').hidden ||= state.view !== 'datasets';
     const view = state.view;
     $('#breadcrumb-view').textContent = VIEW_TITLES[view] || 'Sources';
@@ -469,7 +494,13 @@ export function mountCatalog({
       selectView('workbench');
       document.dispatchEvent(
         new CustomEvent('canopy-prepare-task', {
-          detail: { ...taskRequest(), record_id: target.dataset.taskPrepare },
+          detail: {
+            ...taskRequest(),
+            task_ref: 'task:' + task.id,
+            source_ref:
+              byId[target.dataset.taskPrepare].source_ref || 'zenodo:' + target.dataset.taskPrepare,
+            record_id: target.dataset.taskPrepare,
+          },
         }),
       );
     }
@@ -504,24 +535,57 @@ export function mountCatalog({
       $('#search').focus();
     }
   });
-  $('#task-use').innerHTML = Object.entries(task.requirements.uses)
-    .map(([key, use]) => `<option value="${esc(key)}">${esc(use.label)}</option>`)
-    .join('');
-  $('#task-variables').innerHTML = task.requirements.variables
-    .map(
-      (v) =>
-        `<label title="${esc(v.detail)}">${esc(v.label)}<select id="variable-${esc(v.key)}"><option value="required">Required</option><option value="optional">Optional</option><option value="off">Do not use</option></select></label>`,
-    )
-    .join('');
-  $('#task-use').addEventListener('change', (e) => {
-    state.taskUse = e.target.value;
-    taskChanged();
-  });
-  for (const v of task.requirements.variables)
-    $('#variable-' + v.key).addEventListener('change', (e) => {
-      state.taskVariables[v.key] = e.target.value;
+  function populateTaskControls() {
+    $('#task-use').innerHTML = Object.entries(task.requirements.uses)
+      .map(([key, use]) => `<option value="${esc(key)}">${esc(use.label)}</option>`)
+      .join('');
+    $('#task-variables').innerHTML = task.requirements.variables
+      .map(
+        (v) =>
+          `<label title="${esc(v.detail)}">${esc(v.label)}<select id="variable-${esc(v.key)}"><option value="required">Required</option><option value="optional">Optional</option><option value="off">Do not use</option></select></label>`,
+      )
+      .join('');
+    $('#task-use').onchange = (e) => {
+      state.taskUse = e.target.value;
       taskChanged();
+    };
+    for (const v of task.requirements.variables)
+      $('#variable-' + v.key).onchange = (e) => {
+        state.taskVariables[v.key] = e.target.value;
+        taskChanged();
+      };
+  }
+  function selectTask(id) {
+    if (state.taskRunning || id === task.id) return;
+    taskStates.set(task.id, {
+      taskUse: state.taskUse,
+      taskVariables: state.taskVariables,
+      rank: state.rank,
     });
+    selection.setTask(id);
+    task = selection.task;
+    Object.assign(
+      state,
+      taskStates.get(id) || { taskUse: 'training', taskVariables: {}, rank: 'species' },
+    );
+    $('#preparation-task').value = 'task:' + id;
+    populateTaskControls();
+    taskChanged();
+    selectView(state.view);
+    document.dispatchEvent(
+      new CustomEvent('canopy-task-change', { detail: { task_ref: 'task:' + id } }),
+    );
+  }
+  $('#preparation-task').value = 'task:' + task.id;
+  $('#preparation-task').onchange = (e) => selectTask(e.target.value.replace('task:', ''));
+  $('#task-rank').onchange = (e) => {
+    state.rank = e.target.value;
+    taskChanged();
+  };
+  document.addEventListener('canopy-select-task', (e) =>
+    selectTask(e.detail.task_ref.replace('task:', '')),
+  );
+  populateTaskControls();
   renderTaskRequest();
   $('#search').addEventListener('input', (e) => {
     state.search = e.target.value;

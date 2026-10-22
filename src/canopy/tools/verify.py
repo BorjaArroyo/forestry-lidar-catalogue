@@ -25,6 +25,7 @@ def steps():
     return [
         ("Validate the curated knowledge model", [python, "-m", "canopy", "model"]),
         ("Validate publication fingerprints", [python, "-m", "canopy", "publication"]),
+        ("Audit classification metadata", [python, "-m", "canopy", "classification", "audit"]),
         ("Check Python style", [python, "-m", "ruff", "check", "."]),
         ("Check Python formatting", [python, "-m", "ruff", "format", "--check", "."]),
         ("Check JavaScript style", ["npm", "run", "lint"]),

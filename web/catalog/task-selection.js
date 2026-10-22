@@ -1,7 +1,13 @@
 /* Presentation only: the worker independently resolves and validates every request. */
-export function createTaskSelection(catalog) {
-  const task = catalog.tasks.find((t) => t.id === 'instances');
-  const requirements = task.requirements;
+export function createTaskSelection(catalog, initialTask = 'instances') {
+  let task, requirements;
+  function setTask(id) {
+    const selected = catalog.tasks.find((t) => t.id === id && t.requirements);
+    if (!selected) throw Error('Unknown preparation task');
+    task = selected;
+    requirements = task.requirements;
+  }
+  setTask(initialTask);
   function normalize(use = 'training', variables = {}) {
     if (!Object.hasOwn(requirements.uses, use)) throw Error('Unknown task use');
     const choices = Object.fromEntries(requirements.variables.map((v) => [v.key, v.default]));
@@ -15,7 +21,12 @@ export function createTaskSelection(catalog) {
         throw Error('Task minimum cannot be relaxed: ' + key);
       choices[key] = 'required';
     }
-    return { use, variables: choices };
+    if (task.id === 'species' && use === 'inference') choices.taxonomy = 'off';
+    return {
+      use,
+      variables: choices,
+      ...(task.id === 'species' ? { task_ref: 'task:species', rank: 'species' } : {}),
+    };
   }
   function assess(record, request) {
     request = normalize(request.use, request.variables);
@@ -36,6 +47,18 @@ export function createTaskSelection(catalog) {
         if (choice === 'required') blockers.push(key + ': ' + reason);
       }
     }
+    if (task.id === 'species') {
+      const source = catalog.datasets.find((d) => d.id === String(record));
+      if (
+        !source?.classification ||
+        !requirements.uses[request.use].allowed_partitions.some(
+          (p) => source.classification.partitions[p],
+        )
+      )
+        blockers.push('No published partition for this use');
+      if (record === '13255198' && request.use === 'evaluation')
+        blockers.push('FOR test has no public taxonomic reference');
+    }
     if (!pipeline) blockers.unshift('No admitted source-specific preparation pipeline');
     return {
       ...request,
@@ -48,6 +71,9 @@ export function createTaskSelection(catalog) {
     };
   }
   function matches(record, request) {
+    const sourceRecord = catalog.datasets.find((d) => d.id === String(record));
+    if (task.id === 'species') return Boolean(sourceRecord?.classification);
+    if (sourceRecord?.classification) return false;
     const result = assess(record, request);
     const context = task.preparation_sources[String(record)];
     const source = catalog.datasets.find((d) => d.id === String(record));
@@ -68,5 +94,13 @@ export function createTaskSelection(catalog) {
       );
     });
   }
-  return { task, normalize, assess, matches };
+  return {
+    get task() {
+      return task;
+    },
+    setTask,
+    normalize,
+    assess,
+    matches,
+  };
 }

@@ -1,0 +1,3 @@
+# Retain exact checksummed provider and vendored bytes.
+data/classification/sources/** -text -whitespace
+browser-prepare/vendor/** -whitespace

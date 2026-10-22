@@ -4,7 +4,7 @@ test('catalog modules load below the published project path', async ({ page }) =
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
   await page.goto('./');
-  await expect(page.locator('#dataset-count')).toHaveText('10');
+  await expect(page.locator('#dataset-count')).toHaveText('12');
   await expect(page.locator('#dataset-grid article')).toHaveCount(8);
   expect(pageErrors).toEqual([]);
   expect(await page.evaluate(() => 'CanopyHub' in window || 'CanopyTaskSelection' in window)).toBe(

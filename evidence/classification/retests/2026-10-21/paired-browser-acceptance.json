@@ -1,0 +1,532 @@
+{
+  "schema_version": "1.0.0",
+  "status": "bounded-native-samples-validated",
+  "scope": "Exact original paired cloud bytes in small repackaged archives",
+  "implementation_sha256": "eee2d5b8a61fc2286f8cb39107cd6483bec63c168211404020bd9dae9d7b7263",
+  "fixture_sha256": "0c9ac61fb819cc89dc6a77da6db69dbe9cc5a78c86243f9c59e5913070675949",
+  "runs": [
+    {
+      "browser": "chromium",
+      "version": "145.0.7632.6",
+      "use": "training",
+      "rank": "genus",
+      "zip_sha256": "98876d7ff497b8bd2f3fcd492964e03ea0d020d1ccd74dccfae5753b190d85b8",
+      "zip_size": 12643548,
+      "plan_sha256": "1b9d49f9a5bd6d77a3bad171681fccec76214ffa7db8c8ac44678448d308fef1",
+      "runtime_sha256": "da0a492fcbdf2a37368eca1287cbb9e0a6755a6cdef40817c1311eb135fbbb8f",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 6881280,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "process_memory": {
+        "process_tree_rss_sum_peak_bytes": 907018240,
+        "process_tree_pss_sum_peak_bytes": 485713920,
+        "sampling_interval_seconds": 0.5,
+        "samples": 9,
+        "scope": "Sampled local browser, Playwright and acceptance Python process tree; RSS double-counts shared pages, PSS apportions them"
+      },
+      "archive_verification": [
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 2,
+          "tar_complete": true,
+          "archive": "TLS.tar.zst",
+          "size_bytes": 680943,
+          "expanded_bytes": 686080,
+          "sha256": "e1b5054affe4d15d8462479465977cf1d96910da91476735f62149b4d8248600",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 2,
+          "tar_complete": true,
+          "archive": "ULS.tar.zst",
+          "size_bytes": 14819,
+          "expanded_bytes": 30720,
+          "sha256": "5a07aaff594b2b2789afd14f7a6b8fc24b091214c31f2cdd528f1d0f41f9473b",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "zenodo:13255198",
+          "archive": "dev.zip",
+          "selected_members_verified": true,
+          "provider_checksum_verified": false,
+          "traversals": null
+        }
+      ],
+      "elapsed_seconds": 3.9,
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 5,
+      "observations": 7,
+      "points": 268284,
+      "blocks": 8,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission",
+      "second_source_corruption": "rejected-without-zip-and-staging-cleared",
+      "cancellation": "rejected-without-zip-and-active-staging-cleared"
+    },
+    {
+      "browser": "chromium",
+      "version": "145.0.7632.6",
+      "use": "validation",
+      "rank": "species",
+      "zip_sha256": "0f8056291bdbc97798555e19964a8a7c77082502506915cd91b140fc7ca6d53c",
+      "zip_size": 566977,
+      "plan_sha256": "7b6099817d59e4cfddfb84c01ec6e769fb03788560118eae992c40d6b4b83752",
+      "runtime_sha256": "da0a492fcbdf2a37368eca1287cbb9e0a6755a6cdef40817c1311eb135fbbb8f",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 4063232,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "process_memory": {
+        "process_tree_rss_sum_peak_bytes": 826847232,
+        "process_tree_pss_sum_peak_bytes": 404551680,
+        "sampling_interval_seconds": 0.5,
+        "samples": 4,
+        "scope": "Sampled local browser, Playwright and acceptance Python process tree; RSS double-counts shared pages, PSS apportions them"
+      },
+      "archive_verification": [
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 1,
+          "tar_complete": true,
+          "archive": "TLS.tar.zst",
+          "size_bytes": 680943,
+          "expanded_bytes": 686080,
+          "sha256": "e1b5054affe4d15d8462479465977cf1d96910da91476735f62149b4d8248600",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 1,
+          "tar_complete": true,
+          "archive": "ULS.tar.zst",
+          "size_bytes": 14819,
+          "expanded_bytes": 30720,
+          "sha256": "5a07aaff594b2b2789afd14f7a6b8fc24b091214c31f2cdd528f1d0f41f9473b",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        }
+      ],
+      "elapsed_seconds": 1.6,
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 1,
+      "observations": 2,
+      "points": 7706,
+      "blocks": 2,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission"
+    },
+    {
+      "browser": "chromium",
+      "version": "145.0.7632.6",
+      "use": "evaluation",
+      "rank": "species",
+      "zip_sha256": "6fe533958b79f011e69bc656f7ac7480fc7ae3044dab2bc7f26d12bc2377cd7a",
+      "zip_size": 622687,
+      "plan_sha256": "12fe2816e46a9d30f9bd6e833c630c3e26771184b0128e33df6a7e179276eb89",
+      "runtime_sha256": "da0a492fcbdf2a37368eca1287cbb9e0a6755a6cdef40817c1311eb135fbbb8f",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 4063232,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "process_memory": {
+        "process_tree_rss_sum_peak_bytes": 827822080,
+        "process_tree_pss_sum_peak_bytes": 402763776,
+        "sampling_interval_seconds": 0.5,
+        "samples": 4,
+        "scope": "Sampled local browser, Playwright and acceptance Python process tree; RSS double-counts shared pages, PSS apportions them"
+      },
+      "archive_verification": [
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 1,
+          "tar_complete": true,
+          "archive": "TLS.tar.zst",
+          "size_bytes": 680943,
+          "expanded_bytes": 686080,
+          "sha256": "e1b5054affe4d15d8462479465977cf1d96910da91476735f62149b4d8248600",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 1,
+          "tar_complete": true,
+          "archive": "ULS.tar.zst",
+          "size_bytes": 14819,
+          "expanded_bytes": 30720,
+          "sha256": "5a07aaff594b2b2789afd14f7a6b8fc24b091214c31f2cdd528f1d0f41f9473b",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        }
+      ],
+      "elapsed_seconds": 1.61,
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 1,
+      "observations": 2,
+      "points": 8480,
+      "blocks": 2,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission"
+    },
+    {
+      "browser": "chromium",
+      "version": "145.0.7632.6",
+      "use": "inference",
+      "rank": "species",
+      "zip_sha256": "5fe9452ce0e8cd2199b98b0f85d6d3f359c671edd75ced357f93a0a06ca3e25d",
+      "zip_size": 60992181,
+      "plan_sha256": "bd2839fc418b709df920b38a2bf44d28bd86388c57cec507f44bf48ff28cd0b0",
+      "runtime_sha256": "da0a492fcbdf2a37368eca1287cbb9e0a6755a6cdef40817c1311eb135fbbb8f",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 14417920,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "process_memory": {
+        "process_tree_rss_sum_peak_bytes": 1025642496,
+        "process_tree_pss_sum_peak_bytes": 629439488,
+        "sampling_interval_seconds": 0.5,
+        "samples": 16,
+        "scope": "Sampled local browser, Playwright and acceptance Python process tree; RSS double-counts shared pages, PSS apportions them"
+      },
+      "archive_verification": [
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 5,
+          "tar_complete": true,
+          "archive": "TLS.tar.zst",
+          "size_bytes": 680943,
+          "expanded_bytes": 686080,
+          "sha256": "e1b5054affe4d15d8462479465977cf1d96910da91476735f62149b4d8248600",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 5,
+          "tar_complete": true,
+          "archive": "ULS.tar.zst",
+          "size_bytes": 14819,
+          "expanded_bytes": 30720,
+          "sha256": "5a07aaff594b2b2789afd14f7a6b8fc24b091214c31f2cdd528f1d0f41f9473b",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "zenodo:13255198",
+          "archive": "dev.zip",
+          "selected_members_verified": true,
+          "provider_checksum_verified": false,
+          "traversals": null
+        },
+        {
+          "source_ref": "zenodo:13255198",
+          "archive": "test.zip",
+          "selected_members_verified": true,
+          "provider_checksum_verified": false,
+          "traversals": null
+        }
+      ],
+      "elapsed_seconds": 7.66,
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 9,
+      "observations": 14,
+      "points": 1118470,
+      "blocks": 18,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission"
+    },
+    {
+      "browser": "firefox",
+      "version": "146.0.1",
+      "use": "training",
+      "rank": "genus",
+      "zip_sha256": "c5b594f29f346fd4f17a6902c4a226dd5c60eb07c5bee75be32cbc6870175eee",
+      "zip_size": 12643506,
+      "plan_sha256": "1b9d49f9a5bd6d77a3bad171681fccec76214ffa7db8c8ac44678448d308fef1",
+      "runtime_sha256": "da0a492fcbdf2a37368eca1287cbb9e0a6755a6cdef40817c1311eb135fbbb8f",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 6881280,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "process_memory": {
+        "process_tree_rss_sum_peak_bytes": 1161437184,
+        "process_tree_pss_sum_peak_bytes": 676950016,
+        "sampling_interval_seconds": 0.5,
+        "samples": 15,
+        "scope": "Sampled local browser, Playwright and acceptance Python process tree; RSS double-counts shared pages, PSS apportions them"
+      },
+      "archive_verification": [
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 2,
+          "tar_complete": true,
+          "archive": "TLS.tar.zst",
+          "size_bytes": 680943,
+          "expanded_bytes": 686080,
+          "sha256": "e1b5054affe4d15d8462479465977cf1d96910da91476735f62149b4d8248600",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 2,
+          "tar_complete": true,
+          "archive": "ULS.tar.zst",
+          "size_bytes": 14819,
+          "expanded_bytes": 30720,
+          "sha256": "5a07aaff594b2b2789afd14f7a6b8fc24b091214c31f2cdd528f1d0f41f9473b",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "zenodo:13255198",
+          "archive": "dev.zip",
+          "selected_members_verified": true,
+          "provider_checksum_verified": false,
+          "traversals": null
+        }
+      ],
+      "elapsed_seconds": 7.22,
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 5,
+      "observations": 7,
+      "points": 268284,
+      "blocks": 8,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission",
+      "second_source_corruption": "rejected-without-zip-and-staging-cleared",
+      "cancellation": "rejected-without-zip-and-active-staging-cleared"
+    },
+    {
+      "browser": "firefox",
+      "version": "146.0.1",
+      "use": "validation",
+      "rank": "species",
+      "zip_sha256": "a798d9acbdcbb73dbd3179a38e24c22fdb1dfa440e7eca491834cd96274d868d",
+      "zip_size": 566935,
+      "plan_sha256": "7b6099817d59e4cfddfb84c01ec6e769fb03788560118eae992c40d6b4b83752",
+      "runtime_sha256": "da0a492fcbdf2a37368eca1287cbb9e0a6755a6cdef40817c1311eb135fbbb8f",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 4063232,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "process_memory": {
+        "process_tree_rss_sum_peak_bytes": 1182568448,
+        "process_tree_pss_sum_peak_bytes": 709220352,
+        "sampling_interval_seconds": 0.5,
+        "samples": 6,
+        "scope": "Sampled local browser, Playwright and acceptance Python process tree; RSS double-counts shared pages, PSS apportions them"
+      },
+      "archive_verification": [
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 1,
+          "tar_complete": true,
+          "archive": "TLS.tar.zst",
+          "size_bytes": 680943,
+          "expanded_bytes": 686080,
+          "sha256": "e1b5054affe4d15d8462479465977cf1d96910da91476735f62149b4d8248600",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 1,
+          "tar_complete": true,
+          "archive": "ULS.tar.zst",
+          "size_bytes": 14819,
+          "expanded_bytes": 30720,
+          "sha256": "5a07aaff594b2b2789afd14f7a6b8fc24b091214c31f2cdd528f1d0f41f9473b",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        }
+      ],
+      "elapsed_seconds": 2.56,
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 1,
+      "observations": 2,
+      "points": 7706,
+      "blocks": 2,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission"
+    },
+    {
+      "browser": "firefox",
+      "version": "146.0.1",
+      "use": "evaluation",
+      "rank": "species",
+      "zip_sha256": "d702b7541961c954e1966d9039bf95a36ad6e1e9380cde28c8a7c230ab424f53",
+      "zip_size": 622645,
+      "plan_sha256": "12fe2816e46a9d30f9bd6e833c630c3e26771184b0128e33df6a7e179276eb89",
+      "runtime_sha256": "da0a492fcbdf2a37368eca1287cbb9e0a6755a6cdef40817c1311eb135fbbb8f",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 4063232,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "process_memory": {
+        "process_tree_rss_sum_peak_bytes": 1215746048,
+        "process_tree_pss_sum_peak_bytes": 742453248,
+        "sampling_interval_seconds": 0.5,
+        "samples": 6,
+        "scope": "Sampled local browser, Playwright and acceptance Python process tree; RSS double-counts shared pages, PSS apportions them"
+      },
+      "archive_verification": [
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 1,
+          "tar_complete": true,
+          "archive": "TLS.tar.zst",
+          "size_bytes": 680943,
+          "expanded_bytes": 686080,
+          "sha256": "e1b5054affe4d15d8462479465977cf1d96910da91476735f62149b4d8248600",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 1,
+          "tar_complete": true,
+          "archive": "ULS.tar.zst",
+          "size_bytes": 14819,
+          "expanded_bytes": 30720,
+          "sha256": "5a07aaff594b2b2789afd14f7a6b8fc24b091214c31f2cdd528f1d0f41f9473b",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        }
+      ],
+      "elapsed_seconds": 2.51,
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 1,
+      "observations": 2,
+      "points": 8480,
+      "blocks": 2,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission"
+    },
+    {
+      "browser": "firefox",
+      "version": "146.0.1",
+      "use": "inference",
+      "rank": "species",
+      "zip_sha256": "0ed819a40985d3263e45d784f4ce39f7901806135164916eac273ad15d0e3490",
+      "zip_size": 60992139,
+      "plan_sha256": "bd2839fc418b709df920b38a2bf44d28bd86388c57cec507f44bf48ff28cd0b0",
+      "runtime_sha256": "da0a492fcbdf2a37368eca1287cbb9e0a6755a6cdef40817c1311eb135fbbb8f",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "observed_memory": {
+        "laz_perf_heap_bytes": 14417920,
+        "process_peak_bytes": null,
+        "scope": "Allocated decoder heap at completion; not whole-process peak memory"
+      },
+      "process_memory": {
+        "process_tree_rss_sum_peak_bytes": 1202712576,
+        "process_tree_pss_sum_peak_bytes": 729307136,
+        "sampling_interval_seconds": 0.5,
+        "samples": 23,
+        "scope": "Sampled local browser, Playwright and acceptance Python process tree; RSS double-counts shared pages, PSS apportions them"
+      },
+      "archive_verification": [
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 5,
+          "tar_complete": true,
+          "archive": "TLS.tar.zst",
+          "size_bytes": 680943,
+          "expanded_bytes": 686080,
+          "sha256": "e1b5054affe4d15d8462479465977cf1d96910da91476735f62149b4d8248600",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "grodata:128035:1.0",
+          "entries": 5,
+          "selected": 5,
+          "tar_complete": true,
+          "archive": "ULS.tar.zst",
+          "size_bytes": 14819,
+          "expanded_bytes": 30720,
+          "sha256": "5a07aaff594b2b2789afd14f7a6b8fc24b091214c31f2cdd528f1d0f41f9473b",
+          "provider_checksum_verified": true,
+          "traversals": 1,
+          "zstd_window_limit_bytes": 67108864
+        },
+        {
+          "source_ref": "zenodo:13255198",
+          "archive": "dev.zip",
+          "selected_members_verified": true,
+          "provider_checksum_verified": false,
+          "traversals": null
+        },
+        {
+          "source_ref": "zenodo:13255198",
+          "archive": "test.zip",
+          "selected_members_verified": true,
+          "provider_checksum_verified": false,
+          "traversals": null
+        }
+      ],
+      "elapsed_seconds": 11.83,
+      "status": "validated",
+      "task_ref": "task:species",
+      "trees": 9,
+      "observations": 14,
+      "points": 1118470,
+      "blocks": 18,
+      "scope": "Complete exported selection against original LAS/LAZ; no whole-source admission"
+    }
+  ],
+  "limitations": [
+    "Acceptance runs do not constitute publication admission",
+    "Selected browser observations are bounded; the independent native audit covers every point cloud",
+    "Process memory is sampled, not an instrumented allocation limit"
+  ]
+}

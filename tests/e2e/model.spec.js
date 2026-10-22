@@ -32,9 +32,9 @@ test('model navigation respects visibility and inspects requirements separately 
   await openModel(page);
   await expect(page.locator('[data-view="model"]')).toBeVisible();
   await expect(page.locator('.task-request')).toBeHidden();
-  await expect(page.locator('#model-task-nav')).toBeHidden();
+  await expect(page.locator('#model-task-nav')).toBeVisible();
   await expect(page.locator('#model-graph-count')).toHaveText(
-    '2 of 10 sources · 2 admitted routes',
+    '2 of 12 sources · 2 admitted routes',
   );
   const requirement = page.locator('[data-edge="task:instances:requires:xyz"]');
   await requirement.focus();
@@ -58,9 +58,9 @@ test('model navigation respects visibility and inspects requirements separately 
 test('reported sources, pan, zoom, and reopening preserve usable navigation', async ({ page }) => {
   await openModel(page);
   await page.locator('#model-show-reported').check();
-  await expect(page.locator('.graph-node')).toHaveCount(20);
+  await expect(page.locator('.graph-node')).toHaveCount(22);
   await expect(page.locator('#model-graph-count')).toHaveText(
-    '10 of 10 sources · 2 admitted routes',
+    '12 of 12 sources · 2 admitted routes',
   );
   expect(await fitted(page)).toBe(true);
   await page.locator('#model-show-reported').uncheck();
@@ -103,10 +103,10 @@ test('a model without admitted routes explains its empty state', async ({ page }
   await page.goto('./#model');
   await expect(page.locator('#model-empty')).toBeVisible();
   await expect(page.locator('#model-graph-count')).toHaveText(
-    '0 of 10 sources · 0 admitted routes',
+    '0 of 12 sources · 0 admitted routes',
   );
   await page.locator('#model-show-reported').check();
-  await expect(page.locator('.graph-node.reported')).toHaveCount(10);
+  await expect(page.locator('.graph-node.reported')).toHaveCount(12);
 });
 
 for (const width of [375, 768, 1280, 1920]) {

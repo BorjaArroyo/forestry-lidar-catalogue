@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "code_sha256": "e0306924f487af562b6d90e6dfa6faa8e1df2987a18eb62fed6c400cfe47d9b8",
+  "attempts": [
+    {
+      "mode": "combined-browser-run",
+      "chromium": "validated",
+      "firefox": "incomplete-browser-closed",
+      "last_reported_tls_gb_decimal": 10.2,
+      "error": "Playwright TargetClosedError",
+      "cause": "Undetermined; no kernel/cgroup OOM event observed"
+    },
+    {
+      "mode": "standalone-diagnostic",
+      "status": "operator-stopped",
+      "reason": "Relaunched with a detached local supervisor to investigate possible command-session interference"
+    },
+    {
+      "mode": "detached-standalone-firefox",
+      "status": "failed-without-validated-zip",
+      "error": "ARCHIVE_SHA256_MISMATCH",
+      "archive": "TLS.tar.zst",
+      "provider_md5": "passed",
+      "cause": "Undetermined; the original error did not include the computed SHA256"
+    },
+    {
+      "mode": "detached-standalone-firefox-with-expanded-checksum-diagnostic",
+      "status": "validated",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "zip_sha256": "b88363a73864e3513746b0d4bd7dc826eb734ddb522bbe10a1671371816351d9",
+      "evidence": "evidence/classification/retests/2026-10-21/full-browser-acceptance-firefox.json"
+    },
+    {
+      "date": "2026-10-22",
+      "mode": "fresh-local-repeat-both-browsers",
+      "status": "validated",
+      "code_sha256": "2a8c3e28e8813bb85538bf739861eefb39884cdeaed33c1a0361c5405df8fce0",
+      "evidence": "evidence/classification/retests/2026-10-22/summary.json",
+      "sha256_failure_reproduced": false
+    }
+  ],
+  "diagnostic_controls": {
+    "status": "passed",
+    "evidence": "evidence/classification/archive-hash-diagnostics.json",
+    "explanation": "Both full-file hash-only and production-intake controls match native hashes. No deterministic hash failure was reproduced."
+  }
+}

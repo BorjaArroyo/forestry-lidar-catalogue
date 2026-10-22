@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tree-classification-dataset.schema.json",
+  "title": "Tree classification dataset 1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "task_ref",
+    "plan_sha256",
+    "trees",
+    "observations",
+    "rights",
+    "spatial_audit",
+    "archive_verification",
+    "vocabulary",
+    "plan",
+    "partition_policy"
+  ],
+  "properties": {
+    "schema": {
+      "const": "tree-classification-dataset:1.0.0"
+    },
+    "task_ref": {
+      "const": "task:species"
+    },
+    "plan_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "trees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_ref",
+          "tree_id",
+          "native_label",
+          "taxonomy",
+          "reference_valid",
+          "collection",
+          "published_split",
+          "modalities",
+          "native_metadata"
+        ],
+        "properties": {
+          "source_ref": {
+            "type": "string",
+            "pattern": "^(zenodo:[1-9][0-9]*|grodata:[1-9][0-9]*:[0-9]+\\.[0-9]+)$"
+          },
+          "tree_id": {
+            "type": "string"
+          },
+          "native_label": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "taxonomy": {
+            "type": "object",
+            "required": [
+              "genus",
+              "species"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "genus": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "species": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          },
+          "reference_valid": {
+            "type": "object",
+            "required": [
+              "genus",
+              "species"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "genus": {
+                "type": "boolean"
+              },
+              "species": {
+                "type": "boolean"
+              }
+            }
+          },
+          "collection": {
+            "type": "string"
+          },
+          "published_split": {
+            "enum": [
+              "dev",
+              "train",
+              "validate",
+              "test",
+              "unassigned"
+            ]
+          },
+          "modalities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "native_metadata": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source_ref",
+          "tree_id",
+          "observation_id",
+          "modality",
+          "path",
+          "archive",
+          "size_bytes",
+          "sha256",
+          "points",
+          "point_record_length",
+          "native_records_sha256",
+          "published_split",
+          "collection"
+        ],
+        "properties": {
+          "source_ref": {
+            "type": "string",
+            "pattern": "^(zenodo:[1-9][0-9]*|grodata:[1-9][0-9]*:[0-9]+\\.[0-9]+)$"
+          },
+          "tree_id": {
+            "type": "string"
+          },
+          "observation_id": {
+            "type": "string"
+          },
+          "modality": {
+            "enum": [
+              "TLS",
+              "MLS",
+              "ULS",
+              "unknown"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "archive": {
+            "type": "string"
+          },
+          "size_bytes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "points": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "point_record_length": {
+            "type": "integer",
+            "minimum": 20,
+            "maximum": 256
+          },
+          "native_records_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "published_split": {
+            "enum": [
+              "dev",
+              "train",
+              "validate",
+              "test",
+              "unassigned"
+            ]
+          },
+          "collection": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "rights": {
+      "type": "object"
+    },
+    "spatial_audit": {
+      "type": "object"
+    },
+    "archive_verification": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "vocabulary": {
+      "const": "vocabulary.json"
+    },
+    "plan": {
+      "const": "dataset-plan.json"
+    },
+    "partition_policy": {
+      "const": "preserve-published"
+    }
+  }
+}

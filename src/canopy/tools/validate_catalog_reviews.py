@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import re
 from datetime import date
 from pathlib import Path
 from ..paths import repository_root
@@ -23,7 +24,9 @@ def validate(catalog, base, reviews):
     required = [d for d in catalog["datasets"] if previous.get(str(d["id"])) != d]
     for dataset in required:
         identifier = str(dataset["id"])
-        if not identifier.isdecimal():
+        if not identifier.isdecimal() and not re.fullmatch(
+            r"grodata-[1-9][0-9]*-[0-9]+\.[0-9]+", identifier
+        ):
             raise ValueError("Dataset ID must be a numeric provider record ID")
         review = json.loads((reviews / (identifier + ".json")).read_text())
         if review.get("dataset_id") != identifier or review.get("dataset_sha256") != fingerprint(
