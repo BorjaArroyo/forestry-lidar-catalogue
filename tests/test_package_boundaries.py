@@ -22,7 +22,8 @@ class PackageBoundaries(unittest.TestCase):
         code = """
 import importlib, pkgutil, pathlib, subprocess
 from unittest.mock import patch
-import numpy, jsonschema
+# Dependencies may inspect platform metadata; guard application imports below.
+import numpy, jsonschema, filelock
 import canopy
 with patch.object(pathlib.Path, 'read_text', side_effect=AssertionError('read on import')), \\
      patch.object(pathlib.Path, 'mkdir', side_effect=AssertionError('mkdir on import')), \\
@@ -30,14 +31,14 @@ with patch.object(pathlib.Path, 'read_text', side_effect=AssertionError('read on
     for module in pkgutil.walk_packages(canopy.__path__, 'canopy.'):
         importlib.import_module(module.name)
 """
-        subprocess.run(
+        result = subprocess.run(
             [sys.executable, "-c", code],
             cwd=tempfile.gettempdir(),
             env=self.environment(),
-            check=True,
             capture_output=True,
             text=True,
         )
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_preparation_status_works_from_a_clean_interpreter_outside_checkout(self):
         result = subprocess.run(
