@@ -1,0 +1,106 @@
+{
+  "validation_date": "2026-10-22",
+  "purpose": "Consolidated application layout and retired MVP functionality",
+  "base_revision": "4291fa7734f899db2446c9f7b4e3f84b4576fbc8",
+  "code_revision": "56037adc370fef81183174669c6bb74661fa50fa",
+  "runtime_lock_sha256": "2c5dae8b1fc93944202ed3f1fb1c1fb622bc99850413b5372664e31085dc47f5",
+  "root_files": {
+    "before": 36,
+    "after": 16
+  },
+  "local_verification": {
+    "command": "canopy verify",
+    "status": "passed",
+    "python": "3.14.6",
+    "node": "v26.5.0",
+    "python_tests": 132,
+    "adapter_tests": 7,
+    "javascript_tests": 65,
+    "e2e_tests": 16
+  },
+  "retired": [
+    "generic normalizer and --harmonize option",
+    "WASI container prototype and its fixtures/shims",
+    "experimental small-asset download screen and checksum helpers",
+    "script compatibility facades",
+    "unused plyfile and lazrs dependencies"
+  ],
+  "preserved": {
+    "current_adapters_and_existing_evidence_reviews": 45,
+    "schema_bytes": "unchanged",
+    "external_runtime_pins": 17,
+    "scientific_rules": "unchanged"
+  },
+  "metadata_changes": [
+    "Disabled normalizer implementation pointer is null; its code provenance URL is pinned to the pre-cleanup commit.",
+    "Catalogue changes the model fingerprint and pins normalization provenance URLs to the source commit; dataset records, tasks, mapping rules, observations and timestamps are unchanged."
+  ],
+  "process_restart": "Both browser processes closed after one committed checkpoint and resumed the same isolated profile.",
+  "plan_round_trip": "Both browsers exported and re-imported the plan through a fresh production worker.",
+  "results": {
+    "chromium": {
+      "status": "succeeded",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+      "runtime_lock_sha256": "2c5dae8b1fc93944202ed3f1fb1c1fb622bc99850413b5372664e31085dc47f5",
+      "archive_sha256": "c8730e3f40c68a6a902fad1034716230f06047669577740116e12f841f626b30",
+      "size_bytes": 873662649,
+      "zip_crc": "passed",
+      "report": {
+        "status": "validated",
+        "dataset_sha256": "640af3372d6dd31ec0d8759c0ba751f5040c264fdb617df26ef12d9beab6bb33",
+        "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+        "validator_sha256": "9ef647681a3d2eda00a877e00cc58981c53cc94ae46587940d9224d7fffa611c",
+        "packages": 2,
+        "scenes": 5,
+        "points": 9160560,
+        "partitions": [
+          "dev",
+          "train"
+        ]
+      },
+      "matching_native_chunks": 39,
+      "plan_sha256": "3b921741563b88d3024ac1b2f25fa92c3c46b766dc2432bf72b3445db44f197c",
+      "native_validation": "Unchanged TaskDataset and TaskPackage checks; complete NPZ files materialized one at a time",
+      "plot_paths": [
+        "sources/19351234/originals/training/training/plot_1003.las",
+        "sources/19351234/originals/training/training/plot_1022.las",
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+        "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+      ],
+      "event_log": "evidence/consolidation-chromium-events.jsonl"
+    },
+    "firefox": {
+      "status": "succeeded",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:157.0) Gecko/20100101 Firefox/157.0",
+      "runtime_lock_sha256": "2c5dae8b1fc93944202ed3f1fb1c1fb622bc99850413b5372664e31085dc47f5",
+      "archive_sha256": "33c5489097bb8ca48c9fa7c26fc2ccf1439bbbd492b2aac3409e7a289b2f9b44",
+      "size_bytes": 873662605,
+      "zip_crc": "passed",
+      "report": {
+        "status": "validated",
+        "dataset_sha256": "640af3372d6dd31ec0d8759c0ba751f5040c264fdb617df26ef12d9beab6bb33",
+        "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+        "validator_sha256": "9ef647681a3d2eda00a877e00cc58981c53cc94ae46587940d9224d7fffa611c",
+        "packages": 2,
+        "scenes": 5,
+        "points": 9160560,
+        "partitions": [
+          "dev",
+          "train"
+        ]
+      },
+      "matching_native_chunks": 39,
+      "plan_sha256": "3b921741563b88d3024ac1b2f25fa92c3c46b766dc2432bf72b3445db44f197c",
+      "native_validation": "Unchanged TaskDataset and TaskPackage checks; complete NPZ files materialized one at a time",
+      "plot_paths": [
+        "sources/19351234/originals/training/training/plot_1003.las",
+        "sources/19351234/originals/training/training/plot_1022.las",
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+        "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+      ],
+      "event_log": "evidence/consolidation-firefox-events.jsonl"
+    }
+  }
+}

@@ -16,7 +16,7 @@
     <script>
       window.CANOPY_PUBLIC = true;
     </script>
-    <script defer src="catalog.js"></script>
+    <script defer src="data/catalog.js"></script>
     <script type="module" src="web/bootstrap.js"></script>
   </head>
   <body>
@@ -304,23 +304,9 @@
               <p>
                 Consistency checks do not certify annotation quality, complete-release coverage or
                 geographic independence.
-                <a href="BROWSER-PREPARATION.md">Browser preparation scope</a>.
+                <a href="docs/guides/BROWSER-PREPARATION.md">Browser preparation scope</a>.
               </p>
             </details>
-          </article>
-          <article class="work-card">
-            <h3>Download a small pinned provider asset</h3>
-            <p>
-              Download directly from Zenodo and verify the pinned size and provider MD5 before
-              saving. This path accepts assets up to 8 MiB; it does not retrieve the full
-              FOR-instance archive.
-            </p>
-            <label>Pinned asset<select id="asset"></select></label>
-            <div class="lab-actions">
-              <button class="button" id="fetch" disabled>Download and verify</button
-              ><button class="button" id="save" disabled>Save to disk</button>
-            </div>
-            <p id="dl-status" class="notice" role="status">Loading pinned inventory…</p>
           </article>
           <article class="work-card">
             <h3>Reviewed source records</h3>

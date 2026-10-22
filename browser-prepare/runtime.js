@@ -65,11 +65,11 @@ function createRuntime({ scope, base, nativeFetch, digest, profileForSource, pha
           !name.startsWith('scripts/') &&
           !name.startsWith('src/canopy/') &&
           ![
-            'task-package.schema.json',
-            'task-dataset.schema.json',
-            'dataset-plan.schema.json',
-            'knowledge-model.json',
-            'knowledge-model.schema.json',
+            'schemas/task-package.schema.json',
+            'schemas/task-dataset.schema.json',
+            'schemas/dataset-plan.schema.json',
+            'data/knowledge-model.json',
+            'schemas/knowledge-model.schema.json',
             'browser-prepare/kernel.py',
             'browser-prepare/batch.py',
           ].includes(name)
@@ -131,7 +131,7 @@ function createRuntime({ scope, base, nativeFetch, digest, profileForSource, pha
     py.globals.set('source_contexts_json', JSON.stringify(contexts));
     py.globals.set('runtime_lock_sha256', runtimeHash);
     py.runPython(
-      "task_model = load_model('/app/knowledge-model.json'); source_contexts = json.loads(source_contexts_json)",
+      "task_model = load_model('/app/data/knowledge-model.json'); source_contexts = json.loads(source_contexts_json)",
     );
     return { lock, sources, py, runtimeHash };
   }

@@ -37,10 +37,14 @@ jobs:
           test "$BASE_SHA" != "0000000000000000000000000000000000000000"
           BASE_COMMIT=$(git rev-parse "$BASE_SHA^{commit}")
           test "$BASE_COMMIT" != "$(git rev-parse HEAD)"
-          git cat-file -e "$BASE_COMMIT:catalog.json"
-          git show "$BASE_COMMIT:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
-          python scripts/validate_catalog_reviews.py --base "$RUNNER_TEMP/base-catalog.json"
+          if git cat-file -e "$BASE_COMMIT:data/catalog.json" 2>/dev/null; then
+            BASE_CATALOG=data/catalog.json
+          else
+            BASE_CATALOG=catalog.json
+          fi
+          git show "$BASE_COMMIT:$BASE_CATALOG" > "$RUNNER_TEMP/base-catalog.json"
+          python -m canopy admission --base "$RUNNER_TEMP/base-catalog.json"
       - name: Install browser engines
         run: npx playwright install --with-deps chromium firefox
       - name: Run shared local verification entrypoint
-        run: python scripts/verify.py
+        run: python -m canopy verify

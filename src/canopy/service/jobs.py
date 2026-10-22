@@ -19,8 +19,7 @@ def inspect_jobs(state, read):
     result = []
     for path in sorted((Path(state) / "jobs").glob("*/job.json"), reverse=True):
         job = read(path)
-        if job.get("backend") == "ray":
-            result.append(job)
+        if job.get("kind") not in {"acquire", "prepare-instances"}:
             continue
         pid_file = path.parent / "worker.pid"
         if not job.get("pid") and pid_file.exists():
@@ -82,7 +81,7 @@ def submit(api, body):
             request.get("variables", {}), dict
         ):
             raise RequestError("Invalid task request")
-        model = load(api.WEB / "knowledge-model.json")
+        model = load(api.WEB / "data/knowledge-model.json")
         try:
             task_plan = plan_request(
                 model, body["record_id"], request.get("use", "training"), request.get("variables")
@@ -160,7 +159,7 @@ def submit(api, body):
 
 def launch_worker(api, folder):
     # posix_spawn avoids forking the multithreaded macOS HTTP process after NumPy loads.
-    command = [sys.executable, "-m", "canopy.service.cli", "--worker", str(folder)]
+    command = [sys.executable, "-m", "canopy", "service", "--worker", str(folder)]
     try:
         with (folder / "worker.log").open("ab") as log:
             pid = os.posix_spawn(
@@ -213,7 +212,7 @@ def worker(api, folder):
 
             if api.sha(api.REPO / "src/canopy/task_plan.py") != job["task_plan_validator_sha256"]:
                 raise RequestError("Task request validator changed after submission")
-            task_model = load(api.WEB / "knowledge-model.json")
+            task_model = load(api.WEB / "data/knowledge-model.json")
             check_plan(task_model, job["task_plan"])
         if job["kind"] not in {"acquire", "prepare-instances"}:
             raise RequestError("Unsupported job type")
@@ -224,7 +223,9 @@ def worker(api, folder):
             state_root = folder.parents[2]
             command = [
                 sys.executable,
-                str(api.REPO / "scripts/acquire_lidar.py"),
+                "-m",
+                "canopy",
+                "acquire",
                 "--inventory",
                 str(folder / "inventory.json"),
                 "--root",

@@ -13,7 +13,7 @@ The current service acquires pinned records from the reviewed inventory and
 prepares the FOR-instance v1 archive with its validated adapter.
 It verifies transfer integrity and ZIP extraction and preserves original assets.
 Other task transformations remain unadmitted. The source-specific normalization code
-and policy remain historical evidence for interpreting existing exports. They
+and policy have been removed from the application; their source remains in Git. They
 do not make those outputs ready for instance-segmentation training or scoring.
 
 ## New dataset admission

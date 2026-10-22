@@ -10,14 +10,19 @@ from .model_projection import project
 
 
 def load(path=None):
-    path = Path(path) if path else CONTENT / "knowledge-model.json"
-    return validate(read_json(path), read_json(path.with_name("knowledge-model.schema.json")))
+    path = Path(path) if path else CONTENT / "data/knowledge-model.json"
+    schema = (
+        path.parent.parent / "schemas/knowledge-model.schema.json"
+        if path.parent.name == "data"
+        else path.with_name("knowledge-model.schema.json")
+    )
+    return validate(read_json(path), read_json(schema))
 
 
 def check_views(content=CONTENT):
-    graph = load(content / "knowledge-model.json")
+    graph = load(content / "data/knowledge-model.json")
     profiles, relationships, tasks = project(graph)
-    catalog = read_json(content / "catalog.json")
+    catalog = read_json(content / "data/catalog.json")
     if {d["id"] for d in catalog["datasets"]} != set(profiles):
         raise ValueError("Catalog source membership differs from the canonical graph")
     if any(
@@ -80,16 +85,16 @@ def model_hashes(content=CONTENT):
     return {
         key: hashlib.sha256((content / name).read_bytes()).hexdigest()
         for key, name in (
-            ("model_sha256", "knowledge-model.json"),
-            ("model_schema_sha256", "knowledge-model.schema.json"),
+            ("model_sha256", "data/knowledge-model.json"),
+            ("model_schema_sha256", "schemas/knowledge-model.schema.json"),
         )
     }
 
 
 def export_views(content=CONTENT):
     """Refresh presentation metadata while retaining the observed acquisition snapshot."""
-    profiles, relationships, tasks = project(load(content / "knowledge-model.json"))
-    catalog = read_json(content / "catalog.json")
+    profiles, relationships, tasks = project(load(content / "data/knowledge-model.json"))
+    catalog = read_json(content / "data/catalog.json")
     if {d["id"] for d in catalog["datasets"]} != set(profiles):
         raise ValueError(
             "Changed source membership requires rebuilding from the acquisition inventory"
@@ -114,7 +119,7 @@ def export_views(content=CONTENT):
             if dataset.get(key) != value:
                 dataset[key] = value
     catalog["content_review"].update(model_hashes(content))
-    _write_json(content / "catalog.json", catalog)
+    _write_json(content / "data/catalog.json", catalog)
     snapshot = json.dumps(catalog, indent=2, ensure_ascii=False)
-    (content / "catalog.js").write_text("window.LIDAR_CATALOG = " + snapshot + ";\n")
+    (content / "data/catalog.js").write_text("window.LIDAR_CATALOG = " + snapshot + ";\n")
     check_views(content)

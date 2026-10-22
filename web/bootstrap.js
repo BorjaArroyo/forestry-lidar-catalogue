@@ -3,7 +3,6 @@ import { createTaskSelection } from './catalog/task-selection.js';
 import { mountWorkbench } from './workbench/workbench.js';
 import { createServiceClient } from './workbench/client.js';
 import { mountPreparation } from '../browser-prepare/ui.js';
-import { mountDownloadUI } from '../browser-prepare/download-ui.js';
 
 const catalog = window.LIDAR_CATALOG;
 if (!catalog) {
@@ -24,5 +23,4 @@ if (!catalog) {
     selection,
   });
   mountPreparation({ catalog, document, selection });
-  mountDownloadUI();
 }

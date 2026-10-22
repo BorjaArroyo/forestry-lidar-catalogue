@@ -4,8 +4,8 @@ Anyone can propose a dataset through a Dataset proposal issue. Only maintainers
 publish catalog changes after analysis and human review in a pull request.
 Downloading or inspecting a source does not admit it to this catalog.
 
-Author curated entries in `knowledge-model.json`; profile, relationship and
-catalog files are generated views. Follow [DATA-MODEL.md](DATA-MODEL.md) to
+Author curated entries in `data/knowledge-model.json`; profile, relationship and
+catalog files are generated views. Follow [DATA-MODEL.md](docs/guides/DATA-MODEL.md) to
 refresh and validate them. The storage model does not change admission rules.
 
 ## Process
@@ -19,7 +19,7 @@ refresh and validate them. The storage model does not change admission rules.
    Record transformations, information loss and validation needed. Unlabelled
    data may support geometry checks without supporting supervised evaluation.
 4. Submit a pull request containing the catalog entry, matching catalog.js and
-   reviews/<record-id>.json, using review-template.json as the starting point.
+   reviews/<record-id>.json, using reviews/template.json as the starting point.
    Hash the final dataset object using the validator's fingerprint function.
 5. A maintainer reviews evidence and limitations before merging. Request changes,
    defer or reject proposals when evidence is insufficient. Admission is not a
@@ -42,7 +42,7 @@ Deletion of a catalog record does not delete local data; explain removals in PRs
 
 ## Review record
 
-Copy review-template.json to reviews/<numeric-record-id>.json. Replace all
+Copy reviews/template.json to reviews/<numeric-record-id>.json. Replace all
 placeholders and supply evidence links or repository paths to inspectable reports.
 Use unknown with a rationale when a task cannot yet be established. Admission
 with limitations must make those limitations visible in the dataset entry too.
@@ -51,7 +51,7 @@ The template is a draft and intentionally cannot satisfy the admission check.
 Run from the published repository root:
 
 ```bash
-python3 scripts/validate_catalog_reviews.py --base previous-catalog.json
+python -m canopy admission --base previous-catalog.json
 ```
 
 Supply the previous committed catalog as the base; do not use the proposed file

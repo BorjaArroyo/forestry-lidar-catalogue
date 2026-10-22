@@ -97,7 +97,7 @@ def resolve(
 
 
 def _validate_schema(plan):
-    schema = json.loads((ROOT / "dataset-plan.schema.json").read_text())
+    schema = json.loads((ROOT / "schemas/dataset-plan.schema.json").read_text())
     jsonschema.Draft202012Validator(schema).validate(plan)
 
 

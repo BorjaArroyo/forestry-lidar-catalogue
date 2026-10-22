@@ -200,7 +200,10 @@ def build(inventory, status, outputs):
     }
     catalog["content_review"].update(model_hashes(CONTENT))
     catalog["evidence"] = [
-        {"name": "Public content review and remaining questions", "url": "CONTENT-REVIEW.md"},
+        {
+            "name": "Public content review and remaining questions",
+            "url": "docs/reviews/CONTENT-REVIEW.md",
+        },
         {"name": "Pinned inventory", "path": "docs/lidar-acquisition-inventory.json"},
         {"name": "Acquisition and recovery log", "path": "docs/lidar-acquisition-log.md"},
         {"name": "Annotation definitions", "path": "docs/annotations.md"},
@@ -219,7 +222,7 @@ def build(inventory, status, outputs):
     return catalog
 
 
-def main():
+def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--inventory", type=Path, default=Path("docs/lidar-acquisition-inventory.json"))
     p.add_argument("--root", type=Path, required=True)
@@ -246,16 +249,16 @@ def main():
         "acquisition_status_sha256": hashlib.sha256(
             (args.root / "acquisition-status.json").read_bytes()
         ).hexdigest(),
-        "builder": "scripts/build_knowledge_hub_catalog.py",
+        "builder": "canopy catalog",
         "sample_audit_date": "2026-10-15",
     }
     assert len({x["id"] for x in catalog["datasets"]}) == len(catalog["datasets"])
     ids = {x["id"] for x in catalog["datasets"]}
     assert all(m["source"] in ids and m["target"] in ids for m in catalog["mappings"])
-    args.output.mkdir(parents=True, exist_ok=True)
+    (args.output / "data").mkdir(parents=True, exist_ok=True)
     text = json.dumps(catalog, indent=2, ensure_ascii=False) + "\n"
-    (args.output / "catalog.json").write_text(text)
-    (args.output / "catalog.js").write_text("window.LIDAR_CATALOG = " + text.rstrip() + ";\n")
+    (args.output / "data/catalog.json").write_text(text)
+    (args.output / "data/catalog.js").write_text("window.LIDAR_CATALOG = " + text.rstrip() + ";\n")
     print(
         "CATALOG_VALIDATED",
         len(catalog["datasets"]),

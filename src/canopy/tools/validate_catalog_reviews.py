@@ -60,13 +60,13 @@ def validate(catalog, base, reviews):
     return len(required)
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     root = repository_root()
-    parser.add_argument("--catalog", type=Path, default=root / "catalog.json")
+    parser.add_argument("--catalog", type=Path, default=root / "data/catalog.json")
     parser.add_argument("--base", type=Path, required=True)
     parser.add_argument("--reviews", type=Path, default=root / "reviews")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     count = validate(
         json.loads(args.catalog.read_text()), json.loads(args.base.read_text()), args.reviews
     )

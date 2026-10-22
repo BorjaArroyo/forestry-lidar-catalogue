@@ -22,7 +22,8 @@ class PackageBoundaries(unittest.TestCase):
         code = """
 import importlib, pkgutil, pathlib, subprocess
 from unittest.mock import patch
-import numpy, jsonschema
+# Dependencies may inspect platform metadata; guard application imports below.
+import numpy, jsonschema, filelock
 import canopy
 with patch.object(pathlib.Path, 'read_text', side_effect=AssertionError('read on import')), \\
      patch.object(pathlib.Path, 'mkdir', side_effect=AssertionError('mkdir on import')), \\
@@ -30,14 +31,14 @@ with patch.object(pathlib.Path, 'read_text', side_effect=AssertionError('read on
     for module in pkgutil.walk_packages(canopy.__path__, 'canopy.'):
         importlib.import_module(module.name)
 """
-        subprocess.run(
+        result = subprocess.run(
             [sys.executable, "-c", code],
             cwd=tempfile.gettempdir(),
             env=self.environment(),
-            check=True,
             capture_output=True,
             text=True,
         )
+        self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_preparation_status_works_from_a_clean_interpreter_outside_checkout(self):
         result = subprocess.run(
@@ -54,11 +55,8 @@ with patch.object(pathlib.Path, 'read_text', side_effect=AssertionError('read on
         )
         self.assertEqual(result.stdout.strip(), "True")
 
-    def test_legacy_service_cli_and_packaged_worker_accept_their_arguments(self):
-        for command in [
-            [str(ROOT / "scripts/serve_knowledge_hub.py")],
-            ["-m", "canopy.service.cli"],
-        ]:
+    def test_supported_service_cli_accepts_its_arguments(self):
+        for command in [["-m", "canopy", "service"]]:
             result = subprocess.run(
                 [sys.executable, *command, "--help"],
                 cwd=tempfile.gettempdir(),
@@ -70,7 +68,7 @@ with patch.object(pathlib.Path, 'read_text', side_effect=AssertionError('read on
             self.assertIn("--worker", result.stdout)
 
     def test_moved_guides_have_resolvable_local_links(self):
-        files = [ROOT / "README.md", ROOT / "docs/README.md", *(ROOT / "docs/guides").glob("*.md")]
+        files = [ROOT / "README.md", ROOT / "docs/README.md", *(ROOT / "docs").rglob("*.md")]
         for source in files:
             for target in re.findall(r"\]\(([^)]+)\)", source.read_text()):
                 parsed = urlsplit(target)
@@ -78,3 +76,26 @@ with patch.object(pathlib.Path, 'read_text', side_effect=AssertionError('read on
                     continue
                 with self.subTest(source=source.name, target=target):
                     self.assertTrue((source.parent / unquote(parsed.path)).exists())
+
+    def test_acquisition_rejects_retired_normalization_option(self):
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-m",
+                "canopy",
+                "acquire",
+                "--inventory",
+                "unused.json",
+                "--root",
+                "/unused",
+                "--stage",
+                "/unused-stage",
+                "--harmonize",
+            ],
+            cwd=tempfile.gettempdir(),
+            env=self.environment(),
+            capture_output=True,
+            text=True,
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("unrecognized arguments: --harmonize", result.stderr)

@@ -49,11 +49,11 @@ Browser runs generate these folders directly. Existing prepared packages can be
 composed without another download or point transformation:
 
 ```bash
-python scripts/task_dataset.py export \
+python -m canopy dataset export \
   --input /absolute/subset-a --input /absolute/subset-b \
   --output /absolute/new-dataset --use training
 
-python scripts/task_dataset.py sample \
+python -m canopy dataset sample \
   --output /absolute/new-dataset --partition dev
 ```
 
@@ -82,9 +82,9 @@ With saved subsets, the plan covers their union; otherwise it covers the current
 selection. No source LAS is downloaded during review. The pinned Python runtime
 and reviewed metadata may be downloaded to resolve the plan.
 
-`dataset-plan.schema.json` defines combined version 2.0.0 and retains the exact
+`schemas/dataset-plan.schema.json` defines combined version 2.0.0 and retains the exact
 version 1.0.0 source-plan contract. Each combined plan contains one common request,
-source plans with their own provenance, global totals and a global fingerprint. `scripts/dataset_plan.py` resolves
+source plans with their own provenance, global totals and a global fingerprint. `canopy.dataset_plan` resolves
 and checks the plan using the same canonical task planner as preparation. It records:
 
 - Exact source release, pipeline version, task use, required/optional variables,
@@ -118,13 +118,13 @@ contains unchanged `reflectance_1/2/3` (1550/905/532 nm). `feature_valid` is a
 separate mask for each finite value unequal to -9999; invalid source values stay
 unchanged. Units/calibration and provider nearest-neighbor association accuracy
 remain unresolved. RGB is preserved only inside original records, not substituted
-for these measurements. See [FGI-EMIT.md](../../FGI-EMIT.md).
+for these measurements. See [FGI-EMIT.md](../sources/FGI-EMIT.md).
 
 The native entrypoint prepares one complete reviewed LAS into a new directory:
 
 ```bash
 python scripts/fgi_emit/prepare.py --input /absolute/plot_1022.las --output /absolute/new-fgi-package
-python scripts/task_package.py validate /absolute/new-fgi-package --allow-selection
+python -m canopy package validate /absolute/new-fgi-package --allow-selection
 ```
 
 The common export command can compose already prepared FOR-instance and FGI-EMIT

@@ -8,7 +8,6 @@ import os
 from pathlib import Path
 import tempfile
 import subprocess
-import sys
 import threading
 import time
 import unittest
@@ -260,11 +259,7 @@ class WorkbenchTests(unittest.TestCase):
             case.tearDown()
 
     def test_download_prepare_validate_and_resume_end_to_end(self):
-        spec = importlib.util.spec_from_file_location(
-            "acquisition", REPO / "scripts/acquire_lidar.py"
-        )
-        acquisition = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(acquisition)
+        import canopy.tools.acquire as acquisition
 
         spec = importlib.util.spec_from_file_location(
             "e2e_fixture", REPO / "scripts/for_instance/test_pipeline.py"
@@ -333,9 +328,8 @@ class WorkbenchTests(unittest.TestCase):
         real_run = subprocess.run
 
         def run(command, **kwargs):
-            if command[1] == str(REPO / "scripts/acquire_lidar.py"):
-                with patch.object(sys, "argv", command[1:]):
-                    acquisition.main()
+            if command[1:4] == ["-m", "canopy", "acquire"]:
+                acquisition.main(command[4:])
                 return subprocess.CompletedProcess(command, 0)
             return real_run(command, **kwargs)
 
@@ -399,7 +393,7 @@ class WorkbenchTests(unittest.TestCase):
             for name in [
                 "browser-prepare/kernel.py",
                 "src/canopy/task_package.py",
-                "task-package.schema.json",
+                "schemas/task-package.schema.json",
             ]:
                 with urlopen(base + "/" + name, timeout=5) as response:
                     self.assertEqual(

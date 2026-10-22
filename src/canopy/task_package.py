@@ -12,7 +12,7 @@ import numpy as np
 from .paths import repository_root
 
 REPO = repository_root()
-SCHEMA = REPO / "task-package.schema.json"
+SCHEMA = REPO / "schemas/task-package.schema.json"
 PROFILE = REPO / "scripts/for_instance"
 FIELDS = {"xyz", "instance", "instance_valid", "native_class", "original_points"}
 
@@ -347,7 +347,7 @@ class TaskPackage:
         )
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("operation", choices=["validate", "sample"])
     parser.add_argument("root", type=Path)
@@ -359,7 +359,7 @@ def main():
     parser.add_argument(
         "--scene", help="Scene identity for sample; never limits complete validation"
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     if args.operation == "validate" and args.scene:
         parser.error("--scene is only available for sample")
     try:

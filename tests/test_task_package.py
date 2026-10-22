@@ -77,7 +77,7 @@ class ContractTests(unittest.TestCase):
         self.assertEqual([s["published_split"] for s in package.scenes.values()], ["dev", "test"])
 
     def test_reader_arrays_match_the_curated_graph_contract(self):
-        graph = read_json(REPO / "knowledge-model.json")
+        graph = read_json(REPO / "data/knowledge-model.json")
         fields = graph["nodes"]["contract:for-instance-plot-instances:1.0.0"]["data"]["fields"]
         package = self.open()
         block = next(package.iter_scene(next(iter(package.scenes))))

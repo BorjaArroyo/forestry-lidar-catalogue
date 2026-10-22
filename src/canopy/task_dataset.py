@@ -12,7 +12,7 @@ from .paths import repository_root
 from .task_package import TaskPackage, inside, read_json, sha_file
 from .task_plan import check_plan, fingerprint, plan_request, validate_prepared, iter_task_blocks
 
-SCHEMA = repository_root() / "task-dataset.schema.json"
+SCHEMA = repository_root() / "schemas/task-dataset.schema.json"
 
 
 def encoded(value):
@@ -256,7 +256,7 @@ def export_dataset(model, inputs, output, *, use="training", variables=None, pro
     return report
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("operation", choices=["export", "validate", "sample"])
     parser.add_argument("--input", type=Path, action="append", default=[])
@@ -265,7 +265,7 @@ def main():
         "--use", default="training", choices=["training", "evaluation", "inference"]
     )
     parser.add_argument("--partition")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     from .knowledge_model import load
 
     model = load()

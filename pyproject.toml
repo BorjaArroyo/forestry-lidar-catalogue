@@ -9,6 +9,9 @@ description = "Curated forestry LiDAR catalogue and reviewed task data tools"
 requires-python = ">=3.11"
 dynamic = ["dependencies"]
 
+[project.scripts]
+canopy = "canopy.cli:main"
+
 [project.optional-dependencies]
 dev = ["ruff==0.17.1"]
 
@@ -19,17 +22,15 @@ dependencies = {file = ["requirements.txt"]}
 where = ["src"]
 
 [tool.ruff]
+cache-dir = "temp/cache/ruff"
 target-version = "py311"
 line-length = 100
 force-exclude = true
 extend-exclude = [
   "scripts/for_instance/**",
   "scripts/fgi_emit/**",
-  "scripts/harmonize_lidar.py",
-  "scripts/normalization_inputs.py",
   "scripts/audit_fgi_measurements.py",
   "browser-prepare/vendor/**",
-  "container-lab/wasi-shim/**",
   "temp/**",
   "evidence/**",
   "reviews/**",

@@ -115,8 +115,8 @@
       "sha256": "046ab6fdb02c76b1750e20c0e44bea6f28e564c66f682935173fed930464254f",
       "size_bytes": 377
     },
-    "task-package.schema.json": {
-      "url": "task-package.schema.json",
+    "schemas/task-package.schema.json": {
+      "url": "schemas/task-package.schema.json",
       "sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
       "size_bytes": 16589
     },
@@ -135,13 +135,13 @@
       "sha256": "a09858e0983540898fd41fe2e0df7c746e22982a4c58808f7426b6add1651f03",
       "size_bytes": 5742
     },
-    "knowledge-model.json": {
-      "url": "knowledge-model.json",
-      "sha256": "3390b57d089588af2cd08edb6772bc321c73cf121dabfa5ba359f6439c15d7b9",
-      "size_bytes": 184126
+    "data/knowledge-model.json": {
+      "url": "data/knowledge-model.json",
+      "sha256": "91c193fc1337dba92cf59c6b02b8b7df40a5d4134b628790b687b95076f87239",
+      "size_bytes": 183976
     },
-    "knowledge-model.schema.json": {
-      "url": "knowledge-model.schema.json",
+    "schemas/knowledge-model.schema.json": {
+      "url": "schemas/knowledge-model.schema.json",
       "sha256": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2",
       "size_bytes": 46687
     },
@@ -165,13 +165,13 @@
       "sha256": "cfaffea8c6b0cf8ba3d83dd9e316b73dd2c36342dc828f301f32fe0136f3ea12",
       "size_bytes": 768
     },
-    "task-dataset.schema.json": {
-      "url": "task-dataset.schema.json",
+    "schemas/task-dataset.schema.json": {
+      "url": "schemas/task-dataset.schema.json",
       "size_bytes": 2810,
       "sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7"
     },
-    "dataset-plan.schema.json": {
-      "url": "dataset-plan.schema.json",
+    "schemas/dataset-plan.schema.json": {
+      "url": "schemas/dataset-plan.schema.json",
       "size_bytes": 7934,
       "sha256": "126a934a3e2ebafc789b9ace6c98c62dc567d0b81cebae0f350e53fabb8d71e1"
     },
@@ -222,8 +222,8 @@
     },
     "src/canopy/dataset_plan.py": {
       "url": "src/canopy/dataset_plan.py",
-      "sha256": "496f4b17dfadde95ddc4bcfa721f0fa28b19000ba75dd62bacc896c56ed496e3",
-      "size_bytes": 11055
+      "sha256": "daad7a0a086183817efdb154283aec4541fa5ebe9b7abd7d7b4ab6b59b605796",
+      "size_bytes": 11063
     },
     "src/canopy/knowledge_model.py": {
       "url": "src/canopy/knowledge_model.py",
@@ -242,8 +242,8 @@
     },
     "src/canopy/model_publication.py": {
       "url": "src/canopy/model_publication.py",
-      "sha256": "a8f8ae57fa3324e777ebbd576d19808d7d7277ab3c3f94f82a0f75c391fe36e0",
-      "size_bytes": 5595
+      "sha256": "4817d9d8a7ce6cd3f136753e6871e7a417e0f0c3f85abd23a6812130257117db",
+      "size_bytes": 5789
     },
     "src/canopy/model_validation.py": {
       "url": "src/canopy/model_validation.py",
@@ -252,13 +252,13 @@
     },
     "src/canopy/paths.py": {
       "url": "src/canopy/paths.py",
-      "sha256": "f3a83e518b186ceab55f61a241b768bc058fb3e0fe6e20ac51bc06c9315c1569",
-      "size_bytes": 888
+      "sha256": "16421d793eded17ac2a1aa0a31a668168136e030695ce792cd176514c2e0390e",
+      "size_bytes": 893
     },
     "src/canopy/preparation_profile.py": {
       "url": "src/canopy/preparation_profile.py",
-      "sha256": "b1d502114865fba1606b4e4d7ecdd3d053bad824fbfa02115a4ec492d22c66bc",
-      "size_bytes": 2208
+      "sha256": "5ee5113c9b3799861eedeff2747f65b6b725b7d9e4a3650ec7a51fa7f9328877",
+      "size_bytes": 2213
     },
     "src/canopy/service/__init__.py": {
       "url": "src/canopy/service/__init__.py",
@@ -272,23 +272,23 @@
     },
     "src/canopy/service/cli.py": {
       "url": "src/canopy/service/cli.py",
-      "sha256": "6728bc33ec23e9351ba068d07567458c490dc3cc1471e5fa557bea7f5ee41cef",
-      "size_bytes": 750
+      "sha256": "53942de8f37281d98e88b2ad8c79b9b53e4cfe1917462bf633918db5eb43d270",
+      "size_bytes": 763
     },
     "src/canopy/task_dataset.py": {
       "url": "src/canopy/task_dataset.py",
-      "sha256": "2034de4b7041aacf5da7fe1e1155a082b0d416f9fb724bb9ccc3dac0df1a6d6c",
-      "size_bytes": 13227
+      "sha256": "9ef647681a3d2eda00a877e00cc58981c53cc94ae46587940d9224d7fffa611c",
+      "size_bytes": 13248
     },
     "src/canopy/task_package.py": {
       "url": "src/canopy/task_package.py",
-      "sha256": "d734ad86903bbc835ccd98fc9b50e8b4bf1c2360b004657d169e5379b7b97644",
-      "size_bytes": 17482
+      "sha256": "6c51ca9f6db3f6b558135965600b7b76aadb398393511e5f6f4b88f75d532c53",
+      "size_bytes": 17503
     },
     "src/canopy/task_plan.py": {
       "url": "src/canopy/task_plan.py",
-      "sha256": "033e04aee9788bbb91cbc1a6609a1226c73cc39030b0297a612c803b130aa790",
-      "size_bytes": 11202
+      "sha256": "7168acd55073d2ece9a522ce8f621c0c0f9004c2d6fe8c93fa58d52688d578d5",
+      "size_bytes": 11215
     },
     "src/canopy/tools/__init__.py": {
       "url": "src/canopy/tools/__init__.py",
@@ -297,18 +297,18 @@
     },
     "src/canopy/tools/check_pinned_sources.py": {
       "url": "src/canopy/tools/check_pinned_sources.py",
-      "sha256": "89fb890ec4c59fac258fa49e3c1d1958ba6066f4f3b7185f8800182642a7874b",
-      "size_bytes": 4161
+      "sha256": "3278fe6f805752ad9cb3bd1a351a28580508a3b9a14042df1ec6ea842b4c2a49",
+      "size_bytes": 4174
     },
     "src/canopy/tools/check_publication.py": {
       "url": "src/canopy/tools/check_publication.py",
-      "sha256": "d2024dbfd8473696cd606f284f3e3d24d6637bd609c40e431fcc9abc2ad4d6ac",
-      "size_bytes": 2147
+      "sha256": "7baa05b9f12ab0982e5021d207d702929f4cb75e01e6d115e4ba79fdc03c8660",
+      "size_bytes": 2160
     },
     "src/canopy/tools/validate_catalog_reviews.py": {
       "url": "src/canopy/tools/validate_catalog_reviews.py",
-      "sha256": "65cce6ad2f6b25d1212e8940de35a7b712500787e019ceab1f5cdf5c0c9fdfd1",
-      "size_bytes": 3356
+      "sha256": "22f7898bce9ee95d1835c46c7386b4c3096998fdfc12207a25a2f784d19928f1",
+      "size_bytes": 3374
     },
     "src/canopy/validation/__init__.py": {
       "url": "src/canopy/validation/__init__.py",
@@ -322,8 +322,8 @@
     },
     "src/canopy/service/jobs.py": {
       "url": "src/canopy/service/jobs.py",
-      "sha256": "a8aca1cd8ba426ac7dc3d748172cdee3593da745bca95cb9233cf9950e415499",
-      "size_bytes": 12193
+      "sha256": "2f78a28374cf94ed3af015d1e11491de195c3f57bbcadc4f0948f5f39137e124",
+      "size_bytes": 12214
     },
     "src/canopy/service/storage.py": {
       "url": "src/canopy/service/storage.py",
@@ -367,8 +367,8 @@
     },
     "browser-prepare/runtime.js": {
       "url": "browser-prepare/runtime.js",
-      "sha256": "df4225f2adfac710231f5cb16082d4d711f5a7798bfe548251c7a534d2cc9179",
-      "size_bytes": 6494
+      "sha256": "7d7482a8b0caf278cec642b412b3e4a62f0ad2c2f86bdc6cfe256794bad97c74",
+      "size_bytes": 6536
     },
     "browser-prepare/export.js": {
       "url": "browser-prepare/export.js",
@@ -395,11 +395,6 @@
       "sha256": "ca6cd455cae779661e4dbdfc2d932c8cdc3425a0622c0af052e739463e4a2fa1",
       "size_bytes": 1647
     },
-    "browser-prepare/download-ui.js": {
-      "url": "browser-prepare/download-ui.js",
-      "sha256": "5bb0d90d589b8fa943ade01a67ca73e3adf88201ddc86784eef579517de0a294",
-      "size_bytes": 2230
-    },
     "browser-prepare/draft-panel.js": {
       "url": "browser-prepare/draft-panel.js",
       "sha256": "93c8b1e5c04f943adcd3df2b2c0f40a222fb9ca4711a987bccfc584d4e887eb4",
@@ -417,13 +412,13 @@
     },
     "src/canopy/tools/build_knowledge_hub_catalog.py": {
       "url": "src/canopy/tools/build_knowledge_hub_catalog.py",
-      "sha256": "d68f6a6d94083a966469f7e2aab9c83a726a4692aa76036617f65c328327a448",
-      "size_bytes": 12516
+      "sha256": "ca0be93f02fb1a42d9643561266d19200e3ed944209a5047f3bafc50b17882ec",
+      "size_bytes": 12570
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "fd0e23be12ebb0a07c621dc8233011e24c01d696f779cf52ccdb1b186607da98",
-      "size_bytes": 1103
+      "sha256": "c4389fcf67941c704419e55a85799b3ec06198b5303b764aa42f6203fece7e60",
+      "size_bytes": 1013
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
@@ -434,16 +429,6 @@
       "url": "web/catalog/app.js",
       "sha256": "87d0053d2ba8b0377e1337f2710b13db16736ebcf7fcdc42fa04a93bde088293",
       "size_bytes": 22643
-    },
-    "web/shared/download.js": {
-      "url": "web/shared/download.js",
-      "sha256": "b7540ec04009235e806519f6f0a5700ecc79aa06b9b2b431d1f3d65c011a75e7",
-      "size_bytes": 2305
-    },
-    "web/shared/md5.js": {
-      "url": "web/shared/md5.js",
-      "sha256": "8c503b447d8689852651e83e4ba5beaad04a98accbe30a396eafe9ebf8fa6ab8",
-      "size_bytes": 2121
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
@@ -494,6 +479,26 @@
       "url": "browser-prepare/staging.js",
       "sha256": "244362a341dc054a282bc027bdb9e80ed1d5ce17820dc4eb3d95b6c61935e3e5",
       "size_bytes": 1677
+    },
+    "src/canopy/cli.py": {
+      "url": "src/canopy/cli.py",
+      "sha256": "0b389dec188da5bcc9fcfae037a2e9bab86b94c1bce88b66d6b3c1c42f385172",
+      "size_bytes": 979
+    },
+    "src/canopy/__main__.py": {
+      "url": "src/canopy/__main__.py",
+      "sha256": "21d5c8df5419f23a733778e69591d68f44fabc3275f87bc98b340cc282a67ace",
+      "size_bytes": 156
+    },
+    "src/canopy/tools/acquire.py": {
+      "url": "src/canopy/tools/acquire.py",
+      "sha256": "08b3f605a0e4f08ddb92718f68d26a25167f74afd634e82dfaf5a48802a47363",
+      "size_bytes": 18178
+    },
+    "src/canopy/tools/verify.py": {
+      "url": "src/canopy/tools/verify.py",
+      "sha256": "fe36965bf990bbee4fd7da56debfaa0cf68bbcce06af6b9f5038f7fbf3ac4d42",
+      "size_bytes": 2561
     }
   },
   "zip_js": "2.20.0",

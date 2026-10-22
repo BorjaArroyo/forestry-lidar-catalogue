@@ -12,7 +12,7 @@ def repository_root() -> Path:
     )
     if (
         not (root / "publication-manifest.json").is_file()
-        and not (root / "knowledge-model.json").is_file()
+        and not (root / "data/knowledge-model.json").is_file()
     ):
         raise RuntimeError(
             "Canopy data files were not found. Install in editable mode from the repository "
