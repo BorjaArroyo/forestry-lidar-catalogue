@@ -162,17 +162,21 @@ def launch_worker(api, folder):
     command = [sys.executable, "-m", "canopy", "service", "--worker", str(folder)]
     try:
         with (folder / "worker.log").open("ab") as log:
-            pid = os.posix_spawn(
-                sys.executable,
-                command,
-                os.environ,
-                file_actions=[
-                    (os.POSIX_SPAWN_OPEN, 0, "/dev/null", os.O_RDONLY, 0),
-                    (os.POSIX_SPAWN_DUP2, log.fileno(), 1),
-                    (os.POSIX_SPAWN_DUP2, log.fileno(), 2),
-                ],
-                setsid=True,
-            )
+            file_actions = [
+                (os.POSIX_SPAWN_OPEN, 0, "/dev/null", os.O_RDONLY, 0),
+                (os.POSIX_SPAWN_DUP2, log.fileno(), 1),
+                (os.POSIX_SPAWN_DUP2, log.fileno(), 2),
+            ]
+            try:
+                pid = os.posix_spawn(
+                    sys.executable, command, os.environ, file_actions=file_actions, setsid=True
+                )
+            except NotImplementedError:
+                # Some standalone Linux Python builds omit spawn's session extension.
+                # A separate process group keeps the worker isolated without a fork.
+                pid = os.posix_spawn(
+                    sys.executable, command, os.environ, file_actions=file_actions, setpgroup=0
+                )
         (folder / "worker.pid").write_text(str(pid))
         deadline = time.monotonic() + 2
         while time.monotonic() < deadline:
@@ -186,7 +190,7 @@ def launch_worker(api, folder):
                 )
             time.sleep(0.02)
         return pid
-    except (OSError, ValueError) as error:
+    except (OSError, ValueError, NotImplementedError) as error:
         current = api.read(folder / "job.json")
         current.update(status="failed", error=str(error), finished_at=api.now())
         api.save(folder / "job.json", current)

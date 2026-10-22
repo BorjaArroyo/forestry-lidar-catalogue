@@ -322,8 +322,8 @@
     },
     "src/canopy/service/jobs.py": {
       "url": "src/canopy/service/jobs.py",
-      "sha256": "2f78a28374cf94ed3af015d1e11491de195c3f57bbcadc4f0948f5f39137e124",
-      "size_bytes": 12214
+      "sha256": "62809f63ee1aef3531d5eba534e20694fa6079eb184e7f222009cf6f07a8ea11",
+      "size_bytes": 12586
     },
     "src/canopy/service/storage.py": {
       "url": "src/canopy/service/storage.py",

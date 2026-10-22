@@ -539,6 +539,19 @@ class WorkbenchTests(unittest.TestCase):
         self.assertNotIn("validation_report_sha256", job)
         self.assertFalse((folder / "task-package-report.json").exists())
 
+    def test_worker_start_uses_a_process_group_when_spawn_sessions_are_unavailable(self):
+        folder = self.service.STATE / "jobs/portable-launch"
+        self.service.save(folder / "job.json", dict(id="fixture", status="running"))
+        with patch.object(
+            service_jobs.os,
+            "posix_spawn",
+            side_effect=[NotImplementedError("setsid unavailable"), 123456],
+        ) as spawn:
+            self.assertEqual(self.service.launch_worker(folder), 123456)
+        self.assertTrue(spawn.call_args_list[0].kwargs["setsid"])
+        self.assertEqual(spawn.call_args_list[1].kwargs["setpgroup"], 0)
+        self.assertEqual((folder / "worker.pid").read_text(), "123456")
+
     def test_failed_worker_start_is_persisted_instead_of_left_queued(self):
         folder = self.service.STATE / "jobs/failed-launch"
         self.service.save(
