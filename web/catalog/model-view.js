@@ -11,7 +11,16 @@ export function mountModelView({
   fetch: doFetch = (...args) => fetch(...args),
 } = {}) {
   const $ = (selector) => doc.querySelector(selector);
-  const state = { task: 'instances', selected: null, model: null, load: null };
+  const state = {
+    task: 'instances',
+    selected: null,
+    model: null,
+    load: null,
+    graph: null,
+    zoom: 0.85,
+    pan: { x: 0, y: 0 },
+    justDragged: false,
+  };
   const SUPPORT_COLORS = {
     documented: '#3f8972',
     partial: '#c19b4b',
@@ -197,9 +206,28 @@ export function mountModelView({
     ];
     return `M ${start.join(' ')} Q ${control.join(' ')} ${end.join(' ')}`;
   }
+  function applyTransform() {
+    const group = $('#model-content');
+    if (group)
+      group.setAttribute(
+        'transform',
+        `translate(${state.pan.x} ${state.pan.y}) scale(${state.zoom})`,
+      );
+  }
+  function fitGraph() {
+    const svg = $('#model-graph');
+    const rect = svg.getBoundingClientRect();
+    if (!state.graph || !rect.width) return;
+    const maxX = Math.max(...state.graph.nodes.map((node) => node.x + node.w)) + 40;
+    const maxY = Math.max(...state.graph.nodes.map((node) => node.y + node.h)) + 40;
+    state.zoom = Math.min(2, Math.max(0.25, Math.min(rect.width / maxX, rect.height / maxY)));
+    state.pan = { x: 20, y: 20 };
+    applyTransform();
+  }
   function renderGraph() {
     const svg = $('#model-graph');
     const graph = computeGraph(state.model, `task:${state.task}`);
+    state.graph = graph;
     const edgeHtml = graph.edges
       .map((edge) => {
         const color =
@@ -228,8 +256,7 @@ export function mountModelView({
         return `<g class="graph-node ${node.dim ? 'dim' : ''} ${selected ? 'selected' : ''}" data-node="${esc(node.id)}" tabindex="0" role="button" aria-label="${esc(`${node.name}: ${node.sub}`)}" transform="translate(${node.x} ${node.y})"><rect width="${node.w}" height="${node.h}" rx="12"/><text class="node-mark" x="14" y="28">${mark}</text><text class="node-name" x="38" y="27">${esc(node.name)}</text><text class="node-sub" x="15" y="${node.h - 30}">${esc(node.sub)}</text>${node.status ? `<text class="node-status" x="15" y="${node.h - 12}">${esc(String(node.status).replaceAll('_', ' ').toUpperCase())}</text>` : ''}</g>`;
       })
       .join('');
-    svg.setAttribute('viewBox', graph.viewBox);
-    svg.innerHTML = `<defs><marker id="model-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5a7a6c"/></marker></defs>${edgeHtml}${nodeHtml}`;
+    svg.innerHTML = `<defs><marker id="model-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5a7a6c"/></marker></defs><g id="model-content" transform="translate(${state.pan.x} ${state.pan.y}) scale(${state.zoom})">${edgeHtml}${nodeHtml}</g>`;
     const flowLinks = graph.edges.filter((edge) => edge.kind === 'flow').length;
     $('#model-graph-count').textContent =
       `${graph.nodes.filter((node) => node.type === 'source_release').length} sources · ` +
@@ -305,6 +332,10 @@ export function mountModelView({
     render();
   }
   doc.addEventListener('click', (event) => {
+    if (state.justDragged) {
+      state.justDragged = false;
+      return;
+    }
     const taskButton = event.target.closest('[data-task]');
     if (taskButton) {
       state.task = taskButton.dataset.task;
@@ -329,13 +360,67 @@ export function mountModelView({
       renderGraph();
     }
   });
+  /* Pan by dragging, zoom towards the pointer; a click still selects nodes. */
+  let pointer = null;
+  function bindNavigation() {
+    const svg = $('#model-graph');
+    if (svg.dataset.bound) return;
+    svg.dataset.bound = 'true';
+    svg.addEventListener('pointerdown', (event) => {
+      pointer = { x: event.clientX, y: event.clientY, pan: { ...state.pan }, moved: 0 };
+      svg.setPointerCapture(event.pointerId);
+    });
+    svg.addEventListener('pointermove', (event) => {
+      if (!pointer) return;
+      const dx = event.clientX - pointer.x,
+        dy = event.clientY - pointer.y;
+      pointer.moved = Math.max(pointer.moved, Math.hypot(dx, dy));
+      state.pan = { x: pointer.pan.x + dx, y: pointer.pan.y + dy };
+      applyTransform();
+    });
+    const release = () => {
+      state.justDragged = Boolean(pointer && pointer.moved > 5);
+      pointer = null;
+    };
+    svg.addEventListener('pointerup', release);
+    svg.addEventListener('pointercancel', release);
+    svg.addEventListener(
+      'wheel',
+      (event) => {
+        event.preventDefault();
+        const rect = svg.getBoundingClientRect();
+        const factor = event.deltaY < 0 ? 1.15 : 1 / 1.15;
+        const zoom = Math.min(3, Math.max(0.25, state.zoom * factor));
+        const cx = event.clientX - rect.left,
+          cy = event.clientY - rect.top;
+        state.pan = {
+          x: cx - ((cx - state.pan.x) * zoom) / state.zoom,
+          y: cy - ((cy - state.pan.y) * zoom) / state.zoom,
+        };
+        state.zoom = zoom;
+        applyTransform();
+      },
+      { passive: false },
+    );
+    $('#model-zoom-in').addEventListener('click', () => {
+      state.zoom = Math.min(3, state.zoom * 1.25);
+      applyTransform();
+    });
+    $('#model-zoom-out').addEventListener('click', () => {
+      state.zoom = Math.max(0.25, state.zoom / 1.25);
+      applyTransform();
+    });
+    $('#model-zoom-fit').addEventListener('click', fitGraph);
+  }
   return {
     open() {
-      ensureModel().catch((error) => {
-        $('#model-status').textContent = 'Knowledge model unavailable';
-        $('#model-status').className = 'badge red';
-        $('#model-inspector').textContent = error.message;
-      });
+      ensureModel()
+        .then(bindNavigation)
+        .catch((error) => {
+          $('#model-status').textContent = 'Knowledge model unavailable';
+          $('#model-status').className = 'badge red';
+          $('#model-inspector').textContent = error.message;
+        });
     },
   };
 }

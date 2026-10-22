@@ -1547,12 +1547,45 @@ td:first-child {
 .graph-wrap {
   position: relative;
   padding: 12px;
-  overflow: auto;
+  overflow: hidden;
 }
 .graph-wrap svg {
   display: block;
   width: 100%;
-  min-height: 480px;
+  height: 560px;
+  cursor: grab;
+  touch-action: none;
+}
+.graph-wrap svg:active {
+  cursor: grabbing;
+}
+.graph-controls {
+  position: absolute;
+  bottom: 52px;
+  left: 22px;
+  display: flex;
+  gap: 6px;
+}
+.graph-controls button {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--line);
+  background: var(--surface-raised);
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-sm);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+.graph-controls button:hover {
+  border-color: var(--forest-300);
+  color: var(--forest-600);
 }
 .graph-caption {
   font-size: var(--text-xs);
