@@ -387,8 +387,8 @@
     },
     "browser-prepare/ui.js": {
       "url": "browser-prepare/ui.js",
-      "sha256": "4548325841135e57c760914231f152f4cf6ec69a59a485e7805feb611368ade1",
-      "size_bytes": 22508
+      "sha256": "714cbf24e8fd820ae9269692bc3a3be02d5ed15ce45ee2ffad852eb3d6d8809a",
+      "size_bytes": 19079
     },
     "browser-prepare/run-session.js": {
       "url": "browser-prepare/run-session.js",
@@ -465,6 +465,11 @@
       "sha256": "7adb9e182b924f91724ef480ad90d7cf0730d8542a71d8a2b41a737546d99b2c",
       "size_bytes": 2409
     },
+    "browser-prepare/saved-runs-panel.js": {
+      "url": "browser-prepare/saved-runs-panel.js",
+      "sha256": "762ae7732cd40579cbd20b68042fd906f1c1f6ccbd7516b68ca0f3a6bfb38822",
+      "size_bytes": 3823
+    },
     "browser-prepare/saved-runs.js": {
       "url": "browser-prepare/saved-runs.js",
       "sha256": "1012273fb2a2e0ead7594b1465468cdf86e47a45d51ecdcde04272cfbeb4dac3",
@@ -492,8 +497,8 @@
     },
     "src/canopy/tools/acquire.py": {
       "url": "src/canopy/tools/acquire.py",
-      "sha256": "08b3f605a0e4f08ddb92718f68d26a25167f74afd634e82dfaf5a48802a47363",
-      "size_bytes": 18178
+      "sha256": "20256dea939e369a18775dcb7b54ffdc2bf190b38914d1e7e3b85b1f61894fac",
+      "size_bytes": 18326
     },
     "src/canopy/tools/verify.py": {
       "url": "src/canopy/tools/verify.py",

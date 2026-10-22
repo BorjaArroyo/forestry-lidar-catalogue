@@ -113,168 +113,200 @@ def open_asset(record, asset, headers):
     raise RuntimeError("No download URL available")
 
 
+def verified_marker(marker, asset, root):
+    """Return a previously verified asset record after rechecking its outputs."""
+    if not marker.exists():
+        return None
+    previous = json.loads(marker.read_text())
+    expected_kind = "archive" if asset["name"].lower().endswith(".zip") else "file"
+    if previous.get("status") != "verified" or previous.get("stored_kind") != expected_kind:
+        return None
+    # Avoid deleting/replacing anything when a completed asset changed.
+    if previous["provider_checksum"] != asset["provider_checksum"]:
+        raise ValueError("Completed asset checksum differs from inventory")
+    platform = [item for item in previous["outputs"] if is_platform_metadata(item["path"])]
+    if platform:
+        previous.setdefault("platform_metadata", []).extend(platform)
+        previous["outputs"] = [
+            item for item in previous["outputs"] if not is_platform_metadata(item["path"])
+        ]
+        save_json(marker, previous)
+    for item in previous["outputs"]:
+        path = root / item["path"]
+        if not path.exists() or path.stat().st_size != item["size_bytes"]:
+            raise ValueError(f"Completed output missing or changed: {path}")
+    return previous
+
+
+def download_asset(record, asset, stage, local):
+    """Download the asset into staging, resuming a partial file when allowed."""
+    size = asset["size_bytes"]
+    if local.exists() and local.stat().st_size == size:
+        return "verified_local_staging"
+    offset = local.stat().st_size if local.exists() else 0
+    headers = {"User-Agent": "lidar-acquisition/0.1", "Accept-Encoding": "identity"}
+    if offset:
+        headers["Range"] = f"bytes={offset}-"
+    response, fetched_url = open_asset(record, asset, headers)
+    with response:
+        if offset and response.status != 206:
+            offset = 0
+        if offset and not response.headers.get("Content-Range", "").startswith(f"bytes {offset}-"):
+            raise ValueError("Unexpected range response")
+        if shutil.disk_usage(stage).free < size - offset + 5 * 1024**3:
+            raise OSError("Insufficient local staging space including 5 GiB reserve")
+        with local.open("ab" if offset else "wb") as stream:
+            while block := response.read(8 * 1024 * 1024):
+                stream.write(block)
+    if local.stat().st_size != size:
+        raise ValueError("Downloaded size does not match published size")
+    return fetched_url
+
+
+def extract_payload_member(archive, member, dest, output_map, root):
+    """Extract one payload member, reusing a checkpointed copy only when exact."""
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    expected_sha = None
+    prior = output_map.get(member.filename)
+    if prior and dest.exists() and dest.stat().st_size == member.file_size:
+        if digest(dest)["sha256"] == prior["sha256"]:
+            expected_sha = prior["sha256"]
+    if expected_sha is None:
+        expected_sha = archive_member_sha256(archive, member)
+        current_sha = (
+            digest(dest)["sha256"]
+            if dest.exists() and dest.stat().st_size == member.file_size
+            else None
+        )
+        if current_sha != expected_sha:
+            verified = False
+            for attempt in range(3):
+                with dest.open("wb") as out:
+                    written_digest = stream_archive_member(archive, member, out)
+                # The ZIP reader validates each member when its stream ends.
+                if written_digest == expected_sha and dest.stat().st_size == member.file_size:
+                    for read_attempt in range(3):
+                        if digest(dest)["sha256"] == expected_sha:
+                            verified = True
+                            break
+                        time.sleep(2 * (read_attempt + 1))
+                    if verified:
+                        break
+                time.sleep(2 * (attempt + 1))
+            if not verified:
+                raise ValueError(f"Extracted file verification failed: {dest}")
+    item = {
+        "path": str(dest.relative_to(root)),
+        "size_bytes": member.file_size,
+        "sha256": expected_sha,
+    }
+    output_map[member.filename] = item
+    return item
+
+
+def archive_platform_metadata(archive, member, metadata_map):
+    """Record AppleDouble members as evidence without storing them as payload."""
+    item = metadata_map.get(member.filename)
+    if item is None:
+        item = {
+            "archive_member": member.filename,
+            "sha256": archive_member_sha256(archive, member),
+            "size_bytes": member.file_size,
+            "stored": False,
+            "reason": "AppleDouble platform metadata",
+        }
+        metadata_map[member.filename] = item
+    return item
+
+
+def extract_archive(record, asset, local, raw, root, stage):
+    """Extract a verified archive into originals with resumable checkpoints."""
+    if not zipfile.is_zipfile(local):
+        raise ValueError("Published ZIP asset is not a readable ZIP archive")
+    target = raw / asset["name"].removesuffix(".zip")
+    checkpoint_path = stage / f"{record['record_id']}_{asset['name']}.resume.json"
+    try:
+        checkpoint = json.loads(checkpoint_path.read_text()) if checkpoint_path.exists() else {}
+    except json.JSONDecodeError:
+        checkpoint = {}
+    output_map = checkpoint.get("outputs", {})
+    metadata_map = checkpoint.get("platform_metadata", {})
+    with zipfile.ZipFile(local) as archive:
+        members = archive.infolist()
+        paths = [str(safe_name(member.filename)) for member in members]
+        if len(paths) != len(set(paths)):
+            raise ValueError("Duplicate archive paths")
+        payload_members = [member for member in members if not member.is_dir()]
+        processed = 0
+        for member in members:
+            if stat.S_ISLNK(member.external_attr >> 16):
+                raise ValueError("Archive symlinks are unsupported")
+            dest = target / safe_name(member.filename)
+            if member.is_dir():
+                dest.mkdir(parents=True, exist_ok=True)
+                continue
+            if is_platform_metadata(member.filename):
+                # macOS/WebDAV can consume AppleDouble files as filesystem metadata.
+                archive_platform_metadata(archive, member, metadata_map)
+            else:
+                extract_payload_member(archive, member, dest, output_map, root)
+            save_archive_checkpoint(checkpoint_path, output_map, metadata_map)
+            processed += 1
+            if processed % 50 == 0 or processed == len(payload_members):
+                print(
+                    f"EXTRACTION {record['record_id']} {asset['name']} "
+                    f"{processed}/{len(payload_members)}",
+                    flush=True,
+                )
+    return list(output_map.values()), list(metadata_map.values())
+
+
+def store_file(asset, local, raw, root, source, hashes):
+    """Store a non-archive asset into originals under its published name."""
+    dest = raw / asset["name"]
+    if dest.is_dir():
+        # Preserve the earlier pilot's incorrectly expanded Office container.
+        diagnostic = source / "pilot-diagnostics" / asset["name"]
+        diagnostic.parent.mkdir(parents=True, exist_ok=True)
+        if diagnostic.exists():
+            raise ValueError("Pilot diagnostic destination already exists")
+        dest.rename(diagnostic)
+    shutil.copyfile(local, dest)
+    if digest(dest)["sha256"] != hashes["sha256"]:
+        raise ValueError("Stored file checksum mismatch")
+    return [
+        {
+            "path": str(dest.relative_to(root)),
+            "size_bytes": asset["size_bytes"],
+            "sha256": hashes["sha256"],
+        }
+    ]
+
+
 def acquire(record, asset, root, stage):
     safe_name(asset["name"])
     if len(PurePosixPath(asset["name"]).parts) != 1:
         raise ValueError("Asset name must be a basename")
     source = root / "sources" / str(record["record_id"])
     marker = source / "manifests" / (asset["name"] + ".json")
-    if marker.exists():
-        previous = json.loads(marker.read_text())
-        expected_kind = "archive" if asset["name"].lower().endswith(".zip") else "file"
-        if previous.get("status") == "verified" and previous.get("stored_kind") == expected_kind:
-            # Avoid deleting/replacing anything when a completed asset changed.
-            if previous["provider_checksum"] != asset["provider_checksum"]:
-                raise ValueError("Completed asset checksum differs from inventory")
-            platform = [item for item in previous["outputs"] if is_platform_metadata(item["path"])]
-            if platform:
-                previous.setdefault("platform_metadata", []).extend(platform)
-                previous["outputs"] = [
-                    item for item in previous["outputs"] if not is_platform_metadata(item["path"])
-                ]
-                save_json(marker, previous)
-            for item in previous["outputs"]:
-                path = root / item["path"]
-                if not path.exists() or path.stat().st_size != item["size_bytes"]:
-                    raise ValueError(f"Completed output missing or changed: {path}")
-            return previous
+    previous = verified_marker(marker, asset, root)
+    if previous is not None:
+        return previous
     stage.mkdir(parents=True, exist_ok=True)
     local = stage / (str(record["record_id"]) + "_" + asset["name"])
-    size = asset["size_bytes"]
-    if not local.exists() or local.stat().st_size != size:
-        offset = local.stat().st_size if local.exists() else 0
-        headers = {"User-Agent": "lidar-acquisition/0.1", "Accept-Encoding": "identity"}
-        if offset:
-            headers["Range"] = f"bytes={offset}-"
-        response, fetched_url = open_asset(record, asset, headers)
-        with response:
-            if offset and response.status != 206:
-                offset = 0
-            if offset and not response.headers.get("Content-Range", "").startswith(
-                f"bytes {offset}-"
-            ):
-                raise ValueError("Unexpected range response")
-            if shutil.disk_usage(stage).free < size - offset + 5 * 1024**3:
-                raise OSError("Insufficient local staging space including 5 GiB reserve")
-            with local.open("ab" if offset else "wb") as stream:
-                while block := response.read(8 * 1024 * 1024):
-                    stream.write(block)
-        if local.stat().st_size != size:
-            raise ValueError("Downloaded size does not match published size")
-    else:
-        fetched_url = "verified_local_staging"
+    fetched_url = download_asset(record, asset, stage, local)
     hashes = digest(local)
     algorithm, expected = asset["provider_checksum"].split(":", 1)
     if algorithm not in hashes or hashes[algorithm] != expected:
         raise ValueError("Downloaded provider checksum mismatch; staged file retained")
-    outputs = []
-    platform_metadata = []
     raw = source / "originals"
     raw.mkdir(parents=True, exist_ok=True)
     is_archive = asset["name"].lower().endswith(".zip")
     if is_archive:
-        if not zipfile.is_zipfile(local):
-            raise ValueError("Published ZIP asset is not a readable ZIP archive")
-        target = raw / asset["name"].removesuffix(".zip")
-        checkpoint_path = stage / f"{record['record_id']}_{asset['name']}.resume.json"
-        try:
-            checkpoint = json.loads(checkpoint_path.read_text()) if checkpoint_path.exists() else {}
-        except json.JSONDecodeError:
-            checkpoint = {}
-        output_map = checkpoint.get("outputs", {})
-        metadata_map = checkpoint.get("platform_metadata", {})
-        with zipfile.ZipFile(local) as archive:
-            members = archive.infolist()
-            paths = [str(safe_name(member.filename)) for member in members]
-            if len(paths) != len(set(paths)):
-                raise ValueError("Duplicate archive paths")
-            payload_members = [member for member in members if not member.is_dir()]
-            processed = 0
-            for member in members:
-                if stat.S_ISLNK(member.external_attr >> 16):
-                    raise ValueError("Archive symlinks are unsupported")
-                dest = target / safe_name(member.filename)
-                if member.is_dir():
-                    dest.mkdir(parents=True, exist_ok=True)
-                    continue
-                if is_platform_metadata(member.filename):
-                    # macOS/WebDAV can consume AppleDouble files as filesystem metadata.
-                    item = metadata_map.get(member.filename)
-                    if item is None:
-                        item = {
-                            "archive_member": member.filename,
-                            "sha256": archive_member_sha256(archive, member),
-                            "size_bytes": member.file_size,
-                            "stored": False,
-                            "reason": "AppleDouble platform metadata",
-                        }
-                        metadata_map[member.filename] = item
-                else:
-                    dest.parent.mkdir(parents=True, exist_ok=True)
-                    expected_sha = None
-                    prior = output_map.get(member.filename)
-                    if prior and dest.exists() and dest.stat().st_size == member.file_size:
-                        if digest(dest)["sha256"] == prior["sha256"]:
-                            expected_sha = prior["sha256"]
-                    if expected_sha is None:
-                        expected_sha = archive_member_sha256(archive, member)
-                        current_sha = (
-                            digest(dest)["sha256"]
-                            if dest.exists() and dest.stat().st_size == member.file_size
-                            else None
-                        )
-                        if current_sha != expected_sha:
-                            verified = False
-                            for attempt in range(3):
-                                with dest.open("wb") as out:
-                                    written_digest = stream_archive_member(archive, member, out)
-                                # The ZIP reader validates each member when its stream ends.
-                                if (
-                                    written_digest == expected_sha
-                                    and dest.stat().st_size == member.file_size
-                                ):
-                                    for read_attempt in range(3):
-                                        if digest(dest)["sha256"] == expected_sha:
-                                            verified = True
-                                            break
-                                        time.sleep(2 * (read_attempt + 1))
-                                    if verified:
-                                        break
-                                time.sleep(2 * (attempt + 1))
-                            if not verified:
-                                raise ValueError(f"Extracted file verification failed: {dest}")
-                    item = {
-                        "path": str(dest.relative_to(root)),
-                        "size_bytes": member.file_size,
-                        "sha256": expected_sha,
-                    }
-                    output_map[member.filename] = item
-                    outputs.append(item)
-                save_archive_checkpoint(checkpoint_path, output_map, metadata_map)
-                processed += 1
-                if processed % 50 == 0 or processed == len(payload_members):
-                    print(
-                        f"EXTRACTION {record['record_id']} {asset['name']} "
-                        f"{processed}/{len(payload_members)}",
-                        flush=True,
-                    )
-        outputs = list(output_map.values())
-        platform_metadata = list(metadata_map.values())
+        outputs, platform_metadata = extract_archive(record, asset, local, raw, root, stage)
     else:
-        dest = raw / asset["name"]
-        if dest.is_dir():
-            # Preserve the earlier pilot's incorrectly expanded Office container.
-            diagnostic = source / "pilot-diagnostics" / asset["name"]
-            diagnostic.parent.mkdir(parents=True, exist_ok=True)
-            if diagnostic.exists():
-                raise ValueError("Pilot diagnostic destination already exists")
-            dest.rename(diagnostic)
-        shutil.copyfile(local, dest)
-        if digest(dest)["sha256"] != hashes["sha256"]:
-            raise ValueError("Stored file checksum mismatch")
-        outputs.append(
-            {"path": str(dest.relative_to(root)), "size_bytes": size, "sha256": hashes["sha256"]}
-        )
+        outputs = store_file(asset, local, raw, root, source, hashes)
+        platform_metadata = []
     result = {
         "record_id": record["record_id"],
         "asset": asset["name"],
@@ -293,7 +325,7 @@ def acquire(record, asset, root, stage):
     # Only the task-owned staged asset is removed, after durable evidence exists.
     local.unlink()
     if is_archive:
-        checkpoint_path.unlink(missing_ok=True)
+        stage.joinpath(f"{record['record_id']}_{asset['name']}.resume.json").unlink(missing_ok=True)
     return result
 
 
