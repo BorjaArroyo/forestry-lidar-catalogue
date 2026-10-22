@@ -96,3 +96,7 @@ isolated profiles and compares all 39 prepared blocks with the native reference.
 
 The WASI container prototype, generic normalizer and experimental small-asset
 screen are not part of the application. Their source is available in Git history.
+
+[Consolidated application acceptance](../../evidence/application-consolidation-validation-2026-10-22.json)
+validates the current directory layout and CLI in both browsers. The five-plot
+ZIPs contain 9,160,560 points and all 39 NPZ blocks match the native reference.

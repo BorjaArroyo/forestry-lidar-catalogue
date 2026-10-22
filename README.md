@@ -58,16 +58,18 @@ host directory requires the Python download service:
 
 ```bash
 python3.11 -m venv .venv
-.venv/bin/python -m pip install -e '.[dev]'
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
 npm ci
-python -m canopy service --port 8765
+npx playwright install chromium firefox
+canopy service --port 8765
 ```
 
 Open http://127.0.0.1:8765/#workbench. Inspect a source, review its assets and
 enter a new absolute destination directory. Only admitted inventory records
 are accepted; this operation does not add new records to the catalog. For FOR-instance, select
 "Prepare instance data after download" and a separate output directory, or use
-the existing-acquisition preparation form. Preparation runs locally, without Ray.
+the existing-acquisition preparation form. Preparation runs locally.
 
 Resume uses the same matching single-record destination and staging directory.
 A nonempty unrelated destination is rejected. Only ZIP assets are expanded.
@@ -135,8 +137,7 @@ it becomes executable. The [roadmap](docs/ROADMAP.md) lists the remaining MVP ga
 ## Verification and publication
 
 ```bash
-python -m canopy verify
-npm run test:e2e
+canopy verify
 ```
 
 The maintained Python package is under `src/canopy/`, and browser modules are

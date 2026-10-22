@@ -12,7 +12,7 @@
     "CONTRIBUTING.md": "eeb07ca2e56f39d4f03bd452090ebca2b2983983cb1b1f142728786203a16894",
     "docs/sources/FGI-EMIT.md": "3a88f59bdc50640e39588179212be4dfc376da864db0c43a144c8f94e25c95f9",
     "docs/sources/FOR-INSTANCE.md": "a4c4f47cb9034a94946e29ba722a5f7cb562ddfb70bf2728e3bcab84c3093515",
-    "README.md": "43bc23c2fa0855af5410a69d9bde44b9acb8f1930f20123a39cbce339170bde8",
+    "README.md": "b3474baf91e3faa4cc5c799b20a699dfee542512fcc13c9a7bd91ee9222a7cc5",
     "docs/ROADMAP.md": "ddb21e4d1db560c981be006d5966d3af29dc9fa141323c7b444c1d8f785aa60d",
     "docs/guides/TASK-REQUIREMENTS.md": "8106a5803602fe978be6873ab94a0c6fa50039c9fadb624d63ab205f249a07bf",
     "browser-prepare/batch.py": "6dd968d92333d947ff13d8b76872e8f4ad74c5b78ea8cae4fbc5005fde38b596",
@@ -131,7 +131,7 @@
     "web/catalog/task-selection.js": "d2f554569be0800ebb1041604b1fc487e5f09cbcee33b8b256918db3ec3cfece",
     "web/styles.css": "ab2a48d31ebeee667d66a866ca6d30aef953a72dea5d7df9a07d439977c83731",
     "web/workbench/workbench.js": "e78acb3fd7a452997bf68d130f6fda3c28118a0223990a5e0aa31e55e0086521",
-    "docs/guides/BROWSER-PREPARATION.md": "a0d1a3398ee0b2f91c1b4c130072e5ac6342a78e7aec56039a2225d824be5053",
+    "docs/guides/BROWSER-PREPARATION.md": "34034c2a08af3e9fe37f63f3588fb824d9d5a45f15786d487d8f817a4d3a627d",
     "docs/guides/DATA-MODEL.md": "d956c87a7f4b33d46b2bdfed7badf81a1cfdf7117d67b36d8dda0c3aac596c7e",
     "docs/guides/PIPELINES.md": "a47132b0be8c73163835e361548e2b76186e0cec3357f26f6d56e29fe6082318",
     "docs/guides/TASK-DATASET.md": "f0a793308068eed1acc96511c3139782454aafdd146ef1c40b81cb043fd6285a",
@@ -181,7 +181,10 @@
     "src/canopy/cli.py": "0b389dec188da5bcc9fcfae037a2e9bab86b94c1bce88b66d6b3c1c42f385172",
     "src/canopy/__main__.py": "21d5c8df5419f23a733778e69591d68f44fabc3275f87bc98b340cc282a67ace",
     "src/canopy/tools/acquire.py": "08b3f605a0e4f08ddb92718f68d26a25167f74afd634e82dfaf5a48802a47363",
-    "src/canopy/tools/verify.py": "fe36965bf990bbee4fd7da56debfaa0cf68bbcce06af6b9f5038f7fbf3ac4d42"
+    "src/canopy/tools/verify.py": "fe36965bf990bbee4fd7da56debfaa0cf68bbcce06af6b9f5038f7fbf3ac4d42",
+    "evidence/application-consolidation-validation-2026-10-22.json": "177ca8f54f51dcdfa99cb0fb05c202376723ec9e09acca8e54bac56ba24715d2",
+    "evidence/consolidation-chromium-events.jsonl": "7b89efbe8af13cff76ab72af53baffbc7aef95efe816cbf6ad8261c119b67341",
+    "evidence/consolidation-firefox-events.jsonl": "b2c1ffd86765e1a528152af03fb77d0167c6fb867895f5805ae301770fcbddba"
   },
   "target": "https://borjaarroyo.github.io/forestry-lidar-catalogue/"
 }
