@@ -1,10 +1,11 @@
 """Independent checks for FGI references, native channels and masked missingness."""
 
+from canopy.adapters import load_adapter
+
 import json
 from pathlib import Path
 import shutil
 import subprocess
-import sys
 import tempfile
 import unittest
 
@@ -13,8 +14,9 @@ import numpy as np
 from canopy.task_package import TaskPackage
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
-from fgi_emit.prepare import Preparation, prepare, reference, sha  # noqa: E402
+
+adapter = load_adapter("fgi_emit")
+Preparation, prepare, reference, sha = adapter.Preparation, adapter.prepare, adapter.reference, adapter.sha
 
 
 class FgiPreparation(unittest.TestCase):

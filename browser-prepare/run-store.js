@@ -27,8 +27,8 @@ export async function occupiedBytes(root) {
       handle.kind === 'directory' ? await occupiedBytes(handle) : (await handle.getFile()).size;
   return bytes;
 }
-export async function inspectRuns() {
-  const origin = await navigator.storage.getDirectory();
+export async function inspectRuns(browser = navigator) {
+  const origin = await browser.storage.getDirectory();
   let jobs;
   try {
     jobs = await origin.getDirectoryHandle('canopy-preparation');
@@ -39,7 +39,7 @@ export async function inspectRuns() {
   const runs = [];
   for await (const [id, root] of jobs.entries()) {
     if (root.kind !== 'directory' || !validJob(id)) continue;
-    await navigator.locks.request(lockName(id), { ifAvailable: true }, async (lock) => {
+    await browser.locks.request(lockName(id), { ifAvailable: true }, async (lock) => {
       if (!lock) {
         runs.push({ id, status: 'busy' });
         return;

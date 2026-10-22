@@ -1,15 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import vm from 'node:vm';
 import { webcrypto } from 'node:crypto';
-import { selectPlots } from '../browser-prepare/selection.js';
-import { directory, write, checkpointFiles, mountBlocks } from '../browser-prepare/storage.js';
-import { validateCheckpoint } from '../browser-prepare/checkpoints.js';
-import { createRuntime } from '../browser-prepare/runtime.js';
-import { profileForSource } from '../browser-prepare/profiles.js';
-import { writeArchive } from '../browser-prepare/export.js';
-import { createWorkerController } from '../browser-prepare/runner.js';
+import { write, mountBlocks } from '../browser-prepare/storage.js';
+import { createPreparationController } from '../browser-prepare/controller.js';
 import { MemoryDirectory } from './browser-memory-fs.mjs';
 
 const job = '12345678-1234-1234-1234-123456789abc';
@@ -82,7 +75,7 @@ function worker({
       if (code.includes('folder_dataset =')) return JSON.stringify({ scenes: 2, points: 18 });
     },
   };
-  const context = vm.createContext({
+  const context = {
     URL,
     Map,
     TextEncoder,
@@ -92,16 +85,8 @@ function worker({
     Blob,
     WritableStream,
     DOMException,
-    selectPlots,
-    createRuntime,
-    profileForSource,
-    directory,
     write,
-    checkpointFiles,
     mountBlocks,
-    validateCheckpoint,
-    writeArchive,
-    createWorkerController,
     crypto: { subtle: webcrypto.subtle, randomUUID: () => job },
     self: {
       location: { href: 'http://localhost/browser-prepare/worker.js' },
@@ -175,36 +160,24 @@ function worker({
         async close() {}
       },
     }),
+  };
+  const controller = createPreparationController({
+    scope: context.self,
+    browser: context.navigator,
+    cryptoProvider: context.crypto,
+    runtime: { loadContext: context.mockLoadContext },
+    taskForRequest: context.getTask,
+    stagePlot: context.stage,
+    preparePlot: context.prepare,
+    loadZip: context.zipRuntime,
   });
-  vm.runInContext(
-    fs
-      .readFileSync(new URL('../browser-prepare/run-store.js', import.meta.url), 'utf8')
-      .replaceAll('export ', ''),
-    context,
-  );
-  const code = fs
-    .readFileSync(new URL('../browser-prepare/worker.js', import.meta.url), 'utf8')
-    .replace(/^import\s+\{[\s\S]*?\}\s+from\s+["'][^"']+["'];\s*/gm, '');
-  vm.runInContext(code, context);
-  vm.runInContext(
-    'runtime.loadContext=mockLoadContext;taskForRequest=getTask;stagePlot=stage;preparePlot=prepare;loadZip=zipRuntime;',
-    context,
-  );
   return {
-    store,
-    messages,
-    staged,
-    validated,
-    context,
-    run: () =>
-      vm.runInContext(
-        'run(input)',
-        Object.assign(context, {
-          input: { mode: 'zenodo', task_request: request, execution_plan: plan },
-        }),
-      ),
-    resume: () => vm.runInContext('resume(savedId)', Object.assign(context, { savedId: job })),
-    inspect: () => vm.runInContext('inspectRuns()', context),
+    store, messages, staged, validated,
+    run: () => controller.run({mode: 'zenodo', task_request: request, execution_plan: plan}),
+    resume: () => controller.resume(job),
+    inspect: controller.inspect,
+    review: controller.review,
+    onmessage: controller.onmessage,
   };
 }
 async function checkpoint(store, record) {

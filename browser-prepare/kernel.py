@@ -3,13 +3,13 @@
 import hashlib
 import json
 from pathlib import Path
-import sys
 
 import laspy
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts/for_instance"))
-import prepare as audited
+from canopy.adapters import load_adapter
+
+audited = load_adapter("for_instance")
 
 
 class Preparation:

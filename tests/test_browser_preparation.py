@@ -7,15 +7,16 @@ import io
 import json
 from pathlib import Path
 import shutil
-import sys
 import unittest
 
 import numpy as np
 from canopy.task_package import TaskPackage
 
 REPO = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO / "browser-prepare"))
-from kernel import Preparation  # noqa: E402
+KERNEL = importlib.util.spec_from_file_location("browser_kernel", REPO / "browser-prepare/kernel.py")
+kernel = importlib.util.module_from_spec(KERNEL)
+KERNEL.loader.exec_module(kernel)
+Preparation = kernel.Preparation
 
 SPEC = importlib.util.spec_from_file_location(
     "browser_fixtures", REPO / "scripts/for_instance/test_pipeline.py"
@@ -126,7 +127,10 @@ class BrowserBatchTests(unittest.TestCase):
     open = BrowserPreparationTests.open
 
     def test_selected_scenes_form_one_independently_validated_package(self):
-        from batch import combine_manifests
+        spec = importlib.util.spec_from_file_location("browser_batch", REPO / "browser-prepare/batch.py")
+        batch = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(batch)
+        combine_manifests = batch.combine_manifests
 
         lock = json.loads((self.fixture.package / "source-lock.json").read_text())
         manifests = []
@@ -162,8 +166,14 @@ class BrowserBatchTests(unittest.TestCase):
 
 class BrowserDeploymentTests(unittest.TestCase):
     def test_worker_bootstrap_exposes_the_protected_adapter_integration_path(self):
-        runtime = (REPO / "browser-prepare/runtime.js").read_text()
-        self.assertIn("'/app/scripts'", runtime)
+        import sys
+        from canopy.adapters import load_adapter
+
+        before = sys.path[:]
+        adapter = load_adapter("for_instance")
+        self.assertIs(kernel.audited, adapter)
+        self.assertEqual(Path(adapter.__file__), REPO / "scripts/for_instance/prepare.py")
+        self.assertEqual(sys.path, before)
 
     def test_provider_archive_pin_agrees_with_reviewed_inventory(self):
         runtime = json.loads((REPO / "browser-prepare/runtime-lock.json").read_text())
@@ -203,15 +213,10 @@ class BrowserDeploymentTests(unittest.TestCase):
     def test_worker_component_modules_are_locked_and_published(self):
         runtime = json.loads((REPO / "browser-prepare/runtime-lock.json").read_text())
         publication = json.loads((REPO / "publication-manifest.json").read_text())["files"]
-        for name in (
-            "browser-prepare/storage.js",
-            "browser-prepare/prepare.js",
-            "browser-prepare/checkpoints.js",
-            "browser-prepare/runtime.js",
-            "browser-prepare/export.js",
-            "browser-prepare/runner.js",
-            "browser-prepare/bootstrap.js",
-        ):
+        for path in sorted((REPO / "browser-prepare").rglob("*.js")):
+            if "vendor" in path.parts:
+                continue
+            name = path.relative_to(REPO).as_posix()
             path = REPO / name
             self.assertEqual(
                 runtime["files"][name]["sha256"], hashlib.sha256(path.read_bytes()).hexdigest()

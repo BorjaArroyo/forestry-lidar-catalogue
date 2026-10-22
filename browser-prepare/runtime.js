@@ -59,7 +59,6 @@ function createRuntime({ scope, base, nativeFetch, digest, profileForSource, pha
       });
       for (const name of ['laspy-2.7.0-py3-none-any.whl', 'filelock-4.0.12-py3-none-any.whl']) {
         py.FS.writeFile('/' + name, await asset(name));
-        py.runPython(`import sys; sys.path.insert(0, '/${name}')`);
       }
       for (const [name, entry] of Object.entries(lock.files)) {
         if (
@@ -81,7 +80,7 @@ function createRuntime({ scope, base, nativeFetch, digest, profileForSource, pha
         py.FS.writeFile(path, await checked(entry));
       }
       py.runPython(
-        "import sys; sys.path[:0] = ['/app/browser-prepare', '/app/src', '/app/scripts']; from kernel import Preparation; from batch import combine_manifests; from canopy.task_package import TaskPackage; from canopy.task_dataset import compose_layout, encoded, TaskDataset; from canopy.task_plan import plan_request, check_plan, validate_prepared, iter_task_blocks; from canopy.knowledge_model import load as load_model; from canopy import dataset_plan; import json, numpy, laspy, platform",
+        "import sys; sys.path[:0] = ['/app/browser-prepare', '/app/src', '/laspy-2.7.0-py3-none-any.whl', '/filelock-4.0.12-py3-none-any.whl']; from kernel import Preparation; from batch import combine_manifests; from canopy.task_package import TaskPackage; from canopy.task_dataset import compose_layout, encoded, TaskDataset; from canopy.task_plan import plan_request, check_plan, validate_prepared, iter_task_blocks; from canopy.knowledge_model import load as load_model; from canopy import dataset_plan; import json, numpy, laspy, platform",
       );
       const versions = JSON.parse(
         py.runPython(
@@ -121,19 +120,8 @@ function createRuntime({ scope, base, nativeFetch, digest, profileForSource, pha
         source_lock_sha256: await digest(sourceBytes),
       };
     }
-    for (const path of [
-      'browser-prepare/worker.js',
-      'browser-prepare/storage.js',
-      'browser-prepare/prepare.js',
-      'browser-prepare/checkpoints.js',
-      'browser-prepare/run-store.js',
-      'browser-prepare/intake.js',
-      'browser-prepare/selection.js',
-      'browser-prepare/profiles.js',
-      'browser-prepare/profiles/for-instance.js',
-      'browser-prepare/profiles/fgi-emit.js',
-    ])
-      await checked(lock.files[path]);
+    for (const [name, entry] of Object.entries(lock.files))
+      if ((name.startsWith('browser-prepare/') || name.startsWith('web/')) && name.endsWith('.js')) await checked(entry);
     phase(
       'Checking task requirements and exact versions for every source; no source LAS is downloaded yet…',
     );

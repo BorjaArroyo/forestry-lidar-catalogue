@@ -56,3 +56,47 @@ async function mountBlocks(py, files, outputRoot) {
 }
 
 export { directory, write, checkpointFiles, mountBlocks };
+
+export async function checkQuota({browser, groups, mode, reusable, executionPlan, resuming}) {
+      const estimate = await browser.storage.estimate();
+      const candidateBytes = groups.flatMap((g) =>
+        g.candidates.map(
+          (p) =>
+            p.size_bytes +
+            p.points * (g.profile.derivedBytesPerPoint || 34) +
+            Math.ceil(p.points / 250000) * 65536,
+        ),
+      );
+      const preparedBytes =
+        mode === 'las' ? Math.max(...candidateBytes) : candidateBytes.reduce((a, b) => a + b, 0);
+      const pendingBytes = groups
+        .flatMap((g) =>
+          g.candidates
+            .filter((p) => !reusable.has(g.record + ':' + p.path))
+            .map(
+              (p) =>
+                p.size_bytes +
+                p.points * (g.profile.derivedBytesPerPoint || 34) +
+                Math.ceil(p.points / 250000) * 65536,
+            ),
+        )
+        .reduce((a, b) => a + b, 0);
+      const stagingBytes = Math.max(
+        0,
+        ...groups.flatMap((g) =>
+          g.candidates
+            .filter((p) => !reusable.has(g.record + ':' + p.path))
+            .map((p) => p.size_bytes),
+        ),
+      );
+      const required =
+        mode === 'zenodo' && resuming
+          ? preparedBytes + pendingBytes + stagingBytes + 64 * 1024 ** 2
+          : (executionPlan?.totals.estimated_browser_storage_bytes ??
+            2 * preparedBytes + (mode === 'las' ? 0 : stagingBytes) + 64 * 1024 ** 2);
+      if (!Number.isFinite(estimate.quota) || estimate.quota - (estimate.usage || 0) < required)
+        throw Error(
+          `Insufficient browser storage; approximately ${Math.ceil(required / 1048576)} MiB free is required for the selected dataset and ZIP export`,
+        );
+
+}

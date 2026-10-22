@@ -17,7 +17,7 @@ export const fgiEmit = Object.freeze({
   },
   start(py) {
     py.runPython(
-      "from fgi_emit.prepare import Preparation as FgiPreparation; prep = FgiPreparation('/input/source.las', '/app/scripts/fgi_emit')",
+      "from canopy.adapters import load_adapter; FgiPreparation = load_adapter('fgi_emit').Preparation; prep = FgiPreparation('/input/source.las', '/app/scripts/fgi_emit')",
     );
   },
   validate(py, root) {
