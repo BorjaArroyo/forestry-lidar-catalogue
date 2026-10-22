@@ -141,7 +141,7 @@ class TaskPlans(unittest.TestCase):
                     )
         script = """const fs=require('node:fs'),path=require('node:path');
         (async()=>{
-        const catalog=JSON.parse(fs.readFileSync('catalog.json','utf8'));
+        const catalog=JSON.parse(fs.readFileSync('data/catalog.json','utf8'));
         const {createTaskSelection}=await import('file://'+path.resolve('web/catalog/task-selection.js'));
         const selection=createTaskSelection(catalog);
         const cases=JSON.parse(fs.readFileSync(0,'utf8'));

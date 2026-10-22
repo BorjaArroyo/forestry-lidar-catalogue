@@ -2,8 +2,8 @@
 
 The versioned output contract formalizes the existing FOR-instance preparation
 without changing its producer, hashes, reference policy or stored outputs.
-`task-package.schema.json` describes the manifest using JSON Schema 2020-12.
-`scripts/task_package.py` independently validates binary arrays and provides a
+`schemas/task-package.schema.json` describes the manifest using JSON Schema 2020-12.
+`canopy.task_package` independently validates binary arrays and provides a
 bounded reader. It does not import the producer or call its reference function.
 The array contract agrees with `contract:for-instance-plot-instances:1.0.0` in the
 curated graph; a regression test checks that relationship.
@@ -42,7 +42,7 @@ admit quantitative multispectral feature extraction.
 Install the checkout's pinned `requirements.txt`, then run:
 
 ```bash
-python scripts/task_package.py validate /absolute/prepared-package
+python -m canopy package validate /absolute/prepared-package
 ```
 
 The validator checks the closed manifest schema, unique scene/chunk membership,
@@ -64,8 +64,8 @@ replacement manifest.
 ## Consume a bounded block
 
 ```bash
-python scripts/task_package.py sample /absolute/prepared-package
-python scripts/task_package.py sample /absolute/prepared-package --scene SCENE_ID
+python -m canopy package sample /absolute/prepared-package
+python -m canopy package sample /absolute/prepared-package --scene SCENE_ID
 ```
 
 The sample command reads one verified block and reports its scene, partition,
@@ -141,7 +141,7 @@ The same independent reader now also accepts `fgi-emit-plot-instances:1.0.0`.
 Its trusted package is `scripts/fgi_emit/`; the manifest chooses between the two
 closed profiles, never arbitrary executable code. FGI source archives, native
 class semantics and policy remain separate from FOR-instance. See
-[FGI-EMIT.md](../../FGI-EMIT.md) for full-source evidence and exact reference/channel rules.
+[FGI-EMIT.md](../sources/FGI-EMIT.md) for full-source evidence and exact reference/channel rules.
 
 FGI chunks additionally expose float32 `features[N,3]` and boolean
 `feature_valid[N,3]` in scanner order 1550/905/532 nm. Native unknown/sentinel

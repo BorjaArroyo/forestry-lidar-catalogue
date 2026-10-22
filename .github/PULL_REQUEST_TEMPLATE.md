@@ -13,4 +13,4 @@ Link the proposal and explain the added, changed or removed dataset.
 ## Human review
 
 Request a maintainer review. Passing CI checks structure, not scientific validity.
-Existing records without admission reviews remain legacy, partially audited data.
+Existing records without admission reviews remain partially audited data.

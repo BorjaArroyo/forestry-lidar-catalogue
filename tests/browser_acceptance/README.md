@@ -57,7 +57,7 @@ with its corresponding scene in the native reference evidence. Do not use the
 five-plot exact-membership checker for a one-plot smoke test.
 
 Refresh existing local fingerprints explicitly with
-`python scripts/check_publication.py --write`, then verify with the same command
+`python -m canopy publication --write`, then verify with the same command
 without `--write`. New public files must first be added to the publication
 allowlist; the checker does not discover or admit files automatically. External
 runtime URLs and source pins are never updated by this command.

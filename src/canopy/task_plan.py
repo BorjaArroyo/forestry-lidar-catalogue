@@ -216,7 +216,7 @@ def iter_task_blocks(model, plan, package):
             )
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("operation", choices=["plan", "validate", "sample"])
     parser.add_argument("--record", default="8287792")
@@ -231,7 +231,7 @@ def main():
         "--plan", type=Path, help="Validate an exported plan exactly; use its recorded request"
     )
     parser.add_argument("--allow-selection", action="store_true")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     from .knowledge_model import load
     from .task_package import TaskPackage
 

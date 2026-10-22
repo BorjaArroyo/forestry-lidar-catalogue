@@ -13,7 +13,7 @@ WEB = ROOT
 class CatalogContent(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.catalog = json.loads((WEB / "catalog.json").read_text())
+        cls.catalog = json.loads((WEB / "data/catalog.json").read_text())
         cls.profiles, _, _ = knowledge_model.project(knowledge_model.load())
         cls.inventory = json.loads((ROOT / "docs/lidar-acquisition-inventory.json").read_text())
 

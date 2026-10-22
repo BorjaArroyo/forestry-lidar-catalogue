@@ -40,12 +40,12 @@ def check(root=ROOT, *, write=False):
     return len(failures)
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--write", action="store_true", help="Explicitly refresh existing local fingerprints"
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     changed = check(write=args.write)
     print(
         f"Publication fingerprints refreshed: {changed}"

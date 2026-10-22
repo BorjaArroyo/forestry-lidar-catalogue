@@ -4,7 +4,9 @@ import fs from 'node:fs';
 import { createTaskSelection } from '../web/catalog/task-selection.js';
 import { emptyDraft, readDraft, addSubset, reviewDraft } from '../browser-prepare/dataset-draft.js';
 import { profileForPipeline } from '../browser-prepare/profiles.js';
-const catalog = JSON.parse(fs.readFileSync(new URL('../catalog.json', import.meta.url), 'utf8'));
+const catalog = JSON.parse(
+  fs.readFileSync(new URL('../data/catalog.json', import.meta.url), 'utf8'),
+);
 const selection = createTaskSelection(catalog);
 const source = JSON.parse(
   fs.readFileSync(new URL('../scripts/for_instance/source-lock.json', import.meta.url), 'utf8'),

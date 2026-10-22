@@ -39,7 +39,7 @@ Quick paths:
 - The local service downloads all assets of a reviewed record into a chosen
   directory, checks provider checksums, verifies ZIP extraction, preserves
   originals and supports checkpoint-based resume.
-- FOR-instance has [versioned contracts and evidence](FOR-INSTANCE.md).
+- FOR-instance has [versioned contracts and evidence](docs/sources/FOR-INSTANCE.md).
   The adapter preserves native data and published dev/test assignments. Those
   assignments do not establish geographic independence.
 
@@ -60,7 +60,7 @@ host directory requires the Python download service:
 python3.11 -m venv .venv
 .venv/bin/python -m pip install -e '.[dev]'
 npm ci
-.venv/bin/python scripts/serve_knowledge_hub.py --port 8765
+python -m canopy service --port 8765
 ```
 
 Open http://127.0.0.1:8765/#workbench. Inspect a source, review its assets and
@@ -88,15 +88,15 @@ nothing else moves.
 
 ## FOR-instance output
 
-The [task-package contract and reader](TASK-PACKAGE.md) formalize these outputs.
+The [task-package contract and reader](docs/guides/TASK-PACKAGE.md) formalize these outputs.
 The service now completes preparation only after the independent validator has
 checked every prepared chunk. The workbench distinguishes downloading, preparing
 and checking output, and exports the validation report with its artifact hashes.
 Independently validate a complete package or inspect one bounded block:
 
 ```bash
-python scripts/task_package.py validate /absolute/prepared-package
-python scripts/task_package.py sample /absolute/prepared-package
+python -m canopy package validate /absolute/prepared-package
+python -m canopy package sample /absolute/prepared-package
 ```
 
 The self-contained package in `scripts/for_instance/` includes its entrypoint,
@@ -120,53 +120,38 @@ full-source validation scope and implementation/package fingerprints.
 
 ## Evidence and maintenance
 
-Curated facts live in `knowledge-model.json`, validated by JSON Schema and graph
-reference checks. `catalog.json` and `catalog.js` are generated presentation
+Curated facts live in `data/knowledge-model.json`, validated by JSON Schema and graph
+reference checks. `data/catalog.json` and `data/catalog.js` are generated presentation
 snapshots. See [docs/README.md](docs/README.md), [docs/guides/DATA-MODEL.md](docs/guides/DATA-MODEL.md) and
-[CONTENT-REVIEW.md](CONTENT-REVIEW.md) for evidence scope and unresolved questions.
+[CONTENT-REVIEW.md](docs/reviews/CONTENT-REVIEW.md) for evidence scope and unresolved questions.
 Acquisition counts describe a saved research workspace, not the current browser.
 Provider licenses are recorded declarations; intended-use review remains required.
 
 New sources and changed transformations follow [the admission process](CONTRIBUTING.md)
 and [pipeline requirements](docs/guides/PIPELINES.md). A transformation must be analyzed,
 self-contained and validated for its declared dataset/task combination before
-it becomes executable. The [roadmap](ROADMAP.md) lists the remaining MVP gates.
-
-## Retired experiments
-
-The graph explorer, generic preprocessing controls, PLY inspector, benchmark
-runner, image registry and frozen Wytham diagnostic are outside this product
-build. Their UI, callable service operations and public bundle entries were
-removed, rather than left as hidden runnable features. Their historical code and evidence remain in Git history at
-`04f05ac0cec819f302283e2f23e3e5c87f5f49c1`.
-
-The canonical graph, scientific caveats and source evidence remain current.
-Legacy normalization code and policy are retained only to interpret existing
-recorded outputs and verify the pinned implementation described in the graph.
-They do not constitute an admitted instance pipeline. No raw data, study results
-or unrelated research code were deleted by this cleanup.
+it becomes executable. The [roadmap](docs/ROADMAP.md) lists the remaining MVP gates.
 
 ## Verification and publication
 
 ```bash
-.venv/bin/python scripts/verify.py
+python -m canopy verify
 npm run test:e2e
 ```
 
 The maintained Python package is under `src/canopy/`, and browser modules are
-under `web/` and `browser-prepare/`. Legacy commands in `scripts/` remain as
-compatibility entrypoints. Root model, schema and catalog JSON files remain in
-place because their paths are part of published contracts. The publication
-builder uses an explicit allowlist and records file SHA256 in
+under `web/` and `browser-prepare/`. The installed `canopy` command is the single supported CLI. Domain snapshots live in `data/`, JSON schemas in
+`schemas/`, and technical documentation in `docs/`. The publication builder uses an explicit allowlist and records file SHA256 in
 `publication-manifest.json`. It excludes archives, previews, local logs,
 credentials, machine paths and unrelated research work.
 
-Keep audited adapter packages, pinned source locks, model/schema snapshots, and
-historical review/evidence files unchanged during structural work. Completed ZIP
+Keep admitted adapter packages, source locks, scientific schema bytes and recorded
+evidence unchanged during layout work. Retiring an implementation is an explicit
+model metadata change. Completed ZIP
 exports remain readable; resuming an interrupted run requires the checkout that
 contains the matching browser runtime dependencies.
 
-The [FGI-EMIT review and adapter](FGI-EMIT.md) document full-source validation, conservative references, native multispectral masks and unresolved calibration.
+The [FGI-EMIT review and adapter](docs/sources/FGI-EMIT.md) document full-source validation, conservative references, native multispectral masks and unresolved calibration.
 
 ## Prepare reviewed plots in the browser
 
@@ -198,12 +183,12 @@ restricts the reviewed plots to the published partitions for that use, downloads
 and verifies the selected source, runs the admitted transformation and independent
 validator, and exports a ZIP with `task-plan.json` and `task-validation.json`.
 The optional local service retains FOR-instance whole-archive preparation. FGI-EMIT also has a per-LAS native entrypoint; the browser can execute both admitted sources in one combined plan.
-See [Task requirements and consumption](TASK-REQUIREMENTS.md).
+See [Task requirements and consumption](docs/guides/TASK-REQUIREMENTS.md).
 
 ## Load prepared dataset folders
 
 Workbench exports `dataset.json` and preserved partition/source folders in a ZIP.
-Extract it and use `TaskDataset`. See [TASK-DATASET.md](TASK-DATASET.md) for the
+Extract it and use `TaskDataset`. See [TASK-DATASET.md](docs/guides/TASK-DATASET.md) for the
 layout, bounded loader and composition of existing prepared subsets.
 
 ## Resume interrupted Zenodo preparation
@@ -220,3 +205,13 @@ can be downloaded again from the saved list. An interrupted export is rebuilt
 only after all source and dataset checks pass. Recovery covers Zenodo selections;
 local LAS/ZIP inputs restart. Browser storage may be cleared or evicted, so download
 the completed ZIP to retain your dataset. See [the recovery contract](docs/guides/BROWSER-PREPARATION.md#resumable-zenodo-runs).
+
+See [repository layout](docs/repository-layout.md) for directory ownership and the
+supported application boundaries.
+
+The supported commands are `canopy acquire`, `canopy model`, `canopy plan`,
+`canopy package`, `canopy dataset`, `canopy service`, `canopy publication`,
+`canopy sources`, `canopy admission`, `canopy catalog` and `canopy verify`.
+Use `python -m canopy` when selecting a specific Python environment. The generic
+normalizer, WASI prototype and experimental small-asset downloader have been removed.
+Their previous source remains in Git, rather than in the installed application.

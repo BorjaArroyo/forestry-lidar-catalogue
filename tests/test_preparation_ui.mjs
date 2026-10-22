@@ -13,7 +13,6 @@ import { createTaskSelection } from '../web/catalog/task-selection.js';
 test('preparation modules import without touching the DOM', async () => {
   assert.equal(globalThis.window, undefined);
   await import('../browser-prepare/ui.js');
-  await import('../browser-prepare/download-ui.js');
   assert.equal(globalThis.window, undefined);
 });
 
@@ -145,7 +144,9 @@ async function panel({ savedStorage, savedRuns = [], missingRun = false } = {}) 
         ),
     }),
   };
-  const catalog = JSON.parse(fs.readFileSync(new URL('../catalog.json', import.meta.url), 'utf8'));
+  const catalog = JSON.parse(
+    fs.readFileSync(new URL('../data/catalog.json', import.meta.url), 'utf8'),
+  );
   context.window.LIDAR_CATALOG = catalog;
   const selection = createTaskSelection(catalog);
   let request = selection.normalize();

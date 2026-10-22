@@ -33,7 +33,7 @@ test('the application and worker module graphs have explicit publication entries
     assert.ok(Object.hasOwn(publication, name), `Unpublished worker module ${name}`);
     assert.ok(Object.hasOwn(runtime, name), `Unpinned worker module ${name}`);
     assert.ok(
-      !name.startsWith('container-lab/'),
+      !name.startsWith('experiments/container-lab/'),
       `Active worker imports historical prototype ${name}`,
     );
   }

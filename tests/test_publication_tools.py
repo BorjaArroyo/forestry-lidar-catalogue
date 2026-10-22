@@ -7,6 +7,7 @@ import tempfile
 import unittest
 import warnings
 import zipfile
+from canopy.tools import check_publication as publication
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -18,7 +19,6 @@ def module(name, path):
     return loaded
 
 
-publication = module("publication_check", ROOT / "scripts/check_publication.py")
 acceptance = module(
     "browser_acceptance_validator", ROOT / "tests/browser_acceptance/validate_download.py"
 )

@@ -24,7 +24,7 @@ measurement_counts = load_adapter("audit_fgi_measurements").measurement_counts
 class KnowledgeModel(unittest.TestCase):
     def setUp(self):
         self.graph = model.load()
-        self.schema = model.read_json(WEB / "knowledge-model.schema.json")
+        self.schema = model.read_json(WEB / "schemas/knowledge-model.schema.json")
 
     def test_package_imports_and_legacy_cli_work_outside_the_checkout(self):
         outside = Path(tempfile.gettempdir())
@@ -47,7 +47,7 @@ class KnowledgeModel(unittest.TestCase):
             self.assertEqual(imported.stdout, "")
             self.assertFalse(state.exists())
             cli = subprocess.run(
-                [sys.executable, str(ROOT / "scripts/knowledge_model.py")],
+                [sys.executable, "-m", "canopy", "model"],
                 cwd=outside,
                 env=environment,
                 capture_output=True,
@@ -64,7 +64,7 @@ class KnowledgeModel(unittest.TestCase):
     def test_current_content_round_trips_without_promoting_evidence(self):
         before = copy.deepcopy(self.graph)
         profiles, relationships, tasks = model.project(self.graph)
-        catalog = model.read_json(WEB / "catalog.json")
+        catalog = model.read_json(WEB / "data/catalog.json")
         self.assertEqual(set(profiles), {d["id"] for d in catalog["datasets"]})
         self.assertEqual(relationships, catalog["mappings"])
         self.assertEqual(tasks, catalog["tasks"])
@@ -164,16 +164,18 @@ class KnowledgeModel(unittest.TestCase):
     def test_refresh_is_deterministic_and_preserves_observed_snapshot(self):
         with tempfile.TemporaryDirectory(dir=ROOT / "temp") as folder:
             folder = Path(folder)
-            for name in ("knowledge-model.json", "knowledge-model.schema.json", "catalog.json"):
+            for name in (
+                "data/knowledge-model.json",
+                "schemas/knowledge-model.schema.json",
+                "data/catalog.json",
+            ):
+                (folder / name).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(WEB / name, folder / name)
             (folder / "evidence").mkdir()
             shutil.copyfile(
                 WEB / "evidence/for-instance-v1.json", folder / "evidence/for-instance-v1.json"
             )
             (folder / "scripts").mkdir()
-            shutil.copyfile(
-                ROOT / "scripts/harmonize_lidar.py", folder / "scripts/harmonize_lidar.py"
-            )
             shutil.copytree(
                 ROOT / "scripts/for_instance",
                 folder / "scripts/for_instance",
@@ -186,9 +188,9 @@ class KnowledgeModel(unittest.TestCase):
             )
             for source in (WEB / "evidence").glob("*.json"):
                 shutil.copyfile(source, folder / "evidence" / source.name)
-            before = model.read_json(folder / "catalog.json")
+            before = model.read_json(folder / "data/catalog.json")
             model.export_views(folder)
-            after = model.read_json(folder / "catalog.json")
+            after = model.read_json(folder / "data/catalog.json")
             for key in (
                 "datasets",
                 "tasks",
@@ -198,18 +200,18 @@ class KnowledgeModel(unittest.TestCase):
                 "generated_at",
             ):
                 self.assertEqual(before[key], after[key])
-            first = (folder / "catalog.json").read_bytes()
+            first = (folder / "data/catalog.json").read_bytes()
             model.export_views(folder)
-            self.assertEqual(first, (folder / "catalog.json").read_bytes())
-            code = folder / "scripts/harmonize_lidar.py"
+            self.assertEqual(first, (folder / "data/catalog.json").read_bytes())
+            code = folder / "scripts/for_instance/prepare.py"
             original = code.read_bytes()
             code.write_bytes(original + b"\n# changed implementation\n")
             with self.assertRaisesRegex(ValueError, "Pinned metadata artifact changed"):
                 model.check_views(folder)
             code.write_bytes(original)
-            changed = model.read_json(folder / "catalog.json")
+            changed = model.read_json(folder / "data/catalog.json")
             changed["datasets"][0]["name"] = "stale view"
-            (folder / "catalog.json").write_text(json.dumps(changed))
+            (folder / "data/catalog.json").write_text(json.dumps(changed))
             with self.assertRaisesRegex(ValueError, "source view is stale"):
                 model.check_views(folder)
 

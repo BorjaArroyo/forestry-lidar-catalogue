@@ -21,7 +21,7 @@ def status(package, web):
     package_fingerprint, read = adapter.package_fingerprint, adapter.read
     from .knowledge_model import load
 
-    model = load(web / "knowledge-model.json")
+    model = load(web / "data/knowledge-model.json")
     if not model["nodes"]["pipeline:for-instance-plot-instances:1.0.0"]["data"][
         "execution_enabled"
     ]:

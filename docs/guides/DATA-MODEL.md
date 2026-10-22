@@ -1,8 +1,8 @@
 # Curated knowledge model
 
-`knowledge-model.json` is the canonical, editable representation of curated
+`data/knowledge-model.json` is the canonical, editable representation of curated
 source profiles, tasks, source-task assessments and dataset relationships.
-`knowledge-model.schema.json` defines its JSON Schema 2020-12 structure.
+`schemas/knowledge-model.schema.json` defines its JSON Schema 2020-12 structure.
 This is a property graph serialized as JSON; no graph database is required.
 Existing statements, limitations and task visibility are preserved. This storage
 change does not introduce an ETL executor, change transformations or certify pipelines.
@@ -49,9 +49,9 @@ These are qualified metadata relationships, not proof of transitive compatibilit
 Metadata cycles remain allowed. Pipeline descriptions additionally require
 connected input/output contracts in their declared order; this introduces no executor.
 
-[FOR-instance](../../FOR-INSTANCE.md) has a validated direct archive-to-task pipeline.
+[FOR-instance](../sources/FOR-INSTANCE.md) has a validated direct archive-to-task pipeline.
 Its inspected historical conversion remains a disabled evidence branch. The
-[FGI-EMIT measurement review](../../FGI-EMIT.md) adds a native contract with 39 typed
+[FGI-EMIT measurement review](../sources/FGI-EMIT.md) adds a native contract with 39 typed
 fields and three source-scoped sensor channels. Its independently validated
 preparation is enabled for the reviewed 19-plot scope.
 Code inspection, bounded measurement observations and execution admission retain
@@ -61,7 +61,7 @@ distinct states. Data-flow edge roles are `describes`, `consumes`,
 ## Validation and editing
 
 JSON Schema validates closed entity shapes, required fields, types, dates and
-controlled status values. `scripts/knowledge_model.py` additionally validates
+controlled status values. `canopy.knowledge_model` additionally validates
 reference existence and endpoint types, source/task identity, unique assessments,
 shared evidence, display order, generated views and model/schema fingerprints.
 It also checks versioned contract/operation identities, typed data-flow endpoints,
@@ -70,7 +70,7 @@ This validates representation and consistency, not scientific truth. Review and
 admission requirements continue to apply. Unknown model versions fail validation;
 an incompatible change requires a versioned schema and explicit migration.
 
-`catalog.json` and `catalog.js` combine curated projections with saved acquisition
+`data/catalog.json` and `data/catalog.js` combine curated projections with saved acquisition
 observations. They support API/HTTP and offline viewing respectively. The graph
 is the single curated authoring source. Redundant `dataset-profiles.json` and
 `relationships.json` exports and their regeneration code have been removed;
@@ -79,8 +79,8 @@ their views are computed in memory. The website consumes the same catalog shape.
 After editing the model, refresh presentation metadata without reading LiDAR:
 
 ```bash
-python scripts/knowledge_model.py --export-views
-python scripts/knowledge_model.py
+python -m canopy model --export-views
+python -m canopy model
 python tests/test_knowledge_model.py
 ```
 
@@ -142,8 +142,8 @@ and inspector fingerprint; full source/adapter validation remains separate.
 ## Executable task-package contract
 
 The [task-package contract](TASK-PACKAGE.md) formalizes existing FOR-instance
-1.0 outputs with `task-package.schema.json` and an independent binary validator
-and streaming reader in `scripts/task_package.py`. A regression check binds the
+1.0 outputs with `schemas/task-package.schema.json` and an independent binary validator
+and streaming reader in `canopy.task_package`. A regression check binds the
 reader's array types/shapes to the existing graph output contract. Schema checks
 do not replace payload checks or scientific admission. This increment changes
 neither the curated model version nor the producer's pinned execution package.
@@ -157,19 +157,18 @@ rejects missing bindings, wrong types/shapes, undefined variables, and spectral
 outputs without corresponding audited measurement inputs. Native candidate
 measurements remain separate from pipeline output admission.
 
-`scripts/task_plan.py` resolves and checks requests, gates complete independent
+`canopy.task_plan` resolves and checks requests, gates complete independent
 package validation, and streams only requested arrays and allowed partitions.
 The browser and local service export the exact plan and validation report. The
 source-specific FOR-instance producer and reference policy are unchanged.
-See [Task requirements](../../TASK-REQUIREMENTS.md). The schema now requires model 1.4;
+See [Task requirements](TASK-REQUIREMENTS.md). The schema now requires model 1.4;
 older versions need explicit migration. No source membership or scientific
 preparation-readiness claim is promoted by this increment.
 
 ## Implementation boundaries
 
-The canonical graph and generated catalog bytes are unchanged by the code split.
-`scripts/knowledge_model.py` retains its public imports and CLI as a compatibility
-facade. Its implementation is separated into:
+The graph records scientific observations separately from installed implementations.
+`canopy.knowledge_model` exposes the graph API; `canopy model` is its CLI. Its implementation is separated into:
 
 - `model_io.py`: duplicate-key rejection and reproducible snapshot provenance.
 - `model_validation.py`: schema, typed graph and scientific admission invariants.

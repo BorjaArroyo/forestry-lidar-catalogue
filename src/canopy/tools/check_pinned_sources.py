@@ -90,12 +90,12 @@ def check(inventory_path):
     return failures
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--inventory", type=Path, default=ROOT / "docs" / "lidar-acquisition-inventory.json"
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     failures = check(args.inventory)
     if failures:
         print("PINNED SOURCE DRIFT", file=sys.stderr)

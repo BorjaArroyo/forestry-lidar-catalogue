@@ -80,10 +80,7 @@ export default [
       '**/vendor/**',
       'scripts/for_instance/**',
       'scripts/fgi_emit/**',
-      'scripts/harmonize_lidar.py',
-      'scripts/normalization_inputs.py',
       'scripts/audit_fgi_measurements.py',
-      'container-lab/wasi-shim/**',
       'temp/**',
       'evidence/**',
       'reviews/**',
@@ -95,12 +92,11 @@ export default [
   },
   {
     files: [
-      'catalog.js',
+      'data/catalog.js',
       'web/**/*.js',
       'web/**/*.mjs',
       'browser-prepare/**/*.js',
       'browser-prepare/**/*.mjs',
-      'container-lab/ui.js',
       'tests/browser_acceptance/**/*.js',
     ],
     languageOptions: { globals: browserGlobals },
@@ -116,7 +112,7 @@ export default [
     languageOptions: { globals: nodeGlobals },
   },
   {
-    files: ['browser-prepare/worker.js', 'container-lab/worker.js'],
+    files: ['browser-prepare/worker.js'],
     languageOptions: {
       globals: { ...browserGlobals, importScripts: 'readonly', postMessage: 'readonly' },
     },

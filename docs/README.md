@@ -9,8 +9,18 @@ Start with the [project README](../README.md) for installation, commands and the
 - [Task package contract](guides/TASK-PACKAGE.md)
 - [Task dataset contract](guides/TASK-DATASET.md)
 - [Browser preparation](guides/BROWSER-PREPARATION.md)
-- [Browser container prototype](../BROWSER-CONTAINERS.md)
+
+## Repository and source reviews
+
+- [Repository layout](repository-layout.md)
+- [Task requirements](guides/TASK-REQUIREMENTS.md)
+- [FOR-instance](sources/FOR-INSTANCE.md)
+- [FGI-EMIT](sources/FGI-EMIT.md)
+- [Content review](reviews/CONTENT-REVIEW.md)
+- [Roadmap](ROADMAP.md)
 
 ## Historical evidence and review records
 
-Source-specific evidence and review files remain at their recorded paths so existing catalog and admission references continue to resolve.
+Source-specific evidence and review files remain at their recorded paths without rewriting their recorded paths. Historical path references describe the checkout
+where the record was created; the directory migration records the original commit and
+new locations separately.

@@ -7,11 +7,11 @@ from pathlib import Path
 from .app import Service
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--worker", type=Path)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     service = Service()
     if args.worker:
         service.worker(args.worker)
