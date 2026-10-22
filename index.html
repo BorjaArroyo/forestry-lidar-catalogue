@@ -34,9 +34,7 @@
         <button class="nav-item active" data-view="datasets">
           <span>▦</span> Sources <b id="dataset-count">10</b>
         </button>
-        <button class="nav-item" data-view="model" hidden title="Under review">
-          <span>◈</span> Data model
-        </button>
+        <button class="nav-item" data-view="model"><span>◈</span> Data model</button>
       </nav>
       <div class="nav-label">WORKSPACE</div>
       <nav aria-label="Preparation navigation">
@@ -163,9 +161,21 @@
                 data contract each task consumes.
               </p>
             </div>
-            <span id="model-status" class="badge neutral">Loading knowledge model…</span>
+            <div class="model-status-actions">
+              <span id="model-status" class="badge neutral" role="status"
+                >Loading knowledge model…</span
+              >
+              <button id="model-retry" class="button small" hidden>Retry loading model</button>
+            </div>
           </div>
-          <div id="model-task-nav" class="task-nav-model" role="tablist" aria-label="Task"></div>
+          <div id="model-task-nav" class="task-nav-model" role="group" aria-label="Task"></div>
+          <label class="model-support-toggle">
+            <input id="model-show-reported" type="checkbox" disabled />
+            Show sources with reported support only (<span id="model-reported-count">0</span>)
+          </label>
+          <p id="model-empty" class="notice" hidden>
+            No admitted preparation route is available for this task.
+          </p>
           <div class="graph-layout">
             <div class="graph-panel">
               <div class="panel-top">
@@ -180,17 +190,26 @@
                   id="model-graph"
                   role="group"
                   aria-label="Interactive graph of the task data model"
+                  aria-describedby="model-caption"
+                  tabindex="0"
                 ></svg>
                 <div class="graph-controls">
                   <button id="model-zoom-in" aria-label="Zoom in">+</button>
                   <button id="model-zoom-out" aria-label="Zoom out">−</button>
                   <button id="model-zoom-fit" aria-label="Fit whole graph">⤢</button>
                 </div>
-                <div class="graph-caption">
-                  Drag to move · scroll to zoom.<br />
-                  Directed links describe audited preparation flow toward the task contract.<br />
-                  Dashed links identify reported support, not an executable preparation.
-                </div>
+              </div>
+              <div id="model-caption" class="graph-caption">
+                <p>
+                  <span class="model-legend flow">Preparation relationships</span
+                  ><span class="model-legend requires">Task requirements</span
+                  ><span class="model-legend support">Reported support</span>
+                </p>
+                <p>
+                  Arrows preserve relationship direction; select a link to read its role. Drag to
+                  move, scroll to zoom. Keyboard: arrows to move, +/− to zoom, 0 to fit, Enter to
+                  select.
+                </p>
               </div>
             </div>
             <aside id="model-inspector" class="inspector" aria-label="Selected node detail"></aside>

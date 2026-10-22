@@ -1,4 +1,20 @@
-# Dataset admission
+# Contributing
+
+## Pull requests and branch protection
+
+All code, presentation and documentation changes reach `main` through a pull request.
+Create a topic branch, run `uv run --no-sync python -m canopy verify`, and submit
+the final change with its relevant validation and desktop/mobile screenshots for UI work.
+
+GitHub protects `main`, including administrators: the GitHub Actions `verify`
+check must pass against an up-to-date branch, and review conversations must be
+resolved. Direct pushes, force pushes and branch deletion are blocked. No
+approving GitHub review is required for routine changes while the repository has
+a single maintainer. Scientific dataset admission still requires the human
+evidence review described below. Merge a PR only when its current head has passed
+CI and satisfies these requirements.
+
+## Dataset admission
 
 Anyone can propose a dataset through a Dataset proposal issue. Only maintainers
 publish catalog changes after analysis and human review in a pull request.
@@ -27,10 +43,10 @@ refresh and validate them. The storage model does not change admission rules.
 
 The admitted decision records a human judgment; CI checks completeness and the
 snapshot fingerprint, not the truth of evidence or reviewer identity. Require
-actual GitHub review before merge. Contributors must not self-approve by filling
-in a name. Maintainers should configure branch protection to require the
-Dataset admission check and an approving review. Repository templates and CI
-alone do not prevent a maintainer from pushing directly or changing the policy.
+human evidence review before scientific admission. Contributors must not
+self-approve by filling in a name. The required `verify` job includes dataset
+admission checks; its success checks structure rather than scientific validity.
+The branch policy above is configured in GitHub, not enforced by templates alone.
 
 ## Existing collection
 

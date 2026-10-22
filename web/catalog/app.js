@@ -411,6 +411,8 @@ export function mountCatalog({
     $('#compare-open').disabled = state.compare.size < 2;
     $('#compare-open').hidden = state.view !== 'datasets';
     $('.toolbar').hidden = state.view !== 'datasets';
+    $('.task-request').hidden = state.view === 'model';
+    $('#active-filters').hidden ||= state.view !== 'datasets';
     const view = state.view;
     $('#breadcrumb-view').textContent = VIEW_TITLES[view] || 'Sources';
     const [heading, subtitle] = VIEW_HEADINGS[view] || VIEW_HEADINGS.datasets;

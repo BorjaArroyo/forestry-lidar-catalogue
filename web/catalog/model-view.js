@@ -1,441 +1,291 @@
-/* Renders the reviewed knowledge graph per task. The model is data, not a promise. */
-const esc = (value) =>
-  String(value ?? '').replace(
-    /[&<>"']/g,
-    (character) =>
-      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character],
-  );
+import { escapeHTML as esc } from '../shared/dom.js';
+import { layoutTaskGraph, projectTaskGraph, visibleTasks } from './model-graph.js';
 
-export function mountModelView({
-  document: doc = document,
-  fetch: doFetch = (...args) => fetch(...args),
-} = {}) {
+const TYPES = {
+  task: 'Task',
+  variable: 'Task variable',
+  source_release: 'Source release',
+  data_contract: 'Data contract',
+  transformation: 'Preparation step',
+};
+const ROLES = {
+  describes: 'Source describes native data',
+  consumes: 'Preparation consumes input contract',
+  produces: 'Preparation produces output contract',
+  designed_for: 'Prepared contract is designed for the task',
+  requires: 'Task requirement',
+  reported_support: 'Reported task support',
+};
+
+export function mountModelView({ document: doc = document, fetch: doFetch = fetch } = {}) {
   const $ = (selector) => doc.querySelector(selector);
+  const svg = $('#model-graph');
+  const inspector = $('#model-inspector');
   const state = {
-    task: 'instances',
-    selected: null,
     model: null,
-    load: null,
+    loading: null,
     graph: null,
-    zoom: 0.85,
-    pan: { x: 0, y: 0 },
-    justDragged: false,
+    task: null,
+    selected: null,
+    zoom: 1,
+    x: 0,
+    y: 0,
   };
-  const SUPPORT_COLORS = {
-    documented: '#3f8972',
-    partial: '#c19b4b',
-    not_documented: '#a4ac9c',
-    unsupported: '#ba7e70',
-    derived_only: '#917ba4',
+  const context = doc.createElement('canvas').getContext('2d');
+  const measure = (text, size = 14) => {
+    context.font = `${size === 14 ? 600 : 400} ${size}px ${doc.defaultView.getComputedStyle(svg).fontFamily}`;
+    return context.measureText(text).width;
   };
-  async function load() {
-    if (!state.load)
-      state.load = doFetch('data/knowledge-model.json', { cache: 'no-store' })
-        .then((response) => {
-          if (!response.ok) throw Error(`Knowledge model HTTP ${response.status}`);
-          return response.json();
-        })
-        .catch((error) => {
-          state.load = null;
-          throw error;
-        });
-    return state.load;
-  }
-  const flows = (model) => Object.values(model.edges).filter((edge) => edge.type === 'data_flow');
-  const supportsOf = (model, taskId) =>
-    Object.entries(model.edges)
-      .filter(([, edge]) => edge.type === 'task_support' && edge.target === taskId)
-      .map(([id, edge]) => ({ id, source: edge.source, target: edge.target, data: edge.data }));
-  /* The audited preparation chain: source → native contract → pipeline → task contract. */
-  function preparationChain(model, taskId) {
-    const packages = new Set(
-      flows(model)
-        .filter((edge) => edge.target === taskId)
-        .map((edge) => edge.source),
+  function transform() {
+    $('#model-content')?.setAttribute(
+      'transform',
+      `translate(${state.x} ${state.y}) scale(${state.zoom})`,
     );
-    const pipelines = new Set(
-      flows(model)
-        .filter((edge) => packages.has(edge.target))
-        .map((edge) => edge.source),
-    );
-    const natives = new Set(
-      flows(model)
-        .filter((edge) => pipelines.has(edge.source))
-        .map((edge) => edge.target)
-        .filter((id) => model.nodes[id]?.type === 'data_contract'),
-    );
-    const sources = new Set(
-      flows(model)
-        .filter((edge) => natives.has(edge.target))
-        .map((edge) => edge.source),
-    );
-    return { packages, pipelines, natives, sources };
-  }
-  function computeGraph(model, taskId) {
-    const taskNode = model.nodes[taskId];
-    const chain = preparationChain(model, taskId);
-    const supports = supportsOf(model, taskId);
-    const chainNodes = new Set([
-      ...chain.sources,
-      ...chain.natives,
-      ...chain.pipelines,
-      ...chain.packages,
-    ]);
-    const chainEdges = flows(model).filter(
-      (edge) =>
-        (chain.sources.has(edge.source) && chain.natives.has(edge.target)) ||
-        (chain.pipelines.has(edge.source) &&
-          (chain.natives.has(edge.target) || chain.packages.has(edge.target))) ||
-        (chain.packages.has(edge.source) && edge.target === taskId),
-    );
-    /* Nodes of one audited chain share a horizontal track, propagated over its links. */
-    const trackOf = new Map();
-    [...chain.sources].forEach((sourceId, index) => trackOf.set(sourceId, index));
-    let changed = true;
-    while (changed) {
-      changed = false;
-      for (const edge of chainEdges) {
-        if (!chainNodes.has(edge.source) || !chainNodes.has(edge.target)) continue;
-        if (trackOf.has(edge.source) && !trackOf.has(edge.target)) {
-          trackOf.set(edge.target, trackOf.get(edge.source));
-          changed = true;
-        } else if (trackOf.has(edge.target) && !trackOf.has(edge.source)) {
-          trackOf.set(edge.source, trackOf.get(edge.target));
-          changed = true;
-        }
-      }
-    }
-    /* Top-down hierarchy: task on top, request variables below it, then the
-       audited preparation flow descending in one vertical column per source
-       track. Reported-support sources flank the flow so their links never
-       cross the audited chain. */
-    const ROW_Y = {
-      task: 30,
-      variable: 200,
-      package: 360,
-      pipeline: 500,
-      native: 640,
-      source: 780,
-    };
-    const trackCount = Math.max(1, chain.sources.size);
-    const trackCenter = (track) => 700 + (track - (trackCount - 1) / 2) * 280;
-    const nodes = [];
-    const edges = chainEdges.map((edge) => ({ kind: 'flow', from: edge.source, to: edge.target }));
-    const flowNode = (id, row, width) => {
-      const data = model.nodes[id].data;
-      nodes.push({
-        id,
-        type: model.nodes[id].type,
-        x: trackCenter(trackOf.get(id) ?? 0) - width / 2,
-        y: ROW_Y[row],
-        w: width,
-        h: 92,
-        name: data.name || id.split(':').slice(0, -1).join(':'),
-        sub:
-          model.nodes[id].type === 'source_release'
-            ? `Record ${id.split(':')[1]}`
-            : `Version ${data.version}`,
-        status: data.status,
-        data,
-      });
-    };
-    for (const id of chain.sources) flowNode(id, 'source', 210);
-    for (const id of chain.natives) flowNode(id, 'native', 210);
-    for (const id of chain.pipelines) flowNode(id, 'pipeline', 230);
-    for (const id of chain.packages) flowNode(id, 'package', 210);
-    /* Every reviewed source keeps its reported support for this task. */
-    supports
-      .filter((edge) => !chain.sources.has(edge.source))
-      .forEach((edge, index) => {
-        const id = edge.source;
-        const left = index % 2 === 0;
-        const row = Math.floor(index / 2);
-        nodes.push({
-          id,
-          type: 'source_release',
-          x: left ? 40 : 1160,
-          y: ROW_Y.variable + row * 105,
-          w: 200,
-          h: 76,
-          name: model.nodes[id].data.name || id.split(':').slice(0, -1).join(':'),
-          sub: `Record ${id.split(':')[1]}`,
-          status: edge.data.status,
-          dim: true,
-          data: model.nodes[id].data,
-        });
-        edges.push({ kind: 'support', from: id, to: taskId, status: edge.data.status });
-      });
-    nodes.push({
-      id: taskId,
-      type: 'task',
-      x: 700 - 115,
-      y: ROW_Y.task,
-      w: 230,
-      h: 104,
-      name: taskNode.data.name,
-      sub: taskNode.data.status.replaceAll('_', ' '),
-      status: taskNode.data.status,
-      data: taskNode.data,
-    });
-    const variables = taskNode.data.requirements?.variables || [];
-    const variableWidth = 210,
-      variableGap = 40;
-    variables.forEach((variable, index) => {
-      nodes.push({
-        id: `variable:${variable.key}`,
-        type: 'variable',
-        x:
-          700 -
-          (variables.length * variableWidth + (variables.length - 1) * variableGap) / 2 +
-          index * (variableWidth + variableGap),
-        y: ROW_Y.variable,
-        w: variableWidth,
-        h: 78,
-        name: variable.label,
-        sub: `${variable.purpose}${variable.quantity ? ' · ' + variable.quantity : ''}`,
-        data: variable,
-      });
-      edges.push({ kind: 'requires', from: taskId, to: `variable:${variable.key}` });
-    });
-    return { nodes, edges, supports, task: taskNode };
-  }
-  const byId = (graph, id) => graph.nodes.find((node) => node.id === id);
-  /* Anchor each edge on the node side facing its counterpart; vertical flow
-     links render as straight segments, diagonal support links as soft elbows. */
-  function anchor(node, towards) {
-    const cx = node.x + node.w / 2,
-      cy = node.y + node.h / 2;
-    const tx = towards.x + towards.w / 2,
-      ty = towards.y + towards.h / 2;
-    if (Math.abs(ty - cy) >= Math.abs(tx - cx)) return [cx, ty > cy ? node.y + node.h : node.y];
-    return [tx > cx ? node.x + node.w : node.x, cy];
-  }
-  function edgePath(graph, edge) {
-    const from = byId(graph, edge.from),
-      to = byId(graph, edge.to);
-    const start = anchor(from, to),
-      end = anchor(to, from);
-    const mostlyHorizontal = Math.abs(end[0] - start[0]) > Math.abs(end[1] - start[1]);
-    const control = mostlyHorizontal
-      ? [end[0], start[1]]
-      : [(start[0] + end[0]) / 2, (start[1] + end[1]) / 2];
-    return `M ${start.join(' ')} Q ${control.join(' ')} ${end.join(' ')}`;
-  }
-  function applyTransform() {
-    const group = $('#model-content');
-    if (group)
-      group.setAttribute(
-        'transform',
-        `translate(${state.pan.x} ${state.pan.y}) scale(${state.zoom})`,
-      );
   }
   function fitGraph() {
-    const svg = $('#model-graph');
     const rect = svg.getBoundingClientRect();
-    if (!state.graph || !rect.width) return;
-    const maxX = Math.max(...state.graph.nodes.map((node) => node.x + node.w)) + 40;
-    const maxY = Math.max(...state.graph.nodes.map((node) => node.y + node.h)) + 40;
-    state.zoom = Math.min(2, Math.max(0.25, Math.min(rect.width / maxX, rect.height / maxY)));
-    state.pan = { x: 20, y: 20 };
-    applyTransform();
+    if (!state.graph || !rect.width || !rect.height) return;
+    const bounds = state.graph.bounds,
+      margin = 20;
+    state.zoom = Math.min(
+      1,
+      (rect.width - margin * 2) / bounds.width,
+      (rect.height - margin * 2) / bounds.height,
+    );
+    state.x = (rect.width - bounds.width * state.zoom) / 2 - bounds.x * state.zoom;
+    state.y = (rect.height - bounds.height * state.zoom) / 2 - bounds.y * state.zoom;
+    transform();
   }
-  function renderGraph() {
-    const svg = $('#model-graph');
-    const graph = computeGraph(state.model, `task:${state.task}`);
-    state.graph = graph;
-    const edgeHtml = graph.edges
-      .map((edge) => {
-        const color =
-          edge.kind === 'support'
-            ? SUPPORT_COLORS[edge.status] || '#a4ac9c'
-            : edge.kind === 'requires'
-              ? '#cca84d'
-              : '#3d7a6b';
-        const dashes = edge.kind === 'flow' ? '' : '6 5';
-        return `<g class="edge-group" data-edge="${esc(edge.from)}=>${esc(edge.to)}" tabindex="0" role="button" aria-label="Connection from ${esc(edge.from)} to ${esc(edge.to)}"><path class="edge-hit" d="${edgePath(graph, edge)}"/><path class="edge ${state.selected === `${edge.from}=>${edge.to}` ? 'selected' : ''}" d="${edgePath(graph, edge)}" stroke="${color}" stroke-dasharray="${dashes}" marker-end="url(#model-arrow)" opacity="${edge.kind === 'support' ? 0.5 : 0.85}"/></g>`;
-      })
-      .join('');
-    const nodeHtml = graph.nodes
-      .map((node) => {
-        const selected = state.selected === node.id;
-        const mark =
-          node.type === 'task'
-            ? '◈'
-            : node.type === 'variable'
-              ? '…'
-              : node.type === 'transformation'
-                ? '⟿'
-                : node.type === 'data_contract'
-                  ? '▤'
-                  : '⌁';
-        return `<g class="graph-node ${node.dim ? 'dim' : ''} ${selected ? 'selected' : ''}" data-node="${esc(node.id)}" tabindex="0" role="button" aria-label="${esc(`${node.name}: ${node.sub}`)}" transform="translate(${node.x} ${node.y})"><rect width="${node.w}" height="${node.h}" rx="12"/><text class="node-mark" x="14" y="28">${mark}</text><text class="node-name" x="38" y="27">${esc(node.name)}</text><text class="node-sub" x="15" y="${node.h - 30}">${esc(node.sub)}</text>${node.status ? `<text class="node-status" x="15" y="${node.h - 12}">${esc(String(node.status).replaceAll('_', ' ').toUpperCase())}</text>` : ''}</g>`;
-      })
-      .join('');
-    svg.innerHTML = `<defs><marker id="model-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5a7a6c"/></marker></defs><g id="model-content" transform="translate(${state.pan.x} ${state.pan.y}) scale(${state.zoom})">${edgeHtml}${nodeHtml}</g>`;
-    const flowLinks = graph.edges.filter((edge) => edge.kind === 'flow').length;
-    $('#model-graph-count').textContent =
-      `${graph.nodes.filter((node) => node.type === 'source_release').length} sources · ` +
-      `${flowLinks} audited flow links · ${graph.supports.length} reported support links`;
-    $('#model-graph-title').textContent = `${graph.task.data.name} — data model`;
-    renderInspector(graph);
+  function zoomBy(factor, cx = svg.clientWidth / 2, cy = svg.clientHeight / 2) {
+    const zoom = Math.min(3, Math.max(0.08, state.zoom * factor));
+    state.x = cx - ((cx - state.x) * zoom) / state.zoom;
+    state.y = cy - ((cy - state.y) * zoom) / state.zoom;
+    state.zoom = zoom;
+    transform();
+  }
+  function edgePath(edge) {
+    const from = state.graph.nodes.find((node) => node.id === edge.source);
+    const to = state.graph.nodes.find((node) => node.id === edge.target);
+    if (edge.kind === 'support') {
+      const lane = state.graph.bounds.x + 16;
+      return `M ${from.x + from.w / 2} ${from.y + from.h} v 16 H ${lane} V ${to.y + to.h / 2} H ${to.x}`;
+    }
+    if (edge.role === 'designed_for') {
+      const left = from.x < to.x;
+      const lane = left
+        ? state.graph.bounds.x + 24
+        : state.graph.bounds.x + state.graph.bounds.width - 16;
+      return `M ${from.x + from.w / 2} ${from.y} v -16 H ${lane} V ${to.y + to.h / 2} H ${left ? to.x : to.x + to.w}`;
+    }
+    const downward = from.y < to.y;
+    const start = [from.x + from.w / 2, downward ? from.y + from.h : from.y];
+    const end = [to.x + to.w / 2, downward ? to.y : to.y + to.h];
+    const middle = (start[1] + end[1]) / 2;
+    return `M ${start.join(' ')} C ${start[0]} ${middle} ${end[0]} ${middle} ${end.join(' ')}`;
   }
   function fieldTable(fields) {
     if (!fields?.length) return '';
-    const rows = fields
+    return `<div class="scroll-table"><table><caption>Fields of this data contract</caption><thead><tr><th>Field</th><th>Type</th><th>Shape</th><th>Meaning</th></tr></thead><tbody>${fields.map((field) => `<tr><td><code>${esc(field.name)}</code>${field.required ? ' (required)' : ''}</td><td>${esc((field.dtypes || []).join(' / '))}</td><td>${esc(Array.isArray(field.shape) ? field.shape.join(' × ') : field.shape)}</td><td>${esc(field.meaning)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  function renderInspector() {
+    const graph = state.graph;
+    const node = graph.nodes.find((item) => item.id === state.selected);
+    const edge = graph.edges.find((item) => item.id === state.selected);
+    if (!node && !edge) {
+      inspector.innerHTML = `<div class="inspector-top">MODEL OVERVIEW</div><h3>${esc(graph.task.data.title)}</h3><p>${esc(graph.task.data.description)}</p><p>${graph.pipelineCount ? `${graph.pipelineCount} admitted preparation routes are shown.` : 'No admitted preparation route is available for this task.'}</p><p class="notice">Choose a node or a connection to inspect its meaning and evidence. The arrows preserve each relationship's direction.</p>`;
+    } else if (edge) {
+      const names = [edge.source, edge.target].map(
+        (id) => graph.nodes.find((item) => item.id === id).name,
+      );
+      inspector.innerHTML = `<div class="inspector-top">${esc(edge.kind === 'flow' ? 'PREPARATION RELATIONSHIP' : edge.kind === 'requires' ? 'TASK REQUIREMENT' : 'REPORTED SUPPORT')}</div><h3>${esc(ROLES[edge.role])}</h3><p>${names.map(esc).join(' → ')}</p>${edge.kind === 'requires' ? '<p>This task variable describes an input requirement. It is not a preparation or evidence of source coverage.</p>' : edge.kind === 'support' ? `<p>${esc(edge.data.reason)}</p><p class="notice">Reported support does not admit an executable preparation.</p>` : '<p>This relationship belongs to an enabled, validated source-specific preparation route.</p>'}<code class="raw-path">${esc(edge.id)}</code>`;
+    } else {
+      const data = node.data;
+      let detail = '';
+      if (node.type === 'data_contract') {
+        detail = `<p><strong>${esc(data.format)}</strong></p><p>${esc(data.observation_unit)}</p>${fieldTable(data.fields)}<p class="notice">A contract describes fields; it does not certify annotation completeness or whole-source coverage.</p>`;
+      } else if (node.type === 'transformation') {
+        detail = `<h4>Rules</h4><p>${esc(data.rules)}</p><h4>Preserves</h4><p>${esc(data.preserves)}</p><h4>Limits and information loss</h4><p class="notice">${esc(data.losses)}</p><h4>Implementation</h4><p>${esc(data.implementation)}</p>`;
+      } else if (node.type === 'variable') {
+        detail = `<p>${esc(data.detail)}</p>${fieldTable(data.output_fields)}`;
+      } else if (node.type === 'task') {
+        detail = `<p>${esc(data.description)}</p><h4>Intended uses</h4>${Object.values(
+          data.requirements?.uses || {},
+        )
+          .map((use) => `<h4>${esc(use.label)}</h4><p>${esc(use.detail)}</p>`)
+          .join('')}`;
+      } else {
+        const support = graph.supports.find((item) => item.source === node.id);
+        detail = `<p>${esc(data.profile.geography)}</p><p>${esc(data.profile.discovery.coverage)}</p>${support ? `<h4>Reported task support</h4><p>${esc(support.data.reason)}</p>` : ''}${node.reported ? '<p class="notice">No admitted preparation route is registered for this source and task.</p>' : `<h4>Audited preparation scope</h4><p>${esc(data.profile.discovery.preparation.detail)}</p>`}`;
+      }
+      inspector.innerHTML = `<div class="inspector-top">${esc(TYPES[node.type])}</div><h3>${esc(node.name)}</h3>${node.status ? `<p class="model-state">${esc(node.status.replaceAll('_', ' '))}</p>` : ''}${detail}<code class="raw-path">${esc(node.id)}</code>`;
+    }
+  }
+  function select(id) {
+    state.selected = id;
+    svg.querySelectorAll('[data-node], [data-edge]').forEach((element) => {
+      const selected = (element.dataset.node || element.dataset.edge) === id;
+      element.classList.toggle('selected', selected);
+      element.setAttribute('aria-pressed', String(selected));
+    });
+    renderInspector();
+  }
+  function renderGraph() {
+    state.graph = layoutTaskGraph(
+      projectTaskGraph(state.model, state.task, {
+        includeReported: $('#model-show-reported').checked,
+      }),
+      measure,
+    );
+    const graph = state.graph;
+    const edgeHtml = graph.edges
       .map(
-        (field) =>
-          `<tr><td><code>${esc(field.name)}</code>${field.required ? ' <span class="badge">required</span>' : ''}</td><td>${esc((field.dtypes || []).join(' / '))}</td><td>${esc(Array.isArray(field.shape) ? field.shape.join(' × ') : field.shape || '')}</td><td>${esc(field.meaning || '')}</td></tr>`,
+        (edge) =>
+          `<g class="model-edge ${edge.kind}" data-edge="${esc(edge.id)}" tabindex="0" role="button" aria-pressed="false" aria-label="${esc(ROLES[edge.role])}: ${esc(graph.nodes.find((node) => node.id === edge.source).name)} to ${esc(graph.nodes.find((node) => node.id === edge.target).name)}"><title>${esc(ROLES[edge.role])}</title><path class="edge-hit" d="${edgePath(edge)}"/><path class="edge" d="${edgePath(edge)}" marker-end="url(#model-arrow)"/></g>`,
       )
       .join('');
-    return `<div class="scroll-table"><table><caption>Fields of the shared data contract</caption><thead><tr><th>Field</th><th>Type</th><th>Shape</th><th>Meaning</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    const nodesHtml = graph.nodes
+      .map(
+        (node) =>
+          `<g class="graph-node ${node.reported ? 'reported' : ''}" data-node="${esc(node.id)}" tabindex="0" role="button" aria-pressed="false" aria-label="${esc(`${node.name}. ${node.sub}`)}" transform="translate(${node.x} ${node.y})"><title>${esc(node.name)}</title><rect width="${node.w}" height="${node.h}" rx="10"/><text class="node-type" x="14" y="19">${esc(TYPES[node.type].toUpperCase())}</text><text class="node-name">${node.lines.map((line, index) => `<tspan x="14" y="${40 + index * 17}">${esc(line)}</tspan>`).join('')}</text><text class="node-sub">${node.metaLines.map((line, index) => `<tspan x="14" y="${node.h - 16 - (node.metaLines.length - 1 - index) * 14}">${esc(line)}</tspan>`).join('')}</text></g>`,
+      )
+      .join('');
+    const groupLabel = graph.nodes.some((node) => node.reported)
+      ? `<text class="model-group-label" x="${graph.bounds.x + 64}" y="${graph.reportedTop}">REPORTED SUPPORT · NO ADMITTED PREPARATION</text>`
+      : '';
+    svg.innerHTML = `<defs><marker id="model-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"/></marker></defs><g id="model-content">${edgeHtml}${groupLabel}${nodesHtml}</g>`;
+    $('#model-graph-count').textContent =
+      `${graph.nodes.filter((node) => node.type === 'source_release').length} of ${graph.sourceCount} sources · ${graph.pipelineCount} admitted routes`;
+    $('#model-reported-count').textContent = String(graph.reportedCount);
+    $('#model-graph-title').textContent = graph.task.data.title;
+    $('#model-empty').hidden = graph.pipelineCount > 0;
+    select(null);
+    fitGraph();
   }
-  function renderInspector(graph) {
-    const box = $('#model-inspector');
-    if (!state.selected) {
-      box.innerHTML = `<div class="inspector-top">MODEL OVERVIEW</div><h3>${esc(graph.task.data.title || graph.task.data.name)}</h3><p>${esc(graph.task.data.description)}</p><p class="notice">Choose a node or a connection. Solid links are audited preparation flow; dashed links are reported support only.</p>`;
-      return;
-    }
-    const node = graph.nodes.find((n) => n.id === state.selected);
-    if (node) {
-      if (node.type === 'data_contract') {
-        box.innerHTML = `<div class="inspector-top"><span>DATA CONTRACT</span></div><h3>${esc(node.data.name)}</h3>${node.data.status ? `<p><span class="badge ${node.data.status === 'validated' ? '' : 'neutral'}">${esc(node.data.status)}</span></p>` : ''}<p><strong>${esc(node.data.format)}</strong></p><p>${esc(node.data.observation_unit)}</p>${fieldTable(node.data.fields)}<p class="evidence-tag">The contract defines the shared data model; sample availability does not establish whole-source coverage.</p>`;
-      } else if (node.type === 'transformation') {
-        box.innerHTML = `<div class="inspector-top"><span>PREPARATION PIPELINE</span></div><h3>${esc(node.data.name)}</h3><p><span class="badge">${esc(node.data.status)}</span></p><h4>Rules</h4><p>${esc(node.data.rules)}</p><h4>Preserves</h4><p>${esc(node.data.preserves)}</p><h4>Limits and information loss</h4><p class="notice">${esc(node.data.losses)}</p><h4>Implementation</h4><p>${esc(node.data.implementation)}</p>`;
-      } else if (node.type === 'variable') {
-        box.innerHTML = `<div class="inspector-top"><span>TASK VARIABLE</span></div><h3>${esc(node.data.label)}</h3><p><span class="badge">${esc(node.data.purpose)}</span>${node.data.quantity ? ` <span class="badge neutral">${esc(node.data.quantity)}</span>` : ''}</p><p>${esc(node.data.detail)}</p>`;
-      } else if (node.type === 'task') {
-        const uses = Object.entries(node.data.requirements?.uses || {})
-          .map(
-            ([, use]) =>
-              `<div class="task-mini"><span>${esc(use.label)}</span><span class="task-state">${esc((use.allowed_partitions || []).join(' / '))}</span></div>`,
-          )
-          .join('');
-        box.innerHTML = `<div class="inspector-top"><span>TASK</span></div><h3>${esc(node.data.title || node.data.name)}</h3><p>${esc(node.data.description)}</p><h4>Intended uses</h4>${uses}<p class="notice">Uses keep only the published partitions permitted by your request.</p>`;
-      } else {
-        const support = graph.supports.find((edge) => edge.source === node.id);
-        box.innerHTML = `<div class="inspector-top"><span>SOURCE RELEASE</span><span class="record-number">${esc(node.id.split(':')[1] || '')}</span></div><h3>${esc(node.name)}</h3>${support ? `<p><span class="badge ${support.data.status === 'documented' ? '' : 'neutral'}">${esc(support.data.status.replaceAll('_', ' '))}</span></p><p>${esc(support.data.reason)}</p>` : ''}${node.dim ? '<p class="evidence-tag">Reported support only; no admitted preparation pipeline for this task.</p>' : ''}`;
-      }
-      return;
-    }
-    const [from, to] = state.selected.split('=>');
-    const support = graph.supports.find((edge) => edge.source === from && edge.target === to);
-    box.innerHTML = support
-      ? `<div class="inspector-top"><span>REPORTED SUPPORT</span></div><h3>${esc(support.source)} → ${esc(support.target)}</h3><p><span class="badge ${support.data.status === 'documented' ? '' : 'neutral'}">${esc(support.data.status.replaceAll('_', ' '))}</span></p><p>${esc(support.data.reason)}</p><p class="evidence-tag">A reported reference does not admit a preparation pipeline.</p>`
-      : `<div class="inspector-top"><span>AUDITED FLOW</span></div><h3>${esc(from)} → ${esc(to)}</h3><p class="evidence-tag">This link is part of an admitted, independently validated preparation flow.</p>`;
-  }
-  function renderTaskNav() {
-    const tasks = Object.entries(state.model.nodes)
-      .filter(([, node]) => node.type === 'task')
-      .sort((a, b) => (a[1].data.order ?? 99) - (b[1].data.order ?? 99));
+  function render() {
+    const tasks = visibleTasks(state.model);
+    $('#model-task-nav').hidden = tasks.length < 2;
     $('#model-task-nav').innerHTML = tasks
       .map(
         ([id, node]) =>
-          `<button class="task-option-model ${id === `task:${state.task}` ? 'active' : ''}" data-task="${esc(id.split(':')[1])}" role="tab" aria-selected="${id === `task:${state.task}`}">${esc(node.data.name)}<span class="task-state ${node.data.status === 'work_in_progress' ? 'yes' : ''}">${esc(node.data.status.replaceAll('_', ' '))}</span></button>`,
+          `<button class="task-option-model" data-model-task="${esc(id)}" aria-pressed="${id === state.task}">${esc(node.data.name)}</button>`,
       )
       .join('');
-  }
-  function render() {
-    renderTaskNav();
     renderGraph();
   }
-  async function ensureModel() {
-    if (state.model) return;
-    const model = await load();
-    state.model = model;
-    $('#model-status').textContent = 'Reviewed knowledge model';
-    $('#model-status').className = 'badge';
-    render();
-  }
-  doc.addEventListener('click', (event) => {
-    if (state.justDragged) {
-      state.justDragged = false;
+  let pointer = null,
+    dragged = false;
+  svg.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0) return;
+    pointer = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      panX: state.x,
+      panY: state.y,
+    };
+    dragged = false;
+  });
+  svg.addEventListener('pointermove', (event) => {
+    if (!pointer) return;
+    const dx = event.clientX - pointer.x,
+      dy = event.clientY - pointer.y;
+    if (Math.hypot(dx, dy) > 5) {
+      dragged = true;
+      svg.setPointerCapture(pointer.id);
+    }
+    if (!dragged) return;
+    state.x = pointer.panX + dx;
+    state.y = pointer.panY + dy;
+    transform();
+  });
+  const release = () => {
+    pointer = null;
+  };
+  svg.addEventListener('pointerup', release);
+  svg.addEventListener('pointercancel', release);
+  svg.addEventListener('lostpointercapture', release);
+  svg.addEventListener('click', (event) => {
+    if (dragged) {
+      dragged = false;
       return;
     }
-    const taskButton = event.target.closest('[data-task]');
-    if (taskButton) {
-      state.task = taskButton.dataset.task;
-      state.selected = null;
+    const target = event.target.closest('[data-node], [data-edge]');
+    select(target?.dataset.node || target?.dataset.edge || null);
+  });
+  svg.addEventListener('keydown', (event) => {
+    const target = event.target.closest('[data-node], [data-edge]');
+    if (['Enter', ' '].includes(event.key) && target) {
+      event.preventDefault();
+      select(target.dataset.node || target.dataset.edge);
+    } else if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
+      event.preventDefault();
+      state.x += event.key === 'ArrowLeft' ? 40 : event.key === 'ArrowRight' ? -40 : 0;
+      state.y += event.key === 'ArrowUp' ? 40 : event.key === 'ArrowDown' ? -40 : 0;
+      transform();
+    } else if (['+', '=', '-'].includes(event.key)) {
+      event.preventDefault();
+      zoomBy(event.key === '-' ? 0.8 : 1.25);
+    } else if (event.key === 'Escape') select(null);
+    else if (event.key === '0') fitGraph();
+  });
+  svg.addEventListener(
+    'wheel',
+    (event) => {
+      event.preventDefault();
+      const rect = svg.getBoundingClientRect();
+      zoomBy(
+        event.deltaY < 0 ? 1.12 : 1 / 1.12,
+        event.clientX - rect.left,
+        event.clientY - rect.top,
+      );
+    },
+    { passive: false },
+  );
+  $('#model-zoom-in').addEventListener('click', () => zoomBy(1.25));
+  $('#model-zoom-out').addEventListener('click', () => zoomBy(0.8));
+  $('#model-zoom-fit').addEventListener('click', fitGraph);
+  $('#model-show-reported').addEventListener('change', renderGraph);
+  $('#model-task-nav').addEventListener('click', (event) => {
+    const button = event.target.closest('[data-model-task]');
+    if (button) {
+      state.task = button.dataset.modelTask;
       render();
-      return;
-    }
-    const nodeGroup = event.target.closest('#model-graph [data-node]');
-    if (nodeGroup) {
-      state.selected = nodeGroup.dataset.node;
-      renderGraph();
-      return;
-    }
-    const edgeGroup = event.target.closest('#model-graph [data-edge]');
-    if (edgeGroup) {
-      state.selected = edgeGroup.dataset.edge;
-      renderGraph();
-      return;
-    }
-    if (event.target.closest('#model-graph') && state.selected !== null) {
-      state.selected = null;
-      renderGraph();
     }
   });
-  /* Pan by dragging, zoom towards the pointer; a click still selects nodes. */
-  let pointer = null;
-  function bindNavigation() {
-    const svg = $('#model-graph');
-    if (svg.dataset.bound) return;
-    svg.dataset.bound = 'true';
-    svg.addEventListener('pointerdown', (event) => {
-      pointer = { x: event.clientX, y: event.clientY, pan: { ...state.pan }, moved: 0 };
-      svg.setPointerCapture(event.pointerId);
-    });
-    svg.addEventListener('pointermove', (event) => {
-      if (!pointer) return;
-      const dx = event.clientX - pointer.x,
-        dy = event.clientY - pointer.y;
-      pointer.moved = Math.max(pointer.moved, Math.hypot(dx, dy));
-      state.pan = { x: pointer.pan.x + dx, y: pointer.pan.y + dy };
-      applyTransform();
-    });
-    const release = () => {
-      state.justDragged = Boolean(pointer && pointer.moved > 5);
-      pointer = null;
-    };
-    svg.addEventListener('pointerup', release);
-    svg.addEventListener('pointercancel', release);
-    svg.addEventListener(
-      'wheel',
-      (event) => {
-        event.preventDefault();
-        const rect = svg.getBoundingClientRect();
-        const factor = event.deltaY < 0 ? 1.15 : 1 / 1.15;
-        const zoom = Math.min(3, Math.max(0.25, state.zoom * factor));
-        const cx = event.clientX - rect.left,
-          cy = event.clientY - rect.top;
-        state.pan = {
-          x: cx - ((cx - state.pan.x) * zoom) / state.zoom,
-          y: cy - ((cy - state.pan.y) * zoom) / state.zoom,
-        };
-        state.zoom = zoom;
-        applyTransform();
-      },
-      { passive: false },
-    );
-    $('#model-zoom-in').addEventListener('click', () => {
-      state.zoom = Math.min(3, state.zoom * 1.25);
-      applyTransform();
-    });
-    $('#model-zoom-out').addEventListener('click', () => {
-      state.zoom = Math.max(0.25, state.zoom / 1.25);
-      applyTransform();
-    });
-    $('#model-zoom-fit').addEventListener('click', fitGraph);
+  const observer = new doc.defaultView.ResizeObserver(() => fitGraph());
+  observer.observe(svg);
+  async function open() {
+    try {
+      if (!state.model) {
+        state.loading ||= doFetch('data/knowledge-model.json', { cache: 'no-store' }).then(
+          (response) => {
+            if (!response.ok) throw Error(`Knowledge model HTTP ${response.status}`);
+            return response.json();
+          },
+        );
+        const model = await state.loading;
+        if (!visibleTasks(model).length) throw Error('No visible task model is available');
+        state.model = model;
+        state.task = visibleTasks(model)[0][0];
+      }
+      $('#model-status').textContent = 'Reviewed knowledge model';
+      $('#model-status').className = 'badge';
+      $('#model-retry').hidden = true;
+      $('#model-show-reported').disabled = false;
+      render();
+    } catch (error) {
+      state.loading = null;
+      state.model = null;
+      state.graph = null;
+      svg.replaceChildren();
+      $('#model-status').textContent = 'Knowledge model unavailable';
+      $('#model-status').className = 'badge red';
+      $('#model-retry').hidden = false;
+      $('#model-show-reported').disabled = true;
+      $('#model-graph-count').textContent = '';
+      inspector.textContent = error.message;
+    }
   }
-  return {
-    open() {
-      ensureModel()
-        .then(bindNavigation)
-        .catch((error) => {
-          $('#model-status').textContent = 'Knowledge model unavailable';
-          $('#model-status').className = 'badge red';
-          $('#model-inspector').textContent = error.message;
-        });
-    },
-  };
+  $('#model-retry').addEventListener('click', open);
+  return { open };
 }
