@@ -6,17 +6,17 @@ import copy
 import hashlib
 import json
 from pathlib import Path
-from .knowledge_model import load as load_model, project, model_hashes, snapshot_timestamp
-from .paths import repository_root
+from ..knowledge_model import load as load_model, project, model_hashes, snapshot_timestamp
+from ..paths import repository_root
 
 # Curated source facts and proposals are separate from observed acquisition counts.
 ROOT = repository_root()
 CONTENT = ROOT
-profiles, RELATIONSHIPS, TASKS = project(load_model())
-PROFILES = {int(k): v for k, v in profiles.items()}
 
 
 def build(inventory, status, outputs):
+    profiles, relationships, tasks = project(load_model())
+    profiles = {int(key): value for key, value in profiles.items()}
     scenes = [x for x in status["harmonized"] if x["status"] == "verified"]
     datasets = []
     for record in inventory["records"]:
@@ -24,7 +24,7 @@ def build(inventory, status, outputs):
         rows = [x for x in scenes if x["record_id"] == sid]
         fields = collections.Counter(tuple(x["source_fields"]) for x in rows)
         ds = dict(
-            copy.deepcopy(PROFILES[sid]),
+            copy.deepcopy(profiles[sid]),
             id=str(sid),
             title=record["title"],
             url=record["url"],
@@ -79,10 +79,10 @@ def build(inventory, status, outputs):
             "identical_scene_groups": len(identical),
             "identical_scene_extras": sum(len(g) - 1 for g in identical),
         },
-        "tasks": copy.deepcopy(TASKS),
+        "tasks": copy.deepcopy(tasks),
         "datasets": datasets,
     }
-    catalog["mappings"] = json.loads(json.dumps(RELATIONSHIPS))
+    catalog["mappings"] = json.loads(json.dumps(relationships))
     for dataset in datasets:
         review = dataset["review"]
         current = {

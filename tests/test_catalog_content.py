@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 import unittest
-from canopy import build_knowledge_hub_catalog as builder
+from canopy.tools import build_knowledge_hub_catalog as builder
 from canopy import knowledge_model
 
 ROOT = Path(__file__).resolve().parents[1]

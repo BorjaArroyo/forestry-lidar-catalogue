@@ -1,5 +1,7 @@
 """Protect graph identity, references and lossless existing catalog projections."""
 
+from canopy.adapters import load_adapter
+
 import copy
 import json
 import os
@@ -15,8 +17,8 @@ from canopy import knowledge_model as model
 
 ROOT = Path(__file__).resolve().parents[1]
 WEB = ROOT
-sys.path.insert(0, str(ROOT / "scripts"))
-from audit_fgi_measurements import measurement_counts  # noqa: E402
+
+measurement_counts = load_adapter("audit_fgi_measurements").measurement_counts
 
 
 class KnowledgeModel(unittest.TestCase):
