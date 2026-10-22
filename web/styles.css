@@ -1,19 +1,131 @@
 :root {
+  /* ── Brand palette ─────────────────────────────────────────── */
+  --forest-950: #0a1f1a;
+  --forest-900: #102e28;
+  --forest-800: #143d34;
+  --forest-700: #1b5047;
+  --forest-600: #1d5147;
+  --forest-500: #2a6458;
+  --forest-400: #3d7a6b;
+  --forest-300: #5a9a88;
+  --forest-200: #91bba2;
+  --forest-100: #c5d9ce;
+  --forest-50: #eaf0e6;
+
+  --gold-600: #b8954a;
+  --gold-500: #cca84d;
+  --gold-400: #d5af62;
+  --gold-300: #e4c57e;
+  --gold-200: #eed9a8;
+  --gold-100: #f7ecd0;
+  --gold-50: #fbf5e8;
+
+  --clay-600: #8a5542;
+  --clay-500: #9e5f47;
+  --clay-100: #f7e8e1;
+  --clay-50: #faf0ec;
+
+  --sky-600: #3a6b7a;
+  --sky-100: #e0ecf0;
+  --sky-50: #eef5f7;
+
+  /* ── Semantic colors ───────────────────────────────────────── */
   --ink: #17332c;
-  --forest: #1d5147;
+  --ink-soft: #3a5044;
   --muted: #708079;
+  --faint: #9baca0;
   --line: #e2e8e2;
+  --line-soft: #edf1e8;
   --paper: #f5f7f2;
-  --gold: #d5af62;
-  --sidebar: #102e28;
-  --white: #fff;
-  --radius: 15px;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
+  --surface: #fffef9;
+  --surface-raised: #ffffff;
+  --sidebar-bg: var(--forest-900);
+  --sidebar-text: #d3e0d9;
+  --sidebar-muted: #88a59a;
+  --sidebar-faint: #7f9d8c;
+
+  --success-bg: #e0efe4;
+  --success-text: #28553c;
+  --warning-bg: #faf1da;
+  --warning-text: #80672c;
+  --error-bg: #f7e8e1;
+  --error-text: #8a5542;
+  --neutral-bg: #f0f3ed;
+  --neutral-text: #677360;
+
+  /* ── Typography ────────────────────────────────────────────── */
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+
+  --text-xs: 9px;
+  --text-sm: 10px;
+  --text-base: 11px;
+  --text-md: 12px;
+  --text-lg: 13px;
+  --text-xl: 14px;
+  --text-2xl: 17px;
+  --text-3xl: 24px;
+  --text-4xl: 34px;
+  --text-5xl: 40px;
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+  --leading-loose: 1.8;
+
+  --tracking-tight: -1.1px;
+  --tracking-snug: -0.5px;
+  --tracking-normal: 0;
+  --tracking-wide: 1.4px;
+  --tracking-wider: 1.8px;
+  --tracking-widest: 2px;
+
+  /* ── Spacing scale ─────────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ── Radii ─────────────────────────────────────────────────── */
+  --radius-sm: 4px;
+  --radius: 7px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+  --radius-2xl: 15px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ───────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px #10291e0a;
+  --shadow-sm: 0 1px 3px #10291e0d, 0 1px 2px #10291e06;
+  --shadow: 0 4px 12px #10291e10;
+  --shadow-md: 0 7px 23px #203c2710;
+  --shadow-lg: 0 12px 40px #10291e18;
+  --shadow-xl: 0 30px 130px #10291e45;
+  --shadow-glow: 0 0 0 1px #d5af6220, 0 4px 16px #d5af6210;
+  --shadow-inset-accent: inset 3px 0 var(--gold-300);
+
+  /* ── Transitions ───────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration: 200ms;
+  --duration-slow: 300ms;
+
+  /* ── Legacy aliases (mapped to new tokens) ─────────────────── */
+  --forest: var(--forest-600);
+  --gold: var(--gold-400);
+  --sidebar: var(--sidebar-bg);
+  --white: var(--surface-raised);
+
+  font-family: var(--font-sans);
   color: var(--ink);
   font-synthesis: none;
 }
@@ -1312,4 +1424,62 @@ td:first-child {
   .dataset-draft li {
     flex-wrap: wrap;
   }
+}
+
+/* Active filter chips */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  margin: -8px 0 var(--space-4);
+}
+.filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  font-size: var(--text-md);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+.filter-chip:hover {
+  border-color: var(--forest-400);
+  background: var(--forest-50);
+  color: var(--forest-600);
+}
+.filter-chip span {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+  margin-left: 2px;
+}
+.filter-chip:hover span {
+  color: var(--forest-500);
+}
+.active-filters .text-button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: var(--text-md);
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+.active-filters .text-button:hover {
+  color: var(--ink);
+  background: var(--surface-raised);
+}
+.empty .button {
+  margin: 12px 0 8px;
+}
+.empty p {
+  margin: 6px 0 0;
 }

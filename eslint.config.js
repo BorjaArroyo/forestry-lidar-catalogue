@@ -30,6 +30,7 @@ const browserGlobals = {
   crypto: 'readonly',
   document: 'readonly',
   fetch: 'readonly',
+  history: 'readonly',
   indexedDB: 'readonly',
   location: 'readonly',
   localStorage: 'readonly',
