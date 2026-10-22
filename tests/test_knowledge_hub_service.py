@@ -127,7 +127,9 @@ class WorkbenchTests(unittest.TestCase):
             self.assertFalse(any(stage.iterdir()))
             original = root / "sources/8287792/originals/fixture.txt"
             self.assertEqual(original.read_bytes(), payload)
-            self.assertEqual(len(self.service.read(root / "acquisition-status.json")["completed"]), 1)
+            self.assertEqual(
+                len(self.service.read(root / "acquisition-status.json")["completed"]), 1
+            )
             index = self.service.read(self.service.STATE_ROOT / "acquisitions" / "index.json")
             entry = index["acquisitions"][str(root.resolve())]
             self.assertEqual(entry["completed_assets"], 1)
@@ -159,7 +161,9 @@ class WorkbenchTests(unittest.TestCase):
 
     def test_existing_inventory_is_never_repurposed(self):
         target = self.root / "existing"
-        self.service.save(target / "inventory.json", {"records": [{"record_id": 16742708, "files": []}]})
+        self.service.save(
+            target / "inventory.json", {"records": [{"record_id": 16742708, "files": []}]}
+        )
         original = (target / "inventory.json").read_bytes()
         with self.assertRaisesRegex(ValueError, "another inventory"):
             self.service.submit({"kind": "acquire", "record_id": 8287792, "root": str(target)})
@@ -190,7 +194,8 @@ class WorkbenchTests(unittest.TestCase):
             with self.subTest(body=body), self.assertRaises(ValueError):
                 self.service.submit(body)
         self.assertFalse(
-            (self.service.STATE / "jobs").exists() and list((self.service.STATE / "jobs").glob("*/job.json"))
+            (self.service.STATE / "jobs").exists()
+            and list((self.service.STATE / "jobs").glob("*/job.json"))
         )
 
     def test_pipeline_changes_after_submission_block_the_worker(self):
@@ -207,7 +212,9 @@ class WorkbenchTests(unittest.TestCase):
             ),
         )
         with (
-            patch.object(self.service, "preparation_status", return_value={"package_sha256": "new"}),
+            patch.object(
+                self.service, "preparation_status", return_value={"package_sha256": "new"}
+            ),
             patch.object(service_jobs.subprocess, "run") as run,
         ):
             self.service.worker(folder)
@@ -253,7 +260,9 @@ class WorkbenchTests(unittest.TestCase):
             case.tearDown()
 
     def test_download_prepare_validate_and_resume_end_to_end(self):
-        spec = importlib.util.spec_from_file_location("acquisition", REPO / "scripts/acquire_lidar.py")
+        spec = importlib.util.spec_from_file_location(
+            "acquisition", REPO / "scripts/acquire_lidar.py"
+        )
         acquisition = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(acquisition)
 
@@ -452,11 +461,16 @@ class WorkbenchTests(unittest.TestCase):
                 (report["status"], report["plots"], report["points"]), ("validated", 2, 18)
             )
             self.assertEqual(
-                job["validation_report_sha256"], self.service.sha(folder / "task-package-report.json")
+                job["validation_report_sha256"],
+                self.service.sha(folder / "task-package-report.json"),
             )
-            self.assertEqual(report["manifest_sha256"], self.service.sha(output / "task-package.json"))
+            self.assertEqual(
+                report["manifest_sha256"], self.service.sha(output / "task-package.json")
+            )
             marker = root / "sources/8287792/manifests/FORinstance_dataset.zip.json"
-            self.assertEqual(self.service.read(marker)["download_sha256"], case.lock["download_sha256"])
+            self.assertEqual(
+                self.service.read(marker)["download_sha256"], case.lock["download_sha256"]
+            )
             self.assertEqual(len(requests), 1)
             manifest = self.service.read(output / "task-package.json")
             first = output / manifest["scenes"][0]["chunks"][0]["path"]
@@ -465,7 +479,9 @@ class WorkbenchTests(unittest.TestCase):
                 self.assertEqual(json.load(response)["reports"]["task-package-report.json"], report)
             resumed = submit_http()
             self.assertEqual(
-                self.service.read(self.service.STATE / "jobs" / resumed["id"] / "job.json")["status"],
+                self.service.read(self.service.STATE / "jobs" / resumed["id"] / "job.json")[
+                    "status"
+                ],
                 "completed",
             )
             self.assertEqual(len(requests), 1)

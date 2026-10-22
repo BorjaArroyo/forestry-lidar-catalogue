@@ -1,7 +1,14 @@
 import { escapeHTML as esc, downloadJSON } from '../shared/dom.js';
 import { ServiceConnectionError } from './client.js';
 /* Pinned originals and admitted source preparation run on the service host. */
-export function mountWorkbench({ getTaskRequest, selection, catalog, client, localService, document: doc = document }) {
+export function mountWorkbench({
+  getTaskRequest,
+  selection,
+  catalog,
+  client,
+  localService,
+  document: doc = document,
+}) {
   const $ = (s) => doc.querySelector(s);
   const selectedSource = () => document.getElementById('prepare-source')?.value;
   const localPreparationReady = (id) =>
@@ -22,7 +29,12 @@ export function mountWorkbench({ getTaskRequest, selection, catalog, client, loc
     try {
       return await client.request(path, body, token);
     } catch (error) {
-      if (error instanceof ServiceConnectionError || error.status === undefined || error.status >= 500 || error.status < 400) {
+      if (
+        error instanceof ServiceConnectionError ||
+        error.status === undefined ||
+        error.status >= 500 ||
+        error.status < 400
+      ) {
         token = null;
         controls(false);
       }

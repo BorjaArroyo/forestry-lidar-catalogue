@@ -55,7 +55,12 @@ function start(request, interrupt = false) {
     if (data.type === 'result' && data.operation === 'review') {
       plan = data.plan;
       worker.terminate();
-      start({operation: 'import', mode: 'zenodo', records: plan.source_plans.map((source) => source.task_plan.source_ref.slice(7)), plan_text: JSON.stringify(plan)});
+      start({
+        operation: 'import',
+        mode: 'zenodo',
+        records: plan.source_plans.map((source) => source.task_plan.source_ref.slice(7)),
+        plan_text: JSON.stringify(plan),
+      });
     } else if (data.type === 'result' && data.operation === 'import') {
       plan = data.plan;
       $('start').disabled = false;

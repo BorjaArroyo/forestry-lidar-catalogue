@@ -36,7 +36,6 @@ class Service:
     def records(self):
         return self.read(self.REPO / "docs/lidar-acquisition-inventory.json")["records"]
 
-
     def inspect_record(self, value):
         match = re.fullmatch(r"(?:https://zenodo.org/records/)?([1-9][0-9]*)/?", str(value).strip())
         if not match:
@@ -52,12 +51,10 @@ class Service:
         self.save(self.STATE / "records" / f"{rid}.json", record)
         return record
 
-
     def preparation_status(self):
         from ..preparation_profile import status
 
         return status(self.INSTANCE_PACKAGE, self.WEB)
-
 
     def preparation_destination(self, root, output, fingerprint):
         if root == output or output.is_relative_to(root) or root.is_relative_to(output):
@@ -68,36 +65,34 @@ class Service:
             if not marker.exists() or self.read(marker).get("package_sha256") != fingerprint:
                 raise RequestError("Existing output is not a matching resumable instance package")
 
-
     def preparation_input(self, root, output):
         from ..preparation_profile import validate_input
 
         return validate_input(
-            root, output, self.INSTANCE_PACKAGE, self.preparation_status(), self.preparation_destination
+            root,
+            output,
+            self.INSTANCE_PACKAGE,
+            self.preparation_status(),
+            self.preparation_destination,
         )
-
 
     def jobs(self):
         return inspect_jobs(self.STATE, self.read)
-
 
     def submit(self, body):
         from .jobs import submit as submit_job
 
         return submit_job(self, body)
 
-
     def launch_worker(self, folder):
         from .jobs import launch_worker as launch
 
         return launch(self, folder)
 
-
     def job_path(self, jid):
         from .jobs import job_path as path_for_job
 
         return path_for_job(self, jid)
-
 
     def worker(self, folder):
         from .jobs import worker as run_worker

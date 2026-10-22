@@ -172,8 +172,11 @@ function worker({
     loadZip: context.zipRuntime,
   });
   return {
-    store, messages, staged, validated,
-    run: () => controller.run({mode: 'zenodo', task_request: request, execution_plan: plan}),
+    store,
+    messages,
+    staged,
+    validated,
+    run: () => controller.run({ mode: 'zenodo', task_request: request, execution_plan: plan }),
     resume: () => controller.resume(job),
     inspect: controller.inspect,
     review: controller.review,

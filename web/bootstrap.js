@@ -11,10 +11,18 @@ if (!catalog) {
     'Catalog unavailable. Rebuild catalog.js using the documented command.';
 } else {
   const selection = createTaskSelection(catalog);
-  const localService = !window.CANOPY_PUBLIC && ['127.0.0.1', 'localhost'].includes(location.hostname);
-  const client = createServiceClient({fetch: window.fetch.bind(window), enabled: localService});
+  const localService =
+    !window.CANOPY_PUBLIC && ['127.0.0.1', 'localhost'].includes(location.hostname);
+  const client = createServiceClient({ fetch: window.fetch.bind(window), enabled: localService });
   const application = mountCatalog({ catalog, document, selection });
-  mountWorkbench({ catalog, document, client, localService, getTaskRequest: application.getTaskRequest, selection });
-  mountPreparation({catalog, document, selection});
+  mountWorkbench({
+    catalog,
+    document,
+    client,
+    localService,
+    getTaskRequest: application.getTaskRequest,
+    selection,
+  });
+  mountPreparation({ catalog, document, selection });
   mountDownloadUI();
 }

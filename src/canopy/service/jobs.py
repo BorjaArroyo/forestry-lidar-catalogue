@@ -61,7 +61,9 @@ def submit(api, body):
         )
     if not isinstance(body, dict) or "record_id" not in body:
         raise RequestError("A job requires a record_id")
-    if isinstance(body["record_id"], bool) or not re.fullmatch(r"[1-9][0-9]*", str(body["record_id"])):
+    if isinstance(body["record_id"], bool) or not re.fullmatch(
+        r"[1-9][0-9]*", str(body["record_id"])
+    ):
         raise RequestError("Invalid record_id")
     for key in ("root", "output", "prepare_output"):
         if key in body and not isinstance(body[key], str):
@@ -76,7 +78,9 @@ def submit(api, body):
             raise RequestError("Invalid task request")
         if kind != "prepare-instances" and not body.get("prepare_output"):
             raise RequestError("A task request requires audited preparation, not only acquisition")
-        if not isinstance(request.get("use", "training"), str) or not isinstance(request.get("variables", {}), dict):
+        if not isinstance(request.get("use", "training"), str) or not isinstance(
+            request.get("variables", {}), dict
+        ):
             raise RequestError("Invalid task request")
         model = load(api.WEB / "knowledge-model.json")
         try:
@@ -132,7 +136,9 @@ def submit(api, body):
                         "Pinned asset inventory differs from destination; inspect before resuming"
                     )
             elif root.exists() and any(root.iterdir()):
-                raise RequestError("Choose an empty destination or a matching acquisition directory")
+                raise RequestError(
+                    "Choose an empty destination or a matching acquisition directory"
+                )
             parent = root
             while not parent.exists():
                 parent = parent.parent

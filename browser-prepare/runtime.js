@@ -121,7 +121,8 @@ function createRuntime({ scope, base, nativeFetch, digest, profileForSource, pha
       };
     }
     for (const [name, entry] of Object.entries(lock.files))
-      if ((name.startsWith('browser-prepare/') || name.startsWith('web/')) && name.endsWith('.js')) await checked(entry);
+      if ((name.startsWith('browser-prepare/') || name.startsWith('web/')) && name.endsWith('.js'))
+        await checked(entry);
     phase(
       'Checking task requirements and exact versions for every source; no source LAS is downloaded yet…',
     );

@@ -1,7 +1,12 @@
 import { renderSavedRuns } from './saved-runs.js';
 import { updateControls } from './controls.js';
 import { decodeImportedPlan, renderPlan, planSources } from './plan-panel.js';
-import { inspectRuns as defaultInspectRuns, validJob, lockName, openRun as defaultOpenRun } from './run-store.js';
+import {
+  inspectRuns as defaultInspectRuns,
+  validJob,
+  lockName,
+  openRun as defaultOpenRun,
+} from './run-store.js';
 import { DraftPanel } from './draft-panel.js';
 import { renderPlotOptions } from './source-selection.js';
 import { RunSession as DefaultRunSession } from './run-session.js?v=2';
@@ -101,7 +106,7 @@ export function mountPreparation({
     $('dataset-plan').hidden = true;
   }
   function applyImportedPlan(data) {
-    const {plan, request, sources, draft, memberships} = decodeImportedPlan(data, selection);
+    const { plan, request, sources, draft, memberships } = decodeImportedPlan(data, selection);
     controls();
     busy = true;
     try {
@@ -138,9 +143,26 @@ export function mountPreparation({
     $('dataset-plan').hidden = false;
   }
   function controls() {
-    updateControls({document, CustomEvent, busy, session, inspecting, selectedProfile, draftPanel,
-      initialized, selectedValues, getRequest, assessment, supported, selectionSummary, planIntent,
-      reviewedPlan, reviewedKey, clearPlan, job});
+    updateControls({
+      document,
+      CustomEvent,
+      busy,
+      session,
+      inspecting,
+      selectedProfile,
+      draftPanel,
+      initialized,
+      selectedValues,
+      getRequest,
+      assessment,
+      supported,
+      selectionSummary,
+      planIntent,
+      reviewedPlan,
+      reviewedKey,
+      clearPlan,
+      job,
+    });
   }
   function selectionSummary(mode) {
     if (mode === 'las')
@@ -152,7 +174,13 @@ export function mountPreparation({
     return `${chosen.length} complete plots · ${points.toLocaleString()} points · ${(bytes / 1048576).toFixed(1)} MiB of source LAS. Prepared output and ZIP require additional browser storage. Published partitions and scene identities are preserved; geographic independence is not established.`;
   }
   function refreshPlots(resetFilters = true) {
-    renderPlotOptions({document, plots, allowed: assessment().allowed_partitions, profile: selectedProfile(), resetFilters});
+    renderPlotOptions({
+      document,
+      plots,
+      allowed: assessment().allowed_partitions,
+      profile: selectedProfile(),
+      resetFilters,
+    });
   }
   async function sourceChanged() {
     const revision = ++sourceRevision;
@@ -463,31 +491,34 @@ export function mountPreparation({
     controls();
     try {
       const runs = await inspectRuns();
-      renderSavedRuns({document, runs, isRunning: () => busy || session.running,
+      renderSavedRuns({
+        document,
+        runs,
+        isRunning: () => busy || session.running,
         onDownload(run, sources, use) {
-            if (busy || session.running || inspecting) return;
-            remember(run.id);
-            showExport(run.file, run.evidence, 'tree-instance-dataset.zip');
-            status(`Recovered ZIP for ${sources} / ${use}. Its saved plan describes that run.`);
-            controls();
+          if (busy || session.running || inspecting) return;
+          remember(run.id);
+          showExport(run.file, run.evidence, 'tree-instance-dataset.zip');
+          status(`Recovered ZIP for ${sources} / ${use}. Its saved plan describes that run.`);
+          controls();
         },
         onResume(run, sources, use) {
-            if (busy || session.running || inspecting) return;
-            hideExport();
-            remember(run.id);
-            try {
-              session.start(
-                () =>
-                  new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), {
-                    type: 'module',
-                  }),
-                { operation: 'resume', job: run.id },
-              );
-              status(`Rechecking saved plan and every completed plot for ${sources} / ${use}…`);
-            } catch (error) {
-              status('Could not resume preparation: ' + error.message);
-            }
-            controls();
+          if (busy || session.running || inspecting) return;
+          hideExport();
+          remember(run.id);
+          try {
+            session.start(
+              () =>
+                new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), {
+                  type: 'module',
+                }),
+              { operation: 'resume', job: run.id },
+            );
+            status(`Rechecking saved plan and every completed plot for ${sources} / ${use}…`);
+          } catch (error) {
+            status('Could not resume preparation: ' + error.message);
+          }
+          controls();
         },
         async onDelete(run) {
           if (busy || session.running || inspecting) return;

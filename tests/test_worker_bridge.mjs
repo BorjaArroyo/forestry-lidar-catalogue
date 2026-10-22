@@ -14,10 +14,14 @@ print(json.dumps(execution_plan))
 `;
 
 test('the production import bridge resolves the packaged decoder and rejects duplicate keys', () => {
-  const execute = (input) => spawnSync(process.env.CANOPY_PYTHON || 'python3', ['-c', bridge, IMPORT_PLAN_CODE], {input, encoding: 'utf8'});
+  const execute = (input) =>
+    spawnSync(process.env.CANOPY_PYTHON || 'python3', ['-c', bridge, IMPORT_PLAN_CODE], {
+      input,
+      encoding: 'utf8',
+    });
   const valid = execute('{"schema_version":"2.0.0"}');
   assert.equal(valid.status, 0, valid.stderr);
-  assert.deepEqual(JSON.parse(valid.stdout), {schema_version: '2.0.0'});
+  assert.deepEqual(JSON.parse(valid.stdout), { schema_version: '2.0.0' });
   const duplicate = execute('{"schema_version":"1.0.0","schema_version":"2.0.0"}');
   assert.notEqual(duplicate.status, 0);
   assert.match(duplicate.stderr, /Duplicate JSON key/);

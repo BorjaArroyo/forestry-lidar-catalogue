@@ -16,7 +16,12 @@ from canopy.task_package import TaskPackage
 ROOT = Path(__file__).resolve().parents[1]
 
 adapter = load_adapter("fgi_emit")
-Preparation, prepare, reference, sha = adapter.Preparation, adapter.prepare, adapter.reference, adapter.sha
+Preparation, prepare, reference, sha = (
+    adapter.Preparation,
+    adapter.prepare,
+    adapter.reference,
+    adapter.sha,
+)
 
 
 class FgiPreparation(unittest.TestCase):

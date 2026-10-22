@@ -20,8 +20,6 @@ def require_pinned_validation(nodes, key, evidence_refs):
         raise ValueError("Validated measurements require pinned local validation evidence")
 
 
-
-
 def validate_nodes(nodes):
     def require(key, expected):
         require_node(nodes, key, expected)

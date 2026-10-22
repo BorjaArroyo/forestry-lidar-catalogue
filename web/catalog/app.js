@@ -2,7 +2,11 @@ import { escapeHTML as esc, downloadJSON } from '../shared/dom.js';
 /* A dependency-free, offline viewer. This application never modifies LiDAR files. */
 import { createTaskSelection } from './task-selection.js';
 
-export function mountCatalog({ catalog, document: doc = document, selection = createTaskSelection(catalog) }) {
+export function mountCatalog({
+  catalog,
+  document: doc = document,
+  selection = createTaskSelection(catalog),
+}) {
   const data = catalog;
   if (!data) {
     doc.querySelector('main').textContent =

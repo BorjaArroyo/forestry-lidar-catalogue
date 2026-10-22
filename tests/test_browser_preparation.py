@@ -13,7 +13,9 @@ import numpy as np
 from canopy.task_package import TaskPackage
 
 REPO = Path(__file__).resolve().parents[1]
-KERNEL = importlib.util.spec_from_file_location("browser_kernel", REPO / "browser-prepare/kernel.py")
+KERNEL = importlib.util.spec_from_file_location(
+    "browser_kernel", REPO / "browser-prepare/kernel.py"
+)
 kernel = importlib.util.module_from_spec(KERNEL)
 KERNEL.loader.exec_module(kernel)
 Preparation = kernel.Preparation
@@ -127,7 +129,9 @@ class BrowserBatchTests(unittest.TestCase):
     open = BrowserPreparationTests.open
 
     def test_selected_scenes_form_one_independently_validated_package(self):
-        spec = importlib.util.spec_from_file_location("browser_batch", REPO / "browser-prepare/batch.py")
+        spec = importlib.util.spec_from_file_location(
+            "browser_batch", REPO / "browser-prepare/batch.py"
+        )
         batch = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(batch)
         combine_manifests = batch.combine_manifests

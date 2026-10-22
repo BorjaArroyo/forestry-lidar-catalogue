@@ -26,22 +26,45 @@ export function createWorkerController({ scope, inspect, review, resume, run }) 
   };
 }
 
-export function createPreparationController({ scope, browser, cryptoProvider,
-  runtime: providedRuntime, stagePlot: providedIntake, preparePlot: prepare = preparePlot,
-  loadZip: providedZip, taskForRequest: providedTask }) {
+export function createPreparationController({
+  scope,
+  browser,
+  cryptoProvider,
+  runtime: providedRuntime,
+  stagePlot: providedIntake,
+  preparePlot: prepare = preparePlot,
+  loadZip: providedZip,
+  taskForRequest: providedTask,
+}) {
   const base = new URL('../', scope.location.href);
   const nativeFetch = scope.fetch.bind(scope);
   const phase = (text) => scope.postMessage({ type: 'phase', text });
   const digest = async (bytes) =>
     [...new Uint8Array(await cryptoProvider.subtle.digest('SHA-256', bytes))]
-      .map((x) => x.toString(16).padStart(2, '0')).join('');
-  const runtime = providedRuntime || createRuntime({scope, base, nativeFetch, digest, profileForSource, phase});
-  const loadZip = providedZip || createZipRuntime({scope, runtime});
-  const { review, taskForRequest } = createPlanReview({runtime, scope});
-  const stagePlot = providedIntake || createIntake({loadZip, nativeFetch, phase});
-  const runner = createRunner({scope, browser, cryptoProvider, runtime, digest, phase,
-    loadZip, stagePlot, preparePlot: prepare, taskForRequest: providedTask || taskForRequest});
+      .map((x) => x.toString(16).padStart(2, '0'))
+      .join('');
+  const runtime =
+    providedRuntime || createRuntime({ scope, base, nativeFetch, digest, profileForSource, phase });
+  const loadZip = providedZip || createZipRuntime({ scope, runtime });
+  const { review, taskForRequest } = createPlanReview({ runtime, scope });
+  const stagePlot = providedIntake || createIntake({ loadZip, nativeFetch, phase });
+  const runner = createRunner({
+    scope,
+    browser,
+    cryptoProvider,
+    runtime,
+    digest,
+    phase,
+    loadZip,
+    stagePlot,
+    preparePlot: prepare,
+    taskForRequest: providedTask || taskForRequest,
+  });
   const inspect = () => inspectRuns(browser);
-  return { ...runner, review, inspect,
-    onmessage: createWorkerController({scope, inspect, review, ...runner}) };
+  return {
+    ...runner,
+    review,
+    inspect,
+    onmessage: createWorkerController({ scope, inspect, review, ...runner }),
+  };
 }
