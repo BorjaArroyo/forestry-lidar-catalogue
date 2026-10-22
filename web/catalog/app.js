@@ -194,18 +194,48 @@ export function mountCatalog({
     toast.timer = setTimeout(() => ($('#toast').hidden = true), 3200);
   }
 
+  /* Cards communicate uniform state; the audited per-source detail stays in the dialog. */
+  const REFERENCE_STATUS_LABELS = {
+    plots: 'Tree IDs per plot',
+    trees: 'Tree IDs in tree exports',
+    none: 'No instance labels',
+    unknown: 'Reference not reviewed',
+  };
+  const PREPARATION_STATUS_LABELS = {
+    ready: 'Validated preparation',
+    tbd: 'Pipeline TBD',
+    blocked: 'Rights review required',
+  };
+  function cardStatuses(d) {
+    const s = discovery(d);
+    return `<div class="card-status"><span class="source-status reference-${esc(s.instance_reference.status)}">${esc(REFERENCE_STATUS_LABELS[s.instance_reference.status] || 'Reference not reviewed')}</span><span class="source-status preparation-${esc(s.preparation.status)}">${esc(PREPARATION_STATUS_LABELS[s.preparation.status] || 'Pipeline TBD')}</span></div>`;
+  }
+  function cardHtml(d) {
+    const s = discovery(d);
+    const upcoming = s.preparation.status !== 'ready';
+    const fit = upcoming ? null : selection.assess(d.id, taskRequest());
+    const fitLine = !fit
+      ? ''
+      : `<p class="fit-line ${fit.status === 'ready' ? 'ok' : 'no'}">${fit.status === 'ready' ? 'Audited pipeline covers this request.' : 'Admitted pipeline does not cover the current request.'}</p>`;
+    return `<article class="dataset-card source-card${upcoming ? ' upcoming' : ''}" data-source="${d.id}"><div class="card-top">${upcoming ? badge('Upcoming', 'neutral') : ''}${badge(d.modalities.join(' · '))}<span class="source-unit">${esc(s.unit_label)}</span></div><h3>${esc(d.name)}</h3><p class="source-location" title="${esc(d.geography)}">${esc(d.geography)}</p>${cardStatuses(d)}${fitLine}<p class="card-meta">${recordSize(d)} · ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} in the pinned record</p><div class="card-bottom"><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" ${state.compare.has(d.id) ? 'checked' : ''}>Compare</label>${fit?.status === 'ready' ? `<button class="button small" data-task-prepare="${d.id}">Prepare</button>` : ''}<button data-detail="${d.id}">View source & preparation ↗</button></div></article>`;
+  }
   function renderDatasets() {
     const rows = visibleDatasets();
     $('#catalog-count').textContent =
       `${rows.length} of ${data.datasets.length} source records · ${rows.filter((d) => selection.assess(d.id, taskRequest()).status === 'ready').length} with an audited pipeline for this request`;
+    if (!rows.length) {
+      $('#dataset-grid').innerHTML =
+        '<div class="empty">No source matches all these conditions.<button class="button small" data-clear-filters>Clear all filters</button><p>This catalog does not cover every public source.</p></div>';
+      return;
+    }
+    const ready = rows.filter((d) => discovery(d).preparation.status === 'ready');
+    const upcoming = rows.filter((d) => discovery(d).preparation.status !== 'ready');
+    const divider =
+      ready.length && upcoming.length
+        ? `<div class="grid-divider"><div><h3>Upcoming sources</h3><p>Reviewed records listed for discovery; no audited preparation is admitted for this task yet.</p></div><span class="muted">${upcoming.length} ${upcoming.length === 1 ? 'source' : 'sources'}</span></div>`
+        : '';
     $('#dataset-grid').innerHTML =
-      rows
-        .map((d) => {
-          const s = discovery(d);
-          return `<article class="dataset-card source-card" data-source="${d.id}"><div class="card-top">${badge(d.modalities.join(' · '))}<span class="source-unit">${esc(s.unit_label)}</span></div><h3>${esc(d.name)}</h3><p class="source-location">${esc(d.geography)}</p>${readinessHtml(d)}${requestFit(d, true)}<p class="source-coverage">${esc(s.coverage)}</p><div class="source-caveat"><strong>Before choosing</strong><p>${esc(s.limitation)}</p></div><p class="source-record-size">${recordSize(d)} · ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} in the pinned record<br><small>${selection.assess(d.id, taskRequest()).status === 'ready' ? 'Whole record size; a reviewed plot can be retrieved in the browser.' : 'Whole record; selected-plot preparation remains TBD.'}</small></p><div class="card-bottom"><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" ${state.compare.has(d.id) ? 'checked' : ''}>Compare</label><button data-detail="${d.id}">View source & preparation ↗</button></div></article>`;
-        })
-        .join('') ||
-      `<div class="empty">No source matches all these conditions.<button class="button small" data-clear-filters>Clear all filters</button><p>This catalog does not cover every public source.</p></div>`;
+      ready.map(cardHtml).join('') + divider + upcoming.map(cardHtml).join('');
   }
   function detail(id) {
     const d = byId[id];
@@ -354,6 +384,25 @@ export function mountCatalog({
     }
   }
 
+  const VIEW_TITLES = {
+    datasets: 'Sources',
+    workbench: 'Workbench',
+    model: 'Data model',
+  };
+  const VIEW_HEADINGS = {
+    datasets: [
+      'Find a source for tree segmentation.',
+      'Compare reference coverage and limitations. FOR-instance archive preparation is validated; other adapters remain work in progress.',
+    ],
+    workbench: [
+      'Prepare a dataset for your model.',
+      'Choose a source, inspect its audited pipeline and prepare data for your task requirements.',
+    ],
+    model: [
+      'Navigate the shared data model for each task.',
+      'Sources, audited preparation flows and the data contract each task consumes. Reported support is not an admitted pipeline.',
+    ],
+  };
   function render() {
     renderDatasets();
     renderActiveFilters();
@@ -362,14 +411,11 @@ export function mountCatalog({
     $('#compare-open').disabled = state.compare.size < 2;
     $('#compare-open').hidden = state.view !== 'datasets';
     $('.toolbar').hidden = state.view !== 'datasets';
-    const downloading = state.view === 'workbench';
-    $('#breadcrumb-view').textContent = downloading ? 'Workbench' : 'Sources';
-    $('.page-heading h1').textContent = downloading
-      ? 'Prepare a dataset for your model.'
-      : 'Find a source for tree segmentation.';
-    $('.page-heading p').textContent = downloading
-      ? 'Choose a source, inspect its audited pipeline and prepare data for your task requirements.'
-      : 'Compare reference coverage and limitations. FOR-instance archive preparation is validated; other adapters remain work in progress.';
+    const view = state.view;
+    $('#breadcrumb-view').textContent = VIEW_TITLES[view] || 'Sources';
+    const [heading, subtitle] = VIEW_HEADINGS[view] || VIEW_HEADINGS.datasets;
+    $('.page-heading h1').textContent = heading;
+    $('.page-heading p').textContent = subtitle;
     $$('.nav-item').forEach((b) => {
       b.classList.toggle('active', b.dataset.view === state.view);
       b.setAttribute('aria-current', b.dataset.view === state.view ? 'page' : 'false');
@@ -380,6 +426,7 @@ export function mountCatalog({
     state.view = view;
     location.hash = view;
     render();
+    document.dispatchEvent(new CustomEvent('canopy-view', { detail: { view } }));
     window.scrollTo(0, 0);
   }
   document.addEventListener('click', (event) => {
@@ -470,9 +517,16 @@ export function mountCatalog({
   $('#reset').addEventListener('click', clearFilters);
   $('#compare-open').addEventListener('click', showCompare);
   $('#export').addEventListener('click', () => download(data, 'canopy-catalog.json'));
+  const viewFromHash = () =>
+    location.hash === '#workbench'
+      ? 'workbench'
+      : location.hash === '#model'
+        ? 'model'
+        : 'datasets';
   window.addEventListener('hashchange', () => {
-    state.view = location.hash === '#workbench' ? 'workbench' : 'datasets';
+    state.view = viewFromHash();
     render();
+    document.dispatchEvent(new CustomEvent('canopy-view', { detail: { view: state.view } }));
   });
   $$('dialog').forEach((d) =>
     d.addEventListener('click', (e) => {
@@ -492,7 +546,7 @@ export function mountCatalog({
     $$('[data-source-download]').forEach((b) => (b.disabled = !serviceConnected));
     $$('.source-service-note').forEach((p) => (p.textContent = sourceServiceNote()));
   });
-  state.view = location.hash === '#workbench' ? 'workbench' : 'datasets';
+  state.view = viewFromHash();
   initFromUrl();
   $('#dataset-count').textContent = data.datasets.length;
   $('#snapshot-date').textContent =

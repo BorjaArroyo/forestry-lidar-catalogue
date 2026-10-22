@@ -417,8 +417,8 @@
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "c4389fcf67941c704419e55a85799b3ec06198b5303b764aa42f6203fece7e60",
-      "size_bytes": 1013
+      "sha256": "34eac8682d09ad49a818ebf4db52503311440fef0aa358bbaf5bea46f3b87b15",
+      "size_bytes": 1326
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
@@ -427,8 +427,8 @@
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "bacb5f60209fbca47ff76c90d549e888a455031258a4396357fd4a692564b3f3",
-      "size_bytes": 25735
+      "sha256": "a822168c08c0670bdbe20e328c5d9f5990ca2c7988296f27f04ae1d974d948de",
+      "size_bytes": 28095
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
