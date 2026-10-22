@@ -1,58 +1,46 @@
-name: Dataset admission
+name: Repository verification and dataset admission
 on:
   pull_request:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      base_sha:
+        description: Existing commit to use as the catalog admission comparison base
+        required: true
+        type: string
 permissions:
   contents: read
 jobs:
-  admission:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Validate added and changed dataset reviews
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install project and development dependencies
+        run: |
+          python -m pip install -e '.[dev]'
+          npm ci
+      - name: Select explicit admission comparison base
         env:
-          # On pull_request, compare against the merge base; on push, against the previous commit.
-          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          BASE_SHA: ${{ github.event.inputs.base_sha || github.event.pull_request.base.sha || github.event.before }}
         run: |
-          python3 tests/test_catalog_reviews.py
-          git show "$BASE_SHA:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
-          python3 scripts/validate_catalog_reviews.py --base "$RUNNER_TEMP/base-catalog.json"
-          python3 - <<'PYTHON'
-          import json
-          from pathlib import Path
-          catalog = json.loads(Path('catalog.json').read_text())
-          script = Path('catalog.js').read_text()
-          assert json.loads(script.split('=', 1)[1].strip().rstrip(';')) == catalog, 'Catalog snapshots differ'
-          PYTHON
-      - name: Validate curated graph and generated views
-        run: |
-          python3 -m pip install -r requirements.txt
-          python3 scripts/knowledge_model.py
-          python3 scripts/check_publication.py
-          python3 tests/test_publication_tools.py
-          python3 tests/test_knowledge_model.py
-          python3 tests/test_catalog_content.py
-          python3 tests/test_knowledge_hub_service.py
-          python3 tests/test_pinned_sources.py
-          python3 scripts/for_instance/test_pipeline.py
-          python3 tests/test_task_package.py
-          python3 tests/test_fgi_preparation.py
-          python3 tests/test_task_plan.py
-          python3 tests/test_task_dataset.py
-          python3 tests/test_dataset_plan.py
-          python3 tests/test_browser_preparation.py
-          python3 tests/test_browser_container.py
-          node --test tests/test_*.mjs
-          node --check browser-prepare/intake.js
-          node --check browser-prepare/worker.js
-          node --check browser-prepare/ui.js
-          node --check browser-prepare/download-ui.js
-          node --check container-lab/worker.js
-          node --check container-lab/ui.js
-          node --check task-selection.js
-          node --check app.js
-          node --check workbench.js
+          test -n "$BASE_SHA"
+          test "$BASE_SHA" != "0000000000000000000000000000000000000000"
+          BASE_COMMIT=$(git rev-parse "$BASE_SHA^{commit}")
+          test "$BASE_COMMIT" != "$(git rev-parse HEAD)"
+          git cat-file -e "$BASE_COMMIT:catalog.json"
+          git show "$BASE_COMMIT:catalog.json" > "$RUNNER_TEMP/base-catalog.json"
+          python scripts/validate_catalog_reviews.py --base "$RUNNER_TEMP/base-catalog.json"
+      - name: Install browser engines
+        run: npx playwright install --with-deps chromium firefox
+      - name: Run shared local verification entrypoint
+        run: python scripts/verify.py

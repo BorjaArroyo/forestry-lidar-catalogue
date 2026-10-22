@@ -115,11 +115,6 @@
       "sha256": "046ab6fdb02c76b1750e20c0e44bea6f28e564c66f682935173fed930464254f",
       "size_bytes": 377
     },
-    "scripts/task_package.py": {
-      "url": "scripts/task_package.py",
-      "sha256": "0cf0ee956f2746fc6bea1d3fc9195a07d2e855b97f627fa0e73de36ceff29fa4",
-      "size_bytes": 16041
-    },
     "task-package.schema.json": {
       "url": "task-package.schema.json",
       "sha256": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d",
@@ -127,8 +122,8 @@
     },
     "browser-prepare/kernel.py": {
       "url": "browser-prepare/kernel.py",
-      "sha256": "5d6f0ab294b09684f943fe0abf59121b37fa61dd25c99c9d13f8eff08431b20e",
-      "size_bytes": 4590
+      "sha256": "f4cccaaac4382cc997b11235544381ca9125c543939556ac62b09064ad65910e",
+      "size_bytes": 5101
     },
     "pyodide.js": {
       "url": "https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.js",
@@ -137,18 +132,8 @@
     },
     "browser-prepare/intake.js": {
       "url": "browser-prepare/intake.js",
-      "sha256": "adc6767fedbd428347acdee38aa63171fb9f8e693d99e232dab462ee3667b7d3",
-      "size_bytes": 5451
-    },
-    "scripts/task_plan.py": {
-      "url": "scripts/task_plan.py",
-      "sha256": "f8383a43964f2da2996c2f25aa314a325350e9df047d80a6db34c79e6a4c7020",
-      "size_bytes": 10664
-    },
-    "scripts/knowledge_model.py": {
-      "url": "scripts/knowledge_model.py",
-      "sha256": "1fa63bb8ec68af517efea26ce5c533461a6902285ef8c5899acca8dc2d5c2f64",
-      "size_bytes": 1077
+      "sha256": "a09858e0983540898fd41fe2e0df7c746e22982a4c58808f7426b6add1651f03",
+      "size_bytes": 5742
     },
     "knowledge-model.json": {
       "url": "knowledge-model.json",
@@ -160,60 +145,30 @@
       "sha256": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2",
       "size_bytes": 46687
     },
-    "scripts/model_io.py": {
-      "url": "scripts/model_io.py",
-      "sha256": "d9f336c15e9ccf770fc2f99158249ed66c48aa3b43ba07f2c3f450fce18048ad",
-      "size_bytes": 1650
-    },
-    "scripts/model_validation.py": {
-      "url": "scripts/model_validation.py",
-      "sha256": "11c5bb2685cddcbf5725ffecafdf600db48680b1dec82649548a0562fd52dd50",
-      "size_bytes": 17756
-    },
-    "scripts/model_projection.py": {
-      "url": "scripts/model_projection.py",
-      "sha256": "10b53986b7685d35ef23f6b845747bf9506bf57dd2ce8a2bc62f5ec585a7993c",
-      "size_bytes": 4563
-    },
-    "scripts/model_publication.py": {
-      "url": "scripts/model_publication.py",
-      "sha256": "70deb06cb9982747f8ff7cffd58b09943865c4af49552f5ea90cd804d7ec7685",
-      "size_bytes": 5390
-    },
     "browser-prepare/profiles.js": {
       "url": "browser-prepare/profiles.js",
-      "sha256": "72d3cbe2732fcf64de223b0bc3d0b622439583a8d86b5ba1e54e5b286a52a69c",
-      "size_bytes": 426
+      "sha256": "4cdf5e7ce527986e352af1750355bad4985c3480f6d083ebca1fdeb773362f4e",
+      "size_bytes": 438
     },
     "browser-prepare/profiles/for-instance.js": {
       "url": "browser-prepare/profiles/for-instance.js",
-      "sha256": "127a16cc984b3d1064046eeccd78afd1f8959e6cc829cd6309023bcd1ea74d52",
-      "size_bytes": 930
+      "sha256": "4e36d26d2caac8679492750ea2d74468184629160a13246103c307929a703f88",
+      "size_bytes": 970
     },
     "browser-prepare/batch.py": {
       "url": "browser-prepare/batch.py",
-      "sha256": "63e5c4c46dabe575304fb450dce6a7f9f6c4fa737e84d780010b725fc4879638",
-      "size_bytes": 1883
+      "sha256": "6dd968d92333d947ff13d8b76872e8f4ad74c5b78ea8cae4fbc5005fde38b596",
+      "size_bytes": 1925
     },
     "browser-prepare/selection.js": {
       "url": "browser-prepare/selection.js",
-      "sha256": "c7708583b5291295a3803a2bca606128af87e8a32028dec1a30c0597c55a1a2e",
-      "size_bytes": 731
-    },
-    "scripts/task_dataset.py": {
-      "url": "scripts/task_dataset.py",
-      "size_bytes": 12205,
-      "sha256": "58c28450e052f6db6a6b750a55ffc4ce73cdfa3a0416fd10aae0b5583c71ee80"
+      "sha256": "cfaffea8c6b0cf8ba3d83dd9e316b73dd2c36342dc828f301f32fe0136f3ea12",
+      "size_bytes": 768
     },
     "task-dataset.schema.json": {
       "url": "task-dataset.schema.json",
       "size_bytes": 2810,
       "sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7"
-    },
-    "scripts/dataset_plan.py": {
-      "url": "scripts/dataset_plan.py",
-      "size_bytes": 10402,
-      "sha256": "eaa9b278ef4f151384b252f54df49a3c6d5bcc854ac25898b92fec8e81621b01"
     },
     "dataset-plan.schema.json": {
       "url": "dataset-plan.schema.json",
@@ -247,18 +202,298 @@
     },
     "browser-prepare/profiles/fgi-emit.js": {
       "url": "browser-prepare/profiles/fgi-emit.js",
-      "size_bytes": 1236,
-      "sha256": "751e7b00e78597775d746623b0853575eb5a6b5b68cf0834504737b528edece4"
+      "size_bytes": 1330,
+      "sha256": "617598f229d2d4ac68a755dba3dca3a0f1e34f13f6a28a0017f5699f441f89e0"
     },
     "browser-prepare/worker.js": {
       "url": "browser-prepare/worker.js",
-      "size_bytes": 33095,
-      "sha256": "0e0408b98242a1a608a9ebbb66001d602b48c11c30bb03a27a29390710289972"
+      "sha256": "f2eaf8257f0501d361418556f471c0454a932e59d3be5c60eb24f80906ba0e52",
+      "size_bytes": 280
     },
     "browser-prepare/run-store.js": {
       "url": "browser-prepare/run-store.js",
-      "sha256": "199b0b7c024dbc8737e0383bfce54e9d4ff0d29c1ab4425c50a64bf0a135c590",
-      "size_bytes": 3313
+      "sha256": "bb8cbd09abd274e46c9bb06f100b8380e75f01bb175d800880f2fb99d0acc13c",
+      "size_bytes": 3662
+    },
+    "src/canopy/__init__.py": {
+      "url": "src/canopy/__init__.py",
+      "sha256": "667ec92d6ddd205c9479f5bda076d920d6d44e32b6f3bee8f7d5c61e104a2f4f",
+      "size_bytes": 46
+    },
+    "src/canopy/dataset_plan.py": {
+      "url": "src/canopy/dataset_plan.py",
+      "sha256": "496f4b17dfadde95ddc4bcfa721f0fa28b19000ba75dd62bacc896c56ed496e3",
+      "size_bytes": 11055
+    },
+    "src/canopy/knowledge_model.py": {
+      "url": "src/canopy/knowledge_model.py",
+      "sha256": "3118a57f98b289c135d9394ce20de6b8734a949fb14a2fddfefc0c97f4eaa2f1",
+      "size_bytes": 1451
+    },
+    "src/canopy/model_io.py": {
+      "url": "src/canopy/model_io.py",
+      "sha256": "4d42e8149e9df4a56d200185043f0f6de75f3a265de1c04c3e999007039cd8db",
+      "size_bytes": 1633
+    },
+    "src/canopy/model_projection.py": {
+      "url": "src/canopy/model_projection.py",
+      "sha256": "7de070c19689423d88b19d73f998665bc5a2a99dd58d986724c439e863b8b6a5",
+      "size_bytes": 5281
+    },
+    "src/canopy/model_publication.py": {
+      "url": "src/canopy/model_publication.py",
+      "sha256": "a8f8ae57fa3324e777ebbd576d19808d7d7277ab3c3f94f82a0f75c391fe36e0",
+      "size_bytes": 5595
+    },
+    "src/canopy/model_validation.py": {
+      "url": "src/canopy/model_validation.py",
+      "sha256": "d572156aac91b3a3f9695deed450eb99c0c263d269de5d3d201a5b7d1437f544",
+      "size_bytes": 705
+    },
+    "src/canopy/paths.py": {
+      "url": "src/canopy/paths.py",
+      "sha256": "f3a83e518b186ceab55f61a241b768bc058fb3e0fe6e20ac51bc06c9315c1569",
+      "size_bytes": 888
+    },
+    "src/canopy/preparation_profile.py": {
+      "url": "src/canopy/preparation_profile.py",
+      "sha256": "b1d502114865fba1606b4e4d7ecdd3d053bad824fbfa02115a4ec492d22c66bc",
+      "size_bytes": 2208
+    },
+    "src/canopy/service/__init__.py": {
+      "url": "src/canopy/service/__init__.py",
+      "sha256": "44ce414b956612c703aa3ed90cc786490e32e02403616fff5fdb1cf7c1dee374",
+      "size_bytes": 49
+    },
+    "src/canopy/service/app.py": {
+      "url": "src/canopy/service/app.py",
+      "sha256": "ac0295c19a1de3850d65c610cd79cc0caecf0c549f44c1292e791f44350802ce",
+      "size_bytes": 3557
+    },
+    "src/canopy/service/cli.py": {
+      "url": "src/canopy/service/cli.py",
+      "sha256": "6728bc33ec23e9351ba068d07567458c490dc3cc1471e5fa557bea7f5ee41cef",
+      "size_bytes": 750
+    },
+    "src/canopy/task_dataset.py": {
+      "url": "src/canopy/task_dataset.py",
+      "sha256": "2034de4b7041aacf5da7fe1e1155a082b0d416f9fb724bb9ccc3dac0df1a6d6c",
+      "size_bytes": 13227
+    },
+    "src/canopy/task_package.py": {
+      "url": "src/canopy/task_package.py",
+      "sha256": "d734ad86903bbc835ccd98fc9b50e8b4bf1c2360b004657d169e5379b7b97644",
+      "size_bytes": 17482
+    },
+    "src/canopy/task_plan.py": {
+      "url": "src/canopy/task_plan.py",
+      "sha256": "033e04aee9788bbb91cbc1a6609a1226c73cc39030b0297a612c803b130aa790",
+      "size_bytes": 11202
+    },
+    "src/canopy/tools/__init__.py": {
+      "url": "src/canopy/tools/__init__.py",
+      "sha256": "cd0460378e80ed7af48ba5efe6abd2c650ab51b162c9453443af3d12833628ea",
+      "size_bytes": 64
+    },
+    "src/canopy/tools/check_pinned_sources.py": {
+      "url": "src/canopy/tools/check_pinned_sources.py",
+      "sha256": "89fb890ec4c59fac258fa49e3c1d1958ba6066f4f3b7185f8800182642a7874b",
+      "size_bytes": 4161
+    },
+    "src/canopy/tools/check_publication.py": {
+      "url": "src/canopy/tools/check_publication.py",
+      "sha256": "d2024dbfd8473696cd606f284f3e3d24d6637bd609c40e431fcc9abc2ad4d6ac",
+      "size_bytes": 2147
+    },
+    "src/canopy/tools/validate_catalog_reviews.py": {
+      "url": "src/canopy/tools/validate_catalog_reviews.py",
+      "sha256": "65cce6ad2f6b25d1212e8940de35a7b712500787e019ceab1f5cdf5c0c9fdfd1",
+      "size_bytes": 3356
+    },
+    "src/canopy/validation/__init__.py": {
+      "url": "src/canopy/validation/__init__.py",
+      "sha256": "8766bf10ef9eec01add63b275b641c95e7a0d558a622420d7ce5b7a59321fadd",
+      "size_bytes": 50
+    },
+    "src/canopy/service/config.py": {
+      "url": "src/canopy/service/config.py",
+      "sha256": "b2f95ffe2904c5fc4853ed70ca403611e181d43342456f99b6bef36e814b1d72",
+      "size_bytes": 697
+    },
+    "src/canopy/service/jobs.py": {
+      "url": "src/canopy/service/jobs.py",
+      "sha256": "a8aca1cd8ba426ac7dc3d748172cdee3593da745bca95cb9233cf9950e415499",
+      "size_bytes": 12193
+    },
+    "src/canopy/service/storage.py": {
+      "url": "src/canopy/service/storage.py",
+      "sha256": "35b20f16c027975ed77d1c06d50e2ba1c39503c4afb1f4a13b92ecd45c3bd267",
+      "size_bytes": 1713
+    },
+    "browser-prepare/storage.js": {
+      "url": "browser-prepare/storage.js",
+      "sha256": "06cdea26fe8e4f521b148ef1a6c325c7c5b852fff3acf1876890ea7e09430214",
+      "size_bytes": 3599
+    },
+    "src/canopy/validation/tasks.py": {
+      "url": "src/canopy/validation/tasks.py",
+      "sha256": "960877ab07db7b785bca2bd55438e7dbe9577b18bf463260538d582e3296a8bb",
+      "size_bytes": 6177
+    },
+    "src/canopy/validation/edges.py": {
+      "url": "src/canopy/validation/edges.py",
+      "sha256": "ee419b24a33e3dac314a964bfbd94b119abde8feea43544ca4d73d5456915995",
+      "size_bytes": 3763
+    },
+    "src/canopy/validation/nodes.py": {
+      "url": "src/canopy/validation/nodes.py",
+      "sha256": "d356b1f5dba79944487a77453d155a615022d931944d4722a37c31951c4fd9c3",
+      "size_bytes": 8207
+    },
+    "src/canopy/validation/pipelines.py": {
+      "url": "src/canopy/validation/pipelines.py",
+      "sha256": "421b1c316bf3d4fad192e3d00269876b1d8068eb533987b5857ff57316d8c2f4",
+      "size_bytes": 2175
+    },
+    "browser-prepare/prepare.js": {
+      "url": "browser-prepare/prepare.js",
+      "sha256": "8720104bc1cb09b7453cd1582ff3d9e19f4a71d2c22354c091fb4252fc74045c",
+      "size_bytes": 8278
+    },
+    "browser-prepare/checkpoints.js": {
+      "url": "browser-prepare/checkpoints.js",
+      "sha256": "6a0f85674953ae18d56571fdd9be651a673aa0cedf6983cb21c749884622c328",
+      "size_bytes": 3531
+    },
+    "browser-prepare/runtime.js": {
+      "url": "browser-prepare/runtime.js",
+      "sha256": "df4225f2adfac710231f5cb16082d4d711f5a7798bfe548251c7a534d2cc9179",
+      "size_bytes": 6494
+    },
+    "browser-prepare/export.js": {
+      "url": "browser-prepare/export.js",
+      "sha256": "bc623324daabd3f09aac73be92f52c7e3ea002e80c2e439366cf8dcbb4492d92",
+      "size_bytes": 5998
+    },
+    "browser-prepare/runner.js": {
+      "url": "browser-prepare/runner.js",
+      "sha256": "0c4b3e142f00cf30abd792f9e39f8714d0373fdf3dbfa7da5c0685dcb80702bb",
+      "size_bytes": 6816
+    },
+    "src/canopy/service/http.py": {
+      "url": "src/canopy/service/http.py",
+      "sha256": "e42bf569f2dc80ec00068eb3fb392244427582c80ac270e28b5b1ae60601c9fa",
+      "size_bytes": 6433
+    },
+    "browser-prepare/ui.js": {
+      "url": "browser-prepare/ui.js",
+      "sha256": "4548325841135e57c760914231f152f4cf6ec69a59a485e7805feb611368ade1",
+      "size_bytes": 22508
+    },
+    "browser-prepare/run-session.js": {
+      "url": "browser-prepare/run-session.js",
+      "sha256": "ca6cd455cae779661e4dbdfc2d932c8cdc3425a0622c0af052e739463e4a2fa1",
+      "size_bytes": 1647
+    },
+    "browser-prepare/download-ui.js": {
+      "url": "browser-prepare/download-ui.js",
+      "sha256": "5bb0d90d589b8fa943ade01a67ca73e3adf88201ddc86784eef579517de0a294",
+      "size_bytes": 2230
+    },
+    "browser-prepare/draft-panel.js": {
+      "url": "browser-prepare/draft-panel.js",
+      "sha256": "93c8b1e5c04f943adcd3df2b2c0f40a222fb9ca4711a987bccfc584d4e887eb4",
+      "size_bytes": 5298
+    },
+    "browser-prepare/dataset-draft.js": {
+      "url": "browser-prepare/dataset-draft.js",
+      "sha256": "bf50a0a03e06dd704cf1674e44aa9a513fe67fb011a2e867d1cd148ba8322ccd",
+      "size_bytes": 6277
+    },
+    "src/canopy/adapters.py": {
+      "url": "src/canopy/adapters.py",
+      "sha256": "6db07c7eda041c34001e581f4aee61abf3aca1be6c70ea0e067884338baef8d3",
+      "size_bytes": 829
+    },
+    "src/canopy/tools/build_knowledge_hub_catalog.py": {
+      "url": "src/canopy/tools/build_knowledge_hub_catalog.py",
+      "sha256": "d68f6a6d94083a966469f7e2aab9c83a726a4692aa76036617f65c328327a448",
+      "size_bytes": 12516
+    },
+    "web/bootstrap.js": {
+      "url": "web/bootstrap.js",
+      "sha256": "fd0e23be12ebb0a07c621dc8233011e24c01d696f779cf52ccdb1b186607da98",
+      "size_bytes": 1103
+    },
+    "web/catalog/task-selection.js": {
+      "url": "web/catalog/task-selection.js",
+      "sha256": "d2f554569be0800ebb1041604b1fc487e5f09cbcee33b8b256918db3ec3cfece",
+      "size_bytes": 3172
+    },
+    "web/catalog/app.js": {
+      "url": "web/catalog/app.js",
+      "sha256": "87d0053d2ba8b0377e1337f2710b13db16736ebcf7fcdc42fa04a93bde088293",
+      "size_bytes": 22643
+    },
+    "web/shared/download.js": {
+      "url": "web/shared/download.js",
+      "sha256": "b7540ec04009235e806519f6f0a5700ecc79aa06b9b2b431d1f3d65c011a75e7",
+      "size_bytes": 2305
+    },
+    "web/shared/md5.js": {
+      "url": "web/shared/md5.js",
+      "sha256": "8c503b447d8689852651e83e4ba5beaad04a98accbe30a396eafe9ebf8fa6ab8",
+      "size_bytes": 2121
+    },
+    "web/shared/dom.js": {
+      "url": "web/shared/dom.js",
+      "sha256": "82f13a498c569f769cb28662ec9582b0bbc5c34fb41908af8cfcb5d7480ee9be",
+      "size_bytes": 609
+    },
+    "web/workbench/client.js": {
+      "url": "web/workbench/client.js",
+      "sha256": "2a29f10bfa6b8229e2934a93171115c9d3090c8c3f4aef9b9c9265f1a978807c",
+      "size_bytes": 1689
+    },
+    "web/workbench/workbench.js": {
+      "url": "web/workbench/workbench.js",
+      "sha256": "e78acb3fd7a452997bf68d130f6fda3c28118a0223990a5e0aa31e55e0086521",
+      "size_bytes": 9884
+    },
+    "browser-prepare/plan-panel.js": {
+      "url": "browser-prepare/plan-panel.js",
+      "sha256": "8ec5fbb630df7e37a6e4bf990484b8e7dfa9bded7b2317aff77f45ab034bbfd0",
+      "size_bytes": 3831
+    },
+    "browser-prepare/review.js": {
+      "url": "browser-prepare/review.js",
+      "sha256": "341669161500b6b675742faf18ec46cc87b3db0934a497b41b4dbe1f50431f64",
+      "size_bytes": 2459
+    },
+    "browser-prepare/controls.js": {
+      "url": "browser-prepare/controls.js",
+      "sha256": "f36b93c3c9831ae1582d92d2f9da3ded7817df9f11347e212f6b25bad34d7475",
+      "size_bytes": 3092
+    },
+    "browser-prepare/controller.js": {
+      "url": "browser-prepare/controller.js",
+      "sha256": "7adb9e182b924f91724ef480ad90d7cf0730d8542a71d8a2b41a737546d99b2c",
+      "size_bytes": 2409
+    },
+    "browser-prepare/saved-runs.js": {
+      "url": "browser-prepare/saved-runs.js",
+      "sha256": "1012273fb2a2e0ead7594b1465468cdf86e47a45d51ecdcde04272cfbeb4dac3",
+      "size_bytes": 2045
+    },
+    "browser-prepare/source-selection.js": {
+      "url": "browser-prepare/source-selection.js",
+      "sha256": "1737620182cf32ddbc502c52cfc77cd20134bab87e3f0eefe1c4ac280f17d61c",
+      "size_bytes": 1365
+    },
+    "browser-prepare/staging.js": {
+      "url": "browser-prepare/staging.js",
+      "sha256": "244362a341dc054a282bc027bdb9e80ed1d5ce17820dc4eb3d95b6c61935e3e5",
+      "size_bytes": 1677
     }
   },
   "zip_js": "2.20.0",

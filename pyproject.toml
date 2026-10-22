@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "canopy-forestry-lidar-catalogue"
+version = "0.1.0"
+description = "Curated forestry LiDAR catalogue and reviewed task data tools"
+requires-python = ">=3.11"
+dynamic = ["dependencies"]
+
+[project.optional-dependencies]
+dev = ["ruff==0.17.1"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+force-exclude = true
+extend-exclude = [
+  "scripts/for_instance/**",
+  "scripts/fgi_emit/**",
+  "scripts/harmonize_lidar.py",
+  "scripts/normalization_inputs.py",
+  "scripts/audit_fgi_measurements.py",
+  "browser-prepare/vendor/**",
+  "container-lab/wasi-shim/**",
+  "temp/**",
+  "evidence/**",
+  "reviews/**",
+]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

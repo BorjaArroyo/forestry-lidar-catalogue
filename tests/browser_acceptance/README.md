@@ -22,7 +22,7 @@ the repository's pinned requirements. Run Chromium and Firefox sequentially.
    port with a different new output directory. It serves the publication allowlist
    and three explicit acceptance files; capture endpoints exist only on loopback.
 4. Open `http://127.0.0.1:8893/tests/browser_acceptance/` in the test profile.
-   Click **Review five-plot plan**, then **Prepare and interrupt after first
+   Click **Review five-plot plan**. The harness exports and re-imports the plan through a fresh production worker before enabling preparation. Then click **Prepare and interrupt after first
    checkpoint**. The harness terminates the worker immediately on its first
    committed checkpoint, before waiting for telemetry. Save the resulting event
    log, job identity and displayed interruption status.

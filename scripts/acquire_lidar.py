@@ -97,9 +97,11 @@ def save_json(path, value):
 
 
 def open_asset(record, asset, headers):
-    urls = [f"https://zenodo.org/records/{record['record_id']}/files/"
-            f"{quote(asset['name'], safe='')}?download=1",
-            asset["download_url"]]
+    urls = [
+        f"https://zenodo.org/records/{record['record_id']}/files/"
+        f"{quote(asset['name'], safe='')}?download=1",
+        asset["download_url"],
+    ]
     for index, url in enumerate(dict.fromkeys(urls)):
         try:
             return urlopen(Request(url, headers=headers), timeout=60), url
@@ -126,8 +128,9 @@ def acquire(record, asset, root, stage):
             platform = [item for item in previous["outputs"] if is_platform_metadata(item["path"])]
             if platform:
                 previous.setdefault("platform_metadata", []).extend(platform)
-                previous["outputs"] = [item for item in previous["outputs"]
-                                       if not is_platform_metadata(item["path"])]
+                previous["outputs"] = [
+                    item for item in previous["outputs"] if not is_platform_metadata(item["path"])
+                ]
                 save_json(marker, previous)
             for item in previous["outputs"]:
                 path = root / item["path"]
@@ -197,11 +200,13 @@ def acquire(record, asset, root, stage):
                     # macOS/WebDAV can consume AppleDouble files as filesystem metadata.
                     item = metadata_map.get(member.filename)
                     if item is None:
-                        item = {"archive_member": member.filename,
-                                "sha256": archive_member_sha256(archive, member),
-                                "size_bytes": member.file_size,
-                                "stored": False,
-                                "reason": "AppleDouble platform metadata"}
+                        item = {
+                            "archive_member": member.filename,
+                            "sha256": archive_member_sha256(archive, member),
+                            "size_bytes": member.file_size,
+                            "stored": False,
+                            "reason": "AppleDouble platform metadata",
+                        }
                         metadata_map[member.filename] = item
                 else:
                     dest.parent.mkdir(parents=True, exist_ok=True)
@@ -212,16 +217,21 @@ def acquire(record, asset, root, stage):
                             expected_sha = prior["sha256"]
                     if expected_sha is None:
                         expected_sha = archive_member_sha256(archive, member)
-                        current_sha = (digest(dest)["sha256"]
-                                       if dest.exists() and dest.stat().st_size == member.file_size
-                                       else None)
+                        current_sha = (
+                            digest(dest)["sha256"]
+                            if dest.exists() and dest.stat().st_size == member.file_size
+                            else None
+                        )
                         if current_sha != expected_sha:
                             verified = False
                             for attempt in range(3):
                                 with dest.open("wb") as out:
                                     written_digest = stream_archive_member(archive, member, out)
                                 # The ZIP reader validates each member when its stream ends.
-                                if written_digest == expected_sha and dest.stat().st_size == member.file_size:
+                                if (
+                                    written_digest == expected_sha
+                                    and dest.stat().st_size == member.file_size
+                                ):
                                     for read_attempt in range(3):
                                         if digest(dest)["sha256"] == expected_sha:
                                             verified = True
@@ -232,16 +242,21 @@ def acquire(record, asset, root, stage):
                                 time.sleep(2 * (attempt + 1))
                             if not verified:
                                 raise ValueError(f"Extracted file verification failed: {dest}")
-                    item = {"path": str(dest.relative_to(root)),
-                            "size_bytes": member.file_size,
-                            "sha256": expected_sha}
+                    item = {
+                        "path": str(dest.relative_to(root)),
+                        "size_bytes": member.file_size,
+                        "sha256": expected_sha,
+                    }
                     output_map[member.filename] = item
                     outputs.append(item)
                 save_archive_checkpoint(checkpoint_path, output_map, metadata_map)
                 processed += 1
                 if processed % 50 == 0 or processed == len(payload_members):
-                    print(f"EXTRACTION {record['record_id']} {asset['name']} "
-                          f"{processed}/{len(payload_members)}", flush=True)
+                    print(
+                        f"EXTRACTION {record['record_id']} {asset['name']} "
+                        f"{processed}/{len(payload_members)}",
+                        flush=True,
+                    )
         outputs = list(output_map.values())
         platform_metadata = list(metadata_map.values())
     else:
@@ -256,16 +271,23 @@ def acquire(record, asset, root, stage):
         shutil.copyfile(local, dest)
         if digest(dest)["sha256"] != hashes["sha256"]:
             raise ValueError("Stored file checksum mismatch")
-        outputs.append({"path": str(dest.relative_to(root)), "size_bytes": size,
-                        "sha256": hashes["sha256"]})
-    result = {"record_id": record["record_id"], "asset": asset["name"],
-              "url": asset["download_url"], "provider_checksum": asset["provider_checksum"],
-              "fetched_url": fetched_url,
-              "download_sha256": hashes["sha256"], "status": "verified",
-              "verified_at": now(), "outputs": outputs,
-              "platform_metadata": platform_metadata,
-              "stored_kind": "archive" if is_archive else "file",
-              "staging_cleanup": "authorized_after_verified_storage"}
+        outputs.append(
+            {"path": str(dest.relative_to(root)), "size_bytes": size, "sha256": hashes["sha256"]}
+        )
+    result = {
+        "record_id": record["record_id"],
+        "asset": asset["name"],
+        "url": asset["download_url"],
+        "provider_checksum": asset["provider_checksum"],
+        "fetched_url": fetched_url,
+        "download_sha256": hashes["sha256"],
+        "status": "verified",
+        "verified_at": now(),
+        "outputs": outputs,
+        "platform_metadata": platform_metadata,
+        "stored_kind": "archive" if is_archive else "file",
+        "staging_cleanup": "authorized_after_verified_storage",
+    }
     save_json(marker, result)
     # Only the task-owned staged asset is removed, after durable evidence exists.
     local.unlink()
@@ -281,8 +303,11 @@ def main():
     parser.add_argument("--stage", type=Path, required=True)
     parser.add_argument("--max-asset-bytes", type=int)
     parser.add_argument("--harmonize", action="store_true")
-    parser.add_argument("--resume", action="store_true",
-                        help="Continue from the current status without replaying completed assets")
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Continue from the current status without replaying completed assets",
+    )
     args = parser.parse_args()
     with FileLock(str(args.stage.parent / "lidar-acquisition.lock"), timeout=0):
         run(args)
@@ -316,11 +341,14 @@ def run(args):
     previous = json.loads(status_path.read_text()) if status_path.exists() else None
     if status_path.exists():
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-        save_json(args.root / "history" / f"acquisition-{stamp}.json",
-                  previous)
+        save_json(args.root / "history" / f"acquisition-{stamp}.json", previous)
     save_json(args.root / "inventory.json", inventory)
-    queue = [(record, asset) for record in inventory["records"] for asset in record["files"]
-             if args.max_asset_bytes is None or asset["size_bytes"] <= args.max_asset_bytes]
+    queue = [
+        (record, asset)
+        for record in inventory["records"]
+        for asset in record["files"]
+        if args.max_asset_bytes is None or asset["size_bytes"] <= args.max_asset_bytes
+    ]
     queue.sort(key=lambda pair: pair[1]["size_bytes"])
     requested_assets = len(queue)
     completed = []
@@ -328,46 +356,72 @@ def run(args):
     conversion_errors = []
     if args.resume and previous:
         available = {(record["record_id"], asset["name"]) for record, asset in queue}
-        completed = [item for item in previous.get("completed", [])
-                     if (item["record_id"], item["asset"]) in available]
+        completed = [
+            item
+            for item in previous.get("completed", [])
+            if (item["record_id"], item["asset"]) in available
+        ]
         completed_keys = {(item["record_id"], item["asset"]) for item in completed}
-        queue = [(record, asset) for record, asset in queue
-                 if (record["record_id"], asset["name"]) not in completed_keys]
+        queue = [
+            (record, asset)
+            for record, asset in queue
+            if (record["record_id"], asset["name"]) not in completed_keys
+        ]
         harmonized = previous.get("harmonized", [])
         conversion_errors = previous.get("conversion_errors", [])
     normalize = None
     if args.harmonize:
         from harmonize_lidar import harmonize
+
         normalize = harmonize
-    summary = {"started_at": previous.get("started_at", now()) if args.resume and previous else now(),
-               "updated_at": now(), "requested_assets": requested_assets,
-               "completed": completed, "errors": [], "harmonized": harmonized,
-               "conversion_errors": conversion_errors}
+    summary = {
+        "started_at": previous.get("started_at", now()) if args.resume and previous else now(),
+        "updated_at": now(),
+        "requested_assets": requested_assets,
+        "completed": completed,
+        "errors": [],
+        "harmonized": harmonized,
+        "conversion_errors": conversion_errors,
+    }
     for record, asset in queue:
-        print(f"START {record['record_id']} {asset['name']} {asset['size_bytes']} bytes", flush=True)
+        print(
+            f"START {record['record_id']} {asset['name']} {asset['size_bytes']} bytes", flush=True
+        )
         for attempt in range(3):
             try:
                 result = acquire(record, asset, args.root, args.stage)
-                summary["completed"].append({"record_id": record["record_id"],
-                                              "asset": asset["name"]})
-                print(f"VERIFIED {record['record_id']} {asset['name']} {len(result['outputs'])} files", flush=True)
+                summary["completed"].append(
+                    {"record_id": record["record_id"], "asset": asset["name"]}
+                )
+                print(
+                    f"VERIFIED {record['record_id']} {asset['name']} {len(result['outputs'])} files",
+                    flush=True,
+                )
                 if normalize:
                     for item in result["outputs"]:
                         try:
                             normalized = normalize(args.root, record["record_id"], item)
                             if normalized:
                                 summary["harmonized"].append(normalized)
-                                print(f"NORMALIZED {item['path']} {normalized['status']}", flush=True)
+                                print(
+                                    f"NORMALIZED {item['path']} {normalized['status']}", flush=True
+                                )
                         except Exception as error:
-                            summary["conversion_errors"].append({"path": item["path"],
-                                                                 "error": str(error)})
+                            summary["conversion_errors"].append(
+                                {"path": item["path"], "error": str(error)}
+                            )
                             print(f"CONVERSION ERROR {item['path']}: {error}", flush=True)
                 break
             except Exception as error:
                 print(f"ERROR attempt={attempt + 1}: {error}", flush=True)
                 if attempt == 2:
-                    summary["errors"].append({"record_id": record["record_id"],
-                                               "asset": asset["name"], "error": str(error)})
+                    summary["errors"].append(
+                        {
+                            "record_id": record["record_id"],
+                            "asset": asset["name"],
+                            "error": str(error),
+                        }
+                    )
                 else:
                     time.sleep(5)
         summary["updated_at"] = now()

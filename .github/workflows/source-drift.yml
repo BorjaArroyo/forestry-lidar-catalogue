@@ -11,6 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install internal command entrypoints
+        run: python -m pip install --no-deps -e .
       - name: Compare pinned records against provider metadata
         run: |
           python3 scripts/check_pinned_sources.py

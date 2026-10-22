@@ -1,6 +1,6 @@
 name: Dataset proposal
 description: Propose a source for analysis before catalog admission
-title: "[Dataset proposal] "
+title: '[Dataset proposal] '
 body:
   - type: markdown
     attributes:

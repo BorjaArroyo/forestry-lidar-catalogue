@@ -1,0 +1,141 @@
+{
+  "validation_date": "2026-10-22",
+  "purpose": "Final acceptance after correcting repository organization integration boundaries",
+  "code_revision": "31c85864a40ae5c883f5d0ca65dcffaa34759d6c",
+  "runtime_lock_sha256": "c9ac70511a2051c64e7e80886d11aa0f16f0c315cdda8b85871ce06e4292422c",
+  "scientific_reference": "evidence/combined-browser-expanded-validation.json",
+  "process_restart": "Each browser process closed after the first validated checkpoint and resumed with the same isolated profile.",
+  "plan_round_trip": "Each browser reviewed, exported and re-imported the plan through a fresh production worker before intake.",
+  "local_verification": {
+    "command": "python scripts/verify.py",
+    "status": "passed",
+    "python": "3.14.6",
+    "node": "v26.5.0",
+    "python_tests": 138,
+    "for_instance_tests": 7,
+    "javascript_tests": 66,
+    "e2e_tests": 16,
+    "quality_and_publication_checks": "passed"
+  },
+  "protected_artifacts": {
+    "base_commit": "8cc7c0bdbe36f049598a02ee8299245c540f14a8",
+    "unchanged_files": {
+      "catalog.js": "c4030919233f268c81a6c5690a6e24e8b61fbb634806f3af31e20fdec471cb43",
+      "catalog.json": "d84083f68bcda1b1e173cfdcff7f1ad6f427eea518bbbd3a726ab88aa4182b6d",
+      "dataset-plan.schema.json": "126a934a3e2ebafc789b9ace6c98c62dc567d0b81cebae0f350e53fabb8d71e1",
+      "evidence/browser-archive-intake-validation.json": "b024db40200779ca023e6e36d222d71f78f5c56b155a7a41fc6cb1c2556b0689",
+      "evidence/browser-batch-preparation-validation.json": "7723c2d647b2f72f317730c5cefc75daaa9ecec48d2f09e2a490a474748e4d02",
+      "evidence/browser-bulk-validation.json": "502035ca13c6a353b5a69f8bd2e1a3f0200cb504bec05e610f1ccfb1eb981c46",
+      "evidence/browser-expanded-acceptance.json": "5057a306fae9ccce5deeffd5aca126960db565d9d0e370c0d22ce0c9da486294",
+      "evidence/browser-preparation-validation.json": "91e36bd91acef4265a0311090c62a271e81c3bba28f7b5d64f342c693cdbe6ab",
+      "evidence/browser-release-validation.json": "f50f37c7ea84b273375e90648bbe3ac0a2c80e9473020140df7c5c5347f2296b",
+      "evidence/browser-resume-validation.json": "525fe6167ce3832e4474f06612c49cfcb450cf2fd91c0ffda7a8bda10d5072ce",
+      "evidence/browser-runtime-dependencies.json": "8314061485ec25d45327d9eae813fa8be2873826eb97b1441471ce2e1eb76a62",
+      "evidence/combined-browser-expanded-validation.json": "e1c0968b203670723f26c9c970b5327db94418da52d1ceb697440fe8d79d6222",
+      "evidence/combined-chromium-validation.json": "408bef5107823bb8781b1567e3542570b0b34e98470b3b3105312d63762cf821",
+      "evidence/combined-firefox-validation.json": "393bd2b788a7968a83b95863c016163adc1e6007d749506bf1e0923f0ce217ed",
+      "evidence/dataset-plan-browser-validation.json": "54a9b8a3efad20df58e9f4a36c5ee05355a5a708b73d8bc4208433305c69c8a5",
+      "evidence/fgi-emit-browser-validation.json": "37566ebea2ead6e91584a6810ec7f654acd432bbe331c2087d28c96c61219637",
+      "evidence/fgi-emit-full-audit.json": "c144a9405672ec5771f526edd68e98a5909e038702c81a4dfb0b68344b0c747d",
+      "evidence/fgi-emit-measurements.json": "29edd05d91e35f1fa809b6b0bc85b4f93dd8295df5d7d0673c4ca8833c366ee0",
+      "evidence/fgi-emit-preparation-validation.json": "58737d922bb21275df2861b7482dd1c33ba30959e3d92276d34a6fc8b952f936",
+      "evidence/for-instance-e2e-validation.json": "acf30c5725675efac2e2c3500c99e7dec3103a067a5463b6d364a265b714de78",
+      "evidence/for-instance-full-audit-20261018.json": "6d31be76e230c2691fbb2dab0d708409c0996f40be14541fecf3569fd17263d1",
+      "evidence/for-instance-preparation-validation.json": "d403395faa13d2aed608c79a1682532f2dbce22f52f87b7cbc7ed981adf4cff0",
+      "evidence/for-instance-v1.json": "6f75798938676dc190725cb56f0b400afb4cfc17d6a7842806de355a9ca9b510",
+      "evidence/task-dataset-folder-validation.json": "b55c4c9d09fbca1c0455897acb706db817aad16f134279612b0ca01cb497d49f",
+      "evidence/task-driven-preparation-validation.json": "7a9709fbb5cc2ac3a4b8a9b4b372390118930146a8e012823fdb77fa4b2ba21c",
+      "evidence/task-package-reader-validation.json": "71a5e35093ee0047744fa3ff7af26d235764934d3b88f7336f187127d4f771ba",
+      "knowledge-model.json": "3390b57d089588af2cd08edb6772bc321c73cf121dabfa5ba359f6439c15d7b9",
+      "knowledge-model.schema.json": "8b1a9bc7aec1e75fd6b0be17dc5be7250322d124413868d8ae98bf26e0010ce2",
+      "reviews/16742708.json": "323708bcd755f0e5ac84bbe2a5036273ea601590c5e99656ae4d5263b6ca5252",
+      "reviews/19351234.json": "bc9da0b53477a9dc376ee44a7068433e30455db208b39a8d9e072c7e3a136d9c",
+      "reviews/8287792.json": "2ebc4c2cea52f9c1c0bdb78545c01513a560ab28d8d1f7d5fa559e41b6b2c036",
+      "reviews/README.md": "5299facf6b408642b1e439ba85f095d7660fd4231dade45a89515416b7dc12c6",
+      "scripts/audit_fgi_measurements.py": "ca1b279dd582a423fedf1b560bd5a6283168f29adfe07d263e55e884c40784f8",
+      "scripts/fgi_emit/package-lock.json": "a911857328e31dbca597100685188420a487b5653e620daecf9cd48f0e55ecce",
+      "scripts/fgi_emit/policy.json": "9bed7b358f11d9b506cf7b94006d053b0a9f99f57c040f05ad3a54b6ca183f4c",
+      "scripts/fgi_emit/prepare.py": "b92fa98d031677ad010831f192b7a9b364728b8e9b0f10e4230e3dda71fe0f6e",
+      "scripts/fgi_emit/requirements.txt": "abc796d248535b406c2288ddeca78eaa47c414d844c0090326aa3b28c94d3d68",
+      "scripts/fgi_emit/source-lock.json": "29833c3a00b032e2c16c9317921c4ba222ddd31e8454dcbbd65508a1f998265e",
+      "scripts/for_instance/README.md": "420b747b6217a76a4b45872d507ca37460a9a2ca074b1681fc30fc006172191e",
+      "scripts/for_instance/package-lock.json": "046ab6fdb02c76b1750e20c0e44bea6f28e564c66f682935173fed930464254f",
+      "scripts/for_instance/policy.json": "e9dca018888df2a7014406ea81c6468140be67f87b6f3dffcf1770de1de4b4e4",
+      "scripts/for_instance/prepare.py": "b7ddc8ef8c9b8ebc53a5b896bc2633eb7c6928e5b68e7b49b9b0b48f96c89f04",
+      "scripts/for_instance/requirements.txt": "28953bc6a122c71e12714fbc894818c7e07a66928585c476af31423f5fe80c75",
+      "scripts/for_instance/source-lock.json": "ba4c66fe29f31772352d73768e3f979e9a291060a408652ebef675e253ac1a0e",
+      "scripts/for_instance/test_pipeline.py": "c81cd4537a908bf0908dcab3954e106c2dd7205face9c0f5932c6747ee53dca1",
+      "scripts/harmonize_lidar.py": "3ba155822d47b793237194ca0b0860748685cc4732490f09349c9f936f2d26b9",
+      "scripts/normalization_inputs.py": "93167cba8a12329d14422bd6ed32ccfef2ba6ba009547c565496dc858e5c3d37",
+      "task-dataset.schema.json": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+      "task-package.schema.json": "247ca53d5f15a497612922b3c2787e4c68ca285273edbed732cac327e81e673d"
+    }
+  },
+  "external_dependency_pins": "All 17 external browser runtime entries and the three historical prototype runtime files match the starting revision.",
+  "results": {
+    "chromium": {
+      "status": "succeeded",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36",
+      "runtime_lock_sha256": "c9ac70511a2051c64e7e80886d11aa0f16f0c315cdda8b85871ce06e4292422c",
+      "archive_sha256": "d91906be50d507a55e132ee751c15e8240aee275cc6d6e91ea49d65f0b8dd0ad",
+      "size_bytes": 873662649,
+      "zip_crc": "passed",
+      "report": {
+        "status": "validated",
+        "dataset_sha256": "640af3372d6dd31ec0d8759c0ba751f5040c264fdb617df26ef12d9beab6bb33",
+        "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+        "validator_sha256": "2034de4b7041aacf5da7fe1e1155a082b0d416f9fb724bb9ccc3dac0df1a6d6c",
+        "packages": 2,
+        "scenes": 5,
+        "points": 9160560,
+        "partitions": [
+          "dev",
+          "train"
+        ]
+      },
+      "matching_native_chunks": 39,
+      "plan_sha256": "85489b712ee201886169d01738e29226c9685f8b8847d1be84933ea7728b0d21",
+      "native_validation": "Unchanged TaskDataset and TaskPackage checks; complete NPZ files materialized one at a time",
+      "plot_paths": [
+        "sources/19351234/originals/training/training/plot_1003.las",
+        "sources/19351234/originals/training/training/plot_1022.las",
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+        "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+      ],
+      "event_log": "evidence/reorganization-corrections-chromium-events.jsonl"
+    },
+    "firefox": {
+      "status": "succeeded",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:157.0) Gecko/20100101 Firefox/157.0",
+      "runtime_lock_sha256": "c9ac70511a2051c64e7e80886d11aa0f16f0c315cdda8b85871ce06e4292422c",
+      "archive_sha256": "ef53467949e416c829d545296addd2f4ea35461603b8ff7d36b89fd1182240f8",
+      "size_bytes": 873662605,
+      "zip_crc": "passed",
+      "report": {
+        "status": "validated",
+        "dataset_sha256": "640af3372d6dd31ec0d8759c0ba751f5040c264fdb617df26ef12d9beab6bb33",
+        "schema_sha256": "29592c4f22de605eecfd56386fa87a9144d9098604711c0871625abc9e17aad7",
+        "validator_sha256": "2034de4b7041aacf5da7fe1e1155a082b0d416f9fb724bb9ccc3dac0df1a6d6c",
+        "packages": 2,
+        "scenes": 5,
+        "points": 9160560,
+        "partitions": [
+          "dev",
+          "train"
+        ]
+      },
+      "matching_native_chunks": 39,
+      "plan_sha256": "85489b712ee201886169d01738e29226c9685f8b8847d1be84933ea7728b0d21",
+      "native_validation": "Unchanged TaskDataset and TaskPackage checks; complete NPZ files materialized one at a time",
+      "plot_paths": [
+        "sources/19351234/originals/training/training/plot_1003.las",
+        "sources/19351234/originals/training/training/plot_1022.las",
+        "sources/8287792/originals/FORinstance_dataset/CULS/plot_1_annotated.las",
+        "sources/8287792/originals/FORinstance_dataset/RMIT/train.las",
+        "sources/8287792/originals/FORinstance_dataset/SCION/plot_39_annotated.las"
+      ],
+      "event_log": "evidence/reorganization-corrections-firefox-events.jsonl"
+    }
+  }
+}

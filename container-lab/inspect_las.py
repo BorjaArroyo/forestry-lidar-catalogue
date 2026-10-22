@@ -1,4 +1,5 @@
 """Read-only LAS inspection executed inside the Python OCI container."""
+
 import hashlib
 import json
 import math
@@ -20,7 +21,7 @@ def inspect(data):
         raise ValueError("Supported LAS versions are 1.0 through 1.4")
     header_size, offset = struct.unpack_from("<HI", data, 94)
     format_id, record_bytes, legacy_count = struct.unpack_from("<BHI", data, 104)
-    if format_id & 0xc0:
+    if format_id & 0xC0:
         raise ValueError("LAZ/compressed LAS is outside this prototype")
     if format_id > 10 or record_bytes < POINT_LENGTHS[format_id]:
         raise ValueError("Unsupported point format or short point record")
@@ -36,29 +37,44 @@ def inspect(data):
     origin = struct.unpack_from("<ddd", data, 155)
     if not all(math.isfinite(v) for v in scale + origin) or not all(v > 0 for v in scale):
         raise ValueError("Invalid coordinate scales or offsets")
-    low, high = [math.inf]*3, [-math.inf]*3
+    low, high = [math.inf] * 3, [-math.inf] * 3
     finite = 0
     for index in range(count):
         xyz = struct.unpack_from("<iii", data, offset + index * record_bytes)
-        decoded = [xyz[axis]*scale[axis] + origin[axis] for axis in range(3)]
+        decoded = [xyz[axis] * scale[axis] + origin[axis] for axis in range(3)]
         if all(math.isfinite(v) for v in decoded):
             finite += 1
-            low = [min(a,b) for a,b in zip(low,decoded)]
-            high = [max(a,b) for a,b in zip(high,decoded)]
-    return {"operation":"las-coordinate-inspection:0.1.0", "input_sha256":hashlib.sha256(data).hexdigest(),
-            "input_bytes":len(data), "las_version":"%d.%d" % version, "point_format":format_id,
-            "record_bytes":record_bytes, "point_count":count, "finite_xyz_points":finite,
-            "bounds": {"min":low,"max":high} if finite else None,
-            "scale":scale, "offset":origin,
-            "environment":{"python":platform.python_version(),"system":platform.system(),"machine":platform.machine()},
-            "scope":"Coordinate inspection only. No source modified, labels mapped, CRS inferred or dataset prepared."}
+            low = [min(a, b) for a, b in zip(low, decoded)]
+            high = [max(a, b) for a, b in zip(high, decoded)]
+    return {
+        "operation": "las-coordinate-inspection:0.1.0",
+        "input_sha256": hashlib.sha256(data).hexdigest(),
+        "input_bytes": len(data),
+        "las_version": "%d.%d" % version,
+        "point_format": format_id,
+        "record_bytes": record_bytes,
+        "point_count": count,
+        "finite_xyz_points": finite,
+        "bounds": {"min": low, "max": high} if finite else None,
+        "scale": scale,
+        "offset": origin,
+        "environment": {
+            "python": platform.python_version(),
+            "system": platform.system(),
+            "machine": platform.machine(),
+        },
+        "scope": "Coordinate inspection only. No source modified, labels mapped, CRS inferred or dataset prepared.",
+    }
 
 
 if __name__ == "__main__":
     try:
         with open(sys.argv[1], "rb") as source:
-            data = source.read(MAX_BYTES+1)
-        print("CANOPY_RESULT=" + json.dumps({"ok":True,"report":inspect(data)},allow_nan=False),flush=True)
+            data = source.read(MAX_BYTES + 1)
+        print(
+            "CANOPY_RESULT=" + json.dumps({"ok": True, "report": inspect(data)}, allow_nan=False),
+            flush=True,
+        )
     except Exception as error:
-        print("CANOPY_RESULT=" + json.dumps({"ok":False,"error":str(error)}),flush=True)
+        print("CANOPY_RESULT=" + json.dumps({"ok": False, "error": str(error)}), flush=True)
         sys.exit(1)
