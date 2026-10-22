@@ -1,12 +1,7 @@
-import { renderSavedRuns } from './saved-runs.js';
 import { updateControls } from './controls.js';
 import { decodeImportedPlan, renderPlan, planSources } from './plan-panel.js';
-import {
-  inspectRuns as defaultInspectRuns,
-  validJob,
-  lockName,
-  openRun as defaultOpenRun,
-} from './run-store.js';
+import { inspectRuns as defaultInspectRuns, openRun as defaultOpenRun } from './run-store.js';
+import { createSavedRunsPanel } from './saved-runs-panel.js';
 import { DraftPanel } from './draft-panel.js';
 import { renderPlotOptions } from './source-selection.js';
 import { RunSession as DefaultRunSession } from './run-session.js?v=2';
@@ -41,6 +36,9 @@ export function mountPreparation({
   const status = (text) => {
     $('prepare-status').textContent = text;
   };
+  const spawnWorker = () =>
+    new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), { type: 'module' });
+  const locked = () => busy || session.running || savedRuns.isInspecting();
   const storageKey = 'canopy-preparation-job';
   const supported = Boolean(
     window.Worker && window.isSecureContext && navigator.storage?.getDirectory && navigator.locks,
@@ -51,7 +49,6 @@ export function mountPreparation({
     reviewedKey = null,
     pendingReviewKey = null,
     planURL = null;
-  let inspecting = false;
   let initialized = false,
     busy = false,
     reviewing = false,
@@ -73,6 +70,12 @@ export function mountPreparation({
     if (resultURL) URL.revokeObjectURL(resultURL);
     resultURL = null;
     $('prepare-download').hidden = true;
+  }
+  async function fetchMembership(profile) {
+    const response = await fetch(new URL('../' + profile.sourceLock, import.meta.url));
+    if (!response.ok) throw Error('Reviewed source membership unavailable');
+    const lock = await response.json();
+    return lock.plots.map((p) => ({ ...p, collection: profile.collectionOf(p) }));
   }
   function planIntent() {
     if ($('prepare-mode').value !== 'zenodo' || draftPanel?.blockedStorage) return null;
@@ -148,7 +151,7 @@ export function mountPreparation({
       CustomEvent,
       busy,
       session,
-      inspecting,
+      inspecting: savedRuns.isInspecting(),
       selectedProfile,
       draftPanel,
       initialized,
@@ -206,13 +209,9 @@ export function mountPreparation({
     }
     status('Loading reviewed source membership…');
     try {
-      const response = await fetch(new URL('../' + profile.sourceLock, import.meta.url));
-      if (!response.ok) throw Error('Reviewed plot list unavailable');
-      const sourceLock = await response.json();
+      const membership = await fetchMembership(profile);
       if (revision !== sourceRevision) return;
-      plots = sourceLock.plots
-        .map((p) => ({ ...p, collection: profile.collectionOf(p) }))
-        .sort((a, b) => a.size_bytes - b.size_bytes);
+      plots = membership.sort((a, b) => a.size_bytes - b.size_bytes);
       sourceMembership.set(selectedSource(), plots);
       refreshPlots();
       status(
@@ -228,19 +227,6 @@ export function mountPreparation({
         controls();
       }
     }
-  }
-  async function removeJob(id) {
-    if (!id) return;
-    if (!validJob(id)) throw Error('Invalid saved run identity');
-    await navigator.locks.request(lockName(id), { ifAvailable: true }, async (lock) => {
-      if (!lock) throw Error('This output is in use by another page');
-      try {
-        const { jobs } = await openRun(id);
-        await jobs.removeEntry(id, { recursive: true });
-      } catch (error) {
-        if (error.name !== 'NotFoundError') throw error;
-      }
-    });
   }
   function showExport(file, evidence, name) {
     hideExport();
@@ -277,7 +263,7 @@ export function mountPreparation({
               `${source.task_plan.source_ref}: ${Object.keys(source.task_plan.omitted).join(', ') || 'none'}`,
           )
           .join('; ');
-        void refreshSaved();
+        void savedRuns.refreshSaved();
         status(
           `Validated for ${request.use}: ${report.plots} plots, ${report.points.toLocaleString()} points in ${report.chunks} blocks. Optional omissions: ${omissions}. Download the ZIP to keep it.`,
         );
@@ -287,7 +273,7 @@ export function mountPreparation({
         status('Preparation failed: ' + data.error.trim().split('\n').at(-1));
         $('prepare-result').textContent = data.error;
         // Zenodo checkpoints survive failures; local preparations retain their cleanup behavior.
-        void refreshSaved();
+        void savedRuns.refreshSaved();
         $('prepare-clear').disabled = !job;
       }
       controls();
@@ -295,8 +281,35 @@ export function mountPreparation({
     failure(text) {
       reviewing = false;
       status(text);
-      void refreshSaved();
+      void savedRuns.refreshSaved();
       $('prepare-clear').disabled = !job;
+      controls();
+    },
+  });
+  const savedRuns = createSavedRunsPanel({
+    document,
+    navigator,
+    sessionStorage,
+    supported,
+    storageKey,
+    session,
+    inspectRuns,
+    openRun,
+    spawnWorker,
+    isLocked: locked,
+    isRunning: () => busy || session.running,
+    currentJob: () => job,
+    remember,
+    showExport,
+    hideExport,
+    status,
+    controls,
+    beginInteraction: () => {
+      busy = true;
+      controls();
+    },
+    endInteraction: () => {
+      busy = false;
       controls();
     },
   });
@@ -320,7 +333,7 @@ export function mountPreparation({
     isRunning: () => busy || session.running,
   });
   $('prepare-add').onclick = () => {
-    if (busy || session.running || $('prepare-add').disabled) return;
+    if (locked() || $('prepare-add').disabled) return;
     const paths = new Set(selectedValues('prepare-plot'));
     const chosen = plots.filter((plot) => paths.has(plot.path));
     draftPanel.add({
@@ -340,7 +353,7 @@ export function mountPreparation({
   $('prepare-plot').onchange = controls;
   $('prepare-source').onchange = sourceChanged;
   $('dataset-plan-file').onchange = async () => {
-    if (busy || session.running || inspecting) return;
+    if (locked()) return;
     const file = $('dataset-plan-file').files[0];
     if (!file) return;
     busy = true;
@@ -356,15 +369,12 @@ export function mountPreparation({
       )
         throw Error('Choose a dataset-plan.json with reviewed Zenodo sources');
       reviewing = true;
-      session.start(
-        () => new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), { type: 'module' }),
-        {
-          operation: 'import',
-          mode: 'zenodo',
-          records: sources.map((source) => source.slice(7)),
-          plan_text: text,
-        },
-      );
+      session.start(spawnWorker, {
+        operation: 'import',
+        mode: 'zenodo',
+        records: sources.map((source) => source.slice(7)),
+        plan_text: text,
+      });
       status('Checking the imported plan against current source, pipeline and runtime pins…');
     } catch (error) {
       reviewing = false;
@@ -376,17 +386,14 @@ export function mountPreparation({
     }
   };
   $('prepare-review').onclick = () => {
-    if (busy || session.running || inspecting || $('prepare-review').disabled) return;
+    if (locked() || $('prepare-review').disabled) return;
     const intent = planIntent();
     if (!intent) return;
     clearPlan();
     pendingReviewKey = JSON.stringify(intent);
     reviewing = true;
     try {
-      session.start(
-        () => new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), { type: 'module' }),
-        { operation: 'review', ...intent },
-      );
+      session.start(spawnWorker, { operation: 'review', ...intent });
       status('Resolving the plan against pinned source metadata and audited task requirements…');
     } catch (error) {
       reviewing = false;
@@ -395,7 +402,7 @@ export function mountPreparation({
     controls();
   };
   $('prepare-run').onclick = async () => {
-    if (busy || session.running || inspecting || $('prepare-run').disabled) return;
+    if (locked() || $('prepare-run').disabled) return;
     const saved = draftPanel.hasSubsets ? draftPanel.review() : null;
     if (
       draftPanel.blockedStorage ||
@@ -432,18 +439,15 @@ export function mountPreparation({
     $('prepare-result').textContent = '';
     try {
       remember(null);
-      session.start(
-        () => new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), { type: 'module' }),
-        {
-          ...(intent || { record_id: record, mode: $('prepare-mode').value }),
-          selected_paths: saved?.paths || selectedValues('prepare-plot'),
-          file: $('prepare-file').files[0],
-          task_request: request,
-          execution_plan: reviewedPlan,
-        },
-      );
+      session.start(spawnWorker, {
+        ...(intent || { record_id: record, mode: $('prepare-mode').value }),
+        selected_paths: saved?.paths || selectedValues('prepare-plot'),
+        file: $('prepare-file').files[0],
+        task_request: request,
+        execution_plan: reviewedPlan,
+      });
       status('Rechecking the frozen plan and available browser storage…');
-      void refreshSaved();
+      void savedRuns.refreshSaved();
     } catch (error) {
       console.error(error);
       status(error.message);
@@ -465,18 +469,18 @@ export function mountPreparation({
     status(
       'Stopped. Validated Zenodo plots are retained; use Resume in Saved preparations. Local inputs must restart.',
     );
-    await refreshSaved();
+    await savedRuns.refreshSaved();
     controls();
   };
   $('prepare-clear').onclick = async () => {
     busy = true;
     controls();
     try {
-      await removeJob(job);
+      await savedRuns.removeJob(job);
       remember(null);
       hideExport();
       $('prepare-clear').disabled = true;
-      await refreshSaved();
+      await savedRuns.refreshSaved();
       status('Temporary output deleted.');
     } catch (error) {
       status('Could not clear temporary output: ' + error.message);
@@ -485,93 +489,9 @@ export function mountPreparation({
       controls();
     }
   };
-  async function refreshSaved() {
-    if (!supported || session.running || inspecting) return;
-    inspecting = true;
-    controls();
-    try {
-      const runs = await inspectRuns();
-      renderSavedRuns({
-        document,
-        runs,
-        isRunning: () => busy || session.running,
-        onDownload(run, sources, use) {
-          if (busy || session.running || inspecting) return;
-          remember(run.id);
-          showExport(run.file, run.evidence, 'tree-instance-dataset.zip');
-          status(`Recovered ZIP for ${sources} / ${use}. Its saved plan describes that run.`);
-          controls();
-        },
-        onResume(run, sources, use) {
-          if (busy || session.running || inspecting) return;
-          hideExport();
-          remember(run.id);
-          try {
-            session.start(
-              () =>
-                new Worker(new URL('./worker.js?v=resume-v1', import.meta.url), {
-                  type: 'module',
-                }),
-              { operation: 'resume', job: run.id },
-            );
-            status(`Rechecking saved plan and every completed plot for ${sources} / ${use}…`);
-          } catch (error) {
-            status('Could not resume preparation: ' + error.message);
-          }
-          controls();
-        },
-        async onDelete(run) {
-          if (busy || session.running || inspecting) return;
-          busy = true;
-          controls();
-          try {
-            await removeJob(run.id);
-            if (job === run.id) {
-              remember(null);
-              hideExport();
-            }
-            status('Saved preparation deleted.');
-          } catch (error) {
-            status('Could not delete preparation: ' + error.message);
-          } finally {
-            busy = false;
-            controls();
-            await refreshSaved();
-          }
-        },
-      });
-      $('saved-runs-status').textContent = runs.length
-        ? 'Resume rechecks exact versions and every saved block. Browser storage can be cleared by the browser; download completed ZIPs to keep them.'
-        : 'No saved preparations in this browser.';
-      return runs;
-    } catch (error) {
-      $('saved-runs-status').textContent = 'Could not inspect saved preparations: ' + error.message;
-    } finally {
-      inspecting = false;
-      controls();
-    }
-  }
-  $('saved-runs-refresh').onclick = () => refreshSaved();
-  async function recover() {
-    const runs = await refreshSaved();
-    // Older local-input results have no run.json; retain their tab recovery as well.
-    try {
-      const previous = sessionStorage.getItem(storageKey);
-      if (!validJob(previous)) return;
-      const run = runs?.find((run) => run.id === previous);
-      if (run?.status === 'complete') {
-        remember(previous);
-        showExport(run.file, run.evidence);
-        status('Recovered a completed ZIP. Its saved plan describes the previous run.');
-      }
-    } catch {
-      /* All discoverable runs remain available in the saved preparations list. */
-    }
-    controls();
-  }
   document.addEventListener('canopy-task-request', (event) => {
     currentRequest = selection.normalize(event.detail.use, event.detail.variables);
-    if (busy || session.running || inspecting) return;
+    if (locked()) return;
     refreshPlots();
     hideExport();
     const result = assessment();
@@ -612,20 +532,14 @@ export function mountPreparation({
       );
       if (!profile) continue;
       try {
-        const response = await fetch(new URL('../' + profile.sourceLock, import.meta.url));
-        if (!response.ok) throw Error('Reviewed source membership unavailable');
-        const lock = await response.json();
-        sourceMembership.set(
-          record,
-          lock.plots.map((p) => ({ ...p, collection: profile.collectionOf(p) })),
-        );
+        sourceMembership.set(record, await fetchMembership(profile));
       } catch (error) {
         status(`zenodo:${record}: ${error.message}`);
       }
     }
     controls();
     return supported
-      ? recover()
+      ? savedRuns.recover()
       : status('Browser storage is unavailable. Use a current browser over HTTPS or localhost.');
   });
   window.addEventListener('pagehide', () => session.stop());
