@@ -314,7 +314,14 @@ and tab-recovery evidence; its full-process restart was not exercised.
 
 ## Scientific browser restart acceptance (2026-10-22)
 
-[Final-code browser restart acceptance](../../evidence/browser-reorganization-acceptance-2026-10-22.json)
+[Initial reorganization browser restart acceptance](../../evidence/browser-reorganization-acceptance-2026-10-22.json)
 records full process exit and same-profile resume in Chromium 156 and Firefox 157.
 Both downloaded ZIPs pass CRC and unchanged native validation for five plots,
-9,160,560 points and all 39 NPZ block hashes using the final runtime lock. The [Chromium event log](../../evidence/reorganization-chromium-events.jsonl) and [Firefox event log](../../evidence/reorganization-firefox-events.jsonl) record the review, interruption, process restart and resume. The source provider returned HTTP 429 during intake; retries resumed the saved run without discarding validated checkpoints.
+9,160,560 points and all 39 NPZ block hashes using the runtime lock recorded in that report. The [Chromium event log](../../evidence/reorganization-chromium-events.jsonl) and [Firefox event log](../../evidence/reorganization-firefox-events.jsonl) record the review, interruption, process restart and resume. The source provider returned HTTP 429 during intake; retries resumed the saved run without discarding validated checkpoints.
+
+[Final integration-correction acceptance](../../evidence/browser-reorganization-corrections-2026-10-22.json)
+records the final controller and packaged imports in Chromium and Firefox. Both browsers
+reviewed and re-imported the plan, closed after one independently validated checkpoint,
+resumed the same profile, and exported five plots with 9,160,560 points. Native ZIP
+validation confirmed exact equality of all 39 NPZ blocks with the existing reference.
+The report also records the complete local verification and unchanged protected files.
