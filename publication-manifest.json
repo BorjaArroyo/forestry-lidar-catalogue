@@ -13,7 +13,7 @@
     "docs/sources/FGI-EMIT.md": "3a88f59bdc50640e39588179212be4dfc376da864db0c43a144c8f94e25c95f9",
     "docs/sources/FOR-INSTANCE.md": "a4c4f47cb9034a94946e29ba722a5f7cb562ddfb70bf2728e3bcab84c3093515",
     "README.md": "ef6f263afad432ee7388ebf3b366a99977bedc93d3cf0e5030a6411db39af8eb",
-    "docs/ROADMAP.md": "ddb21e4d1db560c981be006d5966d3af29dc9fa141323c7b444c1d8f785aa60d",
+    "docs/ROADMAP.md": "f630ca539c4fab447945e379a467e168dd20b9fb33ffcb4b568a419feeb8e34e",
     "docs/guides/TASK-REQUIREMENTS.md": "8106a5803602fe978be6873ab94a0c6fa50039c9fadb624d63ab205f249a07bf",
     "browser-prepare/batch.py": "6dd968d92333d947ff13d8b76872e8f4ad74c5b78ea8cae4fbc5005fde38b596",
     "browser-prepare/dataset-draft.js": "bf50a0a03e06dd704cf1674e44aa9a513fe67fb011a2e867d1cd148ba8322ccd",
@@ -133,11 +133,11 @@
     "web/styles.css": "4cf1ea58e7c3c38f182f66e2bab044fdf73fcffaf3d516526b2473f29428a844",
     "web/workbench/workbench.js": "e78acb3fd7a452997bf68d130f6fda3c28118a0223990a5e0aa31e55e0086521",
     "docs/guides/BROWSER-PREPARATION.md": "34034c2a08af3e9fe37f63f3588fb824d9d5a45f15786d487d8f817a4d3a627d",
-    "docs/guides/DATA-MODEL.md": "d956c87a7f4b33d46b2bdfed7badf81a1cfdf7117d67b36d8dda0c3aac596c7e",
-    "docs/guides/PIPELINES.md": "a47132b0be8c73163835e361548e2b76186e0cec3357f26f6d56e29fe6082318",
+    "docs/guides/DATA-MODEL.md": "672e22019ec97db96d137d139a866dad2168fca81d41100c9a36a88cb17f33be",
+    "docs/guides/PIPELINES.md": "98a233cc07f006cd6c3f2f4d105556f9a2ffb7c0116d1ecd3265a17f82fa89c5",
     "docs/guides/TASK-DATASET.md": "f0a793308068eed1acc96511c3139782454aafdd146ef1c40b81cb043fd6285a",
     "docs/guides/TASK-PACKAGE.md": "601f0b09fad02fb1d6fa93e02ecac051830c28a711bbf2c265b640c5f5c0b72d",
-    "docs/README.md": "1c1c9e811906dededf132c04963b3965dbcb6b30ce5b63a35d6304a620cb5ff4",
+    "docs/README.md": "ebe32b9708da887dd83576af588d2696b75f1abc9995d9d572b5c94eaccab4a5",
     "tests/e2e/serve.py": "5736da85bc17b3cce7c89af9d8155455ae4052aae88eef71f4aba7fd66ae15dd",
     "tests/e2e/catalog.spec.js": "722547d73a9086fc6e5c812d419f1ef59c3f90e0d6dea4a13fa04d49ffc51edc",
     "tests/e2e/kernel.spec.js": "e09f6ea7e55ffe20f731a76dadb81dc44621bb63a0bc8e1c8e82b4f029c9cf38",
@@ -283,11 +283,12 @@
     "evidence/classification/native/implementations/45de96c841f6c851fd68198cfeadb03e8f78f27f4192539fc3ec68f33303b6ab.py": "45de96c841f6c851fd68198cfeadb03e8f78f27f4192539fc3ec68f33303b6ab",
     "schemas/tree-classification-plan.schema.json": "20711fff02330bb4280b064f55247224c08df0d5721c442965b4a21fc1081011",
     "schemas/tree-classification-dataset.schema.json": "6626e81a2b12080044c77a1c4900084122bc9d0992ac4ebce88e28e4187fb082",
-    "docs/guides/TREE-CLASSIFICATION.md": "ce605fcb577adfba680dc3707e6d63fbe6e3fcede8084c1057cd25242544cf7d",
+    "docs/guides/TREE-CLASSIFICATION.md": "6f592e16a1c1fa6a2e54c502e62395ea28dc04efe807efd042439d2ac0412732",
     "reviews/grodata-128035-1.0.json": "bead313b77c662fa9f12576ad190179b0dd373546de3888c394072b203a510bd",
     "reviews/13255198.json": "9cc9fe2638e1220a5d6b1fa2810953bcf35fbf2d1da2e5fef3ca9805f4bc750b",
     ".gitattributes": "d5e66bd7d0dacb97963348d5304893b896a4edb71e1117ffb9b51b89528a855b",
-    "uv.lock": "65e2130becfa1122ae010afba67ddb6ebf3ac9fa25f1d808b2d784a316722d27"
+    "uv.lock": "65e2130becfa1122ae010afba67ddb6ebf3ac9fa25f1d808b2d784a316722d27",
+    "docs/design/EXPERIMENT-WORKSPACE.md": "c359a798c83d05fe2dbbfb9787d7cc3b47d34e19ef9da8b7618545e8241b805d"
   },
   "target": "https://borjaarroyo.github.io/forestry-lidar-catalogue/"
 }

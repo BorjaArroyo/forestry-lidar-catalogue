@@ -38,9 +38,11 @@ to their source — FOR-instance class 2 is terrain while FGI-EMIT class 2 is
 building — and a preparation admitted as `ready` must declare them, so class
 collisions between sources are checked by validation rather than read in prose.
 
-Source identity is the version-specific Zenodo record. Concept-level dataset
-families are not guessed from names. Versions, assets and acquisition observations
-remain in their existing inventories, joined by record ID. Tree IDs stay scene-local.
+Source identity is the pinned provider release, including version-specific Zenodo
+records and the reviewed GRO.data release. Concept-level dataset families are not
+guessed from names. Versions, assets and acquisition observations retain their
+provider identities. Segmentation instance IDs stay scene-local; classification
+tree and observation IDs retain their source-release scope.
 
 Existing relationships retain their exact meaning. Historical FOR-v2 target links
 remain legacy schema anchors, not declarations that a pipeline produces FOR-v2.
@@ -103,8 +105,9 @@ pipeline must contain enabled transformations; a ready source badge must resolve
 to one enabled instance pipeline. Publication also verifies package artifact
 hashes and the validation report binding to code and package. Version 1.3 adds optional typed field measurements, measurement-channel nodes and
 pipeline input requirements. Existing observation snapshots and FOR-instance
-execution/code evidence are retained. The current schema requires version 1.3; unknown versions fail instead
-of being interpreted through an old shape. This Canopy-specific profile does not
+execution/code evidence are retained. That migration required version 1.3; the
+task requirements below subsequently advance the model to 1.4. Unknown versions
+fail instead of being interpreted through an old shape. This Canopy-specific profile does not
 claim DCAT, STAC, Croissant or SSSOM conformance. Experimental benchmark registries and execution packages are archived outside the
 current application. Original-download jobs retain their durable job records.
 

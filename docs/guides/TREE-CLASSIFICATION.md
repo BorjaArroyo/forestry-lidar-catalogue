@@ -6,6 +6,13 @@ Admission follows the segmentation evidence procedure, explicitly authorized by 
 
 ## Original contribution documentation
 
+This section preserves the historical PR #10 contribution, including its WIP
+statements and original paths. The current canonical graph enables the reviewed
+FOR-species20K and BioDiv-3DTrees classification routes; execution gates are
+derived from that graph. Maintained code is under `src/canopy/classification/`
+and metadata under `data/classification/`. Historical admission statements below
+do not describe the integrated current state.
+
 # Tree taxonomic classification
 
 The new `task:species` path discovers FOR-species20K and BioDiv-3DTrees,

@@ -9,12 +9,17 @@ and validation of the affected parts, not a blanket restart of every audit.
 
 ## Current workflow
 
-The current service acquires pinned records from the reviewed inventory and
-prepares the FOR-instance v1 archive with its validated adapter.
-It verifies transfer integrity and ZIP extraction and preserves original assets.
-Other task transformations remain unadmitted. The source-specific normalization code
-and policy have been removed from the application; their source remains in Git. They
-do not make those outputs ready for instance-segmentation training or scoring.
+The local service acquires pinned reviewed records, verifies transfer integrity
+and ZIP extraction, preserves originals and prepares FOR-instance v1. Browser
+preparation has admitted segmentation routes for FOR-instance and FGI-EMIT, and
+classification routes for FOR-species20K and BioDiv-3DTrees. Admission is derived
+from the canonical task graph; see [classification](TREE-CLASSIFICATION.md) for
+its task-specific plan, observation and validation contracts.
+
+Published splits remain unchanged. Custom experimental splits, new matching and
+same-state fusion require the separate contracts and evidence described in the
+[experiment workspace design](../design/EXPERIMENT-WORKSPACE.md). Retired generic
+normalization code remains in Git and does not establish an admitted preparation.
 
 ## New dataset admission
 
