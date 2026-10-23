@@ -387,8 +387,8 @@
     },
     "browser-prepare/ui.js": {
       "url": "browser-prepare/ui.js",
-      "sha256": "6b3d4cfff80712dab074cbade065b0ff9665efb70f124b18fc067a9d523c797f",
-      "size_bytes": 19232
+      "sha256": "e2d0dcfc6e913774cc6552b7571b75d2f6db520fecc306fe1d597e5154b8e9a0",
+      "size_bytes": 19649
     },
     "browser-prepare/run-session.js": {
       "url": "browser-prepare/run-session.js",
@@ -417,8 +417,8 @@
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "7905663b3ac525a08bc7a94be61828cf0255ce13de7a3c29044ffcc69e7d4ddf",
-      "size_bytes": 1771
+      "sha256": "c7d5ef83c21d17f8937928e6841af008dd1b72add790e3ccfb867ef86d421eec",
+      "size_bytes": 1990
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
@@ -427,8 +427,8 @@
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "5e313db2d3e0aa89b1dff45b66598b4838bb640cba70e266b9d707374c9d87f9",
-      "size_bytes": 32302
+      "sha256": "4bfce8bda891152879e57f16a685a404b0c23f7b210c53c2ea6286c7378534a4",
+      "size_bytes": 37899
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
@@ -442,8 +442,8 @@
     },
     "web/workbench/workbench.js": {
       "url": "web/workbench/workbench.js",
-      "sha256": "e78acb3fd7a452997bf68d130f6fda3c28118a0223990a5e0aa31e55e0086521",
-      "size_bytes": 9884
+      "sha256": "be05ce079480d4f0edd4682b3e793cb20dff30bbd8209e5e1a63870a7d19a8e7",
+      "size_bytes": 9893
     },
     "browser-prepare/plan-panel.js": {
       "url": "browser-prepare/plan-panel.js",
@@ -624,6 +624,16 @@
       "url": "browser-prepare/classification-model.js",
       "sha256": "d9ef3d3b444be05621ea19223bd490b4258e9e926bef2c411c5c366f64973796",
       "size_bytes": 13210
+    },
+    "web/workspace.js": {
+      "url": "web/workspace.js",
+      "sha256": "75828fc77d2d16d53515fc631dbdd17d7cf4ec90ff4bd577271288062a4a6255",
+      "size_bytes": 6407
+    },
+    "web/classification-workspace.js": {
+      "url": "web/classification-workspace.js",
+      "sha256": "999d39056aa72f9f06deed60fe7232645897f047e5c6a9ddcab7ead3560133a9",
+      "size_bytes": 1019
     }
   },
   "zip_js": "2.20.0",

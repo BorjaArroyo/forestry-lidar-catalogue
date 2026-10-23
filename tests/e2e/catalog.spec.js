@@ -29,11 +29,15 @@ test('task variables and partitions follow the selected use and source', async (
   await page.locator('#prepare-source').selectOption('8287792');
   await expect(page.locator('#prepare-add')).toBeEnabled();
   await expect(page.locator('#prepare-partitions option[value="test"]')).toHaveCount(0);
+  await page.locator('#workspace-navigation [data-workspace-section="objectives"]').click();
   await page.locator('#variable-reflectance').selectOption('required');
+  await page.locator('#workspace-navigation [data-workspace-section="data"]').click();
   await expect(page.locator('#prepare-add')).toBeDisabled();
   await page.locator('#prepare-source').selectOption('19351234');
   await expect(page.locator('#prepare-add')).toBeEnabled();
+  await page.locator('#workspace-navigation [data-workspace-section="objectives"]').click();
   await page.locator('#task-use').selectOption('evaluation');
+  await page.locator('#workspace-navigation [data-workspace-section="data"]').click();
   await expect(page.locator('#prepare-partitions option[value="train"]')).toHaveCount(0);
   await expect(page.locator('#prepare-partitions option[value="test"]')).toHaveCount(1);
 });
@@ -93,7 +97,7 @@ async function localServicePage(page, respond) {
     });
   });
   await page.route('**/api/state', respond);
-  await page.goto('./#workbench');
+  await page.goto('./#experiment/service');
 }
 
 test('HTTP 500 remains visible and submissions stay disabled until a valid service state returns', async ({

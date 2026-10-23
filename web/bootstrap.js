@@ -3,8 +3,9 @@ import { createTaskSelection } from './catalog/task-selection.js';
 import { mountModelView } from './catalog/model-view.js';
 import { mountWorkbench } from './workbench/workbench.js';
 import { createServiceClient } from './workbench/client.js';
-import { mountClassification } from '../browser-prepare/classification-ui.js';
+import { mountClassificationWorkspace } from './classification-workspace.js';
 import { mountPreparation } from '../browser-prepare/ui.js';
+import { mountWorkspace } from './workspace.js';
 
 const catalog = window.LIDAR_CATALOG;
 if (!catalog) {
@@ -36,6 +37,13 @@ if (!catalog) {
         : application.getTaskRequest(),
     selection: instanceSelection,
   });
-  mountPreparation({ catalog, document, selection: instanceSelection });
-  mountClassification({ catalog, document });
+  mountPreparation({
+    catalog,
+    document,
+    selection: instanceSelection,
+    initialRequest:
+      application.selection.task.id === 'instances' ? application.getTaskRequest() : null,
+  });
+  mountClassificationWorkspace({ document });
+  mountWorkspace({ application, document });
 }

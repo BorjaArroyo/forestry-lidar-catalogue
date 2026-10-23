@@ -129,6 +129,88 @@
   color: var(--ink);
   font-synthesis: none;
 }
+
+/* Workspace routes preserve form nodes and worker state between sections. */
+.workspace-context {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  margin-bottom: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.workspace-context > span {
+  color: var(--ink-soft);
+}
+.workspace-navigation,
+.workspace-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.workspace-navigation .button[aria-current='step'] {
+  background: var(--forest-700);
+  color: var(--surface);
+}
+.workspace-footer {
+  margin-top: 24px;
+}
+.workspace-footer #workspace-next {
+  margin-left: auto;
+}
+#view-workbench[data-workspace-section='objectives']
+  [data-workspace-stage]:not([data-workspace-stage~='objectives']),
+#view-workbench[data-workspace-section='data']
+  [data-workspace-stage]:not([data-workspace-stage~='data']),
+#view-workbench[data-workspace-section='preparation']
+  [data-workspace-stage]:not([data-workspace-stage~='preparation']),
+#view-workbench[data-workspace-section='splits']
+  [data-workspace-stage]:not([data-workspace-stage~='splits']),
+#view-workbench[data-workspace-section='review']
+  [data-workspace-stage]:not([data-workspace-stage~='review']),
+#view-workbench[data-workspace-section='runs']
+  [data-workspace-stage]:not([data-workspace-stage~='runs']),
+#view-workbench[data-workspace-section='service']
+  [data-workspace-stage]:not([data-workspace-stage~='service']) {
+  display: none !important;
+}
+@media (max-width: 600px) {
+  .workspace-consumer-table :is(caption, tbody, tr, th, td) {
+    display: block;
+    width: 100%;
+  }
+  .workspace-consumer-table thead {
+    display: none;
+  }
+  .workspace-consumer-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 12px;
+    overflow-wrap: anywhere;
+  }
+  .workspace-consumer-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+  }
+  .workspace-consumer-table tr {
+    margin-bottom: 12px;
+  }
+  .workspace-navigation {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .workspace-navigation .button {
+    min-height: 44px;
+    padding: 8px;
+  }
+  .workspace-footer .button {
+    min-height: 44px;
+  }
+}
 * {
   box-sizing: border-box;
 }

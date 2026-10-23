@@ -22,9 +22,10 @@ record (pinned Zenodo release)          read-only curation
 Quick paths:
 
 - **Browse the catalog**: open the published site above. No setup required.
-- **Prepare a dataset selection in the browser**: choose a data use in Workbench,
-  add collections and partitions from FOR-instance and FGI-EMIT to My dataset,
-  review one combined plan and export a single verified ZIP. Only admitted implementations can run; current
+- **Prepare a dataset selection in the browser**: open Experiments, define the
+  use in Objectives, add source subsets in Data and inspect the plan in Review.
+  Runs & outputs holds progress, recovery and the validated ZIP. For segmentation,
+  combine FOR-instance and FGI-EMIT in one task-specific plan. Only admitted implementations can run; current
   FOR-instance and FGI-EMIT are executable. Other source review gaps remain visible.
 - **Get FOR-instance locally**: run the download service (below) and select
   "Prepare instance data after download".
@@ -65,7 +66,7 @@ npx playwright install chromium firefox
 canopy service --port 8765
 ```
 
-Open http://127.0.0.1:8765/#workbench. Inspect a source, review its assets and
+Open http://127.0.0.1:8765/#experiment/service. Inspect a source, review its assets and
 enter a new absolute destination directory. Only admitted inventory records
 are accepted; this operation does not add new records to the catalog. For FOR-instance, select
 "Prepare instance data after download" and a separate output directory, or use

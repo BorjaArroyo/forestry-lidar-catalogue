@@ -202,7 +202,7 @@ export function mountWorkbench({
     if (evidence) save(evidence, `canopy-job-${selectedJob}.json`);
   });
   document.addEventListener('canopy-inspect-source', (e) => {
-    location.hash = 'workbench';
+    location.hash = 'experiment/service';
     $('#zenodo-record').value = e.detail.record_id;
     $('#inspect-form').requestSubmit();
     message('Review the original assets. Downloading does not prepare task-ready data.');

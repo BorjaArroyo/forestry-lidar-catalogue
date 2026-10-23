@@ -19,7 +19,7 @@ async function classification(page) {
       body: readFileSync(path.join(directory, 'runtime-lock.json')),
     }),
   );
-  await page.goto('./?task=species#workbench');
+  await page.goto('./?task=species#experiment/objectives');
   await expect(page.locator('#classification-source option')).toHaveCount(2);
 }
 for (const [use, rank, trees, observations] of [
@@ -37,12 +37,14 @@ for (const [use, rank, trees, observations] of [
     await classification(page);
     await page.selectOption('#task-use', use);
     await page.selectOption('#task-rank', rank);
+    await page.locator('#workspace-navigation [data-workspace-section="data"]').click();
     for (const source of use === 'training' || use === 'inference'
       ? ['zenodo:13255198', 'grodata:128035:1.0']
       : ['grodata:128035:1.0']) {
       await page.selectOption('#classification-source', source);
       await page.click('#classification-add');
     }
+    await page.locator('#workspace-navigation [data-workspace-section="review"]').click();
     await page.click('#classification-review');
     await expect(page.locator('#classification-plan')).toBeVisible();
     const plan = JSON.parse(await page.locator('#classification-plan-text').innerText());
@@ -54,6 +56,13 @@ for (const [use, rank, trees, observations] of [
       plan.archives.map((a) => path.join(directory, a.name)),
     );
     await page.click('#classification-run');
+    await expect(page).toHaveURL(/#experiment\/runs$/);
+    if (use === 'training') {
+      await page.locator('.sidebar [data-workspace-section="objectives"]').click();
+      await page.locator('#workspace-navigation [data-workspace-section="preparation"]').click();
+      await expect(page.locator('#workspace-consumer-fields')).toContainText('taxonomy');
+      await page.locator('.sidebar [data-workspace-section="runs"]').click();
+    }
     await expect(page.locator('#classification-download')).toBeVisible({ timeout: 60000 });
     const downloadEvent = page.waitForEvent('download');
     await page.click('#classification-download');
@@ -97,13 +106,17 @@ test('classification retains its draft across task changes and rejects corrupt l
 }) => {
   await classification(page);
   await page.selectOption('#task-use', 'inference');
+  await page.locator('#workspace-navigation [data-workspace-section="data"]').click();
   for (const ref of ['zenodo:13255198', 'grodata:128035:1.0']) {
     await page.selectOption('#classification-source', ref);
     await page.click('#classification-add');
   }
+  await page.locator('#workspace-navigation [data-workspace-section="objectives"]').click();
   await page.selectOption('#preparation-task', 'task:instances');
   await page.selectOption('#preparation-task', 'task:species');
+  await page.locator('#workspace-navigation [data-workspace-section="data"]').click();
   await expect(page.locator('#classification-draft-list li')).toHaveCount(2);
+  await page.locator('#workspace-navigation [data-workspace-section="review"]').click();
   await page.click('#classification-review');
   await expect(page.locator('#classification-plan')).toBeVisible();
   const plan = JSON.parse(await page.locator('#classification-plan-text').innerText());
