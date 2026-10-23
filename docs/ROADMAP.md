@@ -1,4 +1,10 @@
-# Instance-segmentation MVP
+# Canopy preparation roadmap
+
+The [experiment workspace specification](design/EXPERIMENT-WORKSPACE.md) records
+the shared direction for segmentation, classification and future tasks, including
+the current contract review and navigation acceptance scenarios. Multitask plans,
+custom experimental splits, new matching and same-state fusion are proposed
+increments, not current execution guarantees.
 
 ## Delivered workflow
 
@@ -21,6 +27,11 @@ Download result and Delete actions, and revalidates checkpoints before reuse.
 Interrupted plots and downloads restart; an interrupted ZIP is rebuilt. Local
 LAS/ZIP preparation retains its restart behavior. Browser storage can be evicted;
 a downloaded ZIP remains the durable copy. See [browser scope](guides/BROWSER-PREPARATION.md).
+
+Classification now shares the catalog and Workbench through its independently
+validated FOR-species20K and BioDiv-3DTrees routes. Task-specific plans, native
+observations and published partitions remain explicit. See
+[classification](guides/TREE-CLASSIFICATION.md) for current scope and evidence.
 
 ## Remaining reliability and scale gates
 

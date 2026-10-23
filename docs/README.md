@@ -9,6 +9,13 @@ Start with the [project README](../README.md) for installation, commands and the
 - [Task package contract](guides/TASK-PACKAGE.md)
 - [Task dataset contract](guides/TASK-DATASET.md)
 - [Browser preparation](guides/BROWSER-PREPARATION.md)
+- [Tree classification](guides/TREE-CLASSIFICATION.md)
+
+## Design and contract review
+
+- [Experiment workspace](design/EXPERIMENT-WORKSPACE.md): agreed multitask
+  direction, current contract inventory, implementation gaps and navigation
+  acceptance scenarios. Proposed capabilities remain separate from admitted routes.
 
 ## Repository and source reviews
 
