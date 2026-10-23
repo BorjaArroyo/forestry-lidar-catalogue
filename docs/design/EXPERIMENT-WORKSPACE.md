@@ -1,9 +1,9 @@
 # Experiment workspace: contracts and UX acceptance
 
-Status: agreed design direction, consolidated on 2026-10-23. This specification
-does not enable new preparations or change existing scientific schemas, source
-admission, reference policies or historical evidence. Delivery stages below
-separate proposed behavior from current capabilities.
+Status: agreed design direction, consolidated on 2026-10-23. Workspace navigation
+is implemented over the existing independent task routes. Shared multitask plans,
+custom splits and fusion remain proposed. This specification does not change
+scientific schemas, source admission, reference policies or historical evidence.
 
 ## Scope
 
@@ -182,7 +182,13 @@ Validate these implemented journeys with representative users before closing UX:
 
 1. Consolidate this specification/current gaps and label historical documentation.
 2. Implement workspace navigation and draft/run state over existing audited
-   routes; check the journeys while preserving current exports/readers.
+   routes; check the journeys while preserving current exports/readers. The five
+   sections, separate Runs & outputs, URL/history restoration, saved task
+   preferences and retained form/worker nodes are implemented. Automated browser
+   checks cover both tasks and narrow/desktop widths; representative-user
+   walkthroughs and the joint-task journey remain open. Only added subsets are
+   durable drafts; local file handles and unsaved source-control choices do not
+   survive reload. Existing input-specific recovery limits still apply.
 3. Version the shared experiment/consumer envelope after defining joint-reference
    policy and task-specific validation; specify historical-package compatibility.
 4. Admit custom splits, new matching and same-state fusion through separate

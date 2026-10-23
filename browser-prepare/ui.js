@@ -21,13 +21,18 @@ export function mountPreparation({
   inspectRuns = defaultInspectRuns,
   openRun = defaultOpenRun,
   selection = createTaskSelection(catalog),
+  initialRequest = null,
 } = {}) {
   const $ = (id) => document.getElementById(id);
-  let currentRequest = selection.normalize();
+  let currentRequest = selection.normalize(initialRequest?.use, initialRequest?.variables);
   const getRequest = () => currentRequest;
   const setRequest = (request) => {
     currentRequest = selection.normalize(request.use, request.variables);
-    document.dispatchEvent(new CustomEvent('canopy-set-task-request', { detail: currentRequest }));
+    document.dispatchEvent(
+      new CustomEvent('canopy-set-task-request', {
+        detail: { ...currentRequest, task_ref: 'task:instances' },
+      }),
+    );
   };
   const selectedSource = () => $('prepare-source').value;
   const selectedValues = (id) => [...$(id).options].filter((o) => o.selected).map((o) => o.value);
@@ -144,6 +149,9 @@ export function mountPreparation({
     );
     $('dataset-plan-download').href = planURL;
     $('dataset-plan').hidden = false;
+    document.dispatchEvent(
+      new CustomEvent('canopy-plan-reviewed', { detail: { task_ref: 'task:instances' } }),
+    );
   }
   function controls() {
     updateControls({
@@ -446,6 +454,9 @@ export function mountPreparation({
         task_request: request,
         execution_plan: reviewedPlan,
       });
+      document.dispatchEvent(
+        new CustomEvent('canopy-execution-started', { detail: { task_ref: 'task:instances' } }),
+      );
       status('Rechecking the frozen plan and available browser storage…');
       void savedRuns.refreshSaved();
     } catch (error) {
@@ -522,7 +533,7 @@ export function mountPreparation({
     catalog.datasets.find((d) => selection.assess(d.id, getRequest()).status === 'ready')?.id ||
     catalog.datasets[0].id;
   try {
-    draftPanel.restoreRequest();
+    if (!initialRequest) draftPanel.restoreRequest();
   } catch (error) {
     draftPanel.loadError = 'Saved requirements could not be restored: ' + error.message;
   }

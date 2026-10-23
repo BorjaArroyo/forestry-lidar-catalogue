@@ -1,6 +1,7 @@
 import { escapeHTML as esc, downloadJSON } from '../shared/dom.js';
 /* A dependency-free, offline viewer. This application never modifies LiDAR files. */
 import { createTaskSelection } from './task-selection.js';
+import { parseWorkspaceRoute, workspaceHash } from '../workspace.js';
 
 export function mountCatalog({
   catalog,
@@ -23,6 +24,7 @@ export function mountCatalog({
   const byId = Object.fromEntries(data.datasets.map((d) => [d.id, d]));
   const state = {
     view: 'datasets',
+    section: 'objectives',
     search: '',
     platform: 'all',
     unit: 'all',
@@ -34,6 +36,51 @@ export function mountCatalog({
     taskRunning: false,
     compare: new Set(),
   };
+  const storageKey = 'canopy-workspace-v1';
+  let saved = {};
+  try {
+    const value = JSON.parse(localStorage.getItem(storageKey));
+    if (value?.schema_version === '1.0.0') saved = value;
+  } catch {
+    state.storageUnavailable = true;
+  }
+  for (const [id, value] of Object.entries(saved.tasks || {})) {
+    const definition = data.tasks.find((entry) => entry.id === id && entry.requirements);
+    if (!definition || !value || typeof value !== 'object') continue;
+    const variables = Object.fromEntries(
+      Object.entries(value.taskVariables || {}).filter(
+        ([key, choice]) =>
+          definition.requirements.variables.some((entry) => entry.key === key) &&
+          ['required', 'optional', 'off'].includes(choice),
+      ),
+    );
+    taskStates.set(id, {
+      taskUse: Object.hasOwn(definition.requirements.uses, value.taskUse)
+        ? value.taskUse
+        : 'training',
+      taskVariables: variables,
+      rank: value.rank === 'genus' ? 'genus' : 'species',
+    });
+  }
+  function persist() {
+    taskStates.set(task.id, {
+      taskUse: state.taskUse,
+      taskVariables: state.taskVariables,
+      rank: state.rank,
+    });
+    try {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({
+          schema_version: '1.0.0',
+          activeTask: task.id,
+          tasks: Object.fromEntries(taskStates),
+        }),
+      );
+    } catch {
+      state.storageUnavailable = true;
+    }
+  }
   let serviceConnected = false;
   const discovery = (d) =>
     d.discovery || {
@@ -71,7 +118,7 @@ export function mountCatalog({
   };
   const sourceServiceNote = (source) =>
     source?.classification
-      ? 'Classification originals are read from the pinned provider or supplied locally in Workbench. The optional HTTP service does not prepare this task.'
+      ? 'Classification originals are read from the pinned provider or supplied locally in Review. The optional HTTP service does not prepare this task.'
       : (serviceConnected
           ? 'The connected service can inspect the record before you start its download.'
           : 'Connect the local service to download originals into a chosen directory. The provider record remains directly accessible.') +
@@ -137,10 +184,12 @@ export function mountCatalog({
   function taskChanged() {
     renderTaskRequest();
     render();
+    updateUrl();
     document.dispatchEvent(new CustomEvent('canopy-task-request', { detail: taskRequest() }));
   }
   document.addEventListener('canopy-set-task-request', (event) => {
     if (state.taskRunning) return;
+    if (event.detail.task_ref && event.detail.task_ref !== 'task:' + task.id) return;
     const normalized = selection.normalize(event.detail.use, event.detail.variables || {});
     state.taskUse = normalized.use;
     state.taskVariables = { ...normalized.variables };
@@ -378,51 +427,68 @@ export function mountCatalog({
   let urlTimer;
   function syncUrl() {
     clearTimeout(urlTimer);
-    urlTimer = setTimeout(() => {
-      const params = new URLSearchParams();
-      if (task.id !== 'instances') params.set('task', task.id);
-      if (state.taskUse !== 'training') params.set('use', state.taskUse);
-      if (task.id === 'species' && state.rank !== 'species') params.set('rank', state.rank);
-      if (state.search) params.set('q', state.search);
-      if (state.compare.size) params.set('compare', [...state.compare].join(','));
-      for (const key of ['platform', 'unit', 'reference', 'preparation'])
-        if (state[key] !== 'all') params.set(key, state[key]);
-      const query = params.toString();
-      try {
-        history.replaceState(
-          null,
-          '',
-          location.pathname + (query ? `?${query}` : '') + location.hash,
-        );
-      } catch {
-        /* Browser rate-limited replaceState; the visible UI state still applies. */
-      }
-    }, 300);
+    urlTimer = setTimeout(updateUrl, 300);
   }
-  function initFromUrl() {
+  function updateUrl() {
+    const params = new URLSearchParams();
+    params.set('task', task.id);
+    if (state.taskUse !== 'training') params.set('use', state.taskUse);
+    if (task.id === 'species' && state.rank !== 'species') params.set('rank', state.rank);
+    if (state.search) params.set('q', state.search);
+    if (state.compare.size) params.set('compare', [...state.compare].join(','));
+    for (const [key, value] of Object.entries(state.taskVariables)) params.set('var_' + key, value);
+    for (const key of ['platform', 'unit', 'reference', 'preparation'])
+      if (state[key] !== 'all') params.set(key, state[key]);
+    const query = params.toString();
+    try {
+      history.replaceState(
+        null,
+        '',
+        location.pathname + (query ? `?${query}` : '') + location.hash,
+      );
+      lastLocation = location.href;
+    } catch {
+      /* Browser rate-limited replaceState; the visible UI state still applies. */
+    }
+  }
+  function initFromUrl(initial = false) {
     const params = new URLSearchParams(location.search);
+    const requested = params.get('task') || (initial ? saved.activeTask : 'instances');
+    if (['instances', 'species'].includes(requested) && requested !== task.id)
+      selectTask(requested, true);
+    if (initial && taskStates.has(task.id)) Object.assign(state, taskStates.get(task.id));
     state.compare = new Set(
       (params.get('compare') || '')
         .split(',')
         .filter((id) => Object.hasOwn(byId, id))
         .slice(0, 3),
     );
-    if (Object.hasOwn(task.requirements.uses, params.get('use'))) state.taskUse = params.get('use');
-    if (params.get('rank') === 'genus') state.rank = 'genus';
+    if (!initial || params.has('use'))
+      state.taskUse = Object.hasOwn(task.requirements.uses, params.get('use'))
+        ? params.get('use')
+        : 'training';
+    if (!initial || params.has('rank'))
+      state.rank = params.get('rank') === 'genus' ? 'genus' : 'species';
+    if (!initial) state.taskVariables = {};
+    for (const variable of task.requirements.variables) {
+      const value = params.get('var_' + variable.key);
+      if (['required', 'optional', 'off'].includes(value))
+        state.taskVariables[variable.key] = value;
+    }
     state.search = params.get('q') || '';
     $('#search').value = state.search;
     for (const key of ['platform', 'unit', 'reference', 'preparation']) {
       const value = params.get(key);
-      if (value) {
-        state[key] = value;
-        $('#' + key).value = value;
-      }
+      state[key] = [...$('#' + key).options].some((option) => option.value === value)
+        ? value
+        : 'all';
+      $('#' + key).value = state[key];
     }
   }
 
   const VIEW_TITLES = {
     datasets: 'Sources',
-    workbench: 'Workbench',
+    workbench: 'Experiment',
     model: 'Data model',
   };
   const VIEW_HEADINGS = {
@@ -440,6 +506,7 @@ export function mountCatalog({
     ],
   };
   function render() {
+    persist();
     renderDatasets();
     renderActiveFilters();
     syncUrl();
@@ -447,7 +514,8 @@ export function mountCatalog({
     $('#compare-open').disabled = state.compare.size < 2;
     $('#compare-open').hidden = state.view !== 'datasets';
     $('.toolbar').hidden = state.view !== 'datasets';
-    $('.task-request').hidden = state.view === 'model';
+    $('.task-request').hidden =
+      state.view === 'model' || (state.view === 'workbench' && state.section !== 'objectives');
     if (task.id === 'species' && state.view !== 'model') {
       $('.page-heading h1').textContent =
         state.view === 'workbench'
@@ -463,24 +531,77 @@ export function mountCatalog({
     const [heading, subtitle] = VIEW_HEADINGS[view] || VIEW_HEADINGS.datasets;
     $('.page-heading h1').textContent = heading;
     $('.page-heading p').textContent = subtitle;
+    if (view === 'workbench') {
+      const headings = {
+        objectives: [
+          'Define your preparation objectives.',
+          'Choose a task and its requirements; each task retains its own draft.',
+        ],
+        data: [
+          'Choose data for your objectives.',
+          'Select reviewed sources, collections and published partitions.',
+        ],
+        preparation: [
+          'Understand the prepared representation.',
+          'Inspect named fields, validity and source-specific preparation guarantees.',
+        ],
+        splits: [
+          'Review partition coverage.',
+          'Current routes preserve the provider assignments for this request.',
+        ],
+        review: [
+          'Review the exact preparation plan.',
+          'Check source coverage, optional omissions and pinned dependencies before execution.',
+        ],
+        runs: [
+          'Runs and validated outputs.',
+          'Inspect progress, recover supported runs and retain downloaded results.',
+        ],
+        service: [
+          'Optional local data service.',
+          'Inspect originals or prepare the reviewed full release on the service host.',
+        ],
+      };
+      [$('.page-heading h1').textContent, $('.page-heading p').textContent] =
+        headings[state.section];
+      $('#breadcrumb-view').textContent = 'Experiment / ' + state.section;
+    } else if (view === 'datasets' && task.id === 'species') {
+      $('.page-heading h1').textContent = 'Find tree classification data.';
+    }
+    $('.page-heading .eyebrow').textContent = task.title || task.name;
+    $('#view-workbench').dataset.workspaceSection = state.section;
     $$('.nav-item').forEach((b) => {
-      b.classList.toggle('active', b.dataset.view === state.view);
-      b.setAttribute('aria-current', b.dataset.view === state.view ? 'page' : 'false');
+      const active =
+        b.dataset.view === state.view &&
+        (state.view !== 'workbench' ||
+          (b.dataset.workspaceSection === 'runs') === (state.section === 'runs'));
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-current', active ? 'page' : 'false');
     });
     $$('.view').forEach((el) => (el.hidden = el.id !== `view-${state.view}`));
   }
-  function selectView(view) {
+  function selectView(view, section = 'objectives') {
     state.view = view;
-    location.hash = view;
+    state.section = parseWorkspaceRoute(workspaceHash(view, section)).section;
+    clearTimeout(urlTimer);
+    updateUrl();
+    const hash = workspaceHash(view, state.section);
+    if (location.hash !== hash)
+      history.pushState(null, '', location.pathname + location.search + hash);
+    lastLocation = location.href;
     render();
-    document.dispatchEvent(new CustomEvent('canopy-view', { detail: { view } }));
+    document.dispatchEvent(
+      new CustomEvent('canopy-view', { detail: { view, section: state.section } }),
+    );
     window.scrollTo(0, 0);
+    $('.page-heading h1').focus({ preventScroll: true });
   }
   document.addEventListener('click', (event) => {
     const target = event.target.closest('button');
     if (!target) return;
     if (target.dataset.sourceDownload && serviceConnected) {
       $('#detail-dialog').close();
+      selectView('workbench', 'service');
       document.dispatchEvent(
         new CustomEvent('canopy-inspect-source', {
           detail: { record_id: target.dataset.sourceDownload },
@@ -491,7 +612,7 @@ export function mountCatalog({
       const request = selection.assess(target.dataset.taskPrepare, taskRequest());
       if (request.status !== 'ready') return;
       $('#detail-dialog').close();
-      selectView('workbench');
+      selectView('workbench', 'data');
       document.dispatchEvent(
         new CustomEvent('canopy-prepare-task', {
           detail: {
@@ -504,7 +625,7 @@ export function mountCatalog({
         }),
       );
     }
-    if (target.dataset.view) selectView(target.dataset.view);
+    if (target.dataset.view) selectView(target.dataset.view, target.dataset.workspaceSection);
     if (target.dataset.detail) detail(target.dataset.detail);
     if (target.dataset.compare) toggleCompare(target.dataset.compare);
     if (target.dataset.clearFilters) clearFilters();
@@ -555,7 +676,7 @@ export function mountCatalog({
         taskChanged();
       };
   }
-  function selectTask(id) {
+  function selectTask(id, deferRender = false) {
     if (state.taskRunning || id === task.id) return;
     taskStates.set(task.id, {
       taskUse: state.taskUse,
@@ -570,8 +691,8 @@ export function mountCatalog({
     );
     $('#preparation-task').value = 'task:' + id;
     populateTaskControls();
+    if (deferRender) return;
     taskChanged();
-    selectView(state.view);
     document.dispatchEvent(
       new CustomEvent('canopy-task-change', { detail: { task_ref: 'task:' + id } }),
     );
@@ -607,17 +728,29 @@ export function mountCatalog({
   $('#reset').addEventListener('click', clearFilters);
   $('#compare-open').addEventListener('click', showCompare);
   $('#export').addEventListener('click', () => download(data, 'canopy-catalog.json'));
-  const viewFromHash = () =>
-    location.hash === '#workbench'
-      ? 'workbench'
-      : location.hash === '#model'
-        ? 'model'
-        : 'datasets';
-  window.addEventListener('hashchange', () => {
-    state.view = viewFromHash();
+  let lastLocation = location.href;
+  const locationChanged = () => {
+    if (lastLocation === location.href) return;
+    lastLocation = location.href;
+    clearTimeout(urlTimer);
+    const previousTask = task.id;
+    const previousRequest = JSON.stringify(taskRequest());
+    Object.assign(state, parseWorkspaceRoute(location.hash));
+    initFromUrl();
+    renderTaskRequest();
     render();
-    document.dispatchEvent(new CustomEvent('canopy-view', { detail: { view: state.view } }));
-  });
+    if (previousTask !== task.id)
+      document.dispatchEvent(
+        new CustomEvent('canopy-task-change', { detail: { task_ref: 'task:' + task.id } }),
+      );
+    if (previousRequest !== JSON.stringify(taskRequest()))
+      document.dispatchEvent(new CustomEvent('canopy-task-request', { detail: taskRequest() }));
+    document.dispatchEvent(
+      new CustomEvent('canopy-view', { detail: { view: state.view, section: state.section } }),
+    );
+  };
+  window.addEventListener('hashchange', locationChanged);
+  window.addEventListener('popstate', locationChanged);
   $$('dialog').forEach((d) =>
     d.addEventListener('click', (e) => {
       if (e.target === d) {
@@ -636,8 +769,9 @@ export function mountCatalog({
     $$('[data-source-download]').forEach((b) => (b.disabled = !serviceConnected));
     $$('.source-service-note').forEach((p) => (p.textContent = sourceServiceNote()));
   });
-  state.view = viewFromHash();
-  initFromUrl();
+  Object.assign(state, parseWorkspaceRoute(location.hash));
+  initFromUrl(true);
+  renderTaskRequest();
   $('#dataset-count').textContent = data.datasets.length;
   $('#snapshot-date').textContent =
     `Snapshot · ${new Date(data.generated_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`;
@@ -647,6 +781,7 @@ export function mountCatalog({
     catalog: data,
     selection,
     getTaskRequest: taskRequest,
+    navigate: selectView,
     getState: () => ({ ...state, compare: [...state.compare] }),
   };
 }

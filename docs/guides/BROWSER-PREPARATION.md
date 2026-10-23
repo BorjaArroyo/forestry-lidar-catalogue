@@ -8,6 +8,25 @@ The browser runtime, scientific dependencies and local modules are pinned in
 
 ## Supported workflow
 
+Experiments provides direct access to Objectives, Data, Preparation, Splits and
+Review. Runs & outputs separates progress, supported recovery and downloads.
+The same navigation serves the independent
+[classification route](TREE-CLASSIFICATION.md); task drafts and exports remain
+separate. A shared multitask plan is not implemented.
+
+Routes use `#experiment/objectives`, `data`, `preparation`, `splits`, `review`,
+`runs` and `service`. The legacy `#workbench` opens Data. Navigation keeps form
+nodes and browser workers alive without starting work. Back/Forward restores
+the route and its task requirements; reload restores URL requirements, saved
+task preferences and explicitly added subsets. Unsaved source-control choices
+and local file handles are not persisted. Reload closes browser workers;
+recovery remains specific to the input type described below.
+
+Preparation shows requested fields, shapes and validity. Splits explains current
+provider assignments and the A/B/C evaluation goals. Neither view admits custom
+splits or fusion. An exact reviewed plan remains necessary for Zenodo selection
+preparation; viewing the workspace is not plan validation.
+
 1. Choose the data use and required, optional or omitted variables.
 2. Choose an admitted source, collections and published partitions. Individual
    plots are available as an advanced subset.
