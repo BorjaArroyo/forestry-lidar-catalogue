@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { openRequirements } from './workspace-helpers.js';
 
 const source = (page, id) => page.locator(`article[data-source="${id}"]`);
 
@@ -12,6 +13,7 @@ test('cards preserve partial reference coverage and separate preparation gates',
   await expect(source(page, '8287792')).toContainText('Not produced: Multispectral reflectance.');
   await expect(source(page, '19351234')).not.toContainText('Not produced:');
   await expect(page.locator('.grid-divider')).toBeVisible();
+  await openRequirements(page);
   await page.locator('#variable-reflectance').selectOption('required');
   await expect(source(page, '8287792')).toHaveCount(0);
   await expect(source(page, '19351234').locator('[data-task-prepare]')).toBeVisible();

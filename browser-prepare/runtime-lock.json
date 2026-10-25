@@ -417,8 +417,8 @@
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "c7d5ef83c21d17f8937928e6841af008dd1b72add790e3ccfb867ef86d421eec",
-      "size_bytes": 1990
+      "sha256": "a29471745522e9cd09b735331cd589c27182d5238b26aadded67f9e4011e8d23",
+      "size_bytes": 2020
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
@@ -427,8 +427,8 @@
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "4bfce8bda891152879e57f16a685a404b0c23f7b210c53c2ea6286c7378534a4",
-      "size_bytes": 37899
+      "sha256": "a17e5b6bde29070ed6bef5a00858def4d952e77eeef2bad11ac640ba26822941",
+      "size_bytes": 37907
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
@@ -627,8 +627,8 @@
     },
     "web/workspace.js": {
       "url": "web/workspace.js",
-      "sha256": "75828fc77d2d16d53515fc631dbdd17d7cf4ec90ff4bd577271288062a4a6255",
-      "size_bytes": 6407
+      "sha256": "bec27a0b4f72b95ab8e615ccff72f8e15aadf7ec32153ca7b1c904595c6ad360",
+      "size_bytes": 16611
     },
     "web/classification-workspace.js": {
       "url": "web/classification-workspace.js",

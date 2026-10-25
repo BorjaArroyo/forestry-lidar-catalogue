@@ -1,7 +1,7 @@
 import { escapeHTML as esc, downloadJSON } from '../shared/dom.js';
 /* A dependency-free, offline viewer. This application never modifies LiDAR files. */
 import { createTaskSelection } from './task-selection.js';
-import { parseWorkspaceRoute, workspaceHash } from '../workspace.js';
+import { parseWorkspaceRoute, workspaceHash } from '../workspace.js?v=workspace-v2';
 
 export function mountCatalog({
   catalog,
@@ -534,28 +534,28 @@ export function mountCatalog({
     if (view === 'workbench') {
       const headings = {
         objectives: [
-          'Define your preparation objectives.',
-          'Choose a task and its requirements; each task retains its own draft.',
+          'What should this dataset support?',
+          'Choose a task and the requirements its prepared data must satisfy.',
         ],
         data: [
-          'Choose data for your objectives.',
-          'Select reviewed sources, collections and published partitions.',
+          'Find data for your objectives.',
+          'Inspect coverage, then configure the subsets you want to include.',
         ],
         preparation: [
-          'Understand the prepared representation.',
-          'Inspect named fields, validity and source-specific preparation guarantees.',
+          'Choose the data representation.',
+          'Reviewed routes preserve native observations and their source-specific semantics.',
         ],
         splits: [
-          'Review partition coverage.',
-          'Current routes preserve the provider assignments for this request.',
+          'Define what stays unseen.',
+          'Inspect the current assignments and the evidence needed for independent evaluation.',
         ],
         review: [
-          'Review the exact preparation plan.',
-          'Check source coverage, optional omissions and pinned dependencies before execution.',
+          'Review your dataset as a whole.',
+          'Check coverage, expected outputs and unresolved evidence before execution.',
         ],
         runs: [
-          'Runs and validated outputs.',
-          'Inspect progress, recover supported runs and retain downloaded results.',
+          'Runs and datasets.',
+          'Each execution retains its reviewed plan and its own validation evidence.',
         ],
         service: [
           'Optional local data service.',
