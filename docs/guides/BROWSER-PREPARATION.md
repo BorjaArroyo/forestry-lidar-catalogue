@@ -22,13 +22,26 @@ task preferences and explicitly added subsets. Unsaved source-control choices
 and local file handles are not persisted. Reload closes browser workers;
 recovery remains specific to the input type described below.
 
-Preparation shows requested fields, shapes and validity. Splits explains current
-provider assignments and the A/B/C evaluation goals. Neither view admits custom
+The workspace follows the selected navigation concept: global navigation at the
+top, a persistent context bar and independent sections in the left navigation
+(above the content on mobile). Data shows a compact source-coverage table. Configure
+a subset in its contextual dialog, inspect collections/partitions and add it;
+Escape closes the dialog without changing saved subsets. Errors appear inside
+the dialog, and successful additions return to the selected-subset list.
+
+Preparation explains representation lineage and selects the segmentation input
+method. Review summarizes selected data and exposes named fields, shapes and
+validity under Expected consumer structure. Empty public selections require an
+explicitly added subset or imported plan before review/execution. Runs has its
+own empty, execution, saved-preparation and output states, without configuration
+controls. Detailed evidence, local archives and recovery help open on demand.
+
+Splits explains current provider assignments and the A/B/C evaluation goals. Neither view admits custom
 splits or fusion. An exact reviewed plan remains necessary for Zenodo selection
 preparation; viewing the workspace is not plan validation.
 
 1. Choose the data use and required, optional or omitted variables.
-2. Choose an admitted source, collections and published partitions. Individual
+2. In Data, configure an admitted source, collections and published partitions. Individual
    plots are available as an advanced subset.
 3. Add subsets to the dataset draft. The draft persists locally across reloads.
 4. Review the execution plan, or import a previously exported plan. The worker

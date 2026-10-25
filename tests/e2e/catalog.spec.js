@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { openSubset, closeSubset, openRequirements } from './workspace-helpers.js';
 
 test('catalog modules load below the published project path', async ({ page }) => {
   const pageErrors = [];
@@ -26,24 +27,34 @@ test('catalog filters and comparison keep their interactive behavior', async ({ 
 
 test('task variables and partitions follow the selected use and source', async ({ page }) => {
   await page.goto('./#workbench');
-  await page.locator('#prepare-source').selectOption('8287792');
+  await openSubset(page, 'zenodo:8287792');
   await expect(page.locator('#prepare-add')).toBeEnabled();
   await expect(page.locator('#prepare-partitions option[value="test"]')).toHaveCount(0);
+  await closeSubset(page);
   await page.locator('#workspace-navigation [data-workspace-section="objectives"]').click();
+  await openRequirements(page);
   await page.locator('#variable-reflectance').selectOption('required');
   await page.locator('#workspace-navigation [data-workspace-section="data"]').click();
-  await expect(page.locator('#prepare-add')).toBeDisabled();
-  await page.locator('#prepare-source').selectOption('19351234');
+  await expect(
+    page
+      .locator('#workspace-source-list tr')
+      .filter({ hasText: 'zenodo:8287792' })
+      .getByRole('button', { name: 'Configure subset' }),
+  ).toBeDisabled();
+  await openSubset(page, 'zenodo:19351234');
   await expect(page.locator('#prepare-add')).toBeEnabled();
+  await closeSubset(page);
   await page.locator('#workspace-navigation [data-workspace-section="objectives"]').click();
   await page.locator('#task-use').selectOption('evaluation');
   await page.locator('#workspace-navigation [data-workspace-section="data"]').click();
+  await openSubset(page, 'zenodo:19351234');
   await expect(page.locator('#prepare-partitions option[value="train"]')).toHaveCount(0);
   await expect(page.locator('#prepare-partitions option[value="test"]')).toHaveCount(1);
 });
 
 test('a saved draft survives reload with its requirements and selected plots', async ({ page }) => {
   await page.goto('./#workbench');
+  await openSubset(page, 'zenodo:8287792');
   await expect(page.locator('#prepare-add')).toBeEnabled();
   await page.locator('#prepare-plot-label summary').click();
   await page.locator('#prepare-plot').selectOption({ index: 0 });

@@ -22,8 +22,8 @@ record (pinned Zenodo release)          read-only curation
 Quick paths:
 
 - **Browse the catalog**: open the published site above. No setup required.
-- **Prepare a dataset selection in the browser**: open Experiments, define the
-  use in Objectives, add source subsets in Data and inspect the plan in Review.
+- **Prepare a dataset selection in the browser**: open Experiment, define the
+  use in Objectives, configure and add source subsets in Data, then inspect the plan in Review.
   Runs & outputs holds progress, recovery and the validated ZIP. For segmentation,
   combine FOR-instance and FGI-EMIT in one task-specific plan. Only admitted implementations can run; current
   FOR-instance and FGI-EMIT are executable. Other source review gaps remain visible.

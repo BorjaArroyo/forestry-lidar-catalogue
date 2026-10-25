@@ -1,7 +1,9 @@
 # Experiment workspace: contracts and UX acceptance
 
-Status: agreed design direction, consolidated on 2026-10-23. Workspace navigation
-is implemented over the existing independent task routes. Shared multitask plans,
+Status: agreed design direction, consolidated on 2026-10-23; visual workspace
+implementation corrected on 2026-10-25. Compact section views and contextual
+subset configuration follow the selected concept over the existing independent
+task routes. Shared multitask plans,
 custom splits and fusion remain proposed. This specification does not change
 scientific schemas, source admission, reference policies or historical evidence.
 
@@ -185,7 +187,17 @@ Validate these implemented journeys with representative users before closing UX:
    routes; check the journeys while preserving current exports/readers. The five
    sections, separate Runs & outputs, URL/history restoration, saved task
    preferences and retained form/worker nodes are implemented. Automated browser
-   checks cover both tasks and narrow/desktop widths; representative-user
+   checks cover both tasks and narrow/desktop widths. The implementation uses
+   global top navigation, contextual section navigation, a compact coverage table,
+   bounded subset dialogs and an independent run view. Inactive sections have
+   native hidden state; visibility does not depend on a cached stylesheet.
+   Empty-selection gating, keyboard dismissal/focus, duplicate-subset errors,
+   history, real classification exports and desktop page-height limits have
+   regression coverage. Full-page screenshots of every section at both sizes
+   accompany browser tests; [Data desktop](../ui/workspace-desktop.png),
+   [Data mobile](../ui/workspace-mobile.png) and
+   [Runs](../ui/workspace-runs-desktop.png) document the actual application.
+   Representative-user
    walkthroughs and the joint-task journey remain open. Only added subsets are
    durable drafts; local file handles and unsaved source-control choices do not
    survive reload. Existing input-specific recovery limits still apply.
