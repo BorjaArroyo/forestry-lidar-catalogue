@@ -15,7 +15,7 @@ supervised tasks.
 | Sources | Potential shared supervision | Evidence and present limit |
 | --- | --- | --- |
 | TreeScanPL10K | Point-level tree instances and tree-level taxonomy on the same plots | `treeID`, `treeSP` and crown completeness are documented. Companion tables establish partial taxonomic coverage, with unresolved discrepancies below. Neither task has an enabled preparation route for this source. |
-| FOR-instance v1 | Instances, native components and taxonomy in part of the collection | The saved header audit finds `treeSP` in 28 of 32 plots. Instance preparation is enabled; a taxonomic lookup, per-tree coverage audit and joint adapter remain missing. |
+| FOR-instance v1 | Instances and native components | Instance preparation is enabled. `treeSP` is not an established taxonomic reference and does not make this source a candidate for joint instance/species supervision. |
 | FOR-instance V2 | Instances and terrain/wood/foliage components | The catalog records both references in observed PLY schemas. Species reference is not established. No enabled source preparation; v1/v2 capture ancestry remains unresolved. |
 | EvoMS | Instances and wood/foliage/understory components | Both references are documented for two labeled plots; 18 other plots are unlabeled. No enabled source preparation or species reference established. |
 | ForestSemantic | Tree and branch instances, components and structural references | Native IDs use dataset-specific LAS fields. Existing derivative and intended-use review remains outstanding; species supervision is not established. |
@@ -95,26 +95,20 @@ interval or matching filename alone cannot establish same-state compatibility
 for a new fusion. Preserve the provider's existing combined scans as supplied
 representations; new combinations need their own reviewed lineage and route.
 
-## FOR-instance v1: field presence is not joint coverage
+## FOR-instance v1 is excluded from the instance/species case
 
-Recounting [the saved header audit](../../evidence/for-instance-v1.json) gives
-28 plots with native int32 `treeSP`: eight CULS/SCION plots and twenty NIBIO
-plots. RMIT and TUWIEN each have two plots without that field. This is a header
-finding; the audit's short point prefixes do not measure valid species coverage.
+The [paper's Forest types section](https://arxiv.org/pdf/2309.01279), PDF page 5,
+states that species reference was not published. A bounded follow-up inspection
+on 2026-10-26 checked all seven support files against the existing source-lock
+SHA256 values: the five tree tables contain DBH and identifiers, without species
+columns or a code-to-taxon lookup. Headers and 2,048-point prefixes from all 32
+LAS files confirm native `treeSP` fields and numeric codes in part of the archive;
+the field description is only “tree species”. These observations establish no
+mapping to taxonomic names and cannot estimate valid taxonomic coverage.
 
-The enabled [instance adapter](../sources/FOR-INSTANCE.md) preserves original
-fields and applies its own conservative instance-reference policy. It does not
-produce a validated tree-taxonomy table. A joint route must resolve collection
-lookups and special values, check that labels agree within each plot-local tree,
-and report species/genus/unknown coverage by collection and partition. Do not
-pool raw `treeSP` integers across collections or copy TreeScan's lookup merely
-because field names match. Keep trees lacking taxonomy eligible for the tasks
-whose reference remains valid under the selected policy.
-
-The current classification profiles contain a copied FOR-instance observation
-about 32 plots. It is not classification evidence: use the pinned classification
-audit for FOR-species20K/BioDiv counts. This editorial issue and stale admission
-wording in some task assessments require a separate catalog correction.
+Consequently this source is excluded from the joint instance/species prototype.
+Do not infer taxonomy from collection-level dominant species or shared field names.
+Instances plus native components remain a separate, documented multitask case.
 
 ## Configurable reference policy and consumer contract
 
@@ -181,7 +175,7 @@ must use task-specific evidence for discovery and enabled pipelines for executio
 without treating one as the other.
 
 First resolve TreeScan's bounded metadata discrepancies and audit its point/tree
-joins; in parallel, recover FOR-instance's collection taxonomic lookups. Then
+joins. FOR-instance v1 is not a species candidate without new mapping evidence. Then
 specify and validate the shared consumer contract and both coverage policies
 before enabling a joint preparation. Instance-plus-component cases exercise
 two point-level targets; taxonomy cases exercise different target dimensions.
