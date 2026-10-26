@@ -277,7 +277,8 @@ body[data-area='workbench'] .top-actions {
   line-height: 1.6;
 }
 body[data-area='workbench'] .task-select,
-body:not([data-area='workbench']) .workspace-task-choices {
+body:not([data-area='workbench']) .workspace-task-choices,
+body:not([data-area='workbench']) #workspace-objectives-note {
   display: none;
 }
 body[data-area='workbench'] .task-request {
