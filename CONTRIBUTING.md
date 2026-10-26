@@ -4,7 +4,8 @@
 
 All code, presentation and documentation changes reach `main` through a pull request.
 Create a topic branch, run `uv run --no-sync python -m canopy verify`, and submit
-the final change with its relevant validation and desktop/mobile screenshots for UI work.
+the final change with its relevant validation and desktop screenshots for UI work.
+The application targets desktop use; mobile design and mobile-specific tests are out of scope.
 
 GitHub protects `main`, including administrators: the GitHub Actions `verify`
 check must pass against an up-to-date branch, and review conversations must be

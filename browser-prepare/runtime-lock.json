@@ -387,8 +387,8 @@
     },
     "browser-prepare/ui.js": {
       "url": "browser-prepare/ui.js",
-      "sha256": "e2d0dcfc6e913774cc6552b7571b75d2f6db520fecc306fe1d597e5154b8e9a0",
-      "size_bytes": 19649
+      "sha256": "de04eebd7fa21ec3445181d67786fe8bf827fd3f3aed9560469aed70cec357f2",
+      "size_bytes": 20264
     },
     "browser-prepare/run-session.js": {
       "url": "browser-prepare/run-session.js",
@@ -417,8 +417,8 @@
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "0800b23ee5b9f24209fa0644d4b7ee133f1c873104f402fc050c55a5e21c7b6c",
-      "size_bytes": 2035
+      "sha256": "d774e0ac858b9a2fbb9d3d9cf023038c330580ab9fe6a597da3bb506291e8ac2",
+      "size_bytes": 2139
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
@@ -427,8 +427,8 @@
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "4264cf7b96e2e4af29d5ca77287067c7fa712cca763dacc485c9030caf50c8fc",
-      "size_bytes": 41999
+      "sha256": "bdb533af30bf8fe5eb2056a643adbae59d69dc33dd70f3e842e50e30f099bbda",
+      "size_bytes": 42012
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
@@ -457,8 +457,8 @@
     },
     "browser-prepare/controls.js": {
       "url": "browser-prepare/controls.js",
-      "sha256": "f36b93c3c9831ae1582d92d2f9da3ded7817df9f11347e212f6b25bad34d7475",
-      "size_bytes": 3092
+      "sha256": "3979aaa00e2f7260a7e7a25d026d6c4f006d3c4fff9e5fe9b91ba6c35b28df80",
+      "size_bytes": 3239
     },
     "browser-prepare/controller.js": {
       "url": "browser-prepare/controller.js",
@@ -627,8 +627,8 @@
     },
     "web/workspace.js": {
       "url": "web/workspace.js",
-      "sha256": "9e7dbc7b421f3ca30e187af68868190b06d74f275b27261606f2dffa4811a8e2",
-      "size_bytes": 25337
+      "sha256": "a48e9149e80587577ad6146b27d9fa1233c118b76ff19e8af027c142d171b8b0",
+      "size_bytes": 25764
     },
     "web/classification-workspace.js": {
       "url": "web/classification-workspace.js",
@@ -644,6 +644,16 @@
       "url": "browser-prepare/classification-store.js",
       "sha256": "e30cbd86e7273e8dc3e86cb77851098f110816a8283d1462bfda93d2b70de646",
       "size_bytes": 2051
+    },
+    "src/canopy/loader.py": {
+      "url": "src/canopy/loader.py",
+      "sha256": "0d6c25b78c59087d7a51bb1fff85973c8a8466b1359f992647cc1752e0faf300",
+      "size_bytes": 8469
+    },
+    "web/loading-guide.js": {
+      "url": "web/loading-guide.js",
+      "sha256": "e359dad870dccef3307e54e398cca8af7fad80ed72f42131472d31749d0e682d",
+      "size_bytes": 2070
     }
   },
   "zip_js": "2.20.0",

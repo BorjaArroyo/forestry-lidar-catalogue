@@ -103,13 +103,13 @@
               <label
                 ><input type="checkbox" data-workspace-task="task:instances" checked /><span>
                   <strong>Segmentation</strong
-                  ><small>Plot geometry, tree instances and reference masks.</small>
+                  ><small>FOR-instance and FGI-EMIT · validated plot preparation.</small>
                 </span></label
               >
               <label
                 ><input type="checkbox" data-workspace-task="task:species" /><span>
                   <strong>Classification</strong
-                  ><small>Tree observations and valid genus or species reference.</small>
+                  ><small>FOR-species20K and BioDiv-3DTrees · validated tree observations.</small>
                 </span></label
               >
             </fieldset>
@@ -140,9 +140,9 @@
               <details id="workspace-requirements">
                 <summary>Input and target requirements</summary>
                 <div id="task-variables" class="task-options"></div>
+                <p id="task-request-summary" class="muted" role="status" aria-live="polite"></p>
               </details>
             </div>
-            <p id="task-request-summary" class="muted" role="status" aria-live="polite"></p>
           </section>
           <div class="toolbar source-filters">
             <label class="search"
@@ -281,10 +281,11 @@
           </section>
           <section id="view-workbench" class="view" hidden="">
             <section class="workspace-note" data-workspace-stage="objectives" hidden="">
-              <strong>Keep your objectives across sections</strong>
+              <strong>Four validated sources, two available tasks</strong>
               <p>
-                Select one task for its audited preparation, or both for a shared experiment draft.
-                Each target retains its own reference requirements and validity.
+                Choose one task to prepare its validated sources. Selecting both opens a
+                configuration preview only: joint execution is not available. Each task keeps its
+                saved selection.
               </p>
               <details>
                 <summary>Multitask execution</summary>
@@ -294,6 +295,26 @@
                   when you return to that task.
                 </p>
               </details>
+            </section>
+            <section
+              id="workspace-available-routes"
+              class="workspace-note"
+              data-workspace-stage="data"
+              hidden
+            >
+              <strong>Available preparations</strong>
+              <p>
+                These four sources can run now through their validated task routes. Joint
+                instance/taxonomy configuration below is a preview.
+              </p>
+              <div class="lab-actions">
+                <button class="button" data-ready-task="instances">
+                  Segmentation · FOR-instance + FGI-EMIT
+                </button>
+                <button class="button" data-ready-task="species">
+                  Classification · FOR-species20K + BioDiv-3DTrees
+                </button>
+              </div>
             </section>
             <section
               class="workspace-source-browser"
@@ -416,7 +437,11 @@
                   Edit selected subsets →
                 </button>
               </div>
-              <h2>What should remain unseen?</h2>
+              <h2>Evaluation context · informational</h2>
+              <p class="workspace-help">
+                This step inspects existing provider partitions. It does not create a new split or
+                select an evaluation profile.
+              </p>
               <div class="workspace-profile-grid">
                 <article>
                   <span>A</span>
@@ -485,6 +510,31 @@
                 <p id="workspace-consumer-help" class="workspace-help">
                   N counts points in a scene or observation; C counts source-specific channels. File
                   blocks are storage units. Exact source omissions appear in the reviewed plan.
+                </p>
+              </details>
+            </section>
+            <section id="workspace-loading-guide" hidden>
+              <details>
+                <summary>Load this dataset with Python / NumPy</summary>
+                <p>
+                  Extract the completed ZIP into a folder containing dataset.json. Install a
+                  compatible Canopy checkout with <code id="loading-install"></code>.
+                  <a href="docs/guides/NUMPY-LOADER.md">Installation and configuration guide →</a>
+                </p>
+                <p id="loading-context"></p>
+                <pre class="loading-example"><code id="loading-code"></code></pre>
+                <div class="lab-actions">
+                  <button class="button" id="loading-copy">Copy Python example</button>
+                  <a class="button" href="examples/load_dataset.py" download="load_dataset.py"
+                    >Download configurable example</a
+                  >
+                </div>
+                <p id="loading-copy-status" role="status"></p>
+                <p class="workspace-help">
+                  Configure partitions, sources, fields, modalities and block size with
+                  LoaderConfig. Blocks are storage units, not training samples. Sampling, grouping
+                  and normalization remain explicit downstream choices. No Torch, TensorFlow or JAX
+                  is required.
                 </p>
               </details>
             </section>
@@ -750,6 +800,14 @@
                       ></label>
                     </div>
                     <p id="prepare-selection-summary" class="notice" role="status"></p>
+                    <div class="lab-actions">
+                      <button type="button" id="prepare-smallest" class="button">
+                        Try the smallest plot
+                      </button>
+                      <button type="button" id="prepare-select-all" class="button">
+                        Select all matching plots
+                      </button>
+                    </div>
                     <details id="prepare-plot-label">
                       <summary>Advanced: choose individual plots</summary>
                       <p>

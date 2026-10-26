@@ -6,6 +6,7 @@ import { createServiceClient } from './workbench/client.js';
 import { mountClassificationWorkspace } from './classification-workspace.js';
 import { mountPreparation } from '../browser-prepare/ui.js';
 import { mountWorkspace } from './workspace.js?v=multitask-v1';
+import { mountLoadingGuide } from './loading-guide.js';
 
 const catalog = window.LIDAR_CATALOG;
 if (!catalog) {
@@ -46,4 +47,5 @@ if (!catalog) {
   });
   mountClassificationWorkspace({ document });
   mountWorkspace({ application, document });
+  mountLoadingGuide({ application, document });
 }

@@ -68,7 +68,7 @@ test('rank and crown filters affect candidates while joint drafts cannot trigger
   await expect(page.locator('[data-workspace-source="8287792"]')).toBeVisible();
 });
 
-for (const width of [375, 1280])
+for (const width of [1280, 1440])
   test('shared workspace stays usable at ' + width + 'px', async ({ page }, info) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto('./?tasks=instances,species&sources=19127709&coverage=partial#experiment/data');

@@ -150,7 +150,7 @@ test('review requires explicit data and runs has its own empty view', async ({ p
   await expect(page.locator('#workspace-review-summary')).toBeVisible();
 });
 
-for (const width of [375, 1280]) {
+for (const width of [1280, 1440]) {
   test('workspace sections remain readable at ' + width + 'px', async ({ page }, info) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto('./#experiment/objectives');
@@ -175,19 +175,6 @@ for (const width of [375, 1280]) {
           const navigation = await page.locator('#workspace-navigation').boundingBox();
           const content = await page.locator('.page-heading').boundingBox();
           expect(navigation.x + navigation.width).toBeLessThanOrEqual(content.x);
-        }
-        if (width === 375 && name === 'data') {
-          // Source readiness can replace rows; measure the current table in one browser turn.
-          await expect
-            .poll(() =>
-              page
-                .locator('#workspace-source-list tr')
-                .evaluateAll(
-                  (rows) =>
-                    rows.length > 0 && rows.every((row) => row.getBoundingClientRect().width > 280),
-                ),
-            )
-            .toBe(true);
         }
         if (width === 1280 && name === 'data') {
           await openSubset(page, task === 'species' ? 'zenodo:13255198' : 'zenodo:8287792');

@@ -109,7 +109,7 @@ test('a model without admitted routes explains its empty state', async ({ page }
   await expect(page.locator('.graph-node.reported')).toHaveCount(12);
 });
 
-for (const width of [375, 768, 1280, 1920]) {
+for (const width of [1024, 1280, 1440, 1920]) {
   test(`model fits without page overflow or text collisions at ${width}px`, async ({
     page,
   }, testInfo) => {
@@ -140,7 +140,7 @@ for (const width of [375, 768, 1280, 1920]) {
       .screenshot({ path: testInfo.outputPath(`model-${width}.png`) });
     await page.locator('#model-show-reported').check();
     expect(await fitted(page)).toBe(true);
-    await page.setViewportSize({ width: width === 375 ? 768 : 375, height: 1000 });
+    await page.setViewportSize({ width: width === 1024 ? 1440 : 1024, height: 1000 });
     await expect.poll(() => fitted(page)).toBe(true);
   });
 }

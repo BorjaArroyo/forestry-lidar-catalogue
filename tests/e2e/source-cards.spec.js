@@ -49,7 +49,7 @@ test('preparation actions keep the existing source and request bridge', async ({
   await expect(page.locator('#task-use')).toHaveValue('training');
 });
 
-for (const width of [375, 768, 1280, 1920]) {
+for (const width of [1024, 1280, 1440, 1920]) {
   test(`cards and expanded detail remain readable at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto('./');

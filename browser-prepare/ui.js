@@ -359,6 +359,22 @@ export function mountPreparation({
     controls();
   };
   $('prepare-plot').onchange = controls;
+  $('prepare-smallest').onclick = () => {
+    if (locked()) return;
+    const options = [...$('prepare-plot').options];
+    const sizes = new Map(plots.map((plot) => [plot.path, plot.size_bytes]));
+    const smallest = options.reduce(
+      (best, option) => (!best || sizes.get(option.value) < sizes.get(best.value) ? option : best),
+      null,
+    );
+    for (const option of options) option.selected = option === smallest;
+    controls();
+  };
+  $('prepare-select-all').onclick = () => {
+    if (locked()) return;
+    for (const option of $('prepare-plot').options) option.selected = true;
+    controls();
+  };
   $('prepare-source').onchange = sourceChanged;
   $('dataset-plan-file').onchange = async () => {
     if (locked()) return;
