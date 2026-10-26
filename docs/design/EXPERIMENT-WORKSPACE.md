@@ -7,6 +7,10 @@ task routes. Shared multitask plans,
 custom splits and fusion remain proposed. This specification does not change
 scientific schemas, source admission, reference policies or historical evidence.
 
+The [multitask coverage review](../reviews/MULTITASK-COVERAGE.md), dated
+2026-10-26, analyzes concrete source candidates and records configurable partial
+versus joint reference requirements, with their discovery and consumer implications.
+
 ## Scope
 
 Prepare reproducible datasets through a persistent, potentially multitask
@@ -113,8 +117,10 @@ A joint plot view may have point-level instance reference and tree-level taxonom
 with an explicit point/tree relation: targets need not share dimensions. Declare
 the consumer sample unit and variable dimensions; file chunks remain storage
 units. Sampling, granularity changes and dtype conversions belong to explicit
-recipes. Requiring joint reference or permitting partial coverage must be a
-declared recipe decision; no universal policy has been selected.
+recipes. Requiring joint reference or permitting partial coverage is configurable
+in the preparation and frozen in the recipe. Show coverage and exclusions for
+each choice; no universal default has been selected. Requiring joint reference
+must not silently remove scene context or relabel excluded trees as background.
 
 Review shows the expected schema; a completed, independently validated run can
 expose a real bounded sample. Keep the format framework-neutral and clear enough
