@@ -1,6 +1,5 @@
 import { mountClassification } from '../browser-prepare/classification-ui.js';
 
-// Keep the admitted coordinator and its historical execution evidence immutable.
 // Workspace objectives own restoration; an explicit plan import can replace them.
 export function mountClassificationWorkspace({ document: doc = document }) {
   const document = new Proxy(doc, {

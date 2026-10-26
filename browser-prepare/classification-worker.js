@@ -3,9 +3,21 @@ import { loadContext, loadTools, sha256 } from './classification-runtime.js';
 import { decodeObservation } from './classification-las.js';
 import { traverseZstd } from './classification-intake.js';
 import { extractPlot, localReader, providerReader } from './intake.js';
+import { writeArchive } from './export.js';
+import { classificationLock } from './classification-store.js';
 
 const encode = (value) => new TextEncoder().encode(JSON.stringify(value, null, 2) + '\n');
 const phase = (text) => self.postMessage({ type: 'phase', text });
+function byteProgress(label) {
+  let last = 0;
+  return (bytes) => {
+    const now = performance.now();
+    if (now - last >= 1000) {
+      phase(`${label}: ${(bytes / 1048576).toFixed(1)} MiB…`);
+      last = now;
+    }
+  };
+}
 async function directory(root, path) {
   let dir = root;
   for (const part of path.split('/').filter(Boolean))
@@ -122,12 +134,15 @@ async function execute(plan, inputs, tools, root) {
       access = await original.createSyncAccessHandle();
     try {
       access.truncate(0);
-      for (let offset = 0; offset < file.size; offset += 1024 ** 2)
+      const progress = byteProgress('Preserving original cloud');
+      for (let offset = 0; offset < file.size; offset += 1024 ** 2) {
         writeAll(
           access,
           new Uint8Array(await file.slice(offset, offset + 1024 ** 2).arrayBuffer()),
           offset,
         );
+        progress(Math.min(offset + 1024 ** 2, file.size));
+      }
       access.flush();
     } finally {
       access.close();
@@ -196,9 +211,16 @@ async function execute(plan, inputs, tools, root) {
         if (inputs?.length && !local) throw Error('LOCAL_ARCHIVE_MISSING: ' + asset.name);
         if (local && local.size !== asset.size_bytes) throw Error('ARCHIVE_SIZE_MISMATCH');
         const member = { ...observation, archive_member: observation.path };
+        const downloading = byteProgress('Downloading ' + asset.name);
         const remote = local
           ? null
-          : providerReader(tools.zip, { ...asset, download_url: asset.url }, member, fetch);
+          : providerReader(
+              tools.zip,
+              { ...asset, download_url: asset.url },
+              member,
+              fetch,
+              (stats) => downloading(stats.bytes_received),
+            );
         const reader = local ? localReader(tools.zip, local) : remote.reader;
         const file = await target(root, 'staging/cloud'),
           access = await file.createSyncAccessHandle();
@@ -209,7 +231,7 @@ async function execute(plan, inputs, tools, root) {
             reader,
             member,
             (bytes, offset) => writeAll(access, bytes, offset),
-            () => {},
+            byteProgress('Extracting ' + observation.path),
             { maxEntries: 25000 },
           );
           access.flush();
@@ -277,26 +299,9 @@ async function execute(plan, inputs, tools, root) {
   }))
     files.push(await write(root, path, encode(value)));
   phase('All sources verified. Writing one dataset ZIP…');
-  const archive = await target(root, 'prepared.zip'),
-    access = await archive.createSyncAccessHandle();
-  let position = 0;
-  try {
-    access.truncate(0);
-    const output = new WritableStream({
-      write(bytes) {
-        writeAll(access, bytes, position);
-        position += bytes.length;
-      },
-    });
-    const writer = new tools.zip.ZipWriter(output, { level: 0, zip64: true });
-    for (const entry of files)
-      await writer.add(entry.path, new tools.zip.BlobReader(await entry.handle.getFile()));
-    await writer.close();
-    access.flush();
-  } finally {
-    access.close();
-  }
-  return { file: await archive.getFile(), evidence };
+  const file = await writeArchive(tools.zip, root, files, byteProgress('Writing dataset ZIP'));
+  await write(root, 'complete.json', encode({ size_bytes: file.size, evidence }));
+  return { file, evidence };
 }
 let active = false;
 self.onmessage = async ({ data }) => {
@@ -323,11 +328,12 @@ self.onmessage = async ({ data }) => {
     const origin = await navigator.storage.getDirectory();
     jobs = await origin.getDirectoryHandle('canopy-classification', { create: true });
     job = crypto.randomUUID();
-    const root = await jobs.getDirectoryHandle(job, { create: true });
-    self.postMessage({ type: 'job', id: job });
-    const result = await execute(plan, data.inputs, await loadTools(read), root);
-    self.postMessage({ type: 'result', ...result });
-    // Export is a File snapshot; release worker staging after the client receives it.
+    await navigator.locks.request(classificationLock(job), async () => {
+      const root = await jobs.getDirectoryHandle(job, { create: true });
+      self.postMessage({ type: 'job', id: job });
+      const result = await execute(plan, data.inputs, await loadTools(read), root);
+      self.postMessage({ type: 'result', ...result });
+    });
   } catch (error) {
     if (job) await jobs.removeEntry(job, { recursive: true }).catch(() => {});
     self.postMessage({

@@ -137,8 +137,8 @@
     },
     "data/knowledge-model.json": {
       "url": "data/knowledge-model.json",
-      "sha256": "e5dc15d52c7c96218f0e9963e612c434d245bfefb780883180d5087a4c0d6ef2",
-      "size_bytes": 214289
+      "sha256": "24a55a1848bab9f8d039636aaaf7376ac22772efd3941a905907bb794c455d75",
+      "size_bytes": 214744
     },
     "schemas/knowledge-model.schema.json": {
       "url": "schemas/knowledge-model.schema.json",
@@ -372,8 +372,8 @@
     },
     "browser-prepare/export.js": {
       "url": "browser-prepare/export.js",
-      "sha256": "bc623324daabd3f09aac73be92f52c7e3ea002e80c2e439366cf8dcbb4492d92",
-      "size_bytes": 5998
+      "sha256": "3a8e592dba9e7e76b1b9be753bcf9b495a318a51f5dde1bf21a9db72307cdd84",
+      "size_bytes": 6279
     },
     "browser-prepare/runner.js": {
       "url": "browser-prepare/runner.js",
@@ -392,8 +392,8 @@
     },
     "browser-prepare/run-session.js": {
       "url": "browser-prepare/run-session.js",
-      "sha256": "ca6cd455cae779661e4dbdfc2d932c8cdc3425a0622c0af052e739463e4a2fa1",
-      "size_bytes": 1647
+      "sha256": "a3f9e194f03d97313f47dc7309c3fd5fe4602651fef66d4d6a4e2d99d71032d9",
+      "size_bytes": 1679
     },
     "browser-prepare/draft-panel.js": {
       "url": "browser-prepare/draft-panel.js",
@@ -427,8 +427,8 @@
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "a9d3bf97847d2d29faf9b7842428105b02456e7155790043055dab9ef6cb5c18",
-      "size_bytes": 41654
+      "sha256": "4264cf7b96e2e4af29d5ca77287067c7fa712cca763dacc485c9030caf50c8fc",
+      "size_bytes": 41999
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
@@ -497,8 +497,8 @@
     },
     "src/canopy/tools/acquire.py": {
       "url": "src/canopy/tools/acquire.py",
-      "sha256": "20256dea939e369a18775dcb7b54ffdc2bf190b38914d1e7e3b85b1f61894fac",
-      "size_bytes": 18326
+      "sha256": "1248ffdcd632b7e689a3116bee2701806139569e9e30467c9f1593596acebba9",
+      "size_bytes": 18087
     },
     "src/canopy/tools/verify.py": {
       "url": "src/canopy/tools/verify.py",
@@ -542,8 +542,8 @@
     },
     "src/canopy/classification/refresh_locks.py": {
       "url": "src/canopy/classification/refresh_locks.py",
-      "sha256": "6ffe57326e19a59cbb7ac42e81f61b2df6812db42609ab86c922786300f3ca0b",
-      "size_bytes": 1567
+      "sha256": "8b035fe355a84250548011cdf4deee448c60680b0c5aeb481bcbda8247609966",
+      "size_bytes": 1752
     },
     "src/canopy/classification/source_identity.py": {
       "url": "src/canopy/classification/source_identity.py",
@@ -597,8 +597,8 @@
     },
     "browser-prepare/classification-ui.js": {
       "url": "browser-prepare/classification-ui.js",
-      "sha256": "f72055bdb57690671a5a4ec35537512f66f7309de699f64f420dc166ad9a7649",
-      "size_bytes": 14433
+      "sha256": "9cd15cb8a692bf89f2fe57716fd0913c26f530c06480eec7206c6f66d79140c4",
+      "size_bytes": 17878
     },
     "browser-prepare/classification-las.js": {
       "url": "browser-prepare/classification-las.js",
@@ -607,8 +607,8 @@
     },
     "browser-prepare/classification-worker.js": {
       "url": "browser-prepare/classification-worker.js",
-      "sha256": "61aa4c64452172fa815787473a5c88d49dcd5838c8ede59a3b09b8373ef4f725",
-      "size_bytes": 12511
+      "sha256": "b1d0da9f43fa2b74ad712016c700bd924d9543990a424683d76bb68f64ee2df4",
+      "size_bytes": 12780
     },
     "browser-prepare/classification-intake.js": {
       "url": "browser-prepare/classification-intake.js",
@@ -627,18 +627,23 @@
     },
     "web/workspace.js": {
       "url": "web/workspace.js",
-      "sha256": "300dc260616c3484aa88d7c6d502a30f10dafb6abfd5dea87037011b89ec493b",
-      "size_bytes": 25276
+      "sha256": "9e7dbc7b421f3ca30e187af68868190b06d74f275b27261606f2dffa4811a8e2",
+      "size_bytes": 25337
     },
     "web/classification-workspace.js": {
       "url": "web/classification-workspace.js",
-      "sha256": "999d39056aa72f9f06deed60fe7232645897f047e5c6a9ddcab7ead3560133a9",
-      "size_bytes": 1019
+      "sha256": "cbaf6715a24e17d1d4ce14a3ee96d6bb6cb063bbce1905ea6c9511525029662e",
+      "size_bytes": 937
     },
     "web/experiment.js": {
       "url": "web/experiment.js",
       "sha256": "042f334b8835fe7717418204b36a232f5a552ca8cbd57ca2aee5033ac27415e0",
       "size_bytes": 5112
+    },
+    "browser-prepare/classification-store.js": {
+      "url": "browser-prepare/classification-store.js",
+      "sha256": "e30cbd86e7273e8dc3e86cb77851098f110816a8283d1462bfda93d2b70de646",
+      "size_bytes": 2051
     }
   },
   "zip_js": "2.20.0",

@@ -1,6 +1,6 @@
 import { write } from './storage.js';
 
-export async function writeArchive(zip, root, entries) {
+export async function writeArchive(zip, root, entries, progress = () => {}) {
   const archive = await root.getFileHandle('prepared.zip', { create: true });
   const access = await archive.createSyncAccessHandle();
   let position = 0;
@@ -14,6 +14,7 @@ export async function writeArchive(zip, root, entries) {
           if (!count) throw Error('ZIP write stopped');
           offset += count;
           position += count;
+          progress(position);
         }
       },
     });
@@ -158,7 +159,14 @@ export async function exportDataset({
     });
   phase('Writing the downloadable ZIP from browser storage…');
   const zip = await loadZip(lock);
-  const outputFile = await writeArchive(zip, root, [...exportFiles, ...provenance]);
+  let lastProgress = 0;
+  const outputFile = await writeArchive(zip, root, [...exportFiles, ...provenance], (bytes) => {
+    const now = performance.now();
+    if (now - lastProgress >= 1000) {
+      phase(`Writing dataset ZIP: ${(bytes / 1048576).toFixed(1)} MiB stored…`);
+      lastProgress = now;
+    }
+  });
   await write(
     root,
     'complete.json',

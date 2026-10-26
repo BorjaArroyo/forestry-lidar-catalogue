@@ -161,8 +161,11 @@ intake and explicitly reports its whole-provider ZIP checksum as unchecked.
 
 Corruption after a selected member, missing committed modalities, insufficient
 storage, cancellation or a later-source failure prevents a validated ZIP.
-Failure removes the run's staging. Temporary successful output can be cleared
-from the UI. Browser output is temporary; download a completed ZIP to keep it.
+Reported worker failures remove the run's staging. Reloading or stopping a worker
+can leave interrupted files; these are listed under Saved classification files
+for explicit deletion. Completed ZIPs can be downloaded there after reloading.
+Run locks prevent deleting files while another tab is using them. Browser output
+is temporary; download a completed ZIP to keep it.
 
 ## Reproducing evidence
 

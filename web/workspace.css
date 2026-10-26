@@ -364,6 +364,21 @@ body[data-area='workbench'] .task-request {
   border-bottom: 1px solid var(--line);
   font-size: 12px;
 }
+.workspace-saved-runs li {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.workspace-saved-runs li > :is(span, p) {
+  flex: 1 1 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .workspace-flow {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -528,6 +543,7 @@ body[data-area='workbench'] .task-request {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+  align-items: start;
 }
 .workspace-subset-dialog :is(select, input),
 .workspace-input-method :is(select, input),

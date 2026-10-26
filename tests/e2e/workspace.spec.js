@@ -24,8 +24,10 @@ test('workspace routes retain draft, filters and focus across navigation and rel
   await expect(page.locator('#workspace-partitions')).toHaveText('dev, train');
   await page.goBack();
   await expect(page).toHaveURL(/#experiment\/preparation$/);
+  await expect(page.locator('.page-heading h1')).toBeFocused();
   await page.goForward();
   await expect(page).toHaveURL(/#experiment\/splits$/);
+  await expect(page.locator('.page-heading h1')).toBeFocused();
   await page.reload();
   await expect(page.locator('#workspace-partitions')).toHaveText('dev, train');
   await section(page, 'data').click();
@@ -34,6 +36,17 @@ test('workspace routes retain draft, filters and focus across navigation and rel
   await page.locator('.sidebar [data-view="datasets"]').click();
   await expect(page.locator('#search')).toHaveValue('FOR-instance');
   expect(errors).toEqual([]);
+});
+
+test('skip to content keeps the current workspace route and keyboard context', async ({ page }) => {
+  await page.goto('./#experiment/data');
+  const route = page.url();
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(route);
+  await expect(page.locator('.page-heading h1')).toBeFocused();
+  await expect(page.locator('#workspace-navigation')).toBeVisible();
 });
 
 test('objectives persist independently for both tasks without starting preparation', async ({
@@ -150,6 +163,11 @@ for (const width of [375, 1280]) {
         expect(
           await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
         ).toBe(true);
+        for (const input of await page.locator('input:visible, select:visible').all()) {
+          const bounds = await input.boundingBox();
+          expect(bounds.x).toBeGreaterThanOrEqual(0);
+          expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+        }
         if (width === 1280) {
           expect(
             await page.evaluate(() => document.documentElement.scrollHeight),
@@ -170,6 +188,28 @@ for (const width of [375, 1280]) {
                 ),
             )
             .toBe(true);
+        }
+        if (width === 1280 && name === 'data') {
+          await openSubset(page, task === 'species' ? 'zenodo:13255198' : 'zenodo:8287792');
+          const dialog = page.locator('.workspace-subset-dialog[open]');
+          for (const input of await dialog.locator('select:visible').all()) {
+            const bounds = await input.boundingBox();
+            expect(bounds.x).toBeGreaterThanOrEqual(0);
+            expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+          }
+          expect(
+            await dialog
+              .locator('.notice')
+              .first()
+              .evaluate((node) =>
+                parseFloat(node.ownerDocument.defaultView.getComputedStyle(node).fontSize),
+              ),
+          ).toBeGreaterThanOrEqual(13);
+          await page.screenshot({
+            path: info.outputPath(task + '-fields-' + width + '.png'),
+            fullPage: true,
+          });
+          await page.keyboard.press('Escape');
         }
         await page.screenshot({
           path: info.outputPath(task + '-' + name + '-' + width + '.png'),
