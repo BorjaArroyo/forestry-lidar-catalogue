@@ -417,18 +417,18 @@
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "a29471745522e9cd09b735331cd589c27182d5238b26aadded67f9e4011e8d23",
-      "size_bytes": 2020
+      "sha256": "0800b23ee5b9f24209fa0644d4b7ee133f1c873104f402fc050c55a5e21c7b6c",
+      "size_bytes": 2035
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
-      "sha256": "6bfbd2371421a9bc837c8a7615332153420ee07b1ad83f1499a88704b9bad9e9",
-      "size_bytes": 4322
+      "sha256": "3632d2b90bb6f1a536d4d18a1b109e2fa46f40ad0004f6718ea497a5349a39bd",
+      "size_bytes": 4395
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "a17e5b6bde29070ed6bef5a00858def4d952e77eeef2bad11ac640ba26822941",
-      "size_bytes": 37907
+      "sha256": "a9d3bf97847d2d29faf9b7842428105b02456e7155790043055dab9ef6cb5c18",
+      "size_bytes": 41654
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
@@ -627,13 +627,18 @@
     },
     "web/workspace.js": {
       "url": "web/workspace.js",
-      "sha256": "bec27a0b4f72b95ab8e615ccff72f8e15aadf7ec32153ca7b1c904595c6ad360",
-      "size_bytes": 16611
+      "sha256": "300dc260616c3484aa88d7c6d502a30f10dafb6abfd5dea87037011b89ec493b",
+      "size_bytes": 25276
     },
     "web/classification-workspace.js": {
       "url": "web/classification-workspace.js",
       "sha256": "999d39056aa72f9f06deed60fe7232645897f047e5c6a9ddcab7ead3560133a9",
       "size_bytes": 1019
+    },
+    "web/experiment.js": {
+      "url": "web/experiment.js",
+      "sha256": "042f334b8835fe7717418204b36a232f5a552ca8cbd57ca2aee5033ac27415e0",
+      "size_bytes": 5112
     }
   },
   "zip_js": "2.20.0",

@@ -1,4 +1,5 @@
 /* Presentation only: the worker independently resolves and validates every request. */
+import { referenceFor } from '../experiment.js?v=multitask-v1';
 export function createTaskSelection(catalog, initialTask = 'instances') {
   let task, requirements;
   function setTask(id) {
@@ -72,7 +73,7 @@ export function createTaskSelection(catalog, initialTask = 'instances') {
   }
   function matches(record, request) {
     const sourceRecord = catalog.datasets.find((d) => d.id === String(record));
-    if (task.id === 'species') return Boolean(sourceRecord?.classification);
+    if (task.id === 'species') return referenceFor(sourceRecord, 'species').reported;
     if (sourceRecord?.classification) return false;
     const result = assess(record, request);
     const context = task.preparation_sources[String(record)];

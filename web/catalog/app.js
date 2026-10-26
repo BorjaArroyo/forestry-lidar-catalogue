@@ -1,7 +1,14 @@
 import { escapeHTML as esc, downloadJSON } from '../shared/dom.js';
 /* A dependency-free, offline viewer. This application never modifies LiDAR files. */
-import { createTaskSelection } from './task-selection.js';
-import { parseWorkspaceRoute, workspaceHash } from '../workspace.js?v=workspace-v2';
+import { createTaskSelection } from './task-selection.js?v=multitask-v1';
+import { parseWorkspaceRoute, workspaceHash } from '../workspace.js?v=multitask-v1';
+import {
+  normalizeExperiment,
+  experimentFromUrl,
+  experimentToUrl,
+  jointSources,
+  referenceFor,
+} from '../experiment.js?v=multitask-v1';
 
 export function mountCatalog({
   catalog,
@@ -44,6 +51,8 @@ export function mountCatalog({
   } catch {
     state.storageUnavailable = true;
   }
+  let experiment = normalizeExperiment(saved.experiment, data, saved.activeTask || task.id);
+  const joint = () => experiment.tasks.length > 1;
   for (const [id, value] of Object.entries(saved.tasks || {})) {
     const definition = data.tasks.find((entry) => entry.id === id && entry.requirements);
     if (!definition || !value || typeof value !== 'object') continue;
@@ -75,6 +84,7 @@ export function mountCatalog({
           schema_version: '1.0.0',
           activeTask: task.id,
           tasks: Object.fromEntries(taskStates),
+          experiment,
         }),
       );
     } catch {
@@ -114,6 +124,10 @@ export function mountCatalog({
       : 'Size not reviewed';
   const readinessHtml = (d) => {
     const s = discovery(d);
+    if (joint())
+      return `<dl class="source-readiness">${experiment.tasks.map((id) => `<div><dt>${id === 'instances' ? 'Instances' : 'Taxonomy'}</dt><dd>${esc(referenceFor(d, id).label)}</dd></div>`).join('')}<div><dt>Preparation</dt><dd>Joint route unavailable</dd></div></dl>`;
+    if (task.id === 'species')
+      return `<dl class="source-readiness"><div><dt>Taxonomic reference</dt><dd>${esc(referenceFor(d, 'species').label)}</dd></div><div><dt>Task preparation</dt><dd>${esc(d.classification ? s.preparation.label : 'No admitted classification pipeline')}</dd></div></dl>`;
     return `<dl class="source-readiness"><div><dt>${task.id === 'species' ? 'Taxonomic reference' : 'Instance reference'}</dt><dd><span class="source-status reference-${esc(s.instance_reference.status)}">${esc(s.instance_reference.label)}</span></dd></div><div><dt>Task preparation</dt><dd><span class="source-status preparation-${esc(s.preparation.status)}">${esc(s.preparation.label)}</span></dd></div></dl>`;
   };
   const sourceServiceNote = (source) =>
@@ -142,7 +156,9 @@ export function mountCatalog({
       (state.unit === 'all' || discovery(d).unit === state.unit) &&
       (state.reference === 'all' || discovery(d).instance_reference.status === state.reference) &&
       (state.preparation === 'all' || discovery(d).preparation.status === state.preparation) &&
-      selection.matches(d.id, taskRequest())
+      (joint()
+        ? jointSources(data).some((source) => source.id === d.id)
+        : selection.matches(d.id, taskRequest()))
     );
   };
   const visibleDatasets = () => data.datasets.filter(matches);
@@ -159,7 +175,10 @@ export function mountCatalog({
     const request = taskRequest(),
       use = task.requirements.uses[request.use];
     $('#task-use').value = request.use;
-    $('#task-rank-label').hidden = task.id !== 'species';
+    $('#task-rank-label').hidden = joint() || task.id !== 'species';
+    $('#task-use').closest('label').hidden = joint();
+    $('#experiment-rank-label').hidden = !joint();
+    $('#experiment-rank').value = experiment.rank;
     $('#task-rank').value = state.rank;
     $('#task-variables').hidden = task.id === 'species';
     $('#task-use').disabled = state.taskRunning;
@@ -168,7 +187,11 @@ export function mountCatalog({
       input.value = request.variables[variable.key];
       input.disabled = state.taskRunning || use.required_variables.includes(variable.key);
     }
-    $('#task-request-summary').textContent = use.detail;
+    $('#task-native-selector').hidden = joint();
+    $('#experiment-source-context').hidden = !joint();
+    $('#task-request-summary').textContent = joint()
+      ? 'Each target keeps its own reference, validity and dimensions. Review shared coverage before execution.'
+      : use.detail;
   }
   function omittedVariables(result) {
     return Object.keys(result.omitted).map(
@@ -176,6 +199,8 @@ export function mountCatalog({
     );
   }
   function requestFit(d) {
+    if (joint())
+      return '<div class="request-fit"><strong>Joint preparation is unavailable</strong><p>Reference availability does not establish an admitted joint pipeline.</p></div>';
     const result = selection.assess(d.id, taskRequest());
     const omitted = omittedVariables(result);
     const channels = task.preparation_sources[d.id].native_reflectance;
@@ -188,7 +213,7 @@ export function mountCatalog({
     document.dispatchEvent(new CustomEvent('canopy-task-request', { detail: taskRequest() }));
   }
   document.addEventListener('canopy-set-task-request', (event) => {
-    if (state.taskRunning) return;
+    if (state.taskRunning || joint()) return;
     if (event.detail.task_ref && event.detail.task_ref !== 'task:' + task.id) return;
     const normalized = selection.normalize(event.detail.use, event.detail.variables || {});
     state.taskUse = normalized.use;
@@ -261,7 +286,9 @@ export function mountCatalog({
   function cardHtml(d) {
     const s = discovery(d);
     const upcoming = s.preparation.status !== 'ready';
-    const fit = selection.assess(d.id, taskRequest());
+    const fit = joint()
+      ? { status: 'blocked', omitted: {} }
+      : selection.assess(d.id, taskRequest());
     const omitted = omittedVariables(fit);
     return `<article class="dataset-card source-card${upcoming ? ' upcoming' : ''}" data-source="${d.id}" aria-labelledby="source-title-${d.id}">
       <header class="source-card-heading"><div><p class="source-kicker">${esc(d.modalities.join(' · '))} <span>· ${esc(s.unit_label)}</span></p><h3 id="source-title-${d.id}">${esc(d.name)}</h3></div><label class="card-compare"><input type="checkbox" data-compare-check="${d.id}" aria-label="Compare ${esc(d.name)}" ${state.compare.has(d.id) ? 'checked' : ''}><span>Compare</span></label></header>
@@ -270,13 +297,13 @@ export function mountCatalog({
       ${readinessHtml(d)}
       ${upcoming ? '' : `<div class="card-fit ${fit.status === 'ready' ? 'ok' : 'no'}"><strong>${fit.status === 'ready' ? 'Ready for your request' : 'Current requirements are not covered'}</strong>${omitted.length ? `<p>Not produced: ${esc(omitted.join(', '))}.</p>` : ''}</div>`}
       <div class="source-limitation"><strong>Key limitation</strong><p>${esc(s.limitation)}</p></div>
-      <footer class="card-bottom"><p class="card-meta"><strong>${recordSize(d)}</strong><span>${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} · whole pinned record</span></p><div class="card-actions"><button class="button small ${fit.status === 'ready' ? '' : 'primary'}" data-detail="${d.id}">View details</button>${fit.status === 'ready' ? `<button class="button small primary" data-task-prepare="${d.id}">Prepare <span aria-hidden="true">→</span></button>` : ''}</div></footer>
+      <footer class="card-bottom"><p class="card-meta"><strong>${recordSize(d)}</strong><span>${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} · whole pinned record</span></p><div class="card-actions"><button class="button small ${fit.status === 'ready' ? '' : 'primary'}" data-detail="${d.id}">View details</button>${joint() ? `<button class="button small" data-experiment-add="${d.id}">Add to experiment</button>` : fit.status === 'ready' ? `<button class="button small primary" data-task-prepare="${d.id}">Prepare <span aria-hidden="true">→</span></button>` : ''}</div></footer>
     </article>`;
   }
   function renderDatasets() {
     const rows = visibleDatasets();
     $('#catalog-count').textContent =
-      `${rows.length} of ${data.datasets.length} source records · ${rows.filter((d) => selection.assess(d.id, taskRequest()).status === 'ready').length} with an audited pipeline for this request`;
+      `${rows.length} of ${data.datasets.length} source records · ${joint() ? 0 : rows.filter((d) => selection.assess(d.id, taskRequest()).status === 'ready').length} with an audited pipeline for this request`;
     if (!rows.length) {
       $('#dataset-grid').innerHTML =
         '<div class="empty">No source matches all these conditions.<button class="button small" data-clear-filters>Clear all filters</button><p>This catalog does not cover every public source.</p></div>';
@@ -295,7 +322,7 @@ export function mountCatalog({
     const d = byId[id];
     if (!d) return;
     const s = discovery(d);
-    const fit = selection.assess(id, taskRequest());
+    const fit = joint() ? { status: 'blocked' } : selection.assess(id, taskRequest());
     const dialog = $('#detail-dialog');
     const wasOpen = dialog.open;
     const scrollTop = dialog.scrollTop;
@@ -439,6 +466,7 @@ export function mountCatalog({
     for (const [key, value] of Object.entries(state.taskVariables)) params.set('var_' + key, value);
     for (const key of ['platform', 'unit', 'reference', 'preparation'])
       if (state[key] !== 'all') params.set(key, state[key]);
+    experimentToUrl(params, experiment);
     const query = params.toString();
     try {
       history.replaceState(
@@ -455,7 +483,9 @@ export function mountCatalog({
     const params = new URLSearchParams(location.search);
     const requested = params.get('task') || (initial ? saved.activeTask : 'instances');
     if (['instances', 'species'].includes(requested) && requested !== task.id)
-      selectTask(requested, true);
+      selectTask(requested, true, true);
+    if (!state.taskRunning)
+      experiment = experimentFromUrl(params, experiment, data, task.id, initial);
     if (initial && taskStates.has(task.id)) Object.assign(state, taskStates.get(task.id));
     state.compare = new Set(
       (params.get('compare') || '')
@@ -569,6 +599,14 @@ export function mountCatalog({
       $('.page-heading h1').textContent = 'Find tree classification data.';
     }
     $('.page-heading .eyebrow').textContent = task.title || task.name;
+    if (joint()) {
+      $('.page-heading .eyebrow').textContent = 'TREE INSTANCES + TAXONOMY';
+      if (view === 'datasets') {
+        $('.page-heading h1').textContent = 'Find data for both targets.';
+        $('.page-heading p').textContent =
+          'Shared reference is reported separately from preparation readiness.';
+      }
+    }
     $('#view-workbench').dataset.workspaceSection = state.section;
     $$('.nav-item').forEach((b) => {
       const active =
@@ -609,6 +647,7 @@ export function mountCatalog({
       );
     }
     if (target.dataset.taskPrepare) {
+      if (joint()) return;
       const request = selection.assess(target.dataset.taskPrepare, taskRequest());
       if (request.status !== 'ready') return;
       $('#detail-dialog').close();
@@ -624,6 +663,10 @@ export function mountCatalog({
           },
         }),
       );
+    }
+    if (target.dataset.experimentAdd) {
+      setExperiment({ sources: [...experiment.sources, target.dataset.experimentAdd] });
+      selectView('workbench', 'data');
     }
     if (target.dataset.view) selectView(target.dataset.view, target.dataset.workspaceSection);
     if (target.dataset.detail) detail(target.dataset.detail);
@@ -676,8 +719,18 @@ export function mountCatalog({
         taskChanged();
       };
   }
-  function selectTask(id, deferRender = false) {
-    if (state.taskRunning || id === task.id) return;
+  function selectTask(id, deferRender = false, preserveExperiment = false) {
+    if (state.taskRunning) return;
+    const changed = id !== task.id;
+    if (!preserveExperiment) experiment = { ...experiment, tasks: [id] };
+    if (!changed) {
+      if (!deferRender) {
+        renderTaskRequest();
+        render();
+        document.dispatchEvent(new CustomEvent('canopy-experiment-change'));
+      }
+      return;
+    }
     taskStates.set(task.id, {
       taskUse: state.taskUse,
       taskVariables: state.taskVariables,
@@ -697,12 +750,29 @@ export function mountCatalog({
       new CustomEvent('canopy-task-change', { detail: { task_ref: 'task:' + id } }),
     );
   }
+  function setExperiment(update) {
+    if (state.taskRunning) return;
+    const previousTask = task.id;
+    experiment = normalizeExperiment({ ...experiment, ...update }, data, task.id);
+    if (experiment.tasks.length === 1) selectTask(experiment.tasks[0], true, true);
+    renderTaskRequest();
+    render();
+    updateUrl();
+    if (previousTask !== task.id) {
+      document.dispatchEvent(new CustomEvent('canopy-task-request', { detail: taskRequest() }));
+      document.dispatchEvent(
+        new CustomEvent('canopy-task-change', { detail: { task_ref: 'task:' + task.id } }),
+      );
+    }
+    document.dispatchEvent(new CustomEvent('canopy-experiment-change'));
+  }
   $('#preparation-task').value = 'task:' + task.id;
   $('#preparation-task').onchange = (e) => selectTask(e.target.value.replace('task:', ''));
   $('#task-rank').onchange = (e) => {
     state.rank = e.target.value;
     taskChanged();
   };
+  $('#experiment-rank').onchange = (e) => setExperiment({ rank: e.target.value });
   document.addEventListener('canopy-select-task', (e) =>
     selectTask(e.detail.task_ref.replace('task:', '')),
   );
@@ -748,6 +818,7 @@ export function mountCatalog({
     document.dispatchEvent(
       new CustomEvent('canopy-view', { detail: { view: state.view, section: state.section } }),
     );
+    document.dispatchEvent(new CustomEvent('canopy-experiment-change'));
   };
   window.addEventListener('hashchange', locationChanged);
   window.addEventListener('popstate', locationChanged);
@@ -783,5 +854,7 @@ export function mountCatalog({
     getTaskRequest: taskRequest,
     navigate: selectView,
     getState: () => ({ ...state, compare: [...state.compare] }),
+    getExperiment: () => normalizeExperiment(experiment, data, task.id),
+    setExperiment,
   };
 }

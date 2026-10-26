@@ -3,8 +3,8 @@
 Status: agreed design direction, consolidated on 2026-10-23; visual workspace
 implementation corrected on 2026-10-25. Compact section views and contextual
 subset configuration follow the selected concept over the existing independent
-task routes. Shared multitask plans,
-custom splits and fusion remain proposed. This specification does not change
+task routes. Shared multitask configuration was integrated on 2026-10-26;
+joint execution, custom splits and fusion remain proposed. This specification does not change
 scientific schemas, source admission, reference policies or historical evidence.
 
 The [multitask coverage review](../reviews/MULTITASK-COVERAGE.md), dated

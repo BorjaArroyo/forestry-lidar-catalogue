@@ -14,7 +14,10 @@ export async function closeSubset(page) {
 }
 
 export async function chooseTask(page, task) {
-  await page.locator('[data-workspace-task="task:' + task + '"]').click();
+  await page.locator('[data-workspace-task="task:' + task + '"]').check();
+  await page
+    .locator('[data-workspace-task="task:' + (task === 'species' ? 'instances' : 'species') + '"]')
+    .uncheck();
 }
 
 export async function openRequirements(page) {

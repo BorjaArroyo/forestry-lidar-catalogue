@@ -187,8 +187,8 @@ body[data-area='workbench'] .top-actions {
   font-size: 13px;
   margin-bottom: 10px;
 }
-.workspace-task-choices button {
-  display: grid;
+.workspace-task-choices label {
+  display: flex;
   gap: 6px;
   padding: 18px;
   text-align: left;
@@ -198,17 +198,87 @@ body[data-area='workbench'] .top-actions {
   color: var(--ink);
   font: inherit;
 }
-.workspace-task-choices button[aria-pressed='true'] {
+.workspace-task-choices label:has(input:checked) {
   background: #e7eee4;
   border-color: #819b82;
 }
 .workspace-task-choices small {
+  display: block;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.5;
 }
+.workspace-task-choices input {
+  margin-top: 5px;
+  accent-color: var(--ink);
+}
+.workspace-task-choices span {
+  display: grid;
+  gap: 6px;
+}
+#experiment-source-context {
+  font-size: 13px;
+}
+.experiment-check {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.experiment-policy {
+  border: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.experiment-policy legend {
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+.experiment-policy label {
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 13px;
+}
+.experiment-policy label:has(input:checked) {
+  background: #e7eee4;
+}
+.experiment-policy input {
+  margin-top: 5px;
+  accent-color: var(--ink);
+}
+.experiment-policy small {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.experiment-coverage-counts {
+  margin: 20px 0;
+  font-size: 13px;
+}
+.experiment-coverage-counts > div {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.experiment-coverage-counts strong {
+  font-variant-numeric: tabular-nums;
+}
+#experiment-review-blockers {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
 body[data-area='workbench'] .task-select,
-body:not([data-area='workbench']) .workspace-task-choices {
+body:not([data-area='workbench']) .workspace-task-choices,
+body:not([data-area='workbench']) #workspace-objectives-note {
   display: none;
 }
 body[data-area='workbench'] .task-request {

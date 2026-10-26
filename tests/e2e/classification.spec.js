@@ -84,7 +84,11 @@ for (const [use, rank, trees, observations] of [
 }
 test('classification shares responsive source cards, details and the graph', async ({ page }) => {
   await page.goto('./?task=species');
-  await expect(page.locator('.source-card')).toHaveCount(2);
+  await expect(page.locator('.source-card')).toHaveCount(3);
+  await expect(page.locator('[data-source="19127709"]')).toContainText(
+    'No admitted classification pipeline',
+  );
+  await expect(page.locator('[data-source="19127709"] [data-task-prepare]')).toHaveCount(0);
   for (const width of [375, 768, 1280, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     await expect(page.locator('.source-card').first()).toContainText('FOR-species20K');

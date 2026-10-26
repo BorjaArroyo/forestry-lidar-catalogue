@@ -1,10 +1,16 @@
 # First instance and taxonomy design case
 
-Status: design preview, 2026-10-26. No joint preparation is enabled.
+Status: shared configuration integrated into the application, 2026-10-26.
+Joint execution remains blocked pending source validation and pipeline admission.
+
+Open Objectives and select both targets to configure the shared draft. The
+application persists targets, selected sources, taxonomic rank, coverage policy
+and crown filter across navigation and reloads. Its URL also carries these choices.
+Individual admitted preparation routes remain available when one target is selected.
 
 ## Source selection
 
-Use TreeScanPL10K for the instance/taxonomy prototype. Its actual
+Use TreeScanPL10K for the instance/taxonomy configuration. Its actual
 `species_id_names.csv` supplies a code-to-taxon lookup. Its companion summaries
 still disagree in totals and three plot identifiers; joint reference must be
 validated against the clouds before execution. See the
@@ -15,7 +21,7 @@ established; the reason is recorded in its [source review](../sources/FOR-INSTAN
 
 ## Concrete coverage preview
 
-The [interactive prototype](prototypes/multitask-preparation.html) uses the
+The integrated application and [design prototype](prototypes/multitask-preparation.html) use the
 fingerprinted tree CSV from the [metadata inspection](../../evidence/multitask-metadata-review.json).
 It reports metadata candidates, not independently validated reference coverage:
 
@@ -32,7 +38,7 @@ scene points, certify all instance reference, or resolve the conflicting workboo
 total of 10,417. Genus rank and complete-crown filtering change the preview from
 the same CSV, rather than multiplying marginal coverage percentages.
 
-The policy is explicitly selected: the prototype chooses no universal default.
+The policy is explicitly selected: the application chooses no universal default.
 Changing it preserves targets, source and crown selection. Missing targets use
 independent masks; requiring joint reference changes target eligibility without
 turning excluded trees into background. With only one task selected, eligibility
@@ -67,10 +73,10 @@ mode. This format is framework-neutral; no loader implementation is introduced.
 
 ## Navigation and acceptance
 
-The prototype extends the selected experiment workspace: Objectives, Data,
+The application extends the selected experiment workspace: Objectives, Data,
 Preparation, Splits and Review are distinct views. Sources and Runs & outputs
-also have their own content. Context persists across local navigation; supported
-host interaction state retains the task/rank/policy choices.
+also have their own content. Context persists across local navigation, reloads
+and supported shared URLs. Runs explains why joint execution is unavailable.
 
 Data shows one source with task-specific coverage and preparation readiness.
 Source evidence and crown filtering are contextual details. Preparation contains

@@ -12,13 +12,13 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231b5047'/%3E%3Cpath d='M16 5 5 23h8v5h6v-5h8Z' fill='%23e7c477'/%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="web/styles.css?v=workspace-v2" />
+    <link rel="stylesheet" href="web/styles.css?v=multitask-v1" />
     <script>
       window.CANOPY_PUBLIC = true;
     </script>
     <script defer src="data/catalog.js"></script>
-    <script type="module" src="web/bootstrap.js?v=workspace-v2"></script>
-    <link rel="stylesheet" href="web/workspace.css?v=workspace-v2" />
+    <script type="module" src="web/bootstrap.js?v=multitask-v1"></script>
+    <link rel="stylesheet" href="web/workspace.css?v=multitask-v1" />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -92,25 +92,44 @@
           </div>
 
           <section class="work-card task-request" aria-labelledby="task-request-title">
-            <label class="task-select"
+            <label id="task-native-selector" class="task-select"
               >Preparation task<select id="preparation-task">
                 <option value="task:instances">Individual-tree segmentation</option>
                 <option value="task:species">Tree taxonomic classification</option>
               </select></label
             >
             <fieldset class="workspace-task-choices">
-              <legend>Preparation task</legend>
-              <button type="button" data-workspace-task="task:instances" aria-pressed="true">
-                <strong>Segmentation</strong
-                ><small>Plot geometry, tree instances and reference masks.</small>
-              </button>
-              <button type="button" data-workspace-task="task:species" aria-pressed="false">
-                <strong>Classification</strong
-                ><small>Tree observations and valid genus or species reference.</small>
-              </button>
+              <legend>Choose one or both targets</legend>
+              <label
+                ><input type="checkbox" data-workspace-task="task:instances" checked /><span>
+                  <strong>Segmentation</strong
+                  ><small>Plot geometry, tree instances and reference masks.</small>
+                </span></label
+              >
+              <label
+                ><input type="checkbox" data-workspace-task="task:species" /><span>
+                  <strong>Classification</strong
+                  ><small>Tree observations and valid genus or species reference.</small>
+                </span></label
+              >
             </fieldset>
+            <p id="workspace-objectives-note" class="workspace-help">
+              At least one target is required.
+            </p>
+            <p id="experiment-source-context" hidden>
+              Instances + taxonomy · shared experiment
+              <button class="text-button" data-view="workbench" data-workspace-section="objectives">
+                Edit objectives
+              </button>
+            </p>
             <h2 id="task-request-title">Data requirements</h2>
             <div class="task-options">
+              <label id="experiment-rank-label" hidden
+                >Required taxonomic rank<select id="experiment-rank">
+                  <option value="species">Species</option>
+                  <option value="genus">Genus</option>
+                </select></label
+              >
               <label>Data use<select id="task-use"></select></label>
               <label id="task-rank-label" hidden=""
                 >Reference rank<select id="task-rank">
@@ -262,16 +281,17 @@
           </section>
           <section id="view-workbench" class="view" hidden="">
             <section class="workspace-note" data-workspace-stage="objectives" hidden="">
-              <strong>Keep a selection for each task</strong>
+              <strong>Keep your objectives across sections</strong>
               <p>
-                Move freely between sections. Each task retains its own draft and exports its own
-                validated dataset.
+                Select one task for its audited preparation, or both for a shared experiment draft.
+                Each target retains its own reference requirements and validity.
               </p>
               <details>
                 <summary>Multitask execution</summary>
                 <p>
-                  Tasks currently prepare separate datasets. Switching tasks keeps both selections;
-                  it does not pair observations or fuse point clouds.
+                  Joint configuration records your choices but requires an admitted joint pipeline
+                  before execution. Individual-task drafts and validated outputs remain available
+                  when you return to that task.
                 </p>
               </details>
             </section>
@@ -298,9 +318,66 @@
                   <tbody id="workspace-source-list"></tbody>
                 </table>
               </div>
-              <p class="workspace-help">
+              <p id="workspace-source-help" class="workspace-help">
                 Coverage is checked for the active task. Related sensor views remain separate
                 observations.
+              </p>
+            </section>
+            <section id="experiment-selection" data-workspace-stage="data" hidden>
+              <div class="workspace-section-heading">
+                <h2>Selected shared sources</h2>
+                <span id="experiment-selection-summary"></span>
+              </div>
+              <p id="experiment-selection-status" role="status"></p>
+              <details id="experiment-source-evidence">
+                <summary>Source coverage and evidence</summary>
+                <label class="experiment-check"
+                  ><input type="checkbox" id="experiment-complete-crowns" /> Only trees with
+                  complete crowns</label
+                >
+                <p>
+                  TreeScan's tree table contains 10,447 rows; its plot workbook reports 10,417
+                  trees. Three plot identifiers differ in their year. These counts require
+                  reconciliation with the point clouds.
+                </p>
+                <p>
+                  Code 40 identifies Quercus sp., a genus-only label. Crown completeness is separate
+                  from reference validity.
+                </p>
+                <a href="docs/reviews/MULTITASK-COVERAGE.md">Read the bounded source review</a>
+              </details>
+            </section>
+            <section id="experiment-coverage" data-workspace-stage="preparation" hidden>
+              <h2>Reference coverage</h2>
+              <fieldset class="experiment-policy">
+                <legend>Choose an explicit policy for the selected targets</legend>
+                <label
+                  ><input type="radio" name="experiment-coverage" value="partial" /><span
+                    ><strong>Allow partial references</strong
+                    ><small
+                      >Keep trees useful for at least one selected target. Missing targets have
+                      independent masks.</small
+                    ></span
+                  ></label
+                >
+                <label
+                  ><input type="radio" name="experiment-coverage" value="joint" /><span
+                    ><strong>Require all selected references</strong
+                    ><small
+                      >Restrict target eligibility to trees satisfying every selected
+                      requirement.</small
+                    ></span
+                  ></label
+                >
+              </fieldset>
+              <div
+                id="experiment-coverage-counts"
+                class="experiment-coverage-counts"
+                aria-live="polite"
+              ></div>
+              <p class="workspace-help">
+                Companion-table candidates, pending point/tree validation. Eligibility exclusions do
+                not remove scene context or turn trees into background.
               </p>
             </section>
             <section class="workspace-preparation" data-workspace-stage="preparation" hidden="">
@@ -330,7 +407,7 @@
             </section>
             <section class="workspace-splits" data-workspace-stage="splits" hidden="">
               <div class="workspace-note">
-                <strong>Provider assignments are preserved</strong>
+                <strong id="workspace-assignment-title">Provider assignments are preserved</strong>
                 <p>
                   Permitted partitions: <span id="workspace-partitions"></span>. Selected subsets
                   are checked against the exact plan in Review.
@@ -379,12 +456,18 @@
                   Check data selection
                 </button>
               </div>
+              <div id="experiment-review-blockers" hidden>
+                <ul id="experiment-blockers"></ul>
+                <button class="button primary" id="experiment-run" disabled>
+                  Joint preparation unavailable
+                </button>
+              </div>
               <details id="workspace-consumer-description">
                 <summary id="workspace-consumer-title">Expected consumer structure</summary>
                 <p id="workspace-consumer-unit"></p>
                 <div class="scroll-table">
                   <table class="workspace-consumer-table">
-                    <caption>
+                    <caption id="workspace-consumer-caption">
                       Requested task fields; exact source coverage and optional omissions are
                       checked in the reviewed plan.
                     </caption>
@@ -399,7 +482,7 @@
                     <tbody id="workspace-consumer-fields"></tbody>
                   </table>
                 </div>
-                <p class="workspace-help">
+                <p id="workspace-consumer-help" class="workspace-help">
                   N counts points in a scene or observation; C counts source-specific channels. File
                   blocks are storage units. Exact source omissions appear in the reviewed plan.
                 </p>
@@ -420,444 +503,478 @@
                 Review current selection
               </button>
             </section>
-            <section id="classification-panel" hidden="" aria-label="Classification preparation">
-              <section class="workspace-data-selection" data-workspace-stage="data" hidden="">
-                <section class="workspace-selection">
-                  <h3>Selected subsets</h3>
-
-                  <ol id="classification-draft-list"></ol>
-                  <button id="classification-clear" class="button small">
-                    Clear classification selection
-                  </button>
-                </section>
-              </section>
-              <dialog
-                id="classification-subset-dialog"
-                class="workspace-subset-dialog"
-                aria-labelledby="classification-title"
-              >
-                <div class="workspace-dialog-heading">
-                  <div>
-                    <span class="eyebrow">CLASSIFICATION SUBSET</span>
-                    <h2 id="classification-title">Choose tree observations</h2>
-                  </div>
-                  <button type="button" class="close-dialog" aria-label="Close subset selection">
-                    ×
-                  </button>
-                </div>
-                <div class="workspace-dialog-body">
-                  <label>Classification source<select id="classification-source"></select></label>
-                  <div class="workspace-filter-grid">
-                    <label
-                      >Collections / plots<select
-                        id="classification-collections"
-                        multiple=""
-                        size="5"
-                      ></select></label
-                    ><label
-                      >Sensor views<select
-                        id="classification-modalities"
-                        multiple=""
-                        size="4"
-                      ></select></label
-                    ><label
-                      >Published partitions<select
-                        id="classification-partitions"
-                        multiple=""
-                        size="5"
-                      ></select
-                    ></label>
-                  </div>
-                  <details>
-                    <summary>Taxonomic and tree filters</summary>
-                    <label
-                      >Taxa (select none for all; selecting a genus includes its documented
-                      descendants)<select
-                        id="classification-taxa"
-                        multiple=""
-                        size="6"
-                      ></select></label
-                    ><label
-                      >Tree IDs<select id="classification-trees" multiple="" size="6"></select
-                    ></label>
-                  </details>
-                  <p id="classification-summary" class="notice" role="status"></p>
-                  <details>
-                    <summary>Source evidence and exclusions</summary>
-                    <p id="classification-source-detail" class="notice"></p>
-                    <pre id="classification-exclusions" class="evidence-log"></pre>
-                  </details>
-                </div>
-                <div class="workspace-dialog-actions">
-                  <p
-                    id="classification-subset-message"
-                    class="workspace-subset-message"
-                    role="status"
-                  ></p>
-                  <button id="classification-add" class="button primary" disabled="">
-                    Add subset to my classification dataset</button
-                  ><button type="button" class="button close-dialog">Cancel</button>
-                </div>
-              </dialog>
-              <section class="workspace-task-review" data-workspace-stage="review" hidden="">
-                <fieldset class="workspace-review-actions" aria-label="Plan review and preparation">
-                  <button id="classification-review" class="button" disabled="">
-                    Review classification plan</button
-                  ><button id="classification-run" class="button" disabled="">
-                    Prepare classification dataset
-                  </button>
-                </fieldset>
-                <section id="classification-plan" class="dataset-draft" hidden="">
-                  <h3>Reviewed classification plan</h3>
-                  <details>
-                    <summary>Exact plan and dependencies</summary>
-                    <pre id="classification-plan-text" class="evidence-log"></pre>
-                  </details>
-                  <a
-                    id="classification-plan-download"
-                    class="button small"
-                    download="classification-plan.json"
-                    >Download plan</a
-                  >
-                </section>
-                <details>
-                  <summary>Import a reviewed plan or use local archives</summary>
-                  <label
-                    >Import a classification plan<input
-                      id="classification-import"
-                      type="file"
-                      accept=".json,application/json" /></label
-                  ><label
-                    >Optional original archives downloaded locally<input
-                      id="classification-files"
-                      type="file"
-                      multiple=""
-                      accept=".zip,.zst"
-                  /></label>
-                  <p>
-                    Leave archives empty for direct provider downloads, or provide every planned
-                    archive. BioDiv traversal can require 19.94 GB TLS and 0.65 GB ULS even for a
-                    small selection. Files stay in this browser.
-                  </p>
-                </details>
-              </section>
-              <section
-                id="workspace-classification-result"
-                class="workspace-run-card"
-                data-workspace-stage="runs"
-                hidden=""
-              >
-                <h2>Classification execution</h2>
-                <div class="lab-actions">
-                  <a
-                    id="classification-download"
-                    class="button"
-                    download="tree-classification-dataset.zip"
-                    hidden=""
-                    >Download classification ZIP</a
-                  ><button id="classification-cancel" class="button" disabled="">Cancel</button
-                  ><button id="classification-release" class="button small">
-                    Clear temporary classification output
-                  </button>
-                </div>
-                <details>
-                  <summary>Storage and recovery</summary>
-                  <p>
-                    Keep this page open during execution. Download the validated ZIP to retain it.
-                    Classification inputs restart after interruption.
-                  </p>
-                  <a href="docs/guides/TREE-CLASSIFICATION.md"
-                    >Classification contracts and audit scope</a
-                  >
-                </details>
-              </section>
-              <div data-workspace-stage="data review runs" hidden="">
-                <p
-                  id="classification-status"
-                  class="notice"
-                  role="status"
-                  data-workspace-stage="data review runs"
-                >
-                  Loading pinned classification metadata…
-                </p>
-              </div>
+            <section
+              id="experiment-runs-info"
+              class="workspace-note"
+              data-workspace-stage="runs"
+              hidden
+            >
+              <h2>Joint execution is not available yet</h2>
+              <p>
+                The shared draft has not run. Existing individual-task outputs remain with their
+                original task and plan.
+              </p>
+              <button class="button" data-workspace-section="objectives">
+                Choose an individual task
+              </button>
             </section>
-            <div id="instance-workbench">
-              <section class="workspace-data-selection" data-workspace-stage="data" hidden="">
-                <section class="workspace-selection" aria-labelledby="dataset-draft-title">
-                  <h4 id="dataset-draft-title">Selected subsets</h4>
+            <div id="workspace-single-task-routes">
+              <section id="classification-panel" hidden="" aria-label="Classification preparation">
+                <section class="workspace-data-selection" data-workspace-stage="data" hidden="">
+                  <section class="workspace-selection">
+                    <h3>Selected subsets</h3>
 
-                  <p id="dataset-draft-summary" role="status"></p>
-                  <ol id="dataset-draft-list"></ol>
-                  <div class="lab-actions">
-                    <button class="button small" id="dataset-draft-restore" hidden="">
-                      Restore saved requirements</button
-                    ><button class="button small" id="dataset-draft-clear" disabled="">
-                      Clear dataset selection
+                    <ol id="classification-draft-list"></ol>
+                    <button id="classification-clear" class="button small">
+                      Clear classification selection
+                    </button>
+                  </section>
+                </section>
+                <dialog
+                  id="classification-subset-dialog"
+                  class="workspace-subset-dialog"
+                  aria-labelledby="classification-title"
+                >
+                  <div class="workspace-dialog-heading">
+                    <div>
+                      <span class="eyebrow">CLASSIFICATION SUBSET</span>
+                      <h2 id="classification-title">Choose tree observations</h2>
+                    </div>
+                    <button type="button" class="close-dialog" aria-label="Close subset selection">
+                      ×
                     </button>
                   </div>
-                  <p id="dataset-draft-status" role="status"></p>
-                </section>
-              </section>
-              <dialog
-                id="prepare-subset-dialog"
-                class="workspace-subset-dialog"
-                aria-labelledby="prepare-subset-title"
-              >
-                <div class="workspace-dialog-heading">
-                  <div>
-                    <span class="eyebrow">SEGMENTATION SUBSET</span>
-                    <h2 id="prepare-subset-title">Choose plot observations</h2>
+                  <div class="workspace-dialog-body">
+                    <label>Classification source<select id="classification-source"></select></label>
+                    <div class="workspace-filter-grid">
+                      <label
+                        >Collections / plots<select
+                          id="classification-collections"
+                          multiple=""
+                          size="5"
+                        ></select></label
+                      ><label
+                        >Sensor views<select
+                          id="classification-modalities"
+                          multiple=""
+                          size="4"
+                        ></select></label
+                      ><label
+                        >Published partitions<select
+                          id="classification-partitions"
+                          multiple=""
+                          size="5"
+                        ></select
+                      ></label>
+                    </div>
+                    <details>
+                      <summary>Taxonomic and tree filters</summary>
+                      <label
+                        >Taxa (select none for all; selecting a genus includes its documented
+                        descendants)<select
+                          id="classification-taxa"
+                          multiple=""
+                          size="6"
+                        ></select></label
+                      ><label
+                        >Tree IDs<select id="classification-trees" multiple="" size="6"></select
+                      ></label>
+                    </details>
+                    <p id="classification-summary" class="notice" role="status"></p>
+                    <details>
+                      <summary>Source evidence and exclusions</summary>
+                      <p id="classification-source-detail" class="notice"></p>
+                      <pre id="classification-exclusions" class="evidence-log"></pre>
+                    </details>
                   </div>
-                  <button type="button" class="close-dialog" aria-label="Close subset selection">
-                    ×
-                  </button>
-                </div>
-                <div class="workspace-dialog-body">
-                  <label>Preparation source<select id="prepare-source"></select></label>
-                  <div class="workspace-filter-grid">
-                    <label
-                      >Collections<select
-                        id="prepare-collections"
-                        multiple=""
-                        size="5"
-                      ></select></label
-                    ><label
-                      >Published partitions<select
-                        id="prepare-partitions"
-                        multiple=""
-                        size="3"
-                      ></select
-                    ></label>
+                  <div class="workspace-dialog-actions">
+                    <p
+                      id="classification-subset-message"
+                      class="workspace-subset-message"
+                      role="status"
+                    ></p>
+                    <button id="classification-add" class="button primary" disabled="">
+                      Add subset to my classification dataset</button
+                    ><button type="button" class="button close-dialog">Cancel</button>
                   </div>
-                  <p id="prepare-selection-summary" class="notice" role="status"></p>
-                  <details id="prepare-plot-label">
-                    <summary>Advanced: choose individual plots</summary>
-                    <p>
-                      All matching plots are selected by default. Use Ctrl/Cmd to adjust the
-                      selection.
-                    </p>
-                    <label
-                      >Included plots<select id="prepare-plot" multiple="" size="6"></select
-                    ></label>
-                  </details>
+                </dialog>
+                <section class="workspace-task-review" data-workspace-stage="review" hidden="">
+                  <fieldset
+                    class="workspace-review-actions"
+                    aria-label="Plan review and preparation"
+                  >
+                    <button id="classification-review" class="button" disabled="">
+                      Review classification plan</button
+                    ><button id="classification-run" class="button" disabled="">
+                      Prepare classification dataset
+                    </button>
+                  </fieldset>
+                  <section id="classification-plan" class="dataset-draft" hidden="">
+                    <h3>Reviewed classification plan</h3>
+                    <details>
+                      <summary>Exact plan and dependencies</summary>
+                      <pre id="classification-plan-text" class="evidence-log"></pre>
+                    </details>
+                    <a
+                      id="classification-plan-download"
+                      class="button small"
+                      download="classification-plan.json"
+                      >Download plan</a
+                    >
+                  </section>
                   <details>
-                    <summary>Source evidence and intake limits</summary>
-                    <p id="prepare-source-status" class="notice" role="status"></p>
+                    <summary>Import a reviewed plan or use local archives</summary>
+                    <label
+                      >Import a classification plan<input
+                        id="classification-import"
+                        type="file"
+                        accept=".json,application/json" /></label
+                    ><label
+                      >Optional original archives downloaded locally<input
+                        id="classification-files"
+                        type="file"
+                        multiple=""
+                        accept=".zip,.zst"
+                    /></label>
                     <p>
-                      Only admitted pipelines can run. Selective Zenodo intake checks selected LAS
-                      SHA256, not the whole ZIP checksum. A local reviewed ZIP is available if byte
-                      ranges are blocked. Large selections need browser storage for the dataset and
-                      ZIP; full-release browser execution has not been validated.
+                      Leave archives empty for direct provider downloads, or provide every planned
+                      archive. BioDiv traversal can require 19.94 GB TLS and 0.65 GB ULS even for a
+                      small selection. Files stay in this browser.
                     </p>
                   </details>
-                </div>
-                <div class="workspace-dialog-actions">
-                  <p id="prepare-subset-message" class="workspace-subset-message" role="status"></p>
-                  <button class="button primary" id="prepare-add" disabled="">
-                    Add subset to my dataset</button
-                  ><button type="button" class="button close-dialog">Cancel</button>
-                </div>
-              </dialog>
-              <section class="workspace-input-method" data-workspace-stage="preparation" hidden="">
-                <h2>Input method</h2>
-                <label
-                  >Input source<select id="prepare-mode">
-                    <option value="las">Quick test: one local LAS</option>
-                    <option value="zip">Local reviewed ZIP</option>
-                    <option value="zenodo">Download selected dataset from Zenodo</option>
-                  </select></label
-                ><label id="prepare-file-label"
-                  ><span id="prepare-file-title">Complete reviewed LAS</span
-                  ><input type="file" id="prepare-file" accept=".las"
-                /></label>
-                <p class="workspace-help">
-                  Public subsets use Zenodo intake. Local LAS or ZIP inputs must match the reviewed
-                  source. Files stay in this browser.
-                </p>
-              </section>
-              <section class="workspace-task-review" data-workspace-stage="review" hidden="">
-                <fieldset class="workspace-review-actions" aria-label="Plan review and preparation">
-                  <button class="button" id="prepare-review" disabled="">Review dataset plan</button
-                  ><button class="button" id="prepare-run" disabled="">
-                    Prepare current selection
-                  </button>
-                </fieldset>
+                </section>
                 <section
-                  id="dataset-plan"
-                  class="dataset-draft"
-                  aria-labelledby="dataset-plan-title"
+                  id="workspace-classification-result"
+                  class="workspace-run-card"
+                  data-workspace-stage="runs"
                   hidden=""
                 >
-                  <h4 id="dataset-plan-title">Ready to prepare</h4>
-                  <p id="dataset-plan-summary"></p>
-                  <p id="dataset-plan-requirements"></p>
-                  <ul id="dataset-plan-limitations"></ul>
+                  <h2>Classification execution</h2>
+                  <div class="lab-actions">
+                    <a
+                      id="classification-download"
+                      class="button"
+                      download="tree-classification-dataset.zip"
+                      hidden=""
+                      >Download classification ZIP</a
+                    ><button id="classification-cancel" class="button" disabled="">Cancel</button
+                    ><button id="classification-release" class="button small">
+                      Clear temporary classification output
+                    </button>
+                  </div>
                   <details>
-                    <summary>Versions and reproducibility</summary>
-                    <p id="dataset-plan-version"></p>
-                    <pre id="dataset-plan-evidence" class="evidence-log"></pre>
+                    <summary>Storage and recovery</summary>
+                    <p>
+                      Keep this page open during execution. Download the validated ZIP to retain it.
+                      Classification inputs restart after interruption.
+                    </p>
+                    <a href="docs/guides/TREE-CLASSIFICATION.md"
+                      >Classification contracts and audit scope</a
+                    >
                   </details>
-                  <a class="button small" id="dataset-plan-download" download="dataset-plan.json"
-                    >Download plan (JSON)</a
+                </section>
+                <div data-workspace-stage="data review runs" hidden="">
+                  <p
+                    id="classification-status"
+                    class="notice"
+                    role="status"
+                    data-workspace-stage="data review runs"
                   >
-                  <p>
-                    Changing the saved selection or task requirements requires another review. This
-                    plan fixes inputs and code versions; successful preparation is verified
-                    separately. Import a saved plan above to repeat its selection with the exact
-                    current versions. Interrupted Zenodo executions can resume from independently
-                    validated plots in Saved preparations.
+                    Loading pinned classification metadata…
+                  </p>
+                </div>
+              </section>
+              <div id="instance-workbench">
+                <section class="workspace-data-selection" data-workspace-stage="data" hidden="">
+                  <section class="workspace-selection" aria-labelledby="dataset-draft-title">
+                    <h4 id="dataset-draft-title">Selected subsets</h4>
+
+                    <p id="dataset-draft-summary" role="status"></p>
+                    <ol id="dataset-draft-list"></ol>
+                    <div class="lab-actions">
+                      <button class="button small" id="dataset-draft-restore" hidden="">
+                        Restore saved requirements</button
+                      ><button class="button small" id="dataset-draft-clear" disabled="">
+                        Clear dataset selection
+                      </button>
+                    </div>
+                    <p id="dataset-draft-status" role="status"></p>
+                  </section>
+                </section>
+                <dialog
+                  id="prepare-subset-dialog"
+                  class="workspace-subset-dialog"
+                  aria-labelledby="prepare-subset-title"
+                >
+                  <div class="workspace-dialog-heading">
+                    <div>
+                      <span class="eyebrow">SEGMENTATION SUBSET</span>
+                      <h2 id="prepare-subset-title">Choose plot observations</h2>
+                    </div>
+                    <button type="button" class="close-dialog" aria-label="Close subset selection">
+                      ×
+                    </button>
+                  </div>
+                  <div class="workspace-dialog-body">
+                    <label>Preparation source<select id="prepare-source"></select></label>
+                    <div class="workspace-filter-grid">
+                      <label
+                        >Collections<select
+                          id="prepare-collections"
+                          multiple=""
+                          size="5"
+                        ></select></label
+                      ><label
+                        >Published partitions<select
+                          id="prepare-partitions"
+                          multiple=""
+                          size="3"
+                        ></select
+                      ></label>
+                    </div>
+                    <p id="prepare-selection-summary" class="notice" role="status"></p>
+                    <details id="prepare-plot-label">
+                      <summary>Advanced: choose individual plots</summary>
+                      <p>
+                        All matching plots are selected by default. Use Ctrl/Cmd to adjust the
+                        selection.
+                      </p>
+                      <label
+                        >Included plots<select id="prepare-plot" multiple="" size="6"></select
+                      ></label>
+                    </details>
+                    <details>
+                      <summary>Source evidence and intake limits</summary>
+                      <p id="prepare-source-status" class="notice" role="status"></p>
+                      <p>
+                        Only admitted pipelines can run. Selective Zenodo intake checks selected LAS
+                        SHA256, not the whole ZIP checksum. A local reviewed ZIP is available if
+                        byte ranges are blocked. Large selections need browser storage for the
+                        dataset and ZIP; full-release browser execution has not been validated.
+                      </p>
+                    </details>
+                  </div>
+                  <div class="workspace-dialog-actions">
+                    <p
+                      id="prepare-subset-message"
+                      class="workspace-subset-message"
+                      role="status"
+                    ></p>
+                    <button class="button primary" id="prepare-add" disabled="">
+                      Add subset to my dataset</button
+                    ><button type="button" class="button close-dialog">Cancel</button>
+                  </div>
+                </dialog>
+                <section
+                  class="workspace-input-method"
+                  data-workspace-stage="preparation"
+                  hidden=""
+                >
+                  <h2>Input method</h2>
+                  <label
+                    >Input source<select id="prepare-mode">
+                      <option value="las">Quick test: one local LAS</option>
+                      <option value="zip">Local reviewed ZIP</option>
+                      <option value="zenodo">Download selected dataset from Zenodo</option>
+                    </select></label
+                  ><label id="prepare-file-label"
+                    ><span id="prepare-file-title">Complete reviewed LAS</span
+                    ><input type="file" id="prepare-file" accept=".las"
+                  /></label>
+                  <p class="workspace-help">
+                    Public subsets use Zenodo intake. Local LAS or ZIP inputs must match the
+                    reviewed source. Files stay in this browser.
                   </p>
                 </section>
-                <details>
-                  <summary>Import a reviewed dataset plan</summary>
-                  <label
-                    >Import a saved dataset plan<input
-                      type="file"
-                      id="dataset-plan-file"
-                      accept=".json,application/json"
-                  /></label>
-                  <p>
-                    Exact source and code versions are checked before replacing selected subsets.
-                    Import does not download source payloads.
-                  </p>
-                </details>
-              </section>
-              <section
-                id="workspace-instance-result"
-                class="workspace-run-card"
-                data-workspace-stage="runs"
-                hidden=""
-              >
-                <h2>Segmentation execution</h2>
-                <div class="lab-actions">
-                  <a class="button" id="prepare-download" hidden=""
-                    >Download dataset folders (ZIP)</a
-                  ><button class="button" id="prepare-cancel" disabled="">Stop</button
-                  ><button class="button" id="prepare-clear" disabled="">
-                    Delete current output
-                  </button>
-                </div>
-                <details>
-                  <summary>Validation evidence and limitations</summary>
-                  <pre id="prepare-result" class="evidence-log">No result yet.</pre>
-                  <p>
-                    Consistency checks do not certify annotation quality, complete-release coverage
-                    or geographic independence.
-                  </p>
-                </details>
-              </section>
-              <div data-workspace-stage="data review runs" hidden="">
-                <p id="prepare-status" class="notice" role="status">
-                  Ready. Temporary output uses browser storage; download the ZIP to keep it. Saved
-                  Zenodo runs remain available below.
-                </p>
-              </div>
-              <section class="workspace-saved-runs" data-workspace-stage="runs" hidden="">
-                <div class="workspace-section-heading">
-                  <h2 id="saved-runs-title">Saved preparations</h2>
-                  <button class="button small" id="saved-runs-refresh">
-                    Refresh saved preparations
-                  </button>
-                </div>
-                <p id="saved-runs-status" role="status"></p>
-                <ul id="saved-runs"></ul>
-                <details>
-                  <summary>Storage, interruption and recovery</summary>
-                  <p>
-                    Runs belong to this browser and website. Stop retains validated Zenodo plots.
-                    Resume rechecks the saved plan and checkpoints; local LAS and ZIP inputs
-                    restart. Download completed ZIPs to keep them beyond browser storage eviction.
-                    Extract the ZIP to obtain dataset.json, source packages and NPZ blocks.
-                  </p>
-                  <p>
-                    Changed dependencies require the matching checkout to resume an interrupted run.
-                    Saved data is retained. Firefox on macOS: if the save dialog freezes,
-                    temporarily disable “Always ask you where to save files” and download directly
-                    to Downloads.
-                  </p>
-                  <a href="docs/guides/BROWSER-PREPARATION.md">Browser preparation and recovery</a>
-                </details>
-              </section>
-              <section data-workspace-stage="service" hidden="">
-                <div class="section-heading">
-                  <div>
-                    <h2>Original assets and local preparation</h2>
-                    <p>Optional jobs on the connected service host.</p>
-                  </div>
-                  <span id="service-status" class="badge neutral"
-                    >Connecting to local service…</span
+                <section class="workspace-task-review" data-workspace-stage="review" hidden="">
+                  <fieldset
+                    class="workspace-review-actions"
+                    aria-label="Plan review and preparation"
                   >
-                </div>
-                <article class="work-card">
-                  <h3>Reviewed source records</h3>
-                  <p>Choose a pinned catalog source. New sources need prior admission review.</p>
-                  <form id="inspect-form">
-                    <label>Source record<select id="zenodo-record" required=""></select></label
-                    ><button class="button" type="submit" disabled="">
-                      Inspect original assets
+                    <button class="button" id="prepare-review" disabled="">
+                      Review dataset plan</button
+                    ><button class="button" id="prepare-run" disabled="">
+                      Prepare current selection
                     </button>
-                  </form>
-                  <div id="record-preview"></div>
-                </article>
-                <article class="work-card">
-                  <h3>Prepare a full release on the local service</h3>
-                  <p id="preparation-status">
-                    Connect the local service to prepare the reviewed archive.
-                  </p>
-                  <p>
-                    This form prepares the full reviewed release; the collection selection above
-                    applies to browser runs. The source must have an admitted local adapter. The
-                    task consumer keeps the published partitions permitted by your request.
-                  </p>
-                  <form id="prepare-form">
+                  </fieldset>
+                  <section
+                    id="dataset-plan"
+                    class="dataset-draft"
+                    aria-labelledby="dataset-plan-title"
+                    hidden=""
+                  >
+                    <h4 id="dataset-plan-title">Ready to prepare</h4>
+                    <p id="dataset-plan-summary"></p>
+                    <p id="dataset-plan-requirements"></p>
+                    <ul id="dataset-plan-limitations"></ul>
+                    <details>
+                      <summary>Versions and reproducibility</summary>
+                      <p id="dataset-plan-version"></p>
+                      <pre id="dataset-plan-evidence" class="evidence-log"></pre>
+                    </details>
+                    <a class="button small" id="dataset-plan-download" download="dataset-plan.json"
+                      >Download plan (JSON)</a
+                    >
+                    <p>
+                      Changing the saved selection or task requirements requires another review.
+                      This plan fixes inputs and code versions; successful preparation is verified
+                      separately. Import a saved plan above to repeat its selection with the exact
+                      current versions. Interrupted Zenodo executions can resume from independently
+                      validated plots in Saved preparations.
+                    </p>
+                  </section>
+                  <details>
+                    <summary>Import a reviewed dataset plan</summary>
                     <label
-                      >Existing acquisition directory<input
-                        id="prepare-input"
-                        required=""
-                        placeholder="/absolute/path/to/acquisition"
-                        disabled="" /></label
-                    ><label
-                      >Separate prepared-output directory<input
-                        id="prepare-destination"
-                        required=""
-                        placeholder="/absolute/path/to/new-instance-package"
-                        disabled="" /></label
-                    ><button class="button" type="submit" disabled="">
-                      Prepare, validate / resume full release
+                      >Import a saved dataset plan<input
+                        type="file"
+                        id="dataset-plan-file"
+                        accept=".json,application/json"
+                    /></label>
+                    <p>
+                      Exact source and code versions are checked before replacing selected subsets.
+                      Import does not download source payloads.
+                    </p>
+                  </details>
+                </section>
+                <section
+                  id="workspace-instance-result"
+                  class="workspace-run-card"
+                  data-workspace-stage="runs"
+                  hidden=""
+                >
+                  <h2>Segmentation execution</h2>
+                  <div class="lab-actions">
+                    <a class="button" id="prepare-download" hidden=""
+                      >Download dataset folders (ZIP)</a
+                    ><button class="button" id="prepare-cancel" disabled="">Stop</button
+                    ><button class="button" id="prepare-clear" disabled="">
+                      Delete current output
                     </button>
-                  </form>
-                </article>
-              </section>
-              <div data-workspace-stage="service" hidden="">
-                <p id="workbench-message" class="notice" role="status" hidden=""></p>
-              </div>
-              <details class="workspace-service-jobs" data-workspace-stage="runs" hidden="">
-                <summary>Local service jobs</summary>
-                <div class="workspace-section-heading">
-                  <h2>Data jobs</h2>
-                  <button id="refresh-jobs" class="button small" disabled="">Refresh jobs</button>
+                  </div>
+                  <details>
+                    <summary>Validation evidence and limitations</summary>
+                    <pre id="prepare-result" class="evidence-log">No result yet.</pre>
+                    <p>
+                      Consistency checks do not certify annotation quality, complete-release
+                      coverage or geographic independence.
+                    </p>
+                  </details>
+                </section>
+                <div data-workspace-stage="data review runs" hidden="">
+                  <p id="prepare-status" class="notice" role="status">
+                    Ready. Temporary output uses browser storage; download the ZIP to keep it. Saved
+                    Zenodo runs remain available below.
+                  </p>
                 </div>
-                <div id="job-list"></div>
-                <article id="job-detail" class="work-card" hidden="">
-                  <h3>Execution evidence</h3>
-                  <button id="job-export" class="button small">Download job evidence</button>
-                  <p id="job-result" class="notice" role="status" hidden=""></p>
-                  <pre id="job-log"></pre>
-                </article>
-              </details>
-            </div>
-            <div data-workspace-stage="service" hidden="">
-              <section id="workspace-service-unavailable" class="work-card" hidden="">
-                <h2>This task uses browser preparation</h2>
-                <p>
-                  The optional whole-archive local preparation service supports segmentation.
-                  Classification uses its reviewed browser route.
-                </p>
-                <button class="button" data-workspace-section="data">
-                  Open classification data
-                </button>
-              </section>
+                <section class="workspace-saved-runs" data-workspace-stage="runs" hidden="">
+                  <div class="workspace-section-heading">
+                    <h2 id="saved-runs-title">Saved preparations</h2>
+                    <button class="button small" id="saved-runs-refresh">
+                      Refresh saved preparations
+                    </button>
+                  </div>
+                  <p id="saved-runs-status" role="status"></p>
+                  <ul id="saved-runs"></ul>
+                  <details>
+                    <summary>Storage, interruption and recovery</summary>
+                    <p>
+                      Runs belong to this browser and website. Stop retains validated Zenodo plots.
+                      Resume rechecks the saved plan and checkpoints; local LAS and ZIP inputs
+                      restart. Download completed ZIPs to keep them beyond browser storage eviction.
+                      Extract the ZIP to obtain dataset.json, source packages and NPZ blocks.
+                    </p>
+                    <p>
+                      Changed dependencies require the matching checkout to resume an interrupted
+                      run. Saved data is retained. Firefox on macOS: if the save dialog freezes,
+                      temporarily disable “Always ask you where to save files” and download directly
+                      to Downloads.
+                    </p>
+                    <a href="docs/guides/BROWSER-PREPARATION.md"
+                      >Browser preparation and recovery</a
+                    >
+                  </details>
+                </section>
+                <section data-workspace-stage="service" hidden="">
+                  <div class="section-heading">
+                    <div>
+                      <h2>Original assets and local preparation</h2>
+                      <p>Optional jobs on the connected service host.</p>
+                    </div>
+                    <span id="service-status" class="badge neutral"
+                      >Connecting to local service…</span
+                    >
+                  </div>
+                  <article class="work-card">
+                    <h3>Reviewed source records</h3>
+                    <p>Choose a pinned catalog source. New sources need prior admission review.</p>
+                    <form id="inspect-form">
+                      <label>Source record<select id="zenodo-record" required=""></select></label
+                      ><button class="button" type="submit" disabled="">
+                        Inspect original assets
+                      </button>
+                    </form>
+                    <div id="record-preview"></div>
+                  </article>
+                  <article class="work-card">
+                    <h3>Prepare a full release on the local service</h3>
+                    <p id="preparation-status">
+                      Connect the local service to prepare the reviewed archive.
+                    </p>
+                    <p>
+                      This form prepares the full reviewed release; the collection selection above
+                      applies to browser runs. The source must have an admitted local adapter. The
+                      task consumer keeps the published partitions permitted by your request.
+                    </p>
+                    <form id="prepare-form">
+                      <label
+                        >Existing acquisition directory<input
+                          id="prepare-input"
+                          required=""
+                          placeholder="/absolute/path/to/acquisition"
+                          disabled="" /></label
+                      ><label
+                        >Separate prepared-output directory<input
+                          id="prepare-destination"
+                          required=""
+                          placeholder="/absolute/path/to/new-instance-package"
+                          disabled="" /></label
+                      ><button class="button" type="submit" disabled="">
+                        Prepare, validate / resume full release
+                      </button>
+                    </form>
+                  </article>
+                </section>
+                <div data-workspace-stage="service" hidden="">
+                  <p id="workbench-message" class="notice" role="status" hidden=""></p>
+                </div>
+                <details class="workspace-service-jobs" data-workspace-stage="runs" hidden="">
+                  <summary>Local service jobs</summary>
+                  <div class="workspace-section-heading">
+                    <h2>Data jobs</h2>
+                    <button id="refresh-jobs" class="button small" disabled="">Refresh jobs</button>
+                  </div>
+                  <div id="job-list"></div>
+                  <article id="job-detail" class="work-card" hidden="">
+                    <h3>Execution evidence</h3>
+                    <button id="job-export" class="button small">Download job evidence</button>
+                    <p id="job-result" class="notice" role="status" hidden=""></p>
+                    <pre id="job-log"></pre>
+                  </article>
+                </details>
+              </div>
+              <div data-workspace-stage="service" hidden="">
+                <section id="workspace-service-unavailable" class="work-card" hidden="">
+                  <h2>This task uses browser preparation</h2>
+                  <p>
+                    The optional whole-archive local preparation service supports segmentation.
+                    Classification uses its reviewed browser route.
+                  </p>
+                  <button class="button" data-workspace-section="data">
+                    Open classification data
+                  </button>
+                </section>
+              </div>
             </div>
           </section>
           <nav
