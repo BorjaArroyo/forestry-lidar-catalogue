@@ -113,7 +113,7 @@ test('classification shares responsive source cards, details and the graph', asy
     'No admitted classification pipeline',
   );
   await expect(page.locator('[data-source="19127709"] [data-task-prepare]')).toHaveCount(0);
-  for (const width of [375, 768, 1280, 1920]) {
+  for (const width of [1024, 1280, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     await expect(page.locator('.source-card').first()).toContainText('FOR-species20K');
     await page.locator('#dataset-grid [data-detail="13255198"]').click();

@@ -193,6 +193,12 @@ Workbench exports `dataset.json` and preserved partition/source folders in a ZIP
 Extract it and use `TaskDataset`. See [TASK-DATASET.md](docs/guides/TASK-DATASET.md) for the
 layout, bounded loader and composition of existing prepared subsets.
 
+Use the configurable [Python/NumPy loader](docs/guides/NUMPY-LOADER.md) for either
+segmentation or classification exports from all four validated sources. It
+preserves partitions, identities, masks and separate sensor observations without
+installing a training framework. Review and Runs & outputs provide a copyable
+example and a downloadable configurable script.
+
 ## Resume interrupted Zenodo preparation
 
 Workbench lists **Saved preparations** from this website's browser storage, even

@@ -1,4 +1,8 @@
 /* The product shell follows the approved workspace concept at every route. */
+:root {
+  --muted: #53675d;
+  --faint: #63766b;
+}
 .app-navigation {
   position: relative;
   inset: auto;
@@ -53,7 +57,7 @@
   border-bottom: 1px solid var(--line);
   border-radius: 0;
   padding: 13px max(24px, calc((100vw - 1280px) / 2));
-  font-size: 12px;
+  font-size: 13px;
 }
 .workspace-context > p {
   margin: 0;
@@ -85,7 +89,7 @@ body[data-workspace-section='service'] .workspace-layout {
   border-color: transparent;
   text-align: left;
   padding: 12px;
-  font-size: 13px;
+  font-size: 14px;
   justify-content: flex-start;
 }
 .workspace-sections .button[aria-current='step'] {
@@ -570,6 +574,92 @@ body[data-area='workbench'] .task-request {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+/* Desktop reading and discovery keep decisions close to visible results. */
+body[data-area='datasets'] .task-request {
+  display: grid;
+  grid-template-columns: minmax(250px, 1fr) minmax(0, 2fr);
+  gap: 12px 24px;
+  padding: 16px 20px;
+}
+body[data-area='datasets'] .task-request > h2 {
+  display: none;
+}
+body[data-area='datasets'] .task-request .task-options {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+}
+body[data-area='datasets'] .task-request label {
+  margin: 0;
+  flex: 1;
+}
+body[data-area='datasets'] #workspace-requirements {
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  align-self: center;
+}
+body[data-area='datasets'] .page-heading {
+  margin-bottom: 22px;
+}
+body[data-area='datasets'] .source-filters {
+  margin: 16px 0;
+}
+body[data-area='datasets'] #workspace-requirements[open] {
+  flex-basis: 100%;
+}
+body[data-area='datasets'] .task-request:has(#workspace-requirements[open]) {
+  grid-template-columns: 1fr;
+}
+.workspace-help,
+.workspace-note p,
+.workspace-preparation p,
+.workspace-splits p,
+.workspace-task-review p,
+.workspace-review-summary,
+.workspace-dialog-body,
+#workspace-loading-guide p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.workspace-source-table,
+.source-filters .select-label,
+.source-filters .select-label select,
+.source-readiness dt,
+.source-card .source-location,
+.source-card .card-fit p,
+.source-card .source-kicker,
+.source-scope,
+.workspace-tag,
+.workspace-dialog-body label,
+.workspace-source-table small {
+  font-size: 13px;
+}
+.button,
+.app-navigation .nav-item,
+.workspace-sections .button {
+  font-size: 14px;
+}
+.workspace-task-choices small {
+  font-size: 13px;
+}
+.workspace-task-choices,
+.workspace-task-choices label {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+.workspace-task-choices legend {
+  margin-bottom: 12px;
+}
+.loading-example {
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 14px;
+  line-height: 1.7;
 }
 @media (max-width: 800px) {
   .app-navigation {

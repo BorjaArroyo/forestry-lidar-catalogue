@@ -107,6 +107,8 @@ export function mountWorkspace({ application, document: doc = document }) {
   function renderExperiment(state) {
     const experiment = application.getExperiment();
     const multi = isJoint();
+    $('workspace-available-routes').hidden =
+      !multi || state.view !== 'workbench' || state.section !== 'data';
     $('workspace-single-task-routes').hidden = multi;
     for (const id of ['experiment-selection', 'experiment-coverage', 'experiment-runs-info']) {
       const panel = $(id);
@@ -277,7 +279,7 @@ export function mountWorkspace({ application, document: doc = document }) {
           ? 'Reviewed plan'
           : hasSelection
             ? 'Needs review'
-            : 'Draft';
+            : 'No data selected';
     if (state.section === 'runs' && !running && !downloadable)
       $('workspace-context-state').textContent = hasSaved
         ? 'Saved preparations'
@@ -285,8 +287,10 @@ export function mountWorkspace({ application, document: doc = document }) {
           ? 'Execution stopped'
           : 'No runs';
     $('workspace-footer-state').textContent = hasSelection
-      ? `${selectionList().children.length} saved subsets · changes require plan review`
-      : 'Your task requirements are retained across sections';
+      ? !run.disabled
+        ? 'Ready to prepare · open Review to start'
+        : `${selectionList().children.length} saved subsets · review the exact plan before preparing`
+      : 'Next: choose a source in Data and add a subset';
     setHidden($('workspace-requirements'), species);
     setHidden(
       $('workspace-runs-empty'),
@@ -377,6 +381,11 @@ export function mountWorkspace({ application, document: doc = document }) {
     renderExperiment(state);
   }
   doc.addEventListener('click', (event) => {
+    const readyTask = event.target.closest('[data-ready-task]');
+    if (readyTask) {
+      application.setExperiment({ tasks: [readyTask.dataset.readyTask] });
+      application.navigate('workbench', 'data');
+    }
     const button = event.target.closest('button[data-workspace-section]');
     if (button && !button.dataset.view)
       application.navigate('workbench', button.dataset.workspaceSection);

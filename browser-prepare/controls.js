@@ -44,6 +44,8 @@ export function updateControls({
     $(id).disabled = locked || mode === 'las';
   $('prepare-selection-summary').textContent = selectionSummary(mode);
   $('prepare-plot').disabled = locked || !$('prepare-plot').options.length;
+  for (const id of ['prepare-smallest', 'prepare-select-all'])
+    $(id).disabled = locked || !$('prepare-plot').options.length || mode === 'las';
   const compatibleDraft = !hasDraft || sameRequest(getRequest(), draftPanel.draft.request);
   $('prepare-add').disabled =
     locked ||

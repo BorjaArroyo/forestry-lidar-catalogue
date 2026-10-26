@@ -576,8 +576,8 @@ export function mountCatalog({
           'Reviewed routes preserve native observations and their source-specific semantics.',
         ],
         splits: [
-          'Define what stays unseen.',
-          'Inspect the current assignments and the evidence needed for independent evaluation.',
+          'Review the published partitions.',
+          'Keep provider assignments and inspect their evaluation limits. No new split is generated.',
         ],
         review: [
           'Review your dataset as a whole.',
