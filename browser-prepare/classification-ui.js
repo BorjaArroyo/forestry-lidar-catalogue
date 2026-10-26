@@ -9,11 +9,14 @@ import {
 } from './classification-model.js';
 import { loadContext } from './classification-runtime.js';
 import { RunSession } from './run-session.js';
+import { inspectClassificationRuns, removeClassificationRun } from './classification-store.js';
 export function mountClassification({ document: doc = document }) {
   const document = doc;
   const $ = (id) => document.getElementById(id);
   const chosen = (id) => [...$(id).selectedOptions].map((o) => o.value);
   const storageKey = 'canopy-dataset-draft-species-v2';
+  const savedURLs = [];
+  let refreshVersion = 0;
   let ctx,
     pins,
     draft = emptyDraft(),
@@ -100,7 +103,7 @@ export function mountClassification({ document: doc = document }) {
       ? ` ${duplicates} byte-identical cloud groups under different provider IDs; ${audit.duplicate_cloud_groups_crossing_partitions} cross published partitions. IDs and original labels are preserved.`
       : '';
     $('classification-source-detail').textContent =
-      `${source.source_ref} · ${source.status.toUpperCase()} · ${source.license}. ${source.blockers.join('. ')}. ${source.coordinate_policy}${quality}`;
+      `${source.source_ref} · ${source.status.toUpperCase()} · ${source.license}. ${source.blockers.length ? source.blockers.join('. ') + '. ' : ''}${source.coordinate_policy}${quality}`;
     update();
   }
   function update() {
@@ -193,20 +196,78 @@ export function mountClassification({ document: doc = document }) {
   }
   async function removeJob() {
     if (!job) return;
-    const origin = await navigator.storage.getDirectory(),
-      jobs = await origin.getDirectoryHandle('canopy-classification');
-    try {
-      await jobs.removeEntry(job, { recursive: true });
-    } catch (error) {
-      if (error.name !== 'NotFoundError') throw error;
-    }
+    await removeClassificationRun(job);
     job = null;
+    $('classification-release').disabled = true;
+  }
+  async function refreshSaved() {
+    const version = ++refreshVersion;
+    try {
+      const runs = await inspectClassificationRuns();
+      if (version !== refreshVersion) return;
+      for (const url of savedURLs) URL.revokeObjectURL(url);
+      savedURLs.length = 0;
+      $('classification-saved-runs').replaceChildren();
+      $('classification-saved-empty').textContent = 'No saved classification files.';
+      $('classification-saved-empty').hidden = runs.length > 0;
+      for (const run of runs) {
+        const row = document.createElement('li');
+        const text = document.createElement('span');
+        const state =
+          run.status === 'busy'
+            ? run.id === job && session.running
+              ? 'Active on this page'
+              : 'Active in another tab'
+            : run.status === 'complete'
+              ? 'Validated ZIP'
+              : 'Interrupted; restart from Review';
+        text.textContent = `${run.id} · ${state}${run.bytes === undefined ? '' : ' · ' + (run.bytes / 1048576).toFixed(1) + ' MiB'}`;
+        row.append(text);
+        if (run.file) {
+          const link = document.createElement('a');
+          link.href = URL.createObjectURL(run.file);
+          savedURLs.push(link.href);
+          link.download = 'tree-classification-dataset.zip';
+          link.className = 'button small';
+          link.textContent = 'Download ZIP';
+          row.append(link);
+        }
+        const button = document.createElement('button');
+        button.className = 'button small';
+        button.textContent = 'Delete temporary files';
+        button.dataset.busy = String(run.status === 'busy');
+        button.disabled = run.status === 'busy' || session.running;
+        button.onclick = async () => {
+          button.disabled = true;
+          try {
+            await removeClassificationRun(run.id);
+            if (job === run.id) {
+              job = null;
+              hideExport();
+              $('classification-release').disabled = true;
+            }
+            status('Temporary classification files deleted. Downloaded ZIPs are kept.');
+          } catch (error) {
+            status('Could not delete temporary files: ' + error.message);
+          }
+          await refreshSaved();
+        };
+        row.append(button);
+        $('classification-saved-runs').append(row);
+      }
+    } catch (error) {
+      if (version !== refreshVersion) return;
+      $('classification-saved-empty').textContent =
+        'Could not inspect browser storage: ' + error.message;
+      $('classification-saved-empty').hidden = false;
+    }
   }
   function controls(running) {
     document.dispatchEvent(new CustomEvent('canopy-preparation-state', { detail: { running } }));
     for (const element of $('classification-panel').querySelectorAll('select,input,button'))
-      element.disabled = running;
+      element.disabled = running || element.dataset.busy === 'true';
     $('classification-cancel').disabled = !running;
+    $('classification-release').disabled = running || !job;
     if (!running) {
       const saved = plan;
       update();
@@ -222,6 +283,7 @@ export function mountClassification({ document: doc = document }) {
         clearPlan();
         controls(false);
         status('Preparation failed: ' + data.error);
+        refreshSaved();
       }
       if (data.type === 'result') {
         controls(false);
@@ -235,6 +297,7 @@ export function mountClassification({ document: doc = document }) {
           status(
             `Validated selection: ${data.evidence.totals.trees} physical trees, ${data.evidence.totals.observations} sensor observations. Download the ZIP to keep it.`,
           );
+          refreshSaved();
         }
       }
     },
@@ -243,7 +306,10 @@ export function mountClassification({ document: doc = document }) {
       clearPlan();
       controls(false);
       status(text);
+      refreshSaved();
     },
+    timeoutMessage:
+      'Stopped after 180 seconds without progress. Open Saved classification files to delete interrupted data, then restart from Review.',
   });
   function start(data) {
     session.start(
@@ -344,16 +410,25 @@ export function mountClassification({ document: doc = document }) {
     await removeJob().catch(() => {});
     controls(false);
     status('Cancelled; no validated ZIP was offered.');
+    await refreshSaved();
   };
   $('classification-release').onclick = async () => {
     hideExport();
-    await removeJob().catch((error) => status(error.message));
+    try {
+      await removeJob();
+      status('Temporary classification output deleted. Downloaded ZIPs are kept.');
+    } catch (error) {
+      status('Could not delete temporary files: ' + error.message);
+    }
+    await refreshSaved();
   };
+  $('classification-saved-refresh').onclick = refreshSaved;
   function taskChanged() {
     const species = $('preparation-task').value === TASK;
     $('classification-panel').hidden = !species;
     $('instance-workbench').hidden = species;
     if (species && !ctx && !initializing) initialize();
+    if (species) refreshSaved();
   }
   document.addEventListener('canopy-task-change', taskChanged);
   document.addEventListener('canopy-preparation-state', (e) => {
@@ -389,9 +464,14 @@ export function mountClassification({ document: doc = document }) {
           new CustomEvent('canopy-set-task-request', { detail: draft.request }),
         );
         sourceChanged();
+        if (!loadError)
+          status('Choose source subsets in Data, then review the exact plan before preparation.');
       })
       .catch((error) => status('Classification unavailable: ' + error.message));
   }
   window.addEventListener('pagehide', () => session.stop());
+  window.addEventListener('focus', () => {
+    if ($('preparation-task').value === TASK) refreshSaved();
+  });
   taskChanged();
 }

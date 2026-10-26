@@ -264,7 +264,7 @@ export function mountWorkspace({ application, document: doc = document }) {
     const localInput = !species && $('prepare-mode').value !== 'zenodo';
     const hasSelection = selectionList().children.length > 0;
     const downloadable = !$(species ? 'classification-download' : 'prepare-download').hidden;
-    const hasSaved = !species && $('saved-runs').children.length > 0;
+    const hasSaved = $(species ? 'classification-saved-runs' : 'saved-runs').children.length > 0;
     for (const actions of doc.querySelectorAll('.workspace-review-actions'))
       actions.disabled = !hasSelection && !localInput;
     $('workspace-context-title').textContent =
@@ -463,6 +463,7 @@ export function mountWorkspace({ application, document: doc = document }) {
     'classification-draft-list',
     'dataset-draft-list',
     'saved-runs',
+    'classification-saved-runs',
     'classification-plan-text',
     'classification-status',
     'prepare-status',

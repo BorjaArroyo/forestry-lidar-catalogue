@@ -554,9 +554,9 @@ main {
   border: 1px solid #eee2c5;
   border-radius: 7px;
   padding: 11px 12px;
-  font-size: 10px !important;
-  color: #89713e !important;
-  line-height: 1.7 !important;
+  font-size: 13px;
+  color: var(--warning-text);
+  line-height: 1.6;
 }
 .source-link {
   font-size: 10px;

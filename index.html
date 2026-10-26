@@ -577,7 +577,11 @@
                           size="6"
                         ></select></label
                       ><label
-                        >Tree IDs<select id="classification-trees" multiple="" size="6"></select
+                        >Tree IDs (select none for all)<select
+                          id="classification-trees"
+                          multiple=""
+                          size="6"
+                        ></select
                       ></label>
                     </details>
                     <p id="classification-summary" class="notice" role="status"></p>
@@ -658,7 +662,7 @@
                       hidden=""
                       >Download classification ZIP</a
                     ><button id="classification-cancel" class="button" disabled="">Cancel</button
-                    ><button id="classification-release" class="button small">
+                    ><button id="classification-release" class="button small" disabled>
                       Clear temporary classification output
                     </button>
                   </div>
@@ -666,12 +670,25 @@
                     <summary>Storage and recovery</summary>
                     <p>
                       Keep this page open during execution. Download the validated ZIP to retain it.
-                      Classification inputs restart after interruption.
+                      Classification inputs restart after interruption. Saved classification files
+                      below remain available after reloading this page.
                     </p>
                     <a href="docs/guides/TREE-CLASSIFICATION.md"
                       >Classification contracts and audit scope</a
                     >
                   </details>
+                </section>
+                <section class="workspace-saved-runs" data-workspace-stage="runs" hidden>
+                  <h2>Saved classification files</h2>
+                  <p>
+                    Download a completed ZIP or delete temporary files to free browser storage.
+                    Interrupted preparations must be restarted from Review.
+                  </p>
+                  <button id="classification-saved-refresh" class="button small">
+                    Refresh saved files
+                  </button>
+                  <p id="classification-saved-empty">No saved classification files.</p>
+                  <ul id="classification-saved-runs"></ul>
                 </section>
                 <div data-workspace-stage="data review runs" hidden="">
                   <p
@@ -931,12 +948,18 @@
                         >Existing acquisition directory<input
                           id="prepare-input"
                           required=""
+                          autocomplete="off"
+                          autocapitalize="none"
+                          spellcheck="false"
                           placeholder="/absolute/path/to/acquisition"
                           disabled="" /></label
                       ><label
                         >Separate prepared-output directory<input
                           id="prepare-destination"
                           required=""
+                          autocomplete="off"
+                          autocapitalize="none"
+                          spellcheck="false"
                           placeholder="/absolute/path/to/new-instance-package"
                           disabled="" /></label
                       ><button class="button" type="submit" disabled="">

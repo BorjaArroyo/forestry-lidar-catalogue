@@ -12,6 +12,10 @@ def main():
     paths = [
         *sorted((root / "browser-prepare").glob("classification-*.js")),
         root / "browser-prepare/intake.js",
+        root / "browser-prepare/export.js",
+        root / "browser-prepare/storage.js",
+        root / "browser-prepare/run-store.js",
+        root / "browser-prepare/run-session.js",
         *sorted((root / "src/canopy/classification").glob("*.py")),
         *sorted((root / "data/classification").glob("*.json*")),
         *sorted((root / "data/classification/sources").glob("*")),

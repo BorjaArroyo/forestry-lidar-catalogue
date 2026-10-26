@@ -1,0 +1,37 @@
+{
+  "status": "succeeded",
+  "date": "2026-10-26",
+  "scope": "Operational regression validation for progress reporting, shared ZIP writing, and recoverable classification storage. Source membership, rights, reference policies and scientific admission are unchanged.",
+  "implementation_sha256": "b1d0da9f43fa2b74ad712016c700bd924d9543990a424683d76bb68f64ee2df4",
+  "package_sha256": "fbfa6b49bae293c9cbeaf81edd025bc78f2acb7ae060146a0d5cca831180d40d",
+  "previous_validation": {
+    "path": "evidence/classification/integration-validation.json",
+    "sha256": "f08d5f89691531b6d422c0963545a55e41c3773bb0fcbe0eee0990f5075af7f7"
+  },
+  "unchanged_scientific_components": {
+    "classification-las.js": "f1c1b0b9540528d09acc5ca68b65c2dd1d11b172a8cfdffd1a37fdf4af81e1be",
+    "classification-model.js": "d9ef3d3b444be05621ea19223bd490b4258e9e926bef2c411c5c366f64973796",
+    "classification-intake.js": "147376d266806ff142df992d699e238ab492d612474271a3c8fa576af4f825e8",
+    "intake.js": "2c483c9c5016132d7bc32389e98141b22d07ec8c4eb02cd9413eacc4c258cc02"
+  },
+  "validation": {
+    "command": "uv run --frozen --no-sync npx playwright test",
+    "passed": 90,
+    "browsers": [
+      "Chromium",
+      "Firefox"
+    ],
+    "scope": [
+      "All four classification uses exported and independently validated by the native TreeDataset reader using isolated synthetic fixtures.",
+      "A slowed OPFS ZIP writer completed while the progress watchdog was accelerated to two seconds during export.",
+      "Completed exports remained downloadable after reload; interrupted files were discoverable and deletable; another tab could not delete a locked run.",
+      "Corrupt later input offered no validated output.",
+      "Desktop execution, navigation, keyboard focus and readable form fields; existing narrow viewport layout checks retained as regressions."
+    ]
+  },
+  "limitations": [
+    "Full original archives were not traversed again for this maintenance change. Earlier native and real-source browser audits retain their original implementation identities and scope.",
+    "Synthetic regression validation is not a new scientific source admission or an independent human review.",
+    "Browser storage remains temporary; completed ZIPs must be downloaded for durable retention."
+  ]
+}

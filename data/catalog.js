@@ -9617,7 +9617,7 @@ window.LIDAR_CATALOG = {
   "content_review": {
     "reviewed_at": "2026-10-17",
     "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
-    "model_sha256": "e5dc15d52c7c96218f0e9963e612c434d245bfefb780883180d5087a4c0d6ef2",
+    "model_sha256": "24a55a1848bab9f8d039636aaaf7376ac22772efd3941a905907bb794c455d75",
     "model_schema_sha256": "10b3e58b4fe2690c3c1a3e7336e2bfe00a3c9af58c060beeee56e757357b3307"
   },
   "evidence": [

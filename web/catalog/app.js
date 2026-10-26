@@ -634,6 +634,10 @@ export function mountCatalog({
     window.scrollTo(0, 0);
     $('.page-heading h1').focus({ preventScroll: true });
   }
+  $('.skip').addEventListener('click', (event) => {
+    event.preventDefault();
+    $('.page-heading h1').focus();
+  });
   document.addEventListener('click', (event) => {
     const target = event.target.closest('button');
     if (!target) return;
@@ -805,6 +809,7 @@ export function mountCatalog({
     clearTimeout(urlTimer);
     const previousTask = task.id;
     const previousRequest = JSON.stringify(taskRequest());
+    const previousRoute = workspaceHash(state.view, state.section);
     Object.assign(state, parseWorkspaceRoute(location.hash));
     initFromUrl();
     renderTaskRequest();
@@ -819,6 +824,8 @@ export function mountCatalog({
       new CustomEvent('canopy-view', { detail: { view: state.view, section: state.section } }),
     );
     document.dispatchEvent(new CustomEvent('canopy-experiment-change'));
+    if (previousRoute !== workspaceHash(state.view, state.section) || previousTask !== task.id)
+      $('.page-heading h1').focus({ preventScroll: true });
   };
   window.addEventListener('hashchange', locationChanged);
   window.addEventListener('popstate', locationChanged);

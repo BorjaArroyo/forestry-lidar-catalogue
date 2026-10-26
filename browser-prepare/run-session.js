@@ -4,10 +4,11 @@ export class RunSession {
     event,
     failure,
     timeout = 180000,
+    timeoutMessage = `Stopped after ${Math.round(timeout / 1000)} seconds without progress. Check saved preparations before retrying.`,
     schedule = (fn, delay) => setTimeout(fn, delay),
     unschedule = (id) => clearTimeout(id),
   }) {
-    Object.assign(this, { event, failure, timeout, schedule, unschedule });
+    Object.assign(this, { event, failure, timeout, timeoutMessage, schedule, unschedule });
     this.current = null;
   }
   get running() {
@@ -27,10 +28,7 @@ export class RunSession {
     const arm = () => {
       this.unschedule(run.timer);
       run.timer = this.schedule(() => {
-        if (finish())
-          this.failure(
-            'Stopped after 180 seconds without progress. Validated Zenodo plots are retained in Saved preparations.',
-          );
+        if (finish()) this.failure(this.timeoutMessage);
       }, this.timeout);
     };
     run.worker.onmessage = ({ data }) => {

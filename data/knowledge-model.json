@@ -3739,7 +3739,7 @@
         "execution_enabled": true,
         "implementation": {
           "path": "browser-prepare/classification-worker.js",
-          "sha256": "61aa4c64452172fa815787473a5c88d49dcd5838c8ede59a3b09b8373ef4f725",
+          "sha256": "b1d0da9f43fa2b74ad712016c700bd924d9543990a424683d76bb68f64ee2df4",
           "entrypoint": "module worker"
         },
         "rules": [
@@ -3761,9 +3761,10 @@
         "evidence_refs": [
           "evidence:for-species20k-metadata",
           "evidence:classification-native",
-          "evidence:classification-integration"
+          "evidence:classification-integration",
+          "evidence:classification-maintenance"
         ],
-        "validation_ref": "evidence:classification-integration"
+        "validation_ref": "evidence:classification-maintenance"
       }
     },
     "pipeline:for-species20k-classification:1.0.0": {
@@ -3785,7 +3786,8 @@
         "evidence_refs": [
           "evidence:for-species20k-metadata",
           "evidence:classification-native",
-          "evidence:classification-integration"
+          "evidence:classification-integration",
+          "evidence:classification-maintenance"
         ],
         "variable_outputs": {
           "xyz": [
@@ -3796,7 +3798,7 @@
             "reference_valid"
           ]
         },
-        "validation_ref": "evidence:classification-integration"
+        "validation_ref": "evidence:classification-maintenance"
       }
     },
     "evidence:biodiv-3dtrees-metadata": {
@@ -4018,7 +4020,7 @@
         "execution_enabled": true,
         "implementation": {
           "path": "browser-prepare/classification-worker.js",
-          "sha256": "61aa4c64452172fa815787473a5c88d49dcd5838c8ede59a3b09b8373ef4f725",
+          "sha256": "b1d0da9f43fa2b74ad712016c700bd924d9543990a424683d76bb68f64ee2df4",
           "entrypoint": "module worker"
         },
         "rules": [
@@ -4040,9 +4042,10 @@
         "evidence_refs": [
           "evidence:biodiv-3dtrees-metadata",
           "evidence:classification-native",
-          "evidence:classification-integration"
+          "evidence:classification-integration",
+          "evidence:classification-maintenance"
         ],
-        "validation_ref": "evidence:classification-integration"
+        "validation_ref": "evidence:classification-maintenance"
       }
     },
     "pipeline:biodiv-3dtrees-classification:1.0.0": {
@@ -4064,7 +4067,8 @@
         "evidence_refs": [
           "evidence:biodiv-3dtrees-metadata",
           "evidence:classification-native",
-          "evidence:classification-integration"
+          "evidence:classification-integration",
+          "evidence:classification-maintenance"
         ],
         "variable_outputs": {
           "xyz": [
@@ -4075,7 +4079,7 @@
             "reference_valid"
           ]
         },
-        "validation_ref": "evidence:classification-integration"
+        "validation_ref": "evidence:classification-maintenance"
       }
     },
     "evidence:classification-integration": {
@@ -4083,6 +4087,13 @@
       "data": {
         "local": "evidence/classification/integration-validation.json",
         "sha256": "f08d5f89691531b6d422c0963545a55e41c3773bb0fcbe0eee0990f5075af7f7"
+      }
+    },
+    "evidence:classification-maintenance": {
+      "type": "evidence",
+      "data": {
+        "local": "evidence/classification/maintenance-validation.json",
+        "sha256": "c222409c2220ea5ae06d16c2362e903857749e93116b50e84ec59f022373310c"
       }
     }
   },

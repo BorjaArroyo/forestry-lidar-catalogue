@@ -133,7 +133,11 @@ def verified_marker(marker, asset, root):
         save_json(marker, previous)
     for item in previous["outputs"]:
         path = root / item["path"]
-        if not path.exists() or path.stat().st_size != item["size_bytes"]:
+        if (
+            not path.is_file()
+            or path.stat().st_size != item["size_bytes"]
+            or digest(path)["sha256"] != item["sha256"]
+        ):
             raise ValueError(f"Completed output missing or changed: {path}")
     return previous
 
@@ -338,7 +342,7 @@ def main(argv=None):
     parser.add_argument(
         "--resume",
         action="store_true",
-        help="Continue from the current status without replaying completed assets",
+        help="Continue from the current status, revalidating completed assets before reuse",
     )
     args = parser.parse_args(argv)
     configure_archive_reader()
@@ -388,18 +392,8 @@ def run(args):
     harmonized = []
     conversion_errors = []
     if args.resume and previous:
-        available = {(record["record_id"], asset["name"]) for record, asset in queue}
-        completed = [
-            item
-            for item in previous.get("completed", [])
-            if (item["record_id"], item["asset"]) in available
-        ]
-        completed_keys = {(item["record_id"], item["asset"]) for item in completed}
-        queue = [
-            (record, asset)
-            for record, asset in queue
-            if (record["record_id"], asset["name"]) not in completed_keys
-        ]
+        # Every queued asset passes through acquire's durable output verification.
+        # A status entry alone cannot prove that the original bytes still exist.
         harmonized = previous.get("harmonized", [])
         conversion_errors = previous.get("conversion_errors", [])
     summary = {

@@ -22,20 +22,45 @@
       "size_bytes": 4719,
       "sha256": "f30e88c5ccc4d7b619f1ebc9b180170d934d8f0e6a0404489eb750b7fc1c72ab"
     },
+    "browser-prepare/classification-store.js": {
+      "path": "browser-prepare/classification-store.js",
+      "size_bytes": 2051,
+      "sha256": "e30cbd86e7273e8dc3e86cb77851098f110816a8283d1462bfda93d2b70de646"
+    },
     "browser-prepare/classification-ui.js": {
       "path": "browser-prepare/classification-ui.js",
-      "size_bytes": 14433,
-      "sha256": "f72055bdb57690671a5a4ec35537512f66f7309de699f64f420dc166ad9a7649"
+      "size_bytes": 17878,
+      "sha256": "9cd15cb8a692bf89f2fe57716fd0913c26f530c06480eec7206c6f66d79140c4"
     },
     "browser-prepare/classification-worker.js": {
       "path": "browser-prepare/classification-worker.js",
-      "size_bytes": 12511,
-      "sha256": "61aa4c64452172fa815787473a5c88d49dcd5838c8ede59a3b09b8373ef4f725"
+      "size_bytes": 12780,
+      "sha256": "b1d0da9f43fa2b74ad712016c700bd924d9543990a424683d76bb68f64ee2df4"
     },
     "browser-prepare/intake.js": {
       "path": "browser-prepare/intake.js",
       "size_bytes": 6079,
       "sha256": "2c483c9c5016132d7bc32389e98141b22d07ec8c4eb02cd9413eacc4c258cc02"
+    },
+    "browser-prepare/export.js": {
+      "path": "browser-prepare/export.js",
+      "size_bytes": 6279,
+      "sha256": "3a8e592dba9e7e76b1b9be753bcf9b495a318a51f5dde1bf21a9db72307cdd84"
+    },
+    "browser-prepare/storage.js": {
+      "path": "browser-prepare/storage.js",
+      "size_bytes": 3599,
+      "sha256": "06cdea26fe8e4f521b148ef1a6c325c7c5b852fff3acf1876890ea7e09430214"
+    },
+    "browser-prepare/run-store.js": {
+      "path": "browser-prepare/run-store.js",
+      "size_bytes": 3662,
+      "sha256": "bb8cbd09abd274e46c9bb06f100b8380e75f01bb175d800880f2fb99d0acc13c"
+    },
+    "browser-prepare/run-session.js": {
+      "path": "browser-prepare/run-session.js",
+      "size_bytes": 1679,
+      "sha256": "a3f9e194f03d97313f47dc7309c3fd5fe4602651fef66d4d6a4e2d99d71032d9"
     },
     "src/canopy/classification/__init__.py": {
       "path": "src/canopy/classification/__init__.py",
@@ -109,8 +134,8 @@
     },
     "src/canopy/classification/refresh_locks.py": {
       "path": "src/canopy/classification/refresh_locks.py",
-      "size_bytes": 1567,
-      "sha256": "6ffe57326e19a59cbb7ac42e81f61b2df6812db42609ab86c922786300f3ca0b"
+      "size_bytes": 1752,
+      "sha256": "8b035fe355a84250548011cdf4deee448c60680b0c5aeb481bcbda8247609966"
     },
     "src/canopy/classification/sample_inventory.py": {
       "path": "src/canopy/classification/sample_inventory.py",
@@ -184,8 +209,8 @@
     },
     "data/knowledge-model.json": {
       "path": "data/knowledge-model.json",
-      "size_bytes": 214289,
-      "sha256": "e5dc15d52c7c96218f0e9963e612c434d245bfefb780883180d5087a4c0d6ef2"
+      "size_bytes": 214744,
+      "sha256": "24a55a1848bab9f8d039636aaaf7376ac22772efd3941a905907bb794c455d75"
     },
     "browser-prepare/vendor/laz-perf.js": {
       "path": "browser-prepare/vendor/laz-perf.js",
