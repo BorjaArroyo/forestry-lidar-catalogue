@@ -159,9 +159,17 @@ for (const width of [375, 1280]) {
           expect(navigation.x + navigation.width).toBeLessThanOrEqual(content.x);
         }
         if (width === 375 && name === 'data') {
-          for (const row of await page.locator('#workspace-source-list tr').all()) {
-            expect((await row.boundingBox()).width).toBeGreaterThan(280);
-          }
+          // Source readiness can replace rows; measure the current table in one browser turn.
+          await expect
+            .poll(() =>
+              page
+                .locator('#workspace-source-list tr')
+                .evaluateAll(
+                  (rows) =>
+                    rows.length > 0 && rows.every((row) => row.getBoundingClientRect().width > 280),
+                ),
+            )
+            .toBe(true);
         }
         await page.screenshot({
           path: info.outputPath(task + '-' + name + '-' + width + '.png'),

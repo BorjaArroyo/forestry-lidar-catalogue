@@ -1,0 +1,475 @@
+{
+  "reviewed_at": "2026-10-26",
+  "scope": "Provider companion tables and saved FOR-instance header audit only; no new point-cloud or joint-output validation.",
+  "treescan": {
+    "source_ref": "zenodo:19127709",
+    "record_modified": "2026-04-08T13:47:45.764779+00:00",
+    "assets": [
+      {
+        "name": "individual_tree_summary.csv",
+        "url": "https://zenodo.org/api/records/19127709/files/individual_tree_summary.csv/content",
+        "size_bytes": 1079248,
+        "provider_checksum": "md5:636e591582c85164f1532a6dc6350694",
+        "sha256": "cf452e19957265c89f35bf3c02e7920fc9e072c44a7cc5e1791dd0058667059c"
+      },
+      {
+        "name": "plot_summary.xlsx",
+        "url": "https://zenodo.org/api/records/19127709/files/plot_summary.xlsx/content",
+        "size_bytes": 24794,
+        "provider_checksum": "md5:c468bf5eef366dbb62bb0d2287fe3da4",
+        "sha256": "42491a7a21d69d68cfa7501638518ca0666a871db018001f6110cb454c0fd5aa"
+      },
+      {
+        "name": "species_id_names.csv",
+        "url": "https://zenodo.org/api/records/19127709/files/species_id_names.csv/content",
+        "size_bytes": 956,
+        "provider_checksum": "md5:fb30c58415712a1d0d08639deb7bb0a7",
+        "sha256": "c480f8d5dff3eb8d1880fea18681a4adce0bc8494e1076dedb375f8d6ce659bf"
+      }
+    ],
+    "tree_table_columns": [
+      "source_file",
+      "treeID",
+      "species_code",
+      "species",
+      "completely_inside",
+      "point_count",
+      "height_m",
+      "canopy_area_m2",
+      "proj_area_mean_m2",
+      "proj_area_sd_m2"
+    ],
+    "lookup_columns": [
+      "CODE",
+      "LATIN_NAME",
+      "COMMON_NAME"
+    ],
+    "tree_rows": 10447,
+    "plots_in_tree_table": 272,
+    "duplicate_plot_tree_keys": 0,
+    "nonpositive_tree_id_rows": 0,
+    "labeled_trees": 7468,
+    "unknown_trees": 2979,
+    "lookup_entries": 30,
+    "unmapped_positive_codes": [],
+    "lookup_name_disagreements": 531,
+    "lookup_name_variants": [
+      {
+        "code": "40",
+        "tree_table_name": "Quercus species",
+        "lookup_name": "Quercus sp.",
+        "trees": 530
+      },
+      {
+        "code": "97",
+        "tree_table_name": "Salix caprea L.",
+        "lookup_name": "Salix caprea",
+        "trees": 1
+      }
+    ],
+    "genus_only_code_40_rows": 530,
+    "other_positive_code_rows": 6938,
+    "coverage_by_label_and_crown": [
+      {
+        "taxon_known": false,
+        "completely_inside": "0",
+        "trees": 847
+      },
+      {
+        "taxon_known": false,
+        "completely_inside": "1",
+        "trees": 2132
+      },
+      {
+        "taxon_known": true,
+        "completely_inside": "0",
+        "trees": 75
+      },
+      {
+        "taxon_known": true,
+        "completely_inside": "1",
+        "trees": 7393
+      }
+    ],
+    "taxa_counts": {
+      "Abies alba": 453,
+      "Acer campestre": 2,
+      "Acer platanoides": 19,
+      "Acer pseudoplatanus": 47,
+      "Alnus glutinosa": 88,
+      "Alnus incana": 20,
+      "Betula pendula": 439,
+      "Carpinus betulus": 141,
+      "Crataegus monogyna": 1,
+      "Fagus sylvatica": 597,
+      "Fraxinus excelsior": 22,
+      "Larix decidua": 117,
+      "Malus sylvestris": 1,
+      "Picea abies": 936,
+      "Pinus banksiana": 3,
+      "Pinus sylvestris": 3834,
+      "Populus alba": 1,
+      "Populus berolinensis": 3,
+      "Populus tremula": 15,
+      "Prunus avium": 19,
+      "Prunus padus": 3,
+      "Prunus serotina": 3,
+      "Pyrus communis": 2,
+      "Quercus robur": 8,
+      "Quercus rubra": 54,
+      "Quercus species": 530,
+      "Salix caprea L.": 1,
+      "Sorbus aucuparia": 13,
+      "Tilia cordata": 85,
+      "Ulmus minor": 11,
+      "unknown": 2979
+    },
+    "plot_workbook_totals": {
+      "plots": 272,
+      "n_trees": 10417,
+      "n_trees_with_species": 7465
+    },
+    "plot_table_key_difference": [
+      "Rem_Herby_2016_1102006.laz",
+      "Rem_Herby_2016_2204106.laz",
+      "Rem_Herby_2016_2803006.laz",
+      "Rem_Herby_2017_1102006.laz",
+      "Rem_Herby_2017_2204106.laz",
+      "Rem_Herby_2017_2803006.laz"
+    ],
+    "plot_count_disagreements": [
+      {
+        "plot_id": "Rem_Herby_2016_2403606.laz",
+        "workbook_trees": 32,
+        "tree_table_trees": 35,
+        "workbook_labeled": 28,
+        "tree_table_labeled": 28,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Herby_2016_7904506.laz",
+        "workbook_trees": 38,
+        "tree_table_trees": 41,
+        "workbook_labeled": 26,
+        "tree_table_labeled": 26,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Herby_2016_1102006.laz",
+        "workbook_trees": 38,
+        "tree_table_trees": null,
+        "workbook_labeled": 26,
+        "tree_table_labeled": null,
+        "status": "exact_key_missing"
+      },
+      {
+        "plot_id": "Rem_Herby_2016_2204106.laz",
+        "workbook_trees": 22,
+        "tree_table_trees": null,
+        "workbook_labeled": 20,
+        "tree_table_labeled": null,
+        "status": "exact_key_missing"
+      },
+      {
+        "plot_id": "Rem_Herby_2017_2503606.laz",
+        "workbook_trees": 50,
+        "tree_table_trees": 51,
+        "workbook_labeled": 41,
+        "tree_table_labeled": 41,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Herby_2016_2803006.laz",
+        "workbook_trees": 40,
+        "tree_table_trees": null,
+        "workbook_labeled": 27,
+        "tree_table_labeled": null,
+        "status": "exact_key_missing"
+      },
+      {
+        "plot_id": "Rem_Herby_2017_3503506.laz",
+        "workbook_trees": 25,
+        "tree_table_trees": 26,
+        "workbook_labeled": 22,
+        "tree_table_labeled": 22,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Katrynka_2016_3201705.laz",
+        "workbook_trees": 31,
+        "tree_table_trees": 32,
+        "workbook_labeled": 19,
+        "tree_table_labeled": 19,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Katrynka_2016_5201205.laz",
+        "workbook_trees": 27,
+        "tree_table_trees": 28,
+        "workbook_labeled": 24,
+        "tree_table_labeled": 25,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Milicz_2015_1707601.laz",
+        "workbook_trees": 32,
+        "tree_table_trees": 33,
+        "workbook_labeled": 25,
+        "tree_table_labeled": 25,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Milicz_2015_2804101.laz",
+        "workbook_trees": 110,
+        "tree_table_trees": 111,
+        "workbook_labeled": 89,
+        "tree_table_labeled": 89,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Milicz_2015_4103201.laz",
+        "workbook_trees": 51,
+        "tree_table_trees": 52,
+        "workbook_labeled": 34,
+        "tree_table_labeled": 35,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Milicz_2015_4502801.laz",
+        "workbook_trees": 34,
+        "tree_table_trees": 35,
+        "workbook_labeled": 30,
+        "tree_table_labeled": 30,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Milicz_2015_5003201.laz",
+        "workbook_trees": 27,
+        "tree_table_trees": 28,
+        "workbook_labeled": 19,
+        "tree_table_labeled": 20,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Piensk_2016_0901202.laz",
+        "workbook_trees": 140,
+        "tree_table_trees": 141,
+        "workbook_labeled": 102,
+        "tree_table_labeled": 102,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Piensk_2016_1401302.laz",
+        "workbook_trees": 88,
+        "tree_table_trees": 89,
+        "workbook_labeled": 70,
+        "tree_table_labeled": 70,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Piensk_2016_1501902.laz",
+        "workbook_trees": 75,
+        "tree_table_trees": 81,
+        "workbook_labeled": 44,
+        "tree_table_labeled": 44,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Suprasl_2015_2002504.laz",
+        "workbook_trees": 35,
+        "tree_table_trees": 36,
+        "workbook_labeled": 24,
+        "tree_table_labeled": 24,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Suprasl_2015_3602204.laz",
+        "workbook_trees": 83,
+        "tree_table_trees": 84,
+        "workbook_labeled": 51,
+        "tree_table_labeled": 51,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Suprasl_2015_4201404.laz",
+        "workbook_trees": 58,
+        "tree_table_trees": 59,
+        "workbook_labeled": 38,
+        "tree_table_labeled": 38,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Suprasl_2015_4300804.laz",
+        "workbook_trees": 15,
+        "tree_table_trees": 16,
+        "workbook_labeled": 8,
+        "tree_table_labeled": 8,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Suprasl_2015_4502004.laz",
+        "workbook_trees": 13,
+        "tree_table_trees": 14,
+        "workbook_labeled": 7,
+        "tree_table_labeled": 7,
+        "status": "counts_differ"
+      },
+      {
+        "plot_id": "Rem_Suprasl_2015_4601204.laz",
+        "workbook_trees": 40,
+        "tree_table_trees": 42,
+        "workbook_labeled": 35,
+        "tree_table_labeled": 35,
+        "status": "counts_differ"
+      }
+    ],
+    "scanner_types": {
+      "FARO Focus 3D X 130": 93,
+      "FARO Focus 3D S 120": 9,
+      "FARO Focus 3D X 130, Trimble TX5": 100,
+      "FARO Focus 3D 120": 63,
+      "Trimble TX5": 7
+    },
+    "acquisition_dates": {
+      "01.04.2016": 3,
+      "01.09.2015 - 30.11.2015": 11,
+      "01.10.2015": 1,
+      "02.10.2015": 3,
+      "02.11.2015": 3,
+      "03.11.2015": 4,
+      "03.11.2016": 3,
+      "04.11.2015": 2,
+      "04.11.2016": 8,
+      "05.04.2016": 2,
+      "05.04.2017": 1,
+      "06.04.2016": 1,
+      "06.11.2015": 1,
+      "07.04.2016": 1,
+      "07.10.2015": 2,
+      "08.04.2016": 1,
+      "08.10.2015": 2,
+      "08.12.2015": 2,
+      "09.10.2015": 1,
+      "09.11.2015": 5,
+      "09.12.2015": 2,
+      "1.12.2015": 1,
+      "10.12.2015": 1,
+      "10.4.2017": 3,
+      "11.04.2016": 3,
+      "11.10.2016": 4,
+      "11.11.2015": 7,
+      "11.12.2015": 1,
+      "11.4.2017": 1,
+      "12.04.2016": 5,
+      "12.10.2016": 6,
+      "12.11.2015": 7,
+      "12.12.2015": 1,
+      "13.04.2016": 7,
+      "13.10.2015": 2,
+      "13.10.2016": 5,
+      "13.11.2015": 8,
+      "14.03.2016": 2,
+      "14.10.2015": 1,
+      "14.10.2016": 3,
+      "14.11.2015": 5,
+      "15.03.2016": 3,
+      "15.10.2016": 4,
+      "15.11.2016": 7,
+      "16.03.2016": 5,
+      "16.10.2016": 1,
+      "16.11.2015": 1,
+      "16.11.2016": 5,
+      "17.03.2016": 5,
+      "17.10.2016": 3,
+      "17.11.2015": 1,
+      "17.11.2016": 4,
+      "18.03.2016": 3,
+      "18.10.2016": 2,
+      "18.11.2015": 1,
+      "19.10.2015": 3,
+      "19.10.2016": 2,
+      "19.11.2015": 2,
+      "2.10.2015": 1,
+      "2.12.2015": 2,
+      "20.10.2015": 1,
+      "21.10.2016": 1,
+      "22.10.2015": 4,
+      "23.11.2015": 4,
+      "24.09.2015": 1,
+      "24.10.2016": 2,
+      "24.11.2015": 7,
+      "25.10.2016": 1,
+      "25.11.2015": 6,
+      "26.10.2015": 3,
+      "26.10.2016": 6,
+      "26.11.2015": 1,
+      "27.09.2015": 1,
+      "27.10.2015": 3,
+      "27.10.2016": 4,
+      "27.11.2015": 2,
+      "28.10.2015": 3,
+      "28.10.2016": 1,
+      "29.03.2016": 1,
+      "29.10.2015": 5,
+      "3.10.2015": 2,
+      "3.12.2015": 2,
+      "30.03.2016": 1,
+      "30.10.2015": 4,
+      "30.11.2015": 2,
+      "30.3.2017": 1,
+      "30.9.2015": 2,
+      "31.03.2016": 2,
+      "31.3.2017": 2,
+      "6.10.2015": 1,
+      "7.10.2015": 1,
+      "7.12.2015": 2,
+      "8.10.2015": 1,
+      "8.11.2016": 5
+    },
+    "districts": {
+      "Gorlice": 62,
+      "Herby": 50,
+      "Katrynka": 35,
+      "Milicz": 46,
+      "Piensk": 45,
+      "Suprasl": 34
+    },
+    "plot_workbook_columns": [
+      "plot_id",
+      "district",
+      "X",
+      "Y",
+      "species_composition",
+      "n_trees",
+      "n_trees_with_species",
+      "species_list",
+      "package_id",
+      "scanner_types",
+      "date",
+      "annotator_id"
+    ]
+  },
+  "for_instance": {
+    "evidence_path": "evidence/for-instance-v1.json",
+    "evidence_sha256": "6f75798938676dc190725cb56f0b400afb4cfc17d6a7842806de355a9ca9b510",
+    "evidence_scope": "All 32 acquired LAS headers and a prefix of at most 2048 points per distinct dimension schema; not a full payload or annotation audit",
+    "plots": 32,
+    "plots_with_treeSP": 28,
+    "plots_without_treeSP": [
+      "RMIT/test.las",
+      "RMIT/train.las",
+      "TUWIEN/test.las",
+      "TUWIEN/train.las"
+    ],
+    "treeSP_native_dtypes": [
+      "int32"
+    ]
+  },
+  "method": [
+    "Read all CSV records as UTF-8 with a header and all XLSX data rows via XML/shared strings, retaining native strings.",
+    "Check downloaded byte length and provider MD5, then record SHA256 for each companion asset.",
+    "Count tree rows, exact plot/tree keys, nonzero taxonomic codes, crown flags and lookup joins without normalizing identifiers or taxonomy.",
+    "Sum workbook counters and compare exact plot keys and per-plot counts against the tree CSV.",
+    "Recount treeSP field presence from the saved FOR-instance schema/header audit, without interpreting field presence as label validity."
+  ]
+}

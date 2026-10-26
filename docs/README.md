@@ -24,6 +24,8 @@ Start with the [project README](../README.md) for installation, commands and the
 - [FOR-instance](sources/FOR-INSTANCE.md)
 - [FGI-EMIT](sources/FGI-EMIT.md)
 - [Content review](reviews/CONTENT-REVIEW.md)
+- [Multitask coverage](reviews/MULTITASK-COVERAGE.md): source candidates,
+  companion-table discrepancies, configurable reference policies and UX implications.
 - [Roadmap](ROADMAP.md)
 
 ## Historical evidence and review records

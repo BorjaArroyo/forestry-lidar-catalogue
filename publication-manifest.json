@@ -137,7 +137,7 @@
     "docs/guides/PIPELINES.md": "98a233cc07f006cd6c3f2f4d105556f9a2ffb7c0116d1ecd3265a17f82fa89c5",
     "docs/guides/TASK-DATASET.md": "f0a793308068eed1acc96511c3139782454aafdd146ef1c40b81cb043fd6285a",
     "docs/guides/TASK-PACKAGE.md": "601f0b09fad02fb1d6fa93e02ecac051830c28a711bbf2c265b640c5f5c0b72d",
-    "docs/README.md": "ebe32b9708da887dd83576af588d2696b75f1abc9995d9d572b5c94eaccab4a5",
+    "docs/README.md": "3162fc15554ce9c08ff5abc6ca55fd1206c97844a247eb2c45a2a3a3dc0cda22",
     "tests/e2e/serve.py": "5736da85bc17b3cce7c89af9d8155455ae4052aae88eef71f4aba7fd66ae15dd",
     "tests/e2e/catalog.spec.js": "e2209e79a48e27945ff0443858479a3ce4e4289e933786d49aea975fae4173eb",
     "tests/e2e/kernel.spec.js": "e09f6ea7e55ffe20f731a76dadb81dc44621bb63a0bc8e1c8e82b4f029c9cf38",
@@ -288,9 +288,9 @@
     "reviews/13255198.json": "9cc9fe2638e1220a5d6b1fa2810953bcf35fbf2d1da2e5fef3ca9805f4bc750b",
     ".gitattributes": "d5e66bd7d0dacb97963348d5304893b896a4edb71e1117ffb9b51b89528a855b",
     "uv.lock": "65e2130becfa1122ae010afba67ddb6ebf3ac9fa25f1d808b2d784a316722d27",
-    "docs/design/EXPERIMENT-WORKSPACE.md": "9b8747798e9aecd8d5bb2a5bb313235315329776963ae9d83773969e9daba4b3",
+    "docs/design/EXPERIMENT-WORKSPACE.md": "3ea4a635614b9c8467cf7eabf9486a1fa5cdaa48839ea0bb2c44493bf067751d",
     "web/workspace.js": "bec27a0b4f72b95ab8e615ccff72f8e15aadf7ec32153ca7b1c904595c6ad360",
-    "tests/e2e/workspace.spec.js": "2bd76481392c916b63c9ec4c810bc663f71696553ee2d796fc56121c8fe5bb8a",
+    "tests/e2e/workspace.spec.js": "3a305357811f6f5c937ba233d2e4a10751652432b17ea6e584219659cd266bc3",
     "docs/ui/workspace-desktop.png": "23a0b5ed6009cdf397feb24b29011280186e02467d0f8aaaee9de9493f2a5dcc",
     "docs/ui/workspace-mobile.png": "d100c04825d90e35a8ad483837f2b72fbd3c70c88fbba26fde8a0f03d692f8aa",
     "web/classification-workspace.js": "999d39056aa72f9f06deed60fe7232645897f047e5c6a9ddcab7ead3560133a9",
@@ -298,7 +298,9 @@
     "tests/e2e/workspace-helpers.js": "dbac64ab107b4c6d671cd1df943900e1b6db34dd7e462eb41c76469b05949ac9",
     "docs/ui/workspace-objectives-desktop.png": "016f17528b50a05da282b939e8216935e3c61f3cbcbde85b27dd346ae0af9226",
     "docs/ui/workspace-runs-desktop.png": "e5bd525187df648cff091189d6826b55231b760be1552368c4f7f6dffe016edd",
-    "docs/ui/workspace-subset-desktop.png": "4b119b14b1ba841492126b4d57ddb904a40bd35a2eb537b417afd3c60a252a6f"
+    "docs/ui/workspace-subset-desktop.png": "4b119b14b1ba841492126b4d57ddb904a40bd35a2eb537b417afd3c60a252a6f",
+    "docs/reviews/MULTITASK-COVERAGE.md": "ce79f29120fec7ea6bd1fb31c46375e0fd31fa08a2e97c439d1b14fbc5d1e99a",
+    "evidence/multitask-metadata-review.json": "3302ea4e44b12fbdd90200b5375c93d993ef4b3a032dd6980ec565ea28f3e484"
   },
   "target": "https://borjaarroyo.github.io/forestry-lidar-catalogue/"
 }
