@@ -1,4 +1,11 @@
 import { escapeHTML as esc } from './shared/dom.js';
+import {
+  jointSources,
+  referenceFor,
+  coveragePreview,
+  jointBlockers,
+  JOINT_FIELDS,
+} from './experiment.js?v=multitask-v1';
 
 export const WORKSPACE_SECTIONS = ['objectives', 'data', 'preparation', 'splits', 'review'];
 const sections = new Set([...WORKSPACE_SECTIONS, 'runs', 'service']);
@@ -23,6 +30,7 @@ export function workspaceHash(view, section = 'objectives') {
 
 export function mountWorkspace({ application, document: doc = document }) {
   const $ = (id) => doc.getElementById(id);
+  const isJoint = () => application.getExperiment().tasks.length > 1;
   let running = false;
   const startedTasks = new Set();
   const executionContexts = new Map();
@@ -65,6 +73,7 @@ export function mountWorkspace({ application, document: doc = document }) {
   function renderSources(request, task, state) {
     const source = $(task.id === 'species' ? 'classification-source' : 'prepare-source');
     const signature = JSON.stringify([
+      application.getExperiment(),
       task.id,
       request,
       state.taskRunning,
@@ -72,9 +81,18 @@ export function mountWorkspace({ application, document: doc = document }) {
     ]);
     if (signature === sourceSignature) return;
     sourceSignature = signature;
-    $('workspace-source-list').innerHTML = application.catalog.datasets
-      .filter((dataset) => task.preparation_sources[dataset.id]?.pipelines.length)
+    const experiment = application.getExperiment();
+    const candidates = isJoint()
+      ? jointSources(application.catalog)
+      : application.catalog.datasets.filter(
+          (dataset) => task.preparation_sources[dataset.id]?.pipelines.length,
+        );
+    $('workspace-source-list').innerHTML = candidates
       .map((dataset) => {
+        if (isJoint()) {
+          const selected = experiment.sources.includes(dataset.id);
+          return `<tr><td><button class="workspace-source-name" data-detail="${esc(dataset.id)}">${esc(dataset.name)}</button><small>zenodo:${esc(dataset.id)}</small></td><td data-label="Task coverage">${esc(referenceFor(dataset, 'instances').label)}<small>${esc(referenceFor(dataset, 'species').label)}</small><span class="workspace-tag">Reference review required</span></td><td data-label="Representation">Native plot clouds<small>No admitted joint pipeline</small></td><td><button class="button" data-experiment-${selected ? 'remove' : 'add'}="${esc(dataset.id)}">${selected ? 'Remove source' : 'Add to experiment'}</button></td></tr>`;
+        }
         const fit = application.selection.assess(dataset.id, request);
         const loaded = [...source.options].some(
           (option) => option.value === (task.id === 'species' ? dataset.source_ref : dataset.id),
@@ -85,6 +103,117 @@ export function mountWorkspace({ application, document: doc = document }) {
         return `<tr><td><button class="workspace-source-name" data-detail="${esc(dataset.id)}">${esc(dataset.name)}</button><small>${esc(dataset.source_ref || 'zenodo:' + dataset.id)}</small></td><td data-label="Task coverage"><span class="workspace-tag">${fit.status === 'ready' ? 'Audited route' : 'Request unavailable'}</span>${fit.blockers.length ? `<small>${esc(fit.blockers.join('. '))}</small>` : ''}</td><td data-label="Representation">${esc(representation)}</td><td><button class="button" data-workspace-source="${esc(dataset.id)}" ${running || !loaded || fit.status !== 'ready' ? 'disabled' : ''}>${loaded ? 'Configure subset' : 'Loading…'}</button></td></tr>`;
       })
       .join('');
+  }
+  function renderExperiment(state) {
+    const experiment = application.getExperiment();
+    const multi = isJoint();
+    $('workspace-single-task-routes').hidden = multi;
+    for (const id of ['experiment-selection', 'experiment-coverage', 'experiment-runs-info']) {
+      const panel = $(id);
+      panel.hidden =
+        !multi ||
+        state.view !== 'workbench' ||
+        !panel.dataset.workspaceStage.split(' ').includes(state.section);
+    }
+    $('experiment-review-blockers').hidden = !multi;
+    for (const input of doc.querySelectorAll('[data-workspace-task]')) {
+      input.checked = experiment.tasks.includes(input.dataset.workspaceTask.replace('task:', ''));
+      input.disabled = state.taskRunning;
+    }
+    $('workspace-objectives-note').textContent =
+      'Select one or both targets. At least one target is required.';
+    $('workspace-source-help').textContent = multi
+      ? 'One source can contribute to both targets. Reference coverage is separate from execution readiness.'
+      : 'Coverage is checked for the active task. Related sensor views remain separate observations.';
+    $('workspace-consumer-caption').textContent = multi
+      ? 'Proposed joint consumer fields. Source-specific reference policies and the producer still need validation.'
+      : 'Requested task fields; exact source coverage and optional omissions are checked in the reviewed plan.';
+    $('workspace-consumer-help').textContent = multi
+      ? 'N counts points; T counts linked reference trees. Targets keep independent masks. Eligibility exclusions do not change reference validity or remove scene context.'
+      : 'N counts points in a scene or observation; C counts source-specific channels. File blocks are storage units. Exact source omissions appear in the reviewed plan.';
+    $('workspace-assignment-title').textContent = multi
+      ? 'Shared assignments are required'
+      : 'Provider assignments are preserved';
+    $('workspace-review-fix').dataset.workspaceSection = 'data';
+    if (!multi) return;
+    $('workspace-requirements').hidden = true;
+    $('workspace-service').hidden = true;
+    $('workspace-context-text').textContent =
+      `Instances + taxonomy · ${experiment.rank} reference · ${experiment.sources.length} sources`;
+    $('workspace-context-state').textContent =
+      state.section === 'runs' ? 'No joint runs' : 'Draft · not executable';
+    $('workspace-footer-state').textContent = experiment.policy
+      ? `${experiment.sources.length} shared sources · ${experiment.policy === 'partial' ? 'Partial references allowed' : 'All references required'}`
+      : 'Choose shared data and a reference coverage policy';
+    $('workspace-lineage-input').textContent = experiment.sources.length
+      ? 'TreeScanPL10K · native plot observations'
+      : 'No shared source selected';
+    $('workspace-lineage-output').textContent =
+      'Instances + tree taxonomy · joint pipeline pending';
+    $('workspace-partitions').textContent = 'No shared experimental assignment validated';
+    $('experiment-selection-summary').textContent = `${experiment.sources.length} selected`;
+    $('experiment-selection-status').textContent = experiment.sources.length
+      ? 'TreeScanPL10K · companion-table coverage, pending validation against point clouds.'
+      : 'Add a source above to configure shared reference coverage.';
+    $('experiment-source-evidence').hidden = !experiment.sources.length;
+    $('experiment-complete-crowns').checked = experiment.completeCrowns;
+    for (const input of doc.querySelectorAll('[name="experiment-coverage"]'))
+      input.checked = input.value === experiment.policy;
+    const counts = coveragePreview(experiment);
+    const number = (value) => (value === null ? 'Choose a policy' : value.toLocaleString('en-US'));
+    $('experiment-coverage-counts').innerHTML = counts
+      ? [
+          ['Tree-table preview · totals unresolved', counts.total],
+          ['Retained for target eligibility', counts.retained],
+          ['Taxonomic candidates at required rank', counts.taxonomy],
+          ['Excluded from target eligibility', counts.excluded],
+        ]
+          .map(
+            ([label, value]) =>
+              `<div><span>${esc(label)}</span><strong>${esc(number(value))}</strong></div>`,
+          )
+          .join('')
+      : '<p>Add a shared source in Data to inspect candidate coverage.</p>';
+    const blockers = jointBlockers(experiment);
+    $('workspace-review-state').textContent =
+      'The shared draft is saved. Resolve its reference and pipeline requirements before execution.';
+    $('experiment-blockers').innerHTML = blockers
+      .map((reason) => `<li>${esc(reason)}</li>`)
+      .join('');
+    $('workspace-review-fix').hidden = false;
+    $('workspace-review-fix').dataset.workspaceSection = !experiment.sources.length
+      ? 'data'
+      : !experiment.policy
+        ? 'preparation'
+        : 'data';
+    $('workspace-review-summary').innerHTML = [
+      ['Objectives', 'Tree instances + ' + experiment.rank + ' classification'],
+      ['Selected data', experiment.sources.length ? 'TreeScanPL10K' : 'No shared source selected'],
+      [
+        'Reference coverage',
+        experiment.policy === 'partial'
+          ? 'Partial references allowed'
+          : experiment.policy === 'joint'
+            ? 'All selected references required'
+            : 'Not selected',
+      ],
+      ['Crown coverage', experiment.completeCrowns ? 'Complete crowns only' : 'All crowns'],
+      [
+        'Target eligibility',
+        counts?.retained != null
+          ? number(counts.retained) + ' tree-table candidates · not validated'
+          : 'Choose data and a reference policy',
+      ],
+    ]
+      .map(([label, value]) => `<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`)
+      .join('');
+    $('workspace-consumer-unit').textContent =
+      'One plot observation has N points and T linked reference trees. Point-to-tree identity is a reference relationship, not a default model input.';
+    $('workspace-consumer-fields').innerHTML = JOINT_FIELDS.map(
+      ([name, type, shape, meaning]) =>
+        `<tr><th scope="row">${esc(name)}</th><td data-label="Type">${esc(type)}</td><td data-label="Shape">${esc(shape)}</td><td data-label="Requirement">${esc(meaning)}</td></tr>`,
+    ).join('');
+    $('workspace-runs-empty').hidden = state.section !== 'runs';
   }
   function render() {
     const state = application.getState();
@@ -158,13 +287,6 @@ export function mountWorkspace({ application, document: doc = document }) {
     $('workspace-footer-state').textContent = hasSelection
       ? `${selectionList().children.length} saved subsets · changes require plan review`
       : 'Your task requirements are retained across sections';
-    for (const button of doc.querySelectorAll('[data-workspace-task]')) {
-      button.setAttribute(
-        'aria-pressed',
-        String(button.dataset.workspaceTask === 'task:' + task.id),
-      );
-      button.disabled = state.taskRunning;
-    }
     setHidden($('workspace-requirements'), species);
     setHidden(
       $('workspace-runs-empty'),
@@ -252,16 +374,25 @@ export function mountWorkspace({ application, document: doc = document }) {
     $('workspace-plan-cost').textContent = cost;
     setHidden($('workspace-plan-cost'), !cost);
     renderSources(request, task, state);
+    renderExperiment(state);
   }
   doc.addEventListener('click', (event) => {
     const button = event.target.closest('button[data-workspace-section]');
     if (button && !button.dataset.view)
       application.navigate('workbench', button.dataset.workspaceSection);
-    const taskButton = event.target.closest('[data-workspace-task]');
-    if (taskButton) {
-      $('preparation-task').value = taskButton.dataset.workspaceTask;
-      $('preparation-task').dispatchEvent(new Event('change', { bubbles: true }));
+    if (event.target.closest('[data-experiment-remove]')) {
+      const id = event.target.closest('[data-experiment-remove]').dataset.experimentRemove;
+      application.setExperiment({
+        sources: application.getExperiment().sources.filter((value) => value !== id),
+      });
+      doc.querySelector(`#workspace-source-list [data-experiment-add="${id}"]`)?.focus();
     }
+    if (event.target.closest('[data-experiment-add]'))
+      doc
+        .querySelector(
+          `#workspace-source-list [data-experiment-remove="${event.target.closest('[data-experiment-add]').dataset.experimentAdd}"]`,
+        )
+        ?.focus();
     const sourceButton = event.target.closest('[data-workspace-source]');
     if (sourceButton) openSubset(sourceButton.dataset.workspaceSource);
     if (event.target.closest('#prepare-add, #classification-add')) {
@@ -285,6 +416,7 @@ export function mountWorkspace({ application, document: doc = document }) {
     { capture: true },
   );
   doc.addEventListener('canopy-view', render);
+  doc.addEventListener('canopy-experiment-change', render);
   doc.addEventListener('canopy-task-request', render);
   doc.addEventListener('canopy-task-change', render);
   doc.addEventListener('canopy-workspace-storage-error', render);
@@ -307,6 +439,7 @@ export function mountWorkspace({ application, document: doc = document }) {
   const observer = new doc.defaultView.MutationObserver(() => {
     const state = application.getState();
     if (
+      !isJoint() &&
       application.selection.task.id === 'species' &&
       state.view === 'workbench' &&
       state.section === 'data' &&
@@ -340,7 +473,29 @@ export function mountWorkspace({ application, document: doc = document }) {
   for (const id of ['classification-download', 'prepare-download'])
     observer.observe($(id), { attributes: true, attributeFilter: ['hidden'] });
   doc.addEventListener('change', (event) => {
+    if (event.target.matches('[data-workspace-task]')) {
+      const tasks = [...doc.querySelectorAll('[data-workspace-task]:checked')].map((input) =>
+        input.dataset.workspaceTask.replace('task:', ''),
+      );
+      application.setExperiment({ tasks });
+    }
+    if (event.target.matches('[name="experiment-coverage"]'))
+      application.setExperiment({ policy: event.target.value });
+    if (event.target.id === 'experiment-complete-crowns')
+      application.setExperiment({ completeCrowns: event.target.checked });
     if (event.target.matches('#prepare-mode, #prepare-file')) render();
   });
+  // A shared draft cannot execute a stale single-task plan through hidden controls.
+  for (const type of ['click', 'change'])
+    doc.addEventListener(
+      type,
+      (event) => {
+        if (isJoint() && event.target.closest('#workspace-single-task-routes')) {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+      },
+      true,
+    );
   render();
 }
