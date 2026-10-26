@@ -70,7 +70,15 @@ terrain-height normalization. Native dimension descriptors explain packed LAS
 classification storage. Header CRS is retained: EPSG:25833 for three plots,
 EPSG:25832 for twenty, EPSG:2193 for five, and unknown for four. XY units are
 metres for the 28 projected headers; remaining units and vertical datum are not
-certified. Optional collection-specific species fields are preserved, not mapped.
+certified. Additional native `treeSP` fields are preserved without taxonomic interpretation.
+
+`treeSP` must not be advertised as usable species reference. The paper's Forest
+types section (PDF page 5) states that species reference was not published. A
+2026-10-26 inspection of all seven hash-checked support files found identifiers
+and DBH, but no species column or code-to-taxon lookup. Numeric `treeSP` values
+and the extra-dimension description “tree species” do not establish that mapping.
+This source is excluded from the joint instance/species design case; its native
+instance and component annotations remain relevant to their respective tasks.
 
 Positive tree identifiers are scoped by record and plot path. Published dev/test
 membership remains unchanged. No training/validation split, independent-zone

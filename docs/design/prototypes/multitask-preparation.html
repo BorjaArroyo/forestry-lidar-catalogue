@@ -1,0 +1,848 @@
+<div id="canopy-multitask-preview">
+  <div class="mp-shell" aria-label="Canopy multitask design preview">
+    <header class="mp-top">
+      <span class="mp-brand">Canopy</span>
+      <nav aria-label="Main navigation">
+        <button type="button" data-view="sources">Sources</button>
+        <button type="button" data-view="data" data-experiment-link>Experiment</button>
+        <button type="button" data-view="runs">Runs &amp; outputs</button>
+      </nav>
+      <span class="mp-preview">Design preview</span>
+    </header>
+    <div class="mp-context">
+      <strong>Tree instances &amp; taxonomy</strong><span data-context></span>
+    </div>
+    <div class="mp-body">
+      <nav class="mp-sidebar" aria-label="Experiment sections">
+        <span class="mp-overline">EXPERIMENT</span>
+        <button type="button" data-view="objectives">Objectives</button>
+        <button type="button" data-view="data">Data</button>
+        <button type="button" data-view="preparation">Preparation</button>
+        <button type="button" data-view="splits">Splits</button>
+        <button type="button" data-view="review">Review</button>
+      </nav>
+      <main class="mp-main">
+        <section data-panel="objectives" hidden>
+          <span class="mp-overline">EXPERIMENT / OBJECTIVES</span>
+          <h1>What should the data support?</h1>
+          <p class="mp-lead">Choose the targets. Each keeps its own reference requirements.</p>
+          <div class="mp-choices">
+            <label class="mp-choice"
+              ><input type="checkbox" name="instances" checked /><span
+                ><strong>Tree instances</strong
+                ><small>Which points belong to each tree?</small></span
+              ></label
+            >
+            <label class="mp-choice"
+              ><input type="checkbox" name="taxonomy" checked /><span
+                ><strong>Taxonomic classification</strong
+                ><small>Which taxon does each tree belong to?</small></span
+              ></label
+            >
+          </div>
+          <label class="mp-field" data-rank-field
+            >Required taxonomic rank<select name="rank">
+              <option value="species">Species</option>
+              <option value="genus">Genus</option>
+            </select></label
+          >
+          <p class="mp-note" data-objective-note></p>
+        </section>
+        <section data-panel="sources" hidden>
+          <span class="mp-overline">SOURCES</span>
+          <h1>One source, several possible tasks</h1>
+          <p class="mp-lead">
+            Reference availability and preparation readiness are shown separately.
+          </p>
+          <article class="mp-source">
+            <div>
+              <h2>TreeScanPL10K</h2>
+              <p>272 plot clouds · TLS · Poland</p>
+              <span class="mp-tag">Instances + partial taxonomy</span>
+            </div>
+            <button type="button" class="mp-button" data-view="data">View in experiment</button>
+          </article>
+          <p class="mp-note">
+            Taxonomic lookup published. Tree and plot summaries need reconciliation. Joint
+            preparation is not available yet.
+          </p>
+        </section>
+        <section data-panel="data">
+          <span class="mp-overline">EXPERIMENT / DATA</span>
+          <h1>Shared source, separate coverage</h1>
+          <p class="mp-lead">
+            The same trees can contribute to several targets without duplicating the source.
+          </p>
+          <article class="mp-source">
+            <div>
+              <h2>TreeScanPL10K</h2>
+              <p>272 plots · one source release</p>
+              <span class="mp-tag">Reference review required</span>
+            </div>
+            <span class="mp-release">Zenodo 19127709</span>
+          </article>
+          <dl class="mp-facts">
+            <div>
+              <dt>Tree instance reference</dt>
+              <dd>Plot-local tree IDs reported</dd>
+            </div>
+            <div>
+              <dt>Taxonomic reference</dt>
+              <dd>Partial; includes genus-only labels</dd>
+            </div>
+            <div>
+              <dt>Preparation</dt>
+              <dd>Joint pipeline not yet available</dd>
+            </div>
+          </dl>
+          <details>
+            <summary>Choose crown coverage</summary>
+            <label class="mp-check"
+              ><input type="checkbox" name="complete" /> Only trees with complete crowns</label
+            >
+            <p class="mp-muted">
+              Crown completeness is a separate filter; it does not establish reference validity.
+            </p>
+          </details>
+          <details>
+            <summary>Inspect source evidence</summary>
+            <p>
+              Verified companion files: individual_tree_summary.csv, species_id_names.csv and
+              plot_summary.xlsx.
+            </p>
+            <p>
+              The tree table has 10,447 rows; the plot workbook reports 10,417 trees. Three plot
+              identifiers differ in their year. Counts below describe the tree table, pending
+              reconciliation with the point clouds.
+            </p>
+            <p>
+              Code 40 is Quercus sp.: it can provide a genus candidate, not a species target.
+              Unknown taxonomic codes and cropped crowns remain distinct.
+            </p>
+          </details>
+        </section>
+        <section data-panel="preparation" hidden>
+          <span class="mp-overline">EXPERIMENT / PREPARATION</span>
+          <h1>Choose reference coverage</h1>
+          <p class="mp-lead">Apply one explicit policy to the selected targets.</p>
+          <fieldset class="mp-policies">
+            <legend>Reference policy</legend>
+            <label class="mp-choice"
+              ><input type="radio" name="policy" value="partial" /><span
+                ><strong>Allow partial references</strong
+                ><small
+                  >Keep trees useful for at least one selected target. Missing targets have their
+                  own masks.</small
+                ></span
+              ></label
+            >
+            <label class="mp-choice"
+              ><input type="radio" name="policy" value="joint" /><span
+                ><strong>Require all selected references</strong
+                ><small
+                  >Restrict target eligibility to trees satisfying every selected
+                  requirement.</small
+                ></span
+              ></label
+            >
+          </fieldset>
+          <div class="mp-coverage" aria-live="polite" data-coverage></div>
+          <p class="mp-note">
+            Preview from the tree table. Point-level validity and joins still need validation.
+            Filtering target eligibility must not remove scene context or turn excluded trees into
+            background.
+          </p>
+        </section>
+        <section data-panel="splits" hidden>
+          <span class="mp-overline">EXPERIMENT / SPLITS</span>
+          <h1>One assignment across targets</h1>
+          <p class="mp-lead">
+            A tree and its related observations stay together when target coverage changes.
+          </p>
+          <dl class="mp-facts">
+            <div>
+              <dt>Long-term objective</dt>
+              <dd>C · transfer to held-out conditions</dd>
+            </div>
+            <div>
+              <dt>Current assignment</dt>
+              <dd>No experimental split validated for this source</dd>
+            </div>
+            <div>
+              <dt>Geography</dt>
+              <dd>Public plot coordinates are rounded to a kilometer</dd>
+            </div>
+            <div>
+              <dt>Capture time</dt>
+              <dd>Keep dates and intervals with their original precision</dd>
+            </div>
+          </dl>
+          <p class="mp-note">
+            Reference exclusions do not move trees between splits. Geographic independence needs
+            capture and site evidence before profile C can be claimed.
+          </p>
+        </section>
+        <section data-panel="review" hidden>
+          <span class="mp-overline">EXPERIMENT / REVIEW</span>
+          <h1>Inspect the shared contract</h1>
+          <p class="mp-lead">
+            A plot input, distinct target axes and an explicit point-to-tree relationship.
+          </p>
+          <dl class="mp-facts">
+            <div>
+              <dt>Selected targets</dt>
+              <dd data-targets></dd>
+            </div>
+            <div>
+              <dt>Reference policy</dt>
+              <dd data-policy-label></dd>
+            </div>
+            <div>
+              <dt>Consumer sample</dt>
+              <dd>Plot observation with N points and T referenced trees</dd>
+            </div>
+            <div>
+              <dt>Target eligibility</dt>
+              <dd data-retained></dd>
+            </div>
+          </dl>
+          <details data-schema>
+            <summary>Inspect expected inputs and outputs</summary>
+            <div class="mp-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Field</th>
+                    <th>Shape / type</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code>inputs.xyz</code></td>
+                    <td>[N, 3] · float64</td>
+                    <td>Coordinates, units and frame declared</td>
+                  </tr>
+                  <tr data-instance-output>
+                    <td><code>targets.instance</code></td>
+                    <td>[N] · int64</td>
+                    <td>Instance reference with its own validity mask</td>
+                  </tr>
+                  <tr data-instance-mask>
+                    <td><code>validity.instance</code></td>
+                    <td>[N] · bool</td>
+                    <td>Whether point-level instance reference is usable</td>
+                  </tr>
+                  <tr data-taxonomy-output>
+                    <td><code>targets.taxonomy</code></td>
+                    <td>[T] · int64</td>
+                    <td>Vocabulary at the selected rank, with its own validity mask</td>
+                  </tr>
+                  <tr data-taxonomy-mask>
+                    <td><code>validity.taxonomy</code></td>
+                    <td>[T] · bool</td>
+                    <td>Whether tree-level reference meets the required rank</td>
+                  </tr>
+                  <tr>
+                    <td><code>relations.point_to_tree</code></td>
+                    <td>[N] · int64</td>
+                    <td>Reference relationship; not a model input</td>
+                  </tr>
+                  <tr>
+                    <td><code>trees.key</code></td>
+                    <td>[T] · UTF-8</td>
+                    <td>Source release + plot + native tree ID</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="mp-muted">
+              Draft consumer description. Native codes, unavailable reasons, vocabulary, masks and
+              split provenance remain explicit. Storage chunks do not define model samples.
+            </p>
+          </details>
+          <div class="mp-blocker" role="status">
+            <strong>Preparation needs review</strong>
+            <p>
+              Reconcile source summaries, validate point/tree joins and admit the joint pipeline
+              before execution.
+            </p>
+            <p data-choice-blocker></p>
+          </div>
+          <button type="button" class="mp-button mp-primary" disabled>
+            Preparation unavailable
+          </button>
+        </section>
+        <section data-panel="runs" hidden>
+          <span class="mp-overline">RUNS &amp; OUTPUTS</span>
+          <h1>No preparation has run</h1>
+          <p class="mp-lead">
+            Validated outputs will retain their exact tasks, coverage policy and split assignment.
+          </p>
+          <div class="mp-empty">
+            <h2>The draft is still under review</h2>
+            <p>Resolve the source evidence and pipeline requirements before starting a run.</p>
+            <button type="button" class="mp-button" data-view="review">Return to review</button>
+          </div>
+        </section>
+        <footer class="mp-footer">
+          <span data-footer-context></span
+          ><button type="button" class="mp-button mp-primary" data-next>Continue</button>
+        </footer>
+      </main>
+    </div>
+  </div>
+</div>
+<style>
+  #canopy-multitask-preview {
+    color-scheme: light dark;
+  }
+  #canopy-multitask-preview .mp-shell {
+    --mp-bg: light-dark(#f5f7f2, #111c18);
+    --mp-paper: light-dark(#fffef9, #18271f);
+    --mp-ink: light-dark(#17332c, #e2eee7);
+    --mp-soft: light-dark(#506358, #b6c9be);
+    --mp-line: light-dark(#dce4dc, #3d5145);
+    --mp-select: light-dark(#e5ede3, #294337);
+    --mp-action: light-dark(#1b5047, #c5dfca);
+    --mp-action-text: light-dark(#fffef9, #102e28);
+    --mp-nav: light-dark(#102e28, #0b1813);
+    --mp-nav-text: light-dark(#e3eee7, #e3eee7);
+    --mp-notice: light-dark(#f8efd9, #403720);
+    --mp-notice-text: light-dark(#685019, #f4dfac);
+    background: var(--mp-bg);
+    color: var(--mp-ink);
+    font:
+      400 14px/1.5 Inter,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
+    min-width: 0;
+  }
+  #canopy-multitask-preview * {
+    box-sizing: border-box;
+  }
+  #canopy-multitask-preview [hidden] {
+    display: none !important;
+  }
+  #canopy-multitask-preview h1 {
+    font:
+      400 27px/1.2 Georgia,
+      serif;
+    margin: 8px 0 10px;
+  }
+  #canopy-multitask-preview h2 {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+  }
+  #canopy-multitask-preview p {
+    margin: 8px 0;
+  }
+  #canopy-multitask-preview strong {
+    font-weight: 500;
+  }
+  #canopy-multitask-preview button,
+  #canopy-multitask-preview select,
+  #canopy-multitask-preview input {
+    font: inherit;
+    accent-color: var(--mp-action);
+  }
+  #canopy-multitask-preview button:focus-visible,
+  #canopy-multitask-preview select:focus-visible,
+  #canopy-multitask-preview summary:focus-visible {
+    outline: 2px solid var(--mp-action);
+    outline-offset: 3px;
+  }
+  #canopy-multitask-preview .mp-top {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+    background: var(--mp-nav);
+    color: var(--mp-nav-text);
+    padding: 17px 22px;
+    padding-right: 105px;
+  }
+  #canopy-multitask-preview .mp-brand {
+    font:
+      400 26px Georgia,
+      serif;
+  }
+  #canopy-multitask-preview .mp-top nav {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  #canopy-multitask-preview .mp-top button {
+    background: transparent;
+    color: inherit;
+    border: 0;
+    padding: 8px 10px;
+    border-radius: 5px;
+  }
+  #canopy-multitask-preview .mp-top button[aria-current='page'] {
+    background: color-mix(in srgb, var(--mp-nav-text) 15%, transparent);
+  }
+  #canopy-multitask-preview .mp-preview {
+    font-size: 12px;
+  }
+  #canopy-multitask-preview .mp-context {
+    background: var(--mp-paper);
+    border-bottom: 1px solid var(--mp-line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 18px;
+    padding: 12px 22px;
+  }
+  #canopy-multitask-preview .mp-context span {
+    color: var(--mp-soft);
+    font-size: 12px;
+  }
+  #canopy-multitask-preview .mp-body {
+    display: grid;
+    grid-template-columns: 166px minmax(0, 1fr);
+    min-height: 600px;
+  }
+  #canopy-multitask-preview .mp-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 25px 12px;
+    border-right: 1px solid var(--mp-line);
+  }
+  #canopy-multitask-preview .mp-overline {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--mp-soft);
+  }
+  #canopy-multitask-preview .mp-sidebar .mp-overline {
+    padding: 0 10px 10px;
+  }
+  #canopy-multitask-preview .mp-sidebar button {
+    text-align: left;
+    padding: 10px;
+    color: var(--mp-soft);
+    background: transparent;
+    border: 0;
+    border-radius: 5px;
+  }
+  #canopy-multitask-preview .mp-sidebar button[aria-current='step'] {
+    background: var(--mp-select);
+    color: var(--mp-ink);
+  }
+  #canopy-multitask-preview .mp-main {
+    min-width: 0;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  #canopy-multitask-preview .mp-lead,
+  #canopy-multitask-preview .mp-muted {
+    color: var(--mp-soft);
+  }
+  #canopy-multitask-preview .mp-lead {
+    margin-bottom: 22px;
+  }
+  #canopy-multitask-preview .mp-muted {
+    font-size: 12px;
+  }
+  #canopy-multitask-preview .mp-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  #canopy-multitask-preview .mp-choice {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    background: var(--mp-paper);
+    border: 1px solid var(--mp-line);
+    border-radius: 7px;
+    padding: 15px;
+  }
+  #canopy-multitask-preview .mp-choice:has(input:checked) {
+    background: var(--mp-select);
+  }
+  #canopy-multitask-preview .mp-choice input {
+    margin-top: 5px;
+    flex: 0 0 auto;
+  }
+  #canopy-multitask-preview .mp-choice small {
+    display: block;
+    color: var(--mp-soft);
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  #canopy-multitask-preview .mp-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 20px;
+    max-width: 300px;
+  }
+  #canopy-multitask-preview select {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid var(--mp-line);
+    background: var(--mp-paper);
+    color: var(--mp-ink);
+    border-radius: 5px;
+  }
+  #canopy-multitask-preview .mp-source {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 17px;
+    background: var(--mp-paper);
+    border: 1px solid var(--mp-line);
+    border-radius: 7px;
+  }
+  #canopy-multitask-preview .mp-source p,
+  #canopy-multitask-preview .mp-release {
+    color: var(--mp-soft);
+    font-size: 12px;
+  }
+  #canopy-multitask-preview .mp-tag {
+    display: inline-block;
+    font-size: 12px;
+    background: var(--mp-notice);
+    color: var(--mp-notice-text);
+    padding: 3px 7px;
+    border-radius: 4px;
+  }
+  #canopy-multitask-preview .mp-facts {
+    margin: 15px 0;
+  }
+  #canopy-multitask-preview .mp-facts > div {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--mp-line);
+  }
+  #canopy-multitask-preview dt {
+    color: var(--mp-soft);
+  }
+  #canopy-multitask-preview dd {
+    margin: 0;
+  }
+  #canopy-multitask-preview details {
+    border-top: 1px solid var(--mp-line);
+    padding-top: 12px;
+    margin-top: 15px;
+  }
+  #canopy-multitask-preview summary {
+    font-weight: 500;
+    padding: 3px 0;
+  }
+  #canopy-multitask-preview details p {
+    color: var(--mp-soft);
+    font-size: 12px;
+  }
+  #canopy-multitask-preview .mp-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 13px;
+  }
+  #canopy-multitask-preview .mp-note {
+    background: var(--mp-paper);
+    border-left: 3px solid var(--mp-line);
+    padding: 12px 15px;
+    margin-top: 20px;
+    color: var(--mp-soft);
+    font-size: 12px;
+  }
+  #canopy-multitask-preview .mp-policies {
+    border: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+    margin: 0;
+  }
+  #canopy-multitask-preview legend {
+    font-size: 12px;
+    color: var(--mp-soft);
+    padding: 0 0 8px;
+  }
+  #canopy-multitask-preview .mp-coverage {
+    margin-top: 20px;
+  }
+  #canopy-multitask-preview .mp-coverage > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 5px 15px;
+    border-bottom: 1px solid var(--mp-line);
+    padding: 9px 0;
+  }
+  #canopy-multitask-preview .mp-number {
+    font-variant-numeric: tabular-nums;
+  }
+  #canopy-multitask-preview .mp-table-wrap {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  #canopy-multitask-preview table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+  }
+  #canopy-multitask-preview td,
+  #canopy-multitask-preview th {
+    padding: 10px 7px;
+    border-bottom: 1px solid var(--mp-line);
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+  #canopy-multitask-preview th {
+    font-weight: 500;
+    color: var(--mp-soft);
+  }
+  #canopy-multitask-preview .mp-blocker {
+    margin: 20px 0;
+    padding: 13px 15px;
+    background: var(--mp-notice);
+    color: var(--mp-notice-text);
+    border-radius: 5px;
+  }
+  #canopy-multitask-preview .mp-blocker p {
+    font-size: 12px;
+  }
+  #canopy-multitask-preview .mp-button {
+    border: 1px solid var(--mp-line);
+    border-radius: 5px;
+    background: var(--mp-paper);
+    color: var(--mp-ink);
+    padding: 9px 13px;
+  }
+  #canopy-multitask-preview .mp-primary {
+    background: var(--mp-action);
+    color: var(--mp-action-text);
+    border-color: var(--mp-action);
+  }
+  #canopy-multitask-preview .mp-button:disabled {
+    opacity: 0.6;
+  }
+  #canopy-multitask-preview .mp-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--mp-line);
+  }
+  #canopy-multitask-preview .mp-footer span {
+    font-size: 12px;
+    color: var(--mp-soft);
+  }
+  #canopy-multitask-preview .mp-empty {
+    background: var(--mp-paper);
+    padding: 22px;
+    border: 1px dashed var(--mp-line);
+    border-radius: 7px;
+  }
+  @media (max-width: 640px) {
+    #canopy-multitask-preview .mp-top {
+      padding: 15px;
+      gap: 10px;
+      padding-right: 90px;
+    }
+    #canopy-multitask-preview .mp-top nav {
+      order: 3;
+      flex-basis: 100%;
+    }
+    #canopy-multitask-preview .mp-context {
+      padding: 12px 15px;
+    }
+    #canopy-multitask-preview .mp-body {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    #canopy-multitask-preview .mp-sidebar {
+      flex-direction: row;
+      flex-wrap: wrap;
+      border-right: 0;
+      border-bottom: 1px solid var(--mp-line);
+      padding: 10px;
+      gap: 2px;
+    }
+    #canopy-multitask-preview .mp-sidebar .mp-overline {
+      display: none;
+    }
+    #canopy-multitask-preview .mp-sidebar button {
+      padding: 10px 8px;
+    }
+    #canopy-multitask-preview .mp-main {
+      padding: 22px 15px;
+    }
+    #canopy-multitask-preview .mp-choices {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    #canopy-multitask-preview .mp-facts > div {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 4px;
+    }
+    #canopy-multitask-preview input,
+    #canopy-multitask-preview select {
+      min-height: 20px;
+    }
+    #canopy-multitask-preview select {
+      font-size: 16px;
+    }
+  }
+  @media (pointer: coarse) {
+    #canopy-multitask-preview button,
+    #canopy-multitask-preview .mp-check {
+      min-height: 44px;
+    }
+  }
+</style>
+<script>
+  (() => {
+    const root = document.getElementById('canopy-multitask-preview');
+    const sections = ['objectives', 'data', 'preparation', 'splits', 'review'];
+    const views = [...sections, 'sources', 'runs'];
+    const counts = {
+      all: { trees: 10447, species: 6938, genus: 7468 },
+      complete: { trees: 9525, species: 6867, genus: 7393 },
+    };
+    let state = {
+      view: 'data',
+      instances: true,
+      taxonomy: true,
+      rank: 'species',
+      complete: false,
+      policy: null,
+    };
+    const one = (selector) => root.querySelector(selector);
+    const format = (value) => value.toLocaleString('en-US');
+    root
+      .querySelectorAll('button,input,select,summary')
+      .forEach((element) => element.classList.add('cursor-interaction'));
+    function restore(value) {
+      if (!value || value.version !== 1) return;
+      if (views.includes(value.view)) state.view = value.view;
+      for (const key of ['instances', 'taxonomy', 'complete'])
+        if (typeof value[key] === 'boolean') state[key] = value[key];
+      if (['species', 'genus'].includes(value.rank)) state.rank = value.rank;
+      if (['partial', 'joint'].includes(value.policy)) state.policy = value.policy;
+    }
+    restore(window.openai?.widgetState?.modelContent);
+    function render() {
+      const totals = counts[state.complete ? 'complete' : 'all'];
+      const taxonomic = state.taxonomy ? totals[state.rank] : 0;
+      const selected = state.instances || state.taxonomy;
+      const kept =
+        !selected || !state.policy
+          ? null
+          : state.instances && (!state.taxonomy || state.policy === 'partial')
+            ? totals.trees
+            : taxonomic;
+      const tasks = [
+        state.instances && 'Tree instances',
+        state.taxonomy &&
+          (state.rank === 'species' ? 'Species classification' : 'Genus classification'),
+      ].filter(Boolean);
+      const policy =
+        state.policy === 'partial'
+          ? 'Partial references allowed'
+          : state.policy === 'joint'
+            ? 'All selected references required'
+            : 'Not selected';
+      root.querySelectorAll('[data-panel]').forEach((panel) => {
+        panel.hidden = panel.dataset.panel !== state.view;
+      });
+      root.querySelectorAll('[data-view]').forEach((button) => {
+        const active = button.hasAttribute('data-experiment-link')
+          ? sections.includes(state.view)
+          : button.dataset.view === state.view;
+        if (active)
+          button.setAttribute('aria-current', button.closest('.mp-sidebar') ? 'step' : 'page');
+        else button.removeAttribute('aria-current');
+      });
+      for (const key of ['instances', 'taxonomy', 'complete'])
+        one(`[name="${key}"]`).checked = state[key];
+      one('[name="rank"]').value = state.rank;
+      one('[data-rank-field]').hidden = !state.taxonomy;
+      root.querySelectorAll('[name="policy"]').forEach((input) => {
+        input.checked = input.value === state.policy;
+      });
+      one('[data-context]').textContent = `${tasks.length} targets · TreeScanPL10K · Draft`;
+      one('[data-objective-note]').textContent = selected
+        ? 'Targets can have different dimensions. Their coverage is reviewed together before execution.'
+        : 'Select at least one target.';
+      one('[data-coverage]').innerHTML =
+        `<div><span>Tree-table preview · ${state.complete ? 'complete crowns' : 'all crowns'}</span><strong class="mp-number">${format(totals.trees)} records</strong></div><div><span>Retained for selected target eligibility</span><strong class="mp-number">${kept === null ? 'Choose a policy' : format(kept)}</strong></div><div><span>Taxonomic candidates at required rank</span><strong class="mp-number">${state.taxonomy ? format(taxonomic) : 'Not requested'}</strong></div><div><span>Excluded from target eligibility</span><strong class="mp-number">${kept === null ? '—' : format(totals.trees - kept)}</strong></div>`;
+      one('[data-targets]').textContent = tasks.join(' + ') || 'None selected';
+      one('[data-policy-label]').textContent = policy;
+      one('[data-retained]').textContent =
+        kept === null
+          ? 'Choose targets and a reference policy'
+          : `${format(kept)} tree-table records · not yet validated`;
+      one('[data-instance-output]').hidden = !state.instances;
+      one('[data-instance-mask]').hidden = !state.instances;
+      one('[data-taxonomy-output]').hidden = !state.taxonomy;
+      one('[data-taxonomy-mask]').hidden = !state.taxonomy;
+      one('[data-choice-blocker]').textContent = !selected
+        ? 'No targets selected.'
+        : !state.policy
+          ? 'Choose a reference policy in Preparation.'
+          : 'Reference policy selected; source and execution blockers remain.';
+      one('[data-footer-context]').textContent =
+        `${state.complete ? 'Complete crowns' : 'All crowns'} · ${policy}`;
+      const index = sections.indexOf(state.view);
+      const next = index >= 0 && index < sections.length - 1 ? sections[index + 1] : null;
+      one('[data-next]').hidden = !next;
+      one('[data-next]').dataset.view = next || 'review';
+      one('[data-next]').textContent = next ? `Continue to ${next}` : 'Review';
+    }
+    function save() {
+      if (window.openai?.setWidgetState)
+        window.openai
+          .setWidgetState({
+            modelContent: {
+              version: 1,
+              ...state,
+              source: 'zenodo:19127709',
+              evidence: 'companion_tables_only',
+            },
+            privateContent: null,
+          })
+          .catch(() => {});
+    }
+    root.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-view]');
+      if (!button || !root.contains(button) || !views.includes(button.dataset.view)) return;
+      state.view = button.dataset.view;
+      render();
+      save();
+      if (button.closest('[hidden]') || button.hidden)
+        root.querySelector(`.mp-sidebar [data-view="${state.view}"]`)?.focus();
+    });
+    root.addEventListener('change', (event) => {
+      const input = event.target;
+      if (['instances', 'taxonomy', 'complete'].includes(input.name))
+        state[input.name] = input.checked;
+      else if (input.name === 'rank' && ['species', 'genus'].includes(input.value))
+        state.rank = input.value;
+      else if (input.name === 'policy' && ['partial', 'joint'].includes(input.value))
+        state.policy = input.value;
+      else return;
+      render();
+      save();
+    });
+    window.addEventListener('openai:set_globals', (event) => {
+      restore(event.detail?.globals?.widgetState?.modelContent);
+      render();
+    });
+    render();
+  })();
+</script>

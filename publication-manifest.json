@@ -11,7 +11,7 @@
     "docs/reviews/CONTENT-REVIEW.md": "66b0f8d3ecfc1bd05dd9034218111195ec843390f5fe3c5324cee25c291e7bd9",
     "CONTRIBUTING.md": "d6a11ef8add1a3402430467f5414f1c667d47e7bf7be8fb3235d6d0b2762dff4",
     "docs/sources/FGI-EMIT.md": "3a88f59bdc50640e39588179212be4dfc376da864db0c43a144c8f94e25c95f9",
-    "docs/sources/FOR-INSTANCE.md": "a4c4f47cb9034a94946e29ba722a5f7cb562ddfb70bf2728e3bcab84c3093515",
+    "docs/sources/FOR-INSTANCE.md": "a57e7e101fb54f8f118a1e9d1d8274ca76d59649bbd7de3c69ed6b2a656b5a8c",
     "README.md": "967d366004f9520e2c9204ec26a0f9c51e5deb179255ed59ca4c42fff85ce2c1",
     "docs/ROADMAP.md": "f630ca539c4fab447945e379a467e168dd20b9fb33ffcb4b568a419feeb8e34e",
     "docs/guides/TASK-REQUIREMENTS.md": "8106a5803602fe978be6873ab94a0c6fa50039c9fadb624d63ab205f249a07bf",
@@ -137,7 +137,7 @@
     "docs/guides/PIPELINES.md": "98a233cc07f006cd6c3f2f4d105556f9a2ffb7c0116d1ecd3265a17f82fa89c5",
     "docs/guides/TASK-DATASET.md": "f0a793308068eed1acc96511c3139782454aafdd146ef1c40b81cb043fd6285a",
     "docs/guides/TASK-PACKAGE.md": "601f0b09fad02fb1d6fa93e02ecac051830c28a711bbf2c265b640c5f5c0b72d",
-    "docs/README.md": "3162fc15554ce9c08ff5abc6ca55fd1206c97844a247eb2c45a2a3a3dc0cda22",
+    "docs/README.md": "044b0018cdce7db25ec425f9d55df86d8026c6ddf50066b3abccaecc3c31bb52",
     "tests/e2e/serve.py": "5736da85bc17b3cce7c89af9d8155455ae4052aae88eef71f4aba7fd66ae15dd",
     "tests/e2e/catalog.spec.js": "e2209e79a48e27945ff0443858479a3ce4e4289e933786d49aea975fae4173eb",
     "tests/e2e/kernel.spec.js": "e09f6ea7e55ffe20f731a76dadb81dc44621bb63a0bc8e1c8e82b4f029c9cf38",
@@ -299,8 +299,14 @@
     "docs/ui/workspace-objectives-desktop.png": "016f17528b50a05da282b939e8216935e3c61f3cbcbde85b27dd346ae0af9226",
     "docs/ui/workspace-runs-desktop.png": "e5bd525187df648cff091189d6826b55231b760be1552368c4f7f6dffe016edd",
     "docs/ui/workspace-subset-desktop.png": "4b119b14b1ba841492126b4d57ddb904a40bd35a2eb537b417afd3c60a252a6f",
-    "docs/reviews/MULTITASK-COVERAGE.md": "ce79f29120fec7ea6bd1fb31c46375e0fd31fa08a2e97c439d1b14fbc5d1e99a",
-    "evidence/multitask-metadata-review.json": "3302ea4e44b12fbdd90200b5375c93d993ef4b3a032dd6980ec565ea28f3e484"
+    "docs/reviews/MULTITASK-COVERAGE.md": "099afb2a3cb5f9714c4af8c24e007f988956e293dc9d226ba9b23fe825e0ccb1",
+    "evidence/multitask-metadata-review.json": "3302ea4e44b12fbdd90200b5375c93d993ef4b3a032dd6980ec565ea28f3e484",
+    "docs/design/prototypes/multitask-preparation.html": "322cb96203c08d860c7f2620cb580049e23c4f163d8a1cb2b342a0d75c4bdc13",
+    "docs/design/MULTITASK-FIRST-CASE.md": "930079fa11f5e38dbe26d3420377a76be4a50422ed2d47ade56a63f6e7a4a1f1",
+    "docs/ui/multitask-data-desktop.png": "76132a2b19345544c9457a1dfff4c9b91ec2e9e945fad50031a72c1ffcad978b",
+    "docs/ui/multitask-preparation-desktop.png": "2ac3185052405478b196b48570d15a2a78b0e0962958d11b7535dddd86e58daf",
+    "docs/ui/multitask-preparation-mobile.png": "07cd7250a9b6dfc60848ded468141bd7d5a9a28a566fffa7178823d371baf75e",
+    "docs/ui/multitask-review-desktop.png": "ecc6779095d38bb0adf5c808221002326ecbc0de0e9649567392edf0e35860e6"
   },
   "target": "https://borjaarroyo.github.io/forestry-lidar-catalogue/"
 }

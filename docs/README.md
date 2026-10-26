@@ -16,6 +16,8 @@ Start with the [project README](../README.md) for installation, commands and the
 - [Experiment workspace](design/EXPERIMENT-WORKSPACE.md): agreed multitask
   direction, current contract inventory, implementation gaps and navigation
   acceptance scenarios. Proposed capabilities remain separate from admitted routes.
+- [First instance/taxonomy case](design/MULTITASK-FIRST-CASE.md): TreeScan coverage
+  preview, proposed consumer fields and an interactive workspace prototype.
 
 ## Repository and source reviews
 
