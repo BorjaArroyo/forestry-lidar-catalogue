@@ -319,7 +319,9 @@
     "src/canopy/loader.py": "0d6c25b78c59087d7a51bb1fff85973c8a8466b1359f992647cc1752e0faf300",
     "examples/load_dataset.py": "e5602582814cc5791600d9342d23b92a87aa06a7f527e0189973967bc8013a87",
     "docs/guides/NUMPY-LOADER.md": "ce2e1bc754215bdc8e5c1834d3685ffc38b27b72d41239d99c4a8eabcc35fb5c",
-    "web/loading-guide.js": "e359dad870dccef3307e54e398cca8af7fad80ed72f42131472d31749d0e682d"
+    "web/loading-guide.js": "e359dad870dccef3307e54e398cca8af7fad80ed72f42131472d31749d0e682d",
+    "docs/ui/numpy-sources-desktop.png": "42781bd8ec3e87a529f9e49ff750a83bb02895a0e9e4e8c16398e8ad2ed50c7a",
+    "docs/ui/numpy-loader-desktop.png": "3689fa13c244dbe325edcc4cb120468590eecb64658372452cddd33a4a3df4a1"
   },
   "target": "https://borjaarroyo.github.io/forestry-lidar-catalogue/"
 }
