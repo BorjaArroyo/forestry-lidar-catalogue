@@ -667,8 +667,8 @@
     },
     "src/canopy/joint/model.py": {
       "url": "src/canopy/joint/model.py",
-      "size_bytes": 9846,
-      "sha256": "44e192c13ec5e63afe7eb090390ad80461056306d6c0df87bc6094c26f295bc6"
+      "size_bytes": 10236,
+      "sha256": "dde2b26e427f31d0d66d84c980f89db5d28e58f6d38bda4e7d566e516d0451ce"
     },
     "src/canopy/joint/cli.py": {
       "url": "src/canopy/joint/cli.py",

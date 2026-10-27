@@ -79,6 +79,10 @@ def fixture(root):
         ],
         admission=dict(status="admitted", authorization="Synthetic test fixture only"),
     )
+    source["admission"]["approved_plots"] = [plot["path"]]
+    source["admission"]["source_scope_sha256"] = fingerprint(
+        {key: value for key, value in source.items() if key != "admission"}
+    )
     return source
 
 

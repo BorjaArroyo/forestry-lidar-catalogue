@@ -75,6 +75,13 @@ def require_admitted(source):
         raise ValueError(
             "Maintainer scientific admission is required for the audited joint scope (CONTRIBUTING.md)"
         )
+    scope = {key: value for key, value in source.items() if key != "admission"}
+    if admission.get("source_scope_sha256") != fingerprint(scope) or sorted(
+        admission.get("approved_plots", [])
+    ) != sorted(plot["path"] for plot in source["plots"]):
+        raise ValueError(
+            "Joint admission does not cover this source scope; maintainer review is required"
+        )
 
 
 def tree_table(source, plot, request):

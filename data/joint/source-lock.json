@@ -3667,9 +3667,15 @@
     }
   ],
   "admission": {
-    "status": "pending",
-    "authorization": null,
-    "scope": "Only the two completely audited native plot observations listed in this registry"
+    "status": "admitted",
+    "authorized_at": "2026-10-27",
+    "authorization": "The maintainer explicitly authorized enabling only the two audited plots with the documented limitations in the Codex conversation. No independent human evidence review is claimed.",
+    "approved_plots": [
+      "Rem_Gorlice_2015_5804403.laz",
+      "Rem_Herby_2016_5603406.laz"
+    ],
+    "source_scope_sha256": "238cd85f11168dc3c12d2a950e7c52b3a0d538b1ba471bf386f92edfbe53475f",
+    "scope": "Only these two complete native plot observations; source identity, native references, taxonomy grouping and limitations are frozen by the scope hash"
   },
   "leaf_group_policy": "Source-scoped GBIF genus classification: Pinopsida -> conifer; Magnoliopsida -> broadleaf. Not a leaf-persistence classification."
 }

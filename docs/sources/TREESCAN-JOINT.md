@@ -1,8 +1,9 @@
 # TreeScanPL10K joint-reference review
 
 Reviewed on 2026-10-27. Source: [pinned Zenodo record 19127709](https://zenodo.org/records/19127709).
-This is a bounded technical review; maintainer scientific admission remains a
-separate explicit decision in `data/joint/source-lock.json`.
+This is a bounded technical review; the maintainer explicitly authorized enabling only the two audited plots, with
+the documented limitations, on 2026-10-27. The decision and scope hash are in
+`data/joint/source-lock.json`; no independent human evidence review is claimed.
 
 | Complete cloud                 | Points     | Native positive tree IDs | Valid species labels |
 | ------------------------------ | ---------- | ------------------------ | -------------------- |

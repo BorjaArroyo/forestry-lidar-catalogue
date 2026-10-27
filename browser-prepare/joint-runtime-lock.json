@@ -3,8 +3,8 @@
   "files": {
     "browser-prepare/runtime-lock.json": {
       "path": "browser-prepare/runtime-lock.json",
-      "size_bytes": 30775,
-      "sha256": "d368f97911e5e49aade447b8f76d28d757f12ae71741c822407d19734acc6316"
+      "size_bytes": 30776,
+      "sha256": "553c031bcae1ae7cf2b8f8be0afea4f643d8a22a59ddd5edcd812b4215fd38e6"
     },
     "browser-prepare/runtime.js": {
       "path": "browser-prepare/runtime.js",
@@ -48,8 +48,8 @@
     },
     "data/joint/source-lock.json": {
       "path": "data/joint/source-lock.json",
-      "size_bytes": 132118,
-      "sha256": "3447206e4661c8780dceccae7a48afa56d8de8e6660fac33c870f6adcd2a3797"
+      "size_bytes": 132599,
+      "sha256": "09c7beaaf578cf8dfd0c0cee917e55438eb700c45ed4b2cf75cc19f6000431ff"
     },
     "browser-prepare/vendor/md5.umd.js": {
       "path": "browser-prepare/vendor/md5.umd.js",

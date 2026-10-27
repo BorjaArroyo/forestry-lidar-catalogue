@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "reviewed_at": "2026-10-27",
   "status": "succeeded",
-  "admission": "pending maintainer scientific admission",
+  "admission": "Explicit maintainer authorization on 2026-10-27, limited to the two audited plots and frozen scope",
   "source_scope": [
     "Rem_Gorlice_2015_5804403.laz",
     "Rem_Herby_2016_5603406.laz"
@@ -16,7 +16,7 @@
     "trees": 61,
     "taxonomy_eligible": 32
   },
-  "source_lock_sha256": "3447206e4661c8780dceccae7a48afa56d8de8e6660fac33c870f6adcd2a3797",
+  "source_lock_sha256": "09c7beaaf578cf8dfd0c0cee917e55438eb700c45ed4b2cf75cc19f6000431ff",
   "implementation_files": {
     "src/canopy/joint/__init__.py": "995dd4cdd5058ba3ae34f1a0427024c795f1f5381aa9e81324b51d8184543e7e",
     "src/canopy/joint/cli.py": "ac9ad0a28241a63310d56854338b1b7bf0e95ab8d12d397c1bf7567c0b450d0e",
