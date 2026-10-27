@@ -7,9 +7,10 @@ import {
   experimentToUrl,
   referenceFor,
   jointSources,
-  coveragePreview,
-  jointBlockers,
 } from '../web/experiment.js';
+
+import { jointCoverage } from '../web/joint-workspace.js';
+const source = JSON.parse(readFileSync(new URL('../data/joint/source-lock.json', import.meta.url)));
 
 const catalog = JSON.parse(readFileSync(new URL('../data/catalog.json', import.meta.url)));
 const draft = (update = {}) =>
@@ -40,22 +41,21 @@ test('malformed or future drafts cannot restore unknown targets, sources or poli
   );
 });
 
-test('candidate intersections use rank and crown coverage without asserting validated output', () => {
-  assert.deepEqual(coveragePreview(draft({ policy: 'partial' })), {
-    total: 10447,
-    taxonomy: 6938,
-    retained: 10447,
-    excluded: 0,
-    validated: false,
-  });
-  assert.equal(coveragePreview(draft({ policy: 'joint' })).excluded, 3509);
-  assert.equal(
-    coveragePreview(draft({ policy: 'joint', rank: 'genus', completeCrowns: true })).retained,
-    7393,
-  );
-  assert.equal(coveragePreview(draft({ policy: 'joint', completeCrowns: true })).retained, 6867);
-  assert.equal(coveragePreview(draft({ sources: [] })), null);
-  assert(jointBlockers(draft({ policy: 'joint' })).some((reason) => reason.includes('No joint')));
+test('audited coverage measures actual tree labels at the chosen classification level', () => {
+  const request = {
+    plots: source.plots.map((p) => p.path),
+    target: 'species',
+    policy: 'partial',
+    complete_crowns: false,
+  };
+  const partial = jointCoverage(source, request);
+  assert.equal(partial.total, 61);
+  assert.equal(partial.eligible, 61);
+  assert.equal(partial.taxonomy, 32);
+  assert.equal(jointCoverage(source, { ...request, policy: 'joint' }).eligible, 32);
+  assert.equal(jointCoverage(source, { ...request, target: 'genus' }).taxonomy, 40);
+  assert.equal(jointCoverage(source, { ...request, target: 'leaf_group' }).taxonomy, 40);
+  assert.equal(jointCoverage(source, { ...request, plots: [] }).points, 0);
 });
 
 test('shared configuration round-trips in history URLs and explicit single-task routes override it', () => {

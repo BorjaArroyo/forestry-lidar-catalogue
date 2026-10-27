@@ -1,0 +1,23 @@
+{
+  "browser": "156.0.8078.4",
+  "elapsed_seconds": 115.557,
+  "validation": {
+    "plan_sha256": "3ffc3d57e2d12f78caff9e13c250792ea4010ee78f5211c4f6edff0811ec503b",
+    "size_bytes": 2483156287,
+    "zip_sha256": "386329328720e183ffc0df654e4a6b89911a579b855ab5ce30f445f6da7f191a",
+    "validation": {
+      "status": "validated",
+      "scope": "All exported blocks and both linked reference targets",
+      "plan_sha256": "3ffc3d57e2d12f78caff9e13c250792ea4010ee78f5211c4f6edff0811ec503b",
+      "points": 33103057,
+      "blocks": 133,
+      "trees": 10,
+      "taxonomy_eligible": 8
+    }
+  },
+  "schema_version": "1.0.0",
+  "reviewed_at": "2026-10-27",
+  "scope": "One complete native cloud: Rem_Gorlice_2015_5804403.laz. Local original LAZ input in a persistent Chromium profile; provider range intake and whole-release scale are not covered.",
+  "admission": "Acceptance-only override; production scientific admission remains pending",
+  "storage_note": "The first private/incognito run exhausted its ephemeral quota; persistent-profile execution succeeded. Quotas and eviction remain browser-dependent."
+}

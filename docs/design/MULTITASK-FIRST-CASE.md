@@ -1,3 +1,5 @@
+> Implementation update, 2026-10-27: [the joint guide](../guides/JOINT-REFERENCES.md) and [native review](../sources/TREESCAN-JOINT.md) supersede this metadata-only design for the two audited plots. Native cloud references are authoritative within that scope; companion CSV tree IDs must not label cloud points.
+
 # First instance and taxonomy design case
 
 Status: shared configuration integrated into the application, 2026-10-26.

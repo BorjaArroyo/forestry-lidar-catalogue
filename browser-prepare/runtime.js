@@ -68,6 +68,7 @@ function createRuntime({ scope, base, nativeFetch, digest, profileForSource, pha
             'schemas/task-package.schema.json',
             'schemas/task-dataset.schema.json',
             'schemas/dataset-plan.schema.json',
+            'schemas/joint-dataset.schema.json',
             'data/knowledge-model.json',
             'schemas/knowledge-model.schema.json',
             'browser-prepare/kernel.py',

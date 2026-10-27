@@ -227,3 +227,13 @@ Their previous source remains in Git, rather than in the installed application.
 Tree taxonomic classification now shares Sources, Workbench and the task graph.
 See [classification contracts and validation](docs/guides/TREE-CLASSIFICATION.md)
 for rank-specific labels, native sensor views, source conditions and audited limitations.
+
+## Prepare linked instances and tree classification
+
+Select both objectives for the same-observation TreeScan route. The bounded native
+audit covers two complete plots, 71,885,097 points and 61 trees. Species, genus and
+conifer/broadleaf labels remain tree-level targets with independent masks. Exact
+plans, ZIP export, saved output management and the NumPy loader share the workflow.
+Execution requires explicit scientific admission of that scope. See
+[the joint reference guide](docs/guides/JOINT-REFERENCES.md) and
+[the native source review](docs/sources/TREESCAN-JOINT.md).

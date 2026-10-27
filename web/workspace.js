@@ -1,11 +1,5 @@
 import { escapeHTML as esc } from './shared/dom.js';
-import {
-  jointSources,
-  referenceFor,
-  coveragePreview,
-  jointBlockers,
-  JOINT_FIELDS,
-} from './experiment.js?v=multitask-v1';
+import { jointSources, referenceFor } from './experiment.js?v=joint-v1';
 
 export const WORKSPACE_SECTIONS = ['objectives', 'data', 'preparation', 'splits', 'review'];
 const sections = new Set([...WORKSPACE_SECTIONS, 'runs', 'service']);
@@ -28,7 +22,7 @@ export function workspaceHash(view, section = 'objectives') {
     : '#' + (view === 'model' ? 'model' : 'datasets');
 }
 
-export function mountWorkspace({ application, document: doc = document }) {
+export function mountWorkspace({ application, document: doc = document, jointWorkspace }) {
   const $ = (id) => doc.getElementById(id);
   const isJoint = () => application.getExperiment().tasks.length > 1;
   let running = false;
@@ -77,6 +71,7 @@ export function mountWorkspace({ application, document: doc = document }) {
       task.id,
       request,
       state.taskRunning,
+      jointWorkspace.source?.admission?.status,
       [...source.options].map((option) => option.value),
     ]);
     if (signature === sourceSignature) return;
@@ -91,7 +86,7 @@ export function mountWorkspace({ application, document: doc = document }) {
       .map((dataset) => {
         if (isJoint()) {
           const selected = experiment.sources.includes(dataset.id);
-          return `<tr><td><button class="workspace-source-name" data-detail="${esc(dataset.id)}">${esc(dataset.name)}</button><small>zenodo:${esc(dataset.id)}</small></td><td data-label="Task coverage">${esc(referenceFor(dataset, 'instances').label)}<small>${esc(referenceFor(dataset, 'species').label)}</small><span class="workspace-tag">Reference review required</span></td><td data-label="Representation">Native plot clouds<small>No admitted joint pipeline</small></td><td><button class="button" data-experiment-${selected ? 'remove' : 'add'}="${esc(dataset.id)}">${selected ? 'Remove source' : 'Add to experiment'}</button></td></tr>`;
+          return `<tr><td><button class="workspace-source-name" data-detail="${esc(dataset.id)}">${esc(dataset.name)}</button><small>zenodo:${esc(dataset.id)}</small></td><td data-label="Task coverage">${esc(referenceFor(dataset, 'instances').label)}<small>${esc(referenceFor(dataset, 'species').label)}</small><span class="workspace-tag">Reference review required</span></td><td data-label="Representation">Native plot clouds<small>${jointWorkspace.source?.admission?.status === 'admitted' ? 'Audited joint plot selection available' : 'Audited scope · admission pending'}</small></td><td><button class="button" data-experiment-${selected ? 'remove' : 'add'}="${esc(dataset.id)}">${selected ? 'Remove source' : 'Add to experiment'}</button></td></tr>`;
         }
         const fit = application.selection.assess(dataset.id, request);
         const loaded = [...source.options].some(
@@ -138,85 +133,9 @@ export function mountWorkspace({ application, document: doc = document }) {
       : 'Provider assignments are preserved';
     $('workspace-review-fix').dataset.workspaceSection = 'data';
     if (!multi) return;
-    $('workspace-requirements').hidden = true;
-    $('workspace-service').hidden = true;
-    $('workspace-context-text').textContent =
-      `Instances + taxonomy · ${experiment.rank} reference · ${experiment.sources.length} sources`;
-    $('workspace-context-state').textContent =
-      state.section === 'runs' ? 'No joint runs' : 'Draft · not executable';
-    $('workspace-footer-state').textContent = experiment.policy
-      ? `${experiment.sources.length} shared sources · ${experiment.policy === 'partial' ? 'Partial references allowed' : 'All references required'}`
-      : 'Choose shared data and a reference coverage policy';
-    $('workspace-lineage-input').textContent = experiment.sources.length
-      ? 'TreeScanPL10K · native plot observations'
-      : 'No shared source selected';
-    $('workspace-lineage-output').textContent =
-      'Instances + tree taxonomy · joint pipeline pending';
-    $('workspace-partitions').textContent = 'No shared experimental assignment validated';
-    $('experiment-selection-summary').textContent = `${experiment.sources.length} selected`;
-    $('experiment-selection-status').textContent = experiment.sources.length
-      ? 'TreeScanPL10K · companion-table coverage, pending validation against point clouds.'
-      : 'Add a source above to configure shared reference coverage.';
-    $('experiment-source-evidence').hidden = !experiment.sources.length;
-    $('experiment-complete-crowns').checked = experiment.completeCrowns;
-    for (const input of doc.querySelectorAll('[name="experiment-coverage"]'))
-      input.checked = input.value === experiment.policy;
-    const counts = coveragePreview(experiment);
-    const number = (value) => (value === null ? 'Choose a policy' : value.toLocaleString('en-US'));
-    $('experiment-coverage-counts').innerHTML = counts
-      ? [
-          ['Tree-table preview · totals unresolved', counts.total],
-          ['Retained for target eligibility', counts.retained],
-          ['Taxonomic candidates at required rank', counts.taxonomy],
-          ['Excluded from target eligibility', counts.excluded],
-        ]
-          .map(
-            ([label, value]) =>
-              `<div><span>${esc(label)}</span><strong>${esc(number(value))}</strong></div>`,
-          )
-          .join('')
-      : '<p>Add a shared source in Data to inspect candidate coverage.</p>';
-    const blockers = jointBlockers(experiment);
-    $('workspace-review-state').textContent =
-      'The shared draft is saved. Resolve its reference and pipeline requirements before execution.';
-    $('experiment-blockers').innerHTML = blockers
-      .map((reason) => `<li>${esc(reason)}</li>`)
-      .join('');
-    $('workspace-review-fix').hidden = false;
-    $('workspace-review-fix').dataset.workspaceSection = !experiment.sources.length
-      ? 'data'
-      : !experiment.policy
-        ? 'preparation'
-        : 'data';
-    $('workspace-review-summary').innerHTML = [
-      ['Objectives', 'Tree instances + ' + experiment.rank + ' classification'],
-      ['Selected data', experiment.sources.length ? 'TreeScanPL10K' : 'No shared source selected'],
-      [
-        'Reference coverage',
-        experiment.policy === 'partial'
-          ? 'Partial references allowed'
-          : experiment.policy === 'joint'
-            ? 'All selected references required'
-            : 'Not selected',
-      ],
-      ['Crown coverage', experiment.completeCrowns ? 'Complete crowns only' : 'All crowns'],
-      [
-        'Target eligibility',
-        counts?.retained != null
-          ? number(counts.retained) + ' tree-table candidates · not validated'
-          : 'Choose data and a reference policy',
-      ],
-    ]
-      .map(([label, value]) => `<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`)
-      .join('');
-    $('workspace-consumer-unit').textContent =
-      'One plot observation has N points and T linked reference trees. Point-to-tree identity is a reference relationship, not a default model input.';
-    $('workspace-consumer-fields').innerHTML = JOINT_FIELDS.map(
-      ([name, type, shape, meaning]) =>
-        `<tr><th scope="row">${esc(name)}</th><td data-label="Type">${esc(type)}</td><td data-label="Shape">${esc(shape)}</td><td data-label="Requirement">${esc(meaning)}</td></tr>`,
-    ).join('');
-    $('workspace-runs-empty').hidden = state.section !== 'runs';
+    jointWorkspace.render(state);
   }
+
   function render() {
     const state = application.getState();
     const request = application.getTaskRequest();
@@ -425,6 +344,7 @@ export function mountWorkspace({ application, document: doc = document }) {
     { capture: true },
   );
   doc.addEventListener('canopy-view', render);
+  doc.addEventListener('canopy-joint-state', render);
   doc.addEventListener('canopy-experiment-change', render);
   doc.addEventListener('canopy-task-request', render);
   doc.addEventListener('canopy-task-change', render);

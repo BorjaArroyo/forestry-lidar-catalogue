@@ -1,13 +1,6 @@
 /* Presentation contracts never admit a source or an executable preparation. */
 export const EXPERIMENT_TASKS = ['instances', 'species'];
 
-// Bounded companion-table review; these are candidates, not validated payload counts.
-// Evidence: docs/reviews/MULTITASK-COVERAGE.md and docs/design/MULTITASK-FIRST-CASE.md.
-export const TREESCAN_COVERAGE = Object.freeze({
-  all: Object.freeze({ trees: 10447, genus: 7468, species: 6938 }),
-  complete: Object.freeze({ trees: 9525, genus: 7393, species: 6867 }),
-});
-
 export function referenceFor(source, task) {
   if (!source)
     return { reported: false, label: 'Reference not established', status: 'not_documented' };
@@ -58,6 +51,14 @@ export function normalizeExperiment(value, catalog, activeTask = 'instances') {
       candidates.has(id),
     ),
     rank: input.rank === 'genus' ? 'genus' : 'species',
+    target: ['species', 'genus', 'leaf_group'].includes(input.target)
+      ? input.target
+      : input.rank === 'genus'
+        ? 'genus'
+        : 'species',
+    plots: [...new Set(Array.isArray(input.plots) ? input.plots : [])]
+      .filter((path) => typeof path === 'string' && /^[a-zA-Z0-9_-]+\.laz$/.test(path))
+      .slice(0, 50),
     policy: ['partial', 'joint'].includes(input.policy) ? input.policy : null,
     completeCrowns: input.completeCrowns === true,
   };
@@ -69,6 +70,8 @@ export function experimentFromUrl(params, previous, catalog, activeTask, initial
     value.tasks = params.get('tasks').split(',');
     value.sources = (params.get('sources') || '').split(',');
     value.rank = params.get('rank');
+    value.target = params.get('target') || params.get('rank') || 'species';
+    value.plots = (params.get('plots') || '').split(',');
     value.policy = params.get('coverage');
     value.completeCrowns = params.get('crowns') === 'complete';
   } else if (!initial || params.has('task')) value.tasks = [activeTask];
@@ -80,35 +83,10 @@ export function experimentToUrl(params, experiment) {
   params.set('tasks', experiment.tasks.join(','));
   if (experiment.sources.length) params.set('sources', experiment.sources.join(','));
   if (experiment.rank !== 'species') params.set('rank', experiment.rank);
+  if (experiment.target !== experiment.rank) params.set('target', experiment.target);
+  if (experiment.plots.length) params.set('plots', experiment.plots.join(','));
   if (experiment.policy) params.set('coverage', experiment.policy);
   if (experiment.completeCrowns) params.set('crowns', 'complete');
-}
-
-export function coveragePreview(experiment) {
-  if (!experiment.sources.includes('19127709')) return null;
-  const scope = TREESCAN_COVERAGE[experiment.completeCrowns ? 'complete' : 'all'];
-  const taxonomy = scope[experiment.rank];
-  const retained =
-    experiment.policy === 'partial' ? scope.trees : experiment.policy === 'joint' ? taxonomy : null;
-  return {
-    total: scope.trees,
-    taxonomy,
-    retained,
-    excluded: retained === null ? null : scope.trees - retained,
-    validated: false,
-  };
-}
-
-export function jointBlockers(experiment) {
-  const blockers = [];
-  if (!experiment.sources.length) blockers.push('Select a source in Data.');
-  if (!experiment.policy) blockers.push('Choose reference coverage in Preparation.');
-  if (experiment.sources.includes('19127709'))
-    blockers.push(
-      'TreeScan plot and tree summaries disagree; point/tree joins and reference masks need validation.',
-    );
-  blockers.push('No joint instance/taxonomy preparation pipeline is admitted.');
-  return blockers;
 }
 
 export const JOINT_FIELDS = [
@@ -120,4 +98,17 @@ export const JOINT_FIELDS = [
   ['relations.point_to_tree', 'int64', 'N', 'Reference relationship; not a model input'],
   ['validity.point_to_tree', 'bool', 'N', 'Validity of each reference link'],
   ['trees.key', 'UTF-8', 'T', 'Release + plot + native tree ID'],
+  [
+    'tree_arrays.species / species_valid',
+    'int64 / bool',
+    'T',
+    'Species label per tree and its validity',
+  ],
+  ['tree_arrays.genus / genus_valid', 'int64 / bool', 'T', 'Genus label per tree and its validity'],
+  [
+    'tree_arrays.leaf_group / leaf_group_valid',
+    'int64 / bool',
+    'T',
+    'Derived conifer/broadleaf group; separate from taxonomy rank',
+  ],
 ];

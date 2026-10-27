@@ -1,11 +1,12 @@
-import { mountCatalog } from './catalog/app.js?v=multitask-v1';
-import { createTaskSelection } from './catalog/task-selection.js?v=multitask-v1';
+import { mountCatalog } from './catalog/app.js?v=joint-v1';
+import { createTaskSelection } from './catalog/task-selection.js?v=joint-v1';
 import { mountModelView } from './catalog/model-view.js';
 import { mountWorkbench } from './workbench/workbench.js';
 import { createServiceClient } from './workbench/client.js';
 import { mountClassificationWorkspace } from './classification-workspace.js';
 import { mountPreparation } from '../browser-prepare/ui.js';
-import { mountWorkspace } from './workspace.js?v=multitask-v1';
+import { mountWorkspace } from './workspace.js?v=joint-v1';
+import { mountJointWorkspace } from './joint-workspace.js';
 import { mountLoadingGuide } from './loading-guide.js';
 
 const catalog = window.LIDAR_CATALOG;
@@ -46,6 +47,7 @@ if (!catalog) {
       application.selection.task.id === 'instances' ? application.getTaskRequest() : null,
   });
   mountClassificationWorkspace({ document });
-  mountWorkspace({ application, document });
+  const jointWorkspace = mountJointWorkspace({ application, document });
+  mountWorkspace({ application, document, jointWorkspace });
   mountLoadingGuide({ application, document });
 }

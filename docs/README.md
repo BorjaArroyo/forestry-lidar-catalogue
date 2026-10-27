@@ -10,6 +10,7 @@ Start with the [project README](../README.md) for installation, commands and the
 - [Task dataset contract](guides/TASK-DATASET.md)
 - [Browser preparation](guides/BROWSER-PREPARATION.md)
 - [Tree classification](guides/TREE-CLASSIFICATION.md)
+- [Linked instances and tree classification](guides/JOINT-REFERENCES.md)
 
 ## Design and contract review
 

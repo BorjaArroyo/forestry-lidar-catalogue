@@ -12,13 +12,13 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231b5047'/%3E%3Cpath d='M16 5 5 23h8v5h6v-5h8Z' fill='%23e7c477'/%3E%3C/svg%3E"
     />
-    <link rel="stylesheet" href="web/styles.css?v=multitask-v1" />
+    <link rel="stylesheet" href="web/styles.css?v=joint-v1" />
     <script>
       window.CANOPY_PUBLIC = true;
     </script>
     <script defer src="data/catalog.js"></script>
-    <script type="module" src="web/bootstrap.js?v=multitask-v1"></script>
-    <link rel="stylesheet" href="web/workspace.css?v=multitask-v1" />
+    <script type="module" src="web/bootstrap.js?v=joint-v1"></script>
+    <link rel="stylesheet" href="web/workspace.css?v=joint-v1" />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
@@ -125,9 +125,10 @@
             <h2 id="task-request-title">Data requirements</h2>
             <div class="task-options">
               <label id="experiment-rank-label" hidden
-                >Required taxonomic rank<select id="experiment-rank">
+                >Classification target<select id="experiment-rank">
                   <option value="species">Species</option>
                   <option value="genus">Genus</option>
+                  <option value="leaf_group">Conifer / broadleaf</option>
                 </select></label
               >
               <label>Data use<select id="task-use"></select></label>
@@ -283,16 +284,16 @@
             <section class="workspace-note" data-workspace-stage="objectives" hidden="">
               <strong>Four validated sources, two available tasks</strong>
               <p>
-                Choose one task to prepare its validated sources. Selecting both opens a
-                configuration preview only: joint execution is not available. Each task keeps its
-                saved selection.
+                Choose one task to prepare its validated sources, or select both for linked
+                point-instance and tree-classification references from the audited TreeScan scope.
+                Each route keeps its saved selection.
               </p>
               <details>
                 <summary>Multitask execution</summary>
                 <p>
-                  Joint configuration records your choices but requires an admitted joint pipeline
-                  before execution. Individual-task drafts and validated outputs remain available
-                  when you return to that task.
+                  Joint preparation uses the same plot observations for both targets. Species, genus
+                  and conifer/broadleaf labels remain tree-level attributes with independent masks.
+                  Exact source admission and dependencies are checked before execution.
                 </p>
               </details>
             </section>
@@ -304,8 +305,8 @@
             >
               <strong>Available preparations</strong>
               <p>
-                These four sources can run now through their validated task routes. Joint
-                instance/taxonomy configuration below is a preview.
+                These four sources remain available through their separate task routes. Select both
+                objectives for linked references on audited TreeScan plots.
               </p>
               <div class="lab-actions">
                 <button class="button" data-ready-task="instances">
@@ -350,6 +351,10 @@
                 <span id="experiment-selection-summary"></span>
               </div>
               <p id="experiment-selection-status" role="status"></p>
+              <fieldset id="joint-plots">
+                <legend>Complete audited plots</legend>
+                <p>Loading audited plot scope…</p>
+              </fieldset>
               <details id="experiment-source-evidence">
                 <summary>Source coverage and evidence</summary>
                 <label class="experiment-check"
@@ -359,7 +364,8 @@
                 <p>
                   TreeScan's tree table contains 10,447 rows; its plot workbook reports 10,417
                   trees. Three plot identifiers differ in their year. These counts require
-                  reconciliation with the point clouds.
+                  reconciliation with the point clouds. Executable selections below use native cloud
+                  references; companion tree rows never assign species to points.
                 </p>
                 <p>
                   Code 40 identifies Quercus sp., a genus-only label. Crown completeness is separate
@@ -397,8 +403,9 @@
                 aria-live="polite"
               ></div>
               <p class="workspace-help">
-                Companion-table candidates, pending point/tree validation. Eligibility exclusions do
-                not remove scene context or turn trees into background.
+                Counts refer to the selected complete, audited clouds. Eligibility exclusions
+                preserve all scene points and native identities. Every export retains species, genus
+                and conifer/broadleaf labels per tree with separate validity masks.
               </p>
             </section>
             <section class="workspace-preparation" data-workspace-stage="preparation" hidden="">
@@ -483,8 +490,35 @@
               </div>
               <div id="experiment-review-blockers" hidden>
                 <ul id="experiment-blockers"></ul>
+                <div class="lab-actions">
+                  <button class="button" id="joint-review">Review exact joint plan</button>
+                  <button class="button" id="joint-plan-download" disabled>Download plan</button>
+                  <label class="button"
+                    >Import plan<input
+                      id="joint-plan-import"
+                      type="file"
+                      accept=".json,application/json"
+                  /></label>
+                </div>
+                <details id="joint-plan" hidden>
+                  <summary>Frozen plan and dependencies</summary>
+                  <pre id="joint-plan-text"></pre>
+                </details>
+                <label
+                  >Source input<select id="joint-input-mode">
+                    <option value="provider">Pinned provider ZIP ranges</option>
+                    <option value="local">Original audited LAZ files</option>
+                  </select></label
+                >
+                <label id="joint-input-label" hidden
+                  >Choose the selected original LAZ files<input
+                    id="joint-inputs"
+                    type="file"
+                    multiple
+                    accept=".laz,.las"
+                /></label>
                 <button class="button primary" id="experiment-run" disabled>
-                  Joint preparation unavailable
+                  Prepare both targets
                 </button>
               </div>
               <details id="workspace-consumer-description">
@@ -559,14 +593,27 @@
               data-workspace-stage="runs"
               hidden
             >
-              <h2>Joint execution is not available yet</h2>
-              <p>
-                The shared draft has not run. Existing individual-task outputs remain with their
-                original task and plan.
+              <h2>Joint preparation</h2>
+              <p id="joint-status" role="status">Review the exact selection before starting.</p>
+              <div class="lab-actions">
+                <button class="button" id="joint-stop" disabled>Stop joint preparation</button
+                ><a
+                  class="button primary"
+                  id="joint-download"
+                  download="joint-tree-reference.zip"
+                  hidden
+                  >Download validated ZIP</a
+                >
+              </div>
+              <p class="workspace-help">
+                Results are stored in this browser until deleted or evicted. Stop retains temporary
+                files; interrupted plots restart after a new review. Download the ZIP to retain the
+                dataset.
               </p>
-              <button class="button" data-workspace-section="objectives">
-                Choose an individual task
-              </button>
+              <h3>Saved joint preparations</h3>
+              <p id="joint-saved-empty">No saved joint preparations.</p>
+              <ol id="joint-saved-runs"></ol>
+              <button class="button" data-workspace-section="objectives">Edit objectives</button>
             </section>
             <div id="workspace-single-task-routes">
               <section id="classification-panel" hidden="" aria-label="Classification preparation">
