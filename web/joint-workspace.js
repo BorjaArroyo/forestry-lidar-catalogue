@@ -39,6 +39,7 @@ export function mountJointWorkspace({ application, document: doc = document }) {
   let savedVersion = 0;
   let previousSection = null;
   const savedURLs = [];
+  let currentJob = null;
   const active = () => application.getExperiment().tasks.length > 1;
   const request = () => {
     const draft = application.getExperiment();
@@ -69,6 +70,7 @@ export function mountJointWorkspace({ application, document: doc = document }) {
   }
   const session = new RunSession({
     event(data) {
+      if (data.type === 'job') currentJob = data.id;
       if (data.type === 'phase') message = data.text;
       if (data.type === 'result') {
         workState(false);
@@ -155,7 +157,9 @@ export function mountJointWorkspace({ application, document: doc = document }) {
     changed();
   }
   let refreshPromise = null;
+  let deleting = false;
   function refreshSaved() {
+    if (deleting) return Promise.resolve();
     if (!refreshPromise)
       refreshPromise = updateSaved().finally(() => {
         refreshPromise = null;
@@ -211,13 +215,21 @@ export function mountJointWorkspace({ application, document: doc = document }) {
         remove.textContent = 'Delete temporary files';
         remove.disabled = run.status === 'busy' || session.running;
         remove.onclick = async () => {
+          if (deleting) return;
+          deleting = true;
           remove.disabled = true;
           try {
+            await refreshPromise;
             await removeJointRun(run.id);
+            if (run.id === currentJob) {
+              hideOutput();
+              currentJob = null;
+            }
             message = 'Temporary joint files deleted. Downloaded ZIPs are retained.';
           } catch (error) {
             message = error.message;
           }
+          deleting = false;
           await refreshSaved();
           changed();
         };

@@ -65,7 +65,22 @@ print(json.dumps(dict(report=report,points=sum(len(b['arrays']['xyz']) for b in 
   const saved = page.locator('#joint-saved-runs li');
   await expect(saved).toHaveCount(1);
   await expect(saved).toContainText('checksum checked before download');
+  const id = (await saved.textContent()).match(/[0-9a-f-]{36}/)[0];
+  await page.evaluate(async (id) => {
+    let acquired;
+    const ready = new Promise((resolve) => {
+      acquired = resolve;
+    });
+    navigator.locks.request('canopy-joint:' + id, { mode: 'shared' }, async () => {
+      acquired();
+      await new Promise((resolve) => {
+        window.releaseJointInspection = resolve;
+      });
+    });
+    await ready;
+  }, id);
   await saved.getByRole('button', { name: 'Delete temporary files' }).click();
+  await page.evaluate(() => window.releaseJointInspection());
   await expect(saved).toHaveCount(0);
   await page.setViewportSize({ width: 1440, height: 1000 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(

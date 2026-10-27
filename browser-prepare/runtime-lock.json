@@ -702,8 +702,8 @@
     },
     "browser-prepare/joint-store.js": {
       "url": "browser-prepare/joint-store.js",
-      "size_bytes": 2223,
-      "sha256": "9bcff547db72e5300725713f465b03158e46da0e441235c21a37511f109df478"
+      "size_bytes": 2353,
+      "sha256": "b9760e23b55dd433c501011b55dfe803b1a429f1d7e88abf867a11bdfca8e53b"
     },
     "browser-prepare/joint-runtime.js": {
       "url": "browser-prepare/joint-runtime.js",

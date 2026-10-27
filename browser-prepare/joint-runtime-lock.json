@@ -4,7 +4,7 @@
     "browser-prepare/runtime-lock.json": {
       "path": "browser-prepare/runtime-lock.json",
       "size_bytes": 30776,
-      "sha256": "553c031bcae1ae7cf2b8f8be0afea4f643d8a22a59ddd5edcd812b4215fd38e6"
+      "sha256": "738cccde1104b80ddc778f09677089dbb4a4a4422bd43a3d12d0c2823c0d2cdb"
     },
     "browser-prepare/runtime.js": {
       "path": "browser-prepare/runtime.js",
@@ -83,8 +83,8 @@
     },
     "browser-prepare/joint-store.js": {
       "path": "browser-prepare/joint-store.js",
-      "size_bytes": 2223,
-      "sha256": "9bcff547db72e5300725713f465b03158e46da0e441235c21a37511f109df478"
+      "size_bytes": 2353,
+      "sha256": "b9760e23b55dd433c501011b55dfe803b1a429f1d7e88abf867a11bdfca8e53b"
     },
     "browser-prepare/joint-worker.js": {
       "path": "browser-prepare/joint-worker.js",

@@ -42,11 +42,16 @@ export async function inspectJointRuns(browser = navigator) {
 
 export async function removeJointRun(id, browser = navigator) {
   if (!validJob(id)) throw Error('Invalid joint run identity');
-  await browser.locks.request('canopy-joint:' + id, { ifAvailable: true }, async (lock) => {
-    if (!lock) throw Error('This joint preparation is active in another tab');
-    const jobs = await (await browser.storage.getDirectory()).getDirectoryHandle('canopy-joint');
-    await removeEntry(jobs, id);
-  });
+  // A short inspection may still hold a shared lock when its row becomes visible.
+  // Queue behind readers, while keeping an active worker protected by its exclusive lock.
+  await browser.locks.request(
+    'canopy-joint:' + id,
+    { signal: AbortSignal.timeout(3000) },
+    async () => {
+      const jobs = await (await browser.storage.getDirectory()).getDirectoryHandle('canopy-joint');
+      await removeEntry(jobs, id);
+    },
+  );
 }
 
 export async function fileHash(file, hasher, progress = () => {}) {
