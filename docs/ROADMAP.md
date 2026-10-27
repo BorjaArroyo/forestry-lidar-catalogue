@@ -45,6 +45,9 @@ observations and published partitions remain explicit. See
 
 ## Remaining scientific and coverage work
 
+Four additional TreeScan plots have a complete native audit but remain outside
+the admitted scope. See the [candidate review](sources/TREESCAN-EXPANSION-REVIEW.md).
+
 1. Resolve the 50 absent NIBIO2 partition entries with upstream evidence before
    claiming coverage of all 82 FOR-instance partition rows.
 2. Reconcile captures shared with FOR-instance V2 and define site/campaign groups

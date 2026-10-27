@@ -26,6 +26,7 @@ Start with the [project README](../README.md) for installation, commands and the
 - [Task requirements](guides/TASK-REQUIREMENTS.md)
 - [FOR-instance](sources/FOR-INSTANCE.md)
 - [FGI-EMIT](sources/FGI-EMIT.md)
+- [TreeScan expanded candidate audit](sources/TREESCAN-EXPANSION-REVIEW.md)
 - [Content review](reviews/CONTENT-REVIEW.md)
 - [Multitask coverage](reviews/MULTITASK-COVERAGE.md): source candidates,
   companion-table discrepancies, configurable reference policies and UX implications.
