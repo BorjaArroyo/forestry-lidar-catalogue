@@ -1,0 +1,118 @@
+{
+  "source_ref": "zenodo:19127709",
+  "selection_date": "2026-10-27",
+  "selection_method": "Among members with companion rows, exclude the two already admitted clouds; in each chosen filename area, rank by distinct named species codes (excluding unknown 0 and genus-only 40), then by number of those companion rows, then lexicographic filename.",
+  "limitation": "Companion rows are only selection hints; they are not trustworthy tree-to-cloud joins or evidence of native labels. Area names do not prove geographic independence. No candidate is admitted by this evidence.",
+  "metadata_assets": [
+    {
+      "name": "individual_tree_summary.csv",
+      "url": "https://zenodo.org/api/records/19127709/files/individual_tree_summary.csv/content",
+      "size_bytes": 1079248,
+      "provider_checksum": "md5:636e591582c85164f1532a6dc6350694",
+      "sha256": "cf452e19957265c89f35bf3c02e7920fc9e072c44a7cc5e1791dd0058667059c"
+    },
+    {
+      "name": "plot_summary.xlsx",
+      "url": "https://zenodo.org/api/records/19127709/files/plot_summary.xlsx/content",
+      "size_bytes": 24794,
+      "provider_checksum": "md5:c468bf5eef366dbb62bb0d2287fe3da4",
+      "sha256": "42491a7a21d69d68cfa7501638518ca0666a871db018001f6110cb454c0fd5aa"
+    },
+    {
+      "name": "species_id_names.csv",
+      "url": "https://zenodo.org/api/records/19127709/files/species_id_names.csv/content",
+      "size_bytes": 956,
+      "provider_checksum": "md5:fb30c58415712a1d0d08639deb7bb0a7",
+      "sha256": "c480f8d5dff3eb8d1880fea18681a4adce0bc8494e1076dedb375f8d6ce659bf"
+    }
+  ],
+  "prior_member_inventory_sha256": "8e706abc18c8ed05e00f3d8b7855ff01bd00ecc647b48c92090850ce28e1af84",
+  "selected": [
+    {
+      "area_name": "Piensk",
+      "member": {
+        "archive": "batch_23.zip",
+        "path": "Rem_Piensk_2016_2804302.laz",
+        "size_bytes": 416784245,
+        "compressed_size": 415394809,
+        "crc32": "db18e11b"
+      },
+      "companion_row_count": 37,
+      "companion_species_rows": 23,
+      "companion_species_count": 6,
+      "companion_species": {
+        "Fraxinus excelsior": 10,
+        "Populus tremula": 1,
+        "Prunus padus": 2,
+        "Quercus rubra": 1,
+        "Tilia cordata": 1,
+        "Ulmus minor": 8
+      },
+      "status": "metadata_candidate"
+    },
+    {
+      "area_name": "Suprasl",
+      "member": {
+        "archive": "batch_26.zip",
+        "path": "Rem_Suprasl_2015_3501204.laz",
+        "size_bytes": 271068720,
+        "compressed_size": 269899643,
+        "crc32": "c5224041"
+      },
+      "companion_row_count": 34,
+      "companion_species_rows": 18,
+      "companion_species_count": 6,
+      "companion_species": {
+        "Acer platanoides": 1,
+        "Betula pendula": 2,
+        "Carpinus betulus": 2,
+        "Picea abies": 9,
+        "Pinus sylvestris": 2,
+        "Tilia cordata": 2
+      },
+      "status": "metadata_candidate"
+    },
+    {
+      "area_name": "Milicz",
+      "member": {
+        "archive": "batch_16.zip",
+        "path": "Rem_Milicz_2015_2303101.laz",
+        "size_bytes": 383719927,
+        "compressed_size": 382162487,
+        "crc32": "40adb379"
+      },
+      "companion_row_count": 53,
+      "companion_species_rows": 41,
+      "companion_species_count": 5,
+      "companion_species": {
+        "Betula pendula": 7,
+        "Larix decidua": 1,
+        "Picea abies": 1,
+        "Pinus sylvestris": 31,
+        "Sorbus aucuparia": 1
+      },
+      "status": "metadata_candidate"
+    },
+    {
+      "area_name": "Katrynka",
+      "member": {
+        "archive": "batch_14.zip",
+        "path": "Rem_Katrynka_2016_5101105.laz",
+        "size_bytes": 419597984,
+        "compressed_size": 417977728,
+        "crc32": "de782ee2"
+      },
+      "companion_row_count": 53,
+      "companion_species_rows": 39,
+      "companion_species_count": 4,
+      "companion_species": {
+        "Betula pendula": 1,
+        "Picea abies": 18,
+        "Pinus sylvestris": 17,
+        "Tilia cordata": 3
+      },
+      "status": "metadata_candidate"
+    }
+  ],
+  "member_inventory_path": "evidence/joint/treescan-zip-members.json"
+}

@@ -1,0 +1,1906 @@
+[
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_3902101.laz",
+    "size_bytes": 335445394,
+    "compressed_size": 334084446,
+    "crc32": "46b7a301"
+  },
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_4001301.laz",
+    "size_bytes": 339456368,
+    "compressed_size": 338013877,
+    "crc32": "f750f6bd"
+  },
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_4005301.laz",
+    "size_bytes": 350481834,
+    "compressed_size": 348877109,
+    "crc32": "9a8ceb8b"
+  },
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_4103201.laz",
+    "size_bytes": 316805465,
+    "compressed_size": 315360792,
+    "crc32": "8df1a01e"
+  },
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_4104101.laz",
+    "size_bytes": 333638321,
+    "compressed_size": 332151666,
+    "crc32": "c52f19b4"
+  },
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_4205101.laz",
+    "size_bytes": 313537078,
+    "compressed_size": 312271864,
+    "crc32": "d161f4fa"
+  },
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_4206701.laz",
+    "size_bytes": 363455244,
+    "compressed_size": 362006560,
+    "crc32": "19b96bcc"
+  },
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_4302601.laz",
+    "size_bytes": 321755702,
+    "compressed_size": 320384541,
+    "crc32": "36af6e05"
+  },
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_4303901.laz",
+    "size_bytes": 293392601,
+    "compressed_size": 292041700,
+    "crc32": "b8d36822"
+  },
+  {
+    "archive": "batch_18.zip",
+    "path": "Rem_Milicz_2015_4307201.laz",
+    "size_bytes": 344371838,
+    "compressed_size": 342957703,
+    "crc32": "0691af29"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Katrynka_2016_5501805.laz",
+    "size_bytes": 267953186,
+    "compressed_size": 266996055,
+    "crc32": "1c8a7747"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Katrynka_2016_5601205.laz",
+    "size_bytes": 431738529,
+    "compressed_size": 430052536,
+    "crc32": "b5c15463"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Katrynka_2016_5801105.laz",
+    "size_bytes": 480495840,
+    "compressed_size": 479034001,
+    "crc32": "0e35c91a"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Katrynka_2016_5801605.laz",
+    "size_bytes": 370525490,
+    "compressed_size": 369029470,
+    "crc32": "3435ca87"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Katrynka_2016_5902605.laz",
+    "size_bytes": 443737554,
+    "compressed_size": 442354692,
+    "crc32": "ed2011c2"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Katrynka_2016_6102605.laz",
+    "size_bytes": 361753460,
+    "compressed_size": 360236644,
+    "crc32": "3dbf572e"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Katrynka_2016_6302005.laz",
+    "size_bytes": 340568612,
+    "compressed_size": 339303028,
+    "crc32": "bd41a8c4"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Milicz_2015_1707601.laz",
+    "size_bytes": 336705673,
+    "compressed_size": 335181753,
+    "crc32": "73fbc198"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Milicz_2015_2006301.laz",
+    "size_bytes": 335114256,
+    "compressed_size": 333760609,
+    "crc32": "c514178f"
+  },
+  {
+    "archive": "batch_15.zip",
+    "path": "Rem_Milicz_2015_2105901.laz",
+    "size_bytes": 444671392,
+    "compressed_size": 443343031,
+    "crc32": "cfd9a3a5"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_3802203.laz",
+    "size_bytes": 316882627,
+    "compressed_size": 315442656,
+    "crc32": "2e3c56f4"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_4704303.laz",
+    "size_bytes": 254600567,
+    "compressed_size": 253669966,
+    "crc32": "716f5755"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_5001003.laz",
+    "size_bytes": 303431094,
+    "compressed_size": 302293500,
+    "crc32": "3806711a"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_5201303.laz",
+    "size_bytes": 349615775,
+    "compressed_size": 348278189,
+    "crc32": "ebea1a9d"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_5204803.laz",
+    "size_bytes": 264666299,
+    "compressed_size": 263584037,
+    "crc32": "f6e086bc"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_5705203.laz",
+    "size_bytes": 353543479,
+    "compressed_size": 352203529,
+    "crc32": "3d699e01"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_5804403.laz",
+    "size_bytes": 160572953,
+    "compressed_size": 159930572,
+    "crc32": "92f24ce6"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_5805203.laz",
+    "size_bytes": 360159972,
+    "compressed_size": 358740861,
+    "crc32": "9e2410bf"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_5904503.laz",
+    "size_bytes": 306554766,
+    "compressed_size": 305363236,
+    "crc32": "e9435d27"
+  },
+  {
+    "archive": "batch_02.zip",
+    "path": "Rem_Gorlice_2015_5905203.laz",
+    "size_bytes": 203682282,
+    "compressed_size": 202897929,
+    "crc32": "30280d8c"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_2403606.laz",
+    "size_bytes": 361065017,
+    "compressed_size": 359673982,
+    "crc32": "5a02d6ea"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_2502406.laz",
+    "size_bytes": 337048062,
+    "compressed_size": 335636112,
+    "crc32": "9be8b464"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_2603806.laz",
+    "size_bytes": 391508600,
+    "compressed_size": 389986814,
+    "crc32": "9b366049"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_3301806.laz",
+    "size_bytes": 397817106,
+    "compressed_size": 396304258,
+    "crc32": "2de586e9"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_3304206.laz",
+    "size_bytes": 318817288,
+    "compressed_size": 317536554,
+    "crc32": "2f440157"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_4000506.laz",
+    "size_bytes": 221690652,
+    "compressed_size": 220679539,
+    "crc32": "6cd68481"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_4404106.laz",
+    "size_bytes": 297252565,
+    "compressed_size": 295926333,
+    "crc32": "0785d940"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_4700406.laz",
+    "size_bytes": 342584413,
+    "compressed_size": 341213926,
+    "crc32": "b500a781"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_5000506.laz",
+    "size_bytes": 387818459,
+    "compressed_size": 386204639,
+    "crc32": "9fd34814"
+  },
+  {
+    "archive": "batch_08.zip",
+    "path": "Rem_Herby_2016_5106406.laz",
+    "size_bytes": 293045031,
+    "compressed_size": 291924668,
+    "crc32": "56b3162f"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6004603.laz",
+    "size_bytes": 257435045,
+    "compressed_size": 256444825,
+    "crc32": "f9ff9b39"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6005403.laz",
+    "size_bytes": 383617899,
+    "compressed_size": 382010202,
+    "crc32": "a524f95e"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6105103.laz",
+    "size_bytes": 216431351,
+    "compressed_size": 215616526,
+    "crc32": "8c3db7f7"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6105603.laz",
+    "size_bytes": 279105978,
+    "compressed_size": 277969954,
+    "crc32": "e6dabe0a"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6204103.laz",
+    "size_bytes": 209380346,
+    "compressed_size": 208617025,
+    "crc32": "606c8494"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6303103.laz",
+    "size_bytes": 249893319,
+    "compressed_size": 248885398,
+    "crc32": "6d5ba34b"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6304803.laz",
+    "size_bytes": 328726613,
+    "compressed_size": 327376874,
+    "crc32": "478649be"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6305803.laz",
+    "size_bytes": 281626694,
+    "compressed_size": 280313128,
+    "crc32": "e6f7a8d3"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6405903.laz",
+    "size_bytes": 270680182,
+    "compressed_size": 269573308,
+    "crc32": "863b72f3"
+  },
+  {
+    "archive": "batch_03.zip",
+    "path": "Rem_Gorlice_2015_6504403.laz",
+    "size_bytes": 284212235,
+    "compressed_size": 283013796,
+    "crc32": "7d2b0423"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Herby_2017_4401506.laz",
+    "size_bytes": 387168423,
+    "compressed_size": 385583267,
+    "crc32": "68ec7201"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Herby_2017_4802106.laz",
+    "size_bytes": 329408468,
+    "compressed_size": 328003293,
+    "crc32": "b4030286"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Katrynka_2016_0600405.laz",
+    "size_bytes": 478291953,
+    "compressed_size": 476816268,
+    "crc32": "6f0cb8ea"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Katrynka_2016_1800905.laz",
+    "size_bytes": 532597214,
+    "compressed_size": 530960262,
+    "crc32": "2c249f3f"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Katrynka_2016_2000905.laz",
+    "size_bytes": 458934561,
+    "compressed_size": 457556152,
+    "crc32": "81a6f619"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Katrynka_2016_2101205.laz",
+    "size_bytes": 371474283,
+    "compressed_size": 370429082,
+    "crc32": "86c02052"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Katrynka_2016_2201005.laz",
+    "size_bytes": 343782938,
+    "compressed_size": 342548936,
+    "crc32": "e4692726"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Katrynka_2016_2201705.laz",
+    "size_bytes": 425488070,
+    "compressed_size": 424242043,
+    "crc32": "232d5e28"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Katrynka_2016_3101005.laz",
+    "size_bytes": 304294029,
+    "compressed_size": 303385519,
+    "crc32": "a81a5158"
+  },
+  {
+    "archive": "batch_12.zip",
+    "path": "Rem_Katrynka_2016_3101605.laz",
+    "size_bytes": 354875103,
+    "compressed_size": 353493496,
+    "crc32": "83b18de5"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_4502801.laz",
+    "size_bytes": 327963084,
+    "compressed_size": 326692355,
+    "crc32": "e1632171"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_4504701.laz",
+    "size_bytes": 366518535,
+    "compressed_size": 364797177,
+    "crc32": "7bdfbe6c"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_4603701.laz",
+    "size_bytes": 282144247,
+    "compressed_size": 280772796,
+    "crc32": "256a076e"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_4703801.laz",
+    "size_bytes": 393352666,
+    "compressed_size": 391661320,
+    "crc32": "6375d812"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_4903501.laz",
+    "size_bytes": 382126444,
+    "compressed_size": 380351500,
+    "crc32": "b0b39eba"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_5003201.laz",
+    "size_bytes": 375777561,
+    "compressed_size": 374142132,
+    "crc32": "14b00bbc"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_5102401.laz",
+    "size_bytes": 410202152,
+    "compressed_size": 408136647,
+    "crc32": "383582ff"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_5602301.laz",
+    "size_bytes": 217640860,
+    "compressed_size": 216687301,
+    "crc32": "3d789c14"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_6900801.laz",
+    "size_bytes": 383303842,
+    "compressed_size": 381601825,
+    "crc32": "684ec770"
+  },
+  {
+    "archive": "batch_19.zip",
+    "path": "Rem_Milicz_2015_7102401.laz",
+    "size_bytes": 355256101,
+    "compressed_size": 353741205,
+    "crc32": "bd423206"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Milicz_2015_7700601.laz",
+    "size_bytes": 339998564,
+    "compressed_size": 338418929,
+    "crc32": "fb5d6b1b"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Milicz_2015_7902301.laz",
+    "size_bytes": 337008493,
+    "compressed_size": 335563331,
+    "crc32": "8fda82ce"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Milicz_2015_8300301.laz",
+    "size_bytes": 363524540,
+    "compressed_size": 361822834,
+    "crc32": "36654852"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Piensk_2016_0601402.laz",
+    "size_bytes": 364322952,
+    "compressed_size": 363112852,
+    "crc32": "ce566c14"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Piensk_2016_0801702.laz",
+    "size_bytes": 320341592,
+    "compressed_size": 318876634,
+    "crc32": "fc2a2d5d"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Piensk_2016_0901202.laz",
+    "size_bytes": 432334876,
+    "compressed_size": 430950907,
+    "crc32": "8f88788a"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Piensk_2016_1102502.laz",
+    "size_bytes": 360068784,
+    "compressed_size": 358753052,
+    "crc32": "10863d63"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Piensk_2016_1301202.laz",
+    "size_bytes": 335240329,
+    "compressed_size": 333823923,
+    "crc32": "5ebb58cc"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Piensk_2016_1302002.laz",
+    "size_bytes": 327756824,
+    "compressed_size": 326290174,
+    "crc32": "cd835d47"
+  },
+  {
+    "archive": "batch_20.zip",
+    "path": "Rem_Piensk_2016_1401302.laz",
+    "size_bytes": 338950750,
+    "compressed_size": 337564694,
+    "crc32": "b932a077"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_1902204.laz",
+    "size_bytes": 343619524,
+    "compressed_size": 342436604,
+    "crc32": "28f32551"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_2002504.laz",
+    "size_bytes": 353242934,
+    "compressed_size": 352174491,
+    "crc32": "70e90561"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_2102404.laz",
+    "size_bytes": 302010571,
+    "compressed_size": 300984846,
+    "crc32": "faaac834"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_2202704.laz",
+    "size_bytes": 416960347,
+    "compressed_size": 415683926,
+    "crc32": "42228e7b"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_2402904.laz",
+    "size_bytes": 412008682,
+    "compressed_size": 410672445,
+    "crc32": "f5be941f"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_2501204.laz",
+    "size_bytes": 400947941,
+    "compressed_size": 399662746,
+    "crc32": "a8adb2d6"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_2503004.laz",
+    "size_bytes": 432608822,
+    "compressed_size": 431143141,
+    "crc32": "92770d64"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_2700704.laz",
+    "size_bytes": 483177215,
+    "compressed_size": 481447944,
+    "crc32": "9c8daf3d"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_2800604.laz",
+    "size_bytes": 506080755,
+    "compressed_size": 504383031,
+    "crc32": "b64f7271"
+  },
+  {
+    "archive": "batch_25.zip",
+    "path": "Rem_Suprasl_2015_2801204.laz",
+    "size_bytes": 364058019,
+    "compressed_size": 362753700,
+    "crc32": "6736840b"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_6403606.laz",
+    "size_bytes": 314820312,
+    "compressed_size": 313497022,
+    "crc32": "6f699807"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_6505806.laz",
+    "size_bytes": 341128350,
+    "compressed_size": 339813597,
+    "crc32": "8fb85502"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_6508806.laz",
+    "size_bytes": 266914739,
+    "compressed_size": 265837954,
+    "crc32": "db1aae0f"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_6606306.laz",
+    "size_bytes": 342630128,
+    "compressed_size": 341186122,
+    "crc32": "66e7c6f3"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_6608806.laz",
+    "size_bytes": 256755553,
+    "compressed_size": 255731497,
+    "crc32": "482bdb4c"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_6706006.laz",
+    "size_bytes": 304157560,
+    "compressed_size": 302900143,
+    "crc32": "60f611d5"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_6803306.laz",
+    "size_bytes": 265660020,
+    "compressed_size": 264527841,
+    "crc32": "93260f9f"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_6903106.laz",
+    "size_bytes": 308879734,
+    "compressed_size": 307649875,
+    "crc32": "7e0553ea"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_7503806.laz",
+    "size_bytes": 344194138,
+    "compressed_size": 342646797,
+    "crc32": "40773519"
+  },
+  {
+    "archive": "batch_10.zip",
+    "path": "Rem_Herby_2016_7904506.laz",
+    "size_bytes": 341477799,
+    "compressed_size": 339873283,
+    "crc32": "19ad45f2"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_3201005.laz",
+    "size_bytes": 472021084,
+    "compressed_size": 470613609,
+    "crc32": "081dbcce"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_3201705.laz",
+    "size_bytes": 451820670,
+    "compressed_size": 450034290,
+    "crc32": "2644c6ce"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_3400805.laz",
+    "size_bytes": 414538186,
+    "compressed_size": 413311467,
+    "crc32": "4357d5d3"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_3601605.laz",
+    "size_bytes": 386347491,
+    "compressed_size": 384915406,
+    "crc32": "6069022e"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_3701705.laz",
+    "size_bytes": 417525264,
+    "compressed_size": 415929658,
+    "crc32": "f0b174ac"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_3702205.laz",
+    "size_bytes": 393990369,
+    "compressed_size": 392481976,
+    "crc32": "3d67645d"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_4001405.laz",
+    "size_bytes": 396912901,
+    "compressed_size": 395431772,
+    "crc32": "be2af3b2"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_4102805.laz",
+    "size_bytes": 554454027,
+    "compressed_size": 552743517,
+    "crc32": "956bb30b"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_4301405.laz",
+    "size_bytes": 328335712,
+    "compressed_size": 327141448,
+    "crc32": "b9d32535"
+  },
+  {
+    "archive": "batch_13.zip",
+    "path": "Rem_Katrynka_2016_4401505.laz",
+    "size_bytes": 414340062,
+    "compressed_size": 413163595,
+    "crc32": "c6a52178"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Piensk_2016_2903502.laz",
+    "size_bytes": 418862241,
+    "compressed_size": 417583947,
+    "crc32": "ee63377f"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Piensk_2016_3100502.laz",
+    "size_bytes": 340142594,
+    "compressed_size": 338664049,
+    "crc32": "248b6d0b"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Piensk_2016_3100602.laz",
+    "size_bytes": 259802434,
+    "compressed_size": 258696344,
+    "crc32": "ceceac25"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Piensk_2016_3102202.laz",
+    "size_bytes": 270866480,
+    "compressed_size": 269824115,
+    "crc32": "1f0f0c5c"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Piensk_2016_3102802.laz",
+    "size_bytes": 329344353,
+    "compressed_size": 328057910,
+    "crc32": "a8b99db0"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Piensk_2016_3103402.laz",
+    "size_bytes": 324409084,
+    "compressed_size": 323138039,
+    "crc32": "403147c3"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Piensk_2016_3203002.laz",
+    "size_bytes": 302563315,
+    "compressed_size": 301419057,
+    "crc32": "0db51226"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Piensk_2016_3203502.laz",
+    "size_bytes": 427427170,
+    "compressed_size": 426115749,
+    "crc32": "c2e3a356"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Suprasl_2015_1502504.laz",
+    "size_bytes": 391724301,
+    "compressed_size": 390395130,
+    "crc32": "5008a8b8"
+  },
+  {
+    "archive": "batch_24.zip",
+    "path": "Rem_Suprasl_2015_1602604.laz",
+    "size_bytes": 378837191,
+    "compressed_size": 377520064,
+    "crc32": "a0504c60"
+  },
+  {
+    "archive": "batch_28.zip",
+    "path": "Rem_Suprasl_2015_4502004.laz",
+    "size_bytes": 252272764,
+    "compressed_size": 251465539,
+    "crc32": "fb214f87"
+  },
+  {
+    "archive": "batch_28.zip",
+    "path": "Rem_Suprasl_2015_4601204.laz",
+    "size_bytes": 412567007,
+    "compressed_size": 411210283,
+    "crc32": "a0cf53ec"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2204901.laz",
+    "size_bytes": 348824863,
+    "compressed_size": 347406729,
+    "crc32": "6658527f"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2303101.laz",
+    "size_bytes": 383719927,
+    "compressed_size": 382162487,
+    "crc32": "40adb379"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2406101.laz",
+    "size_bytes": 326271524,
+    "compressed_size": 324987317,
+    "crc32": "5a8dc231"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2506201.laz",
+    "size_bytes": 314399831,
+    "compressed_size": 313238272,
+    "crc32": "b5f93b54"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2604401.laz",
+    "size_bytes": 335821887,
+    "compressed_size": 334490339,
+    "crc32": "726dae6f"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2606301.laz",
+    "size_bytes": 331263653,
+    "compressed_size": 330007451,
+    "crc32": "c846156a"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2705901.laz",
+    "size_bytes": 327711388,
+    "compressed_size": 326402968,
+    "crc32": "d998d254"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2804101.laz",
+    "size_bytes": 377834343,
+    "compressed_size": 376235087,
+    "crc32": "751fde01"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2805201.laz",
+    "size_bytes": 371055323,
+    "compressed_size": 369465070,
+    "crc32": "3a9ceacd"
+  },
+  {
+    "archive": "batch_16.zip",
+    "path": "Rem_Milicz_2015_2806501.laz",
+    "size_bytes": 317433381,
+    "compressed_size": 316162730,
+    "crc32": "6d40f034"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_2905401.laz",
+    "size_bytes": 358722285,
+    "compressed_size": 357190654,
+    "crc32": "46ee61c6"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_2906401.laz",
+    "size_bytes": 310978343,
+    "compressed_size": 309788008,
+    "crc32": "a50056b2"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_3103901.laz",
+    "size_bytes": 328733832,
+    "compressed_size": 327347547,
+    "crc32": "42ae8060"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_3204501.laz",
+    "size_bytes": 352942727,
+    "compressed_size": 351445720,
+    "crc32": "4fd7c948"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_3404601.laz",
+    "size_bytes": 336224237,
+    "compressed_size": 334778232,
+    "crc32": "c5792dcd"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_3601901.laz",
+    "size_bytes": 349030001,
+    "compressed_size": 347519106,
+    "crc32": "b5b39baa"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_3605501.laz",
+    "size_bytes": 277798724,
+    "compressed_size": 276689980,
+    "crc32": "fecb5a1b"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_3804301.laz",
+    "size_bytes": 319458832,
+    "compressed_size": 318064746,
+    "crc32": "8912618f"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_3805501.laz",
+    "size_bytes": 371114789,
+    "compressed_size": 369282732,
+    "crc32": "975e9e58"
+  },
+  {
+    "archive": "batch_17.zip",
+    "path": "Rem_Milicz_2015_3806801.laz",
+    "size_bytes": 352781498,
+    "compressed_size": 351369015,
+    "crc32": "2c9c2b0f"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_0101703.laz",
+    "size_bytes": 342522342,
+    "compressed_size": 341118127,
+    "crc32": "68af4a04"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_0601903.laz",
+    "size_bytes": 318007219,
+    "compressed_size": 316740941,
+    "crc32": "3fba6469"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_1302103.laz",
+    "size_bytes": 320550423,
+    "compressed_size": 319262167,
+    "crc32": "7955737e"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_2603203.laz",
+    "size_bytes": 342755270,
+    "compressed_size": 341289770,
+    "crc32": "6eb39f6f"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_2703003.laz",
+    "size_bytes": 358006056,
+    "compressed_size": 356465971,
+    "crc32": "b58f4402"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_2800303.laz",
+    "size_bytes": 294615985,
+    "compressed_size": 293309654,
+    "crc32": "68476cee"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_2902903.laz",
+    "size_bytes": 269402581,
+    "compressed_size": 268291274,
+    "crc32": "ff7ef6ac"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_3003303.laz",
+    "size_bytes": 375403455,
+    "compressed_size": 373922983,
+    "crc32": "da73d6d1"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_3203303.laz",
+    "size_bytes": 214178383,
+    "compressed_size": 213348621,
+    "crc32": "9165e981"
+  },
+  {
+    "archive": "batch_01.zip",
+    "path": "Rem_Gorlice_2015_3203403.laz",
+    "size_bytes": 284282160,
+    "compressed_size": 283225856,
+    "crc32": "701e5605"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6505003.laz",
+    "size_bytes": 255753971,
+    "compressed_size": 254628574,
+    "crc32": "7fe80990"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6505903.laz",
+    "size_bytes": 339132380,
+    "compressed_size": 337737920,
+    "crc32": "df8be786"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6605103.laz",
+    "size_bytes": 232116360,
+    "compressed_size": 231111119,
+    "crc32": "538800d9"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6703803.laz",
+    "size_bytes": 290096323,
+    "compressed_size": 288945836,
+    "crc32": "bbe04710"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6705603.laz",
+    "size_bytes": 326471049,
+    "compressed_size": 325123924,
+    "crc32": "8ae6b481"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6804003.laz",
+    "size_bytes": 235795418,
+    "compressed_size": 234867804,
+    "crc32": "4cd67e2a"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6804603.laz",
+    "size_bytes": 359890818,
+    "compressed_size": 358474142,
+    "crc32": "ba60c99d"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6805703.laz",
+    "size_bytes": 346035404,
+    "compressed_size": 344584653,
+    "crc32": "a1797870"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6904103.laz",
+    "size_bytes": 217715865,
+    "compressed_size": 216903029,
+    "crc32": "f6dccdac"
+  },
+  {
+    "archive": "batch_04.zip",
+    "path": "Rem_Gorlice_2015_6904703.laz",
+    "size_bytes": 259806418,
+    "compressed_size": 258659210,
+    "crc32": "85faea95"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_6905203.laz",
+    "size_bytes": 219050853,
+    "compressed_size": 218243547,
+    "crc32": "186dca17"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_7004603.laz",
+    "size_bytes": 274991615,
+    "compressed_size": 273794404,
+    "crc32": "07ea6a4e"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_7005203.laz",
+    "size_bytes": 573263658,
+    "compressed_size": 571498325,
+    "crc32": "effafeaf"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_7105203.laz",
+    "size_bytes": 294082384,
+    "compressed_size": 292952511,
+    "crc32": "d47db7ce"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_7204703.laz",
+    "size_bytes": 284653951,
+    "compressed_size": 283392928,
+    "crc32": "91f23f78"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_7304103.laz",
+    "size_bytes": 240703923,
+    "compressed_size": 239713606,
+    "crc32": "02c41651"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_7305103.laz",
+    "size_bytes": 301111293,
+    "compressed_size": 299843992,
+    "crc32": "563dce2f"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_7305703.laz",
+    "size_bytes": 331766776,
+    "compressed_size": 330317771,
+    "crc32": "907e0bee"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_7404103.laz",
+    "size_bytes": 229585123,
+    "compressed_size": 228599081,
+    "crc32": "ed2a5e18"
+  },
+  {
+    "archive": "batch_05.zip",
+    "path": "Rem_Gorlice_2015_7404903.laz",
+    "size_bytes": 221345966,
+    "compressed_size": 220361488,
+    "crc32": "b8ad3508"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_7405403.laz",
+    "size_bytes": 302578488,
+    "compressed_size": 301270339,
+    "crc32": "80f14c21"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_7503903.laz",
+    "size_bytes": 303460539,
+    "compressed_size": 302227996,
+    "crc32": "6b9d051d"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_7603803.laz",
+    "size_bytes": 208071933,
+    "compressed_size": 207242372,
+    "crc32": "1d62d55d"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_7604403.laz",
+    "size_bytes": 305065248,
+    "compressed_size": 303843141,
+    "crc32": "6cb8e8c0"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_7704703.laz",
+    "size_bytes": 215685661,
+    "compressed_size": 214782208,
+    "crc32": "29fdd284"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_7804503.laz",
+    "size_bytes": 364778696,
+    "compressed_size": 363253340,
+    "crc32": "6b9c8765"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_7904603.laz",
+    "size_bytes": 299157686,
+    "compressed_size": 297690412,
+    "crc32": "a7055bf7"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_8004803.laz",
+    "size_bytes": 354007615,
+    "compressed_size": 352701643,
+    "crc32": "d958ddc4"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_8104703.laz",
+    "size_bytes": 328997767,
+    "compressed_size": 327628776,
+    "crc32": "301b1c5d"
+  },
+  {
+    "archive": "batch_06.zip",
+    "path": "Rem_Gorlice_2015_8204703.laz",
+    "size_bytes": 239488039,
+    "compressed_size": 238527680,
+    "crc32": "4ad53c7b"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Gorlice_2015_8405203.laz",
+    "size_bytes": 397447533,
+    "compressed_size": 395863059,
+    "crc32": "8ce4ed44"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Gorlice_2015_8505103.laz",
+    "size_bytes": 333856641,
+    "compressed_size": 332467450,
+    "crc32": "5bbbe845"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Herby_2016_0702506.laz",
+    "size_bytes": 157976013,
+    "compressed_size": 157354426,
+    "crc32": "c88fc399"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Herby_2016_1201806.laz",
+    "size_bytes": 389225285,
+    "compressed_size": 387731494,
+    "crc32": "6a0b522a"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Herby_2016_1702406.laz",
+    "size_bytes": 367757381,
+    "compressed_size": 366331425,
+    "crc32": "edec356a"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Herby_2016_2003206.laz",
+    "size_bytes": 415438113,
+    "compressed_size": 413801319,
+    "crc32": "bc5c2ae2"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Herby_2016_2102406.laz",
+    "size_bytes": 389612530,
+    "compressed_size": 388158869,
+    "crc32": "0fff7510"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Herby_2016_2202806.laz",
+    "size_bytes": 344163511,
+    "compressed_size": 343008412,
+    "crc32": "16d8b365"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Herby_2016_2302606.laz",
+    "size_bytes": 335322636,
+    "compressed_size": 334140307,
+    "crc32": "c05a5c4b"
+  },
+  {
+    "archive": "batch_07.zip",
+    "path": "Rem_Herby_2016_2402406.laz",
+    "size_bytes": 391449628,
+    "compressed_size": 390087035,
+    "crc32": "7179b9f8"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1501902.laz",
+    "size_bytes": 468399738,
+    "compressed_size": 466829261,
+    "crc32": "42ab9033"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1503502.laz",
+    "size_bytes": 398097265,
+    "compressed_size": 396775802,
+    "crc32": "3fe507c2"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1601102.laz",
+    "size_bytes": 300754856,
+    "compressed_size": 299564040,
+    "crc32": "fd0229e9"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1602102.laz",
+    "size_bytes": 296403466,
+    "compressed_size": 295234348,
+    "crc32": "65acd288"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1700702.laz",
+    "size_bytes": 322308033,
+    "compressed_size": 321096112,
+    "crc32": "485e4af3"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1701502.laz",
+    "size_bytes": 394786978,
+    "compressed_size": 393541206,
+    "crc32": "65fa491d"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1702302.laz",
+    "size_bytes": 408961215,
+    "compressed_size": 407704950,
+    "crc32": "36fc8a56"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1802502.laz",
+    "size_bytes": 391785557,
+    "compressed_size": 390627307,
+    "crc32": "c03cedb2"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1804502.laz",
+    "size_bytes": 347319481,
+    "compressed_size": 345914965,
+    "crc32": "82f6d097"
+  },
+  {
+    "archive": "batch_21.zip",
+    "path": "Rem_Piensk_2016_1902802.laz",
+    "size_bytes": 411847166,
+    "compressed_size": 410680601,
+    "crc32": "59138d84"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2502602.laz",
+    "size_bytes": 412640507,
+    "compressed_size": 411333059,
+    "crc32": "c73a5c90"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2504302.laz",
+    "size_bytes": 409218325,
+    "compressed_size": 408013290,
+    "crc32": "b1184e28"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2600802.laz",
+    "size_bytes": 366877769,
+    "compressed_size": 365461529,
+    "crc32": "09fb3edc"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2602702.laz",
+    "size_bytes": 357840621,
+    "compressed_size": 356565305,
+    "crc32": "2fd79d56"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2604602.laz",
+    "size_bytes": 301758913,
+    "compressed_size": 300852818,
+    "crc32": "c3fb82f3"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2700402.laz",
+    "size_bytes": 525474323,
+    "compressed_size": 523811863,
+    "crc32": "8ff86904"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2801802.laz",
+    "size_bytes": 307471444,
+    "compressed_size": 306281554,
+    "crc32": "daa97fc3"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2802402.laz",
+    "size_bytes": 317887014,
+    "compressed_size": 316672396,
+    "crc32": "1a1bba41"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2804302.laz",
+    "size_bytes": 416784245,
+    "compressed_size": 415394809,
+    "crc32": "db18e11b"
+  },
+  {
+    "archive": "batch_23.zip",
+    "path": "Rem_Piensk_2016_2901202.laz",
+    "size_bytes": 350197012,
+    "compressed_size": 348794068,
+    "crc32": "760ea9a7"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_2900904.laz",
+    "size_bytes": 522173649,
+    "compressed_size": 520440589,
+    "crc32": "1f4a0924"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_3000604.laz",
+    "size_bytes": 347474960,
+    "compressed_size": 346290383,
+    "crc32": "e7c30341"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_3001704.laz",
+    "size_bytes": 475306687,
+    "compressed_size": 473648320,
+    "crc32": "5e2ba3cb"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_3100704.laz",
+    "size_bytes": 347881452,
+    "compressed_size": 346604264,
+    "crc32": "6a7aac97"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_3302504.laz",
+    "size_bytes": 348301539,
+    "compressed_size": 347105612,
+    "crc32": "21f3189c"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_3400504.laz",
+    "size_bytes": 489441081,
+    "compressed_size": 487700687,
+    "crc32": "429f07cf"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_3501204.laz",
+    "size_bytes": 271068720,
+    "compressed_size": 269899643,
+    "crc32": "c5224041"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_3501704.laz",
+    "size_bytes": 316037687,
+    "compressed_size": 314570205,
+    "crc32": "2ad40de0"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_3600604.laz",
+    "size_bytes": 375275852,
+    "compressed_size": 374096136,
+    "crc32": "41668e9f"
+  },
+  {
+    "archive": "batch_26.zip",
+    "path": "Rem_Suprasl_2015_3601604.laz",
+    "size_bytes": 345093454,
+    "compressed_size": 343593300,
+    "crc32": "178f9a02"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2016_1102006.laz",
+    "size_bytes": 372151163,
+    "compressed_size": 370773037,
+    "crc32": "3da2950f"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2016_2204106.laz",
+    "size_bytes": 404134218,
+    "compressed_size": 402597499,
+    "crc32": "7e422221"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2016_2803006.laz",
+    "size_bytes": 412408990,
+    "compressed_size": 410873592,
+    "crc32": "1051403a"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2016_8607506.laz",
+    "size_bytes": 340987547,
+    "compressed_size": 339629109,
+    "crc32": "7be03733"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2017_2503606.laz",
+    "size_bytes": 317835697,
+    "compressed_size": 316590299,
+    "crc32": "d81e3a07"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2017_2702806.laz",
+    "size_bytes": 350655549,
+    "compressed_size": 349397582,
+    "crc32": "5d75956b"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2017_3203406.laz",
+    "size_bytes": 440518350,
+    "compressed_size": 438769768,
+    "crc32": "888c704a"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2017_3503506.laz",
+    "size_bytes": 375392814,
+    "compressed_size": 373978456,
+    "crc32": "daff433f"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2017_3601406.laz",
+    "size_bytes": 365007655,
+    "compressed_size": 363631743,
+    "crc32": "ded4c4bb"
+  },
+  {
+    "archive": "batch_11.zip",
+    "path": "Rem_Herby_2017_4102706.laz",
+    "size_bytes": 395619285,
+    "compressed_size": 394100180,
+    "crc32": "605a5c79"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_5500406.laz",
+    "size_bytes": 321339793,
+    "compressed_size": 320059244,
+    "crc32": "06a815d6"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_5603406.laz",
+    "size_bytes": 172577593,
+    "compressed_size": 171837399,
+    "crc32": "30d2c716"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_5700906.laz",
+    "size_bytes": 372349474,
+    "compressed_size": 370751326,
+    "crc32": "e436e887"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_5703406.laz",
+    "size_bytes": 341465819,
+    "compressed_size": 340136511,
+    "crc32": "afa50933"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_5804006.laz",
+    "size_bytes": 316112797,
+    "compressed_size": 314794784,
+    "crc32": "a8aa61ba"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_5901206.laz",
+    "size_bytes": 346731257,
+    "compressed_size": 345376742,
+    "crc32": "a4430816"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_6003406.laz",
+    "size_bytes": 320055173,
+    "compressed_size": 318830873,
+    "crc32": "d9db9ef9"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_6101306.laz",
+    "size_bytes": 323120842,
+    "compressed_size": 321713126,
+    "crc32": "c9b7867d"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_6105906.laz",
+    "size_bytes": 315403327,
+    "compressed_size": 314111806,
+    "crc32": "0cb13d30"
+  },
+  {
+    "archive": "batch_09.zip",
+    "path": "Rem_Herby_2016_6305806.laz",
+    "size_bytes": 354061371,
+    "compressed_size": 352687726,
+    "crc32": "a01ea505"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2100902.laz",
+    "size_bytes": 358738318,
+    "compressed_size": 357325704,
+    "crc32": "b375c7e1"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2101702.laz",
+    "size_bytes": 355200845,
+    "compressed_size": 353626217,
+    "crc32": "2fbd6c03"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2202402.laz",
+    "size_bytes": 401246560,
+    "compressed_size": 399941725,
+    "crc32": "ddda38b9"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2202902.laz",
+    "size_bytes": 451807762,
+    "compressed_size": 450519278,
+    "crc32": "0c5ac37c"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2302002.laz",
+    "size_bytes": 327962126,
+    "compressed_size": 326523332,
+    "crc32": "dc95803f"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2400402.laz",
+    "size_bytes": 342701213,
+    "compressed_size": 341158928,
+    "crc32": "61afa55b"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2401002.laz",
+    "size_bytes": 346816525,
+    "compressed_size": 345438525,
+    "crc32": "b19db1ac"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2404602.laz",
+    "size_bytes": 385734419,
+    "compressed_size": 384608655,
+    "crc32": "88aa834c"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2501302.laz",
+    "size_bytes": 316834555,
+    "compressed_size": 315568503,
+    "crc32": "739ed3d6"
+  },
+  {
+    "archive": "batch_22.zip",
+    "path": "Rem_Piensk_2016_2501502.laz",
+    "size_bytes": 286153055,
+    "compressed_size": 284942865,
+    "crc32": "b4b0349b"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_3602204.laz",
+    "size_bytes": 519188521,
+    "compressed_size": 517279084,
+    "crc32": "9e5850d2"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_3702404.laz",
+    "size_bytes": 287416483,
+    "compressed_size": 286178462,
+    "crc32": "0cfe881a"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_3801904.laz",
+    "size_bytes": 334213603,
+    "compressed_size": 332848105,
+    "crc32": "d890dc53"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_3900604.laz",
+    "size_bytes": 400239407,
+    "compressed_size": 398938889,
+    "crc32": "6eb503b5"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_3901204.laz",
+    "size_bytes": 365471384,
+    "compressed_size": 364235574,
+    "crc32": "23ec52d3"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_4001004.laz",
+    "size_bytes": 476657916,
+    "compressed_size": 475140194,
+    "crc32": "6e872660"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_4001604.laz",
+    "size_bytes": 382408757,
+    "compressed_size": 380993329,
+    "crc32": "ed29c93d"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_4101604.laz",
+    "size_bytes": 463243591,
+    "compressed_size": 461630707,
+    "crc32": "0aeaeadb"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_4201404.laz",
+    "size_bytes": 322141964,
+    "compressed_size": 320994641,
+    "crc32": "6a029a71"
+  },
+  {
+    "archive": "batch_27.zip",
+    "path": "Rem_Suprasl_2015_4300804.laz",
+    "size_bytes": 387162151,
+    "compressed_size": 385708529,
+    "crc32": "b3ada5d8"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_4501505.laz",
+    "size_bytes": 466739509,
+    "compressed_size": 465342675,
+    "crc32": "fd5aa618"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_4503105.laz",
+    "size_bytes": 442769822,
+    "compressed_size": 440971912,
+    "crc32": "1d1c6238"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_4601905.laz",
+    "size_bytes": 545337638,
+    "compressed_size": 543662697,
+    "crc32": "4b30ed30"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_4602705.laz",
+    "size_bytes": 383872197,
+    "compressed_size": 382669137,
+    "crc32": "d9461d8f"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_4701305.laz",
+    "size_bytes": 476536546,
+    "compressed_size": 475001927,
+    "crc32": "997dca37"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_4902605.laz",
+    "size_bytes": 317240380,
+    "compressed_size": 316070414,
+    "crc32": "d93bae33"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_5002905.laz",
+    "size_bytes": 353271667,
+    "compressed_size": 352179257,
+    "crc32": "240c19d3"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_5101105.laz",
+    "size_bytes": 419597984,
+    "compressed_size": 417977728,
+    "crc32": "de782ee2"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_5201205.laz",
+    "size_bytes": 466327920,
+    "compressed_size": 464814037,
+    "crc32": "b9d9d962"
+  },
+  {
+    "archive": "batch_14.zip",
+    "path": "Rem_Katrynka_2016_5401105.laz",
+    "size_bytes": 357202601,
+    "compressed_size": 356089956,
+    "crc32": "17a1f94c"
+  }
+]
