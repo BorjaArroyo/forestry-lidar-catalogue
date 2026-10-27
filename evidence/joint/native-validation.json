@@ -10,7 +10,7 @@
   "validation": {
     "status": "validated",
     "scope": "All exported blocks and both linked reference targets",
-    "plan_sha256": "b5920ba864cd2e0ddd7559d152907493631658aa98833a6a4420ecb93892bdb2",
+    "plan_sha256": "ee0602bc1a313ae1d020252f8eab411ebf3e78590dc578f9600b412580548d3e",
     "points": 71885097,
     "blocks": 289,
     "trees": 61,
@@ -21,7 +21,7 @@
     "src/canopy/joint/__init__.py": "995dd4cdd5058ba3ae34f1a0427024c795f1f5381aa9e81324b51d8184543e7e",
     "src/canopy/joint/cli.py": "ac9ad0a28241a63310d56854338b1b7bf0e95ab8d12d397c1bf7567c0b450d0e",
     "src/canopy/joint/locks.py": "bd122eca08f021e5b18dbc0cfd5bde11f4a133d60ad8979fa2f463204442f56e",
-    "src/canopy/joint/model.py": "44e192c13ec5e63afe7eb090390ad80461056306d6c0df87bc6094c26f295bc6",
+    "src/canopy/joint/model.py": "dde2b26e427f31d0d66d84c980f89db5d28e58f6d38bda4e7d566e516d0451ce",
     "src/canopy/joint/package.py": "d32bf58e442c66293b38a5d46403d3be5c4d25094a762f627a4d171e8180624f",
     "src/canopy/joint/source.py": "b93df811508bf16f7dc39b031822573a6c6936b6c3984fe98d62fc432fb8c624"
   },
@@ -31,5 +31,6 @@
     "Whole archive MD5 unchecked",
     "Native code/crown labels only; companion tree rows disagree",
     "All outputs unassigned; no independent evaluation claim"
-  ]
+  ],
+  "native_runtime_sha256": "caf597522dda935f5f1215654b43e3ad64281956e8634eb4fe2254b4493639f1"
 }
