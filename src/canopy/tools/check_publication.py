@@ -11,11 +11,16 @@ ROOT = repository_root()
 def check(root=ROOT, *, write=False):
     """Refresh only already-listed local artifacts; never change remote pins."""
     failures = []
-    for filename in ["browser-prepare/runtime-lock.json", "publication-manifest.json"]:
+    locks = ["browser-prepare/runtime-lock.json"]
+    if (root / "browser-prepare/joint-runtime-lock.json").exists():
+        locks.append("browser-prepare/joint-runtime-lock.json")
+    for filename in [*locks, "publication-manifest.json"]:
         path = root / filename
         document = json.loads(path.read_text())
         for name, entry in document["files"].items():
-            relative = entry["url"] if isinstance(entry, dict) else name
+            relative = (
+                entry.get("url", entry.get("path", name)) if isinstance(entry, dict) else name
+            )
             if relative.startswith("https://"):
                 continue
             artifact = root / relative

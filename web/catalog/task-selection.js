@@ -1,5 +1,5 @@
 /* Presentation only: the worker independently resolves and validates every request. */
-import { referenceFor } from '../experiment.js?v=multitask-v1';
+import { referenceFor } from '../experiment.js?v=joint-v1';
 export function createTaskSelection(catalog, initialTask = 'instances') {
   let task, requirements;
   function setTask(id) {

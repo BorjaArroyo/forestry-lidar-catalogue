@@ -11,6 +11,8 @@ import numpy as np
 
 from . import knowledge_model
 from .classification.package import TreeDataset
+from .joint.package import JointDataset, POINT_FIELDS
+from .joint.model import FORMAT as JOINT_FORMAT, SOURCE as JOINT_SOURCE
 from .task_dataset import TaskDataset
 from .task_package import read_json, sha_file
 
@@ -65,9 +67,34 @@ class NumpyDataset:
             raise TypeError("config must be a LoaderConfig")
         manifest = read_json(self.root / "dataset.json")
         self.task = manifest.get("task_ref")
+        if manifest.get("format") == JOINT_FORMAT:
+            self.task = "task:joint-tree-reference"
         self._metadata_paths = [self.root / "dataset.json"]
         self._report = None
-        if self.task == "task:instances":
+        if self.task == "task:joint-tree-reference":
+            self._reader = JointDataset(self.root)
+            self._metadata_paths.append(self.root / "dataset-plan.json")
+            self._available = {
+                "partitions": {"unassigned"},
+                "sources": {JOINT_SOURCE},
+                "fields": POINT_FIELDS
+                | {
+                    "native_id",
+                    "taxonomy",
+                    "taxonomy_valid",
+                    "instance_eligible",
+                    "taxonomy_eligible",
+                    "complete_crown",
+                    "species",
+                    "species_valid",
+                    "genus",
+                    "genus_valid",
+                    "leaf_group",
+                    "leaf_group_valid",
+                },
+                "modalities": {"TLS"},
+            }
+        elif self.task == "task:instances":
             self._reader = TaskDataset(
                 self.root, model if model is not None else knowledge_model.load(), profile=profile
             )
@@ -105,7 +132,15 @@ class NumpyDataset:
         self._hashes = {path: sha_file(path) for path in self._metadata_paths}
         self._fields = set(self.config.fields) if self.config.fields is not None else None
         if self._fields is not None:
-            for field, mask in (("instance", "instance_valid"), ("features", "feature_valid")):
+            for field, mask in (
+                ("instance", "instance_valid"),
+                ("features", "feature_valid"),
+                ("point_to_tree", "point_to_tree_valid"),
+                ("taxonomy", "taxonomy_valid"),
+                ("species", "species_valid"),
+                ("genus", "genus_valid"),
+                ("leaf_group", "leaf_group_valid"),
+            ):
                 if field in self._fields:
                     self._fields.add(mask)
 
@@ -137,7 +172,14 @@ class NumpyDataset:
         return selection is None or value in selection
 
     def _blocks(self):
-        if self.task == "task:instances":
+        if self.task == "task:joint-tree-reference":
+            if (
+                self._selected("partitions", "unassigned")
+                and self._selected("sources", JOINT_SOURCE)
+                and self._selected("modalities", "TLS")
+            ):
+                yield from self._reader.iter_blocks()
+        elif self.task == "task:instances":
             for partition in sorted(self._available["partitions"]):
                 if self._selected("partitions", partition):
                     for block in self._reader.iter_partition(partition):
@@ -183,7 +225,21 @@ class NumpyDataset:
                         value = value.view()
                         value.setflags(write=False)
                     selected[name] = value
-                yield {**block, "row_offset": block["row_offset"] + start, "arrays": selected}
+                result = {**block, "row_offset": block["row_offset"] + start, "arrays": selected}
+                if "tree_arrays" in block:
+                    # Tree axes are plot-scoped and must never be sliced with point rows.
+                    tree_arrays = {}
+                    for name, array in block["tree_arrays"].items():
+                        if self._fields is not None and name not in self._fields:
+                            continue
+                        value = (
+                            np.array(array, copy=True) if self.config.copy_arrays else array.view()
+                        )
+                        if not self.config.copy_arrays:
+                            value.setflags(write=False)
+                        tree_arrays[name] = value
+                    result["tree_arrays"] = tree_arrays
+                yield result
         self._check_metadata()
 
     def __iter__(self):

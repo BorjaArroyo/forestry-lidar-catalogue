@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://canopy.local/schemas/joint-dataset-1.0.0",
+  "title": "Same-observation point instances and tree taxonomy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "format", "task_refs", "plan", "plots"],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "format": {
+      "const": "joint-tree-reference:1.0.0"
+    },
+    "task_refs": {
+      "const": ["task:instances", "task:species"]
+    },
+    "plan": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "format",
+        "task_refs",
+        "source_ref",
+        "pipeline_ref",
+        "source_lock_sha256",
+        "runtime_sha256",
+        "request",
+        "plots",
+        "taxonomy",
+        "vocabulary",
+        "archives",
+        "totals",
+        "partition_policy",
+        "sample_unit",
+        "limitations",
+        "plan_sha256",
+        "vocabularies"
+      ]
+    },
+    "plots": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "trees", "blocks"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "pattern": "^[^/\\\\:]+\\.laz$"
+          },
+          "trees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/tree"
+            }
+          },
+          "blocks": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "offset", "points", "sha256"],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "pattern": "^unassigned/plots/[0-9]+/blocks/[0-9]+\\.npz$"
+                },
+                "offset": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "points": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 250000
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "tree": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native_id",
+        "native_code",
+        "native_name",
+        "complete_crown",
+        "points",
+        "key",
+        "taxonomy",
+        "taxonomy_valid",
+        "taxonomy_unavailable_reason",
+        "instance_eligible",
+        "taxonomy_eligible",
+        "labels"
+      ],
+      "properties": {
+        "native_id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "native_code": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "native_name": {
+          "type": "string"
+        },
+        "complete_crown": {
+          "type": "boolean"
+        },
+        "points": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "taxonomy": {
+          "type": "integer",
+          "minimum": -1
+        },
+        "taxonomy_valid": {
+          "type": "boolean"
+        },
+        "taxonomy_unavailable_reason": {
+          "enum": ["", "unknown_native_reference", "coarser_rank"]
+        },
+        "instance_eligible": {
+          "type": "boolean"
+        },
+        "taxonomy_eligible": {
+          "type": "boolean"
+        },
+        "labels": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["species", "genus", "leaf_group"],
+          "properties": {
+            "species": {
+              "$ref": "#/$defs/label"
+            },
+            "genus": {
+              "$ref": "#/$defs/label"
+            },
+            "leaf_group": {
+              "$ref": "#/$defs/label"
+            }
+          }
+        }
+      }
+    },
+    "label": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "valid"],
+      "properties": {
+        "value": {
+          "type": ["string", "null"]
+        },
+        "valid": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

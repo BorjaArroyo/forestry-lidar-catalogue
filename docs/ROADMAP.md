@@ -2,9 +2,9 @@
 
 The [experiment workspace specification](design/EXPERIMENT-WORKSPACE.md) records
 the shared direction for segmentation, classification and future tasks, including
-the current contract review and navigation acceptance scenarios. Multitask plans,
-custom experimental splits, new matching and same-state fusion are proposed
-increments, not current execution guarantees.
+the current contract review and navigation acceptance scenarios. Joint reference plans now have a bounded TreeScan implementation and independent
+validator; scientific admission remains explicit. Custom experimental splits, new
+matching and same-state fusion remain proposed increments.
 
 ## Delivered workflow
 

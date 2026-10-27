@@ -28,3 +28,5 @@ tests/e2e/fixtures/
 data/classification/
 browser-prepare/classification-runtime-lock.json
 schemas/tree-classification-*.schema.json
+
+data/joint/

@@ -1,14 +1,14 @@
 import { escapeHTML as esc, downloadJSON } from '../shared/dom.js';
 /* A dependency-free, offline viewer. This application never modifies LiDAR files. */
-import { createTaskSelection } from './task-selection.js?v=multitask-v1';
-import { parseWorkspaceRoute, workspaceHash } from '../workspace.js?v=multitask-v1';
+import { createTaskSelection } from './task-selection.js?v=joint-v1';
+import { parseWorkspaceRoute, workspaceHash } from '../workspace.js?v=joint-v1';
 import {
   normalizeExperiment,
   experimentFromUrl,
   experimentToUrl,
   jointSources,
   referenceFor,
-} from '../experiment.js?v=multitask-v1';
+} from '../experiment.js?v=joint-v1';
 
 export function mountCatalog({
   catalog,
@@ -125,7 +125,7 @@ export function mountCatalog({
   const readinessHtml = (d) => {
     const s = discovery(d);
     if (joint())
-      return `<dl class="source-readiness">${experiment.tasks.map((id) => `<div><dt>${id === 'instances' ? 'Instances' : 'Taxonomy'}</dt><dd>${esc(referenceFor(d, id).label)}</dd></div>`).join('')}<div><dt>Preparation</dt><dd>Joint route unavailable</dd></div></dl>`;
+      return `<dl class="source-readiness">${experiment.tasks.map((id) => `<div><dt>${id === 'instances' ? 'Instances' : 'Taxonomy'}</dt><dd>${esc(referenceFor(d, id).label)}</dd></div>`).join('')}<div><dt>Preparation</dt><dd>Check audited joint scope in Experiment</dd></div></dl>`;
     if (task.id === 'species')
       return `<dl class="source-readiness"><div><dt>Taxonomic reference</dt><dd>${esc(referenceFor(d, 'species').label)}</dd></div><div><dt>Task preparation</dt><dd>${esc(d.classification ? s.preparation.label : 'No admitted classification pipeline')}</dd></div></dl>`;
     return `<dl class="source-readiness"><div><dt>${task.id === 'species' ? 'Taxonomic reference' : 'Instance reference'}</dt><dd><span class="source-status reference-${esc(s.instance_reference.status)}">${esc(s.instance_reference.label)}</span></dd></div><div><dt>Task preparation</dt><dd><span class="source-status preparation-${esc(s.preparation.status)}">${esc(s.preparation.label)}</span></dd></div></dl>`;
@@ -178,7 +178,7 @@ export function mountCatalog({
     $('#task-rank-label').hidden = joint() || task.id !== 'species';
     $('#task-use').closest('label').hidden = joint();
     $('#experiment-rank-label').hidden = !joint();
-    $('#experiment-rank').value = experiment.rank;
+    $('#experiment-rank').value = experiment.target;
     $('#task-rank').value = state.rank;
     $('#task-variables').hidden = task.id === 'species';
     $('#task-use').disabled = state.taskRunning;
@@ -200,7 +200,7 @@ export function mountCatalog({
   }
   function requestFit(d) {
     if (joint())
-      return '<div class="request-fit"><strong>Joint preparation is unavailable</strong><p>Reference availability does not establish an admitted joint pipeline.</p></div>';
+      return '<div class="request-fit"><strong>Joint preparation uses a bounded audited scope</strong><p>Select complete audited plots and review their reference policy in Experiment.</p></div>';
     const result = selection.assess(d.id, taskRequest());
     const omitted = omittedVariables(result);
     const channels = task.preparation_sources[d.id].native_reflectance;
@@ -776,7 +776,11 @@ export function mountCatalog({
     state.rank = e.target.value;
     taskChanged();
   };
-  $('#experiment-rank').onchange = (e) => setExperiment({ rank: e.target.value });
+  $('#experiment-rank').onchange = (e) =>
+    setExperiment({
+      target: e.target.value,
+      ...(e.target.value === 'leaf_group' ? {} : { rank: e.target.value }),
+    });
   document.addEventListener('canopy-select-task', (e) =>
     selectTask(e.detail.task_ref.replace('task:', '')),
   );

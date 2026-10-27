@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "reviewed_at": "2026-10-27",
+  "status": "succeeded",
+  "admission": "pending maintainer scientific admission",
+  "source_scope": [
+    "Rem_Gorlice_2015_5804403.laz",
+    "Rem_Herby_2016_5603406.laz"
+  ],
+  "validation": {
+    "status": "validated",
+    "scope": "All exported blocks and both linked reference targets",
+    "plan_sha256": "b5920ba864cd2e0ddd7559d152907493631658aa98833a6a4420ecb93892bdb2",
+    "points": 71885097,
+    "blocks": 289,
+    "trees": 61,
+    "taxonomy_eligible": 32
+  },
+  "source_lock_sha256": "3447206e4661c8780dceccae7a48afa56d8de8e6660fac33c870f6adcd2a3797",
+  "implementation_files": {
+    "src/canopy/joint/__init__.py": "995dd4cdd5058ba3ae34f1a0427024c795f1f5381aa9e81324b51d8184543e7e",
+    "src/canopy/joint/cli.py": "ac9ad0a28241a63310d56854338b1b7bf0e95ab8d12d397c1bf7567c0b450d0e",
+    "src/canopy/joint/locks.py": "bd122eca08f021e5b18dbc0cfd5bde11f4a133d60ad8979fa2f463204442f56e",
+    "src/canopy/joint/model.py": "44e192c13ec5e63afe7eb090390ad80461056306d6c0df87bc6094c26f295bc6",
+    "src/canopy/joint/package.py": "d32bf58e442c66293b38a5d46403d3be5c4d25094a762f627a4d171e8180624f",
+    "src/canopy/joint/source.py": "b93df811508bf16f7dc39b031822573a6c6936b6c3984fe98d62fc432fb8c624"
+  },
+  "browser_acceptance": "Synthetic complete workflow in Chromium and Firefox; real native scope is recorded separately",
+  "limitations": [
+    "Only these two complete native plots",
+    "Whole archive MD5 unchecked",
+    "Native code/crown labels only; companion tree rows disagree",
+    "All outputs unassigned; no independent evaluation claim"
+  ]
+}

@@ -1,0 +1,3675 @@
+{
+  "schema_version": "1.0.0",
+  "source_ref": "zenodo:19127709",
+  "pipeline_ref": "pipeline:treescan-joint-reference:1.0.0",
+  "scope": "Only the complete plots listed below; whole provider ZIP checksums are unchecked",
+  "table_assets": [
+    {
+      "name": "individual_tree_summary.csv",
+      "url": "https://zenodo.org/api/records/19127709/files/individual_tree_summary.csv/content",
+      "size_bytes": 1079248,
+      "provider_checksum": "md5:636e591582c85164f1532a6dc6350694",
+      "sha256": "cf452e19957265c89f35bf3c02e7920fc9e072c44a7cc5e1791dd0058667059c"
+    },
+    {
+      "name": "plot_summary.xlsx",
+      "url": "https://zenodo.org/api/records/19127709/files/plot_summary.xlsx/content",
+      "size_bytes": 24794,
+      "provider_checksum": "md5:c468bf5eef366dbb62bb0d2287fe3da4",
+      "sha256": "42491a7a21d69d68cfa7501638518ca0666a871db018001f6110cb454c0fd5aa"
+    },
+    {
+      "name": "species_id_names.csv",
+      "url": "https://zenodo.org/api/records/19127709/files/species_id_names.csv/content",
+      "size_bytes": 956,
+      "provider_checksum": "md5:fb30c58415712a1d0d08639deb7bb0a7",
+      "sha256": "c480f8d5dff3eb8d1880fea18681a4adce0bc8494e1076dedb375f8d6ce659bf"
+    }
+  ],
+  "taxonomy": [
+    {
+      "native_code": 1,
+      "native_name": "Pinus sylvestris",
+      "genus": "Pinus",
+      "species": "Pinus sylvestris",
+      "leaf_group": "conifer",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Pinus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 2,
+      "native_name": "Pinus banksiana",
+      "genus": "Pinus",
+      "species": "Pinus banksiana",
+      "leaf_group": "conifer",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Pinus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 8,
+      "native_name": "Larix decidua",
+      "genus": "Larix",
+      "species": "Larix decidua",
+      "leaf_group": "conifer",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Larix&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 11,
+      "native_name": "Picea abies",
+      "genus": "Picea",
+      "species": "Picea abies",
+      "leaf_group": "conifer",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Picea&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 21,
+      "native_name": "Abies alba",
+      "genus": "Abies",
+      "species": "Abies alba",
+      "leaf_group": "conifer",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Abies&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 30,
+      "native_name": "Fagus sylvatica",
+      "genus": "Fagus",
+      "species": "Fagus sylvatica",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Fagus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 40,
+      "native_name": "Quercus sp.",
+      "genus": "Quercus",
+      "species": null,
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Quercus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 41,
+      "native_name": "Quercus robur",
+      "genus": "Quercus",
+      "species": "Quercus robur",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Quercus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 43,
+      "native_name": "Quercus rubra",
+      "genus": "Quercus",
+      "species": "Quercus rubra",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Quercus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 44,
+      "native_name": "Acer platanoides",
+      "genus": "Acer",
+      "species": "Acer platanoides",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Acer&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 45,
+      "native_name": "Acer pseudoplatanus",
+      "genus": "Acer",
+      "species": "Acer pseudoplatanus",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Acer&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 46,
+      "native_name": "Ulmus minor",
+      "genus": "Ulmus",
+      "species": "Ulmus minor",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Ulmus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 48,
+      "native_name": "Fraxinus excelsior",
+      "genus": "Fraxinus",
+      "species": "Fraxinus excelsior",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Fraxinus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 50,
+      "native_name": "Carpinus betulus",
+      "genus": "Carpinus",
+      "species": "Carpinus betulus",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Carpinus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 60,
+      "native_name": "Betula pendula",
+      "genus": "Betula",
+      "species": "Betula pendula",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Betula&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 66,
+      "native_name": "Crataegus monogyna",
+      "genus": "Crataegus",
+      "species": "Crataegus monogyna",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Crataegus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 71,
+      "native_name": "Alnus glutinosa",
+      "genus": "Alnus",
+      "species": "Alnus glutinosa",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Alnus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 72,
+      "native_name": "Alnus incana",
+      "genus": "Alnus",
+      "species": "Alnus incana",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Alnus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 81,
+      "native_name": "Pyrus communis",
+      "genus": "Pyrus",
+      "species": "Pyrus communis",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Pyrus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 82,
+      "native_name": "Prunus avium",
+      "genus": "Prunus",
+      "species": "Prunus avium",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Prunus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 84,
+      "native_name": "Malus sylvestris",
+      "genus": "Malus",
+      "species": "Malus sylvestris",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Malus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 86,
+      "native_name": "Prunus padus",
+      "genus": "Prunus",
+      "species": "Prunus padus",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Prunus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 87,
+      "native_name": "Sorbus aucuparia",
+      "genus": "Sorbus",
+      "species": "Sorbus aucuparia",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Sorbus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 90,
+      "native_name": "Populus alba",
+      "genus": "Populus",
+      "species": "Populus alba",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Populus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 91,
+      "native_name": "Populus tremula",
+      "genus": "Populus",
+      "species": "Populus tremula",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Populus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 95,
+      "native_name": "Tilia cordata",
+      "genus": "Tilia",
+      "species": "Tilia cordata",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Tilia&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 97,
+      "native_name": "Salix caprea",
+      "genus": "Salix",
+      "species": "Salix caprea",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Salix&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 98,
+      "native_name": "Prunus serotina",
+      "genus": "Prunus",
+      "species": "Prunus serotina",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Prunus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 99,
+      "native_name": "Populus berolinensis",
+      "genus": "Populus",
+      "species": "Populus berolinensis",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Populus&rank=GENUS&kingdom=Plantae&strict=true"
+    },
+    {
+      "native_code": 107,
+      "native_name": "Acer campestre",
+      "genus": "Acer",
+      "species": "Acer campestre",
+      "leaf_group": "broadleaf",
+      "leaf_group_evidence": "https://api.gbif.org/v1/species/match?name=Acer&rank=GENUS&kingdom=Plantae&strict=true"
+    }
+  ],
+  "archives": [
+    {
+      "name": "batch_02.zip",
+      "size_bytes": 2862405917,
+      "checksum": "md5:adcc9cf41ce3c770df25a682fb9e9c37",
+      "download_url": "https://zenodo.org/api/records/19127709/files/batch_02.zip/content"
+    },
+    {
+      "name": "batch_09.zip",
+      "size_bytes": 3170300951,
+      "checksum": "md5:f82eff3c9c935d77f14f0bf9a0ea7032",
+      "download_url": "https://zenodo.org/api/records/19127709/files/batch_09.zip/content"
+    }
+  ],
+  "plots": [
+    {
+      "archive": "batch_02.zip",
+      "path": "Rem_Gorlice_2015_5804403.laz",
+      "size_bytes": 160572953,
+      "compressed_size": 159930572,
+      "crc32": "92f24ce6",
+      "sha256": "9a42b3428e3c4b4d7b859463b84818e2c605a75a278e0cf3fa29f5b04fa87036",
+      "points": 33103057,
+      "native_schema": {
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "PointID",
+            "<i8"
+          ],
+          [
+            "treeID",
+            "<i2"
+          ],
+          [
+            "treeSP",
+            "<i2"
+          ],
+          [
+            "completelyInside",
+            "|u1"
+          ]
+        ],
+        "point_format": 0,
+        "point_record_length": 33,
+        "scales": [
+          1e-06,
+          1e-06,
+          1e-06
+        ],
+        "offsets": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "las_version": "1.2"
+      },
+      "native_records_sha256": "8c4145aa8975afe3ee7dba423b767b43ed1a6d818ae9f094fb7db7f5337fd486",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 250000,
+          "records_sha256": "6e20a9d5b5ace20238e21ae15c703f31229d8869767385c382ade60a0f155cab",
+          "xyz_sha256": "3eeb689545a92115f0c0568a301fe888a12c42939e46192eeba1ee1985874f26"
+        },
+        {
+          "offset": 250000,
+          "points": 250000,
+          "records_sha256": "76bf63d78e1aac32da2fb64230fedd2947edbd54cd2abae834485977051410e4",
+          "xyz_sha256": "f304f0179fc2ce2429f2b651423d8eb7766832aff5a7015b4c5e102b5889fdb3"
+        },
+        {
+          "offset": 500000,
+          "points": 250000,
+          "records_sha256": "aa6948411d27a7303c8ef871180c794fd46dc81c4beaabfcce265c5cfd572457",
+          "xyz_sha256": "64a24cfbf9bbb21b7fb3facc834a12b88252e3863eb983ec6654ac27c1c51b7c"
+        },
+        {
+          "offset": 750000,
+          "points": 250000,
+          "records_sha256": "9b930b69f171b7b69584f8b03244eb0d31e8dffcf90e22577d7b230c4605aa9c",
+          "xyz_sha256": "771336aee88354860fae14a109030297746268c429fd7accb375c87b944fdc49"
+        },
+        {
+          "offset": 1000000,
+          "points": 250000,
+          "records_sha256": "8c3c53de9050247ef1f4faad1e161fc709fc958dd138650e71816ca85298ffa3",
+          "xyz_sha256": "353af4c9c5dddefef4afecad26fc942b4f74566f6b98e820f775b51b6d0eceeb"
+        },
+        {
+          "offset": 1250000,
+          "points": 250000,
+          "records_sha256": "411c47b194eca0762588eaa583300c18c190eb5eb3bb44cf1059450f6a4c560f",
+          "xyz_sha256": "0ec73e7e38bf8a631c88e25eb9280a3fd1b79b739e432e1b1e7cdc06f1add125"
+        },
+        {
+          "offset": 1500000,
+          "points": 250000,
+          "records_sha256": "519341342d843aece720550897aeef4fe7198edd83293dd5ca830870e98e7664",
+          "xyz_sha256": "8e78c2e3d91c1c5f280378a55104d5739735c14d1d7cb50eb0a1b9447d6ad977"
+        },
+        {
+          "offset": 1750000,
+          "points": 250000,
+          "records_sha256": "84436a01afce98e05c909fde63735044c259a612077273fb3c4fc4ca3c95222b",
+          "xyz_sha256": "991fc23f0ff25866b6e0396ee1af9cb5c968ff6bcfe797d73555b67974f1efef"
+        },
+        {
+          "offset": 2000000,
+          "points": 250000,
+          "records_sha256": "bf945318e09772d7c2db9a34bd95d71ac527bc23b8bceb0e7d0a7e36fc561a8b",
+          "xyz_sha256": "885a0241bf488cfab051aabb14f927269135d04f058f44d8abce8c07bb06517a"
+        },
+        {
+          "offset": 2250000,
+          "points": 250000,
+          "records_sha256": "26e5d9b63244743e968dcc857e9b5b5b3feb72f24f21f883c839607c7fec187c",
+          "xyz_sha256": "85cc571906bf10685d8ad609372f0ec64254c927f944fd38f36fe65eb69a7634"
+        },
+        {
+          "offset": 2500000,
+          "points": 250000,
+          "records_sha256": "c574d56022aded382d317849e91134b5839fc1c2780ceaadf5aaca55f79906ff",
+          "xyz_sha256": "00bb91844307d323120ce65c3ccefb196f33adda826765b988b6aac4523f83bf"
+        },
+        {
+          "offset": 2750000,
+          "points": 250000,
+          "records_sha256": "7a0314864a1fea3e2123df27f5f333c4e83fd13105ede8b65215a8304611c76e",
+          "xyz_sha256": "001496e125f29aff82c2a09254849e75677733b6b627179d96f4e343e143daad"
+        },
+        {
+          "offset": 3000000,
+          "points": 250000,
+          "records_sha256": "35d701760ddf9cab5b737245d2b4096d94924608c8f3b334140518bfe55fdd94",
+          "xyz_sha256": "b26f238db01777c92247984cb35c42b59b7c4da315829d18c163fd654806095d"
+        },
+        {
+          "offset": 3250000,
+          "points": 250000,
+          "records_sha256": "d88f3831e412436e0d30ebc75a380a114ce66f2ecb8c135dd7723f3316e90852",
+          "xyz_sha256": "246662ebd9a27df2c5d1d5defdbc551bb19786b35483ad995cd75a71c7b7691e"
+        },
+        {
+          "offset": 3500000,
+          "points": 250000,
+          "records_sha256": "64075bbd228c7c5a1d808e067a35a296cf616483f4cf7cc7294dbe38b503ea08",
+          "xyz_sha256": "70869f9666d4deb0f84f74e2ef0e8359dd1175fdfff3bd21105a1adacd5ce86b"
+        },
+        {
+          "offset": 3750000,
+          "points": 250000,
+          "records_sha256": "4aa09028e1f25aab89c9a79023b26338d5300be92b8c1402f5e7f20307c228f1",
+          "xyz_sha256": "0d4ceb601c8fe5659498e14f6ec7ea1300d5628e7680fe4abf0008d159264197"
+        },
+        {
+          "offset": 4000000,
+          "points": 250000,
+          "records_sha256": "f6a7b73385754a0812456ebd441a49dcc12ed083994590a5b283a3a49fc27897",
+          "xyz_sha256": "adf60ef51f6180bdaae9cc9b523c7ca5e618c2047d5a9d32cbf4ddd2a79fe49c"
+        },
+        {
+          "offset": 4250000,
+          "points": 250000,
+          "records_sha256": "128f01afe12a13e6d4f7409abc3ea54deaa7cc22884fcc25acc0a3d5e98de8e6",
+          "xyz_sha256": "d65c37ebdffc65efb39f0f12e0db706327f228638b4adb79e6808a47073a1bcd"
+        },
+        {
+          "offset": 4500000,
+          "points": 250000,
+          "records_sha256": "247b3617aa6441b0102a9ffaeea347b4ac77a2d6502e87fb904318ab18bc6197",
+          "xyz_sha256": "abe7be24a152378c30dd03636200439b6e46ae6a081030c9fe2d9d8e9cbbabec"
+        },
+        {
+          "offset": 4750000,
+          "points": 250000,
+          "records_sha256": "5250175342710fe060ff008e3dcc564ea489d28e585364a6e6ca6c5919e7a3ca",
+          "xyz_sha256": "c617ebba0c8e5bcc0e05384ff413c1a4040dff5bd546a4d8362394cc84abe486"
+        },
+        {
+          "offset": 5000000,
+          "points": 250000,
+          "records_sha256": "359f2b175b1841fe0da6ccb4064189dc1e70418cd5e08fbc6bb815524117e572",
+          "xyz_sha256": "24ff0adee53703473e13fe67a112b7cea44cc33a4b0acb2bac9195e87c90ae79"
+        },
+        {
+          "offset": 5250000,
+          "points": 250000,
+          "records_sha256": "cd404bb5da77fe5352292898fc4a90253dfd04970395ed7aac3d5e9530e400b7",
+          "xyz_sha256": "3bb76e0854acb349431b6701e1625f881bb3af1fd83f88f117cebba7d3c8935c"
+        },
+        {
+          "offset": 5500000,
+          "points": 250000,
+          "records_sha256": "7b25eb95d2f5f44942bc5f1be2be583b30f9ab1d87f0527678b12f9f9c00d492",
+          "xyz_sha256": "949ac9a0ec23e64982a9b871fedc73ccb07b4f14467b5890e687742e459efeef"
+        },
+        {
+          "offset": 5750000,
+          "points": 250000,
+          "records_sha256": "e70b4e6db699edcac2fd34927e51f1f58d4cf19449ee1e4ce43ba9fcea6a75f8",
+          "xyz_sha256": "3a312be71d8b6c1fb3709bb84f69793c7739bd1f53347f9b7388dd98166f8f5b"
+        },
+        {
+          "offset": 6000000,
+          "points": 250000,
+          "records_sha256": "dc3a82474124f4b5410e8cb210dcbc6757d8c415489c3520230bc94a2cbcb805",
+          "xyz_sha256": "ddbbb64203c6795cc9b5b759e661e740751678ffba173444057ee0cb63c22745"
+        },
+        {
+          "offset": 6250000,
+          "points": 250000,
+          "records_sha256": "1496c049305acdce8bf8b73dd6cdd87e3f74932ec366f1929f9ef7fe1db04d00",
+          "xyz_sha256": "27458b1826e6c572a6174821ffbe6e39b711bb4e871ecba412778b2668fc47e8"
+        },
+        {
+          "offset": 6500000,
+          "points": 250000,
+          "records_sha256": "0d1429d5e3c977c5f93c1cd4cb513feb3dd08f74e608dc29e61668e2179f7513",
+          "xyz_sha256": "0fd9063c756d378fb437fb1a89ab196074537fe73f96bd53d50e0a2a5187a744"
+        },
+        {
+          "offset": 6750000,
+          "points": 250000,
+          "records_sha256": "1d94868d3abfa7e80e2f8a3b7093d62e2c22af3fea757c2ba7ec388321d8536a",
+          "xyz_sha256": "51e8622db25ba91842c803dbd19f93e80415c5fcdbeda00d3467b0842d2713c3"
+        },
+        {
+          "offset": 7000000,
+          "points": 250000,
+          "records_sha256": "70c6a5c2ceede86ea1e0937fcf2631c71dd736fb869c0b7854bdfd6f5b583fc8",
+          "xyz_sha256": "222144b7f90faca947e3dbef50c75df9187eb083453281a3b2e701028d1468ac"
+        },
+        {
+          "offset": 7250000,
+          "points": 250000,
+          "records_sha256": "c58c54302827412751cb9c2f4ed905fcde00a48548db8b7b82dd5f8f4f26b7c0",
+          "xyz_sha256": "d771e6ac5c2bc13bbf3d037b820134f888c3a04899488d599cea031e7988deea"
+        },
+        {
+          "offset": 7500000,
+          "points": 250000,
+          "records_sha256": "0a2f50cd99294d8c987069274a9a50ae4c2f83689ab91a16d570e99d6994c1ce",
+          "xyz_sha256": "358a86b299f685896e634fafdeb18aa63b8b9368abe39149867e80edbbd6ab89"
+        },
+        {
+          "offset": 7750000,
+          "points": 250000,
+          "records_sha256": "0b1c4e292e9964e351382c58e26ba5b7feda798c20511951d3adc53d648d055c",
+          "xyz_sha256": "3766956070e88de5e4c99c594e0992c5a0d17303cebfca885f24dd01c7074616"
+        },
+        {
+          "offset": 8000000,
+          "points": 250000,
+          "records_sha256": "3287e30e053cdf98df7a9d37bb41979c5636bc13783858759a6849933927d249",
+          "xyz_sha256": "1c5365ccf9dad6155d857e00da15592c51c3dcdc41ef5e46e83b9c4c35f9b843"
+        },
+        {
+          "offset": 8250000,
+          "points": 250000,
+          "records_sha256": "217d772da2aa7946991a96f5e69e32d9b48a48d6941e64aa4f747ad5c5c60ba0",
+          "xyz_sha256": "745c1c883719a3760096b832260bccf79cf1631149ac581870e4bd8241dc373b"
+        },
+        {
+          "offset": 8500000,
+          "points": 250000,
+          "records_sha256": "40fe203ed30afcd8ddcc0f70e2ef9b1da6669705967b87ed3c21825c67d6cc2b",
+          "xyz_sha256": "015c3435d30a3f12af088e2b287d564216aedf4255ac73f88e62305d224ee9fc"
+        },
+        {
+          "offset": 8750000,
+          "points": 250000,
+          "records_sha256": "2151c9a34410ed9d9d0899126c30bc0e7c9d171d6df02214e4e0d7faae177589",
+          "xyz_sha256": "d8a75dd76adc14ef1164d340be9747b778cc4fcd6a835fc6b27b3719a4ccfe8f"
+        },
+        {
+          "offset": 9000000,
+          "points": 250000,
+          "records_sha256": "1d0ec4907f7c10108556e0f53b797218ccd70f62d11cf28cf5134ad9adf7989e",
+          "xyz_sha256": "fad193d3c874da0440b942f58c9d93aa2a69aa3ece9b0ca0052a0667fa561a39"
+        },
+        {
+          "offset": 9250000,
+          "points": 250000,
+          "records_sha256": "34db0264c56770fc1980eb4126ce5cee3045bd67a458cd26168490cb20344ef6",
+          "xyz_sha256": "14f38da3a9896a8c9b3a14f48d986aca9997c0f4ad07b096da3b2029dcbfdaa6"
+        },
+        {
+          "offset": 9500000,
+          "points": 250000,
+          "records_sha256": "17908226404f002960cba6750df505f2c5f210c32644be787c9e89cae9355a53",
+          "xyz_sha256": "a0fa4d19bf55d20c7e64dc2c35603d7d79bdc4d7a3a34a4319703e08e1f9ba35"
+        },
+        {
+          "offset": 9750000,
+          "points": 250000,
+          "records_sha256": "234ea5e9b79ed972ad46f5698500c9877000ece145cbca05d61f099cd0ecff2a",
+          "xyz_sha256": "2ef1556e2ca54f08ace0ee7a93b5aecaa19481a810b3955423d4fda8071788d8"
+        },
+        {
+          "offset": 10000000,
+          "points": 250000,
+          "records_sha256": "eab35ed2a1e59627a3b2914b585b9e0499f0ccf85aff3262e23781ae51eb356e",
+          "xyz_sha256": "bae09e3b52606e2127d25b5775334ed3b2190ab4d161d16b4628819b81b07ea2"
+        },
+        {
+          "offset": 10250000,
+          "points": 250000,
+          "records_sha256": "c389c9d171274191047fda293ddd68014530017b83d5574c12b08eaf66a41db8",
+          "xyz_sha256": "1c7dbeffb070b57eb1fae28b4e0deb367cf9473018e7e8b86899409fc0c6f3b8"
+        },
+        {
+          "offset": 10500000,
+          "points": 250000,
+          "records_sha256": "59a5de535cd3936cf0b9637ddd48b1011e16b7bc3ebd92f692cd8ab53afe7a3f",
+          "xyz_sha256": "12a27ff8aba7f10d121983df60277be79be744b46cb4e904c37a39b3e4fba0cd"
+        },
+        {
+          "offset": 10750000,
+          "points": 250000,
+          "records_sha256": "69332b004588d5ff33cda138bb4f3932f6df8dcc6c1122b7dee36c4e1977ce6c",
+          "xyz_sha256": "cd53e008c2414d7e6cdac801d0cff8d8eb1d6f3271b5ac0c5407c06fad21ddd7"
+        },
+        {
+          "offset": 11000000,
+          "points": 250000,
+          "records_sha256": "4befd240870f36902fe79a8611e1c88d3a61e43da3246c2966a6c4bd28c0f40a",
+          "xyz_sha256": "be026273e0afc9a50825c9de139a0b9bdf09f51a965e3871769f6a3dba875ab2"
+        },
+        {
+          "offset": 11250000,
+          "points": 250000,
+          "records_sha256": "f2bc5834efc35333a7c34007a0fbfa76f40d7848587d0b36955d71c8058c8161",
+          "xyz_sha256": "6bbca2b1f6d6ef66fa9fbda55f3a8d8779c5b70fcf8197a190c7ce4434e4cefa"
+        },
+        {
+          "offset": 11500000,
+          "points": 250000,
+          "records_sha256": "cccf00326ec183602760f473e2f416795a3da00729e4bdf54ccdcb8c497bf8d6",
+          "xyz_sha256": "45f94090228fbd09f70f015bee591b14bd812778e8a5ea9fcf96f9dad9ce955f"
+        },
+        {
+          "offset": 11750000,
+          "points": 250000,
+          "records_sha256": "4774c9202985ced562768c5272a022b732b70b756b8e20e8102a25bcbeafa084",
+          "xyz_sha256": "616da37c4262e60d387165df9866fad5e8f16be4ec0d53c9a160f99418194264"
+        },
+        {
+          "offset": 12000000,
+          "points": 250000,
+          "records_sha256": "0f3c3c8cbbbda820e2e93add3b19c125c43778af7e0754d056ca51862e1bd788",
+          "xyz_sha256": "347c092b2b499abda23c3af25409de93359719183a842c7c45118fe9a7f29b91"
+        },
+        {
+          "offset": 12250000,
+          "points": 250000,
+          "records_sha256": "fca413e9462d8a73067d3a1b9f50156b53ce0a72d727c9e8a447cd3dd95245a1",
+          "xyz_sha256": "f675454a3b00f206781e6a8f458864e929649bf4e6b2282e191154f4d1160a3f"
+        },
+        {
+          "offset": 12500000,
+          "points": 250000,
+          "records_sha256": "b2158cea8744f987f2b5a4cc193dd6b3858e56c08ef024760557423b33c42fa0",
+          "xyz_sha256": "3cd75657fd22f3e6bf2275ed7d0a070c9b1c172bd72e8faea93b4ff17dd13637"
+        },
+        {
+          "offset": 12750000,
+          "points": 250000,
+          "records_sha256": "0a2ee277b8ec2ad968dd1ba8e7748e38eece282803d3d621497e52117eb8f6ba",
+          "xyz_sha256": "ce60e8d4c52f74fddd1d09a1c497961b55afab399f18e339aecd14a072f8dea2"
+        },
+        {
+          "offset": 13000000,
+          "points": 250000,
+          "records_sha256": "528b531d706aa635db8bd119f2dc04423314c81128804b8be18dcba4a3c22b14",
+          "xyz_sha256": "c4c9427bc07bbdded775e62b2a44b1f263bc6e9e218740910d48f006969a2a3a"
+        },
+        {
+          "offset": 13250000,
+          "points": 250000,
+          "records_sha256": "8a6c8f9935af2808135d62a97c9b6a7db539528f184e4904dca32946da5bb079",
+          "xyz_sha256": "215951c402d5e7ae79c14ca8fffb60f477cf5fef656ed3aa0fceb5dd52cf0cbb"
+        },
+        {
+          "offset": 13500000,
+          "points": 250000,
+          "records_sha256": "cedb5b5fd65aeef82bab46912fee1fd3f0143d21ebf59f6cf74ab8f42c7b60f1",
+          "xyz_sha256": "906d17740e8ce665de1f0142a91ea2cac2eceabb6739fc2e0e130328c5e3e589"
+        },
+        {
+          "offset": 13750000,
+          "points": 250000,
+          "records_sha256": "9ca3b99639d7b5dfb5a2c6719cc6eb5e0b1c7d09530e2670019bd944f9353ae5",
+          "xyz_sha256": "2043e22758bff3bab205c7852ec26fd9410e9059085f5c127fe43c47a508aa3d"
+        },
+        {
+          "offset": 14000000,
+          "points": 250000,
+          "records_sha256": "b4206700c45ee6174cf20ad789dd4e122e1c1160673a5e6c42d18e84e5043bef",
+          "xyz_sha256": "d77635f3007aed544a5101b680225aebd3fefa8ff7443c4c27ff91f2368c540d"
+        },
+        {
+          "offset": 14250000,
+          "points": 250000,
+          "records_sha256": "c787c86373b2a196d736e98900a8de2527dbd6cad9250b492f97f3f83b030219",
+          "xyz_sha256": "695b9bc2eb850c2fe73aa0a73de1ea91b5b1960574191d324faf8df31b8d2c2f"
+        },
+        {
+          "offset": 14500000,
+          "points": 250000,
+          "records_sha256": "d3fdc3afffe9aca9c5ee2d5f7d5c933c87ada8e77e64b73941f2c6dc6c4625f2",
+          "xyz_sha256": "36cbb1aaec460899d2793ef6e7b10543ef84ec0536dc1d4981a93f5cc1107c2a"
+        },
+        {
+          "offset": 14750000,
+          "points": 250000,
+          "records_sha256": "3905ceb05229f6454e601bb00394808dfdd4f3dfb58ac3963e8d91f615a564f1",
+          "xyz_sha256": "f097d3053da1e5b704036c378ae1a646f95a1787c9c5cec72b451b5c9a157b96"
+        },
+        {
+          "offset": 15000000,
+          "points": 250000,
+          "records_sha256": "954f75b47d634496064307f6f221f566dccd662242f635249f455192cd41cced",
+          "xyz_sha256": "7736288c8bea25f0ed57be704791cc69d44f34160a0db1c813b78ea415ec9f02"
+        },
+        {
+          "offset": 15250000,
+          "points": 250000,
+          "records_sha256": "6340239533659d7cef4b21f03e9e1afef1dc36f97960beabddbc6ad28cd3de36",
+          "xyz_sha256": "57211c55dfd6fbdbff4f572a57aa3f8c97f948bc153d5e88b4c717abade37a87"
+        },
+        {
+          "offset": 15500000,
+          "points": 250000,
+          "records_sha256": "ec817cc4bafc6238c4502813392bd6c7039372af8cd10ee9a69cbbca519f0afc",
+          "xyz_sha256": "fdc7423980eb9a11f8256818920ad4a77f2f0818e2bd75b937ad6718aa139aa9"
+        },
+        {
+          "offset": 15750000,
+          "points": 250000,
+          "records_sha256": "65e6f3a39f0bd54e4b0b1fbcc116f934397a441f608394114d42f21be3bf344c",
+          "xyz_sha256": "80d02b82fee3be6235c718f63fd5f76945fad4a56ee684defb8a11bb0f8405eb"
+        },
+        {
+          "offset": 16000000,
+          "points": 250000,
+          "records_sha256": "bafa951aff2377a7381082421f55f7d08265320b2348b769122c137d8d11967a",
+          "xyz_sha256": "9f1b18aa97285765961d4881286727c0b44f5f22414dc832ecb9486a6dd5b752"
+        },
+        {
+          "offset": 16250000,
+          "points": 250000,
+          "records_sha256": "33ee53a6d4c2f7bdd8bd6b7bde96434e44543842645621d2f1194f1e6c29295a",
+          "xyz_sha256": "d84da30c1e767c23901318f105f037550861e03b9d561f166ef64b41739615d0"
+        },
+        {
+          "offset": 16500000,
+          "points": 250000,
+          "records_sha256": "2c7196a531b274dd79154ef56604411952621b24bc86f6bb6a3a31b4f1875b96",
+          "xyz_sha256": "6544432bf528f244721ea0807fc7b33911f6e53e01c9533c9264cf3681051109"
+        },
+        {
+          "offset": 16750000,
+          "points": 250000,
+          "records_sha256": "c653840cc481d1795e038f8b26485cc2bee173ded8ba10a01885f547cfb59fe5",
+          "xyz_sha256": "a078848f97b823bcc0a3f2e11bdc6e2ddfecd694ab6c38c108393371ef0a6822"
+        },
+        {
+          "offset": 17000000,
+          "points": 250000,
+          "records_sha256": "abaf70a1f12246359ceddc68f608a2d2810a10d34b8b3204bef6a751d557f772",
+          "xyz_sha256": "b0612bcf8753fa4d686f19a28e8e6b09351ef1b5904f12656f2e947fcb2bf935"
+        },
+        {
+          "offset": 17250000,
+          "points": 250000,
+          "records_sha256": "30de07b54ce898ce15a01e970574342c68ae1a0cbc71ef2957928c139c1fb349",
+          "xyz_sha256": "81a01b9ccc05c3a2699b6c53417229cc9df70d72f03c6db4321daf6ed9f7dc81"
+        },
+        {
+          "offset": 17500000,
+          "points": 250000,
+          "records_sha256": "9024fd22154f5204d77ba060440382d7cb60ea4c60353f261bad21c853bab93c",
+          "xyz_sha256": "df4be8b745ccbb346660082b4e9b1737694c2ad130aa3e692e62db51a6d25d6b"
+        },
+        {
+          "offset": 17750000,
+          "points": 250000,
+          "records_sha256": "8a2e7c5dad8889043b7d5b969b270b3338be18b8f08cadccb3850ca0a9224a82",
+          "xyz_sha256": "80f8a8c540c19eaffcc53cb59d7d16d8afc78c51f4f4d78dcd8451c464056d24"
+        },
+        {
+          "offset": 18000000,
+          "points": 250000,
+          "records_sha256": "35839a40613d9fdb88de9078bbabb88e29c5941e79ae14a693fef8ddecd2e5d3",
+          "xyz_sha256": "879c48d5c78e312377509482ecfc4042792c8bfca705ac81d4bf7c4e66f34f43"
+        },
+        {
+          "offset": 18250000,
+          "points": 250000,
+          "records_sha256": "2dcda3d98cd1b15334b82899e45a7dd153e89f2a9ffda6f513de16cd08a4f656",
+          "xyz_sha256": "045c8306ca5f0e5473015f0a4bb74480317d2ba1910c11ec03295c9f0b88e4dc"
+        },
+        {
+          "offset": 18500000,
+          "points": 250000,
+          "records_sha256": "aacaf1e1ff379858834f7d0cfec86ff72a4d245bd5753bb38391e8d78b734812",
+          "xyz_sha256": "e1d1f63ab4ed4b9985e6564836cbf5f88d96b35f14e6fa38bbc1b7a3c7f447ce"
+        },
+        {
+          "offset": 18750000,
+          "points": 250000,
+          "records_sha256": "c3ad8e38c876cb6b85bdc21cdc41b94e0d044680ade09d379466d5cbc6c8093c",
+          "xyz_sha256": "e4d1272ddc0393f445b3a5087b00f7062b9baaa414f0a272659446e004dec1aa"
+        },
+        {
+          "offset": 19000000,
+          "points": 250000,
+          "records_sha256": "053caed16c412cba045f9a5c232a940d9e2aa1a4778e0154a371213da16488c2",
+          "xyz_sha256": "52ce7ea3f5e723b0f6691559f38779e29b6d6f17a918ab5788e18b3b767cde2e"
+        },
+        {
+          "offset": 19250000,
+          "points": 250000,
+          "records_sha256": "d39a2138531a891797ee6d778762fd811d50de31bd5aa1fa132b52a5041bcce2",
+          "xyz_sha256": "32196a09d65cf13d85dd6f1be07a86581848d408a6a5d081689fbd29680b0605"
+        },
+        {
+          "offset": 19500000,
+          "points": 250000,
+          "records_sha256": "cc6e290ce81be5f67636d09e07c801b8d5d1342cb56943b75f1e5cba90425780",
+          "xyz_sha256": "fc4127a097d82bd20edf06bcffdb62c24e9e3ab5558ff2fcb2a3dabd83fcb71c"
+        },
+        {
+          "offset": 19750000,
+          "points": 250000,
+          "records_sha256": "f4f9a2837ba841ec30d2be8e88df18a337ec38fca20e11a5e89328ead7538539",
+          "xyz_sha256": "986964ff2f73e12c1670a9a59052fb1a09c469d295fd307a4c9bac7ba947b69a"
+        },
+        {
+          "offset": 20000000,
+          "points": 250000,
+          "records_sha256": "0ca2f0f5efdfb4e2b7155619b673e9f8848c8b1f01098138d17e79a9d139cafa",
+          "xyz_sha256": "cb5999e4077e52a8a8c8ceb9c5f898aa15db95b86509f2af5187c99fb5239a43"
+        },
+        {
+          "offset": 20250000,
+          "points": 250000,
+          "records_sha256": "d286771ff2bc27915cc55f8ff5e1c6f54c4c5d315d1e7527c7eea5ea105c9b93",
+          "xyz_sha256": "4aa1101a9161b24f0aa22ec697f2a895786dab2b62538a5c1c4edccd2c3a56cd"
+        },
+        {
+          "offset": 20500000,
+          "points": 250000,
+          "records_sha256": "fb1907842671b3f96be3bdde576e4941bc2f97da6e2565990d2b2a99097bb4dc",
+          "xyz_sha256": "210388f4fd166cae647c012dd99a372b55f6e86df2d8784d1de7257f63e8bc92"
+        },
+        {
+          "offset": 20750000,
+          "points": 250000,
+          "records_sha256": "e2ff4b5c04d64d4ec1f567a5511989f8266bf78293f3de41782e943187b7bd84",
+          "xyz_sha256": "a5022d00e320cc1fe23abd0ae9d5a15041ef4a38b2603ec2cb3da3f543ef6954"
+        },
+        {
+          "offset": 21000000,
+          "points": 250000,
+          "records_sha256": "63d63477854f9d6a120d42005fac9151bee62245533f71ff3a17099a1394c87b",
+          "xyz_sha256": "5dc879c458177108a2ddef1743156bc787ad7ecd7048f2e447ed537bf71a685e"
+        },
+        {
+          "offset": 21250000,
+          "points": 250000,
+          "records_sha256": "c7d8157bc8e30d36300c1d505815a5c048ac4eea7e3adcc143a38e64df0e6289",
+          "xyz_sha256": "2ff2fefa9480cd696d263055071590527ca0a81a769bb2409033e8f64b88d1f0"
+        },
+        {
+          "offset": 21500000,
+          "points": 250000,
+          "records_sha256": "caba43f601faa09616119a790f0d23fe540683b6903119729860b3f38553d0f3",
+          "xyz_sha256": "1772c6eaebcc7def8a61cf97bc858b4359909d31cab025b50a39f02df7d1b860"
+        },
+        {
+          "offset": 21750000,
+          "points": 250000,
+          "records_sha256": "d95f5f076d03500f53b2f95b66ca69cb36230919357d66310a7ad0b8d6c01479",
+          "xyz_sha256": "e4ce66fa44b804c67d19d9ca32f5a1b1811e93c89f76e1619a3cc5624ff0493a"
+        },
+        {
+          "offset": 22000000,
+          "points": 250000,
+          "records_sha256": "18511d061746f61fd8e243634a0a26f9b74fe242d66b6acc79209bc7599c3e19",
+          "xyz_sha256": "42abbe24e48b72d2bec6bde2bb0462ab725678bd12f2b232a5adfd8c19192a82"
+        },
+        {
+          "offset": 22250000,
+          "points": 250000,
+          "records_sha256": "db8c0473d046d2e84dba8b02fb51d0454d972fa633b38878ae994586645efc1c",
+          "xyz_sha256": "642bcc7a3831761015bf0ed3f465f753a3b26b58b56329b08a52686613b6a302"
+        },
+        {
+          "offset": 22500000,
+          "points": 250000,
+          "records_sha256": "ca6193dfb4a08bcea13ed141cad6d4f6de1c35cf946e2ba03bb19a4c029880d0",
+          "xyz_sha256": "4afbb83a6c0f9156696d3ccbfd489f81975a68f8ebda780dc04e02358ea2d99c"
+        },
+        {
+          "offset": 22750000,
+          "points": 250000,
+          "records_sha256": "7033fd4f1859fe50cd9c400b8d493f188de45b0791485324e1d610ef9498befc",
+          "xyz_sha256": "3040af8cc03c5f353334ca27d8a52e1f99a9d72309e060cfd58e7a8872d65b8a"
+        },
+        {
+          "offset": 23000000,
+          "points": 250000,
+          "records_sha256": "a75ae7ea4bca436dd2f55aadc615e23f28c6298bbffb28785f8958a0dc6b9ccb",
+          "xyz_sha256": "fac894bd610e11c8950ed08980d19cf02484e7d486ef4ccdcb469846e9421fe7"
+        },
+        {
+          "offset": 23250000,
+          "points": 250000,
+          "records_sha256": "989164cd1405e922a8b890ec06c3df6a26c9baa9cd64e754c7f9917abe4e133a",
+          "xyz_sha256": "25640008af75bd44c90cb4d5f3229e4ad61b73cf6629eef9f4be2d301ebd25d5"
+        },
+        {
+          "offset": 23500000,
+          "points": 250000,
+          "records_sha256": "503696be0b4aa9c33ae47df7a675670b76c55605ca8e5cd502858c416b612688",
+          "xyz_sha256": "9b9f040c72bb6c30499c32d8ff2d3b40e714c8515129d567276162dc46f30ac5"
+        },
+        {
+          "offset": 23750000,
+          "points": 250000,
+          "records_sha256": "86f5078a19a111951b5def762eedf8fb5de0c4703636ec81a7606b23a4509e0d",
+          "xyz_sha256": "129a89dc7ca16d1a8a87c028b67cdc7a4237a2a70ec85f234de3d41313121faa"
+        },
+        {
+          "offset": 24000000,
+          "points": 250000,
+          "records_sha256": "ca142227798d0838d882f7920fe5e1df7a1337bfebb225b58d332bf35b38d414",
+          "xyz_sha256": "448599d0b4f0e0bed4e34203121a895e47706ac42cfde286b4ec090b6d843bf6"
+        },
+        {
+          "offset": 24250000,
+          "points": 250000,
+          "records_sha256": "f379d4654a3c78c73e0a6ccec8d34ea035c90d0b76c098605906fbc043b57906",
+          "xyz_sha256": "bff17dc93e6ac70eeba7a15c6649d3a209990c82b2f9048808e97205725ed9b4"
+        },
+        {
+          "offset": 24500000,
+          "points": 250000,
+          "records_sha256": "6cea7090411cfa746ecaa84d02a3184914307676bc616fd84ad2cf3ff5d52417",
+          "xyz_sha256": "946d27a7b7fc84432848d6c995e20b99069fc2e93c796584ea41997b0aaa9db0"
+        },
+        {
+          "offset": 24750000,
+          "points": 250000,
+          "records_sha256": "b31f9556f883596a820c67a7ef6c3cbf77c188756e708986cb99a28f3bbdd0b9",
+          "xyz_sha256": "25d5bc49f1460986ad7c226e09899ca7456aeeedfc52f97d471a62dd3e53a887"
+        },
+        {
+          "offset": 25000000,
+          "points": 250000,
+          "records_sha256": "36d933a38461bb68cfcc8ca8b8b6b74fb05b013df384399a26f43cd201d11471",
+          "xyz_sha256": "b21ee07c3b5e89601f62d8fe5bb9f4be441b8aaaeac639a437b1262c82f7a3de"
+        },
+        {
+          "offset": 25250000,
+          "points": 250000,
+          "records_sha256": "03702ababb235d01b77c12fc1452921a4d3d0b01f865c9fade1fba0462f6a132",
+          "xyz_sha256": "3069463b6f32774029dce651bc45265171dd8a44907f1aa3e59de4d0a6a18e5b"
+        },
+        {
+          "offset": 25500000,
+          "points": 250000,
+          "records_sha256": "e12340f9b57de3055e3eca0eab473d07f0f14f9198ddd9d342effb1b4444795d",
+          "xyz_sha256": "9ba07976b30e05c297dc2e53b827daa85e9291587d3b63a219ae37514f2da34c"
+        },
+        {
+          "offset": 25750000,
+          "points": 250000,
+          "records_sha256": "504207a707e34fc772c33726405d256f4ebce39625993a5d255115da9885f5d7",
+          "xyz_sha256": "061b537519de28598034495591e1c08c533c94b0ab042f7a82d00586a9f9a7f3"
+        },
+        {
+          "offset": 26000000,
+          "points": 250000,
+          "records_sha256": "177de88ad293f2e6998249407638abc4c1eda6e989267b74687bbbd2f8a467af",
+          "xyz_sha256": "4e5159457c53e2658e2c9ebeb8e31637f7b2d393476eb6e44bc10c355b95060e"
+        },
+        {
+          "offset": 26250000,
+          "points": 250000,
+          "records_sha256": "4ef0a181d055cdd003f9fe40cf5a0ab23eaadfee21afd15948f07b1ef137855e",
+          "xyz_sha256": "987aed6319db8a0d8ae00ac28f1b982a701cc2687ad946b9742812f2ee56a96e"
+        },
+        {
+          "offset": 26500000,
+          "points": 250000,
+          "records_sha256": "de5b0e33143775ed53ad48c2dbfa90c26fbf867aad3dbeaa677cc9166d9e42c3",
+          "xyz_sha256": "f56880acb9959c2a2b1488eb811ac9d6fe7029c430b40d361257ec5a48f262e8"
+        },
+        {
+          "offset": 26750000,
+          "points": 250000,
+          "records_sha256": "7b7a6067970b797d9bbb46cd71f87d9399c678763f1358b458c48442eae22892",
+          "xyz_sha256": "94456afa3b5ac19853f51fdb101d9bd216e24e562dcb0f3d760240c258125591"
+        },
+        {
+          "offset": 27000000,
+          "points": 250000,
+          "records_sha256": "8047e325f40510d33d5517458c77e3831a7aecbf4d3262eefded7494851d911e",
+          "xyz_sha256": "9791b1017d80801d94b004dc33b5922569651905000164180f1ecc54be49bd67"
+        },
+        {
+          "offset": 27250000,
+          "points": 250000,
+          "records_sha256": "dd0b1602b5e041d94f9c28af8ebd552a5fd3b39f3bde3816102c8043ffc0ab43",
+          "xyz_sha256": "eda49d1acba016f530b57b7977755ed9af81f97893f72fc38b88f1d64ae2a3ff"
+        },
+        {
+          "offset": 27500000,
+          "points": 250000,
+          "records_sha256": "e821e9ba76520a759351f3cde829d1c159f259741ade8b0d12e07a2a4e30c111",
+          "xyz_sha256": "cba1f295662809b8daaf6dc104d366bc6a6d3acbfecd8ab3439ee4c224549797"
+        },
+        {
+          "offset": 27750000,
+          "points": 250000,
+          "records_sha256": "37a025f0a0abc5ea3eee8ba1ddb1d4a61edcbac841bd8e7f8988113c77a2d3ec",
+          "xyz_sha256": "cd49ff345425e8d02e3d388b9936fdab3783d7be835743f1dcf9e9268c7db8c0"
+        },
+        {
+          "offset": 28000000,
+          "points": 250000,
+          "records_sha256": "2282c0b002913ca251d3d7159d135b24d49d0e6f74e52962983df88ae51d52c5",
+          "xyz_sha256": "bbd695b0eca7c54163f06604338214c96230cd1023e0dbce025029d07705fe53"
+        },
+        {
+          "offset": 28250000,
+          "points": 250000,
+          "records_sha256": "3c18038c28691e2245485ef31247d1f786458a07256f2fd2466e144cf8123af9",
+          "xyz_sha256": "4cdd027e74826d2af4d9542b490d333c55284e82de79d24c70a6aa5be90ab3df"
+        },
+        {
+          "offset": 28500000,
+          "points": 250000,
+          "records_sha256": "94648ee6fadc6416cd8134f666440c85f2a43128ba8352223cb93b841bbe5ec1",
+          "xyz_sha256": "e5ef4498cbe2b8e631106c9352dc28e698b61cc2d0f4d6a421d269088331db27"
+        },
+        {
+          "offset": 28750000,
+          "points": 250000,
+          "records_sha256": "fb2fe5e084e775bf83ebedcee833fc31f226855aeaaf22d074785a07890ae9e0",
+          "xyz_sha256": "ba6acf91c547b8d5703a88fd2ad81b57cbfeab5e01535f2545dcc8b85d55104f"
+        },
+        {
+          "offset": 29000000,
+          "points": 250000,
+          "records_sha256": "3b62267a03b860a864baa8ae9d0f245b7849470715e1f3d7b51a09f71ddd3632",
+          "xyz_sha256": "f0115f4d2492cb8dc1a8d408e0d3c621b28c4e1ffb4e6c57ecc4b8dc5c68df38"
+        },
+        {
+          "offset": 29250000,
+          "points": 250000,
+          "records_sha256": "c639db823c91ec899b6168d8b0242891e985d8e59607f5d3694be205d98cb654",
+          "xyz_sha256": "8fb3cf3227fea566bc4f058475abc31f52308b8886f64329cdd969baf81c7cc8"
+        },
+        {
+          "offset": 29500000,
+          "points": 250000,
+          "records_sha256": "5e5f9a804190aab911ba6501b7125bd4fdf474bff02d901aa3266539871d19d8",
+          "xyz_sha256": "85de90429161721b650c7e9985bbfe80d826a4659ee3ee92c1fb8705856a6485"
+        },
+        {
+          "offset": 29750000,
+          "points": 250000,
+          "records_sha256": "2ba763111e6ae419f1af97e2068e1f55fe2c3d2c39be3bc19f297e18fa2ffa06",
+          "xyz_sha256": "503658e106b475d3acdbdfd46175ad0a1225a3314c076e1b6f14f2fffe0bcaa9"
+        },
+        {
+          "offset": 30000000,
+          "points": 250000,
+          "records_sha256": "2468059271a362e3785aff991bbf51f0a124e6ba2aa4b260863f7b2f6830f7bf",
+          "xyz_sha256": "5fec26a7c045ffd541dd8e3c44ca18261b99a346e4ecdc3433b7b5885b2e2c19"
+        },
+        {
+          "offset": 30250000,
+          "points": 250000,
+          "records_sha256": "4cc21802aecb3836001f17e76b7e9a09a2f97d5d4f9dd7038584ae395f41dd34",
+          "xyz_sha256": "c118945e4ed68d1e229f77535084d97d53a16ae121b618742a6c9aa1bcfe032c"
+        },
+        {
+          "offset": 30500000,
+          "points": 250000,
+          "records_sha256": "8a969d71bfd2b152c5ec76c69aa7f05947a79ed503f019af7970399815408a44",
+          "xyz_sha256": "dc3693eb77b6085960b5b38e06f4453c936f317d47bb6e2a1b1dd69faea8f80b"
+        },
+        {
+          "offset": 30750000,
+          "points": 250000,
+          "records_sha256": "df55e0c55604ac882eb8a7aabc538b2255e1dd379cf376d219dad6c53c5cb9f9",
+          "xyz_sha256": "428ade997dbd05e75c2288f7986b611a71c6c7a64ae3f764dac9ae10769c3bfd"
+        },
+        {
+          "offset": 31000000,
+          "points": 250000,
+          "records_sha256": "cd8a0ba638a62e2597f67df2a5df6b091c2cbbb0eb0d828ac6a72f568e09c688",
+          "xyz_sha256": "260258b04c36dbed81b609c08bef636e2cc414d2a2e3c2dab5741c6f57290c93"
+        },
+        {
+          "offset": 31250000,
+          "points": 250000,
+          "records_sha256": "5503edaab2b17bd802412d522ec4f010152977e278096042a7b403a83e0d82aa",
+          "xyz_sha256": "63e2067133a6e83c1808b3d787b89c95c5eeaf5be80295673667a0fdbd8f741d"
+        },
+        {
+          "offset": 31500000,
+          "points": 250000,
+          "records_sha256": "72028b4004ac50116d380ef2a5246f6a90e503398cea85b8a6b68825b48ffa31",
+          "xyz_sha256": "e3dc029c293a469ca19bd318c2155416bbc832a832b715fba43b964de43fbbf1"
+        },
+        {
+          "offset": 31750000,
+          "points": 250000,
+          "records_sha256": "52bed21422bcbd163fadcd95a778b8bc47908dd878d082a808e9176846be2de6",
+          "xyz_sha256": "9bcc81878590c488713b2c374eade590945dc15e0970e17355ac24aadae33b69"
+        },
+        {
+          "offset": 32000000,
+          "points": 250000,
+          "records_sha256": "1fb8a56dea58d453e803a74c0ebb062487785e7a33882c4ae35e8647c53b063a",
+          "xyz_sha256": "0f4b3024f897720d34e65cf1c86f45140463910dfda8dc2d0c68e567fe635d31"
+        },
+        {
+          "offset": 32250000,
+          "points": 250000,
+          "records_sha256": "c3bf84960057ca5b57ba2d07906b7089bb84f3a614bfff9f1418b426671aebb8",
+          "xyz_sha256": "bda5006e8ee2730c81fe074b0a01951237e5f1ac96ac631b219063d53f6a27c1"
+        },
+        {
+          "offset": 32500000,
+          "points": 250000,
+          "records_sha256": "b29bebd184def9ed4efe80ae9de3275e918e6aa3fea6f0f9db2910c1e847c183",
+          "xyz_sha256": "af90d57c06e33f50df261e638fbaa3983239f274c9b466663f5f3e9a44d716c1"
+        },
+        {
+          "offset": 32750000,
+          "points": 250000,
+          "records_sha256": "9d7e5c7d1296c51337f84c4c5b3170fbf2776871f230ce7ec5ffc0d4a8556d68",
+          "xyz_sha256": "061e5adf6ff724be2975e502f347d326d5ddbeffe98645c7a14050862d0a7d3f"
+        },
+        {
+          "offset": 33000000,
+          "points": 103057,
+          "records_sha256": "084ba1e1182cf18fe52c915c89a222d26d27369a491b2ed81e81c05b10bdcb06",
+          "xyz_sha256": "1d78b5801f8c931c7764c85a95ada32e08195d0b7a59247256394e93a0181841"
+        }
+      ],
+      "trees": [
+        {
+          "native_id": 1,
+          "native_code": 30,
+          "native_name": "Fagus sylvatica",
+          "complete_crown": false,
+          "points": 872457
+        },
+        {
+          "native_id": 2,
+          "native_code": 30,
+          "native_name": "Fagus sylvatica",
+          "complete_crown": true,
+          "points": 1072339
+        },
+        {
+          "native_id": 3,
+          "native_code": 30,
+          "native_name": "Fagus sylvatica",
+          "complete_crown": true,
+          "points": 166010
+        },
+        {
+          "native_id": 4,
+          "native_code": 30,
+          "native_name": "Fagus sylvatica",
+          "complete_crown": false,
+          "points": 681553
+        },
+        {
+          "native_id": 5,
+          "native_code": 30,
+          "native_name": "Fagus sylvatica",
+          "complete_crown": true,
+          "points": 91408
+        },
+        {
+          "native_id": 6,
+          "native_code": 30,
+          "native_name": "Fagus sylvatica",
+          "complete_crown": true,
+          "points": 1712587
+        },
+        {
+          "native_id": 7,
+          "native_code": 30,
+          "native_name": "Fagus sylvatica",
+          "complete_crown": false,
+          "points": 618114
+        },
+        {
+          "native_id": 8,
+          "native_code": 30,
+          "native_name": "Fagus sylvatica",
+          "complete_crown": true,
+          "points": 2494522
+        },
+        {
+          "native_id": 9,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 358133
+        },
+        {
+          "native_id": 10,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 320036
+        }
+      ],
+      "reference_origin": "Native treeID/treeSP/completelyInside fields; companion tree rows are never used to label points",
+      "companion_review": {
+        "status": "disagrees",
+        "disagreements": [
+          {
+            "native_id": 1,
+            "native": {
+              "native_id": 1,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": false,
+              "points": 872457
+            },
+            "companion": {
+              "native_id": 1,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 358133
+            }
+          },
+          {
+            "native_id": 2,
+            "native": {
+              "native_id": 2,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 1072339
+            },
+            "companion": {
+              "native_id": 2,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 872457
+            }
+          },
+          {
+            "native_id": 3,
+            "native": {
+              "native_id": 3,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 166010
+            },
+            "companion": {
+              "native_id": 3,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 1072339
+            }
+          },
+          {
+            "native_id": 4,
+            "native": {
+              "native_id": 4,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": false,
+              "points": 681553
+            },
+            "companion": {
+              "native_id": 4,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 166010
+            }
+          },
+          {
+            "native_id": 5,
+            "native": {
+              "native_id": 5,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 91408
+            },
+            "companion": {
+              "native_id": 5,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 681553
+            }
+          },
+          {
+            "native_id": 6,
+            "native": {
+              "native_id": 6,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 1712587
+            },
+            "companion": {
+              "native_id": 6,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 91408
+            }
+          },
+          {
+            "native_id": 7,
+            "native": {
+              "native_id": 7,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": false,
+              "points": 618114
+            },
+            "companion": {
+              "native_id": 7,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 1712587
+            }
+          },
+          {
+            "native_id": 8,
+            "native": {
+              "native_id": 8,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 2494522
+            },
+            "companion": {
+              "native_id": 8,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 320036
+            }
+          },
+          {
+            "native_id": 9,
+            "native": {
+              "native_id": 9,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 358133
+            },
+            "companion": {
+              "native_id": 9,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 618114
+            }
+          },
+          {
+            "native_id": 10,
+            "native": {
+              "native_id": 10,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 320036
+            },
+            "companion": {
+              "native_id": 10,
+              "native_code": 30,
+              "native_name": "Fagus sylvatica",
+              "complete_crown": true,
+              "points": 2494521
+            }
+          }
+        ],
+        "companion_only_ids": []
+      },
+      "unassigned_points": 24715898,
+      "published_split": "unassigned"
+    },
+    {
+      "archive": "batch_09.zip",
+      "path": "Rem_Herby_2016_5603406.laz",
+      "size_bytes": 172577593,
+      "compressed_size": 171837399,
+      "crc32": "30d2c716",
+      "sha256": "a84ae452de7b2d07de31d50955517a89ac5962b1917adeb131ad63f641843ea4",
+      "points": 38782040,
+      "native_schema": {
+        "fields": [
+          [
+            "X",
+            "<i4"
+          ],
+          [
+            "Y",
+            "<i4"
+          ],
+          [
+            "Z",
+            "<i4"
+          ],
+          [
+            "intensity",
+            "<u2"
+          ],
+          [
+            "bit_fields",
+            "|u1"
+          ],
+          [
+            "raw_classification",
+            "|u1"
+          ],
+          [
+            "scan_angle_rank",
+            "|i1"
+          ],
+          [
+            "user_data",
+            "|u1"
+          ],
+          [
+            "point_source_id",
+            "<u2"
+          ],
+          [
+            "PointID",
+            "<i8"
+          ],
+          [
+            "treeID",
+            "<i2"
+          ],
+          [
+            "treeSP",
+            "<i2"
+          ],
+          [
+            "completelyInside",
+            "|u1"
+          ]
+        ],
+        "point_format": 0,
+        "point_record_length": 33,
+        "scales": [
+          1e-07,
+          1e-07,
+          0.01
+        ],
+        "offsets": [
+          12.0,
+          -3.0,
+          0.0
+        ],
+        "las_version": "1.2"
+      },
+      "native_records_sha256": "b8d6f1969c45734cea9855c73034d9ab5f23f8bdabcd25d544c0fab36debd822",
+      "chunks": [
+        {
+          "offset": 0,
+          "points": 250000,
+          "records_sha256": "f147604b3d8564c5958ae8218ff68ca607ead195cbea7035e61a934108d3529f",
+          "xyz_sha256": "3ccc40dd28c10a016ffd7f475c2917c52b9a1521670713bcd1cdc28b59361d66"
+        },
+        {
+          "offset": 250000,
+          "points": 250000,
+          "records_sha256": "98121219686597d6a4bf592d733b1c0cf5b203068ac8b91696ce6417f3b9f071",
+          "xyz_sha256": "3cdfcca898fa9bc564486f7bb9e0c97712f6a7d4dede56975d9116d018fac52d"
+        },
+        {
+          "offset": 500000,
+          "points": 250000,
+          "records_sha256": "777f14106aa8ec0318ea7cd558a3b5792292db367e5959b0f55496f0c7ae86e6",
+          "xyz_sha256": "db94a671e81ff962d63471fe9f71554d3688adae109d528adf30669e79ffc7ba"
+        },
+        {
+          "offset": 750000,
+          "points": 250000,
+          "records_sha256": "a51c6c76dd73f76586a346f730b3220ad7d5ed6d4fdfdd77b3f5df7f78d79ad4",
+          "xyz_sha256": "7326eaac0c6a4716a0b78330ee4d0065394461ca31deb839710966d3dad43bae"
+        },
+        {
+          "offset": 1000000,
+          "points": 250000,
+          "records_sha256": "f3c796c6c9ddbe08dfeb97ee778ff317c95d87443a068bf360bce5b230ccea3b",
+          "xyz_sha256": "3f383d4ac06664aac5faf3dc55d40fcdc50e5f192ffe5ad6127077a5681441b8"
+        },
+        {
+          "offset": 1250000,
+          "points": 250000,
+          "records_sha256": "d658d11c19bc688ef4008468526abe5636b2815e53b2b023de74ea18fccfa5ae",
+          "xyz_sha256": "1e941d435702cff31760562c0e8a92b5f10c3ba0aa13cc0c89773f8a0a82270a"
+        },
+        {
+          "offset": 1500000,
+          "points": 250000,
+          "records_sha256": "c0547edae722e0f103b220b4c6edc14a238f5afd212c4c79d251bf40fc4bb5d7",
+          "xyz_sha256": "45bb52ec67ae848d1fefcaa4641c4c8009fd6e6cb16029e012cb2cb0fcfd4c8b"
+        },
+        {
+          "offset": 1750000,
+          "points": 250000,
+          "records_sha256": "8571daebf7d22850eed07b8e298320a5df6b8c0f867d1a09159058ef7ef7d300",
+          "xyz_sha256": "10bf5088c661d6539ebb17e6637d5eff82ef961bf3b695527c2b1eecfdcb4e3e"
+        },
+        {
+          "offset": 2000000,
+          "points": 250000,
+          "records_sha256": "dd02270064134c015b5c2b24049bdb3f09d4fe1e547ef404f203463cb9c68b39",
+          "xyz_sha256": "ecd53ce2157ae0e39d3b73d3b8de1ff97bfe0057271d18b55bdf53363e8ba5b9"
+        },
+        {
+          "offset": 2250000,
+          "points": 250000,
+          "records_sha256": "042487d8e9c47e6f11aa6b78c8f1b936f54b6eb92e8200f7a41cef3d25788e44",
+          "xyz_sha256": "a7f91d7ac403313417ab2c7d26395a84f595dc41f9d54cb52b764fd274f2cc7a"
+        },
+        {
+          "offset": 2500000,
+          "points": 250000,
+          "records_sha256": "bc40e52cb863f9befd948578f81dc9ce52fcb708526437b65c343db8c0510f96",
+          "xyz_sha256": "51bac15c7b0948b810950497b4d1920e757e64baf916b2cb090a5d42842ff1d8"
+        },
+        {
+          "offset": 2750000,
+          "points": 250000,
+          "records_sha256": "4a8cbc09d8f6c83d9288066cc0595aa50210491165d03b95c9ccf51a5b31b0b1",
+          "xyz_sha256": "5f090d79c526449dac458708c39dafe4fbf99fd76da78a84d7a291abe0ff5882"
+        },
+        {
+          "offset": 3000000,
+          "points": 250000,
+          "records_sha256": "5c69ca5a5e0eed2c6197692cf15de169fb6c11ef68ca3c736f1414e442534cce",
+          "xyz_sha256": "3f809dc7353b2a390597bd252194612a2fab38c844ba16742a303513e495e335"
+        },
+        {
+          "offset": 3250000,
+          "points": 250000,
+          "records_sha256": "fe875f6e511aea2e896e9b52f306d420302ff0c00386108424fbe5a2cc444a3b",
+          "xyz_sha256": "849348bb6e31059fe5ab278fb3b37db63a375f22d061d0416678a22da5edf535"
+        },
+        {
+          "offset": 3500000,
+          "points": 250000,
+          "records_sha256": "9fc004f639adea8b5dfefacb986f3c230e014bc3fad7ce015bbbfe4d9ee67323",
+          "xyz_sha256": "423e3cd5a5f73b76ba9542bf8997e1feef08fd58567b31ed38b7763ace98b50b"
+        },
+        {
+          "offset": 3750000,
+          "points": 250000,
+          "records_sha256": "be535aba4f761d75ef256e17a7c1dda0a90e0f3a92d941db86e05c5fc03dd781",
+          "xyz_sha256": "149984ed2f41c7499b3c695ed60cc0bec3986d6130f795090fb405a132855281"
+        },
+        {
+          "offset": 4000000,
+          "points": 250000,
+          "records_sha256": "a3e33d124ee9f1454fb0fc9095470f08c8f9276e274b92704cc2641664d56d19",
+          "xyz_sha256": "0a8aa7db6c799e641ff4e8ee3d044bdea8dc9183a26c3a45b138b1758dbe8c06"
+        },
+        {
+          "offset": 4250000,
+          "points": 250000,
+          "records_sha256": "66996093c8ffb1585ea653328aa5c4f0806d6a5c42355aebe4cb865fed17bd6c",
+          "xyz_sha256": "65c2dc238fff514887026c8a047d27a967988d4c066c057456193658809e4b8f"
+        },
+        {
+          "offset": 4500000,
+          "points": 250000,
+          "records_sha256": "f2724f6111299b814e5f3f699a5c98b44bc71acc139692111dfa9b7a2dd974bb",
+          "xyz_sha256": "b2a1c522c46b946963274903d0def5f37fa0f76d2f292fc6a916ba9a454bfcdb"
+        },
+        {
+          "offset": 4750000,
+          "points": 250000,
+          "records_sha256": "4ab1031314158bbcb48d86e304dace5b35901465f19fe26be1c33438a144e572",
+          "xyz_sha256": "1f1743ce3d835b114e1480fbe93c3b65618f504a1bca74c500ce1d4ea259075b"
+        },
+        {
+          "offset": 5000000,
+          "points": 250000,
+          "records_sha256": "7386296f9766bced7ece9291a2c926353fc4dc08b7bf17add4c03cbe490e82bd",
+          "xyz_sha256": "e8f36068a34c3135566ada63a50cf895bd4824dc54923ec0d818c8552df655ad"
+        },
+        {
+          "offset": 5250000,
+          "points": 250000,
+          "records_sha256": "c3390a7c0bac1fa21c1720a914cdfd31629c002ac0cc34a160720681e4a7eae9",
+          "xyz_sha256": "6579dd832a12a3964a8042db8710d5ca16a973780289f42930c7f29cba2c3ed2"
+        },
+        {
+          "offset": 5500000,
+          "points": 250000,
+          "records_sha256": "ee8f843ba65e3d34f66a3c4cb099235ffe4532ab60afa8d9bb341948ceed49be",
+          "xyz_sha256": "4675c38366b96ff58c1bb25b9e6752c9ea1dc660070b5a1fa0b912ba3faef8d6"
+        },
+        {
+          "offset": 5750000,
+          "points": 250000,
+          "records_sha256": "455c181be8c5c4237082c3ec8eb08d548c59defe45585ebd75dd098b3ba3c17c",
+          "xyz_sha256": "6464fafe27cd2af9a78550c6fa24ff5fed53bb8dd0e8ec7aa6a5306cf6440dd4"
+        },
+        {
+          "offset": 6000000,
+          "points": 250000,
+          "records_sha256": "adcbc4e695aadb01e71f03e9d4f6acc8b4451d76d5f281fbb267333d1f23b202",
+          "xyz_sha256": "8b4a087f8f28c881280a05500fcf245d41ffcb5eb95bf1d83505b02f6e97c9cc"
+        },
+        {
+          "offset": 6250000,
+          "points": 250000,
+          "records_sha256": "f316940acc783e64c05d5cc2df917148ee2269296caf1f7a0fff1b6e728a1416",
+          "xyz_sha256": "f16eb77421406b7241e6f5af1ad7169f3a474b7e69905a8c7e14cc35deb41a2c"
+        },
+        {
+          "offset": 6500000,
+          "points": 250000,
+          "records_sha256": "67cac3fb555d777900e1ac454153e175f5953bb4e3e18dc06f7ff35fc79f57a3",
+          "xyz_sha256": "20a7e5769742ca260047521d37f9365ac71fa10f32f732941f0937e445299bd4"
+        },
+        {
+          "offset": 6750000,
+          "points": 250000,
+          "records_sha256": "ad38fcf697ee6eee5b92ec4ff43b848e218f99342f4a7123a31f98262de7de32",
+          "xyz_sha256": "c153318a40ccec7d94afe3ef371bf6a3148063fc35109a592deff4ab5c744d66"
+        },
+        {
+          "offset": 7000000,
+          "points": 250000,
+          "records_sha256": "c9c49a7aab68e16091d657eb782b778976869d00c371802b3de5d2bc224050b9",
+          "xyz_sha256": "e46eeb2955243a597062f116c6b175c907f8f6b7a5d9a61152c9cb35d034d9fb"
+        },
+        {
+          "offset": 7250000,
+          "points": 250000,
+          "records_sha256": "7cd99519d2c786dcf80494bb00fd6ae67ee239a85c240f4e4942f7df51316920",
+          "xyz_sha256": "a6dee21b8170829bebc5b2d087a8f547475bcd5021f7351e9a98e1f2180db482"
+        },
+        {
+          "offset": 7500000,
+          "points": 250000,
+          "records_sha256": "d3c9d9d18e4bdaeff2d6ac7ef307d7a9233d5b74071718378ea03e7e6a8ed997",
+          "xyz_sha256": "9ffcfa91900ee56714034bc2001f47cebae7b6f03e36880416f32e515eb24007"
+        },
+        {
+          "offset": 7750000,
+          "points": 250000,
+          "records_sha256": "674b59af7f619efb8f13c3a0a8863b52a47b98578857e584f90e6dfba96bd290",
+          "xyz_sha256": "314e15467a2d5b88ab7cef2ff7ebee0b8a76dadc9809b62715ae673140b2c343"
+        },
+        {
+          "offset": 8000000,
+          "points": 250000,
+          "records_sha256": "ebe44933520690e8a1c7c4bf6bd51b56a2cd502444bdbdbec11a39d963372a3e",
+          "xyz_sha256": "65d671c49538ffba2acb25834b39cfd20e3e1997f2e5a17e302303ff1cc794c7"
+        },
+        {
+          "offset": 8250000,
+          "points": 250000,
+          "records_sha256": "ef7bd7b0a61b55dc72efcfa6a79716006fb22e5a0149ab4212ce65d0fe41bf60",
+          "xyz_sha256": "7da59898418eafae88c8d1a11002d71eeb3d77c21c3897eb46d49cc170b44dbb"
+        },
+        {
+          "offset": 8500000,
+          "points": 250000,
+          "records_sha256": "241c04134674093079191a3105ff782291c94146cd8f67a0e936c46a29d0a88d",
+          "xyz_sha256": "c2c2b8cedf9f59722e0958ccbf193fc86ed687e07c88d062a797e5185483826f"
+        },
+        {
+          "offset": 8750000,
+          "points": 250000,
+          "records_sha256": "bec6a6cb3cfec86b935f10966b30973a9815f7d0282f6150536c580da2ee3d7f",
+          "xyz_sha256": "e648c0daf3a5108aa23a37609b04d492b71e42c455dfce70d3b5ffb84cbd3e08"
+        },
+        {
+          "offset": 9000000,
+          "points": 250000,
+          "records_sha256": "b9a2f23f09c0a523be9e80c8f9c707989ae5553ccdfa4134462cf36432e72dba",
+          "xyz_sha256": "61a8e47dff7f676dcc13873c4014b9840ada11355f4338b41a99951a97c72b43"
+        },
+        {
+          "offset": 9250000,
+          "points": 250000,
+          "records_sha256": "cadeec24b11e8e4dee2bad3164eec20e54b21be2b0d89e172cc19364e99fb04e",
+          "xyz_sha256": "38510e1e36691bf758a045de9062b70536d8a718ed8dc6fd6f3c67386bc1a00a"
+        },
+        {
+          "offset": 9500000,
+          "points": 250000,
+          "records_sha256": "0599d70581c8815d635fc0bda1624e975443f8c92f005e828138a88955384891",
+          "xyz_sha256": "c5561708d2fb343911ad3f919ae31f76ea92b169261f8a0523f8a624268a7975"
+        },
+        {
+          "offset": 9750000,
+          "points": 250000,
+          "records_sha256": "06ffe82f07fe77027c1ddd3fd012daece1de5d3ccf9c8273f71bc8054e8fe3fa",
+          "xyz_sha256": "10181f42746eacdf5c74cc31956342f9d0421a1bd21e7d10212289a5ae9a5d0a"
+        },
+        {
+          "offset": 10000000,
+          "points": 250000,
+          "records_sha256": "59d92e45b38f9b59f3b29a8c7037fe304967a841d17d3d5e2c9f66b2a39a3b44",
+          "xyz_sha256": "9d2d922245d17b04d004713d6617129e21b34c3a1d87357fbfde95b6b7b863d1"
+        },
+        {
+          "offset": 10250000,
+          "points": 250000,
+          "records_sha256": "8495af9f7c2d9e0f4803b567e7827114a051424c01451bd2320cd5cde88ec575",
+          "xyz_sha256": "a65d0e5e4454e796bc02e367a3bd2cb630ea0e1693c648d8e8f01b7023d78bd3"
+        },
+        {
+          "offset": 10500000,
+          "points": 250000,
+          "records_sha256": "5ecec9948c619b9246eb1aa4e873a9a0234f11d6ad0706f81269aa5e4ab55f03",
+          "xyz_sha256": "6d0ff8785794124a40d70143d0c6cce6b8406367a7a2bb42c34b798484d1d95c"
+        },
+        {
+          "offset": 10750000,
+          "points": 250000,
+          "records_sha256": "01040b077375ba235679f7821f7b77d0dc18c3bc19aa56f1dccbd5b10a7d9237",
+          "xyz_sha256": "e22e407d23e0222576a89061a7b4997a9dbf40567a12850d9d158a12d83aac73"
+        },
+        {
+          "offset": 11000000,
+          "points": 250000,
+          "records_sha256": "37d4bbefc8f828aeca2fe6588c3c9e80f5e255efd955af5a46648f7062718a80",
+          "xyz_sha256": "826c712363c2b21d522547dc93947568b3372ee0efb349ddaf6c69760d6009ad"
+        },
+        {
+          "offset": 11250000,
+          "points": 250000,
+          "records_sha256": "b899e65c6c4e84db4effd2575d0d017fb3157b1bc0d111aa3dad10ecb2daaa91",
+          "xyz_sha256": "50c2d3f3dbbc30212e3dade0a738188844a1c57f541a7b982cd58f462a4ff7e7"
+        },
+        {
+          "offset": 11500000,
+          "points": 250000,
+          "records_sha256": "b2a5156cb6b25acd4e6bbca12351b4f3480809709060c1a9688a540b920001fa",
+          "xyz_sha256": "5d4e5ab47021100aa5b00b15cc522809112bc1c28e2691620a5400c1b9a313a3"
+        },
+        {
+          "offset": 11750000,
+          "points": 250000,
+          "records_sha256": "5cf8b461346c29d69fe993ba94dbade0cf081c0318d2caf2ec3859a7ac4529b1",
+          "xyz_sha256": "304beb777fc20ae99dbd86a935d825177ca06a2b09352fa5cce19575a4fba36f"
+        },
+        {
+          "offset": 12000000,
+          "points": 250000,
+          "records_sha256": "14fa2d23b6450f4ac2d7c4160a391dbeeb57b0d61981d4f95506300ac3d31033",
+          "xyz_sha256": "f95598dd5d7868eba1d5149623329d315f8a9a436b2ba1068c3052ce3c6731a8"
+        },
+        {
+          "offset": 12250000,
+          "points": 250000,
+          "records_sha256": "707bb7997c55b4daf144bfd1ff7a613ca0652883b108ab1aea4af9506267e042",
+          "xyz_sha256": "998fa0c894576036897b36b0773cb6008e29b46c30754e3d12c1079c4ec6b9fa"
+        },
+        {
+          "offset": 12500000,
+          "points": 250000,
+          "records_sha256": "bca4a2195f8fa59fbb11cb515fffb3444f3fc210df2774f29993c798d0b2de72",
+          "xyz_sha256": "5572d758494f621406d2470a958c23439847766f1a3a66ebaf6a2e9a225ee340"
+        },
+        {
+          "offset": 12750000,
+          "points": 250000,
+          "records_sha256": "a9db39b797d5b4a533acd67cdf2e58fdf57812f469a98a862a25e700b73563de",
+          "xyz_sha256": "61c6eb414b3583d930bf2a85518b206611b5371a00d92e16ec9fdd82be253a0f"
+        },
+        {
+          "offset": 13000000,
+          "points": 250000,
+          "records_sha256": "df655d69b1808af5e06d3c4040a317b88dbc21b623a63041605e5bf6a771f5ae",
+          "xyz_sha256": "30dbd9a79620de5382eff19a2eb883b827031bd94d648c6dbb6154057080ffdb"
+        },
+        {
+          "offset": 13250000,
+          "points": 250000,
+          "records_sha256": "ac0df0825b157097ca25c12f032b0ad090342bfa4444679a5557fc2f97146688",
+          "xyz_sha256": "82a4b8667db60f517d686afb694e5161b8626745ae866d67b8dcf482399eb1b4"
+        },
+        {
+          "offset": 13500000,
+          "points": 250000,
+          "records_sha256": "eea647640b8bf59e79d51197bfffd216356e7359a6c0c04f36199a3eb27efa88",
+          "xyz_sha256": "e679ef14e5bdb096cdc7cfc08e6839ed82a2222d5da4cef8547f19285a2df894"
+        },
+        {
+          "offset": 13750000,
+          "points": 250000,
+          "records_sha256": "83d41cd40419f2d2913f7d1e35de4390e3e4338ad70abfd92685591a2f41ff79",
+          "xyz_sha256": "009b2cf98d9ff3015ee01a74a94e53077687e6604a460e6c48ef5fd9e7ae7362"
+        },
+        {
+          "offset": 14000000,
+          "points": 250000,
+          "records_sha256": "fe2a6d1370658f4ea570997f28dc4123d2e010c8865435e795bb0ea88f34ca0b",
+          "xyz_sha256": "bdaaf8af6f2ed1cb9bfc5791c889721a3cbcf9795a4afb342eaa3067259d442e"
+        },
+        {
+          "offset": 14250000,
+          "points": 250000,
+          "records_sha256": "17b843205c20d702e1d631493ae9c36b49df9d6b38097d819ba1e6026ed8aeff",
+          "xyz_sha256": "19efe560631f18b125e8a578c0caa51fd86d5d8041a1dfb982b33705499510b7"
+        },
+        {
+          "offset": 14500000,
+          "points": 250000,
+          "records_sha256": "38ed895a3a64c66eef8dfba4a2fbd6fb5cc6ef4d1b75a76433a955ed33c17eeb",
+          "xyz_sha256": "fc7f08b11d0b1b25f5b2069fafcc78338a2e69e9b47a2660a3358256ce2dadf9"
+        },
+        {
+          "offset": 14750000,
+          "points": 250000,
+          "records_sha256": "ff5d1dcf7b8f867f2e1b772d097f0f71f140195d86caac579f2d3ff525642b07",
+          "xyz_sha256": "4e2c8d94c3ab8a6f66d652d62a1ceabde74cb1a50a049973f1db5b9a40adf725"
+        },
+        {
+          "offset": 15000000,
+          "points": 250000,
+          "records_sha256": "dbd62b66ad7d3d3777f71b4526676e5bb04faab692a404bd1a3d0f9940859de0",
+          "xyz_sha256": "d402edcc9eb71123a1802040c4f46bf7c7646f3ce216def4cf8e6d4b8dde3d6a"
+        },
+        {
+          "offset": 15250000,
+          "points": 250000,
+          "records_sha256": "873b35a748a826bf99a28200227e0106f327b298ca71c2c593e84498d90c660e",
+          "xyz_sha256": "b3c46949fa303a314a4fb73c0ca1c7dc15b8f27d3c7fa95484b01f40a7cb6fa2"
+        },
+        {
+          "offset": 15500000,
+          "points": 250000,
+          "records_sha256": "125a4309aa3a06ece734c350b455ae7055ed1dcd14d31f136bcd590fb29436c0",
+          "xyz_sha256": "8674b146fe83e7e5f097a1e1b752fb82b5e9b9a03465b7dac8a4fd2260feb509"
+        },
+        {
+          "offset": 15750000,
+          "points": 250000,
+          "records_sha256": "33234e18ea4a437bc5786889e14c1d7480900426e592e840476ef86414659609",
+          "xyz_sha256": "8673fe83127c7d3034deed784f4e7fd0a33370c087f9688792437078593974a5"
+        },
+        {
+          "offset": 16000000,
+          "points": 250000,
+          "records_sha256": "4d25059ae6404332e9fbb72d4761ad48846a6b081588c105cccbad93839de2f2",
+          "xyz_sha256": "c420ef1c72d30f4bcfa665bfe6fc71e95df160d1f3a0edcc451a31fa6567ab87"
+        },
+        {
+          "offset": 16250000,
+          "points": 250000,
+          "records_sha256": "6e56db92411b2244abb9dee03824a66b28cbe17fa4225d12526cdf7ee55856e1",
+          "xyz_sha256": "467f1b6af8ca26a49b431f34b134c2f4259c09d6c3eb168397f3d2886ebec7dd"
+        },
+        {
+          "offset": 16500000,
+          "points": 250000,
+          "records_sha256": "91da3712e8c0dd3a7d7f06011d15a6404625a6fddcac7b1b6fe7cb79da6b7008",
+          "xyz_sha256": "89704df0f5c39ec71e39ea733ef9bd795f4a0a763b62d105ae1033a0fe719da9"
+        },
+        {
+          "offset": 16750000,
+          "points": 250000,
+          "records_sha256": "5d2d3aced4298f8cb263ad7e1ac38d86213d5564e13b20e5574174f658a3b93d",
+          "xyz_sha256": "add8833b16b4fd755be9d66c39ac8b6115d093326b2edef6bba8df06f3aee8b1"
+        },
+        {
+          "offset": 17000000,
+          "points": 250000,
+          "records_sha256": "74a79ac69ab81471031cab7c0d5fe29f89926dce3bea15216870d7b690e269ed",
+          "xyz_sha256": "651ee592b6626a411c5a58383864b32859cff262ec1481ee562b5ddbbd10e23d"
+        },
+        {
+          "offset": 17250000,
+          "points": 250000,
+          "records_sha256": "cd3a440c71f0cb828ef79b2b38b922a290f357e5cf534ce7281d8b72dc9cfd40",
+          "xyz_sha256": "8eeb6a8700d1ef5c64debcb9e8a17c05af534a41d5187cf4b371b11baa410fd5"
+        },
+        {
+          "offset": 17500000,
+          "points": 250000,
+          "records_sha256": "0000328d66fabd4bb007d312f64bff035836f2830db1ee318c68bc124086fcb2",
+          "xyz_sha256": "c0f8125e9c383cb23d3607fe1b7bc2a1c06eced3434fff85dbb56e50ccb3e266"
+        },
+        {
+          "offset": 17750000,
+          "points": 250000,
+          "records_sha256": "91948e3a852ea84209283aaecb82b95763237a1fd23cd86e01378e82ebd762e2",
+          "xyz_sha256": "9ea7e7e2767dfbfb6affc7690b52303f0168ca6e406bc08356f7db111ecde1d9"
+        },
+        {
+          "offset": 18000000,
+          "points": 250000,
+          "records_sha256": "b50286ebb35762a32f04f5148d5ecb4777107f36f958d0d1ee2d456663dec963",
+          "xyz_sha256": "ddd9e464eb2496e924bdaa6d3cb930da9ce0d7dbcb042992c564018b3da306fe"
+        },
+        {
+          "offset": 18250000,
+          "points": 250000,
+          "records_sha256": "1f9886b5e8f5e36cc8ffda64d1f767eade3434e1e2712dda98402723712e8954",
+          "xyz_sha256": "e5a21eba1c8ea96debdaff35a2ac310845dda2aae61e7aa24c4c5decd5e8d482"
+        },
+        {
+          "offset": 18500000,
+          "points": 250000,
+          "records_sha256": "e5361d4e36e7b89753841f96db81059b36496ffdbef1bb705a92f8f05dbb79ad",
+          "xyz_sha256": "7704e7530e8b5260e0e0dba78a23f726ffeb8110ec82e4be462681e244922c43"
+        },
+        {
+          "offset": 18750000,
+          "points": 250000,
+          "records_sha256": "f82875fb0f336c4d104a96a4dfb334d60920eab934429c46e46f6b8246a70b65",
+          "xyz_sha256": "7bcd73509705a8a9317fac7d7554ef7082871e7091e46525d1481d3218965140"
+        },
+        {
+          "offset": 19000000,
+          "points": 250000,
+          "records_sha256": "61798ed2a87e61dc2cb992056b830d37838e526e62db8a0713aecf21c5526484",
+          "xyz_sha256": "f61dbdcb8cfcd6025b6ef026b4dc07622c29d3acffeedd6708a9f83d1834953c"
+        },
+        {
+          "offset": 19250000,
+          "points": 250000,
+          "records_sha256": "be216f0a83ad09a0d12e6814485788f9fac545ca1b70c333a21e6a48d4c5809c",
+          "xyz_sha256": "149c492393ac39157fcddfb66d19d5a69810d3a575c654d6e52e74cedc285639"
+        },
+        {
+          "offset": 19500000,
+          "points": 250000,
+          "records_sha256": "4b430302e168b844ab85cb4b82b01d366874b19f2a2a15677b71be0fc2d15c7b",
+          "xyz_sha256": "1e946cca693a6e33f7b05b218cba4f931f9ae987de4cd3ebcc89ed588eb847d9"
+        },
+        {
+          "offset": 19750000,
+          "points": 250000,
+          "records_sha256": "b3f53b0fb972982f74401bc79745cfabf391d3e4505dc379e930a31f4f6b1ec6",
+          "xyz_sha256": "4824ed9b8c23a509871a8304bfa2581f7d679da1cc46a22d4a0745a59473fce9"
+        },
+        {
+          "offset": 20000000,
+          "points": 250000,
+          "records_sha256": "2499ac9537ca83afb2f7672371ad23dafa00cff7da95762fe676c79b9c20a0c8",
+          "xyz_sha256": "50b1fec6807d9eda4d135961aac9b9b0982aed54cb567158fa9adda2eec20564"
+        },
+        {
+          "offset": 20250000,
+          "points": 250000,
+          "records_sha256": "74245796c286c1d0f15d6b33730c4bb66d4c52a82c7c3de9d90df8bbbc1869e4",
+          "xyz_sha256": "1988022fef46037d0c4790c83a84e8aa2b5027af7212534732450816cabe06cc"
+        },
+        {
+          "offset": 20500000,
+          "points": 250000,
+          "records_sha256": "bf7b093b774335586a9d1c9f8bf34cc7484b78f18032533416753e6791caef78",
+          "xyz_sha256": "93d2655eb0400cce49a79fe6d2722e1db6031f3e0a5d99a45210b9610ec7e935"
+        },
+        {
+          "offset": 20750000,
+          "points": 250000,
+          "records_sha256": "3486acd945cc7d2b8b970b9e149cb07c1aba71b800a93bbe188f84e25e1ef5eb",
+          "xyz_sha256": "ad7b1c957d98013bb1494aa6853e723f0474439271c28eb9f165fb8d853f49c0"
+        },
+        {
+          "offset": 21000000,
+          "points": 250000,
+          "records_sha256": "b6a21abee49419e2a4efefda2c4f6308a03585df6c3853d6175d6a4a189747e5",
+          "xyz_sha256": "69100c7bd5e1438489fb623b160064860413c61f40f633ec819bc6d56378d47e"
+        },
+        {
+          "offset": 21250000,
+          "points": 250000,
+          "records_sha256": "ee49f7f3a6ac5294df69872aa0b80237d89ae8176ce97eac73dc7e7044841936",
+          "xyz_sha256": "d8ab8f0c5cd5315e75e60fe2fe72ec0e4b28dc6ec4f492b2c98a685874505682"
+        },
+        {
+          "offset": 21500000,
+          "points": 250000,
+          "records_sha256": "6d5d06b764e9b26b8ac27e804e6cbefb2a6b14111d5ea785e2c70fa46dca3c24",
+          "xyz_sha256": "48c8a7dddaf21d6b838952dfffd0e707e3a450b865ef5726250793480ae86a62"
+        },
+        {
+          "offset": 21750000,
+          "points": 250000,
+          "records_sha256": "ca5d1f351fe65862280359c2d7bf2e6ff7f52b82447ab7b1d7ba01dc5f08555e",
+          "xyz_sha256": "f5d4f602732e64c2a5fbb3c1b5f73da48f39b51116fe574a43a5b35b0110ec38"
+        },
+        {
+          "offset": 22000000,
+          "points": 250000,
+          "records_sha256": "0a1ea9ba2e187a298ee8740ae9136117038da5e1776b918f2ff8cd6e84a438b7",
+          "xyz_sha256": "378ccace7d60c98a424b26449f8490293d8cef9ef191d59cddf9921b712668f2"
+        },
+        {
+          "offset": 22250000,
+          "points": 250000,
+          "records_sha256": "6aeac967a18f310ba9d1ff347af6999596a9ffafb587019f32753c545c7d71b0",
+          "xyz_sha256": "fa51eb66a2f17ba2d811dbd97b141318325813a7fbf1f3a9ac0ad7a2db558b56"
+        },
+        {
+          "offset": 22500000,
+          "points": 250000,
+          "records_sha256": "01f0539b04fef002704f7c132bd7f81122679a3c58fbdbc30de866a61c8d4637",
+          "xyz_sha256": "82a53ac905beed20ee6da08274e055e5f9a374dd43c7310dd28a1bb27a4bd81e"
+        },
+        {
+          "offset": 22750000,
+          "points": 250000,
+          "records_sha256": "1db85eb94cb2df1a9ced9d14a347cf8aa9c8e6620d712dbcb38a236c17531b51",
+          "xyz_sha256": "76e4c626e8e11828cbaeaf24d60dda2de48de8fd620ea98c8044f7bbe56e1097"
+        },
+        {
+          "offset": 23000000,
+          "points": 250000,
+          "records_sha256": "67f09ac8c6f54f6a3b8a20eb44b82be06bf6373aa2694a335bdd0544819ca7fd",
+          "xyz_sha256": "d30790033915bc1aedbc4e14772677a46120f8d15ab310c7a20e3c0485d2f5e2"
+        },
+        {
+          "offset": 23250000,
+          "points": 250000,
+          "records_sha256": "c0286c4ff111784a5e5c814f76fa24e8f7441617bec7f1392b3c99d3dd26463b",
+          "xyz_sha256": "e1a5b465edfcb7662d8cf7f2611a6b28ecdb72affdd9d495c0ff65bdb33eec58"
+        },
+        {
+          "offset": 23500000,
+          "points": 250000,
+          "records_sha256": "608b016365e22639ad2f4554fd145918696eee05cc5d06496d0aa3ff3564da7a",
+          "xyz_sha256": "3b9a2470a873b46ccc512941f7b4b5ef0b55821c87b561c9898e335f97b559b4"
+        },
+        {
+          "offset": 23750000,
+          "points": 250000,
+          "records_sha256": "3b30afaf038228d21f8782ceb62e6ae4cc8d4226a9954dbd8408684db180a51e",
+          "xyz_sha256": "cf59ac73d2ccca1ca17b751bc58d5058976eeeda75f7fd27537b7d2664630a02"
+        },
+        {
+          "offset": 24000000,
+          "points": 250000,
+          "records_sha256": "a6a8006df176c789c760985670456e70a61f097befbbc001c5eed254ac3a6ec7",
+          "xyz_sha256": "fba32c88c710820bf8f5bc8d0539554a15852498e47c9e45485aaa0b0873a7ac"
+        },
+        {
+          "offset": 24250000,
+          "points": 250000,
+          "records_sha256": "a6893bae1b7e8b0b4c8c7e7339dfcdc88ab5d96f57d951d27d96235d7208208f",
+          "xyz_sha256": "f4189b88b4589117cf314625496799ad735531a278c78da1e1c3727c5c6938d4"
+        },
+        {
+          "offset": 24500000,
+          "points": 250000,
+          "records_sha256": "0f2a6ca0c4809e680e98721d86960e6867651e1ec6f2c6d5c6d7053d7a1b06a7",
+          "xyz_sha256": "83704c8cf3d985f46c8d0dac78cca160b58c7c3676b84dcd56213440db07ef4a"
+        },
+        {
+          "offset": 24750000,
+          "points": 250000,
+          "records_sha256": "507938802628e38b7c29e8d033cfb5989d5e10bf45242d6e30323f400c7a6f32",
+          "xyz_sha256": "f53f93cb94b036b45458caae2c7b908fd19b19bac1c88db12cf502b1a0f21731"
+        },
+        {
+          "offset": 25000000,
+          "points": 250000,
+          "records_sha256": "0da0321be545299f819eebb063b7e066cc5eb1faf6901a835d4f5445463df3d4",
+          "xyz_sha256": "920b15a280e07c12aaae9aecbf0f6fdf6017b31555e5fd87450fbb50e6abf4ae"
+        },
+        {
+          "offset": 25250000,
+          "points": 250000,
+          "records_sha256": "49ee6332454904fb24765c2656cfe80e0ac585449304eb1c48925cc1accefa3a",
+          "xyz_sha256": "186f260cb62b9cb01e08f4564745a86b10fdf9ac5b153d0c82d2fea907f8cf08"
+        },
+        {
+          "offset": 25500000,
+          "points": 250000,
+          "records_sha256": "1b62aae973b7716766109d35afaa2b967b3aca14f194616599640e9712b124a1",
+          "xyz_sha256": "11bf0c88eaa8e990788b5c5598f74068678729403d9ca47035713a7d1ddf36e0"
+        },
+        {
+          "offset": 25750000,
+          "points": 250000,
+          "records_sha256": "8ba08abc44832220386ada2d3f4108945ebf34a9d067999fed3d68a284af27cd",
+          "xyz_sha256": "da55328dc3d56c2d5bc2a6a952745dd2f106dea68df425111da7969b4a623348"
+        },
+        {
+          "offset": 26000000,
+          "points": 250000,
+          "records_sha256": "2eaf947d494db57e4b89b3369b39126e352c04beaa9c07a82b6bc7e860e58943",
+          "xyz_sha256": "a153cd6dbf730a630090ca980b0a6c006e04964bf1272c5ea4dc9e4e1cc82a24"
+        },
+        {
+          "offset": 26250000,
+          "points": 250000,
+          "records_sha256": "d0c8469185fad6fc5e32b0c01909c35a5b43b64efecb45763ceb69f50ce3470a",
+          "xyz_sha256": "e8c52897d815ec98726a9a33352fee21698c0d31748ba60eebee057f5dc546bb"
+        },
+        {
+          "offset": 26500000,
+          "points": 250000,
+          "records_sha256": "267ef4f7958870476607787b887d9ae0e236aaad67cb2930b7828cb622045ae0",
+          "xyz_sha256": "a1a11950d09746b80d237e6be6b382e72b2b794df4e806bf4c1df24dd14c03ff"
+        },
+        {
+          "offset": 26750000,
+          "points": 250000,
+          "records_sha256": "4eef82b012ff0c957c2cd13f5f4cf7bbdf823b5d9525748cfb3f9dc63849e73b",
+          "xyz_sha256": "8a2050b76174a301fdf6f15ae8a7949d3661318ca0dd1c9936c898d68b36bad2"
+        },
+        {
+          "offset": 27000000,
+          "points": 250000,
+          "records_sha256": "e5652232087636931daeb6f65d0ef8e8f1e75e9a63107d8c899309fad2425632",
+          "xyz_sha256": "d8eb0a16dc40400852df517cba5e620266b35a9f51dbd111436a7ecefa432a0e"
+        },
+        {
+          "offset": 27250000,
+          "points": 250000,
+          "records_sha256": "c9972e8f461229d876b37e47bce905e1df181d05f1cfd32f651b49c6966e4130",
+          "xyz_sha256": "cb0927cc8a5253e9449b5f27ec105ae16eabf8e75c25abd45e38175c993fe36f"
+        },
+        {
+          "offset": 27500000,
+          "points": 250000,
+          "records_sha256": "350be12abf306e8300e74def69cc09a3a002dc219e69b73dc7c619d7e747d019",
+          "xyz_sha256": "bc197a7e288126df8260791235cc41ef3dc73959fc9c396cb9930ccbdab12762"
+        },
+        {
+          "offset": 27750000,
+          "points": 250000,
+          "records_sha256": "62921e5bec88c83c7e896fb54c59cc81a49ae60251eda33e764393968fa6a0d0",
+          "xyz_sha256": "424b9213339150fec85c0217141dad3cd18378bfb9fddbb3bed658aca25c1320"
+        },
+        {
+          "offset": 28000000,
+          "points": 250000,
+          "records_sha256": "004d65882fbd7febd5638b57221b7de4b4ead6188420ef9cf490b5abf3132436",
+          "xyz_sha256": "9f0c3dd5c6bb6247ceb82ba68dbbfb1c6ed436e933c87904216b96dafc58966a"
+        },
+        {
+          "offset": 28250000,
+          "points": 250000,
+          "records_sha256": "e970bed2b0a6d718b8a9c5812e0d7489909e8472a965e7bcf631c9d43ea90995",
+          "xyz_sha256": "228e4cc3d11742766bbfc717c7d27718f47c1ae4502bfb21da121cd4faa5c49a"
+        },
+        {
+          "offset": 28500000,
+          "points": 250000,
+          "records_sha256": "4103b7bf7af30de3ef7484751859f5f27c79f0df8eb31e3308ca7179e076b41a",
+          "xyz_sha256": "50e818093a184033bd1ca2d2960122bb78b6e53a42d32b471bd79fe4d9f42067"
+        },
+        {
+          "offset": 28750000,
+          "points": 250000,
+          "records_sha256": "f66763f3068e0720ab5d2dbaf9a83d9c19d52aa9f72ba2af94dca83ead813c28",
+          "xyz_sha256": "ab2de911e0c88c98b2bc2bec27fc3344b2060a034d655dbe780dba6e663c7615"
+        },
+        {
+          "offset": 29000000,
+          "points": 250000,
+          "records_sha256": "dcd5ee9848a3886081abe8c3e2764db9655f4b53814ebdf2be673cc242e4d0d5",
+          "xyz_sha256": "4a0baa184610eaa97f733c79f979ee77d2165ebb50cbc6c4167b72f1a259b31c"
+        },
+        {
+          "offset": 29250000,
+          "points": 250000,
+          "records_sha256": "8eac9a38b76c8a5fcb68204705e1c9a009a3d65d145a040cf5fbfad278fa23b9",
+          "xyz_sha256": "8a6f65086fa13817bfe9d4e45a0185609e9b394d8125f194d1b439347b879f86"
+        },
+        {
+          "offset": 29500000,
+          "points": 250000,
+          "records_sha256": "5aadb47bdb7673343bbbdd65af7193aec54ea5640cd46b7aa99a41bc329adfb5",
+          "xyz_sha256": "9731978572f67e4809cd1289ff8b7e47013f0751e54900f95d0597834f5b997c"
+        },
+        {
+          "offset": 29750000,
+          "points": 250000,
+          "records_sha256": "90fa07778d4397c2addb6d7af653072adbaee5f0f9a3192fedb0d4e58e34830a",
+          "xyz_sha256": "81463793c6b88ec83009ee4fc7ec95b13bf60478dc70e4930f0eef287321472e"
+        },
+        {
+          "offset": 30000000,
+          "points": 250000,
+          "records_sha256": "d3544da216c14df2020353aa75ae6be36305d72c07b7dd2247524ecb786d21e6",
+          "xyz_sha256": "a0c7f85bea15b11d24c0e6eb63ec94404c68ce865c98888cd8eefd8453ba1f03"
+        },
+        {
+          "offset": 30250000,
+          "points": 250000,
+          "records_sha256": "3768e70cedc17faa8d0166b2bb6013b697e64acbf4f00a981ea6c0bf12b44c48",
+          "xyz_sha256": "513acd17cb7c64808da7af3c231dff20227ddec4fb00c0114ee4199aa678d59b"
+        },
+        {
+          "offset": 30500000,
+          "points": 250000,
+          "records_sha256": "39dfcda73e3f9db76c9a06272fc594d42eab00f3acbc65941ccd331a59128adf",
+          "xyz_sha256": "d08bb87806f648c2123085a79b97aedf90d3e446090cd1dd0bbdb8fed00c86fe"
+        },
+        {
+          "offset": 30750000,
+          "points": 250000,
+          "records_sha256": "983898961a373186fe916fe818cae81c49636a2f028f980c54383eb1bd0f82ed",
+          "xyz_sha256": "02362e7325b9e6f631e0d8d0f6fe0133c212cb75a2bf15ad6fdc032176cbb1e0"
+        },
+        {
+          "offset": 31000000,
+          "points": 250000,
+          "records_sha256": "5a01fe8632af46fc93af764cffc1f65b86baa19991e5bf7ae6b75dfad66d7c41",
+          "xyz_sha256": "6479d0ebd5c888b81777210a71d5ee70024c962b058935c58d774a87d37cfecf"
+        },
+        {
+          "offset": 31250000,
+          "points": 250000,
+          "records_sha256": "c2f8e590b793e05570a3793c5e38f3dbb51d31bdd0f660f631ca3b648936eafe",
+          "xyz_sha256": "208e8d24886f62008d404a6a08d322e45306e47c5a61dbe619f643bc0b3d9666"
+        },
+        {
+          "offset": 31500000,
+          "points": 250000,
+          "records_sha256": "d91f38278a3ff5633f2c6f3ddf3335005a5f7d41d2c36351c5b9913ed3e55b65",
+          "xyz_sha256": "1c39cb4788a7fdce859ff6bc45ff81287cedd66ec4b106330e83c008e265759b"
+        },
+        {
+          "offset": 31750000,
+          "points": 250000,
+          "records_sha256": "ecbdf0749534c5a801b9fc540ca96b3c8187d3fadf2b3ce3789b492993e37047",
+          "xyz_sha256": "8da13ca5efb9926c4c20003a119e301fa3cb9c1bb7d574062daab13717761d33"
+        },
+        {
+          "offset": 32000000,
+          "points": 250000,
+          "records_sha256": "e676ff7341d09c34f6d1681a9c88be5647ba14f39b8c7187f93b56c58626755b",
+          "xyz_sha256": "0862cd4c105948ae7b102c0c2281ac62cd657fab86085b893a549c6566256906"
+        },
+        {
+          "offset": 32250000,
+          "points": 250000,
+          "records_sha256": "95f1b35461dbc1ae747c5c9dbbb1cb5a12b3fb747566f2fc5731130aa20f5394",
+          "xyz_sha256": "535fab40956ec964912c5579a457cd0b749ef032a4ce012d93510e650dae7eaa"
+        },
+        {
+          "offset": 32500000,
+          "points": 250000,
+          "records_sha256": "c67d378e7c6f361274b71e462056201bf8e08c4b6637928966b68c6a0e4a4f9e",
+          "xyz_sha256": "7e96f9d2bf4706c3cbbd521bb0910bd02887612ecef42cdf62d372a9ab5d12fb"
+        },
+        {
+          "offset": 32750000,
+          "points": 250000,
+          "records_sha256": "55464b6de51a85338d30e822cd195f23bbf5bc5f54424ed0e5f2de23c21d6954",
+          "xyz_sha256": "87f488e20385785dbec157cfc477f8f86c37fdba5a709b2e45d9e020565af880"
+        },
+        {
+          "offset": 33000000,
+          "points": 250000,
+          "records_sha256": "cf73059c60dd483ecb4cdfd5755d145dc47aa7cf4c3852c8fe4ef1e7063af6f2",
+          "xyz_sha256": "5c8b1a3ef7729042c734b67e1bb055f0752997a7ca01e9ccdf6d1d05bbc00d0b"
+        },
+        {
+          "offset": 33250000,
+          "points": 250000,
+          "records_sha256": "4f7282c1ec596af31a098d423123bcd562a395ad545da34f1bdab3dba3851946",
+          "xyz_sha256": "05df5e01d32e41ea417a53b157b09d971b2678c4ed347965fc1d0c9200897e79"
+        },
+        {
+          "offset": 33500000,
+          "points": 250000,
+          "records_sha256": "d342b4dbd33d06d8e8f54db952cf94185eb76715f45deac374c44e162a73b66b",
+          "xyz_sha256": "acf5b88839993f3cff87f713b801bd7bd811b844628fc25bf353f1fdaf5717ef"
+        },
+        {
+          "offset": 33750000,
+          "points": 250000,
+          "records_sha256": "d51226f2d00cf1642a8ce95aa8298cfcf12aa4c90fc920434987aa1bf7759b9e",
+          "xyz_sha256": "766d39ad1971d9a5471ffaa23cc195367f7313454ad0c661a9c1d4168b5b5df3"
+        },
+        {
+          "offset": 34000000,
+          "points": 250000,
+          "records_sha256": "ad859f4aab19942f9523ef08240e0d235a60b699f608cafee330cfc51889575d",
+          "xyz_sha256": "9f54bb1e6047ff527d2a55569ffb3454f7a7b5df634734d52c69bb6e1d9942d0"
+        },
+        {
+          "offset": 34250000,
+          "points": 250000,
+          "records_sha256": "28e22dd6fcb9518d09602d73bedb17ba4e9ba9cffc73fa0c5a55f96326ec4826",
+          "xyz_sha256": "06cc123c523ee6cdaabfb4643996115957c1d7a52d1565f5de5f71263c3f28c9"
+        },
+        {
+          "offset": 34500000,
+          "points": 250000,
+          "records_sha256": "f7731ed6f6468d97cca4b9345e8c2b199d2a9f653dea3815d16761e2d220614a",
+          "xyz_sha256": "9c2cd47f1f49291c9cb7780ad50460e6bdb1abe082334aec57c82adb44595972"
+        },
+        {
+          "offset": 34750000,
+          "points": 250000,
+          "records_sha256": "67cbbeec91b8b1c40ca3e318bc85f8618ddbcb0665a2903cfaf18e6c19f7dd5f",
+          "xyz_sha256": "c02f92ace72a5dda99786956cc564241e99ec8363b02e7f56f4113968f48b0d2"
+        },
+        {
+          "offset": 35000000,
+          "points": 250000,
+          "records_sha256": "af9bf1464f612905d0588c20ca38f4d417f15605b059af464cdcfdda0f22275d",
+          "xyz_sha256": "5f987cbba9859c4286c0922656e642d94b825cbfae365c1632b74d1a03909a17"
+        },
+        {
+          "offset": 35250000,
+          "points": 250000,
+          "records_sha256": "418af27f87c9805a25e1c8e3d8573d6a094e90f4b73b8adbefcb3fa2c7c1c410",
+          "xyz_sha256": "9e5e475c2e9be284b58ba2e6414546177587a8c365d90a7d0369deac4a89c9e2"
+        },
+        {
+          "offset": 35500000,
+          "points": 250000,
+          "records_sha256": "131e5cc133ff8fdb7fb4e26d33ad0c6cdaf163698c2ff483015a2873b65e04c8",
+          "xyz_sha256": "3b21a90e424a69d203f80ae0bca68fc0f166478e5c475d1b3e430e69bb8616b7"
+        },
+        {
+          "offset": 35750000,
+          "points": 250000,
+          "records_sha256": "839b31624d0f8d4afd1138fb33e809a53bef0f5105cf6fe6641c25afc2fdf87d",
+          "xyz_sha256": "127477fb924820d8e622094d12c9d3778350dd872a9c8bd880e9f2a9ae61e099"
+        },
+        {
+          "offset": 36000000,
+          "points": 250000,
+          "records_sha256": "d35b7db398c5935256675560397f20a87ba6f27ed773ac2bf203c702dd65be65",
+          "xyz_sha256": "5cd1bc614b264e187729d9db6af79e752e12c3d2314325ec22ebf8980a9e5b6a"
+        },
+        {
+          "offset": 36250000,
+          "points": 250000,
+          "records_sha256": "67f89f7d73eb1ca82387ec57e9f2d3e2cfd831b7ec2a5cce2cdbcc255820c817",
+          "xyz_sha256": "17080a1a71f5201f8543813aa6891781e45be8f93254676c1b40a708b258c523"
+        },
+        {
+          "offset": 36500000,
+          "points": 250000,
+          "records_sha256": "8269b848278293e871d5f751426446de8893207fff42bdbbfc13fc6e47257d4c",
+          "xyz_sha256": "43d8ea7b608dd42cf8114c8d67b29e17fcd55916e31ec72fed8f34b38a0e9bff"
+        },
+        {
+          "offset": 36750000,
+          "points": 250000,
+          "records_sha256": "9769b4dff0088c3aa26fdf6f1eaa69672f6110854d6f76116e81a1c4ba322899",
+          "xyz_sha256": "6e63ce37127adea2ab70582d2c29295513751f181546dd889a4c71265ac693bc"
+        },
+        {
+          "offset": 37000000,
+          "points": 250000,
+          "records_sha256": "c5701b01ae7e55a88720bb39455cad442fdf7286a87dbb1e8249c1bf04e7a64a",
+          "xyz_sha256": "f16c04ab2e4f250806ac2bf8f2f1cac7ea39be207c23d99aa2dc42e320c0f494"
+        },
+        {
+          "offset": 37250000,
+          "points": 250000,
+          "records_sha256": "2f9cdbc57b6a47b5c843525009391b5aa72aef7457bbf1a9fba40b1d619d35ab",
+          "xyz_sha256": "3ff104801243230d532cf98033d4055e3dc30d622ef16275a51974905d97282d"
+        },
+        {
+          "offset": 37500000,
+          "points": 250000,
+          "records_sha256": "d44a333672646883393576cdbcfde9eb1791bd53807a6df7fa9dcfaa58d5a5cf",
+          "xyz_sha256": "958811c6bcd31262993e26d136ed36ad27165c5aa7db2e6645b2201322bbee08"
+        },
+        {
+          "offset": 37750000,
+          "points": 250000,
+          "records_sha256": "d7379839d95568a0b007bf5af582cd2ca9714e5e12eb36d952e02de192893515",
+          "xyz_sha256": "ff6111e207afb1f7d41efea1d0bc10cd32e4e8d27495b265a329eef810e85a94"
+        },
+        {
+          "offset": 38000000,
+          "points": 250000,
+          "records_sha256": "43929b97a15b264b4e1693e282d4d7cbd5e8a588542f8a15bab98679b274fcf0",
+          "xyz_sha256": "74a9a6da938a6c25ae4a73a94809bc45f905b5e23969abaf4e2ab6955f4d74a1"
+        },
+        {
+          "offset": 38250000,
+          "points": 250000,
+          "records_sha256": "7e52becc7a45b06174269a6f9a4b93af4c957411a3cf26442fc4405ee04e51fc",
+          "xyz_sha256": "b1e7c73be4a60c501062dd7145e81bfab9e335319c242769d3a7ba73f6452899"
+        },
+        {
+          "offset": 38500000,
+          "points": 250000,
+          "records_sha256": "69873ce47895457ebe2f77ca544ea08cd1c9462e1c78260725e24f161893d410",
+          "xyz_sha256": "adc1ae4d1063e46cb52d98764fbce6e3cf7bd8b60ddf13a02383ce8778fdb20f"
+        },
+        {
+          "offset": 38750000,
+          "points": 32040,
+          "records_sha256": "5f9cfcdba7015c09e4d04095f85d03cfef9e09775c40e2ff3cc9f640248da0f9",
+          "xyz_sha256": "a9cc41639a05453c76b1134137d5fd12f0587224c44b52c941840f51b7d2f0a5"
+        }
+      ],
+      "trees": [
+        {
+          "native_id": 1,
+          "native_code": 40,
+          "native_name": "Quercus sp.",
+          "complete_crown": true,
+          "points": 70668
+        },
+        {
+          "native_id": 2,
+          "native_code": 40,
+          "native_name": "Quercus sp.",
+          "complete_crown": true,
+          "points": 504877
+        },
+        {
+          "native_id": 3,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 299717
+        },
+        {
+          "native_id": 4,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 247118
+        },
+        {
+          "native_id": 5,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 197151
+        },
+        {
+          "native_id": 6,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 625451
+        },
+        {
+          "native_id": 7,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 572021
+        },
+        {
+          "native_id": 8,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 579596
+        },
+        {
+          "native_id": 9,
+          "native_code": 40,
+          "native_name": "Quercus sp.",
+          "complete_crown": true,
+          "points": 138419
+        },
+        {
+          "native_id": 10,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 341775
+        },
+        {
+          "native_id": 11,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 131942
+        },
+        {
+          "native_id": 12,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 430269
+        },
+        {
+          "native_id": 13,
+          "native_code": 40,
+          "native_name": "Quercus sp.",
+          "complete_crown": true,
+          "points": 99873
+        },
+        {
+          "native_id": 14,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 366866
+        },
+        {
+          "native_id": 15,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 713954
+        },
+        {
+          "native_id": 16,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 183045
+        },
+        {
+          "native_id": 17,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 255735
+        },
+        {
+          "native_id": 18,
+          "native_code": 43,
+          "native_name": "Quercus rubra",
+          "complete_crown": true,
+          "points": 338854
+        },
+        {
+          "native_id": 19,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 135837
+        },
+        {
+          "native_id": 20,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": false,
+          "points": 164854
+        },
+        {
+          "native_id": 21,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 330741
+        },
+        {
+          "native_id": 22,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 118069
+        },
+        {
+          "native_id": 23,
+          "native_code": 40,
+          "native_name": "Quercus sp.",
+          "complete_crown": true,
+          "points": 222509
+        },
+        {
+          "native_id": 24,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 164995
+        },
+        {
+          "native_id": 25,
+          "native_code": 40,
+          "native_name": "Quercus sp.",
+          "complete_crown": true,
+          "points": 134634
+        },
+        {
+          "native_id": 26,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 413382
+        },
+        {
+          "native_id": 27,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 375840
+        },
+        {
+          "native_id": 28,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 253308
+        },
+        {
+          "native_id": 29,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 407427
+        },
+        {
+          "native_id": 30,
+          "native_code": 40,
+          "native_name": "Quercus sp.",
+          "complete_crown": true,
+          "points": 143794
+        },
+        {
+          "native_id": 31,
+          "native_code": 1,
+          "native_name": "Pinus sylvestris",
+          "complete_crown": true,
+          "points": 554966
+        },
+        {
+          "native_id": 32,
+          "native_code": 40,
+          "native_name": "Quercus sp.",
+          "complete_crown": true,
+          "points": 336032
+        },
+        {
+          "native_id": 33,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": true,
+          "points": 305281
+        },
+        {
+          "native_id": 34,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": true,
+          "points": 136451
+        },
+        {
+          "native_id": 35,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": true,
+          "points": 12154
+        },
+        {
+          "native_id": 36,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": true,
+          "points": 46876
+        },
+        {
+          "native_id": 37,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": true,
+          "points": 45572
+        },
+        {
+          "native_id": 38,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": true,
+          "points": 628330
+        },
+        {
+          "native_id": 39,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": true,
+          "points": 401451
+        },
+        {
+          "native_id": 40,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": true,
+          "points": 76836
+        },
+        {
+          "native_id": 41,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 129670
+        },
+        {
+          "native_id": 42,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 77657
+        },
+        {
+          "native_id": 43,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 33603
+        },
+        {
+          "native_id": 44,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 116902
+        },
+        {
+          "native_id": 45,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 238978
+        },
+        {
+          "native_id": 46,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 78172
+        },
+        {
+          "native_id": 47,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 113238
+        },
+        {
+          "native_id": 48,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 125883
+        },
+        {
+          "native_id": 49,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 79243
+        },
+        {
+          "native_id": 50,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 326204
+        },
+        {
+          "native_id": 51,
+          "native_code": 0,
+          "native_name": "unknown",
+          "complete_crown": false,
+          "points": 219688
+        }
+      ],
+      "reference_origin": "Native treeID/treeSP/completelyInside fields; companion tree rows are never used to label points",
+      "companion_review": {
+        "status": "disagrees",
+        "disagreements": [
+          {
+            "native_id": 1,
+            "native": {
+              "native_id": 1,
+              "native_code": 40,
+              "native_name": "Quercus sp.",
+              "complete_crown": true,
+              "points": 70668
+            },
+            "companion": {
+              "native_id": 1,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 305281
+            }
+          },
+          {
+            "native_id": 2,
+            "native": {
+              "native_id": 2,
+              "native_code": 40,
+              "native_name": "Quercus sp.",
+              "complete_crown": true,
+              "points": 504877
+            },
+            "companion": {
+              "native_id": 2,
+              "native_code": 40,
+              "native_name": "Quercus species",
+              "complete_crown": true,
+              "points": 70665
+            }
+          },
+          {
+            "native_id": 3,
+            "native": {
+              "native_id": 3,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 299717
+            },
+            "companion": {
+              "native_id": 3,
+              "native_code": 40,
+              "native_name": "Quercus species",
+              "complete_crown": true,
+              "points": 504877
+            }
+          },
+          {
+            "native_id": 4,
+            "native": {
+              "native_id": 4,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 247118
+            },
+            "companion": {
+              "native_id": 4,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 129670
+            }
+          },
+          {
+            "native_id": 5,
+            "native": {
+              "native_id": 5,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 197151
+            },
+            "companion": {
+              "native_id": 5,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 299717
+            }
+          },
+          {
+            "native_id": 6,
+            "native": {
+              "native_id": 6,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 625451
+            },
+            "companion": {
+              "native_id": 6,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 247118
+            }
+          },
+          {
+            "native_id": 7,
+            "native": {
+              "native_id": 7,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 572021
+            },
+            "companion": {
+              "native_id": 7,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 197151
+            }
+          },
+          {
+            "native_id": 8,
+            "native": {
+              "native_id": 8,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 579596
+            },
+            "companion": {
+              "native_id": 8,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 77657
+            }
+          },
+          {
+            "native_id": 9,
+            "native": {
+              "native_id": 9,
+              "native_code": 40,
+              "native_name": "Quercus sp.",
+              "complete_crown": true,
+              "points": 138419
+            },
+            "companion": {
+              "native_id": 9,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 625449
+            }
+          },
+          {
+            "native_id": 10,
+            "native": {
+              "native_id": 10,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 341775
+            },
+            "companion": {
+              "native_id": 10,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 33603
+            }
+          },
+          {
+            "native_id": 11,
+            "native": {
+              "native_id": 11,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 131942
+            },
+            "companion": {
+              "native_id": 11,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 116899
+            }
+          },
+          {
+            "native_id": 12,
+            "native": {
+              "native_id": 12,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 430269
+            },
+            "companion": {
+              "native_id": 12,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 572008
+            }
+          },
+          {
+            "native_id": 13,
+            "native": {
+              "native_id": 13,
+              "native_code": 40,
+              "native_name": "Quercus sp.",
+              "complete_crown": true,
+              "points": 99873
+            },
+            "companion": {
+              "native_id": 13,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 579591
+            }
+          },
+          {
+            "native_id": 14,
+            "native": {
+              "native_id": 14,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 366866
+            },
+            "companion": {
+              "native_id": 14,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 136451
+            }
+          },
+          {
+            "native_id": 15,
+            "native": {
+              "native_id": 15,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 713954
+            },
+            "companion": {
+              "native_id": 15,
+              "native_code": 40,
+              "native_name": "Quercus species",
+              "complete_crown": true,
+              "points": 138419
+            }
+          },
+          {
+            "native_id": 16,
+            "native": {
+              "native_id": 16,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 183045
+            },
+            "companion": {
+              "native_id": 16,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 238978
+            }
+          },
+          {
+            "native_id": 17,
+            "native": {
+              "native_id": 17,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 255735
+            },
+            "companion": {
+              "native_id": 17,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 12155
+            }
+          },
+          {
+            "native_id": 18,
+            "native": {
+              "native_id": 18,
+              "native_code": 43,
+              "native_name": "Quercus rubra",
+              "complete_crown": true,
+              "points": 338854
+            },
+            "companion": {
+              "native_id": 18,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 341772
+            }
+          },
+          {
+            "native_id": 19,
+            "native": {
+              "native_id": 19,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 135837
+            },
+            "companion": {
+              "native_id": 19,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 46876
+            }
+          },
+          {
+            "native_id": 20,
+            "native": {
+              "native_id": 20,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": false,
+              "points": 164854
+            },
+            "companion": {
+              "native_id": 20,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 131942
+            }
+          },
+          {
+            "native_id": 21,
+            "native": {
+              "native_id": 21,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 330741
+            },
+            "companion": {
+              "native_id": 21,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 430268
+            }
+          },
+          {
+            "native_id": 22,
+            "native": {
+              "native_id": 22,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 118069
+            },
+            "companion": {
+              "native_id": 22,
+              "native_code": 40,
+              "native_name": "Quercus species",
+              "complete_crown": true,
+              "points": 99873
+            }
+          },
+          {
+            "native_id": 23,
+            "native": {
+              "native_id": 23,
+              "native_code": 40,
+              "native_name": "Quercus sp.",
+              "complete_crown": true,
+              "points": 222509
+            },
+            "companion": {
+              "native_id": 23,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 366865
+            }
+          },
+          {
+            "native_id": 24,
+            "native": {
+              "native_id": 24,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 164995
+            },
+            "companion": {
+              "native_id": 24,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 713946
+            }
+          },
+          {
+            "native_id": 25,
+            "native": {
+              "native_id": 25,
+              "native_code": 40,
+              "native_name": "Quercus sp.",
+              "complete_crown": true,
+              "points": 134634
+            },
+            "companion": {
+              "native_id": 25,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 183028
+            }
+          },
+          {
+            "native_id": 26,
+            "native": {
+              "native_id": 26,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 413382
+            },
+            "companion": {
+              "native_id": 26,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 255735
+            }
+          },
+          {
+            "native_id": 27,
+            "native": {
+              "native_id": 27,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 375840
+            },
+            "companion": {
+              "native_id": 27,
+              "native_code": 43,
+              "native_name": "Quercus rubra",
+              "complete_crown": true,
+              "points": 338849
+            }
+          },
+          {
+            "native_id": 28,
+            "native": {
+              "native_id": 28,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 253308
+            },
+            "companion": {
+              "native_id": 28,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 78172
+            }
+          },
+          {
+            "native_id": 29,
+            "native": {
+              "native_id": 29,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 407427
+            },
+            "companion": {
+              "native_id": 29,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 135837
+            }
+          },
+          {
+            "native_id": 30,
+            "native": {
+              "native_id": 30,
+              "native_code": 40,
+              "native_name": "Quercus sp.",
+              "complete_crown": true,
+              "points": 143794
+            },
+            "companion": {
+              "native_id": 30,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 45572
+            }
+          },
+          {
+            "native_id": 31,
+            "native": {
+              "native_id": 31,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 554966
+            },
+            "companion": {
+              "native_id": 31,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 164854
+            }
+          },
+          {
+            "native_id": 32,
+            "native": {
+              "native_id": 32,
+              "native_code": 40,
+              "native_name": "Quercus sp.",
+              "complete_crown": true,
+              "points": 336032
+            },
+            "companion": {
+              "native_id": 32,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 330741
+            }
+          },
+          {
+            "native_id": 33,
+            "native": {
+              "native_id": 33,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 305281
+            },
+            "companion": {
+              "native_id": 33,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 113238
+            }
+          },
+          {
+            "native_id": 34,
+            "native": {
+              "native_id": 34,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 136451
+            },
+            "companion": {
+              "native_id": 34,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 118069
+            }
+          },
+          {
+            "native_id": 35,
+            "native": {
+              "native_id": 35,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 12154
+            },
+            "companion": {
+              "native_id": 35,
+              "native_code": 40,
+              "native_name": "Quercus species",
+              "complete_crown": true,
+              "points": 222509
+            }
+          },
+          {
+            "native_id": 36,
+            "native": {
+              "native_id": 36,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 46876
+            },
+            "companion": {
+              "native_id": 36,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 164995
+            }
+          },
+          {
+            "native_id": 37,
+            "native": {
+              "native_id": 37,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 45572
+            },
+            "companion": {
+              "native_id": 37,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 628250
+            }
+          },
+          {
+            "native_id": 38,
+            "native": {
+              "native_id": 38,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 628330
+            },
+            "companion": {
+              "native_id": 38,
+              "native_code": 40,
+              "native_name": "Quercus species",
+              "complete_crown": true,
+              "points": 134630
+            }
+          },
+          {
+            "native_id": 39,
+            "native": {
+              "native_id": 39,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 401451
+            },
+            "companion": {
+              "native_id": 39,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 413379
+            }
+          },
+          {
+            "native_id": 40,
+            "native": {
+              "native_id": 40,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 76836
+            },
+            "companion": {
+              "native_id": 40,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 401447
+            }
+          },
+          {
+            "native_id": 41,
+            "native": {
+              "native_id": 41,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 129670
+            },
+            "companion": {
+              "native_id": 41,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 125882
+            }
+          },
+          {
+            "native_id": 42,
+            "native": {
+              "native_id": 42,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 77657
+            },
+            "companion": {
+              "native_id": 42,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 76836
+            }
+          },
+          {
+            "native_id": 43,
+            "native": {
+              "native_id": 43,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 33603
+            },
+            "companion": {
+              "native_id": 43,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 375837
+            }
+          },
+          {
+            "native_id": 44,
+            "native": {
+              "native_id": 44,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 116902
+            },
+            "companion": {
+              "native_id": 44,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 253306
+            }
+          },
+          {
+            "native_id": 45,
+            "native": {
+              "native_id": 45,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 238978
+            },
+            "companion": {
+              "native_id": 45,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 79243
+            }
+          },
+          {
+            "native_id": 46,
+            "native": {
+              "native_id": 46,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 78172
+            },
+            "companion": {
+              "native_id": 46,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 407426
+            }
+          },
+          {
+            "native_id": 47,
+            "native": {
+              "native_id": 47,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 113238
+            },
+            "companion": {
+              "native_id": 47,
+              "native_code": 40,
+              "native_name": "Quercus species",
+              "complete_crown": true,
+              "points": 143791
+            }
+          },
+          {
+            "native_id": 48,
+            "native": {
+              "native_id": 48,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 125883
+            },
+            "companion": {
+              "native_id": 48,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 326201
+            }
+          },
+          {
+            "native_id": 49,
+            "native": {
+              "native_id": 49,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 79243
+            },
+            "companion": {
+              "native_id": 49,
+              "native_code": 1,
+              "native_name": "Pinus sylvestris",
+              "complete_crown": true,
+              "points": 554960
+            }
+          },
+          {
+            "native_id": 50,
+            "native": {
+              "native_id": 50,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 326204
+            },
+            "companion": {
+              "native_id": 50,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": true,
+              "points": 219681
+            }
+          },
+          {
+            "native_id": 51,
+            "native": {
+              "native_id": 51,
+              "native_code": 0,
+              "native_name": "unknown",
+              "complete_crown": false,
+              "points": 219688
+            },
+            "companion": {
+              "native_id": 51,
+              "native_code": 40,
+              "native_name": "Quercus species",
+              "complete_crown": true,
+              "points": 336032
+            }
+          }
+        ],
+        "companion_only_ids": []
+      },
+      "unassigned_points": 25736132,
+      "published_split": "unassigned"
+    }
+  ],
+  "admission": {
+    "status": "pending",
+    "authorization": null,
+    "scope": "Only the two completely audited native plot observations listed in this registry"
+  },
+  "leaf_group_policy": "Source-scoped GBIF genus classification: Pinopsida -> conifer; Magnoliopsida -> broadleaf. Not a leaf-persistence classification."
+}

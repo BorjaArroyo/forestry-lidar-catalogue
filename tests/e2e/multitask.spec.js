@@ -15,11 +15,13 @@ test('shared objectives, source and coverage persist in application navigation a
   await expect(page.locator('#workspace-source-list')).toContainText('TreeScan');
   await expect(page.locator('#workspace-source-list')).not.toContainText('FOR-instance');
   await page.locator('#workspace-source-list [data-experiment-add="19127709"]').click();
+  await expect(page.locator('[data-joint-plot]')).toHaveCount(2);
+  for (const input of await page.locator('[data-joint-plot]').all()) await input.check();
   await section(page, 'preparation').click();
   await page.locator('[name="experiment-coverage"][value="partial"]').check();
-  await expect(page.locator('#experiment-coverage-counts')).toContainText('10,447');
+  await expect(page.locator('#experiment-coverage-counts')).toContainText('61');
   await page.locator('[name="experiment-coverage"][value="joint"]').check();
-  await expect(page.locator('#experiment-coverage-counts')).toContainText('3,509');
+  await expect(page.locator('#experiment-coverage-counts')).toContainText('32');
   await section(page, 'review').click();
   await expect(page.locator('#experiment-run')).toBeDisabled();
   await expect(page.locator('#workspace-single-task-routes')).toBeHidden();
@@ -27,7 +29,7 @@ test('shared objectives, source and coverage persist in application navigation a
   await expect(page.locator('#workspace-review-summary')).toContainText(
     'All selected references required',
   );
-  await expect(page.locator('#workspace-review-summary')).toContainText('6,938');
+  await expect(page.locator('#workspace-review-summary')).toContainText('2 complete audited plots');
   await page.locator('#workspace-consumer-description summary').click();
   await expect(page.locator('#workspace-consumer-fields')).toContainText('validity.taxonomy');
   await expect(page.locator('#workspace-consumer-fields')).toContainText('relations.point_to_tree');
@@ -51,7 +53,7 @@ test('rank and crown filters affect candidates while joint drafts cannot trigger
   await page.locator('#experiment-source-evidence summary').click();
   await page.locator('#experiment-complete-crowns').check();
   await section(page, 'preparation').click();
-  await expect(page.locator('#experiment-coverage-counts')).toContainText('7,393');
+  await expect(page.locator('#experiment-coverage-counts')).toContainText('Genus');
   await section(page, 'review').click();
   await page.evaluate(() => {
     document.getElementById('prepare-run').click();
@@ -62,7 +64,7 @@ test('rank and crown filters affect candidates while joint drafts cannot trigger
   await page.locator('.sidebar [data-workspace-section="runs"]').click();
   await expect(page.locator('#experiment-runs-info')).toBeVisible();
   await expect(page.locator('#workspace-review-summary')).toBeHidden();
-  await page.getByRole('button', { name: 'Choose an individual task' }).click();
+  await page.getByRole('button', { name: 'Edit objectives' }).click();
   await page.locator('[data-workspace-task="task:species"]').uncheck();
   await section(page, 'data').click();
   await expect(page.locator('[data-workspace-source="8287792"]')).toBeVisible();
@@ -74,7 +76,9 @@ for (const width of [1280, 1440])
     await page.goto('./?tasks=instances,species&sources=19127709&coverage=partial#experiment/data');
     for (const view of ['data', 'preparation', 'splits', 'review']) {
       await section(page, view).click();
-      await expect(page.locator('#workspace-context-text')).toContainText('Instances + taxonomy');
+      await expect(page.locator('#workspace-context-text')).toContainText(
+        'Instances + tree classification',
+      );
       expect(
         await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
       ).toBe(true);

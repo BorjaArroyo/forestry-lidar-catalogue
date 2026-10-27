@@ -807,3 +807,25 @@ body[data-area='datasets'] .task-request:has(#workspace-requirements[open]) {
     font-size: 26px;
   }
 }
+
+#joint-plots .experiment-check {
+  align-items: flex-start;
+  margin: 12px 0;
+}
+#joint-plots small {
+  display: block;
+  color: var(--muted);
+  margin-top: 4px;
+}
+#joint-plan-text {
+  max-height: 400px;
+  overflow: auto;
+  font-size: 13px;
+}
+#experiment-review-blockers > label {
+  display: block;
+  margin: 12px 0;
+}
+#joint-plan-import {
+  width: 230px;
+}
