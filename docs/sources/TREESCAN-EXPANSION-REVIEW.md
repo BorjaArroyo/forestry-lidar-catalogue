@@ -1,10 +1,9 @@
 # TreeScanPL10K expanded candidate audit
 
 On 2026-10-27, four additional complete TreeScan clouds were selected and
-inspected for a future joint instance and tree-classification workflow. Their
-native audit is evidence for a proposed expansion; **none of these four plots is
-admitted or selectable in the existing joint pipeline**. The maintainer's prior
-authorization covered only the two plots in the [joint source review](TREESCAN-JOINT.md).
+inspected for a joint instance and tree-classification workflow. The maintainer
+requested the audit and integration of this expansion on 2026-10-28. These four
+plots join the two previously admitted plots in the bounded joint source lock.
 
 ## Selection
 
@@ -46,6 +45,15 @@ are not certified background. Code 40 (`Quercus sp.`) supplies genus and group
 but not species. The conifer/broadleaf mapping is the source-scoped taxonomy
 mapping documented in the existing [joint review](TREESCAN-JOINT.md).
 
+## Prepared-package validation
+
+Native preparation and independent validation covered all four complete clouds:
+297,065,322 points, 177 trees and 1,191 blocks. The species-target partial-reference
+plan retained 121 eligible tree labels. The validation report, source lock hash and
+implementation fingerprints are recorded in
+[`expanded-package-validation.json`](../../evidence/joint/expanded-package-validation.json).
+This validation does not establish correctness of the provider annotations.
+
 ## Companion comparison
 
 At equal numeric tree IDs, the native and companion values disagree as follows:
@@ -65,11 +73,9 @@ points.
 
 The complete provider ZIP MD5 values were not checked. The audit establishes
 internal consistency of native fields, not annotation correctness, completeness,
-coordinate datum or evaluation independence. The four candidate plots have not
-yet passed full prepared-package and browser validation for an expanded source
-scope, and there is no reviewed train/test split. Adding these plots requires a
-scope-specific admission decision and downstream validation; the source lock
-and the two currently admitted plots remain unchanged.
+coordinate datum or evaluation independence. There is no reviewed train/test
+split. Browser validation of the four new complete plots and full-release
+browser scalability remain unestablished.
 
 To reproduce the native audit, place the four original LAZ members and the three
 pinned companion files listed in `metadata_assets` of the selection evidence in

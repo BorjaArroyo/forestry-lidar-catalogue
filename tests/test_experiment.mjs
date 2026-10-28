@@ -49,12 +49,12 @@ test('audited coverage measures actual tree labels at the chosen classification 
     complete_crowns: false,
   };
   const partial = jointCoverage(source, request);
-  assert.equal(partial.total, 61);
-  assert.equal(partial.eligible, 61);
-  assert.equal(partial.taxonomy, 32);
-  assert.equal(jointCoverage(source, { ...request, policy: 'joint' }).eligible, 32);
-  assert.equal(jointCoverage(source, { ...request, target: 'genus' }).taxonomy, 40);
-  assert.equal(jointCoverage(source, { ...request, target: 'leaf_group' }).taxonomy, 40);
+  assert.equal(partial.total, 238);
+  assert.equal(partial.eligible, 238);
+  assert.equal(partial.taxonomy, 153);
+  assert.equal(jointCoverage(source, { ...request, policy: 'joint' }).eligible, 153);
+  assert.equal(jointCoverage(source, { ...request, target: 'genus' }).taxonomy, 175);
+  assert.equal(jointCoverage(source, { ...request, target: 'leaf_group' }).taxonomy, 175);
   assert.equal(jointCoverage(source, { ...request, plots: [] }).points, 0);
 });
 

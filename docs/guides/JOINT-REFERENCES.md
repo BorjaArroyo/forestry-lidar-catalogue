@@ -8,10 +8,10 @@ classification head; no ForestFormer training implementation is included.
 
 ## Audited source scope
 
-The versioned registry at `data/joint/source-lock.json` contains two completely
-audited TreeScanPL10K clouds: 71,885,097 points and 61 plot-local trees. The
+The versioned registry at `data/joint/source-lock.json` contains six completely
+audited TreeScanPL10K clouds: 368,950,419 points and 238 plot-local trees. The
 [source review](../sources/TREESCAN-JOINT.md) records the native evidence and
-companion-table discrepancies. The remaining 270 provider plots are outside
+companion-table discrepancies. The remaining 266 provider plots are outside
 this execution scope. This is not full-release browser scalability evidence.
 
 Scientific admission remains explicit in the joint registry. A successful audit,

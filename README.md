@@ -231,9 +231,9 @@ for rank-specific labels, native sensor views, source conditions and audited lim
 ## Prepare linked instances and tree classification
 
 Select both objectives for the same-observation TreeScan route. The bounded native
-audit covers two complete plots, 71,885,097 points and 61 trees. Species, genus and
+audit covers six complete plots, 368,950,419 points and 238 trees. Species, genus and
 conifer/broadleaf labels remain tree-level targets with independent masks. Exact
 plans, ZIP export, saved output management and the NumPy loader share the workflow.
-Execution requires explicit scientific admission of that scope. See
+Execution is limited to the explicitly admitted scope. See
 [the joint reference guide](docs/guides/JOINT-REFERENCES.md) and
 [the native source review](docs/sources/TREESCAN-JOINT.md).
