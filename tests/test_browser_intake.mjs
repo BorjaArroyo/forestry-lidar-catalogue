@@ -11,6 +11,7 @@ import {
   providerReader,
   MAX_RANGE_BYTES,
 } from '../browser-prepare/intake.js';
+import { extractJointPlot, jointProviderReader } from '../browser-prepare/joint-intake.js';
 
 const zipPath = path.resolve('browser-prepare/vendor/zip.min.js');
 const zipModule = new Module(zipPath);
@@ -45,6 +46,49 @@ test('ZIP64 extracts the exact selected member with CRC and bounded storage writ
   assert.equal(result.crc32_checked, true);
   assert.match(result.archive_verification, /whole-archive checksum not checked/);
   assert.throws(() => memberName({ path: '../foreign.las' }), /profile/);
+});
+
+test('joint intake accepts only matching redundant ZIP64 end records', async () => {
+  const blob = new zip.BlobWriter();
+  const writer = new zip.ZipWriter(blob, { level: 0 });
+  await writer.add('RMIT/test.las', new zip.TextReader('abcdef'));
+  await writer.close();
+  const original = Buffer.from(await (await blob.getData()).arrayBuffer());
+  const end = original.length - 22;
+  const extra = Buffer.alloc(76);
+  extra.writeUInt32LE(0x06064b50, 0);
+  extra.writeBigUInt64LE(44n, 4);
+  extra.writeUInt16LE(45, 12);
+  extra.writeUInt16LE(45, 14);
+  extra.writeBigUInt64LE(BigInt(original.readUInt16LE(end + 8)), 24);
+  extra.writeBigUInt64LE(BigInt(original.readUInt16LE(end + 10)), 32);
+  extra.writeBigUInt64LE(BigInt(original.readUInt32LE(end + 12)), 40);
+  extra.writeBigUInt64LE(BigInt(original.readUInt32LE(end + 16)), 48);
+  extra.writeUInt32LE(0x07064b50, 56);
+  extra.writeBigUInt64LE(BigInt(end), 64);
+  extra.writeUInt32LE(1, 72);
+  const bytes = Buffer.concat([original.subarray(0, end), extra, original.subarray(end)]);
+  const read = async () => {
+    const chunks = [];
+    await extractJointPlot(zip, localReader(zip, new Blob([bytes])), plot, async (part) =>
+      chunks.push(part),
+    );
+    return Buffer.concat(chunks).toString();
+  };
+  assert.equal(await read(), 'abcdef');
+  bytes.writeBigUInt64LE(2n, end + 32);
+  await assert.rejects(read(), /ambiguous/i);
+});
+
+test('joint intake retries a temporary provider rate limit', async () => {
+  let calls = 0;
+  const remote = jointProviderReader(zip, asset, plot, async () =>
+    ++calls === 1
+      ? new Response('limited', { status: 429 })
+      : new Response(new Uint8Array([1, 2, 3]), { status: 206 }),
+  );
+  assert.deepEqual(await remote.reader.readUint8Array(0, 3), new Uint8Array([1, 2, 3]));
+  assert.equal(calls, 2);
 });
 
 test('missing member and mismatched source size fail before output completion', async () => {

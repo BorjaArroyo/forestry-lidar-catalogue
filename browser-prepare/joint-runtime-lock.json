@@ -3,8 +3,8 @@
   "files": {
     "browser-prepare/runtime-lock.json": {
       "path": "browser-prepare/runtime-lock.json",
-      "size_bytes": 30776,
-      "sha256": "738cccde1104b80ddc778f09677089dbb4a4a4422bd43a3d12d0c2823c0d2cdb"
+      "size_bytes": 30981,
+      "sha256": "1bec4f10a222efd79ecfebe0b87cf48f45520b7513bec99e5e734f083e05493a"
     },
     "browser-prepare/runtime.js": {
       "path": "browser-prepare/runtime.js",
@@ -76,6 +76,11 @@
       "size_bytes": 170001,
       "sha256": "932c4626c366ace05094d4648220621b9868d305256c1143a3f3e3a38dd974b0"
     },
+    "browser-prepare/joint-intake.js": {
+      "path": "browser-prepare/joint-intake.js",
+      "size_bytes": 2409,
+      "sha256": "3f4d82d7056fe11dbbd9422cebce85309c780db45d52614eef6c58422d3b26b8"
+    },
     "browser-prepare/joint-runtime.js": {
       "path": "browser-prepare/joint-runtime.js",
       "size_bytes": 2352,
@@ -88,8 +93,8 @@
     },
     "browser-prepare/joint-worker.js": {
       "path": "browser-prepare/joint-worker.js",
-      "size_bytes": 7968,
-      "sha256": "2bd2c34ecca2e8b5eca374e9c0efbbbd9fdacad455766ba6e0999be506ec26db"
+      "size_bytes": 7994,
+      "sha256": "4ccfa48186673244c7a6b86b6c034e43980431fe2326be4dbc3e7dc407f9412e"
     }
   }
 }

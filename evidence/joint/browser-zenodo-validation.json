@@ -1,0 +1,65 @@
+{
+  "browser": "156.0.8078.4",
+  "quota": {
+    "quota": 10737418240,
+    "usage": 0,
+    "usageDetails": {}
+  },
+  "plan_totals": {
+    "plots": 1,
+    "points": 61397777,
+    "trees": 34,
+    "taxonomy_valid": 18,
+    "instance_eligible": 34,
+    "taxonomy_eligible": 18,
+    "source_bytes": 271068720,
+    "estimated_browser_storage_bytes": 9580087846
+  },
+  "started_at": "2026-10-28T11:31:33.575Z",
+  "elapsed_seconds": 277.414,
+  "validation": {
+    "plan_sha256": "5111eb6b8d632589c6a89241bf166eafd09cfa9e9d349616a5737c8647bcc0d6",
+    "size_bytes": 4605630221,
+    "zip_sha256": "58c85f317cdd7379b9b22092d994c1183e47723b1902812cff09b460239c272d",
+    "validation": {
+      "status": "validated",
+      "scope": "All exported blocks and both linked reference targets",
+      "plan_sha256": "5111eb6b8d632589c6a89241bf166eafd09cfa9e9d349616a5737c8647bcc0d6",
+      "points": 61397777,
+      "blocks": 246,
+      "trees": 34,
+      "taxonomy_eligible": 18
+    }
+  },
+  "schema_version": "1.0.0",
+  "reviewed_at": "2026-10-28",
+  "source_plot": "Rem_Suprasl_2015_3501204.laz",
+  "input": "Pinned Zenodo batch_26.zip via browser range requests",
+  "last_observed_transfer": {
+    "elapsed_seconds": 111.783,
+    "status": "Rem_Suprasl_2015_3501204.laz: 257.5 MiB retrieved\u2026"
+  },
+  "first_observed_processing": {
+    "elapsed_seconds": 113.79,
+    "status": "Rem_Suprasl_2015_3501204.laz: 750000 / 61397777 points; tree taxonomy stays on the tree axis"
+  },
+  "native_validation": {
+    "status": "validated",
+    "scope": "All exported blocks and both linked reference targets",
+    "plan_sha256": "5111eb6b8d632589c6a89241bf166eafd09cfa9e9d349616a5737c8647bcc0d6",
+    "points": 61397777,
+    "blocks": 246,
+    "trees": 34,
+    "taxonomy_eligible": 18
+  },
+  "download_sha256": "58c85f317cdd7379b9b22092d994c1183e47723b1902812cff09b460239c272d",
+  "source_lock_sha256": "931e7e90340956c71b6f76a6db208b82e9dc59f2cdc46a80bc6849e6dfea81f5",
+  "runtime_lock_sha256": "2b1e7a9b915f6653e3a4ec157a9d77dfe0571a6a4e0170e93570ce75996839bc",
+  "limitations": [
+    "One complete plot in a fresh persistent Chromium profile; Firefox and full-release scale are not covered",
+    "Selected member CRC and audited LAZ hash checked; whole provider archive checksum not checked",
+    "Provider annotations, geographic independence and train/test split are not established",
+    "Browser quota, network conditions and eviction depend on the environment"
+  ],
+  "joint_intake_sha256": "3f4d82d7056fe11dbbd9422cebce85309c780db45d52614eef6c58422d3b26b8"
+}
