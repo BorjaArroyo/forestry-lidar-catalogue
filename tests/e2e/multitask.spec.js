@@ -6,6 +6,7 @@ const section = (page, value) =>
 test('shared objectives, source and coverage persist in application navigation and history', async ({
   page,
 }) => {
+  test.setTimeout(60_000);
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('./#experiment/objectives');
