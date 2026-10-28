@@ -1,0 +1,56 @@
+{
+  "browser": "156.0.8078.4",
+  "elapsed_seconds": 187.012,
+  "quota": {
+    "quota": 10737418240,
+    "usage": 0,
+    "usageDetails": {}
+  },
+  "plan_totals": {
+    "plots": 1,
+    "points": 61397777,
+    "trees": 34,
+    "taxonomy_valid": 18,
+    "instance_eligible": 34,
+    "taxonomy_eligible": 18,
+    "source_bytes": 271068720,
+    "estimated_browser_storage_bytes": 9580087846
+  },
+  "validation": {
+    "plan_sha256": "52f8400455454672e623e1dabc75892a72148cf06d43f86701472ace3325a01a",
+    "size_bytes": 4605630221,
+    "zip_sha256": "222ee2659f0d2c6f37ccb6ad7e446bbfc775b85cc1ce378eb9202703f8dcc5a6",
+    "validation": {
+      "status": "validated",
+      "scope": "All exported blocks and both linked reference targets",
+      "plan_sha256": "52f8400455454672e623e1dabc75892a72148cf06d43f86701472ace3325a01a",
+      "points": 61397777,
+      "blocks": 246,
+      "trees": 34,
+      "taxonomy_eligible": 18
+    }
+  },
+  "schema_version": "1.0.0",
+  "reviewed_at": "2026-10-28",
+  "source_plot": "Rem_Suprasl_2015_3501204.laz",
+  "input": "Local original LAZ; production source lock and runtime",
+  "native_validation": {
+    "status": "validated",
+    "scope": "All exported blocks and both linked reference targets",
+    "plan_sha256": "52f8400455454672e623e1dabc75892a72148cf06d43f86701472ace3325a01a",
+    "points": 61397777,
+    "blocks": 246,
+    "trees": 34,
+    "taxonomy_eligible": 18
+  },
+  "download_sha256": "222ee2659f0d2c6f37ccb6ad7e446bbfc775b85cc1ce378eb9202703f8dcc5a6",
+  "limitations": [
+    "One complete plot in a fresh persistent Chromium profile; provider range intake, Firefox, and full-release scale are not covered",
+    "Whole provider archive checksum and annotation correctness are not established",
+    "No reviewed train/test split or geographic independence",
+    "Browser quota and eviction depend on the environment"
+  ],
+  "source_lock_sha256": "931e7e90340956c71b6f76a6db208b82e9dc59f2cdc46a80bc6849e6dfea81f5",
+  "runtime_lock_sha256": "094e75e6f7b635526ea7f23dd74bd2e4baf7ab2bd4ff831dd33daf3a95c88d34",
+  "checkout_commit": "c5038452b08aeed33afcb8b1fe67b3f76cb734d9"
+}
