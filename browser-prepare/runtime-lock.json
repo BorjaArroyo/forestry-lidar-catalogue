@@ -697,8 +697,8 @@
     },
     "browser-prepare/joint-worker.js": {
       "url": "browser-prepare/joint-worker.js",
-      "size_bytes": 7968,
-      "sha256": "2bd2c34ecca2e8b5eca374e9c0efbbbd9fdacad455766ba6e0999be506ec26db"
+      "size_bytes": 7994,
+      "sha256": "4ccfa48186673244c7a6b86b6c034e43980431fe2326be4dbc3e7dc407f9412e"
     },
     "browser-prepare/joint-store.js": {
       "url": "browser-prepare/joint-store.js",
@@ -709,6 +709,11 @@
       "url": "browser-prepare/joint-runtime.js",
       "size_bytes": 2352,
       "sha256": "5cb00f379d44198d0626c5b7803a83c8b204eae600de17bc243b2a5316ab8ba7"
+    },
+    "browser-prepare/joint-intake.js": {
+      "url": "browser-prepare/joint-intake.js",
+      "size_bytes": 2409,
+      "sha256": "3f4d82d7056fe11dbbd9422cebce85309c780db45d52614eef6c58422d3b26b8"
     }
   },
   "zip_js": "2.20.0",

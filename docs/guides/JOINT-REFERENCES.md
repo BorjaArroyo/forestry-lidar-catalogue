@@ -19,8 +19,11 @@ original LAZ and the downloaded ZIP was independently validated with the native
 reader: 61,397,777 points, 34 trees and 246 blocks. The run took 187 seconds;
 the ZIP was 4.61 GB and the plan estimated 9.58 GB of browser storage. See
 [the recorded evidence](../../evidence/joint/browser-expanded-validation.json).
-This single-plot test does not establish provider range intake, Firefox behavior
-or full-release scalability.
+The same plot also passed pinned Zenodo range intake in Chromium, followed by
+independent validation of the downloaded ZIP. The complete run took 277 seconds;
+the last observed transfer progress was 257.5 MiB at 112 seconds. See the
+[provider intake evidence](../../evidence/joint/browser-zenodo-validation.json).
+These single-plot tests do not establish Firefox behavior or full-release scalability.
 
 Scientific admission remains explicit in the joint registry. A successful audit,
 test or plan review cannot change its `admission` decision. Pending scopes can

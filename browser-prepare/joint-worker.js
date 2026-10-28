@@ -1,7 +1,7 @@
 /* One complete observation supplies point instances and tree-level taxonomy. */
 import { loadJointContext } from './joint-runtime.js';
 import { decodeObservation } from './classification-las.js';
-import { extractPlot, providerReader } from './intake.js';
+import { extractJointPlot, jointProviderReader } from './joint-intake.js';
 import { writeArchive } from './export.js';
 import { directory, write, mountBlocks } from './storage.js';
 import { fingerprint } from './classification-model.js';
@@ -26,14 +26,14 @@ export async function executeJoint({ context, py, plan, root, inputs = [], progr
       if (inputs.length) throw Error('Selected local cloud is missing: ' + plot.path);
       const asset = plan.archives.find((a) => a.name === plot.archive);
       const requested = { ...plot, archive_member: plot.path };
-      const range = providerReader(tools.zip, asset, requested, context.nativeFetch, (stats) =>
+      const range = jointProviderReader(tools.zip, asset, requested, context.nativeFetch, (stats) =>
         progress(`${plot.path}: ${(stats.bytes_received / 1048576).toFixed(1)} MiB retrieved…`),
       );
       const target = await staging.getFileHandle('cloud.laz', { create: true });
       const access = await target.createSyncAccessHandle();
       try {
         access.truncate(0);
-        await extractPlot(tools.zip, range.reader, requested, async (bytes, position) => {
+        await extractJointPlot(tools.zip, range.reader, requested, async (bytes, position) => {
           let offset = 0;
           while (offset < bytes.length) {
             const count = access.write(bytes.subarray(offset), { at: position + offset });

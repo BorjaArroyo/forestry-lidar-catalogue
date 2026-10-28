@@ -76,8 +76,8 @@ internal consistency of native fields, not annotation correctness, completeness,
 coordinate datum or evaluation independence. There is no reviewed train/test
 split. One of the four new complete plots (Suprasl) passed browser preparation and
 independent validation of the downloaded ZIP in Chromium. See the
-[browser evidence](../../evidence/joint/browser-expanded-validation.json). The
-other three plots, provider range intake, Firefox and full-release browser
+[browser evidence](../../evidence/joint/browser-expanded-validation.json). The same plot also passed [pinned Zenodo range intake](../../evidence/joint/browser-zenodo-validation.json)
+and native ZIP validation. The other three plots, Firefox and full-release browser
 scalability remain unvalidated.
 
 To reproduce the native audit, place the four original LAZ members and the three
