@@ -14,6 +14,14 @@ audited TreeScanPL10K clouds: 368,950,419 points and 238 plot-local trees. The
 companion-table discrepancies. The remaining 266 provider plots are outside
 this execution scope. This is not full-release browser scalability evidence.
 
+A complete newly admitted Suprasl plot was prepared in Chromium from its local
+original LAZ and the downloaded ZIP was independently validated with the native
+reader: 61,397,777 points, 34 trees and 246 blocks. The run took 187 seconds;
+the ZIP was 4.61 GB and the plan estimated 9.58 GB of browser storage. See
+[the recorded evidence](../../evidence/joint/browser-expanded-validation.json).
+This single-plot test does not establish provider range intake, Firefox behavior
+or full-release scalability.
+
 Scientific admission remains explicit in the joint registry. A successful audit,
 test or plan review cannot change its `admission` decision. Pending scopes can
 be inspected and planned, but both the CLI and the browser worker block execution

@@ -337,7 +337,7 @@
     "schemas/joint-dataset.schema.json": "90d12d38722012b6a6d00c463d56b82d7daa7aef7cc67db4e006cb5e9ced225c",
     "data/joint/source-lock.json": "931e7e90340956c71b6f76a6db208b82e9dc59f2cdc46a80bc6849e6dfea81f5",
     "evidence/joint/leaf-group-taxonomy.json": "129d7e43557d1741832bcf9bee30834353dc5dd40d23b549d784111df69afa5a",
-    "docs/guides/JOINT-REFERENCES.md": "49d58503001653bcc608ac4f86b0266306b01a5cf895a7fd845b9ff4625d515a",
+    "docs/guides/JOINT-REFERENCES.md": "5412440dfd2ba272aae4f028fb707281a1e89d7c6090b138e884673aa98ec04c",
     "docs/sources/TREESCAN-JOINT.md": "13c14018d6e8e9ce7af52d83b142628b123f2c173e5b06638c2ace9e5a2b194e",
     "evidence/joint/native-validation.json": "72d1e83e1126b9bab107443e46b4b78650a03fcfac5d57237fbf0b8b6f17361d",
     "evidence/joint/browser-validation.json": "6ef776ba51bf7a35ae457ea10141e5e8808cb3ef66a67e910b48169c3e67ba5c",
