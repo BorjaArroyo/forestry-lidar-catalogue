@@ -77,8 +77,8 @@ coordinate datum or evaluation independence. There is no reviewed train/test
 split. One of the four new complete plots (Suprasl) passed browser preparation and
 independent validation of the downloaded ZIP in Chromium. See the
 [browser evidence](../../evidence/joint/browser-expanded-validation.json). The same plot also passed [pinned Zenodo range intake](../../evidence/joint/browser-zenodo-validation.json)
-and native ZIP validation. The other three plots, Firefox and full-release browser
-scalability remain unvalidated.
+and native ZIP validation in Chromium and [headless Firefox](../../evidence/joint/browser-firefox-zenodo-validation.json).
+The other three plots and full-release browser scalability remain unvalidated.
 
 To reproduce the native audit, place the four original LAZ members and the three
 pinned companion files listed in `metadata_assets` of the selection evidence in

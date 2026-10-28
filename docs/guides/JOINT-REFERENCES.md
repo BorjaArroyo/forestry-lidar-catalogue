@@ -23,7 +23,10 @@ The same plot also passed pinned Zenodo range intake in Chromium, followed by
 independent validation of the downloaded ZIP. The complete run took 277 seconds;
 the last observed transfer progress was 257.5 MiB at 112 seconds. See the
 [provider intake evidence](../../evidence/joint/browser-zenodo-validation.json).
-These single-plot tests do not establish Firefox behavior or full-release scalability.
+The same provider intake and independent downloaded-ZIP validation also passed in
+headless Firefox 157.0 in 294 seconds. See the
+[Firefox evidence](../../evidence/joint/browser-firefox-zenodo-validation.json).
+These single-plot tests do not establish full-release scalability.
 
 Scientific admission remains explicit in the joint registry. A successful audit,
 test or plan review cannot change its `admission` decision. Pending scopes can
