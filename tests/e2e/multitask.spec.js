@@ -15,13 +15,13 @@ test('shared objectives, source and coverage persist in application navigation a
   await expect(page.locator('#workspace-source-list')).toContainText('TreeScan');
   await expect(page.locator('#workspace-source-list')).not.toContainText('FOR-instance');
   await page.locator('#workspace-source-list [data-experiment-add="19127709"]').click();
-  await expect(page.locator('[data-joint-plot]')).toHaveCount(2);
+  await expect(page.locator('[data-joint-plot]')).toHaveCount(6);
   for (const input of await page.locator('[data-joint-plot]').all()) await input.check();
   await section(page, 'preparation').click();
   await page.locator('[name="experiment-coverage"][value="partial"]').check();
-  await expect(page.locator('#experiment-coverage-counts')).toContainText('61');
+  await expect(page.locator('#experiment-coverage-counts')).toContainText('238');
   await page.locator('[name="experiment-coverage"][value="joint"]').check();
-  await expect(page.locator('#experiment-coverage-counts')).toContainText('32');
+  await expect(page.locator('#experiment-coverage-counts')).toContainText('153');
   await section(page, 'review').click();
   await expect(page.locator('#experiment-run')).toBeDisabled();
   await expect(page.locator('#workspace-single-task-routes')).toBeHidden();
@@ -29,7 +29,7 @@ test('shared objectives, source and coverage persist in application navigation a
   await expect(page.locator('#workspace-review-summary')).toContainText(
     'All selected references required',
   );
-  await expect(page.locator('#workspace-review-summary')).toContainText('2 complete audited plots');
+  await expect(page.locator('#workspace-review-summary')).toContainText('6 complete audited plots');
   await page.locator('#workspace-consumer-description summary').click();
   await expect(page.locator('#workspace-consumer-fields')).toContainText('validity.taxonomy');
   await expect(page.locator('#workspace-consumer-fields')).toContainText('relations.point_to_tree');

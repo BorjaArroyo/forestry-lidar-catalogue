@@ -309,7 +309,7 @@
     "docs/ui/multitask-review-desktop.png": "ecc6779095d38bb0adf5c808221002326ecbc0de0e9649567392edf0e35860e6",
     "web/experiment.js": "267699386ac433f65d6bb9399a3f7f5b5db99b7bf54d873c005bd619323448a6",
     "tests/test_experiment.mjs": "b58186c14e9141b5ee8fe14a5024e5b53adc3ea0b234c79a9bd8e84044c0b819",
-    "tests/e2e/multitask.spec.js": "98bb2a34dc5ecef5fe89c67450382bfcfda22daf66c2b83f5e4d4abcc04964c5",
+    "tests/e2e/multitask.spec.js": "343d48dfef4da10095ecfa327e1f0518a5a7f90170078323002cf6f5f8b5129b",
     "docs/ui/multitask-integrated-data-1280.png": "e7a69aa21871e0a0718131e2f60f88a7f7e2e1229c889003e3fc60c31734d8b7",
     "docs/ui/multitask-integrated-preparation-375.png": "17030551f7cd5f1a9f4fe8734f27b81ece4209272f8c243dd2bb86e5929f2926",
     "docs/ui/multitask-integrated-review-1280.png": "aac42ad43975ea0cf3dc27b0cafb60354490713219f4683748a55f579ed7487d",
