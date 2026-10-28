@@ -48,8 +48,8 @@
     },
     "data/joint/source-lock.json": {
       "path": "data/joint/source-lock.json",
-      "size_bytes": 132599,
-      "sha256": "09c7beaaf578cf8dfd0c0cee917e55438eb700c45ed4b2cf75cc19f6000431ff"
+      "size_bytes": 575312,
+      "sha256": "931e7e90340956c71b6f76a6db208b82e9dc59f2cdc46a80bc6849e6dfea81f5"
     },
     "browser-prepare/vendor/md5.umd.js": {
       "path": "browser-prepare/vendor/md5.umd.js",

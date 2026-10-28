@@ -10,7 +10,7 @@ import laspy
 import numpy as np
 
 from canopy.classification.canonical import fingerprint
-from canopy.joint.model import PIPELINE, SOURCE, check, resolve
+from canopy.joint.model import PIPELINE, SOURCE, check, load_source, require_admitted, resolve
 from canopy.joint.package import JointDataset, prepare_native
 from canopy.joint.source import encoded, inspect_plot
 from canopy.loader import LoaderConfig, open_dataset
@@ -91,6 +91,18 @@ def request(**update):
         dict(plots=["synthetic.laz"], target="species", policy="partial", complete_crowns=False)
         | update
     )
+
+
+class JointScopeTests(unittest.TestCase):
+    def test_expanded_registry_matches_native_audit_and_admission(self):
+        root = Path(__file__).resolve().parents[1]
+        source = load_source()
+        audit = json.loads((root / "evidence/joint/expanded-native-audit.json").read_text())
+        registered = {plot["path"]: plot for plot in source["plots"]}
+        for plot in audit["plots"]:
+            self.assertEqual(registered[plot["path"]], plot)
+            self.assertIn(plot["archive"], {item["name"] for item in source["archives"]})
+        require_admitted(source)
 
 
 class JointTests(unittest.TestCase):

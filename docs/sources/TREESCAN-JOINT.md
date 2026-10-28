@@ -1,9 +1,11 @@
 # TreeScanPL10K joint-reference review
 
 Reviewed on 2026-10-27. Source: [pinned Zenodo record 19127709](https://zenodo.org/records/19127709).
-This is a bounded technical review; the maintainer explicitly authorized enabling only the two audited plots, with
-the documented limitations, on 2026-10-27. The decision and scope hash are in
-`data/joint/source-lock.json`; no independent human evidence review is claimed.
+This is the original bounded technical review of two plots, authorized on 2026-10-27.
+Four further plots were integrated following the maintainer request on 2026-10-28;
+see the [expansion review](TREESCAN-EXPANSION-REVIEW.md). The current decision
+and scope hash are in `data/joint/source-lock.json`; no independent human evidence
+review is claimed.
 
 | Complete cloud                 | Points     | Native positive tree IDs | Valid species labels |
 | ------------------------------ | ---------- | ------------------------ | -------------------- |
@@ -52,8 +54,8 @@ point instances and tree labels on separate axes. Species reference is valid for
 
 The original ZIP central directories were inspected through bounded ranges;
 selected member CRCs and complete LAZ hashes were checked. Whole provider ZIP
-MD5 checksums were not checked. No additional provider plots, geographic
-independence, complete annotation correctness or coordinate datum are certified.
+MD5 checksums were not checked. Geographic independence, complete annotation
+correctness and coordinate datum are not certified.
 No reviewed provider train/test split exists, so exports remain unassigned.
 
 Chromium and Firefox automated acceptance uses an explicitly synthetic source
