@@ -18,6 +18,8 @@ def load_adapter(name):
         raise ValueError(f"Unknown protected adapter: {name}")
     path = repository_root() / "scripts" / sources[name]
     spec = importlib.util.spec_from_file_location(f"_canopy_adapter_{name}", path)
+    if spec is None or spec.loader is None:
+        raise ValueError(f"Adapter implementation is missing or unreadable: {name}")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module

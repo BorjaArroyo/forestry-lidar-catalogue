@@ -78,7 +78,6 @@ def create_handler(api):
                     with p.open("rb") as f:
                         f.seek(max(0, p.stat().st_size - 32000))
                         log = f.read().decode(errors="replace")
-                    folder = p.parent
                     reports = {q.name: api.read(q) for q in folder.glob("*report.json")}
                     return self.send_json({"log": log, "reports": reports})
                 if parsed.path.startswith("/api/"):
@@ -86,7 +85,7 @@ def create_handler(api):
                 # Serve only the public application, never job files or repository paths.
                 relative = Path(parsed.path.lstrip("/") or "index.html")
                 path = (api.WEB / relative).resolve()
-                public_files = api.read(api.WEB / "publication-manifest.json")["files"]
+                public_files = api.public_files()
                 if not path.is_relative_to(api.WEB) or not path.is_file():
                     return self.send_json({"error": "Not found"}, 404)
                 name = path.relative_to(api.WEB).as_posix()

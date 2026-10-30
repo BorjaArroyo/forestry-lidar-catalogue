@@ -22,7 +22,7 @@ class Service:
         self.STATE = self.STATE_ROOT / "canopy-workbench"
         self.TOKEN = secrets.token_urlsafe(32)
         self.GUARD = threading.Lock()
-        self.ACTIVE = {"queued", "running", "cancelling"}
+        self.ACTIVE = {"queued", "running"}
         self.Handler = create_handler(self)
 
     now = staticmethod(now)
@@ -32,6 +32,14 @@ class Service:
 
     def directory(self, value, exists=True):
         return directory(value, exists=exists, repo=self.REPO)
+
+    def public_files(self):
+        """Return the published-file manifest, loaded once per service process."""
+        cached = getattr(self, "_public_files", None)
+        if cached is None:
+            cached = self.read(self.WEB / "publication-manifest.json")["files"]
+            self._public_files = cached
+        return cached
 
     def records(self):
         return self.read(self.REPO / "docs/lidar-acquisition-inventory.json")["records"]

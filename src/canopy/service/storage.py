@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -30,7 +31,9 @@ def read(path):
 def save(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(".write-tmp")
+    # The suffix includes the writer's pid so the server and worker processes
+    # never stage the same destination through one temporary file.
+    temporary = path.with_suffix(f".write-tmp-{os.getpid()}")
     temporary.write_text(json.dumps(value, indent=2) + "\n")
     temporary.replace(path)
 
@@ -51,6 +54,7 @@ def directory(value, exists=True, *, repo=None):
     path = path.resolve()
     if exists and not path.is_dir():
         raise RequestError("Directory does not exist")
-    if path == Path("/") or path == Path.home() or path == repository or path in repository.parents:
+    home = Path.home().resolve()
+    if path == Path("/") or path == home or path == repository or path in repository.parents:
         raise RequestError("Choose a dedicated data directory")
     return path
