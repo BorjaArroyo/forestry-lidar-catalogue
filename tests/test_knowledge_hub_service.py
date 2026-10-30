@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import tempfile
 import subprocess
+import sys
 import threading
 import time
 import unittest
@@ -567,6 +568,35 @@ class WorkbenchTests(unittest.TestCase):
         job = self.service.read(folder / "job.json")
         self.assertEqual(job["status"], "failed")
         self.assertIn("finished_at", job)
+
+    def test_inspect_jobs_reports_disappeared_workers_as_interrupted(self):
+        finished = subprocess.Popen([sys.executable, "-c", "pass"])
+        finished.wait()
+        folder = self.service.STATE / "jobs/gone-worker"
+        self.service.save(
+            folder / "job.json",
+            dict(
+                id="gone",
+                kind="acquire",
+                root=str(self.root),
+                status="running",
+                pid=finished.pid,
+            ),
+        )
+        self.service.save(
+            self.service.STATE / "jobs/live-worker/job.json",
+            dict(
+                id="live",
+                kind="acquire",
+                root=str(self.root),
+                status="running",
+                pid=os.getpid(),
+            ),
+        )
+        recorded = {job["id"]: job for job in self.service.jobs()}
+        self.assertEqual(recorded["gone"]["status"], "interrupted")
+        self.assertIn("inspect logs", recorded["gone"]["error"])
+        self.assertEqual(recorded["live"]["status"], "running")
 
 
 if __name__ == "__main__":
