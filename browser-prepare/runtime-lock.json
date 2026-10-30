@@ -417,8 +417,8 @@
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "234278b72abbc6b7e38b3f9cc4642e7a1c13e1e91512a2baf6193c8f8cdea83b",
-      "size_bytes": 2276
+      "sha256": "c41b8a2ddb2df51167f0b84a48746465768cac410c7f497e76ab8caf4da9636c",
+      "size_bytes": 2491
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
