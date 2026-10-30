@@ -1,4 +1,5 @@
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from './fixtures.js';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, mkdirSync } from 'node:fs';
 import path from 'node:path';

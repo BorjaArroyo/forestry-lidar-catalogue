@@ -51,3 +51,7 @@ if (!catalog) {
   mountWorkspace({ application, document, jointWorkspace });
   mountLoadingGuide({ application, document });
 }
+
+/* Set after every mount: e2e interactions wait for this marker because native
+   control events dispatched before the module graph runs are silently lost. */
+document.documentElement.dataset.canopyReady = 'true';

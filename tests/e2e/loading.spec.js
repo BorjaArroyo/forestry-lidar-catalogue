@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from './fixtures.js';
 import { openSubset } from './workspace-helpers.js';
 
 test('desktop discovery shows source cards in the first viewport', async ({ page }, info) => {
