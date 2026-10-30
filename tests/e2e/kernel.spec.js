@@ -1,4 +1,5 @@
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from './fixtures.js';
 
 /*
  * Full-kernel coverage without the 1.6 GB provider archive: the test boots the

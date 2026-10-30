@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from './fixtures.js';
 
 const section = (page, value) =>
   page.locator('#workspace-navigation [data-workspace-section="' + value + '"]');

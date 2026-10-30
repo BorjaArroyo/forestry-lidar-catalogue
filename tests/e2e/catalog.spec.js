@@ -1,4 +1,5 @@
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
+import { test } from './fixtures.js';
 import { openSubset, closeSubset, openRequirements } from './workspace-helpers.js';
 
 test('catalog modules load below the published project path', async ({ page }) => {
