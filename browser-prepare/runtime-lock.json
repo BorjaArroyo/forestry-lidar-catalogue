@@ -267,8 +267,8 @@
     },
     "src/canopy/service/app.py": {
       "url": "src/canopy/service/app.py",
-      "sha256": "ac0295c19a1de3850d65c610cd79cc0caecf0c549f44c1292e791f44350802ce",
-      "size_bytes": 3557
+      "sha256": "6b54e3cbffc0ec82ef47780b3117816a39213df88d9c2ee95b85eeca021a593a",
+      "size_bytes": 3878
     },
     "src/canopy/service/cli.py": {
       "url": "src/canopy/service/cli.py",
@@ -322,13 +322,13 @@
     },
     "src/canopy/service/jobs.py": {
       "url": "src/canopy/service/jobs.py",
-      "sha256": "62809f63ee1aef3531d5eba534e20694fa6079eb184e7f222009cf6f07a8ea11",
-      "size_bytes": 12586
+      "sha256": "c721a00bf8f907faee8bdd31d71b93bb7d69b0be438d2e05268f910098358f4a",
+      "size_bytes": 12556
     },
     "src/canopy/service/storage.py": {
       "url": "src/canopy/service/storage.py",
-      "sha256": "35b20f16c027975ed77d1c06d50e2ba1c39503c4afb1f4a13b92ecd45c3bd267",
-      "size_bytes": 1713
+      "sha256": "260ff52f022737442c100d85b31ca697b2bb07972aee92ed7bc765277b210487",
+      "size_bytes": 1909
     },
     "browser-prepare/storage.js": {
       "url": "browser-prepare/storage.js",
@@ -382,8 +382,8 @@
     },
     "src/canopy/service/http.py": {
       "url": "src/canopy/service/http.py",
-      "sha256": "e42bf569f2dc80ec00068eb3fb392244427582c80ac270e28b5b1ae60601c9fa",
-      "size_bytes": 6433
+      "sha256": "32d256012de6719be193c5ccbcca453c33e632215476af101c7ff22d3c029333",
+      "size_bytes": 6357
     },
     "browser-prepare/ui.js": {
       "url": "browser-prepare/ui.js",
@@ -407,8 +407,8 @@
     },
     "src/canopy/adapters.py": {
       "url": "src/canopy/adapters.py",
-      "sha256": "6db07c7eda041c34001e581f4aee61abf3aca1be6c70ea0e067884338baef8d3",
-      "size_bytes": 829
+      "sha256": "2a048602852d1e5d8966a3e5960c699ba13ea174e4087f67deec176cc4e2c904",
+      "size_bytes": 958
     },
     "src/canopy/tools/build_knowledge_hub_catalog.py": {
       "url": "src/canopy/tools/build_knowledge_hub_catalog.py",

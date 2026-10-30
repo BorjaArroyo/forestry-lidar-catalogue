@@ -58,7 +58,7 @@ def submit(api, body):
         raise RequestError(
             "Only original-source acquisition and the audited FOR-instance preparation are available"
         )
-    if not isinstance(body, dict) or "record_id" not in body:
+    if "record_id" not in body:
         raise RequestError("A job requires a record_id")
     if isinstance(body["record_id"], bool) or not re.fullmatch(
         r"[1-9][0-9]*", str(body["record_id"])
