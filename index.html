@@ -151,9 +151,16 @@
               ><input
                 id="search"
                 type="search"
-                placeholder="Search sources, locations or native attributes…"
+                placeholder="Search sources, locations or documented tasks…"
                 aria-label="Search sources"
               /><kbd>/</kbd></label
+            >
+            <label class="select-label"
+              >Documented task<select id="source-task">
+                <option value="all">All tasks</option>
+                <option value="instances">Instance segmentation</option>
+                <option value="species">Tree taxonomy</option>
+              </select></label
             >
             <label class="select-label"
               >Platform<select id="platform">
@@ -184,8 +191,9 @@
             <label class="select-label"
               >Task preparation<select id="preparation">
                 <option value="all">All preparation states</option>
-                <option value="ready">Validated archive preparation</option>
-                <option value="tbd">Pipeline TBD</option>
+                <option value="ready">Validated preparation available</option>
+                <option value="tbd">No enabled preparation</option>
+                <option value="unknown">Preparation scope unavailable</option>
                 <option value="blocked">Rights review required</option>
               </select></label
             >
@@ -196,7 +204,10 @@
             <div class="section-heading">
               <div>
                 <h2>Public sources</h2>
-                <p>Reported instance reference and audited preparation are separate decisions.</p>
+                <p>
+                  Explore all sources independently of your experiment. Published references and
+                  enabled preparations are shown separately.
+                </p>
               </div>
               <span id="catalog-count" class="muted" role="status" aria-live="polite"></span>
             </div>
@@ -204,6 +215,18 @@
               Preparation availability is shown from the reviewed catalog records. Preparation does
               not establish geographic independence or annotation completeness.
             </p>
+            <p class="muted">
+              A source is a pinned provider release. Documented references describe its annotations;
+              a validated preparation covers only the scope stated for that route. Historical
+              workspace observations are retained inside source details.
+            </p>
+            <div class="source-actions">
+              <button class="button small" id="sources-export-json">
+                Export visible sources · JSON</button
+              ><button class="button small" id="sources-export-csv">
+                Export visible sources · CSV
+              </button>
+            </div>
             <div id="dataset-grid" class="dataset-grid">
               <div class="empty">Loading reviewed sources…</div>
             </div>

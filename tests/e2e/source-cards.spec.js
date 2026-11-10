@@ -1,6 +1,5 @@
 import { expect } from '@playwright/test';
 import { test } from './fixtures.js';
-import { openRequirements } from './workspace-helpers.js';
 
 const source = (page, id) => page.locator(`article[data-source="${id}"]`);
 
@@ -8,15 +7,15 @@ test('cards preserve partial reference coverage and separate preparation gates',
   page,
 }) => {
   await page.goto('./');
-  await expect(source(page, '15913427')).toContainText('Only 2 of 20 plots labeled');
+  await expect(source(page, '15913427')).toContainText('the other 18 are unlabeled');
   await expect(source(page, '15193973')).toContainText('Rights review required');
   await expect(source(page, '15193973').locator('[data-task-prepare]')).toHaveCount(0);
-  await expect(source(page, '8287792')).toContainText('Not produced: Multispectral reflectance.');
+  await expect(page.locator('.source-card')).toHaveCount(12);
   await expect(source(page, '19351234')).not.toContainText('Not produced:');
   await expect(page.locator('.grid-divider')).toBeVisible();
-  await openRequirements(page);
-  await page.locator('#variable-reflectance').selectOption('required');
-  await expect(source(page, '8287792')).toHaveCount(0);
+  await page.goto('./?var_reflectance=required');
+  await expect(source(page, '8287792')).toHaveCount(1);
+  await expect(source(page, '8287792').locator('[data-task-prepare]')).toHaveCount(0);
   await expect(source(page, '19351234').locator('[data-task-prepare]')).toBeVisible();
 });
 

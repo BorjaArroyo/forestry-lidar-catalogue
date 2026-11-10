@@ -40,7 +40,7 @@ test('shared objectives, source and coverage persist in application navigation a
   await expect(page.locator('[name="experiment-coverage"][value="joint"]')).toBeChecked();
   await page.locator('.sidebar [data-view="datasets"]').click();
   await expect(page.locator('#dataset-grid')).toContainText('TreeScan');
-  await expect(page.locator('#dataset-grid')).not.toContainText('FOR-instance');
+  await expect(page.locator('#dataset-grid')).toContainText('FOR-instance');
   expect(errors).toEqual([]);
 });
 

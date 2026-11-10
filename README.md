@@ -237,3 +237,22 @@ plans, ZIP export, saved output management and the NumPy loader share the workfl
 Execution is limited to the explicitly admitted scope. See
 [the joint reference guide](docs/guides/JOINT-REFERENCES.md) and
 [the native source review](docs/sources/TREESCAN-JOINT.md).
+
+## Explore public sources
+
+Sources lists all 12 pinned provider releases independently of the current
+experiment. Use the documented-task, platform, data-unit, instance-reference and
+preparation filters to narrow discovery explicitly. Documented task support is
+separate from an enabled preparation and its validated selection scope.
+TreeScan's joint instance/taxonomy preparation covers six admitted plots; it is
+not a whole-release or standalone classification route. Its scope is read from
+the existing admission registry and checked against the publication manifest fingerprint.
+
+Source cards, details and comparisons share the same preparation summary.
+Experiment compatibility remains contextual in source details and is enforced by
+the existing preparation workflow. Historical local counts, schemas and coordinate
+observations stay in collapsed, labelled sections; they do not establish current
+local availability or whole-source coverage. The JSON and CSV source exports
+contain the visible selection and its public evidence, excluding historical local
+workspace counts. The existing full-catalogue export remains available for
+provenance and historical metadata.
