@@ -209,8 +209,8 @@
     },
     "data/knowledge-model.json": {
       "path": "data/knowledge-model.json",
-      "size_bytes": 214744,
-      "sha256": "24a55a1848bab9f8d039636aaaf7376ac22772efd3941a905907bb794c455d75"
+      "size_bytes": 220476,
+      "sha256": "a2b7dc051282a415b217f01f14664e3a45c9c25c831e5c8986fafa231d482725"
     },
     "browser-prepare/vendor/laz-perf.js": {
       "path": "browser-prepare/vendor/laz-perf.js",

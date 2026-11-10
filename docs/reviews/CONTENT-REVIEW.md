@@ -1,5 +1,7 @@
 # Content review · 17 October 2026
 
+Historical review. Dated workflow and conversion statements below describe their original scope. See [current source definitions](SOURCE-CONTENT.md) for reconciled capabilities and unresolved questions.
+
 The current product focus is **individual-tree segmentation**. Other research
 tasks are hidden from navigation, dataset task assessments,
 and retained as **TBD** in exported metadata. Source descriptions and native

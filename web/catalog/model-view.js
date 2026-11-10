@@ -3,12 +3,15 @@ import { layoutTaskGraph, projectTaskGraph, visibleTasks } from './model-graph.j
 
 const TYPES = {
   task: 'Task',
+  joint_preparation: 'Joint preparation',
   variable: 'Task variable',
   source_release: 'Source release',
   data_contract: 'Data contract',
   transformation: 'Preparation step',
 };
 const ROLES = {
+  joint_input: 'Joint preparation consumes native observations',
+  joint_target: 'Joint preparation requires both instances and taxonomy',
   describes: 'Source describes native data',
   consumes: 'Preparation consumes input contract',
   produces: 'Preparation produces output contract',
@@ -17,7 +20,11 @@ const ROLES = {
   reported_support: 'Reported task support',
 };
 
-export function mountModelView({ document: doc = document, fetch: doFetch = fetch } = {}) {
+export function mountModelView({
+  document: doc = document,
+  fetch: doFetch = fetch,
+  preparations = [],
+} = {}) {
   const $ = (selector) => doc.querySelector(selector);
   const svg = $('#model-graph');
   const inspector = $('#model-inspector');
@@ -105,6 +112,8 @@ export function mountModelView({ document: doc = document, fetch: doFetch = fetc
         detail = `<p><strong>${esc(data.format)}</strong></p><p>${esc(data.observation_unit)}</p>${fieldTable(data.fields)}<p class="notice">A contract describes fields; it does not certify annotation completeness or whole-source coverage.</p>`;
       } else if (node.type === 'transformation') {
         detail = `<h4>Rules</h4><p>${esc(data.rules)}</p><h4>Preserves</h4><p>${esc(data.preserves)}</p><h4>Limits and information loss</h4><p class="notice">${esc(data.losses)}</p><h4>Implementation</h4><p>${esc(data.implementation)}</p>`;
+      } else if (node.type === 'joint_preparation') {
+        detail = `<p>${esc(data.scope)}</p><p>${esc(data.detail)}</p><h4>Required targets</h4><p>${data.task_refs.map(esc).join(' + ')}</p><p>Native point instances and tree taxonomy are linked references on separate axes. This route does not enable a standalone preparation for either task.</p>`;
       } else if (node.type === 'variable') {
         detail = `<p>${esc(data.detail)}</p>${fieldTable(data.output_fields)}`;
       } else if (node.type === 'task') {
@@ -133,6 +142,7 @@ export function mountModelView({ document: doc = document, fetch: doFetch = fetc
     state.graph = layoutTaskGraph(
       projectTaskGraph(state.model, state.task, {
         includeReported: $('#model-show-reported').checked,
+        preparations,
       }),
       measure,
     );

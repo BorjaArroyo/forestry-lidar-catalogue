@@ -5,18 +5,11 @@ export function referenceFor(source, task) {
   if (!source)
     return { reported: false, label: 'Reference not established', status: 'not_documented' };
   if (task === 'species') {
-    if (source.classification)
-      return { reported: true, label: 'Rank-specific taxonomy and validity', status: 'partial' };
-    if (source.id === '19127709')
-      return {
-        reported: true,
-        label: 'Partial taxonomy · genus-only labels retained',
-        status: 'partial',
-      };
+    const support = source.source_task_support?.species;
     return {
-      reported: false,
-      label: 'Taxonomic mapping not established',
-      status: 'not_documented',
+      reported: ['documented', 'partial'].includes(support?.status),
+      label: support?.reason || 'Taxonomic mapping not established',
+      status: support?.status || 'not_documented',
     };
   }
   const support = source.source_task_support?.[task];

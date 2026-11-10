@@ -1,0 +1,14 @@
+{
+  "dataset_id": "grodata-128035-1.0",
+  "decision": "metadata-corrected",
+  "base_dataset_sha256": "2420fd79362fde6c09d3ce7503436becb6f6e0f0fb3f03cc074baf790ae7e287",
+  "dataset_sha256": "817c1020534ab872534bfb0fa0803a29a23e9c3fcc6546ded5f4876e0b1a2909",
+  "reviewed_by": "Codex automated editorial reconciliation requested by the maintainer; no independent human scientific review claimed",
+  "reviewed_at": "2026-11-10",
+  "scope": "Reconcile existing evidence, retired implementation descriptions and source-specific limitations. No new scientific admission, rights decision, positive task-support claim or payload audit.",
+  "evidence": [
+    "docs/reviews/SOURCE-CONTENT.md",
+    "docs/guides/TREE-CLASSIFICATION.md",
+    "docs/reviews/MULTITASK-COVERAGE.md"
+  ]
+}

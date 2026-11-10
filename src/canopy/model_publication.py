@@ -37,6 +37,13 @@ def check_views(content=CONTENT):
         actual["review"].pop("observations_current", None)
         if actual != profile:
             raise ValueError(f"Catalog source view is stale: {dataset['id']}")
+    from .source_preparations import project_preparations
+
+    if catalog.get("preparations") != project_preparations(content, graph):
+        raise ValueError("Source preparation index is stale; regenerate catalog views")
+    for item in catalog.get("evidence", []):
+        if "path" in item and not (content / item["path"]).is_file():
+            raise ValueError("Missing catalog evidence: " + item["path"])
     root = content
     for node in graph["nodes"].values():
         data = node["data"]
@@ -123,6 +130,9 @@ def export_views(content=CONTENT):
             if dataset.get(key) != value:
                 dataset[key] = value
     catalog["content_review"].update(model_hashes(content))
+    from .source_preparations import reconcile_metadata
+
+    reconcile_metadata(catalog, content, load(content / "data/knowledge-model.json"))
     _write_json(content / "data/catalog.json", catalog)
     snapshot = json.dumps(catalog, indent=2, ensure_ascii=False)
     (content / "data/catalog.js").write_text("window.LIDAR_CATALOG = " + snapshot + ";\n")

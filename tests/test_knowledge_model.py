@@ -194,6 +194,8 @@ class KnowledgeModel(unittest.TestCase):
                 ignore=shutil.ignore_patterns("__pycache__"),
             )
             shutil.copytree(ROOT / "evidence/classification", folder / "evidence/classification")
+            for name in ("docs", "data/joint", "evidence/joint"):
+                shutil.copytree(ROOT / name, folder / name)
             before = model.read_json(folder / "data/catalog.json")
             model.export_views(folder)
             after = model.read_json(folder / "data/catalog.json")

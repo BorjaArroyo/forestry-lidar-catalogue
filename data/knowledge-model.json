@@ -141,7 +141,7 @@
       "data": {
         "name": "Forest components",
         "title": "Wood, foliage & ground",
-        "description": "Class meanings must match; tree labels alone do not identify wood or foliage.",
+        "description": "Point-level within-tree components such as wood and foliage. A ground/tree scene-class split alone does not establish this task; native class granularity and masks require review.",
         "visible": false,
         "status": "tbd",
         "key": "components",
@@ -151,7 +151,7 @@
     "task:species": {
       "type": "task",
       "data": {
-        "name": "Tree species",
+        "name": "Tree taxonomy",
         "title": "Species classification",
         "description": "Classify isolated tree observations at documented genus or species rank; native sensor views and published partitions remain separate.",
         "visible": true,
@@ -265,7 +265,7 @@
       "data": {
         "name": "Geometry & robustness",
         "title": "Geometry and consistency checks",
-        "description": "Unlabeled clouds can test consistency and distributions, not segmentation accuracy.",
+        "description": "Geometry and consistency diagnostics using XYZ. This capability does not establish supervised accuracy, a robustness benchmark or geographic independence.",
         "visible": false,
         "status": "tbd",
         "key": "geometry",
@@ -275,9 +275,9 @@
     "task:spectral": {
       "type": "task",
       "data": {
-        "name": "Multispectral",
+        "name": "Spectral inputs",
         "title": "Spectral learning",
-        "description": "Wavelengths, channel units, normalization, and registration must be checked.",
+        "description": "Availability and semantics of spectral input measurements, not an additional supervised target or proof of calibrated cross-source compatibility.",
         "visible": false,
         "status": "tbd",
         "key": "spectral",
@@ -289,7 +289,7 @@
       "data": {
         "name": "Tree structure",
         "title": "Structure and biomass research",
-        "description": "QSMs are derived models; independent reference measurements are required for accuracy claims.",
+        "description": "Structural traits and derived QSM representations. The historical key biomass does not assert independent biomass ground truth; derived-only support remains distinct.",
         "visible": false,
         "status": "tbd",
         "key": "biomass",
@@ -323,7 +323,7 @@
           "scanner": "RIEGL UAV systems; collection-specific models",
           "spectral": false,
           "kind": "Plot clouds",
-          "labels": "Plot-local treeID; terrain, low vegetation, outside-tree, stem, live-branch and woody-branch classes; species in some collections",
+          "labels": "Plot-local treeID; terrain, low vegetation, outside-tree, stem, live-branch and woody-branch classes. Native treeSP codes have no established taxonomic mapping.",
           "class_semantics": [
             {
               "code": "0",
@@ -362,13 +362,13 @@
             }
           ],
           "role": "Published dev/test benchmark",
-          "readiness": "Native labels; mapping incomplete",
+          "readiness": "Validated 32-plot instance preparation; taxonomy unavailable",
           "note": "Original semantic classes do not provide a simple wood/foliage crosswalk. Preserve the official dev/test protocol.",
-          "correction": "32 files retain original classification but have no canonical semantic mapping.",
+          "correction": "The admitted instance policy preserves native classes and conservative masks. The historical generic semantic conversion is retired.",
           "provenance": "Source of collections reused by FOR-instance V2; a new release is not an independent site.",
           "review": {
-            "reviewed_at": "2026-10-17",
-            "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "Annotated LAS plot; treeID is local to a plot. Collections and releases are not independent samples.",
             "source_facts": [
               {
@@ -383,11 +383,11 @@
               }
             ],
             "local_observations": [
-              "32 normalized plots retain classification in original_points; the coarse semantic view has no mapping for it. Some plots lack treeSP."
+              "32 normalized plots retain classification in original_points; the historical coarse semantic view has no mapping for it. Some plots lack treeSP."
             ],
             "open_questions": [
-              "Resolve treeSP lookup tables per collection before species pooling.",
-              "Reconcile plot/capture ancestry with FOR-instance V2 before assigning independent splits."
+              "The 2026-10-26 support-file review did not establish a published treeSP-to-taxon mapping; do not pool species labels without new mapping evidence.",
+              "Resolve the 50 NIBIO2 partition rows absent from the pinned archive and reconcile capture ancestry with FOR-instance V2."
             ],
             "published_protocol": "Development data may be split for model selection; the official test data are reserved for final evaluation.",
             "observations_snapshot": {
@@ -583,13 +583,13 @@
             }
           ],
           "role": "Published train/validation/test benchmark",
-          "readiness": "Native annotation schema",
+          "readiness": "Observed native schema; no enabled preparation",
           "note": "Native namespace: 1 terrain, 2 wood, 3 foliage. These class IDs do not define a catalog-wide ontology.",
           "correction": "Scene identities, physical sites and upstream lineage need reconciliation before claiming site-out generalization.",
           "provenance": "Includes FOR-instance descendants and additional acquisitions, including BlueCat and MLS.",
           "review": {
-            "reviewed_at": "2026-10-17",
-            "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "PLY plot or release-specific scene; scene count is not physical-site count.",
             "source_facts": [
               {
@@ -603,7 +603,8 @@
             ],
             "open_questions": [
               "Reconcile descendants of earlier collections and repeated captures.",
-              "Check source scenes, annotation coverage and component rights for the selected task."
+              "Check source scenes, annotation coverage and component rights for the selected task.",
+              "The 94 saved scene files are historical observations, not a verified count of independent sites or currently available files."
             ],
             "published_protocol": "Retain the official train/validation/test identifiers for published comparisons. Geographic independence requires a separate capture-level audit.",
             "observations_snapshot": {
@@ -636,8 +637,8 @@
             "limitation": "Capture lineage and annotation coverage remain unresolved.",
             "preparation": {
               "status": "tbd",
-              "label": "Task pipeline TBD",
-              "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+              "label": "No enabled preparation",
+              "detail": "No executable preparation is admitted for this source. Documented native reference and preparation readiness are separate assessments.",
               "limited_reference_copy": false
             }
           }
@@ -674,12 +675,12 @@
           "labels": "Ground, trunk, two branch orders, foliage, miscellany; tree and first-order-branch IDs; structural trait tables",
           "role": "Rights review",
           "readiness": "Derivatives deferred",
-          "note": "Three point-cloud conversions were deliberately deferred for derivative-rights review. Acquisition is complete.",
+          "note": "The historical workspace deferred three plot conversions. Preparation remains blocked pending intended-use and component-rights review; this is not a statement of current local acquisition status.",
           "correction": "Do not interpret acquired files as admitted training data. Keep the intended-use review explicit.",
           "provenance": "Recorded source license includes NC and ND terms; component and intended-use review is outstanding.",
           "review": {
-            "reviewed_at": "2026-10-17",
-            "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "Three LAS plots with per-tree trait tables and first-order-branch references.",
             "source_facts": [
               {
@@ -694,11 +695,12 @@
               }
             ],
             "local_observations": [
-              "All 11 selected assets were acquired; three cloud conversions remain deferred. Zero normalized files does not mean the source has no point clouds."
+              "All 11 selected assets were acquired; three cloud conversions were deferred in that workspace. Zero normalized files does not mean the source has no point clouds."
             ],
             "open_questions": [
               "Verify plot locations and acquisition details from the associated paper; this review does not establish their coordinates.",
-              "Resolve intended-use and component terms before generating derivatives."
+              "Resolve intended-use and component terms before generating derivatives.",
+              "Inspect the pinned Tree_Species_ID.txt and its relationship to the per-tree tables before establishing taxonomic support; a filename is not a validated join."
             ],
             "published_protocol": "No executable task-specific split or evaluator is admitted in this hub.",
             "observations_snapshot": {
@@ -751,13 +753,13 @@
           "kind": "Plot clouds",
           "labels": "Ground, low vegetation, trunk, branches, foliage, woody debris; no tree IDs",
           "role": "Published semantic benchmark",
-          "readiness": "Partial crosswalk",
+          "readiness": "Component reference documented; no enabled preparation",
           "note": "Six plots: four training and two test files. SWIR 1550 nm, NIR 905 nm, Green 532 nm; normalized reflectance and VI.",
-          "correction": "Current coarse view does not map low vegetation or woody debris. Preserve both in a richer source namespace.",
+          "correction": "Preserve the native low-vegetation and woody-debris classes. The retired coarse conversion is historical evidence only.",
           "provenance": "Potential relationships to other FGI collections require capture-level evidence; shared institutions do not prove overlap.",
           "review": {
-            "reviewed_at": "2026-10-17",
-            "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "Six annotated multispectral plots: four training and two test plots.",
             "source_facts": [
               {
@@ -772,7 +774,7 @@
               }
             ],
             "local_observations": [
-              "All six normalized files retain native fields. The coarse view merges trunk/branches and leaves low vegetation/debris unknown."
+              "All six normalized files retain native fields. The historical coarse view merges trunk/branches and leaves low vegetation/debris unknown."
             ],
             "open_questions": [
               "Recover the exact normalization and spatial alignment before spectral pooling.",
@@ -828,8 +830,8 @@
             "limitation": "Cannot supply the plot-instance reference required for segmentation accuracy.",
             "preparation": {
               "status": "tbd",
-              "label": "Task pipeline TBD",
-              "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+              "label": "No enabled preparation",
+              "detail": "Component labels are documented, but no component-preparation adapter is admitted. No tree-instance reference is established; adding an instance adapter cannot recover absent reference.",
               "limited_reference_copy": false
             }
           }
@@ -892,13 +894,13 @@
           ],
           "role": "Published instance benchmark",
           "readiness": "Audited source-specific preparation",
-          "note": "Native classes include built objects. The local study uses only selected test plots; the provider also supplies training data.",
+          "note": "The provider supplies 13 training and six test plots. The admitted preparation covers all 19 with conservative instance masks and native spectral masks; a former local study reservation is historical.",
           "correction": "Retain native categories and the out mask. Do not infer wood/foliage labels from the broad tree category.",
           "provenance": "Single Espoonlahti acquisition area; split plots do not by themselves establish geographic generalization.",
           "study_context": "The local forestseg study reserves its selected test plots for terminal evaluation. This reservation is not a provider-wide restriction.",
           "review": {
-            "reviewed_at": "2026-10-20",
-            "scope": "Full provider archive checksums, all 19 original payload SHA256, every point and independent prepared-array validation; no model/evaluator/calibration certification",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "19 cylindrical plots; tree_index is unique within each plot.",
             "source_facts": [
               {
@@ -1025,13 +1027,13 @@
           "labels": "Plots 1–2: tree instances, foliage, wood, understory; 18 unlabeled plots",
           "role": "Partial-label spectral dataset",
           "readiness": "Partial supervision",
-          "note": "Two plots supply instance/component reference. The provider cylinder split and the local plot reservation are different protocols.",
+          "note": "Two plots contain manual instance/component reference and 18 are unlabelled. Preserve the published cylinder protocol independently of any historical local study reservation.",
           "correction": "Use z as the supplied terrain-normalized height. Retain understory as a native class and preserve the 18 unlabeled plots as unlabeled.",
           "provenance": "One Evo acquisition area; labeled and unlabeled subsets do not constitute independent geographic domains.",
           "study_context": "The local forestseg study reserves plots 1–2 for terminal evaluation and excludes plots 3–20 from fitting. The source paper used unlabeled data for training.",
           "review": {
-            "reviewed_at": "2026-10-17",
-            "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "20 plots from the Evo acquisition; only plots 1 and 2 have manual labels.",
             "source_facts": [
               {
@@ -1051,13 +1053,13 @@
               }
             ],
             "local_observations": [
-              "The saved schemas distinguish 2 files with tree_index from 18 without it. The coarse view leaves understory unknown and preserves it natively."
+              "The saved schemas distinguish 2 files with tree_index from 18 without it. The historical coarse view leaves understory unknown and preserves it natively."
             ],
             "open_questions": [
               "Recover cylinder geometry, overlap and model exposure when reproducing the published experiment.",
               "Calibrate radiometry before cross-source transfer; do not normalize terrain a second time."
             ],
-            "published_protocol": "The provider cylinder split differs from the local study, which reserves both labeled plots and excludes the 18 unlabeled plots from fitting.",
+            "published_protocol": "The provider experiment uses overlapping cylinders, including test cylinders within labelled plots 1 and 2. Recover the exact cylinder geometry and exposure before reproducing that protocol. A former local plot reservation is not a provider restriction.",
             "observations_snapshot": {
               "source_metadata_sha256": "e9008d5079b8e230288bc7e28e22eb819aa85aa81f063c098913c9e36e29f7b3",
               "cloud_count": 20,
@@ -1130,8 +1132,8 @@
             "limitation": "Do not normalize terrain again; the published cylinder split is a distinct protocol.",
             "preparation": {
               "status": "tbd",
-              "label": "Task pipeline TBD",
-              "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+              "label": "No enabled preparation",
+              "detail": "No executable preparation is admitted for this source. Documented native reference and preparation readiness are separate assessments.",
               "limited_reference_copy": false
             }
           }
@@ -1160,23 +1162,23 @@
           "spectral": false,
           "kind": "Plot clouds",
           "labels": "Plot-local treeID; treeSP with partial species coverage; completelyInside crown flag",
-          "role": "Instance and species candidate",
-          "readiness": "Coverage review",
-          "note": "272 plots. Completeness and boundary flags matter for evaluation. Species fields require a verified lookup table.",
-          "correction": "Rounded locations do not certify site separation. This source dominates the collection by point count.",
+          "role": "Bounded joint-reference preparation",
+          "readiness": "Joint instance/taxonomy preparation admitted for six plots",
+          "note": "272 provider plot members are recorded. Only six completely audited plots are admitted for joint preparation; whole-source taxonomy and companion joins remain unresolved.",
+          "correction": "Provider summary tables disagree in tree and taxonomic-code counts. Preserve native-cloud references in the admitted six plots; source-wide summaries are not reconciled.",
           "provenance": "Conservative campaign/site grouping is needed; per-file instance IDs are not globally unique.",
           "review": {
-            "reviewed_at": "2026-10-17",
-            "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "272 circular TLS plots (15 m radius); tree identity is plot-local.",
             "source_facts": [
               {
-                "text": "The provider reports 10,417 trees, with species labels for 7,465 across 30 species. treeSP=0 conflates non-tree points and unknown species; completelyInside marks complete versus cropped crowns.",
+                "text": "The provider description reports 10,417 trees and 7,465 taxonomic labels. The saved tree CSV instead contains 10,447 rows and 7,468 nonzero taxonomic codes. The 30-entry lookup includes genus-only Quercus sp.; these entries are not 30 species-level classes.",
                 "label": "Provider annotation coverage",
                 "evidence_ref": "evidence:729f5787a33150c6e2183a2a"
               },
               {
-                "text": "Six Polish forest districts were scanned using FARO Focus 3D X130 and Trimble TX5. species_id.csv gives the taxonomic lookup; plot_summary.csv locations are rounded to a kilometer.",
+                "text": "The pinned companion files are species_id_names.csv, individual_tree_summary.csv and plot_summary.xlsx. The tables include acquisition and scanner-name discrepancies; rounded locations do not establish independent evaluation zones.",
                 "label": "Provider acquisition and companion tables",
                 "evidence_ref": "evidence:729f5787a33150c6e2183a2a"
               }
@@ -1185,8 +1187,8 @@
               "272 normalized plots retain treeID, treeSP, PointID and completelyInside. The coarse normalizer does not establish wood/foliage semantics."
             ],
             "open_questions": [
-              "Join species_id.csv and preserve unknown species; the label coverage percentage describes trees, not points.",
-              "Group campaigns and nearby plots conservatively; rounded coordinates cannot certify separation."
+              "Reconcile the source-wide table counts, three Herby year/name discrepancies and native-to-companion identities outside the admitted scope. Never label native clouds by equal numeric IDs in companion tables.",
+              "Group captures and sites conservatively. Six-plot admission does not establish whole-release annotation correctness or geographic independence."
             ],
             "published_protocol": "No frozen train/validation/test protocol for this source has been admitted by the hub.",
             "observations_snapshot": {
@@ -1261,8 +1263,8 @@
             "limitation": "Rounded locations do not establish independent evaluation zones.",
             "preparation": {
               "status": "tbd",
-              "label": "Task pipeline TBD",
-              "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+              "label": "No standalone instance adapter; six-plot joint route admitted",
+              "detail": "This legacy preparation field describes the standalone instance adapter only. The shared preparations index records the admitted joint instances/taxonomy route for six plots. No whole-release preparation or provider train/test split is admitted.",
               "limited_reference_copy": false
             }
           }
@@ -1293,12 +1295,12 @@
           "labels": "Plot-level ground/tree semantics and instances; extracted-tree exports vary",
           "role": "Four-site instance benchmark",
           "readiness": "Overlap review",
-          "note": "Plot references and derived tree exports are different evaluation units. The validated frozen Wytham run covers only one diagnostic export.",
-          "correction": "118 byte-identical train/validation tree copies; Wytham also overlaps the separate Wytham collection.",
+          "note": "Complete plots, spatial split areas and extracted trees are different units. A former frozen Wytham model run is historical diagnostic evidence, not an enabled preparation.",
+          "correction": "The historical saved-file audit found 118 byte-identical train/validation tree copies. This is a bounded stored-file finding, not a new source-wide deduplication or model-independence audit.",
           "provenance": "Provider documents boundary duplication. Site-level grouping must include all derived tree exports.",
           "review": {
-            "reviewed_at": "2026-10-17",
-            "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "Four physical plots, spatial train/validation/test areas, and derived individual-tree exports.",
             "source_facts": [
               {
@@ -1381,8 +1383,8 @@
             "limitation": "Boundary trees repeat across folders; Wytham also overlaps another record.",
             "preparation": {
               "status": "tbd",
-              "label": "Task pipeline TBD",
-              "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+              "label": "No enabled preparation",
+              "detail": "No executable preparation is admitted for this source. Documented native reference and preparation readiness are separate assessments.",
               "limited_reference_copy": false
             }
           }
@@ -1418,13 +1420,13 @@
           "kind": "Plots + paired tree exports",
           "labels": "StemID; manual and automatic trees; plot treeIDv1 and updated treeIDv2",
           "role": "Versioned annotation candidate",
-          "readiness": "Mapping gap",
+          "readiness": "Versioned references documented; no enabled preparation",
           "note": "515 manual/automatic tree pairs are annotation variants, not duplicate ground truth. Six full plots retain two label versions.",
-          "correction": "All 1,036 files currently lack mapped canonical instance IDs despite preserving the source fields.",
-          "provenance": "The local README documents updated labels and shared lineage with TreeLearn. Keep v1, v2 and predictions separate.",
+          "correction": "The retired generic converter did not map the 1,036 historically observed files to canonical instance IDs. This describes that conversion, not absence of native reference.",
+          "provenance": "The recorded archive README describes label revisions and lineage with TreeLearn. Keep original labels, revised manual labels and automatic predictions separate.",
           "review": {
-            "reviewed_at": "2026-10-17",
-            "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "Six PLS plots and 515 paired manual/automatic tree exports.",
             "source_facts": [
               {
@@ -1532,11 +1534,11 @@
               "label": "Versioned plot labels reported"
             },
             "coverage": "Six plots carry treeIDv1/v2; paired manual and automatic tree exports have different roles.",
-            "limitation": "The current coarse converter does not read the native instance fields.",
+            "limitation": "No enabled preparation for the versioned manual plot references. Automatic outputs are predictions, not reference labels.",
             "preparation": {
               "status": "tbd",
-              "label": "Task pipeline TBD",
-              "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+              "label": "No enabled preparation",
+              "detail": "No executable preparation is admitted for this source. Documented native reference and preparation readiness are separate assessments.",
               "limited_reference_copy": false
             }
           }
@@ -1568,11 +1570,11 @@
           "role": "Tree structure and QSM collection",
           "readiness": "Shared-capture review",
           "note": "A single-tree export supports tree-level studies, not full-scene detection scoring. QSM variants are derived reconstructions.",
-          "correction": "PLY and TXT are alternative encodings. 280 harmonized trees exactly match the TLS benchmark; all 876 names and point counts match.",
+          "correction": "The historical comparison found matching normalized chunk sequences for 280 trees and matching names/counts for 876 exports across the two releases. This does not establish geometric equivalence of every original cloud.",
           "provenance": "The collection contains 876 tree identities; 835 were included in the source analysis after boundary conditions.",
           "review": {
-            "reviewed_at": "2026-10-17",
-            "scope": "Editorial source and metadata review; no new payload, rights or task admission",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "876 isolated-tree identities and QSM reconstructions; not a complete plot reference.",
             "source_facts": [
               {
@@ -1618,12 +1620,12 @@
               "status": "trees",
               "label": "Isolated-tree identities only"
             },
-            "coverage": "Individual-tree exports and derived reconstructions do not include complete scene background.",
+            "coverage": "The release contains 876 tree identities; the source analysis includes 835 after its boundary rule. Isolated-tree exports and derived QSMs do not contain full-scene reference.",
             "limitation": "Cannot reconstruct plot-level omissions, commissions or complete reference.",
             "preparation": {
               "status": "tbd",
-              "label": "Task pipeline TBD",
-              "detail": "No self-contained whole-source pipeline has been audited for this plot-instance task.",
+              "label": "No enabled preparation",
+              "detail": "No executable preparation is admitted for this source. Documented native reference and preparation readiness are separate assessments.",
               "limited_reference_copy": false
             }
           }
@@ -3552,22 +3554,24 @@
           "correction": "Published partitions are preserved; no labels are inferred from duplicate cloud bytes.",
           "provenance": "https://zenodo.org/records/13255198",
           "review": {
-            "reviewed_at": "2026-10-22",
-            "scope": "Imported upstream native audit; integration and human admission reviewed separately.",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "One physical tree with separate native sensor observations",
             "source_facts": [
               {
-                "text": "Complete native audit covers 19962 tree identities and 19962 sensor observations.",
+                "text": "The pinned v1 release distributes dev.zip, test.zip and tree_metadata_dev.csv. The development table supplies taxonomy; test taxonomy is not public. Native archive audit counts are reported separately from provider headline counts.",
                 "evidence_ref": "evidence:for-species20k-metadata",
                 "label": "Pinned provider release"
               }
             ],
             "local_observations": [
-              "32 normalized plots retain classification in original_points; the coarse semantic view has no mapping for it. Some plots lack treeSP."
+              "32 normalized plots retain classification in original_points; the historical coarse semantic view has no mapping for it. Some plots lack treeSP.",
+              "The complete native audit records 19,962 tree IDs and observations, seven identical-cloud groups and four groups crossing dev/test. See evidence/classification/full-native-audit.json; no test taxonomy was inferred."
             ],
             "open_questions": [
               "Geographic independence is not established.",
-              "Views retain native coordinate frames; no cross-source calibration is inferred."
+              "Views retain native coordinate frames; no cross-source calibration is inferred.",
+              "Reconcile the provider-reported 20,158-tree headline with the 19,962 audited IDs without inventing missing trees. Test sensor modality remains unknown when undocumented."
             ],
             "published_protocol": "Official partitions retained; duplicate clouds and overlapping plots are audited, not repaired.",
             "observations_snapshot": {
@@ -3585,8 +3589,8 @@
               "status": "trees",
               "label": "Taxonomic reference per tree"
             },
-            "coverage": "19,962 tree identities · 19,962 native sensor observations",
-            "limitation": "Published splits share plots or duplicate clouds; independent geographic evaluation is not established.",
+            "coverage": "Recorded native audit: 19,962 tree IDs, including 17,707 development entries and 2,255 test entries without public taxonomy. These counts are distinct from the collection name and reported headline count.",
+            "limitation": "Seven recorded identical-cloud groups use different IDs; four cross dev/test. Preserve partitions without inferring withheld test labels. Independent geographic evaluation is not established.",
             "preparation": {
               "status": "ready",
               "label": "Validated classification preparation",
@@ -3831,24 +3835,25 @@
           "correction": "Published partitions are preserved; no labels are inferred from duplicate cloud bytes.",
           "provenance": "https://doi.org/10.25625/8PB1IF",
           "review": {
-            "reviewed_at": "2026-10-22",
-            "scope": "Imported upstream native audit; integration and human admission reviewed separately.",
+            "reviewed_at": "2026-11-10",
+            "scope": "Editorial reconciliation of existing source descriptions and recorded evidence; payload audit dates remain those of the linked reports. No new payload audit, rights decision or scientific admission.",
             "observation_unit": "One physical tree with separate native sensor observations",
             "source_facts": [
               {
-                "text": "Complete native audit covers 4952 tree identities and 9904 sensor observations.",
+                "text": "The pinned release distributes TLS and ULS clouds, labels, QSM reconstructions and graph representations. Its README contains inconsistent statements about ULS coverage; complete observed membership is reported in the native audit.",
                 "evidence_ref": "evidence:biodiv-3dtrees-metadata",
                 "label": "Pinned provider release"
               }
             ],
             "local_observations": [
-              "32 normalized plots retain classification in original_points; the coarse semantic view has no mapping for it. Some plots lack treeSP."
+              "32 normalized plots retain classification in original_points; the historical coarse semantic view has no mapping for it. Some plots lack treeSP.",
+              "The complete native audit finds TLS and ULS views for all 4,952 tree IDs, including 1,543 native conifer rows, 213 genus-only labels, five unassigned trees and no identical-cloud groups. QSM/graph payloads are outside the admitted classification preparation."
             ],
             "open_questions": [
               "Geographic independence is not established.",
               "Views retain native coordinate frames; no cross-source calibration is inferred."
             ],
-            "published_protocol": "Official partitions retained; duplicate clouds and overlapping plots are audited, not repaired.",
+            "published_protocol": "The provider split assigns 3,957 trees to train, 495 to validation and 495 to test, with five unassigned. All 27 recorded plots occur in all three assigned partitions; paired views of each tree retain one shared assignment.",
             "observations_snapshot": {
               "source_metadata_sha256": "5da1c219b30bf4e2cc092547ee0b2e9526b11d7f6d08fa141a48023b0e150a9b",
               "cloud_count": 0,
@@ -3864,8 +3869,8 @@
               "status": "trees",
               "label": "Taxonomic reference per tree"
             },
-            "coverage": "4,952 tree identities · 9,904 native sensor observations",
-            "limitation": "Published splits share plots or duplicate clouds; independent geographic evaluation is not established.",
+            "coverage": "Recorded native audit: 4,952 tree identities with separate TLS and ULS views (9,904 observations); 213 genus-only labels and five unassigned trees.",
+            "limitation": "All 27 recorded plots occur in train, validation and test. The native audit found no identical-cloud groups. The published split does not establish geographic independence.",
             "preparation": {
               "status": "ready",
               "label": "Validated classification preparation",
@@ -4125,10 +4130,10 @@
       "source": "zenodo:8287792",
       "target": "task:species",
       "data": {
-        "status": "partial",
-        "reason": "treeSP occurs in some schemas and field traits vary by collection; lookup and coverage must be joined first.",
-        "listing_order": 3,
-        "conditional_order": 1
+        "status": "not_documented",
+        "reason": "The recorded 2026-10-26 review found no published mapping from native treeSP codes to taxonomic names; numeric fields alone do not establish taxonomy.",
+        "listing_order": null,
+        "conditional_order": null
       }
     },
     "support:8287792:geometry": {
@@ -4832,7 +4837,7 @@
             "Exclude XYZ-only exports from plot reference; audit complete plot/area coverage."
           ],
           "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
-          "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+          "target_scope": "Historical implementation evidence only; this does not enable a current conversion or produce the FOR-instance V2 release."
         }
       }
     },
@@ -4875,7 +4880,7 @@
             "Declare cropped-crown scoring and verify taxonomic lookup; no wood/foliage inference."
           ],
           "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
-          "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+          "target_scope": "Historical implementation evidence only; this does not enable a current conversion or produce the FOR-instance V2 release."
         }
       }
     },
@@ -4919,7 +4924,7 @@
             "Choose learned versus unsupervised filtering; class 0 is not automatically terrain."
           ],
           "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
-          "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+          "target_scope": "Historical implementation evidence only; this does not enable a current conversion or produce the FOR-instance V2 release."
         }
       }
     },
@@ -4935,7 +4940,7 @@
       "data": {
         "kind": "partial",
         "name": "Two labeled plots only",
-        "rule": "Existing coarse projection on labeled plots only; native understory retained. The local study reservation and provider cylinder split differ.",
+        "rule": "Historical retired coarse projection on labeled plots only; native understory retained. The local study reservation and provider cylinder split differ.",
         "loss": "Understory remains unknown in the coarse view. The 18 unlabeled plots cannot provide reference accuracy; the provider did use unlabeled data for training.",
         "evidence_status": "Existing converter inspected; task compatibility not validated",
         "implementation": "Existing source-aware projection in scripts/harmonize_lidar.py; no complete task pipeline validated by this relationship.",
@@ -4965,7 +4970,7 @@
             "Keep published cylinder protocol separate from the local terminal-evaluation reservation."
           ],
           "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
-          "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+          "target_scope": "Historical implementation evidence only; this does not enable a current conversion or produce the FOR-instance V2 release."
         }
       }
     },
@@ -5011,7 +5016,7 @@
             "This projection alone is not a task-validated pipeline."
           ],
           "preserved": "Native fields and source identities remain available; target IDs do not define a universal ontology.",
-          "target_scope": "Historical schema relationship only; does not transform a source into the full target dataset or establish model transferability."
+          "target_scope": "Historical implementation evidence only; this does not enable a current conversion or produce the FOR-instance V2 release."
         }
       }
     },
@@ -5101,7 +5106,7 @@
         "kind": "transform",
         "name": "Missing versioned instance adapter",
         "rule": "No task adapter is registered. Native manual references, two plot-label versions and automatic outputs require separate roles.",
-        "loss": "The current coarse export misses these instance fields. Different label versions and automatic segmentations are not interchangeable references.",
+        "loss": "The retired historical coarse export misses these instance fields. Different label versions and automatic segmentations are not interchangeable references.",
         "evidence_status": "No audited transfer function registered",
         "implementation": "Not executable; no complete transformation package is registered for this relationship.",
         "evidence": [

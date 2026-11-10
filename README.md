@@ -7,7 +7,7 @@ Published at https://borjaarroyo.github.io/forestry-lidar-catalogue/.
 
 ## How the pieces fit
 
-A pinned provider **record** (10 sources) is curated into the graph. A verified
+A pinned provider **record** (12 sources) is curated into the graph. A verified
 local **download** of a reviewed record feeds a source-specific, validated
 **preparation** that produces a **task package** with native fields, reference
 masks and published splits:
@@ -34,9 +34,9 @@ Quick paths:
 
 ## Current scope
 
-- Ten pinned source records, search, filters, comparison and metadata export.
+- Twelve pinned source records, search, filters, comparison and metadata export.
 - Source labels and task preparation are reported separately. FOR-instance has a validated local preparation for all 32 LAS plots present
-  in its pinned archive. FGI-EMIT has an independently validated 19-plot adapter, including native spectral masks. Other adapters remain unadmitted.
+  in its pinned archive. FGI-EMIT has an independently validated 19-plot adapter, including native spectral masks. FOR-species20K and BioDiv-3DTrees have admitted classification routes, and TreeScan has a six-plot joint instances/taxonomy route. Other adapters remain unadmitted.
 - The local service downloads all assets of a reviewed record into a chosen
   directory, checks provider checksums, verifies ZIP extraction, preserves
   originals and supports checkpoint-based resume.
@@ -194,7 +194,7 @@ Extract it and use `TaskDataset`. See [TASK-DATASET.md](docs/guides/TASK-DATASET
 layout, bounded loader and composition of existing prepared subsets.
 
 Use the configurable [Python/NumPy loader](docs/guides/NUMPY-LOADER.md) for either
-segmentation or classification exports from all four validated sources. It
+segmentation or classification exports from the admitted task formats. It
 preserves partitions, identities, masks and separate sensor observations without
 installing a training framework. Review and Runs & outputs provide a copyable
 example and a downloadable configurable script.
@@ -245,8 +245,7 @@ experiment. Use the documented-task, platform, data-unit, instance-reference and
 preparation filters to narrow discovery explicitly. Documented task support is
 separate from an enabled preparation and its validated selection scope.
 TreeScan's joint instance/taxonomy preparation covers six admitted plots; it is
-not a whole-release or standalone classification route. Its scope is read from
-the existing admission registry and checked against the publication manifest fingerprint.
+not a whole-release or standalone classification route. Its scope is projected from the existing admission registry into the shared catalogue preparation index.
 
 Source cards, details and comparisons share the same preparation summary.
 Experiment compatibility remains contextual in source details and is enforced by
@@ -256,3 +255,5 @@ local availability or whole-source coverage. The JSON and CSV source exports
 contain the visible selection and its public evidence, excluding historical local
 workspace counts. The existing full-catalogue export remains available for
 provenance and historical metadata.
+
+The [current source definitions and reconciliation](docs/reviews/SOURCE-CONTENT.md) distinguish provider facts, native audits, admitted selections and historical workspace observations. Sources, the task model and exports share the generated preparation index.

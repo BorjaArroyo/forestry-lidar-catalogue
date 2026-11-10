@@ -1,5 +1,7 @@
 # Multitask reference coverage
 
+Historical analysis dated 2026-10-26. Its candidate/WIP statements precede the six-plot joint admission. For current capabilities see [source definitions](SOURCE-CONTENT.md) and [joint preparation](../guides/JOINT-REFERENCES.md). The analysis below retains its original scope.
+
 Reviewed: 2026-10-26. This is a source and contract analysis, not admission of a
 new preparation route. Reference coverage must be configurable per preparation,
 as confirmed by the maintainer during this review. No joint pipeline, payload

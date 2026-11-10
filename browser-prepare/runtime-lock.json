@@ -137,8 +137,8 @@
     },
     "data/knowledge-model.json": {
       "url": "data/knowledge-model.json",
-      "sha256": "24a55a1848bab9f8d039636aaaf7376ac22772efd3941a905907bb794c455d75",
-      "size_bytes": 214744
+      "sha256": "a2b7dc051282a415b217f01f14664e3a45c9c25c831e5c8986fafa231d482725",
+      "size_bytes": 220476
     },
     "schemas/knowledge-model.schema.json": {
       "url": "schemas/knowledge-model.schema.json",
@@ -242,8 +242,8 @@
     },
     "src/canopy/model_publication.py": {
       "url": "src/canopy/model_publication.py",
-      "sha256": "e4bfd0c7b577d6f3b5fe1503103584621d1dd9cdf242af1d7e34883794054211",
-      "size_bytes": 5956
+      "sha256": "e87daf5bde842c6f3a057a795a7bec34385a5bd55e32e217b434924ca1fa6f08",
+      "size_bytes": 6511
     },
     "src/canopy/model_validation.py": {
       "url": "src/canopy/model_validation.py",
@@ -307,8 +307,8 @@
     },
     "src/canopy/tools/validate_catalog_reviews.py": {
       "url": "src/canopy/tools/validate_catalog_reviews.py",
-      "sha256": "6875b71885c7e089811fbacca0aa0a176fac732a2822c6e189ae9df44bdb7ccd",
-      "size_bytes": 3478
+      "sha256": "ed2893a431efa9d9c45db07a464f0adfa7c7a2065afd7862acb260314cf44826",
+      "size_bytes": 7048
     },
     "src/canopy/validation/__init__.py": {
       "url": "src/canopy/validation/__init__.py",
@@ -412,13 +412,13 @@
     },
     "src/canopy/tools/build_knowledge_hub_catalog.py": {
       "url": "src/canopy/tools/build_knowledge_hub_catalog.py",
-      "sha256": "b9ddebc261bb9ba744197d0d12bdd2923850d3797a6b845e2d37deb5d208647e",
-      "size_bytes": 12827
+      "sha256": "219b8993c0c01c2e9a6059becd0de6486ef5426952921057af328e3e2f7de404",
+      "size_bytes": 12285
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "f03f241f6257819b6edb01a5e807260caed82fa9127fc9c0252e03c6f0f95b5c",
-      "size_bytes": 3462
+      "sha256": "a49c7a65a7d69bb4ec0e12ba8b598818b21b84fda26bfb317762833ae2a029a2",
+      "size_bytes": 2542
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
@@ -427,8 +427,8 @@
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "d6089334d4de920af968ed9f0d636b7aaaf9bfedb74342ea839ee27effa7e8e0",
-      "size_bytes": 42996
+      "sha256": "5026a80c8f1df6a99075ae5cd2c6d98d4c8e1489e1cc50804a553d1ff3631e14",
+      "size_bytes": 43392
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
@@ -637,8 +637,8 @@
     },
     "web/experiment.js": {
       "url": "web/experiment.js",
-      "sha256": "267699386ac433f65d6bb9399a3f7f5b5db99b7bf54d873c005bd619323448a6",
-      "size_bytes": 4744
+      "sha256": "4a718e7cf25ba6494762e265037180676f7b6d3500916017278c3d4c3f72812b",
+      "size_bytes": 4582
     },
     "browser-prepare/classification-store.js": {
       "url": "browser-prepare/classification-store.js",
@@ -717,8 +717,13 @@
     },
     "web/catalog/source-overview.js": {
       "url": "web/catalog/source-overview.js",
-      "sha256": "5527eedd5a1f556400bd064454c55417a72137a8e693e551d22a17bca8a66eb9",
-      "size_bytes": 4767
+      "sha256": "4ce3a54334cfae76f4047998e1c77f7adb41bc12192d3e42f69ce5ded977da69",
+      "size_bytes": 3550
+    },
+    "src/canopy/source_preparations.py": {
+      "url": "src/canopy/source_preparations.py",
+      "size_bytes": 4665,
+      "sha256": "f9a4eab4befd99350279e587211e8a1a38bab06746845fdfc5dfe911d6ba95c7"
     }
   },
   "zip_js": "2.20.0",
