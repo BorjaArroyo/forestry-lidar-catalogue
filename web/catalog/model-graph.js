@@ -5,7 +5,11 @@ export function visibleTasks(model) {
     .sort((a, b) => a[1].data.order - b[1].data.order);
 }
 
-export function projectTaskGraph(model, taskId, { includeReported = false } = {}) {
+export function projectTaskGraph(
+  model,
+  taskId,
+  { includeReported = false, preparations = [] } = {},
+) {
   const task = model.nodes[taskId];
   if (task?.type !== 'task' || !task.data.visible) throw Error('Task model is unavailable');
   const nodes = new Map();
@@ -87,6 +91,32 @@ export function projectTaskGraph(model, taskId, { includeReported = false } = {}
     });
     hierarchy.push({ parent: taskId, child: id, distance: 1 });
   }
+  const jointRoutes = preparations.filter(
+    (route) => route.task_refs.length > 1 && route.task_refs.includes(taskId),
+  );
+  for (const route of jointRoutes) {
+    addNode(route.source_ref);
+    auditedSources.add(route.source_ref);
+    nodes.set(route.id, {
+      id: route.id,
+      type: 'joint_preparation',
+      name: route.name,
+      sub: route.scope,
+      status: 'validated_joint_scope',
+      data: route,
+    });
+    for (const [role, source, target] of [
+      ['joint_input', route.source_ref, route.id],
+      ['joint_target', route.id, taskId],
+    ]) {
+      const id = route.id + ':' + role;
+      edges.set(id, { id, source, target, role, kind: 'flow' });
+    }
+    hierarchy.push(
+      { parent: taskId, child: route.id, distance: 2 },
+      { parent: route.id, child: route.source_ref, distance: 1 },
+    );
+  }
   const reported = supports.filter((edge) => !auditedSources.has(edge.source));
   if (includeReported) {
     for (const edge of reported) {
@@ -103,7 +133,7 @@ export function projectTaskGraph(model, taskId, { includeReported = false } = {}
     edges: [...edges.values()],
     hierarchy,
     supports,
-    pipelineCount: pipelines.length,
+    pipelineCount: pipelines.length + jointRoutes.length,
     reportedCount: reported.length,
     sourceCount: new Set([...auditedSources, ...supports.map((edge) => edge.source)]).size,
   };

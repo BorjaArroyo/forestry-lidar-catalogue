@@ -22,6 +22,8 @@ Start with the [project README](../README.md) for installation, commands and the
 
 ## Repository and source reviews
 
+- [Current source definitions and evidence reconciliation](reviews/SOURCE-CONTENT.md)
+
 - [Repository layout](repository-layout.md)
 - [Task requirements](guides/TASK-REQUIREMENTS.md)
 - [FOR-instance](sources/FOR-INSTANCE.md)

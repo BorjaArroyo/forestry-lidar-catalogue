@@ -9,7 +9,7 @@ const model = JSON.parse(
 async function openModel(page) {
   await page.goto('./#model');
   await expect(page.locator('#model-status')).toHaveText('Reviewed knowledge model');
-  await expect(page.locator('.graph-node')).toHaveCount(12);
+  await expect(page.locator('.graph-node')).toHaveCount(14);
 }
 
 async function fitted(page) {
@@ -35,7 +35,7 @@ test('model navigation respects visibility and inspects requirements separately 
   await expect(page.locator('.task-request')).toBeHidden();
   await expect(page.locator('#model-task-nav')).toBeVisible();
   await expect(page.locator('#model-graph-count')).toHaveText(
-    '2 of 12 sources · 2 admitted routes',
+    '3 of 12 sources · 3 admitted routes',
   );
   const requirement = page.locator('[data-edge="task:instances:requires:xyz"]');
   await requirement.focus();
@@ -59,9 +59,9 @@ test('model navigation respects visibility and inspects requirements separately 
 test('reported sources, pan, zoom, and reopening preserve usable navigation', async ({ page }) => {
   await openModel(page);
   await page.locator('#model-show-reported').check();
-  await expect(page.locator('.graph-node')).toHaveCount(22);
+  await expect(page.locator('.graph-node')).toHaveCount(23);
   await expect(page.locator('#model-graph-count')).toHaveText(
-    '12 of 12 sources · 2 admitted routes',
+    '12 of 12 sources · 3 admitted routes',
   );
   expect(await fitted(page)).toBe(true);
   await page.locator('#model-show-reported').uncheck();
@@ -92,7 +92,7 @@ test('failed model loads have a working retry', async ({ page }) => {
   await expect(page.locator('#model-status')).toHaveText('Knowledge model unavailable');
   healthy = true;
   await page.locator('#model-retry').click();
-  await expect(page.locator('.graph-node')).toHaveCount(12);
+  await expect(page.locator('.graph-node')).toHaveCount(14);
   await expect(page.locator('#model-retry')).toBeHidden();
 });
 
@@ -100,6 +100,16 @@ test('a model without admitted routes explains its empty state', async ({ page }
   const changed = structuredClone(model);
   for (const node of Object.values(changed.nodes))
     if (node.type === 'pipeline_spec') node.data.execution_enabled = false;
+  const emptyCatalog = JSON.parse(
+    fs.readFileSync(new URL('../../data/catalog.json', import.meta.url)),
+  );
+  emptyCatalog.preparations = [];
+  await page.route('**/data/catalog.js', (route) =>
+    route.fulfill({
+      contentType: 'application/javascript',
+      body: 'window.LIDAR_CATALOG = ' + JSON.stringify(emptyCatalog) + ';',
+    }),
+  );
   await page.route('**/data/knowledge-model.json', (route) => route.fulfill({ json: changed }));
   await page.goto('./#model');
   await expect(page.locator('#model-empty')).toBeVisible();

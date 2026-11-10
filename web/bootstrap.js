@@ -14,27 +14,6 @@ if (!catalog) {
   document.querySelector('main').textContent =
     'Catalog unavailable. Rebuild catalog.js using the documented command.';
 } else {
-  let jointSource = null;
-  try {
-    const response = await fetch(new URL('../data/joint/source-lock.json', import.meta.url), {
-      signal: AbortSignal.timeout(10000),
-    });
-    if (!response.ok) throw Error('Joint scope unavailable');
-    const bytes = await response.arrayBuffer();
-    const manifestResponse = await fetch(new URL('../publication-manifest.json', import.meta.url), {
-      signal: AbortSignal.timeout(10000),
-    });
-    if (!manifestResponse.ok) throw Error('Publication manifest unavailable');
-    const manifest = await manifestResponse.json();
-    const hash = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
-      .map((byte) => byte.toString(16).padStart(2, '0'))
-      .join('');
-    if (manifest.files['data/joint/source-lock.json'] !== hash) throw Error('Joint scope changed');
-    const source = JSON.parse(new TextDecoder().decode(bytes));
-    jointSource = source;
-  } catch {
-    jointSource = null;
-  }
   const selection = createTaskSelection(
     catalog,
     new URLSearchParams(location.search).get('task') === 'species' ? 'species' : 'instances',
@@ -43,8 +22,12 @@ if (!catalog) {
   const localService =
     !window.CANOPY_PUBLIC && ['127.0.0.1', 'localhost'].includes(location.hostname);
   const client = createServiceClient({ fetch: window.fetch.bind(window), enabled: localService });
-  const application = mountCatalog({ catalog, document, selection, jointSource });
-  const modelView = mountModelView({ document, fetch: window.fetch.bind(window) });
+  const application = mountCatalog({ catalog, document, selection });
+  const modelView = mountModelView({
+    preparations: catalog.preparations,
+    document,
+    fetch: window.fetch.bind(window),
+  });
   document.addEventListener('canopy-view', (event) => {
     if (event.detail.view === 'model') modelView.open();
   });

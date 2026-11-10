@@ -1,77 +1,50 @@
-import { referenceFor } from '../experiment.js?v=joint-v1';
-/* Source discovery summarizes existing admissions without granting execution. */
-export function sourceOverview(catalog, source, jointSource = null) {
-  const routes = catalog.tasks.flatMap((task) =>
-    (task.preparation_sources?.[source.id]?.pipelines || []).map((pipeline) => ({
-      id: pipeline.id,
-      tasks: [task.id],
-      label: `${task.name}: ${source.discovery?.preparation?.label || 'Validated preparation'}`,
-    })),
-  );
+/* All views consume generated admission summaries; execution remains independently gated. */
+export function sourceOverview(catalog, source) {
   const sourceRef = source.source_ref || `zenodo:${source.id}`;
-  if (
-    jointSource?.source_ref === sourceRef &&
-    jointSource.admission?.status === 'admitted' &&
-    jointSource.plots?.length &&
-    [...jointSource.admission.approved_plots].sort().join('\n') ===
-      jointSource.plots
-        .map((plot) => plot.path)
-        .sort()
-        .join('\n')
-  ) {
-    routes.push({
-      id: jointSource.pipeline_ref,
-      tasks: ['instances', 'species'],
-      label: `Joint instances + taxonomy: ${jointSource.plots.length} admitted plots; unassigned partitions`,
-    });
-  }
-  const taxonomy = referenceFor(source, 'species');
-  const taskSupport = {
-    ...source.source_task_support,
-    species: { status: taxonomy.status, reason: taxonomy.label },
-  };
+  const routes = (catalog.preparations || [])
+    .filter((route) => route.source_ref === sourceRef)
+    .map((route) => ({
+      ...route,
+      tasks: route.task_refs.map((task) => task.replace('task:', '')),
+      label: `${route.name}: ${route.scope}`,
+    }));
+  const taskSupport = source.source_task_support || {};
   const references = Object.entries(taskSupport)
-    .filter(([, value]) => ['documented', 'partial'].includes(value.status))
-    .map(([key]) => catalog.tasks.find((task) => task.id === key)?.name || key);
-  const legacy = source.discovery?.preparation;
+    .filter(([, value]) => ['documented', 'partial', 'derived_only'].includes(value.status))
+    .map(([key, value]) => {
+      const name = catalog.tasks.find((task) => task.id === key)?.name || key;
+      return (
+        name +
+        (value.status === 'partial'
+          ? ' (partial)'
+          : value.status === 'derived_only'
+            ? ' (derived only)'
+            : '')
+      );
+    });
+  const recorded = source.discovery?.preparation;
   return {
     routes,
-    limitation:
-      source.id === '16910335'
-        ? 'No enabled preparation for the versioned manual plot references. Automatic outputs are predictions, not reference labels.'
-        : source.discovery?.limitation || null,
-    references,
     taskSupport,
+    references,
+    limitation: source.discovery?.limitation || null,
     preparation: {
-      status: routes.length
-        ? 'ready'
-        : !jointSource && source.id === '19127709'
-          ? 'unknown'
-          : legacy?.status === 'blocked'
-            ? 'blocked'
-            : 'tbd',
+      status: routes.length ? 'ready' : recorded?.status === 'blocked' ? 'blocked' : 'tbd',
       label: routes.length
         ? 'Validated preparation available'
-        : legacy?.status === 'blocked'
-          ? legacy.label
-          : !jointSource && source.id === '19127709'
-            ? 'Joint preparation scope unavailable'
-            : 'No enabled preparation',
+        : recorded?.status === 'blocked'
+          ? recorded.label
+          : 'No enabled preparation',
       detail: routes.length
-        ? routes.map((route) => route.label).join(' · ') +
-          (source.id === '19127709'
-            ? '. Only the listed complete plots are admitted; whole-release coverage and independent evaluation are not established.'
-            : '. ' + (legacy?.detail || ''))
-        : !jointSource && source.id === '19127709'
-          ? 'The joint scope metadata could not be checked. Preparation availability is unknown; retry loading the catalogue.'
-          : legacy?.detail || 'No validated preparation is registered.',
+        ? routes.map((route) => route.label + '. ' + route.detail).join(' · ')
+        : recorded?.detail || 'No preparation is admitted.',
     },
   };
 }
 
-export function exportSources(catalog, sources, jointSource = null) {
+export function exportSources(catalog, sources) {
   return {
-    schema_version: '1.0.0',
+    schema_version: '2.0.0',
     snapshot_at: catalog.generated_at,
     scope:
       'Published sources and existing preparation admissions. Historical local workspace counts are excluded.',
@@ -84,14 +57,17 @@ export function exportSources(catalog, sources, jointSource = null) {
       modalities: source.modalities,
       geography: source.geography,
       data_unit: source.discovery?.unit_label || null,
-      published_coverage: source.discovery?.coverage || null,
+      coverage_summary: source.discovery?.coverage || null,
       record_download_bytes: source.download_bytes ?? null,
       record_assets: source.assets ?? null,
-      task_support: sourceOverview(catalog, source, jointSource).taskSupport,
-      preparations: sourceOverview(catalog, source, jointSource).routes,
-      preparation_detail: sourceOverview(catalog, source, jointSource).preparation.detail,
-      limitations: sourceOverview(catalog, source, jointSource).limitation,
-      evidence: source.review?.source_facts || [],
+      task_support: sourceOverview(catalog, source).taskSupport,
+      preparations: sourceOverview(catalog, source).routes,
+      preparation_detail: sourceOverview(catalog, source).preparation.detail,
+      limitations: sourceOverview(catalog, source).limitation,
+      evidence: {
+        provider: source.review?.source_facts || [],
+        preparation: sourceOverview(catalog, source).routes.flatMap((route) => route.evidence),
+      },
       reviewed_at: source.review?.reviewed_at || null,
       open_questions: source.review?.open_questions || [],
     })),
@@ -106,7 +82,7 @@ export function sourcesCSV(snapshot) {
     'url',
     'license',
     'data_unit',
-    'published_coverage',
+    'coverage_summary',
     'record_download_bytes',
     'record_assets',
     'preparation_detail',

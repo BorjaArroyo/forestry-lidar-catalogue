@@ -1,7 +1,6 @@
 # FGI-EMIT: audited native task preparation
 
-Record [19351234](https://zenodo.org/records/19351234) is the next source candidate
-for the instance-preparation workflow. Its source-specific adapter is now admitted after complete-source integrity and independent payload validation. No multispectral segmentation model or article evaluator is certified.
+Record [19351234](https://zenodo.org/records/19351234) has an admitted source-specific instance preparation after complete-source integrity and independent payload validation. No multispectral segmentation model or article evaluator is certified.
 
 ## Observed scope
 
@@ -72,7 +71,7 @@ Use the ingestion environment with laspy, NumPy and PyYAML pinned by
 in the research checkout. The audit is bounded and runs locally:
 
 ```bash
-python scripts/audit_fgi_measurements.py --input /absolute/acquisition --output /absolute/new-evidence.json
+uv run --no-sync python scripts/audit_fgi_measurements.py --input /absolute/acquisition --output /absolute/new-evidence.json
 ```
 
 Complete-source integrity, reference-policy and all-plot adapter validation have now passed; retain their versioned evidence. Retain 13 official training plots and six test plots;
@@ -104,5 +103,4 @@ not replace those terms. No raw point clouds are published by this change.
 
 This preparation policy differs from an article scoring protocol. Units, calibration,
 co-registration accuracy, full annotation completeness and independent geographic
-transfer remain unresolved. The browser executes one admitted source per plan;
-existing prepared packages can be composed with the common task-folder exporter.
+transfer remain unresolved. The browser can combine reviewed FOR-instance and FGI-EMIT selections in one dataset plan and ZIP. Full native validation and bounded browser acceptance remain distinct scopes.

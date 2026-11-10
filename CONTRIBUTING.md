@@ -76,3 +76,15 @@ python -m canopy admission --base previous-catalog.json
 Supply the previous committed catalog as the base; do not use the proposed file
 as its own baseline. The GitHub PR check retrieves the base from Git history.
 The validator uses Python standard-library modules only.
+
+## Corrections to existing source descriptions
+
+An existing source may have an editorial correction record under
+`reviews/metadata/<catalog-id>.json` with decision `metadata-corrected`, explicit
+reviewer/scope/evidence/date and fingerprints of both the actual comparison base
+and the final source object. This records a content correction, not admission.
+The admission validator protects identities, licences, measured observations,
+reference/admission statuses and executable requirements. Support may be narrowed
+to not documented, but new positive support and new task listings require the
+scientific admission process above. Metadata records cannot admit new sources.
+Original scientific reviews remain unchanged; a stale base fingerprint fails.

@@ -1,0 +1,14 @@
+{
+  "dataset_id": "15193973",
+  "decision": "metadata-corrected",
+  "base_dataset_sha256": "dfdcc74356da7e2abbf466f641b711df2c726ffc044bb28cfe782f162ae6f646",
+  "dataset_sha256": "3b38c1896ebebc6f93f83e89a54315c89ceccaa231ac5339d22a98a55245d318",
+  "reviewed_by": "Codex automated editorial reconciliation requested by the maintainer; no independent human scientific review claimed",
+  "reviewed_at": "2026-11-10",
+  "scope": "Reconcile existing evidence, retired implementation descriptions and source-specific limitations. No new scientific admission, rights decision, positive task-support claim or payload audit.",
+  "evidence": [
+    "docs/reviews/SOURCE-CONTENT.md",
+    "docs/guides/TREE-CLASSIFICATION.md",
+    "docs/reviews/MULTITASK-COVERAGE.md"
+  ]
+}

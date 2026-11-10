@@ -13,27 +13,23 @@ test('all enabled routes are discoverable independently of the active experiment
   assert.equal(tree.routes.length, 1);
   assert.deepEqual(tree.routes[0].tasks, ['instances', 'species']);
   assert.match(tree.preparation.detail, /6 admitted plots/);
-  assert.match(tree.preparation.detail, /whole-release/);
+  assert.match(tree.preparation.detail, /whole-release/i);
 });
-test('missing joint metadata does not invent a route or hide other sources', () => {
+test('missing generated preparation metadata cannot invent an enabled route', () => {
   const source = catalog.datasets.find((s) => s.id === '19127709');
-  assert.equal(sourceOverview(catalog, source).routes.length, 0);
-  assert.equal(
-    sourceOverview(catalog, source, {
-      ...joint,
-      admission: { ...joint.admission, approved_plots: [] },
-    }).routes.length,
-    0,
-  );
+  assert.equal(sourceOverview({ ...catalog, preparations: [] }, source).routes.length, 0);
   const restricted = catalog.datasets.find((s) => s.id === '15193973');
-  assert.equal(sourceOverview(catalog, restricted, joint).preparation.status, 'blocked');
+  assert.equal(sourceOverview(catalog, restricted).preparation.status, 'blocked');
 });
 
 test('public source exports exclude local observations and preserve the selected scope', async () => {
   const { exportSources, sourcesCSV } = await import('../web/catalog/source-overview.js');
   const source = catalog.datasets.find((s) => s.id === '19127709');
   const exported = exportSources(catalog, [source], joint);
+  assert.equal(exported.schema_version, '2.0.0');
   assert.equal(exported.sources.length, 1);
+  assert.ok('coverage_summary' in exported.sources[0]);
+  assert.ok(Array.isArray(exported.sources[0].evidence.preparation));
   assert.equal(exported.sources[0].preparations[0].tasks.length, 2);
   for (const field of ['cloud_count', 'points', 'chunks', 'example_paths', 'source_fields'])
     assert.equal(field in exported.sources[0], false);

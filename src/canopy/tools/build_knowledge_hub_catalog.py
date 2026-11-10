@@ -205,26 +205,15 @@ def build(inventory, status, outputs):
         "scope": "Source documentation, saved metadata and existing code; no new scientific admission",
     }
     catalog["content_review"].update(model_hashes(CONTENT))
-    catalog["evidence"] = [
-        {
-            "name": "Public content review and remaining questions",
-            "url": "docs/reviews/CONTENT-REVIEW.md",
-        },
-        {"name": "Pinned inventory", "path": "docs/lidar-acquisition-inventory.json"},
-        {"name": "Acquisition and recovery log", "path": "docs/lidar-acquisition-log.md"},
-        {"name": "Annotation definitions", "path": "docs/annotations.md"},
-        {
-            "name": "Training and generalization protocol",
-            "path": "docs/lidar-training-data-plan.md",
-        },
-        {"name": "Prior provenance audit", "path": "docs/data-provenance-audit.md"},
-    ]
     catalog["audit_scope"] = {
         "metadata": f"All {len(status['completed']):,} asset manifests, {len(outputs):,} stored-file records, {len(scenes):,} normalized cloud records and {sum(len(x['chunks']) for x in scenes):,} chunk records.",
         "payload_samples": "Historical 2026-10-15 payload sample: 40 chunks / 17,102,064 points across 20 then-observed source field schemas; not rerun by this builder.",
         "limits": "No current full-payload reread, order-invariant geometry audit, scanner calibration validation, or final license admission. Duplicate groups are evidence for review, not deletion instructions.",
         "curation_applied": False,
     }
+    from ..source_preparations import reconcile_metadata
+
+    reconcile_metadata(catalog, ROOT, load_model())
     return catalog
 
 

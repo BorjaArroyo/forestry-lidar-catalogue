@@ -98,3 +98,16 @@ test('shared contracts and repeated pipeline membership stay unique', () => {
   assert.equal(graph.nodes.length, project().nodes.length);
   assert.equal(graph.edges.length, project().edges.length);
 });
+
+test('the generated joint admission is shown with both required targets', () => {
+  const catalog = JSON.parse(fs.readFileSync(new URL('../data/catalog.json', import.meta.url)));
+  for (const task of ['task:instances', 'task:species']) {
+    const graph = projectTaskGraph(model, task, { preparations: catalog.preparations });
+    assert.equal(graph.pipelineCount, 3);
+    const joint = graph.nodes.find((node) => node.type === 'joint_preparation');
+    assert.deepEqual(joint.data.task_refs, ['task:instances', 'task:species']);
+    assert.equal(joint.data.plots.length, 6);
+    assert.ok(graph.nodes.some((node) => node.id === 'zenodo:19127709' && !node.reported));
+    assert.ok(layoutTaskGraph(graph).bounds.height > 0);
+  }
+});

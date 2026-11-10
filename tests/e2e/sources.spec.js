@@ -31,13 +31,13 @@ test('source discovery and public exports are independent of experiment requirem
   await expect(page.locator('.source-card')).toHaveCount(12);
 });
 
-test('missing joint scope is shown as unavailable without hiding the source', async ({ page }) => {
+test('the generated preparation index does not require a separate browser scope request', async ({
+  page,
+}) => {
   await page.route('**/data/joint/source-lock.json', (route) => route.fulfill({ status: 503 }));
   await page.goto('./');
   await expect(page.locator('.source-card')).toHaveCount(12);
-  await expect(page.locator('[data-source="19127709"]')).toContainText(
-    'Joint preparation scope unavailable',
-  );
+  await expect(page.locator('[data-source="19127709"]')).toContainText('6 admitted plots');
 });
 
 test('consolidated sources fit the desktop viewport', async ({ page }, info) => {

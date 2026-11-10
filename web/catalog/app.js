@@ -13,7 +13,6 @@ export function mountCatalog({
   catalog,
   document: doc = document,
   selection = createTaskSelection(catalog),
-  jointSource = null,
 }) {
   const data = catalog;
   if (!data) {
@@ -108,11 +107,11 @@ export function mountCatalog({
     };
   const discovery = (source) => {
     const legacy = legacyDiscovery(source);
-    const overview = sourceOverview(data, source, jointSource);
+    const overview = sourceOverview(data, source);
     return { ...legacy, preparation: overview.preparation, limitation: overview.limitation };
   };
   const preparationSummary = (source) =>
-    sourceOverview(data, source, jointSource)
+    sourceOverview(data, source)
       .routes.map((route) => route.label)
       .join(' · ') || discovery(source).preparation.label;
   function updateAvailability() {
@@ -130,8 +129,8 @@ export function mountCatalog({
         : `${(d.download_bytes / 1e6).toFixed(1)} MB`
       : 'Size not reviewed';
   const readinessHtml = (source) => {
-    const overview = sourceOverview(data, source, jointSource);
-    return `<dl class="source-readiness"><div><dt>Documented task support</dt><dd>${esc(overview.references.join(' · ') || 'Not established')}</dd></div><div><dt>Available preparation</dt><dd>${esc(preparationSummary(source))}</dd></div></dl>`;
+    const overview = sourceOverview(data, source);
+    return `<dl class="source-readiness"><div><dt>Documented data and reference</dt><dd>${esc(overview.references.join(' · ') || 'Not established')}</dd></div><div><dt>Available preparation</dt><dd>${esc(preparationSummary(source))}</dd></div></dl>`;
   };
   const sourceServiceNote = (source) =>
     source?.classification
@@ -149,7 +148,7 @@ export function mountCatalog({
       d.domain,
       d.geography,
       d.license,
-      ...sourceOverview(data, d, jointSource).references,
+      ...sourceOverview(data, d).references,
     ]
       .join(' ')
       .toLowerCase();
@@ -157,7 +156,7 @@ export function mountCatalog({
       (!state.search || text.includes(state.search.toLowerCase())) &&
       (state.referenceTask === 'all' ||
         ['partial', 'documented'].includes(
-          sourceOverview(data, d, jointSource).taskSupport[state.referenceTask]?.status,
+          sourceOverview(data, d).taskSupport[state.referenceTask]?.status,
         )) &&
       (state.platform === 'all' || d.modalities.includes(state.platform)) &&
       (state.unit === 'all' || discovery(d).unit === state.unit) &&
@@ -228,7 +227,7 @@ export function mountCatalog({
   function sourceReview(d) {
     const r = d.review;
     if (!r) return '<p>Source review is pending.</p>';
-    return `<h4>Observation unit</h4><p>${esc(r.observation_unit)}</p><h4>Reported by the source</h4>${r.source_facts.map((f) => `<p>${esc(f.text)} ${link(f.label, f.url)}</p>`).join('')}<h4>Published protocol</h4><p>${esc(r.published_protocol)}</p><p class="evidence-tag">${r.observations_current ? 'Observation metadata matches the reviewed snapshot.' : 'Metadata changed; these historical observations need rechecking.'}</p><h4>Unresolved before scientific use</h4><ul>${r.open_questions.map((f) => `<li>${esc(f)}</li>`).join('')}</ul><p class="evidence-tag">Reviewed ${esc(r.reviewed_at)} · ${esc(r.scope)}</p>`;
+    return `<h4>Observation unit</h4><p>${esc(r.observation_unit)}</p><h4>Provider descriptions</h4>${r.source_facts.map((f) => `<p>${esc(f.text)} ${link(f.label, f.url)}</p>`).join('')}<h4>Published protocol</h4><p>${esc(r.published_protocol)}</p><p class="evidence-tag">${r.observations_current ? 'Historical observation metadata matches its saved snapshot; this is not a current payload or provider check.' : 'Metadata changed; these historical observations need rechecking.'}</p><h4>Unresolved before scientific use</h4><ul>${r.open_questions.map((f) => `<li>${esc(f)}</li>`).join('')}</ul><p class="evidence-tag">Reviewed ${esc(r.reviewed_at)} · ${esc(r.scope)}</p>`;
   }
   function nativeMeasurements(d) {
     return (d.native_measurement_contracts || [])
@@ -267,6 +266,8 @@ export function mountCatalog({
     return `<h4>Native class codes</h4><div class="scroll-table"><table><caption>Codes are scoped to this source; the same code can mean something different in another source.</caption><thead><tr><th>Code</th><th>Source term</th></tr></thead><tbody>${rows}</tbody></table></div>`;
   }
   function safeUrl(url) {
+    if (/^(docs|evidence|data)\/[A-Za-z0-9_./-]+$/.test(url) && !url.split('/').includes('..'))
+      return url;
     try {
       const parsed = new URL(url);
       return /^https?:$/.test(parsed.protocol) ? parsed.href : '#';
@@ -300,7 +301,7 @@ export function mountCatalog({
       ${readinessHtml(d)}
 
       <div class="source-limitation"><strong>Key limitation</strong><p>${esc(s.limitation)}</p></div>
-      <footer class="card-bottom"><p class="card-meta"><strong>${recordSize(d)}</strong><span>${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} · whole pinned record</span></p><div class="card-actions"><button class="button small ${fit.status === 'ready' ? '' : 'primary'}" data-detail="${d.id}">View details</button>${joint() && sourceOverview(data, d, jointSource).routes.some((route) => route.tasks.length > 1) ? `<button class="button small" data-experiment-add="${d.id}">Add to experiment</button>` : fit.status === 'ready' ? `<button class="button small primary" data-task-prepare="${d.id}">Prepare <span aria-hidden="true">→</span></button>` : ''}</div></footer>
+      <footer class="card-bottom"><p class="card-meta"><strong>${recordSize(d)}</strong><span>${d.assets} ${d.assets === 1 ? 'asset' : 'assets'} · whole pinned record</span></p><div class="card-actions"><button class="button small ${fit.status === 'ready' ? '' : 'primary'}" data-detail="${d.id}">View details</button>${joint() && sourceOverview(data, d).routes.some((route) => route.tasks.length > 1) ? `<button class="button small" data-experiment-add="${d.id}">Add to experiment</button>` : fit.status === 'ready' ? `<button class="button small primary" data-task-prepare="${d.id}">Prepare <span aria-hidden="true">→</span></button>` : ''}</div></footer>
     </article>`;
   }
   function renderDatasets() {
@@ -335,11 +336,19 @@ export function mountCatalog({
     $('#dialog-detail').innerHTML = `<div class="source-detail">
       <section class="source-summary" aria-label="Source summary"><div class="badges">${badge(d.modalities.join(' · '))}${badge(s.unit_label)}${badge(`Pinned record ${d.id}`)}</div><p class="source-location">${esc(d.geography)}</p><p class="source-coverage">${esc(s.coverage)}</p><div class="source-limitation"><strong>Key limitation</strong><p>${esc(s.limitation)}</p></div>
       <div class="source-actions">${fit.status === 'ready' ? `<button class="button primary" data-task-prepare="${d.id}">Prepare data for this request</button>` : ''}${link('Open provider record', d.url)}<button class="button small" data-compare="${d.id}">${state.compare.has(id) ? 'Remove from comparison' : 'Add to comparison'}</button><button class="button small" data-source-download="${d.id}" ${serviceConnected && !d.classification ? '' : 'disabled'}>Review original downloads</button></div><p class="source-service-note" data-source-service="${esc(d.id)}">${esc(sourceServiceNote(d))}</p></section>
-      <section class="source-section" aria-label="Request compatibility"><h3>References and preparation</h3>${readinessHtml(d)}<details><summary>Compatibility with the current experiment</summary>${requestFit(d)}</details></section>
+      <section class="source-section" aria-label="Request compatibility"><h3>References and preparation</h3>${readinessHtml(d)}<h4>Preparation evidence</h4>${sourceOverview(
+        data,
+        d,
+      )
+        .routes.flatMap((route) => route.evidence)
+        .map((item) => link(item.id || item.url, item.url))
+        .join(
+          ' · ',
+        )}<details><summary>Compatibility with the current experiment</summary>${requestFit(d)}</details></section>
       <details class="source-section" data-section="preparation" open><summary>Preparation and validated scope</summary><p>${esc(s.preparation.detail)}</p><p>Whole pinned record: ${recordSize(d)} in ${d.assets} ${d.assets === 1 ? 'asset' : 'assets'}. Supporting files are included where present; extracted data needs additional space.</p></details>
       <details class="source-section" data-section="evidence"><summary>Source evidence and unresolved questions</summary>${sourceReview(d)}</details>
       <details class="source-section" data-section="native"><summary>Declared terms and historical schema observations</summary><h4>Source annotations</h4><p>${esc(d.labels)}</p>${classSemantics(d)}<p class="notice">The coordinate and field observations below come from a historical local workspace. They are not a complete description of the published source or its validated preparation.</p><h4>Historically observed coordinates</h4><p>${esc(d.coordinate_policy)}</p><p>${(d.coordinate_references || []).map((c) => `${esc(c.value)}: ${c.files} files`).join(' · ') || 'No coordinates recorded in the historical workspace.'}</p><h4>Native field names</h4><p>Names from saved schemas; types, ranges and units are not uniformly audited.</p><div class="field-pills">${d.source_fields.map((f) => `<code>${esc(f)}</code>`).join('') || 'No field observations recorded; inspect the source definitions.'}</div>${nativeMeasurements(d)}<h4>Record-declared terms</h4><p>${esc(d.license.toUpperCase())}. Intended-use and component terms still require review.</p><h4>Provider metadata SHA256</h4><code class="raw-path">${esc(d.source_metadata_sha256)}</code></details>
-      <details class="source-section" data-section="history"><summary>Historical local observations</summary><p>${esc(d.study_context)}</p><p>${number(d.cloud_count)} normalized files · ${number(d.chunks)} chunks · ${compact(d.points)} stored points. File counts mix plots and derived trees where applicable; they do not count independent sites.</p><ul>${(d.review?.local_observations || []).map((fact) => `<li>${esc(fact)}</li>`).join('')}</ul><p class="evidence-tag">These saved observations describe a historical workspace. The preparation section states the admitted validation scope.</p></details>
+      <details class="source-section" data-section="history"><summary>Historical local observations</summary><p>${esc(d.study_context)}</p><p>${d.classification ? 'Legacy normalization counts are unavailable for this source; the native audit scope is stated above.' : `${number(d.cloud_count)} historically normalized files · ${number(d.chunks)} chunks · ${compact(d.points)} stored points.`} File counts mix plots and derived trees where applicable; they do not count independent sites.</p><ul>${(d.review?.local_observations || []).map((fact) => `<li>${esc(fact)}</li>`).join('')}</ul><p class="evidence-tag">These saved observations describe a historical workspace. The preparation section states the admitted validation scope.</p></details>
     </div>`;
     if (wasOpen) {
       $$('#dialog-detail details').forEach(
@@ -368,11 +377,8 @@ export function mountCatalog({
     const fields = [
       ['Platform', (d) => d.modalities.join(' · ')],
       ['Data unit', (d) => discovery(d).unit_label],
-      [
-        'Documented task support',
-        (d) => sourceOverview(data, d, jointSource).references.join(' · '),
-      ],
-      ['Reference coverage', (d) => discovery(d).coverage],
+      ['Documented data and reference', (d) => sourceOverview(data, d).references.join(' · ')],
+      ['Reference / audit coverage', (d) => discovery(d).coverage],
       ['Available preparation', preparationSummary],
       ['Main limitation', (d) => discovery(d).limitation],
       [
@@ -816,11 +822,11 @@ export function mountCatalog({
   $('#reset').addEventListener('click', clearFilters);
   $('#compare-open').addEventListener('click', showCompare);
   $('#sources-export-json').addEventListener('click', () =>
-    download(exportSources(data, visibleDatasets(), jointSource), 'canopy-sources.json'),
+    download(exportSources(data, visibleDatasets()), 'canopy-sources.json'),
   );
   $('#sources-export-csv').addEventListener('click', () => {
     const url = URL.createObjectURL(
-      new Blob([sourcesCSV(exportSources(data, visibleDatasets(), jointSource))], {
+      new Blob([sourcesCSV(exportSources(data, visibleDatasets()))], {
         type: 'text/csv;charset=utf-8',
       }),
     );
@@ -883,7 +889,7 @@ export function mountCatalog({
   renderTaskRequest();
   $('#dataset-count').textContent = data.datasets.length;
   $('#snapshot-date').textContent =
-    `Snapshot · ${new Date(data.generated_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+    `Content review · ${new Date(data.generated_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}`;
   updateAvailability();
   render();
   return {
