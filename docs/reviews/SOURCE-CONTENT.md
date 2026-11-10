@@ -79,3 +79,5 @@ source fingerprints and cite this reconciliation. They do not replace or refresh
 scientific admission records. Their validator rejects source/version/licence,
 measured-observation, executable-requirement and admission-status changes, as well
 as new positive task-support claims. Such changes still require source admission.
+
+Public source JSON exports use schema version `2.0.0`: `coverage_summary` replaces the ambiguous `published_coverage` name, and `evidence` separates provider references from preparation evidence. Version 1 exports retain their original interpretation; the full catalogue export remains available for historical provenance.

@@ -44,7 +44,7 @@ export function sourceOverview(catalog, source) {
 
 export function exportSources(catalog, sources) {
   return {
-    schema_version: '1.1.0',
+    schema_version: '2.0.0',
     snapshot_at: catalog.generated_at,
     scope:
       'Published sources and existing preparation admissions. Historical local workspace counts are excluded.',

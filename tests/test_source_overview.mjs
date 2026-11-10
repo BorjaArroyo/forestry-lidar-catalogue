@@ -26,7 +26,10 @@ test('public source exports exclude local observations and preserve the selected
   const { exportSources, sourcesCSV } = await import('../web/catalog/source-overview.js');
   const source = catalog.datasets.find((s) => s.id === '19127709');
   const exported = exportSources(catalog, [source], joint);
+  assert.equal(exported.schema_version, '2.0.0');
   assert.equal(exported.sources.length, 1);
+  assert.ok('coverage_summary' in exported.sources[0]);
+  assert.ok(Array.isArray(exported.sources[0].evidence.preparation));
   assert.equal(exported.sources[0].preparations[0].tasks.length, 2);
   for (const field of ['cloud_count', 'points', 'chunks', 'example_paths', 'source_fields'])
     assert.equal(field in exported.sources[0], false);
