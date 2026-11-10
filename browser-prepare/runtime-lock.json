@@ -417,8 +417,8 @@
     },
     "web/bootstrap.js": {
       "url": "web/bootstrap.js",
-      "sha256": "c41b8a2ddb2df51167f0b84a48746465768cac410c7f497e76ab8caf4da9636c",
-      "size_bytes": 2491
+      "sha256": "f03f241f6257819b6edb01a5e807260caed82fa9127fc9c0252e03c6f0f95b5c",
+      "size_bytes": 3462
     },
     "web/catalog/task-selection.js": {
       "url": "web/catalog/task-selection.js",
@@ -427,8 +427,8 @@
     },
     "web/catalog/app.js": {
       "url": "web/catalog/app.js",
-      "sha256": "083745fcd03742c42d14c4a058d6039d3c2efb6a8b2acf3b6199cfac7d2ddfdd",
-      "size_bytes": 42134
+      "sha256": "d6089334d4de920af968ed9f0d636b7aaaf9bfedb74342ea839ee27effa7e8e0",
+      "size_bytes": 42996
     },
     "web/shared/dom.js": {
       "url": "web/shared/dom.js",
@@ -714,6 +714,11 @@
       "url": "browser-prepare/joint-intake.js",
       "size_bytes": 2409,
       "sha256": "3f4d82d7056fe11dbbd9422cebce85309c780db45d52614eef6c58422d3b26b8"
+    },
+    "web/catalog/source-overview.js": {
+      "url": "web/catalog/source-overview.js",
+      "sha256": "5527eedd5a1f556400bd064454c55417a72137a8e693e551d22a17bca8a66eb9",
+      "size_bytes": 4767
     }
   },
   "zip_js": "2.20.0",

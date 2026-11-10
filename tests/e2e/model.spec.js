@@ -78,7 +78,7 @@ test('reported sources, pan, zoom, and reopening preserve usable navigation', as
   await page.mouse.move(box.x + box.width / 2 + 60, box.y + box.height / 2 + 30);
   await page.mouse.up();
   await page.locator('[data-view="datasets"]').click();
-  await expect(page.locator('.task-request')).toBeVisible();
+  await expect(page.locator('.task-request')).toBeHidden();
   await page.locator('[data-view="model"]').click();
   expect(await fitted(page)).toBe(true);
 });
