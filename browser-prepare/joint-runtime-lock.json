@@ -4,7 +4,7 @@
     "browser-prepare/runtime-lock.json": {
       "path": "browser-prepare/runtime-lock.json",
       "size_bytes": 31393,
-      "sha256": "fc82df8078bf84ff4c44c7414c81dc58885741e03db25a7bae69c7aada7d69bc"
+      "sha256": "40e5ca24d4332367e6f18f9ab0f594ea938abf13056705be8078c6813cbea7a0"
     },
     "browser-prepare/runtime.js": {
       "path": "browser-prepare/runtime.js",

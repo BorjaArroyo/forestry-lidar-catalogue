@@ -130,7 +130,7 @@ export function mountCatalog({
       : 'Size not reviewed';
   const readinessHtml = (source) => {
     const overview = sourceOverview(data, source);
-    return `<dl class="source-readiness"><div><dt>Documented task support</dt><dd>${esc(overview.references.join(' · ') || 'Not established')}</dd></div><div><dt>Available preparation</dt><dd>${esc(preparationSummary(source))}</dd></div></dl>`;
+    return `<dl class="source-readiness"><div><dt>Documented data and reference</dt><dd>${esc(overview.references.join(' · ') || 'Not established')}</dd></div><div><dt>Available preparation</dt><dd>${esc(preparationSummary(source))}</dd></div></dl>`;
   };
   const sourceServiceNote = (source) =>
     source?.classification
@@ -377,7 +377,7 @@ export function mountCatalog({
     const fields = [
       ['Platform', (d) => d.modalities.join(' · ')],
       ['Data unit', (d) => discovery(d).unit_label],
-      ['Documented task support', (d) => sourceOverview(data, d).references.join(' · ')],
+      ['Documented data and reference', (d) => sourceOverview(data, d).references.join(' · ')],
       ['Reference / audit coverage', (d) => discovery(d).coverage],
       ['Available preparation', preparationSummary],
       ['Main limitation', (d) => discovery(d).limitation],
